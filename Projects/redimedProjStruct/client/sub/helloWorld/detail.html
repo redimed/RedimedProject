@@ -1,0 +1,32 @@
+<div >
+
+    <form method="post" ng-submit="addCustomer();">
+        <table cellpadding="11">
+            <tr>
+                <td >ID</td><td>: <input type="text" name="id" ng-model="person.id"></td>
+            </tr>
+            <tr>
+                <td >Name</td><td>: <input type="text" name="name" ng-model="person.name"></td>
+            </tr>
+            <tr>
+                <td  valign="top">Address</td><td valign="top">: <textarea name="address" cols="30" rows="5"
+                    ng-model="person.address"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td >Email</td><td>: <input type="text" name="email" ng-model="person.email"></td>
+            </tr>
+            <tr>
+                <td >Phone</td><td>: <input type="text" name="phone" ng-model="person.phone"></td>
+            </tr>
+            <tr>
+                <td ></td>
+                <td>
+                    <input type="submit" name="submit" value="Save">
+                    <input type="button" name="cancel" value="Cancel" class="cancel" onClick="cancelAdd()">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
