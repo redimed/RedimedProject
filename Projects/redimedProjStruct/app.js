@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 //Implement Router
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var customers = require('./routes/customers');
 
 //Create application management
 var app = express();
@@ -47,23 +46,13 @@ app.use(
 
 //Set request Handler
 //-------------------------------------------
-//app.use('/', routes);
-//app.use('/', customers.list);
 
-app.get('/', function(req, res) {
-    res.sendfile(path.join(clientDir, 'index.html'))
-});
+//SET URL AND ROUTER
 
-//app.get('/customers/add',function(req,res){
-//    res.sendfile(path.join(clientDir,'index.html'))
-//});
+var fs = require('fs');//Read js file for import into
+//root
+eval(fs.readFileSync('module-config.js')+'');
 
-app.use('/users', users);
-app.get('/api/customers', customers.list);
-app.post('/api/customers/add', customers.add);
-app.post('/api/customers/edit', customers.edit);
-
-//-------------------------------------------
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

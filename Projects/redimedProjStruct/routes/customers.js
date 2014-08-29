@@ -34,6 +34,7 @@ function edit(req,res)
 
 function add(req,res)
 {
+    console.log("EEEEEEEEEEESAAAAAAAS");
     var input = req.body;
     req.getConnection(function(err,connection){
         var query=connection.query('insert into customer set ?',input,function(err,rows){

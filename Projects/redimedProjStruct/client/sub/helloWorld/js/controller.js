@@ -28,7 +28,6 @@ app.controller("cusAddController", function($scope,$http) {
 
     $scope.addCustomer=function()
     {
-        alert("OK");
         $http({
             url:"/api/customers/add",
             data:$scope.person
