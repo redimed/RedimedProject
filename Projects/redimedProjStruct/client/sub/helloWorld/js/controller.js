@@ -10,10 +10,10 @@ app.controller("cusListController", function($scope,$http,CustomerService) {
         url:"/api/customers"
     })
     .success(function(data) {
-        $scope.customers=data;
+        $scope.customers = data;
     })
     .error(function (data) {
-
+		alert("Login Failed!");
     })
     .finally(function() {
 

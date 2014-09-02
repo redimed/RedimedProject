@@ -9,4 +9,5 @@ eval(fs.readFileSync('module_listener/root.js')+'');
 eval(fs.readFileSync('module_listener/helloWorld.js')+'');
 
 //User
+eval(fs.readFileSync('module_listener/users.js')+'');
 
