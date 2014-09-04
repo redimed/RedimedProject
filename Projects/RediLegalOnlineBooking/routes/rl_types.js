@@ -1,6 +1,13 @@
 /**
  * Created by meditech on 8/29/2014.
  */
+
+/**
+ * author:tannv.dts@gmail.com
+ * des: get list rl_types
+ * @param req
+ * @param res
+ */
 function list(req, res)
 {
     req.getConnection(function(err,connection)

@@ -1,0 +1,37 @@
+<div >
+
+    <p><strong>Page:</strong> {{tableParams.page()}}
+    <p><strong>Count per page:</strong> {{tableParams.count()}}
+
+
+    <table ng-table="tableParams" class="table ng-table-responsive">
+        <tr ng-repeat="booking in $data">
+            <td data-title="'Booking Date'">
+                {{booking.BOOKING_DATE}}
+            </td>
+            <td data-title="'Booking Type'">
+                {{booking.RL_TYPE_ID}}
+            </td>
+            <td data-title="'Surname'">
+                {{booking.WRK_SURNAME}}
+            </td>
+            <td data-title="'Other name'">
+                {{booking.WRK_OTHERNAMES}}
+            </td>
+            <td data-title="'Preferred doctor'">
+                {{booking.DOCTOR_ID}}
+            </td>
+            <td data-title="'Preferred calendar'">
+                {{booking.refered_date_string}}
+            </td>
+            <td data-title="'Status'">
+                {{booking.STATUS}}
+            </td>
+            <td data-title="'Notes'">
+                {{booking.NOTES}}
+            </td>
+        </tr>
+    </table>
+
+
+</div>

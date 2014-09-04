@@ -2,19 +2,15 @@
  * Created by meditech on 8/29/2014.
  */
 
-
-/**
- * tannv.dts@gmail.com
- * Method GET
- *param: rl_id. get from req.query
+/*
+author:tannv.dts@gmail.com
+des: get list sites
  */
 function list(req, res)
 {
-    var rl_id=req.query.rl_id;
     req.getConnection(function(err,connection)
     {
-
-        var query = connection.query('SELECT * FROM cln_specialties where RL_TYPE_ID=?',rl_id,function(err,rows)
+        var query = connection.query('SELECT * FROM redimedsites',function(err,rows)
         {
             if(err)
             {
@@ -24,6 +20,5 @@ function list(req, res)
         });
     });
 };
-
 
 exports.list=list;
