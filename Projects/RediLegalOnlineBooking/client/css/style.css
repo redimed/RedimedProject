@@ -9,3 +9,6 @@ button {
 a.btn {
     width: 100px;
 }
+
+
+map, div[map] {display:block; width: 600px; height: 400px}
