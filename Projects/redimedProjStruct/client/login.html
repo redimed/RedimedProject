@@ -2,7 +2,7 @@
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="en">
+<html lang="en" ng-app="loginApp">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
@@ -55,11 +55,11 @@
 <!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="login" ng-app="myApp">
+<body class="login" >
 
 <!-- BEGIN LOGO -->
 <div class="logo">
-    <a href="#">
+    <a href="http://www.redimed.com.au">
         <img src="assets/logo.png" alt=""/>
     </a>
 </div>
@@ -71,32 +71,35 @@
 <!-- BEGIN LOGIN -->
 <div class="content">
 <!-- BEGIN LOGIN FORM -->
-<form class="login-form" ng-submit="login()" ng-controller="loginController" method="post">
+<div class="login-form" ng-controller="loginController" ng-init="err = true;msg = true">
     <h3 class="form-title">Login to your account</h3>
-    <div class="alert alert-danger display-hide">
-        <button class="close" data-close="alert"></button>
+    <div class="alert alert-danger" ng-hide="err" >
 			<span>
-			{{message}}</span>
+			{{errMsg}}</span>
+    </div>
+    <div class="alert alert-success" ng-hide="msg" >
+			<span>
+			{{succMsg}}</span>
     </div>
     <div class="form-group">
         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
         <label class="control-label visible-ie8 visible-ie9">Username</label>
         <div class="input-icon">
             <i class="fa fa-user"></i>
-            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" ng-model="user" name="username"/>
+            <input class="form-control placeholder-no-fix" required="true" type="text" autocomplete="off" placeholder="Username" ng-model="uname" name="username"/>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label visible-ie8 visible-ie9">Password</label>
         <div class="input-icon">
             <i class="fa fa-lock"></i>
-            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" ng-model="pass" name="password"/>
+            <input class="form-control placeholder-no-fix" required="true" type="password" autocomplete="off" placeholder="Password" ng-model="pass" name="password"/>
         </div>
     </div>
     <div class="form-actions">
         <label class="checkbox">
             <input type="checkbox" name="remember" value="1"/> Remember me </label>
-        <button type="submit" class="btn green pull-right">
+        <button ng-click="login()" class="btn green pull-right">
             Login <i class="m-icon-swapright m-icon-white"></i>
         </button>
     </div>
@@ -135,7 +138,7 @@
             Create an account </a>
         </p>
     </div>
-</form>
+</div>
 <!-- END LOGIN FORM -->
 <!-- BEGIN FORGOT PASSWORD FORM -->
 <form class="forget-form" action="#" method="post">
@@ -159,7 +162,7 @@
 </form>
 <!-- END FORGOT PASSWORD FORM -->
 <!-- BEGIN REGISTRATION FORM -->
-<form class="register-form"  ng-submit="register()" ng-controller="registerController" method="post">
+<div class="register-form"  ng-controller="registerController" method="post">
 <h3>Sign Up</h3>
 <p>
     Enter your personal details below:
@@ -172,13 +175,13 @@
 <div class="col-md-6">
 <div class="input-icon">
 <i class="fa fa-font"></i>
-<input class="form-control placeholder-no-fix" type="text" placeholder="First Name" name="firstname"/>
+<input class="form-control placeholder-no-fix" type="text" placeholder="First Name" name="firstname" ng-model="user.fname"/>
 </div>
 </div>
 <div class="col-md-6">
 <div class="input-icon">
 <i class="fa fa-font"></i>
-<input class="form-control placeholder-no-fix" type="text" placeholder="Last Name" name="lastname"/>
+<input class="form-control placeholder-no-fix" type="text" placeholder="Last Name" name="lastname" ng-model="user.lname"/>
 </div>
 </div>
 </div>
@@ -188,34 +191,24 @@
     <label class="control-label visible-ie8 visible-ie9">Email</label>
     <div class="input-icon">
         <i class="fa fa-envelope"></i>
-        <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email"/>
+        <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email" ng-model="user.email"/>
     </div>
 </div>
 <div class="form-group">
     <label class="control-label visible-ie8 visible-ie9">Phone:</label>
     <div class="input-icon">
         <i class="fa fa-phone"></i>
-        <input class="form-control placeholder-no-fix" type="text" placeholder="Phone" name="phone"/>
+        <input class="form-control placeholder-no-fix" type="text" placeholder="Phone" name="phone" ng-model="user.phone"/>
     </div>
 </div>
 <div class="form-group">
     <label class="control-label visible-ie8 visible-ie9">Address</label>
     <div class="input-icon">
         <i class="fa fa-check"></i>
-        <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"/>
+        <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address" ng-model="user.addr"/>
     </div>
 </div>
-<div class="form-group">
-    <label class="control-label visible-ie8 visible-ie9">City/Town</label>
-    <div class="input-icon">
-        <i class="fa fa-location-arrow"></i>
-        <input class="form-control placeholder-no-fix" type="text" placeholder="City/Town" name="city"/>
-    </div>
-</div>
-<div class="form-group">
-<label class="control-label visible-ie8 visible-ie9">Country</label>
 
-</div>
 <p>
     Enter your account details below:
 </p>
@@ -255,11 +248,11 @@
 <div class="form-actions">
     <button id="register-back-btn" type="button" class="btn">
         <i class="m-icon-swapleft"></i> Back </button>
-    <button type="submit" id="register-submit-btn" class="btn green pull-right">
+    <button ng-click="register()" id="register-submit-btn" class="btn green pull-right">
         Sign Up <i class="m-icon-swapright m-icon-white"></i>
     </button>
 </div>
-</form>
+</div>
 <!-- END REGISTRATION FORM -->
 </div>
 <!-- END LOGIN -->

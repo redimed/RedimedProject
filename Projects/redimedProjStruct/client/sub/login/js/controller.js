@@ -1,21 +1,29 @@
 /**
  * Created by meditech on 8/26/2014.
  */
-app.controller("loginController",function($scope,$rootScope,$http,$location){
+loginApp.controller("loginController",function($scope,$rootScope,$http,$location){
     $scope.login = function() {
         $http({
-            method: "POST",
+            method:"POST",
             url: "/users/login",
-            data: {uname: $scope.user,
-                    pass: $scope.pass}
+            data: {username: $scope.uname,
+                    password: $scope.pass}
         })
             .success(function (data) {
 
                 if(data['status'] === 'success')
                 {
-                    $rootScope.message = data['msg'];
-                    $http.get("/home").success(function(data){console.log("Redirect to home.html")});
 
+                    $scope.msg = false;
+                    $scope.err = true;
+                    $rootScope.succMsg = "Login Successfully!";
+
+                }
+                else
+                {
+                    $scope.err = false;
+                    $scope.msg = true;
+                    $rootScope.errMsg = data['msg'];
                 }
             })
             .error(function (data) {
@@ -29,7 +37,7 @@ app.controller("loginController",function($scope,$rootScope,$http,$location){
 
 });
 
-app.controller("registerController",function($scope,$http){
+loginApp.controller("registerController",function($scope,$http){
 $scope.register = function(){
     $http({
         method:"POST",
