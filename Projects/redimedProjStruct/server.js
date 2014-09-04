@@ -5,11 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+var passportLocal = require('passport-local');
+var passportHttp = require('passport-http');
 var session = require('express-session');
 
 //Implement Router
-var routes = require('./routes/index');
+
 var users = require('./routes/users');
 
 //Create application management
@@ -17,11 +18,6 @@ var app = express();
 app.set('port', process.env.PORT || 4300);
 var clientDir = path.join(__dirname, 'client');
 
-// view engine setup
-/*NvTan Comment
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(favicon());*/
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -49,17 +45,38 @@ app.use(
     },'pool')
 );
 
+//Passport Authentication
+
+/*
+passport.use(new passportHttp.BasicStrategy(users.login));
+passport.use(new passportLocal.Strategy(users.login));
+
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
+
+var auth = function(req, res, next){
+  if (!req.isAuthenticated()) 
+    res.send(401);
+  else
+    next();
+};
+*/
 
 //Set request Handler
 //-------------------------------------------
+
 
 //SET URL AND ROUTER
 
 var fs = require('fs');//Read js file for import into
 //root
 eval(fs.readFileSync('module-config.js')+'');
-
-
 
 
 /// catch 404 and forward to error handler
@@ -92,8 +109,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-
 
 var debug = require('debug')('redimedProjStruct');
 var server = app.listen(app.get('port'), function() {
