@@ -66,43 +66,98 @@
                         </div>
                         <!--Start of Patient Detail-->
                         <div class="col-md-7 col-sm-12">
-                            <label style="font-weight: bolder; color: #585858; font-size: x-large">Patient Details</label>
-                            <table width="100%">
+                            <label style="font-weight: bolder; color: #585858; font-size: x-large">
+                                Detail of the person requesting the assessment
+                            </label>
+                            <table >
                                 <tr style="height: 40px">
-                                    <td>Patient's full name: </td>
-                                    <td colspan="2">
-                                        <input type="text" class="input-large">
+                                    <td>Surname: </td>
+                                    <td >
+                                        <input type="text" ng-model="newBooking.ASS_SURNAME"/>
                                     </td>
                                 </tr>
                                 <tr style="height: 40px">
-                                    <td>Patient's Date of Birth: </td>
-                                    <td colspan="2">
-                                        <input type="text" class="input-large">
+                                    <td>Other name: </td>
+                                    <td>
+                                        <input type="text" ng-model="newBooking.ASS_OTHERNAMES"/>
                                     </td>
                                 </tr>
                                 <tr style="height: 40px">
-                                    <td>Contact Number: </td>
-                                    <td colspan="2">
-                                        <input type="text" class="input-large">
+                                    <td>Contact number:  </td>
+                                    <td >
+                                        <input type="text" ng-model="newBooking.ASS_CONTACT_NO"/>
                                     </td>
                                 </tr>
                                 <tr style="height: 40px">
-                                    <td>Email </td>
-                                    <div class="radio-list">
-                                        <td style="width: 100px">
-                                            <label>
-                                                <input type="radio" name="toasts" value="warning"/>YES </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="radio" name="toasts" value="error"/>NO </label>
-                                        </td>
-                                    </div>
-
+                                    <td>Email address: </td>
+                                    <td >
+                                        <input type="text"  ng-model="newBooking.ASS_EMAIL"/>
+                                    </td>
                                 </tr>
                             </table>
 
+                            <label style="font-weight: bolder; color: #585858; font-size: x-large">
+                                Worker's detail
+                            </label>
+                            <table >
+                                <tr style="height: 40px">
+                                    <td>Surname: </td>
+                                    <td >
+                                        <input type="text" ng-model="newBooking.WRK_SURNAME"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 40px">
+                                    <td>Other name: </td>
+                                    <td >
+                                        <input type="text"  ng-model="newBooking.WRK_OTHERNAMES"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 40px">
+                                    <td>Email address: </td>
+                                    <td >
+                                        <input type="text" ng-model="newBooking.WRK_EMAIL"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 40px">
+                                    <td>Contact number: </td>
+                                    <td >
+                                        <input type="text" ng-model="newBooking.WRK_CONTACT_NO"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 40px">
+                                    <td>Is the patient new to REDiMED: </td>
+                                    <td >
+                                        <input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW">
+                                    </td>
+                                </tr>
+                                <tr style="height: 40px">
+                                    <td>Description of injury: </td>
+                                    <td>
+                                        <input type="text" ng-model="newBooking.DESC_INJURY"/>
+                                    </td>
+                                </tr>
+                            </table>
 
+                            <label style="font-weight: bolder; color: #585858; font-size: x-large">
+                                Appointment
+                            </label>
+                            <p>
+                                REDiLEGAL to contact the patient and arrage a time
+                                <input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTPATIENT">
+                            </p>
+                            <p>
+                                REDiLEGAL to contact the case manager to arrange a time for the worker
+                                <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTMANAGER">
+                            </p>
+                            <p>
+                                Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment
+                                <input title="sdfasdfadsf" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.isUrgent">
+                            </p>
+                            <p>
+                                Note: <input type="text" ng-model="newBooking.NOTES"/>
+                            </p>
+
+                            <button class="btn btn-sm yellow filter-submit margin-bottom" ng-click="save()">Save</button>
                         </div>
                     </div>
                 </div>
