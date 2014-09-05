@@ -8,7 +8,6 @@ var passport = require('passport');
 var passportLocal = require('passport-local');
 var passportHttp = require('passport-http');
 var session = require('express-session');
-var bcrypt = require('bcrypt-nodejs');
 
 //Implement Router
 
@@ -34,9 +33,8 @@ app.use(passport.session());
 app.use(express.static(clientDir));
 
 //Create sql connection
-
-var mysql = require('mysql');
 var connection  = require('express-myconnection');
+var mysql = require('mysql');
 app.use(
     connection(mysql,{
         host: 'localhost',
@@ -47,67 +45,11 @@ app.use(
     },'pool')
 );
 
-
-
-
 //Passport Authentication
 
-
-passport.use(new passportHttp.BasicStrategy( {passReqToCallback : true},login));
-passport.use(new passportLocal.Strategy({passReqToCallback : true},login));
-
-function login(req,username,password,done)
-{
-    console.log(" User:"+username+" Pass:"+password);
-    req.getConnection(function(err,connection) {
-        var query = connection.query("SELECT * FROM users WHERE user_name=?", [username], function (err, rows) {
-            console.log("wwww");
-            if (err) {
-//                        res.json({status:'fail',
-//                                    error:err});
-                console.log("a");
-                return done(null, false, {status: 'fail',
-                    error: err});
-            }
-            else {
-                console.log("b");
-                if (rows.length > 0) {
-                    console.log("f");
-                    bcrypt.compare(password.toString(), rows[0].password, function (err, r) {
-                        if (r == true) {
-
-//                                res.json({status:'success',
-//                                            msg:"Login Successfully!",
-//                                            username:rows[0].user_name,
-//                                           password:password});
-                            console.log("c");
-                            return done(null, {status: 'success',
-                                msg: "Login Successfully!",
-                                username: rows[0].user_name,
-                                password: password});
-                        }
-                        else {
-//                                res.json({status:'fail',
-//                                            error:err,
-//                                            msg: 'Wrong Username Or Password!'});
-                            console.log("d");
-                            return done(null, false, {status: 'fail',
-                                error: err,
-                                msg: 'Wrong Username Or Password!'});
-                        }
-                    });
-                }
-                else {
-                    console.log("e");
-                    //res.json({status:'fail', msg: 'Wrong Username Or Password!'});
-                    return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
-                }
-            }
-        });
-    });
-    };
-
-
+/*
+passport.use(new passportHttp.BasicStrategy(users.login));
+passport.use(new passportLocal.Strategy(users.login));
 
 
 passport.serializeUser(function(user, done) {
@@ -124,11 +66,7 @@ var auth = function(req, res, next){
   else
     next();
 };
-
-app.post('/users/login', passport.authenticate('local'), function(req, res) {
-    res.json({aaa:"bbbb"});
-});
-
+*/
 
 //Set request Handler
 //-------------------------------------------
