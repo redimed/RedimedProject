@@ -27,9 +27,8 @@ app.controller("legalBookingController", function($scope,$http,locationService,r
         });
     }
 
-
 //--------------------------------------------------------------
-
+    $scope.selectedInfo
 //--------------------------------------------------------------
 
     $scope.rltypes=rlTypesService.allSync();
@@ -81,9 +80,6 @@ app.controller("legalBookingController", function($scope,$http,locationService,r
     $scope.typeChange=function()
     {
         $scope.specialitiesOfType=clnSpecialitiesService.getSpecialitiesForType($scope.selectedInfo.rltypeSelected.RL_TYPE_ID);
-        $scope.selectedInfo.clnSpecialitySelected={};
-        $scope.selectedInfo.doctorSelected={};
-        $scope.updateAppoinmentsList();
     }
 
     //--------------------------------------------------------------
@@ -111,13 +107,13 @@ app.controller("legalBookingController", function($scope,$http,locationService,r
 
     $scope.specialityChange=function(){
         $scope.doctorsOfSpeciality=doctorsService.getDoctorForSpeciality($scope.selectedInfo.clnSpecialitySelected.Specialties_id);
-        $scope.selectedInfo.doctorSelected={};
-        $scope.updateAppoinmentsList();
     }
 
+    //--------------------------------------------------------------
     $scope.appointments=appointmentCalendarService.allSync();
-    $scope.updateAppoinmentsList=function()
+    $scope.doctorChange=function()
     {
+        alert($scope.selectedInfo.var1);
         $scope.appointments.splice(0,$scope.appointments.length);
         var fromtime=$scope.selectedInfo.var1.getFullYear()+"-"+($scope.selectedInfo.var1.getMonth()+1)+"-"+$scope.selectedInfo.var1.getDate();
         $http({
@@ -139,7 +135,6 @@ app.controller("legalBookingController", function($scope,$http,locationService,r
 
             });
     }
-
 });
 
 app.controller("lob_patientDetailController",function($scope,$routeParams,$http,appointmentCalendarService,doctorsService,locationService,bookingService){
@@ -162,6 +157,7 @@ app.controller("lob_patientDetailController",function($scope,$routeParams,$http,
     })
     .success(function(data) {
         $scope.newBooking.BOOKING_ID=data.key;
+        alert($scope.newBooking.BOOKING_ID);
     })
     .error(function (data) {
         alert("insert fail");
@@ -232,7 +228,23 @@ app.controller("lob_bookingListController",function($scope,ngTableParams,$http) 
     .finally(function() {
 
     });
-
+//    var data = [{name: "Moroni", age: 50},
+//        {name: "Tiancum", age: 43},
+//        {name: "Jacob", age: 27},
+//        {name: "Nephi", age: 29},
+//        {name: "Enos", age: 34},
+//        {name: "Tiancum", age: 43},
+//        {name: "Jacob", age: 27},
+//        {name: "Nephi", age: 29},
+//        {name: "Enos", age: 34},
+//        {name: "Tiancum", age: 43},
+//        {name: "Jacob", age: 27},
+//        {name: "Nephi", age: 29},
+//        {name: "Enos", age: 34},
+//        {name: "Tiancum", age: 43},
+//        {name: "Jacob", age: 27},
+//        {name: "Nephi", age: 29},
+//        {name: "Enos", age: 34}];
 
 
 });

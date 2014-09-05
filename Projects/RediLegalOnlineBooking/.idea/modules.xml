@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/RediLegalOnlineBooking.iml" filepath="$PROJECT_DIR$/.idea/RediLegalOnlineBooking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/redimedProjStruct.iml" filepath="$PROJECT_DIR$/.idea/redimedProjStruct.iml" />
     </modules>
   </component>
 </project>

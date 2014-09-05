@@ -17,12 +17,12 @@
                 </tr>
                 <tr align="center">
                     <td>
-                        <select class="form-control input-large" ng-model="selectedInfo.locationSelected" ng-options="location.Site_name for location in locations" ng-change="updateAppoinmentsList();">
+                        <select class="form-control input-large" ng-model="selectedInfo.locationSelected" ng-options="location.Site_name for location in locations" >
                         </select>
 
                     </td>
                     <td >
-                        <div style="width: 120px;margin-left: 10px" class="input-group input-append" id="date"  datetimez ng-model="selectedInfo.var1" ng-change="updateAppoinmentsList();">
+                        <div style="width: 150px;" class="input-group input-append" id="date"  datetimez ng-model="selectedInfo.var1">
                             <input class="form-control form-filter input-sm" style="height: 35px;" readonly data-format="dd-MM-yyyy" type="text" id="input1" name="input1"/>
                                     <span class="add-on input-group-btn">
                                         <button class="btn btn-sm default" type="button" style="height: 35px;">
@@ -57,7 +57,7 @@
             <tr>
                 <td>Doctor</td>
                 <td width="80%">
-                    <select class="form-control input-sm input-large" ng-model="selectedInfo.doctorSelected" ng-options="doctor.NAME for doctor in doctorsOfSpeciality" ng-change="updateAppoinmentsList();"></select>
+                    <select class="form-control input-sm input-large" ng-model="selectedInfo.doctorSelected" ng-options="doctor.NAME for doctor in doctorsOfSpeciality" ng-change="doctorChange();"></select>
 
                 </td>
             </tr>
