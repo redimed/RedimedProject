@@ -47,7 +47,9 @@ function list(req,res)
             }
             else
             {
+                console.log("asdas");
                 res.json(rows);
+
             }
         });
     });
