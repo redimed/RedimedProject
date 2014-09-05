@@ -3,7 +3,7 @@
  */
 app.config(function($routeProvider, $locationProvider) {
     $routeProvider
-        .when('/', {controller: "legalBookingController", templateUrl: '/sub/rediLegalOnlineBooking/.html'})
+        .when('/', {controller: "lob_bookingListController", templateUrl: '/sub/rediLegalOnlineBooking/bookinglist.html'})
         .when("/customers/add",{controller:"cusAddController",templateUrl:"/sub/helloWorld/detail.html"})
         .when("/customers/edit/:id",{controller:"cusEditController",templateUrl:"/sub/helloWorld/detail.html"})
         .when("/online-booking/booking",{controller:"legalBookingController",templateUrl:"/sub/rediLegalOnlineBooking/booking.html"})
