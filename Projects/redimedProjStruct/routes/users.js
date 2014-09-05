@@ -14,9 +14,9 @@ function login(req,username,password,done)
                     error: err});
             }
             else {
-                console.log("b");
+
                 if (rows.length > 0) {
-                    console.log("f");
+
                     bcrypt.compare(password.toString(), rows[0].password, function (err, r) {
                         if (r == true) {
 
@@ -24,11 +24,11 @@ function login(req,username,password,done)
 //                                            msg:"Login Successfully!",
 //                                            username:rows[0].user_name,
 //                                           password:password});
-                            console.log("c");
+
                             return done(null, {status: 'success',
                                 msg: "Login Successfully!",
-                                username: rows[0].user_name,
-                                password: password});
+                                id: rows[0].id,
+                                userType: rows[0].user_type});
                         }
                         else {
 //                                res.json({status:'fail',

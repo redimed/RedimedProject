@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 8/26/2014.
  */
-loginApp.controller("loginController",function($scope,$rootScope,$http,$location){
+app.controller("loginController",function($scope,$rootScope,$http,$window){
     $scope.login = function() {
         $http({
             method:"POST",
@@ -13,10 +13,11 @@ loginApp.controller("loginController",function($scope,$rootScope,$http,$location
 
                 if(data['status'] === 'success')
                 {
-
                     $scope.msg = false;
                     $scope.err = true;
                     $rootScope.succMsg = "Login Successfully!";
+
+                    $window.location.href = "/home";
 
                 }
                 else
@@ -39,7 +40,7 @@ loginApp.controller("loginController",function($scope,$rootScope,$http,$location
 
 });
 
-loginApp.controller("registerController",function($scope,$http){
+app.controller("registerController",function($scope,$http){
     $scope.register = function(){
         $http({
             method:"POST",

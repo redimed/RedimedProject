@@ -67,7 +67,7 @@ passport.deserializeUser(function(user, done) {
 
 var auth = function(req, res, next){
     if (!req.isAuthenticated())
-        res.send(401);
+        res.sendfile(path.join(clientDir, 'login.html'));
     else
         next();
 };

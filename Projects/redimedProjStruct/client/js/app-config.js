@@ -3,10 +3,15 @@
  */
  
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
+
+
+
     $routeProvider
         .when('/customers', {controller: "cusListController", templateUrl: '/sub/helloWorld/list.html'})
         .when("/customers/add",{controller:"cusAddController",templateUrl:"/sub/helloWorld/detail.html"})
         .when("/customers/edit/:id",{controller:"cusEditController",templateUrl:"/sub/helloWorld/detail.html"})
-        .when("/home",{controller:"homeController"})
+        .when("/home",{controller:"homeController",template:" "})
     $locationProvider.html5Mode(true)
 });
+
+
