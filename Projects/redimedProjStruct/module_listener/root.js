@@ -6,7 +6,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/home',function(req,res){
-
+    res.sendfile(path.join(clientDir, 'home.html'))
 });
 
 

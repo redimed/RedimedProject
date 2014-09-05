@@ -8,6 +8,7 @@ var passport = require('passport');
 var passportLocal = require('passport-local');
 var passportHttp = require('passport-http');
 var session = require('express-session');
+var bcrypt = require('bcrypt-nodejs');
 
 //Implement Router
 
@@ -26,15 +27,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(session({ secret: 'securedsession' }));
-app.use(passport.initialize()); 
+app.use(passport.initialize());
 app.use(passport.session());
 
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(clientDir));
 
 //Create sql connection
-var connection  = require('express-myconnection');
+
 var mysql = require('mysql');
+var connection  = require('express-myconnection');
 app.use(
     connection(mysql,{
         host: 'localhost',
@@ -45,11 +47,14 @@ app.use(
     },'pool')
 );
 
+
+
+
 //Passport Authentication
 
-/*
-passport.use(new passportHttp.BasicStrategy(users.login));
-passport.use(new passportLocal.Strategy(users.login));
+
+passport.use(new passportHttp.BasicStrategy( {passReqToCallback : true},users.login));
+passport.use(new passportLocal.Strategy({passReqToCallback : true},users.login));
 
 
 passport.serializeUser(function(user, done) {
@@ -61,12 +66,14 @@ passport.deserializeUser(function(user, done) {
 });
 
 var auth = function(req, res, next){
-  if (!req.isAuthenticated()) 
-    res.send(401);
-  else
-    next();
+    if (!req.isAuthenticated())
+        res.send(401);
+    else
+        next();
 };
-*/
+
+
+
 
 //Set request Handler
 //-------------------------------------------
@@ -115,5 +122,3 @@ var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
 });
 console.log('Express server listening on port ' + server.address().port);
-
-
