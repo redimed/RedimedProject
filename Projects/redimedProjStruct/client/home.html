@@ -11,6 +11,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
+        <!--DatetimePicker-->
+        <link rel="stylesheet" type="text/css" href="sub/rediLegalOnlineBooking/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css"/>
+        <script src="sub/rediLegalOnlineBooking/js/bootstrap-datetimepicker/jquery-1.11.1.min.js"></script>
+        <script src="sub/rediLegalOnlineBooking/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -45,6 +52,18 @@
         <script src="sub/login/js/controller.js"></script>
         <script src="sub/login/js/service.js"></script>
 
+
+
+
+
+        <!--Online Booking-->
+        <script src="sub/rediLegalOnlineBooking/js/legalBookingController.js"></script>
+        <script src="sub/rediLegalOnlineBooking/js/legalBookingService.js"></script>
+        <script src="sub/rediLegalOnlineBooking/js/my-utils.js"></script>
+
+        <!--Booking List-->
+        <script src="assets/global/plugins/ngTable/ng-table.min.js"></script>
+        <link rel="stylesheet" href="assets/global/plugins/ngTable/ng-table.min.css">
 
         <!--END ANGULARJS SCRIPT -->
     </head>
@@ -483,6 +502,7 @@
                         <span class="title">Home</span>
                         <span class="selected"></span>
                     </a>
+
                 </li>
 
                 <li ng-repeat="menu in menuL" ng-class="{'last': $last}" >
@@ -527,6 +547,12 @@
                     </div>
 
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> origin/Tan_Branch
             <!--END MAIN FRAME -->
 
             </div>
