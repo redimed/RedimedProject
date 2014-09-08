@@ -1,0 +1,81 @@
+<link rel="stylesheet" type="text/css" href="../../sub/rediLegalOnlineBooking/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css"/>
+<script src="../../sub/rediLegalOnlineBooking/js/bootstrap-datetimepicker/jquery-1.11.1.min.js"></script>
+<script src="../../sub/rediLegalOnlineBooking/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../../assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
+<script type="text/javascript" src="../../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-basket font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">Online Booking</span>
+
+        </div>
+
+        <div class="actions">
+            <table cellspacing="200" width="100%" >
+                <tr align="center">
+                    <td>Location</td>
+                    <td>Date</td>
+                    <td>Type</td>
+                    <td>Specialty</td>
+
+                    <!--<td></td>-->
+                </tr>
+                <tr align="center">
+                    <td>
+                        <select class="form-control input-large" ng-model="selectedInfo.locationSelected" ng-options="location.Site_name for location in locations" ng-change="updateAppoinmentsList();">
+                        </select>
+
+                    </td>
+                    <td >
+                        <div style="width: 120px;margin-left: 10px" class="input-group input-append" id="date"  datetimez ng-model="selectedInfo.var1" ng-change="updateAppoinmentsList();">
+                            <input class="form-control form-filter input-sm" style="height: 35px;" readonly data-format="dd-MM-yyyy" type="text" id="input1" name="input1"/>
+                                    <span class="add-on input-group-btn">
+                                        <button class="btn btn-sm default" type="button" style="height: 35px;">
+                                            <i class="fa glyphicon glyphicon-calendar " data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                                        </button>
+
+                                    </span>
+                        </div>
+
+                    </td>
+                    <td >
+                        <select class="form-control " style="width: 250px;margin-left: 10px" ng-model="selectedInfo.rltypeSelected" ng-options="rltype.Rl_TYPE_NAME for rltype in rltypes" ng-change="typeChange();"></select>
+
+                    </td>
+                    <td >
+                        <select class="form-control " style="width: 250px;margin-left: 10px" ng-model="selectedInfo.clnSpecialitySelected" ng-options="speciality.Specialties_name for speciality in specialitiesOfType" ng-change="specialityChange();"></select>
+
+                    </td>
+
+                    <!--<td>-->
+                    <!--<div class="margin-bottom-5">-->
+                    <!--<button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Search</button>-->
+                    <!--</div>-->
+                    <!--</td>-->
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <table>
+            <tr>
+                <td>Doctor</td>
+                <td width="80%">
+                    <select class="form-control input-sm input-large" ng-model="selectedInfo.doctorSelected" ng-options="doctor.NAME for doctor in doctorsOfSpeciality" ng-change="updateAppoinmentsList();"></select>
+
+                </td>
+            </tr>
+        </table>
+        <br>
+
+        <a class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px; width: 100px" ng-repeat="appointment in appointments" href="/online-booking/booking/patient-detail/{{appointment.CAL_ID}}">{{appointment.appointment_time}} </a>
+
+    </div>
+
+</div>
+
