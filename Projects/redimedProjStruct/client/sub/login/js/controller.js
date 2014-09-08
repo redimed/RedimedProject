@@ -24,13 +24,13 @@ loginApp.controller("loginController",function($scope,$rootScope,$http,$window){
                 {
                     $scope.err = false;
                     $scope.msg = true;
-                    $rootScope.errMsg = "Wrong Username Or Password!";
+                    $rootScope.errMsg = "Please Check Your Username And Password!";
                 }
             })
             .error(function (data) {
                 $scope.err = false;
                 $scope.msg = true;
-                $rootScope.errMsg = "Wrong Username Or Password!";
+                $rootScope.errMsg = "Please Check Your Username And Password!";
 
             })
             .finally(function () {
