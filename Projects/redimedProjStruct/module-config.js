@@ -5,11 +5,5 @@
 //root
 eval(fs.readFileSync('module_listener/root.js')+'');
 
-//HelloWorld module
-eval(fs.readFileSync('module_listener/helloWorld.js')+'');
-
 //User
 eval(fs.readFileSync('module_listener/users.js')+'');
-
-//LegalOnlineBooking module
-eval(fs.readFileSync('module_listener/redi-legal-online-booking.js')+'');

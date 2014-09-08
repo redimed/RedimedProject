@@ -38,22 +38,12 @@
         <script src="js/app-config.js"></script>
         <script src="js/controller.js"></script>
 
+        <script src="assets/global/plugins/ngTable/ng-table.min.js"></script>
+        <link rel="stylesheet" href="assets/global/plugins/ngTable/ng-table.min.css">
+
         <!--Login-->
         <script src="sub/login/js/controller.js"></script>
         <script src="sub/login/js/service.js"></script>
-
-        <!--Hello world-->
-        <script src="sub/helloWorld/js/controller.js"></script>
-        <script src="sub/helloWorld/js/service.js"></script>
-
-        <!--Online Booking-->
-        <script src="sub/rediLegalOnlineBooking/js/legalBookingController.js"></script>
-        <script src="sub/rediLegalOnlineBooking/js/legalBookingService.js"></script>
-        <script src="sub/rediLegalOnlineBooking/js/my-utils.js"></script>
-
-        <!--Booking List-->
-        <script src="assets/global/plugins/ngTable/ng-table.min.js"></script>
-        <link rel="stylesheet" href="assets/global/plugins/ngTable/ng-table.min.css">
 
 
         <!--END ANGULARJS SCRIPT -->
@@ -494,94 +484,32 @@
                         <span class="selected"></span>
                     </a>
                 </li>
-                <li>
-                    <a href="/booking">
+
+                <li ng-repeat="menu in menuL">
+
+                    <a href="javascript:;">
                         <i class="icon-basket"></i>
-                        <span class="title">Booking</span>
+                        <span class="title">{{menu.Description}}</span>
                         <span class="arrow "></span>
                     </a>
 
-                </li>
-                <li>
-                    <a href="/online-booking/booking/booking-list">
-                        <i class="icon-rocket"></i>
-                        <span class="title">Booking List</span>
-                        <span class="arrow "></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="icon-diamond"></i>
-                        <span class="title">UI Features</span>
-                        <span class="arrow "></span>
-                    </a>
                     <ul class="sub-menu">
-                        <li>
+                        <li ng-repeat="child in menu.menuchild">
                             <a href="#">
-                                General Components</a>
+                                <i class="icon-home"></i>
+                                {{child.Description}}</a>
+
+                            <ul class="sub-menu">
+                                <li ng-repeat="child1 in child.childOnChild track by $index">
+                                    <a href="#">
+                                        <i class="icon-home"></i>
+                                        {{child1.Description}}</a>
+
+                                </li>
+                            </ul>
                         </li>
-                        <li>
-                            <a href="#">
-                                Buttons</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="badge badge-roundless badge-danger">new</span>Font Icons</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Flat UI Colors</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Typography</a>
-                        </li>
+
                     </ul>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="icon-docs"></i>
-                        <span class="title">Pages</span>
-                        <span class="arrow "></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="#">
-                                <i class="icon-hourglass"></i>
-                                <span class="badge badge-danger">4</span>Todo</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-envelope"></i>
-                                <span class="badge badge-danger">4</span>Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-user-following"></i>
-                                User Profile</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-lock"></i>
-                                Lock Screen</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-info"></i>
-                                FAQ</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-feed"></i>
-                                Portfolio</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="last ">
-                    <a href="charts.html">
-                        <i class="icon-bar-chart"></i>
-                        <span class="title">Visual Charts</span>
-                    </a>
                 </li>
             </ul>
             <!-- END SIDEBAR MENU -->

@@ -79,30 +79,29 @@ function register(req,res)
 	
 };
 
-function getUserById(req,res)
+function loadMenu(req,res)
 {
-    var id=req.query.id;
-    req.getConnection(function(err,connection)
-    {
-
-        var query = connection.query(
-            'SELECT * from  users WHERE id=?'
-            ,id,function(err,rows)
+    req.getConnection(function(err,connection){
+        var query = connection.query("SELECT m.Menu_Id,m.Description,IFNULL(f.Definition,' ') " +
+            "AS Definition,IFNULL(m.Parent_Id,-1) AS" +
+            " Parent_Id,f.Type,m.Seq,m.Is_Mutiple_Instance" +
+            " FROM menus m LEFT OUTER JOIN functions f ON m.function_id = f.function_id WHERE" +
+            " m.isEnable = 1 ORDER BY m.Seq",function(err,rows){
+            if(err)
             {
-                if(err)
-                {
-                    res.json({status:"fail"})
-                }
-                else
-                {
-                    res.json(rows[0]);
-                }
-            });
+                res.json({status:'fail',
+                    error:err});
+            }
+            else
+            {
+                res.json(rows);
+            }
+        });
     });
 }
 
-
+exports.loadMenu = loadMenu;
 exports.login = login;
 exports.register = register;
-exports.getUserById=getUserById;
+
 

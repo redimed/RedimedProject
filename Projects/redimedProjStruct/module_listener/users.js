@@ -12,3 +12,5 @@ app.post('/users/logout', function(req, res){
     req.logOut();
     res.send(200);
 });
+
+app.post('/users/home',users.loadMenu);
