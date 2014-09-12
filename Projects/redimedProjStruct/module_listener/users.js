@@ -14,3 +14,4 @@ app.post('/users/logout', function(req, res){
 });
 
 app.post('/users/home',users.loadMenu);
+app.get('/users/companyList',users.companyList);

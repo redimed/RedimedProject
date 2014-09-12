@@ -4,7 +4,6 @@
  
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
-        .when('/booking', {controller: "legalBookingController", templateUrl: '/sub/rediLegalOnlineBooking/booking.html'})
         .when("/customers/add",{controller:"cusAddController",templateUrl:"/sub/helloWorld/detail.html"})
         .when("/customers/edit/:id",{controller:"cusEditController",templateUrl:"/sub/helloWorld/detail.html"})
         .when("/online-booking/booking",{controller:"legalBookingController",templateUrl:"/sub/rediLegalOnlineBooking/booking.html"})
