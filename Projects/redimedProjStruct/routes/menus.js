@@ -5,7 +5,7 @@ function list(req,res)
 {
     req.getConnection(function(err,connection) {
 
-        var query=connection.query("SELECT m.menu_id as MenuID, m.`parent_id` as ParentID ,m.Description as MenuDescription,m.`isEnable` as MenuEnable,m.`type` as MenuType ,f.`function_id` as FunctionID, f.`decription` as FunctionName FROM menus m LEFT JOIN functions f ON m.function_id = f.function_id ORDER BY m.menu_id",function(err,rows){
+        var query=connection.query("SELECT m.menu_id as MenuID, m.`parent_id` as ParentID ,m.Description as MenuDescription,m.`isEnable` as MenuEnable,m.`type` as MenuType ,f.`function_id` as FunctionID, f.`decription` as FunctionName FROM redi_menus m LEFT JOIN redi_functions f ON m.function_id = f.function_id ORDER BY m.menu_id",function(err,rows){
             if(err)
             {
                 res.json({status:"fail"});
@@ -24,7 +24,7 @@ function edit(req,res)
     var m = req.body.m;
 
     req.getConnection(function(err,connection){
-        var query = connection.query("UPDATE menus SET isEnable=?, description=?, type=? WHERE menu_id=?",[m.MenuEnable, m.MenuDescription, m.MenuType ,m.MenuID],function(err,rows){
+        var query = connection.query("UPDATE redi_menus SET isEnable=?, description=?, type=? WHERE menu_id=?",[m.MenuEnable, m.MenuDescription, m.MenuType ,m.MenuID],function(err,rows){
             if(err)
             {
                 res.json({status:"fail"});
@@ -46,7 +46,7 @@ function editChild(req,res)
     var enable = req.body.isEnable;
     var menuId = req.body.menuId;
     req.getConnection(function(err,connection){
-        var query = connection.query("UPDATE menus SET isEnable=?, description=?, type=?, function_id=? WHERE menu_id=?",[enable, des, type ,id,menuId],function(err,rows){
+        var query = connection.query("UPDATE redi_menus SET isEnable=?, description=?, type=?, function_id=? WHERE menu_id=?",[enable, des, type ,id,menuId],function(err,rows){
             if(err)
             {
                 res.json({status:"fail"});
@@ -66,7 +66,7 @@ function insert(req,res)
 
 
     req.getConnection(function(err,connection){
-        var query = connection.query("INSERT INTO menus(menu_id,description,definition,type,isEnable) VALUES((SELECT MAX(m.menu_id) FROM menus m)+1,?,?,?,?)",[m.description, m.definition, m.type, m.isEnable],function(err,rows){
+        var query = connection.query("INSERT INTO redi_menus(description,definition,type,isEnable) VALUES(?,?,?,?)",[m.description, m.definition, m.type, m.isEnable],function(err,rows){
             if(err)
             {
                 res.json({status:"fail"});
@@ -85,7 +85,7 @@ function insertChild(req,res)
     var child = req.body.c;
     var pId = req.body.parentId;
     req.getConnection(function(err,connection){
-        var query = connection.query("INSERT INTO menus(menu_id,description,type,isEnable,function_id,parent_id) VALUES((SELECT MAX(m.menu_id) FROM menus m)+1,?,?,?,?,?)",[child.description, child.type, child.isEnable,child.functionId,pId],function(err,rows){
+        var query = connection.query("INSERT INTO redi_menus(description,type,isEnable,function_id,parent_id) VALUES(?,?,?,?,?)",[child.description, child.type, child.isEnable,child.functionId,pId],function(err,rows){
             if(err)
             {
                 res.json({status:"fail"});

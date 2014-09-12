@@ -5,7 +5,7 @@ function list(req,res)
 {
     req.getConnection(function(err,connection) {
 
-        var query=connection.query("SELECT * FROM functions ",function(err,rows){
+        var query=connection.query("SELECT * FROM redi_functions ",function(err,rows){
             if(err)
             {
                 res.json({status:"fail"});
@@ -23,7 +23,7 @@ function edit(req,res)
 {
     var f = req.body.f;
     req.getConnection(function(err,connection){
-        var query = connection.query("UPDATE functions SET decription=?, definition=?, type=? WHERE function_id=?",[f.decription, f.definition, f.type, f.function_id],function(err,rows){
+        var query = connection.query("UPDATE redi_functions SET decription=?, definition=?, type=? WHERE function_id=?",[f.decription, f.definition, f.type, f.function_id],function(err,rows){
             if(err)
             {
                 res.json({status:"fail"});
@@ -41,7 +41,7 @@ function insert(req,res)
 {
     var f = req.body.f;
     req.getConnection(function(err,connection){
-        var query = connection.query("INSERT INTO functions(function_id,decription,definition,type) VALUES((SELECT MAX(f.function_id) FROM functions f)+1,?,?,?)",[f.decription, f.definition, f.type],function(err,rows){
+        var query = connection.query("INSERT INTO redi_functions(decription,definition,type) VALUES(?,?,?)",[f.decription, f.definition, f.type],function(err,rows){
             if(err)
             {
                 res.json({status:"fail"});

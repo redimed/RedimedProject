@@ -58,10 +58,12 @@ passport.use(new passportLocal.Strategy({passReqToCallback : true},users.login))
 
 
 passport.serializeUser(function(user, done) {
+
     done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
+
     done(null, user);
 });
 
@@ -71,9 +73,6 @@ var auth = function(req, res, next){
     else
         next();
 };
-
-
-
 
 //Set request Handler
 //-------------------------------------------

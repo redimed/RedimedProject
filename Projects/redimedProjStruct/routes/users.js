@@ -27,8 +27,7 @@ function login(req,username,password,done)
 
                             return done(null, {status: 'success',
                                 msg: "Login Successfully!",
-                                id: rows[0].id,
-                                userType: rows[0].user_type});
+                                userInfo: rows });
                         }
                         else {
 //                                res.json({status:'fail',
@@ -55,11 +54,18 @@ function register(req,res)
 	var user=req.body.user;
 	var uname = user['username'];
 	var pass = user['password'];
+    var fname = user['fname'];
+    var lname = user['lname'];
+    var email = user['email'];
+    var phone = user['phone'];
+    var comId = user['companyId'];
+    var fullName = fname+' '+lname;
+
 	bcrypt.genSalt(10,function(err,salt){
 		bcrypt.hash(pass.toString(),salt,function(error,hash){	
 			req.getConnection(function(err,connection){
-				var query = connection.query("INSERT INTO users(user_name,password) VALUES(?,?)",
-												[uname,hash],function(err,rows){
+				var query = connection.query("INSERT INTO users(user_name,password,company_id,Booking_Person,Contact_number,Contact_email,user_type,isEnable) VALUES(?,?,?,?,?,?,'Company',1)",
+												[uname,hash,comId,fullName,phone,email],function(err,rows){
 						if(err)
 						{
 							res.json({status:'fail',
@@ -85,8 +91,8 @@ function loadMenu(req,res)
         var query = connection.query("SELECT m.Menu_Id,m.Description,IFNULL(f.Definition,' ') " +
             "AS Definition,IFNULL(m.Parent_Id,-1) AS" +
             " Parent_Id,f.Type,m.Seq,m.Is_Mutiple_Instance" +
-            " FROM menus m LEFT OUTER JOIN functions f ON m.function_id = f.function_id WHERE" +
-            " m.isEnable = 1 ORDER BY m.Seq",function(err,rows){
+            " FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id WHERE" +
+            " m.isEnable = 1 ORDER BY m.Menu_Id",function(err,rows){
             if(err)
             {
                 res.json({status:'fail',
@@ -100,8 +106,25 @@ function loadMenu(req,res)
     });
 }
 
+function companyList(req,res)
+{
+    req.getConnection(function(err,connection){
+        var query = connection.query("SELECT * FROM companies ORDER BY Company_name ASC",function(err,rows){
+           if(err)
+           {
+               res.json({status:'fail', error:err});
+           }
+            else
+           {
+               res.json(rows);
+           }
+        });
+    });
+}
+
 exports.loadMenu = loadMenu;
 exports.login = login;
 exports.register = register;
+exports.companyList = companyList;
 
 

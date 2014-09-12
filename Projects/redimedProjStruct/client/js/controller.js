@@ -1,4 +1,8 @@
-app.controller("homeController",function($scope,$rootScope,$http,$location,$window){
+app.controller("homeController",function($scope,$cookieStore,$rootScope,$http,$location,$window){
+    $http.get('/users/loggedin').success(function(data){
+        $cookieStore.put('userInfo',data.userInfo);
+    });
+
     $http({
         method:"POST",
         url: "/users/home"
