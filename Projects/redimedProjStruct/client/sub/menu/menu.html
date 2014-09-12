@@ -139,8 +139,8 @@
         </div>
 
         <div>
-            <div class="btn-group pull-right">
-                <a href="#" class="btn green" id="addSub">
+            <div class="btn-group pull-right" ng-show="isSelected">
+                <a href="#"  class="btn green" id="addSub">
                     Add New <i class="fa fa-plus"></i>
                 </a>
             </div>
@@ -159,7 +159,7 @@
                     </td>
                     <td data-title="'Function'">
                         <span ng-if="!c.$edit">{{c.FunctionName}}</span>
-                        <select ng-if="c.$edit" ng-model="c.FunctionID" ng-options="func.FunctionID as func.FunctionName for func in functionList"></select>
+                        <select ng-if="c.$edit" ng-model="c.FunctionID" ng-options="func.function_id as func.decription for func in functionList"></select>
                     </td>
                     <td data-title="'Enable'" >
                         <span ng-if="c.MenuEnable===1 && !c.$edit" ><input  class="form-control" type="checkbox" disabled   checked /></span>
@@ -214,7 +214,7 @@
                             <div class="form-group">
                                 <label class="control-label">Function</label>
                                 <div >
-                                    <select ng-model="child.functionId" ng-options="func.FunctionID as func.FunctionName for func in functionList"></select>
+                                    <select ng-model="child.functionId" ng-options="func.function_id as func.decription for func in functionList"></select>
                                 </div>
                             </div>
                         </div>
