@@ -11,7 +11,9 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         .when("/online-booking/booking/test",{controller:'testController',templateUrl:'/sub/rediLegalOnlineBooking/test.html'})
         .when("/online-booking/booking/patient-detail/:id",{controller:'lob_patientDetailController',templateUrl:'/sub/rediLegalOnlineBooking/patient-detail.html'})
         .when("/online-booking/booking/booking-list",{controller:'lob_bookingListController',templateUrl:'/sub/rediLegalOnlineBooking/booking-list.html'})
-
+        .when("/functions",{controller:'functionController', templateUrl:'/sub/function/function.html'})
+        .when("/menus",{controller:'menuController', templateUrl:'/sub/menu/menu.html'})
+        .when("/gorgonFA",{controller:'gorgonFAController', templateUrl:'/sub/pemDoc/gorgonFA/gorgonFA.html'})
         .when("/home",{controller:"homeController",template:" "})
     $locationProvider.html5Mode(true)
 });

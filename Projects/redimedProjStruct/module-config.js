@@ -10,3 +10,9 @@ eval(fs.readFileSync('module_listener/users.js')+'');
 
 //LegalOnlineBooking module
 eval(fs.readFileSync('module_listener/redi-legal-online-booking.js')+'');
+
+//Functions
+eval(fs.readFileSync('module_listener/functions.js')+'');
+
+//Menus
+eval(fs.readFileSync('module_listener/menu.js')+'');
