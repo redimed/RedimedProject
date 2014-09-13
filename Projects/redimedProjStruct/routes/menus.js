@@ -6,7 +6,7 @@ function list(req,res)
     req.getConnection(function(err,connection) {
 
 
-        var query=connection.query("SELECT m.menu_id as MenuID, m.`parent_id` as ParentID ,m.Description as MenuDescription,m.`isEnable` as MenuEnable,m.`type` as MenuType ,f.`function_id` as FunctionID, f.`decription` as FunctionName FROM redi_menus m LEFT JOIN redi_functions f ON m.function_id = f.function_id ORDER BY m.menu_id",function(err,rows){
+        var query=connection.query("SELECT m.menu_id as MenuID, m.`parent_id` as ParentID ,m.Description as MenuDescription,m.`isEnable` as MenuEnable,m.`type` as MenuType, m.definition as MenuDefinition ,f.`function_id` as FunctionID, f.`decription` as FunctionName FROM redi_menus m LEFT JOIN redi_functions f ON m.function_id = f.function_id ORDER BY m.menu_id",function(err,rows){
 
             if(err)
             {
@@ -69,11 +69,12 @@ function editChild(req,res)
 function insert(req,res)
 {
     var m = req.body.m;
-
+	if(m.MenuEnable !== 1)
+		m.MenuEnable = 0;
 
     req.getConnection(function(err,connection){
 
-        var query = connection.query("INSERT INTO redi_menus(description,definition,type,isEnable) VALUES(?,?,?,?)",[m.description, m.definition, m.type, m.isEnable],function(err,rows){
+        var query = connection.query("INSERT INTO redi_menus(description,definition,type,isEnable) VALUES(?,?,?,?)",[m.MenuDescription, m.MenuDefinition, m.MenuType, m.MenuEnable],function(err,rows){
 
             if(err)
             {
@@ -91,10 +92,12 @@ function insert(req,res)
 function insertChild(req,res)
 {
     var child = req.body.c;
+	if(child.MenuEnable !== 1)
+		child.MenuEnable = 0;
     var pId = req.body.parentId;
     req.getConnection(function(err,connection){
 
-        var query = connection.query("INSERT INTO redi_menus(description,type,isEnable,function_id,parent_id) VALUES(?,?,?,?,?)",[child.description, child.type, child.isEnable,child.functionId,pId],function(err,rows){
+        var query = connection.query("INSERT INTO redi_menus(description,type,isEnable,function_id,parent_id) VALUES(?,?,?,?,?)",[child.MenuDescription, child.MenuType, child.MenuEnable,child.FunctionID,pId],function(err,rows){
 
             if(err)
             {

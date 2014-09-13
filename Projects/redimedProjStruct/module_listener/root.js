@@ -1,16 +1,9 @@
-var java = require('java');
-
 
 app.get('/',function(req, res) {
     res.sendfile(path.join(clientDir, 'login.html'))
 });
 
 app.get('/home',auth,function(req,res){
-    var ArrayList = java.import('java.util.ArrayList');
-    var list = new ArrayList();
-    list.addSync('item1');
-    console.log(list);
-
     res.sendfile(path.join(clientDir, 'home.html'))
 });
 

@@ -5,24 +5,28 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
     $scope.functionList = [];
     $scope.data=[];
     $scope.data1=[];
+    $scope.isSelected = false;
+
+
 
     $http({
         method:"GET",
         url:"/api/menu/list"
     })
         .success(function(data) {
-            menuList = data;
 
+            $http.get('/api/function/list').success(function(data){
+                $scope.functionList = data;
+
+            });
+
+            menuList = data;
             for(var i = 0;i<menuList.length;i++)
             {
-
                 if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
                     $scope.data.push(menuList[i]);
-                if(menuList[i].FunctionID !== null)
-                    $scope.functionList.push(menuList[i]);
+
             }
-
-
 
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
@@ -129,6 +133,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
 
 
     var previousDes;
+	var previousDefi;
     var previousEnable;
     var previousType;
     var pDes;
@@ -142,6 +147,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
         $scope.previousDes = m.MenuDescription;
         $scope.previousEnable = m.MenuEnable;
         $scope.previousType = m.MenuType;
+		$scope.previousDefi = m.MenuDefinition
     };
 
     $scope.editChild = function(c) {
@@ -161,6 +167,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
             if(data['status'] === 'success') {
                 alert("Insert Successfully!");
                 $scope.data.push($scope.menu);
+                console.log($scope.data);
                 $scope.menu = "";
                 $scope.tableParams.reload();
             }
@@ -175,7 +182,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
         $http({
             method:"POST",
             url:"/api/menu/insertChild",
-            data:{c:$scope.child,
+            data:{c: $scope.child,
                     parentId: parentId}
         }).success(function(data){
             if(data['status'] === 'success') {
@@ -195,6 +202,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
 
     $scope.showChild = function(m) {
         $scope.childTitle = m.MenuDescription;
+        $scope.isSelected = true;
         parentId = m.MenuID;
         $scope.data1 = [];
         var id = m.MenuID;
@@ -215,6 +223,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
         m.MenuDescription = $scope.previousDes;
         m.MenuEnable = $scope.previousEnable;
         m.MenuType = $scope.previousType;
+		m.MenuDefinition = $scope.previousDefi;
     };
 
     $scope.cancelChild = function(c) {
