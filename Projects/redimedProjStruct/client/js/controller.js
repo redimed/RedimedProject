@@ -1,8 +1,10 @@
 app.controller("homeController",function($scope,$cookieStore,$rootScope,$http,$location,$window){
     $http.get('/users/loggedin').success(function(data){
-        $cookieStore.put('userInfo',data.userInfo);
+        $cookieStore.put('userInfo',data.userInfo[0]);
+		
+		$scope.user = data.userInfo[0].Booking_Person;
     });
-
+	
     $http({
         method:"POST",
         url: "/users/home"
@@ -71,6 +73,7 @@ app.controller("homeController",function($scope,$cookieStore,$rootScope,$http,$l
 
     $scope.logout = function(){
         $http.post('/users/logout');
+		$cookieStore.remove('userInfo');
         $window.location.href = "/";
     };
 });

@@ -42,6 +42,10 @@
                         <span ng-if="!m.$edit">{{m.MenuDescription}}</span>
                         <div ng-if="m.$edit"><input class="form-control" type="text" ng-model="m.MenuDescription" /></div>
                     </td>
+					<td data-title="'Definition'" sortable="'MenuDefinition'">
+                        <span ng-if="!m.$edit">{{m.MenuDefinition}}</span>
+                        <div ng-if="m.$edit"><input class="form-control" type="text" ng-model="m.MenuDefinition" /></div>
+                    </td>
                     <td data-title="'Type'" sortable="'MenuType'" filter="{ 'MenuType': 'text' }">
                         <span ng-if="!m.$edit">{{m.MenuType}}</span>
                         <div ng-if="m.$edit"><input class="form-control" type="text" ng-model="m.MenuType" /></div>
@@ -83,7 +87,7 @@
                             <div class="form-group">
                                 <label class="control-label">Description</label>
                                 <div>
-                                    <input type="text" class="form-control" id="txtDescription" placeholder="Enter Description" ng-model="menu.description" />
+                                    <input type="text" class="form-control" id="txtDescription" placeholder="Enter Description" ng-model="menu.MenuDescription" />
                                 </div>
                             </div>
                         </div>
@@ -91,7 +95,7 @@
                             <div class="form-group">
                                 <label class="control-label">Definition</label>
                                 <div >
-                                    <input type="text" class="form-control" placeholder="Enter Definition" ng-model="menu.definition" />
+                                    <input type="text" class="form-control" placeholder="Enter Definition" ng-model="menu.MenuDefinition" />
                                 </div>
                             </div>
                         </div>
@@ -99,7 +103,7 @@
                             <div class="form-group">
                                 <label class="control-label">Type</label>
                                 <div >
-                                    <input type="text" class="form-control" placeholder="Enter Type" ng-model="menu.type" />
+                                    <input type="text" class="form-control" placeholder="Enter Type" ng-model="menu.MenuType" />
                                 </div>
                             </div>
                         </div>
@@ -108,7 +112,7 @@
                             <div class="form-group">
                                 <label class="control-label">Enable</label>
                                 <div >
-                                    <input type="checkbox" class="form-control" ng-model="menu.isEnable" ng-true-value="1" ng-false-value="0" />
+                                    <input type="checkbox" class="form-control" ng-model="menu.MenuEnable" ng-true-value="1" ng-false-value="0" />
                                 </div>
                             </div>
                         </div>
@@ -198,7 +202,7 @@
                             <div class="form-group">
                                 <label class="control-label">Description</label>
                                 <div>
-                                    <input type="text" class="form-control" placeholder="Enter Description" ng-model="child.description" />
+                                    <input type="text" class="form-control" placeholder="Enter Description" ng-model="child.MenuDescription" />
                                 </div>
                             </div>
                         </div>
@@ -206,7 +210,7 @@
                             <div class="form-group">
                                 <label class="control-label">Type</label>
                                 <div >
-                                    <input type="text" class="form-control" placeholder="Enter Type" ng-model="child.type" />
+                                    <input type="text" class="form-control" placeholder="Enter Type" ng-model="child.MenuType" />
                                 </div>
                             </div>
                         </div>
@@ -214,7 +218,7 @@
                             <div class="form-group">
                                 <label class="control-label">Function</label>
                                 <div >
-                                    <select ng-model="child.functionId" ng-options="func.function_id as func.decription for func in functionList"></select>
+                                    <select ng-model="child.FunctionID" ng-options="func.function_id as func.decription for func in functionList"></select>
                                 </div>
                             </div>
                         </div>
@@ -223,7 +227,7 @@
                             <div class="form-group">
                                 <label class="control-label">Enable</label>
                                 <div >
-                                    <input type="checkbox" class="form-control" ng-model="child.isEnable" ng-true-value="1" ng-false-value="0" />
+                                    <input type="checkbox" class="form-control" ng-model="child.MenuEnable" ng-true-value="1" ng-false-value="0" />
                                 </div>
                             </div>
                         </div>

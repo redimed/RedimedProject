@@ -133,6 +133,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
 
 
     var previousDes;
+	var previousDefi;
     var previousEnable;
     var previousType;
     var pDes;
@@ -146,6 +147,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
         $scope.previousDes = m.MenuDescription;
         $scope.previousEnable = m.MenuEnable;
         $scope.previousType = m.MenuType;
+		$scope.previousDefi = m.MenuDefinition
     };
 
     $scope.editChild = function(c) {
@@ -180,7 +182,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
         $http({
             method:"POST",
             url:"/api/menu/insertChild",
-            data:{c:$scope.child,
+            data:{c: $scope.child,
                     parentId: parentId}
         }).success(function(data){
             if(data['status'] === 'success') {
@@ -221,6 +223,7 @@ app.controller("menuController",function($scope,$filter,ngTableParams,$http) {
         m.MenuDescription = $scope.previousDes;
         m.MenuEnable = $scope.previousEnable;
         m.MenuType = $scope.previousType;
+		m.MenuDefinition = $scope.previousDefi;
     };
 
     $scope.cancelChild = function(c) {
