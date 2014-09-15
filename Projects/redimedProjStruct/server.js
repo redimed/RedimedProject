@@ -5,20 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var passportLocal = require('passport-local');
-var passportHttp = require('passport-http');
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
-
-//Implement Router
-
-var users = require('./routes/users');
+var config = require('config');
 
 //Create application management
 var app = express();
 app.set('port', process.env.PORT || 4300);
-var clientDir = path.join(__dirname, 'client');
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -26,53 +19,19 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(session({ secret: 'securedsession' }));
+// example get from config
+app.use(session({ secret: config.get('session.secret') }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 //app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(clientDir));
+app.use(express.static(path.join(__dirname, 'client')));
 
 //Create sql connection
 
 var mysql = require('mysql');
-var connection  = require('express-myconnection');
-app.use(
-    connection(mysql,{
-        host: 'localhost',
-        user: 'root',
-        password : 'root',
-        port : 3306, //port mysql
-        database:'sakila'
-    },'pool')
-);
-
-
-
-
-//Passport Authentication
-
-
-passport.use(new passportHttp.BasicStrategy( {passReqToCallback : true},users.login));
-passport.use(new passportLocal.Strategy({passReqToCallback : true},users.login));
-
-
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-    done(null, user);
-});
-
-var auth = function(req, res, next){
-    if (!req.isAuthenticated())
-        res.redirect('/');
-    else
-        next();
-};
-
-
+var connection = require('express-myconnection');
+app.use(connection(mysql, config.get('mysql'), 'pool'));
 
 
 //Set request Handler
@@ -119,6 +78,5 @@ app.use(function(err, req, res, next) {
 
 var debug = require('debug')('redimedProjStruct');
 var server = app.listen(app.get('port'), function() {
-    debug('Express server listening on port ' + server.address().port);
+    debug('App server listening on port ' + server.address().port);
 });
-console.log('Express server listening on port ' + server.address().port);

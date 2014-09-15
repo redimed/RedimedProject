@@ -24,14 +24,10 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client')));
 
-
-
-
-
-var clientDir = path.join(__dirname, 'client')
+var clientDir = path.join(__dirname, 'client');
 app.get('/', function(req, res) {
    res.sendfile(path.join(clientDir, 'index.html'))
-})
+});
 
 
 //app.use('/', routes);
