@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d7fd071-90c9-4b63-bffd-9ed4babcea7e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/views/error.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/views/index.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/views/layout.jade" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/changes.md" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/changes.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="RedimedProject.iws" />
@@ -91,8 +89,8 @@
       <file leaf-file-name="changes.md" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/changes.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1978022" vertical-offset="0" max-vertical-offset="910">
-              <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.21758242" vertical-offset="0" max-vertical-offset="910">
+              <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -390,7 +388,11 @@
       <created>1410746639079</created>
       <updated>1410746639079</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Remove views directory">
+      <created>1410746781702</created>
+      <updated>1410746781702</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -435,7 +437,8 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="Restructuring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Restructuring" />
+    <MESSAGE value="Remove views directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove views directory" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -646,8 +649,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/changes.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1978022" vertical-offset="0" max-vertical-offset="910">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.21758242" vertical-offset="0" max-vertical-offset="910">
+          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
           <folding />
         </state>
       </provider>

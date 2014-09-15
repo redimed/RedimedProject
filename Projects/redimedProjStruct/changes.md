@@ -9,3 +9,4 @@ lại build ra khác nhau nên phải loại bỏ ra khỏi repo.
 Đọc thêm tại đây: [node-config](https://github.com/lorenwest/node-config)
 + Chỉnh sửa lại một số logic trong code.
 + Mới sửa lại logic của login theo chuẩn mới. Thiếu một số route (chưa push lên repo?).
++ Xóa bỏ một số directory không dùng đến.
