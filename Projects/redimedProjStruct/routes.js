@@ -1,5 +1,6 @@
 var users = require('./routes/users'),
     passport = require('passport');
+var AuthenticationController = require('./controllers/AuthenticationController');
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -33,4 +34,6 @@ module.exports = function(app) {
         req.logout();
         res.redirect('/');
     });
+
+    app.get('/test', AuthenticationController.authenticated, AuthenticationController.sampleActionRequiredSignIn);
 };

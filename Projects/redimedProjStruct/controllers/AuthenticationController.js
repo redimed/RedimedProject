@@ -43,5 +43,8 @@ module.exports = {
         else {
             throw new Error('User is not authenticated', 403);
         }
+    },
+    sampleActionRequiredSignIn: function(req, res) {
+        // some code goes here
     }
 };
