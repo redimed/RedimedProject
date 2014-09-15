@@ -1,3 +1,5 @@
+## Thay đổi
+
 + Di chuyển tất cả các route vào file ```routes.js```. Đang xem xét tách route của mỗi module ra một file riêng.
 + Tách logic ra khỏi route. Route chỉ là đường dẫn đến một hoặc nhiều action của controller. Áp dụng mô hình MVC.
 + Đang nghiên cứu đưa logic vào trong model chứ không để trong action của controller. Controller chỉ có tác dụng điều hướng IO.
@@ -10,3 +12,9 @@ lại build ra khác nhau nên phải loại bỏ ra khỏi repo.
 + Chỉnh sửa lại một số logic trong code.
 + Mới sửa lại logic của login theo chuẩn mới. Thiếu một số route (chưa push lên repo?).
 + Xóa bỏ một số directory không dùng đến.
+
+## Kế hoạch chuyển đổi tiếp theo
+
++ Di chuyển tất cả code trong ```module_listener``` vào ```routes.js```.
++ Tách ```routes.js``` thành các module.
++ Tách code trong thư mục ```routes``` thành 2 phần: __model__ và __controller__; sau đó đặt các code trong thư mục tương ứng.
