@@ -8,7 +8,7 @@ var passport = require('passport');
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
 var config = require('config');
-
+var db = require('./models');
 //Create application management
 var app = express();
 app.set('port', process.env.PORT || 4300);
@@ -76,7 +76,16 @@ app.use(function(err, req, res, next) {
     });
 });
 
-var debug = require('debug')('redimedProjStruct');
-var server = app.listen(app.get('port'), function() {
-    debug('App server listening on port ' + server.address().port);
-});
+db.sequelize
+    .sync({ force: true })
+    .complete(function(err) {
+        if (err) {
+            throw err[0];
+        } else {
+            var debug = require('debug')('redimedProjStruct');
+            var server = app.listen(app.get('port'), function() {
+                debug('App server listening on port ' + server.address().port);
+            });
+        }
+    }
+);
