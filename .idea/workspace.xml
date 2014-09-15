@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d7fd071-90c9-4b63-bffd-9ed4babcea7e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/AuthenticationController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/AuthenticationController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/routes.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/routes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/config/production.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/config/production.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="RedimedProject.iws" />
@@ -27,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="routes.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="routes.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71229947" vertical-offset="0" max-vertical-offset="935">
-              <caret line="37" column="114" selection-start-line="37" selection-start-column="114" selection-end-line="37" selection-end-column="114" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="792">
+              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -82,8 +81,8 @@
       <file leaf-file-name="AuthenticationController.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/AuthenticationController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="990">
-              <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
+              <caret line="13" column="60" selection-start-line="13" selection-start-column="60" selection-end-line="13" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -93,7 +92,7 @@
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/config/default.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="324">
-              <caret line="12" column="2" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="12" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -102,8 +101,8 @@
       <file leaf-file-name="changes.md" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/changes.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.76" vertical-offset="0" max-vertical-offset="450">
-              <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+            <state vertical-scroll-proportion="-8.64" vertical-offset="0" max-vertical-offset="450">
+              <caret line="12" column="61" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -119,11 +118,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="production.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="production.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/config/production.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="108">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.1540107" vertical-offset="0" max-vertical-offset="935">
+              <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -154,13 +153,13 @@
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/AuthenticatedController.js" />
         <option value="$PROJECT_DIR$/Projects/demoL/app.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/config/staging.js" />
-        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/config/production.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/changes.md" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/server.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/models/User.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/models/index.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/AuthenticationController.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/routes.js" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/config/production.js" />
       </list>
     </option>
   </component>
@@ -284,6 +283,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedimedProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedimedProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Projects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redimedProjStruct" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -379,7 +400,11 @@
       <created>1410762925057</created>
       <updated>1410762925057</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add sample action required authenticated">
+      <created>1410766781877</created>
+      <updated>1410766781877</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -429,7 +454,8 @@
     <MESSAGE value="Remove .idea directory.&#10;Changes to ```changes.md```" />
     <MESSAGE value="Add sample sequelize object" />
     <MESSAGE value="Update models loader" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update models loader" />
+    <MESSAGE value="Add sample action required authenticated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add sample action required authenticated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -637,22 +663,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/config/staging.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="935">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/config/production.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="935">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/appointment_calendar.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5075922" vertical-offset="0" max-vertical-offset="922">
@@ -678,14 +688,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/config/default.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="324">
-          <caret line="12" column="2" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/redimedsites.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="486">
@@ -702,26 +704,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="792">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/changes.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.76" vertical-offset="0" max-vertical-offset="450">
-          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+        <state vertical-scroll-proportion="-8.64" vertical-offset="0" max-vertical-offset="450">
+          <caret line="12" column="61" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/config/default.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="324">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="12" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/config/staging.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="935">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/AuthenticationController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="990">
-          <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
+          <caret line="13" column="60" selection-start-line="13" selection-start-column="60" selection-end-line="13" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes.js">
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/config/production.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71229947" vertical-offset="0" max-vertical-offset="935">
-          <caret line="37" column="114" selection-start-line="37" selection-start-column="114" selection-end-line="37" selection-end-column="114" />
+        <state vertical-scroll-proportion="0.1540107" vertical-offset="0" max-vertical-offset="935">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
           <folding />
         </state>
       </provider>
