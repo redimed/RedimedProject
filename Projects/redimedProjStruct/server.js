@@ -77,7 +77,8 @@ app.use(function(err, req, res, next) {
 });
 
 db.sequelize
-    .sync({ force: true })
+    // sync để tự động tạo các bảng trong database
+    //.sync({ force: true })
     .complete(function(err) {
         if (err) {
             throw err[0];
