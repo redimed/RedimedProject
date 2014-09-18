@@ -3,9 +3,9 @@ var fs = require('fs'),
     Sequelize = require('sequelize'),
     lodash = require('lodash'),
     config = require('config'),
-    sequelize = new Sequelize(config.get('mysql.database'), config.get('mysql.username'), config.get('mysql.password'), {
-        host: config.get('mysql.host'),
-        port: config.get('mysql.port')
+    sequelize = new Sequelize('sakila', 'root', 'root', {
+        host: 'localhost',
+        port: 3306
     }),
     db = {};
 

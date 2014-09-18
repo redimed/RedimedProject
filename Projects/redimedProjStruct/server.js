@@ -24,8 +24,10 @@ app.use(session({ secret: config.get('session.secret') }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+var clientDir = path.join(__dirname, 'client');
+
 //app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(clientDir));
 
 //Create sql connection
 
@@ -76,17 +78,22 @@ app.use(function(err, req, res, next) {
     });
 });
 
-db.sequelize
-    // sync để tự động tạo các bảng trong database
-    //.sync({ force: true })
-    .complete(function(err) {
-        if (err) {
-            throw err[0];
-        } else {
-            var debug = require('debug')('redimedProjStruct');
-            var server = app.listen(app.get('port'), function() {
-                debug('App server listening on port ' + server.address().port);
-            });
-        }
-    }
-);
+//db.sequelize
+//    // sync để tự động tạo các bảng trong database
+//    //.sync({ force: true })
+//    .complete(function(err) {
+//        if (err) {
+//            throw err[0];
+//        } else {
+//            var debug = require('debug')('redimedProjStruct');
+//            var server = app.listen(app.get('port'), function() {
+//                debug('App server listening on port ' + server.address().port);
+//            });
+//        }
+//    }
+//);
+
+var debug = require('debug')('redimedProjStruct');
+var server = app.listen(app.get('port'), function() {
+    debug('App server listening on port ' + server.address().port);
+});
