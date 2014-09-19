@@ -96,15 +96,28 @@ app.service('appointmentCalendarService',function(){
 
 app.service('bookingService',function(){
     var selectedInfo={};
+    var bookingInfo={};
     this.getSelectedInfo=function(){
         return selectedInfo;
+    }
+    this.getBookingInfo=function(){
+        return bookingInfo;
+    }
+    this.setBookingInfo=function(b){
+        bookingInfo=JSON.parse(JSON.stringify(b));
     }
 });
 
 app.service('loginService',function(){
     var user={};
-    this.getUser=function(){
+    this.getUserInfo=function(){
         return user;
     }
 
+    this.setUserInfo=function(u){
+        user=JSON.parse(JSON.stringify(u));
+    }
+
 });
+
+

@@ -1,44 +1,13 @@
-<div class="portlet light">
+<div class="portlet grey-cascade box">
     <div class="portlet-title">
-
-    <!--<p><strong>Page:</strong> {{tableParams.page()}}-->
-    <!--<p><strong>Count per page:</strong> {{tableParams.count()}}-->
         <div class="caption">
-            <i class="icon-list font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">Booking List</span>
-
+            <i class="fa fa-cogs"></i>Booking List
         </div>
 
-        <div>
-    <table ng-table="tableParams" class="table ng-table-responsive">
-        <tr ng-repeat="booking in $data">
-            <td data-title="'Booking Date'">
-                {{booking.BOOKING_DATE}}
-            </td>
-            <td data-title="'Booking Type'">
-                {{booking.Rl_TYPE_NAME}}
-            </td>
-            <td data-title="'Surname'">
-                {{booking.WRK_SURNAME}}
-            </td>
-            <td data-title="'Other name'">
-                {{booking.WRK_OTHERNAMES}}
-            </td>
-            <td data-title="'Preferred doctor'">
-                {{booking.NAME}}
-            </td>
-            <td data-title="'Preferred calendar'">
-                {{booking.refered_date_string}}
-            </td>
-            <td data-title="'Status'">
-                {{booking.STATUS}}
-            </td>
-            <td data-title="'Notes'">
-                {{booking.NOTES}}
-            </td>
-        </tr>
-    </table>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <mytable></mytable>
         </div>
-</div>
-
+    </div>
 </div>

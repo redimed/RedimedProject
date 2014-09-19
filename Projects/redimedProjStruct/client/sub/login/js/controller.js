@@ -17,6 +17,8 @@ loginApp.controller("loginController",function($scope,$rootScope,$http,$window){
                     $scope.err = true;
                     $rootScope.succMsg = "Login Successfully!";
 
+                    sessionStorage.user = $scope.uname;
+
                     $window.location.href = "/home";
 
                 }
@@ -41,6 +43,11 @@ loginApp.controller("loginController",function($scope,$rootScope,$http,$window){
 });
 
 loginApp.controller("registerController",function($scope,$http){
+    $scope.companyList = [];
+    $http.get('/users/companyList').success(function(data){
+        $scope.companyList = data;
+    })
+
     $scope.register = function(){
         $http({
             method:"POST",
@@ -52,6 +59,7 @@ loginApp.controller("registerController",function($scope,$http){
                 if(data['status'] === 'success')
                 {
                     alert("Register successfully!");
+                    $scope.user = "";
                 }
                 else
                 {

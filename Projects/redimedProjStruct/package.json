@@ -19,6 +19,7 @@
     "morgan": "~1.0.0",
     "mysql": "^2.5.0",
     "passport": "^0.2.1",
+    "passport-http": "^0.2.2",
     "sequelize": "^1.7.10",
     "static-favicon": "~1.0.0"
   }

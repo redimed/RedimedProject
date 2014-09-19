@@ -1,9 +1,17 @@
-app.controller("homeController",function($scope,$rootScope,$http,$location,$window){
+app.controller("homeController",function($scope,$cookieStore,$rootScope,$http,$location,$window){
+
+    $http.get('/users/loggedin').success(function(data){
+        $cookieStore.put('userInfo',data.userInfo);
+
+		$scope.user = data.userInfo.Booking_Person;
+    });
+	
     $http({
         method:"POST",
         url: "/users/home"
     })
         .success(function (data) {
+
             var menuL = [];
             for(i=0;i<data.length;i++)
             {
@@ -67,6 +75,7 @@ app.controller("homeController",function($scope,$rootScope,$http,$location,$wind
 
     $scope.logout = function(){
         $http.post('/users/logout');
+		$cookieStore.remove('userInfo');
         $window.location.href = "/";
     };
 });

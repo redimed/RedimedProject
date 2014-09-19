@@ -1,50 +1,78 @@
+var bcrypt = require('bcrypt-nodejs');
+var db = require('../models');
+
 module.exports = {
-    signin: function(req, res) {
-        var result = {success: false, message: '', data: null};
-        if (typeof req.body.username !== 'undefined' && req.body.username &&
-            typeof req.body.password !== 'undefined' && req.body.password) {
-            req.getConnection(function(err,connection) {
-                connection.query("SELECT * FROM users WHERE user_name=?", req.body.username, function (err, rows) {
-                    if (err) {
-                        res.json(result);
-                    }
-                    else {
-                        if (rows.length > 0) {
-                            bcrypt.compare(req.body.password, rows[0].password, function (err, compareResult) {
-                                if (compareResult == true) {
-                                    result.success = true;
-                                    result.message = 'Signed in successfully';
-                                    res.json(result);
-                                }
-                                else {
-                                    result.message = 'Wrong username or password';
-                                    res.json(result);
-                                }
-                            });
+    login: function(req,username,password,done) {
+
+        if (typeof username !== 'undefined' && username &&
+            typeof password !== 'undefined' && password) {
+            db.User.find({
+                where: {user_name: username}
+            }).success(function (data)
+            {
+                if(data != null)
+                {
+                    bcrypt.compare(password.toString(), data.dataValues.password, function (err, compareResult) {
+                        if (compareResult == true) {
+                            return done(null, {status: 'success',
+                                msg: "Login Successfully!",
+                                userInfo: data.dataValues });
                         }
                         else {
-                            result.message = 'Wrong username or password';
-                            res.json(result);
+
+                            return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
                         }
-                    }
-                });
+                    });
+                }
+                else
+                {
+                    return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
+                }
             });
-        } else {
-            res.json(result);
+
         }
     },
-    signup: function(req, res) {
+    register: function(req, res) {
+        var user=req.body.user;
+        var uname = user['username'];
+        var pass = user['password'];
+        var fname = user['fname'];
+        var lname = user['lname'];
+        var email = user['email'];
+        var phone = user['phone'];
+        var comId = user['companyId'];
+        var fullName = fname+' '+lname;
 
+        bcrypt.genSalt(10,function(err,salt){
+            bcrypt.hash(pass.toString(),salt,function(error,hash)
+            {
+                db.User
+                    .create({
+                        user_name: uname,
+                        password: hash,
+                        company_id: comId,
+                        Booking_Person: fullName,
+                        Contact_number: phone,
+                        Contact_email: email,
+                        user_type: 'Company',
+                        isEnable: 1
+                    })
+                    .success(function(data){
+                        res.json({status:'success',
+                                        msg:'insert successfully'});
+                        })
+                    .error(function(error){
+                        res.json({status:'fail',
+                                    error:err});
+                         });
+            });
+        });
     },
     authenticated: function(req, res, next) {
-        if (typeof req.user !== 'undefined' && req.user) {
+        if (!req.isAuthenticated())
+            res.redirect('/');
+        else
             next();
-        }
-        else {
-            throw new Error('User is not authenticated', 403);
-        }
-    },
-    sampleActionRequiredSignIn: function(req, res) {
-        // some code goes here
     }
+
 };

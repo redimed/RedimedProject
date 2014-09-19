@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
-var bcrypt = require('bcrypt-nodejs');
 var config = require('config');
 var db = require('./models');
 //Create application management
@@ -47,6 +46,7 @@ var fs = require('fs');//Read js file for import into
 eval(fs.readFileSync('module-config.js')+'');
 
 
+
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -78,22 +78,20 @@ app.use(function(err, req, res, next) {
     });
 });
 
-//db.sequelize
-//    // sync để tự động tạo các bảng trong database
-//    //.sync({ force: true })
-//    .complete(function(err) {
-//        if (err) {
-//            throw err[0];
-//        } else {
-//            var debug = require('debug')('redimedProjStruct');
-//            var server = app.listen(app.get('port'), function() {
-//                debug('App server listening on port ' + server.address().port);
-//            });
-//        }
-//    }
-//);
-
-var debug = require('debug')('redimedProjStruct');
-var server = app.listen(app.get('port'), function() {
-    debug('App server listening on port ' + server.address().port);
-});
+db.sequelize
+    // sync để tự động tạo các bảng trong database
+    //.sync({ force: true })
+    .authenticate()
+    .complete(function(err) {
+        if (err) {
+            throw err[0];
+        } else {
+            var debug = require('debug')('redimedProjStruct');
+            var server = app.listen(app.get('port'), function() {
+                debug('App server listening on port ' + server.address().port);
+            });
+            console.log('Connection has been established successfully!');
+            console.log('App server listening on port ' + server.address().port);
+        }
+    }
+);
