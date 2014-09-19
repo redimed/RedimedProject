@@ -31,6 +31,7 @@ app.get('/',function(req, res) {
     res.sendfile(path.join(clientDir, 'login.html'))
 });
 
+
 app.get('/home',AuthenticationController.authenticated,function(req,res){
     res.sendfile(path.join(clientDir, 'home.html'))
 });

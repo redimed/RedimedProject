@@ -16,7 +16,7 @@ module.exports = {
                         if (compareResult == true) {
                             return done(null, {status: 'success',
                                 msg: "Login Successfully!",
-                                userInfo: data.dataValues });
+                                userInfo: data });
                         }
                         else {
 
