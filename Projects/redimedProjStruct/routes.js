@@ -4,6 +4,7 @@ var passport = require('passport'),
 var AuthenticationController = require('./controllers/AuthenticationController');
 var MenuController = require('./controllers/MenuController');
 var CompanyController = require('./controllers/CompanyController');
+var FunctionController = require('./controllers/FunctionController');
 
 
 
@@ -61,7 +62,7 @@ app.all('/users/logout', function(req, res) {
     res.redirect('/');
 });
 
-app.post('/users/home',MenuController.loadMenu);
+app.post('/users/home',MenuController.loadSideMenu);
 
 app.get('/users/companyList',CompanyController.companyList);
 
@@ -81,3 +82,14 @@ app.get('/api/rlob/appointment-calendar/get-appointment-calendar',appointmentCal
 app.post('/api/rlob/rl_bookings/add',rl_bookings.add);
 app.get('/api/rlob/rl_bookings/get-new-key',rl_bookings.getNewKey);
 app.get('/api/rlob/rl_bookings/list',rl_bookings.list);
+
+
+app.get('/api/menu/list',MenuController.list);
+app.post('/api/menu/edit',MenuController.edit);
+app.post('/api/menu/insert',MenuController.insert);
+app.post('/api/menu/editChild',MenuController.editChild);
+app.post('/api/menu/insertChild',MenuController.insertChild);
+
+app.get('/api/function/list',FunctionController.list);
+app.post('/api/function/edit',FunctionController.edit);
+app.post('/api/function/insert',FunctionController.insert);

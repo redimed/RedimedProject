@@ -8,11 +8,11 @@ module.exports = {
             typeof password !== 'undefined' && password) {
             db.User.find({
                 where: {user_name: username}
-            }).success(function (data)
+            }, {raw: true}).success(function (data)
             {
                 if(data != null)
                 {
-                    bcrypt.compare(password.toString(), data.dataValues.password, function (err, compareResult) {
+                    bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                         if (compareResult == true) {
                             return done(null, {status: 'success',
                                 msg: "Login Successfully!",

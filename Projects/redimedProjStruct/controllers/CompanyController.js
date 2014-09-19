@@ -2,7 +2,6 @@
  * Created by meditech on 19/09/2014.
  */
 
-
 module.exports = {
     companyList: function(req,res){
         req.getConnection(function(err,connection){
