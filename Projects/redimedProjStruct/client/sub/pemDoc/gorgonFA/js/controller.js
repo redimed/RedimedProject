@@ -19,8 +19,6 @@ app.controller("gorgonFAController",function($scope,$rootScope,$http,$cookieStor
 
     $scope.print = function()
     {
-        $http.get('/doc/gorgonFA/report').success(function(data){
-            console.log(data);
-        });
+
     }
 });
