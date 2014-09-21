@@ -1,6 +1,13 @@
 /**
  * Created by meditech on 8/26/2014.
  */
+ var headers = {
+				'Access-Control-Allow-Origin' : '*',
+				'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT',
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			};
+ 
 loginApp.controller("loginController",function($scope,$rootScope,$http,$window){
     $scope.login = function() {
         $http({
@@ -39,6 +46,19 @@ loginApp.controller("loginController",function($scope,$rootScope,$http,$window){
 
             });
     };
+	
+	$scope.loginTelehealth = function(){
+		$http({
+			method:"POST",
+			headers: headers,
+			url: " http://telehealth.redimed.com.au/telehealth/index.php/authen/authenticate",
+			data: {username: 'elmont',password: 'redimed'}
+		}).success(function(data){
+			console.log(data);
+		}).error(function(err){
+			console.log(err);
+		})
+	};
 
 });
 

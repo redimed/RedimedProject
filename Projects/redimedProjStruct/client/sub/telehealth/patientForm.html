@@ -1,0 +1,836 @@
+<style>
+    #modalSign .modal-dialog{
+        width: 900px;
+        height: 800px;
+    }
+
+</style>
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12">
+            <i class="font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 25px;">TeleHealth Form</span>
+        </div>
+    </div>
+</div>
+<br/>
+<!--==========================================Patient Form======================================= -->
+<div class="portlet light bordered ">
+	<div class="portlet-title">
+        <div class="caption">
+            <i class="icon-user font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Patient Details</span>
+        </div>
+    </div>
+	<div class="portlet-body form">
+		<div class="row">
+			<div class='col-md-2'>
+				<label class='control-label '>Work Related</label>
+			</div>
+			<div class="btn-group btn-group-circle col-md-6" data-toggle="buttons">
+					<label class="btn grey active">
+						<input type="radio" class="toggle" checked> Work Related </label>
+					<label class="btn grey">
+						<input type="radio" class="toggle"> Non Work Related </label>
+					<label class="btn grey">
+						<input type="radio" class="toggle"> Not Sure </label>
+			</div>
+		</div>
+		<br/>
+		<div class='row col-md-12'>
+			<label class='control-label '>Service Required</label>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Trauma Consult</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Follow Up In Perth</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Initial TeleHealth Consult</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Transport To/From Airport</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>First Medical Certificate</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Fitness for work</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Progress Telehealth Consult</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Physio Consult</label>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-2'>
+				<label class='control-label '>Title</label>
+			</div>
+			<div class='col-md-3'>
+				<select class='form-control'>
+					<option selected>--Select Title--</option>
+					<option >Mr</option>
+					<option >Mrs</option>
+					<option >Ms</option>
+					<option >Miss</option>
+					<option >Master</option>
+					<option >Doctor</option>
+				</select>
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-2">
+				<label class="control-label ">Family Name</label>
+			</div>
+			<div class='col-md-5'>
+				<input type="text" class="form-control" >
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-2">
+				<label class="control-label ">Given Name</label>
+			</div>
+			<div class='col-md-5'>
+				<input type="text" class="form-control" >
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-2">
+				<label class="control-label ">Address</label>
+			</div>
+			<div class='col-md-5'>
+				<input type="text" class="form-control" >
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-2">
+				<label class="control-label ">Email</label>
+			</div>
+			<div class='col-md-5'>
+				<input type="text" class="form-control" >
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-2">
+				<label class="control-label ">Date Of Birth</label>
+			</div>
+			<div class='col-md-3'>
+				<div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+					<input type="text" class="form-control" readonly>
+							<span class="input-group-btn">
+							<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+							</span>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-2'>
+				<label class='control-label '>State</label>
+			</div>
+			<div class='col-md-3'>
+				<select class='form-control'>
+					<option selected>--Select State--</option>
+					<option >NT</option>
+					<option >SA</option>
+					<option >WA</option>
+					<option >NSW</option>
+					<option >Queensland</option>
+					<option >Tasmania</option>
+					<option >Victoria</option>
+				</select>
+			</div>
+		</div>
+		<br/>
+		<div class="row">	
+			<div class="col-md-2">
+				<label class="control-label ">Occupation</label>
+			</div>
+			<div class='col-md-4'>
+				<input type="text" class="form-control" >
+			</div>
+		
+			<div class="col-md-2">
+				<label class="control-label ">Type Of Work</label>
+			</div>
+			<div class='col-md-4'>
+				<input type="text" class="form-control" >
+			</div>
+				
+		</div>
+		<br/>
+		<div class="row">	
+			<div class="col-md-2">
+				<label class="control-label ">Suburb</label>
+			</div>
+			<div class='col-md-4'>
+				<input type="text" class="form-control" >
+			</div>
+		
+			<div class="col-md-2">
+				<label class="control-label ">Postcode</label>
+			</div>
+			<div class='col-md-4'>
+				<input type="text" class="form-control" >
+			</div>
+				
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-2'>
+				<label class='control-label'>Phone</label>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control" placeholder='Home'>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control" placeholder='Mobile'>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control" placeholder='Work'>
+			</div>
+		</div>
+		<br/>
+		<div class="row">	
+			<div class="col-md-2">
+				<label class="control-label ">Next Of Kin</label>
+			</div>
+			<div class='col-md-4'>
+				<input type="text" class="form-control" >
+			</div>
+		
+			<div class="col-md-2">
+				<label class="control-label ">Telephone</label>
+			</div>
+			<div class='col-md-4'>
+				<input type="text" class="form-control" >
+			</div>
+				
+		</div>
+	</div>
+</div>
+<div class="portlet light bordered ">
+	<div class="portlet-title">
+        <div class="caption">
+            <i class=" glyphicon glyphicon-align-justify font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Health Insurance Details</span>
+        </div>
+    </div>
+	<div class="portlet-body form">
+		<div class='row'>
+			<div class='col-md-2'>
+				<label class='control-label'>Medicare</label>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control" placeholder='Number'>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control" placeholder='Position Number'>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control" placeholder='Expiry'>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-3'>
+				<label class='control-label'>Do you have private health insurance ?</label>
+			</div>
+			<div class="btn-group btn-group-circle col-md-2" data-toggle="buttons">
+					<label class="btn grey ">
+						<input type="radio" class="toggle" >Yes</label>
+					<label class="btn grey">
+						<input type="radio" class="toggle">No</label>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control" placeholder='Health Fund Name'>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control" placeholder='Membership Number'>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-3'>
+				<label class='control-label'>Do you have hospital cover ?</label>
+			</div>
+			<div class="btn-group btn-group-circle col-md-2" data-toggle="buttons">
+					<label class="btn grey ">
+						<input type="radio" class="toggle" >Yes</label>
+					<label class="btn grey">
+						<input type="radio" class="toggle">No</label>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-3'>
+				<label class='control-label'>Veteran Affairs Number</label>
+			</div>
+			<div class='col-md-3'>
+				<input type="text" class="form-control">
+			</div>
+			<div class='col-md-2'>
+				<label class='control-label'>Card Holder</label>
+			</div>
+			<div class='col-md-3'>
+				<select class='form-control'>
+					<option></option>
+					<option>N/A</option>
+					<option>Gold</option>
+					<option>White</option>
+				</select>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-1'>
+				<input class='form-control' type="checkbox" />
+			</div>
+			<div class='col-md-11'>
+				<label class='control-label'>I, authorise any doctor who treats me (whether named in this certificate or not) to discuss my medical condition, in relation to my claim for workers; compensation and return to work options, with my employer and with their insurer.</label>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-1'>
+				<input class='form-control' type="checkbox" />
+			</div>
+			<div class='col-md-11'>
+				<label class='control-label'>If your claim is NOT ACCEPTED by the insurance company, or your accounts are not settled by your employer, you will be liable for any invoices issued during the course of your treatment. If your account is forwarded to the debt collector, you will be liable for all fees associated.</label>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-1'>
+				<input class='form-control' type="checkbox" />
+			</div>
+			<div class='col-md-11'>
+				<label class='control-label'>I, agree to having medic/supervisor present as a third party during a medical consult with REDiMED</label>
+			</div>
+		</div>
+	</div>
+	<br/>
+	<div class='row'>
+		<div class='col-md-2'>
+			<a href="#" id="signBtn" class="btn btn-primary">Signature</a>
+		</div>	
+		<div class='col-md-2'>
+			<a href="javascript:;"  class="btn btn-warning">Illness</a>
+		</div>
+		<div class='col-md-2'>
+			<a href="javascript:;"  class="btn btn-danger">Injury</a>
+		</div>
+	</div>
+	<br/>
+	<div class="row">
+            <div class="col-md-6" style="margin-left:15px;">
+                <img  src="" id="signDisplay"  style="width:300px;height: 150px;" />
+            </div>
+	</div>
+</div>
+<script type="text/javascript">
+                $('#signBtn').click(function () {
+                    $('#modalSign').modal({
+                        show: true
+                    });
+                });
+
+		</script>
+<!--===============================Illness Form ================================================= -->
+<div class='portlet light bordered'>
+	<div class="portlet-title">
+        <div class="caption">
+            <i class="glyphicon glyphicon-star font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">General Illness</span>
+        </div>
+    </div>
+	<div class="portlet-body form">
+		<div class='row'>
+			<div class='col-md-4'>
+				<label class='control-label'>Date Of Accident/Onset Of Symptom</label>
+			</div>
+			<div class='col-md-4'>
+				<div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+					<input type="text" class="form-control" readonly>
+							<span class="input-group-btn">
+							<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+							</span>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-4'>
+				<label class='control-label'>Medical History</label>
+			</div>
+			<div class='col-md-5'>	
+				<input type="text" class="form-control" >	
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Asthma</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Heart Condition</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Diabetes Type I</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>High Blood Pressure</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Blood Condition</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Epilepsy</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>High Cholesterol</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Diabetes Type II</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Arthritis</label>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-4'>
+				<label class='control-label'>Have you had these symptoms before ?</label>
+			</div>
+			<div class="btn-group btn-group-circle col-md-2" data-toggle="buttons">
+					<label class="btn grey ">
+						<input type="radio" class="toggle" >Yes</label>
+					<label class="btn grey">
+						<input type="radio" class="toggle">No</label>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Headache</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Vomiting</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Low Mood</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Nausea</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Light Headedness</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Decreased Appetite</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Fatigue</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Diarrhea</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Feeling Depressed</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Fever</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Shortness Of Breath</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Tooth Pain</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Sore Throat</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Chest Pain</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Cough</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Abdomen Pain</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Sinus Congestion</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Back Pain</label>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Body Aches</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class='col-md-3'>
+					<input class='form-control' type="checkbox" />
+				</div>
+				<div class='col-md-9'>
+					<label class='control-label'>Ear Pain</label>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-4'>
+				<label class='control-label'>Medications</label>
+			</div>
+			<div class="btn-group btn-group-circle col-md-2" data-toggle="buttons">
+					<label class="btn grey ">
+						<input type="radio" class="toggle" >Yes</label>
+					<label class="btn grey">
+						<input type="radio" class="toggle">No</label>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-8'>
+				<input type="text" class="form-control" >	
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-4'>
+				<label class='control-label'>Allergies</label>
+			</div>
+			<div class="btn-group btn-group-circle col-md-2" data-toggle="buttons">
+					<label class="btn grey ">
+						<input type="radio" class="toggle" >Yes</label>
+					<label class="btn grey">
+						<input type="radio" class="toggle">No</label>
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-8'>
+				<input type="text" class="form-control" >	
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-3'>
+				<label class='control-label'>Vital Signs:HR (bpm):</label>
+			</div>
+			<div class='col-md-3'> 
+				<input type="text" class="form-control" >	
+			</div>
+			<div class='col-md-3'>
+				<label class='control-label'>Temp(C):</label>
+			</div>
+			<div class='col-md-3'> 
+				<input type="text" class="form-control" >	
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-3'>
+				<label class='control-label'>Blood Pressure(BP):</label>
+			</div>
+			<div class='col-md-3'> 
+				<input type="text" class="form-control" >	
+			</div>
+			<div class='col-md-3'>
+				<label class='control-label'>RR:</label>
+			</div>
+			<div class='col-md-3'> 
+				<input type="text" class="form-control" >	
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-3'>
+				<label class='control-label'>Initial Treatment Provided:</label>
+			</div>
+			<div class='col-md-3'> 
+				<input type="text" class="form-control" >	
+			</div>
+			<div class='col-md-3'>
+				<label class='control-label'>SaO2(%):</label>
+			</div>
+			<div class='col-md-3'> 
+				<input type="text" class="form-control" >	
+			</div>
+		</div>
+		<br/>
+		<div class='row'>
+			<div class='col-md-1'>
+				<button type="button" class="btn">
+                <i class="m-icon-swapleft"></i> Back </button>	
+			</div>
+			<div class='col-md-1'>
+				<a href="javascript:;"  class="btn green">Commit</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--===============================Injury Form ================================================= -->
+
+
+
+<!--=============================== Signature Form ============================================-->
+<div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
+
+<script>
+    (function($){
+        $(document).ready(function() {
+				
+
+            $('#signDisplay').hide();
+            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 900, height: 500});
+
+            $('#resetSig').on('click',function(){
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig').on('click',function(){
+                var data = $sigdiv.jSignature('getData')
+                if(data != null)
+                {
+                    $('#signDisplay').attr("src",data);
+                    $('#signDisplay').show();
+                }
+
+                $('#modalSign').modal('hide');
+               
+            });
+
+        })
+    })(jQuery)
+</script>

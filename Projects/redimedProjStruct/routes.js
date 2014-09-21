@@ -27,6 +27,8 @@ passport.use(new passportLocal.Strategy({passReqToCallback : true},Authenticatio
 
 
 //-----------------------------------Routes--------------------------------------
+
+
 app.get('/',function(req, res) {
     res.sendfile(path.join(clientDir, 'login.html'))
 });

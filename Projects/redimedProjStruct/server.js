@@ -34,7 +34,6 @@ var mysql = require('mysql');
 var connection = require('express-myconnection');
 app.use(connection(mysql, config.get('mysql'), 'pool'));
 
-
 //Set request Handler
 //-------------------------------------------
 
