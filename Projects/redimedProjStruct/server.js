@@ -44,6 +44,14 @@ var fs = require('fs');//Read js file for import into
 //root
 eval(fs.readFileSync('module-config.js')+'');
 
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "GET, POST","PUT");
+    next();
+
+});
+
 
 
 /// catch 404 and forward to error handler

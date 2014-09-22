@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 19/09/2014.
  */
-
+var db = require('../models');
 module.exports = {
     companyList: function(req,res){
         req.getConnection(function(err,connection){
@@ -16,5 +16,14 @@ module.exports = {
                 }
             });
         });
+    },
+    subCompany: function(req,res)
+    {
+        var id = req.body.id;
+        db.Company.findAll({where:{father_id: id}},{raw:true}).success(function(data){
+            res.json({status:'success',rs:data});
+        }).error(function(err){
+            res.json({status:'error',err:err});
+        })
     }
 };

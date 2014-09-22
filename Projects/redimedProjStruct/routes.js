@@ -7,6 +7,7 @@ var AuthenticationController = require('./controllers/AuthenticationController')
 var MenuController = require('./controllers/MenuController');
 var CompanyController = require('./controllers/CompanyController');
 var FunctionController = require('./controllers/FunctionController');
+var BookingController = require('./controllers/BookingController');
 
 var rl_types=require('./routes/rl_types');
 var cln_specialties=require('./routes/cln_specialities');
@@ -57,6 +58,9 @@ app.post('/users/register',AuthenticationController.register);
 app.get('/users/loggedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
+
+app.post('/api/company/getSub',CompanyController.subCompany);
+app.post('/api/booking/package', BookingController.packageList);
 
 app.get('/api/rlob/rl_types/list',rl_types.list);
 app.get('/api/rlob/cln_specialties/list',cln_specialties.list);

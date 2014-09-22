@@ -1,9 +1,20 @@
 app.controller("homeController",function($scope,$cookieStore,$rootScope,$http,$location,$window){
 
     $http.get('/users/loggedin').success(function(data){
-        $cookieStore.put('userInfo',data.userInfo);
+
+        if(data.userInfo !== null)
+        {
+            $cookieStore.put('userInfo',data.userInfo);
+        }
+
+        if(data.companyInfo !== null)
+        {
+            $cookieStore.put('companyInfo',data.companyInfo);
+        }
 
 		$scope.user = data.userInfo.Booking_Person;
+
+
     });
 	
     $http({

@@ -52,7 +52,8 @@ loginApp.controller("loginController",function($scope,$rootScope,$http,$window){
 			method:"POST",
 			headers: headers,
 			url: " http://telehealth.redimed.com.au/telehealth/index.php/authen/authenticate",
-			data: {username: 'elmont',password: 'redimed'}
+            dataType: 'jsonp',
+			data: {username: 'Belmont',password: 'redimed'}
 		}).success(function(data){
 			console.log(data);
 		}).error(function(err){

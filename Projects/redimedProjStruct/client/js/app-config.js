@@ -3,6 +3,7 @@
  */
  
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
 	delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $routeProvider
         .when("/customers/add",{controller:"cusAddController",templateUrl:"/sub/helloWorld/detail.html"})
@@ -19,8 +20,9 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         .when("/gorgonUQ",{controller:'gorgonUQController',templateUrl:'/sub/pemDoc/gorgonUQ/gorgonUQ.html'})
         .when("/category2",{templateUrl:'/sub/pemDoc/category2/category2.html'})
         .when("/home",{controller:"homeController",template:" "})
-		
 		.when("/telehealth/form",{controller:"telehealthFormController",templateUrl:"/sub/telehealth/patientForm.html"})
+
+        .when('/booking/make',{controller:'makeBookingController',templateUrl:'/sub/onlineBooking/makeBooking.html'})
 	.when("/online-booking/booking/upload",{controller:'rob_uploadController', templateUrl:'/sub/rediLegalOnlineBooking/upload.html'})
     $locationProvider.html5Mode(true)
 });
