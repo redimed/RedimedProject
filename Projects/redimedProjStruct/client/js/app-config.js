@@ -14,6 +14,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         .when("/functions",{controller:'functionController', templateUrl:'/sub/function/function.html'})
         .when("/menus",{controller:'menuController', templateUrl:'/sub/menu/menu.html'})
         .when("/gorgonFA",{controller:'gorgonFAController', templateUrl:'/sub/pemDoc/gorgonFA/gorgonFA.html'})
+        .when("/gorgonMH",{controller:'gorgonMHController',templateUrl:'/sub/pemDoc/gorgonMH/gorgonMH.html'})
+        .when("/gorgon",{templateUrl:'/sub/pemDoc/gorgon/gorgon.html'})
+        .when("/gorgonUQ",{controller:'gorgonUQController',templateUrl:'/sub/pemDoc/gorgonUQ/gorgonUQ.html'})
+        .when("/category2",{templateUrl:'/sub/pemDoc/category2/category2.html'})
         .when("/home",{controller:"homeController",template:" "})
 		
 		.when("/telehealth/form",{controller:"telehealthFormController",templateUrl:"/sub/telehealth/patientForm.html"})
