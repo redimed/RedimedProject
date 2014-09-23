@@ -14,5 +14,26 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error',err:err});
             })
+    },
+    packageAss: function(req,res){
+        var packId = req.body.id;
+
+        db.sequelize.query('select * from packages_assessments_v where pack_id=?',null,{raw:true},[packId])
+            .success(function(data){
+                res.json({status:'success',rs:data});
+            })
+            .error(function(err){
+                res.json({status:'error',err:err});
+            })
+    },
+    bookingList: function(req,res){
+        var comId = req.body.id;
+        db.sequelize.query('SELECT * FROM booking_cadidates_v WHERE company_id = ?',null,{raw:true},[comId])
+            .success(function(data){
+                res.json({status:'success',rs:data});
+            })
+            .error(function(err){
+                res.json({status:'error',err:err});
+            })
     }
 };

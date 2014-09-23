@@ -39,28 +39,30 @@ app.get('/home',AuthenticationController.authenticated,function(req,res){
     res.sendfile(path.join(clientDir, 'home.html'))
 });
 
-app.post('/users/login', passport.authenticate('local'),function(req, res) {
+app.post('/api/users/login', passport.authenticate('local'),function(req, res) {
             res.send(req.user);
         }
 );
 
-app.all('/users/logout', function(req, res) {
+app.all('/api/users/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
 
-app.post('/users/home',MenuController.loadSideMenu);
+app.post('/api/users/home',MenuController.loadSideMenu);
 
-app.get('/users/companyList',CompanyController.companyList);
+app.get('/api/users/companyList',CompanyController.companyList);
 
-app.post('/users/register',AuthenticationController.register);
+app.post('/api/users/register',AuthenticationController.register);
 
-app.get('/users/loggedin', function(req, res) {
+app.get('/api/users/loggedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
 
 app.post('/api/company/getSub',CompanyController.subCompany);
 app.post('/api/booking/package', BookingController.packageList);
+app.post('/api/booking/packageAss',BookingController.packageAss);
+app.post('/api/booking/list',BookingController.bookingList);
 
 app.get('/api/rlob/rl_types/list',rl_types.list);
 app.get('/api/rlob/cln_specialties/list',cln_specialties.list);

@@ -1,0 +1,65 @@
+<!-- CONTENT -->
+<div class="content">
+	<form class="login-form" novalidate name="loginForm" ng-submit="login()">
+		<h3 class="form-title">Login to your account</h3>
+		
+		<div class="form-group" ng-class="{'has-error':showClickedValidation && loginForm.username.$invalid}">
+			<!-- USERNAME -->
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+				<input type="text" name="username" ng-model="modelUser.username" required
+					placeholder="Username" autocomplete="off" class="form-control">
+			</div>
+			<!-- ERROR -->
+			<span ng-show="showClickedValidation && loginForm.username.$invalid">
+				<span for="username" class="help-block">Username is required.</span>
+			</span>
+			<!-- ERROR -->
+			<!-- END USERNAME -->
+		</div>
+
+		<div class="form-group">
+			<!-- PASSWORD -->
+			<div class="form-group" ng-class="{'has-error':showClickedValidation && loginForm.password.$invalid}">
+				<div class="input-icon">
+					<i class="fa fa-lock"></i>
+					<input type="password" name="password" ng-model="modelUser.password" required
+						placeholder="Password" autocomplete="off" class="form-control">
+				</div>
+				<!-- ERROR -->
+				<span ng-show="showClickedValidation && loginForm.password.$invalid">
+					<span for="password" class="help-block">Password is required.</span>
+				</span>
+				<!-- ERROR -->
+			</div>
+			<!-- END PASSWORD -->
+		</div>
+
+		<div class="form-actions">
+			<label class="checkbox">
+				<input type="checkbox" checkbox ng-model="modelUser.remember" 
+					name="remember" ng-checked="modelUser.remember">
+				Remember Me
+			</label>
+			<button class="btn green pull-right" type="submit">
+				Login <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+
+		<div class="forget-password">
+			<h4>Forgot your password ?</h4>
+			<p>
+				no worries, click <a ui-sref="security.forgot">here</a> to reset your password.
+			</p>
+		</div>
+
+		<div class="create-account">
+			<p>
+				Don't have an account yet ?
+				<a ui-sref="security.signup">Create an account</a>
+			</p>
+		</div>
+
+	</form>
+</div>
+<!-- END CONTENT -->

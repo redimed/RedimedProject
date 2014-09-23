@@ -1,0 +1,112 @@
+<div class="portlet light bordered">
+    <div class="portlet-title">
+
+        <!--<p><strong>Page:</strong> {{tableParams.page()}}-->
+        <!--<p><strong>Count per page:</strong> {{tableParams.count()}}-->
+        <div class="caption">
+            <i class="icon-anchor font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">Functions</span>
+
+        </div>
+
+        <div>
+            <div class="btn-group pull-right">
+                <a href="javascript:;" class="btn green" id="addBtn">
+                    Add New <i class="fa fa-plus"></i>
+                </a>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $('#modal-content').on('shown.bs.modal', function () {
+                $("#txtDescription").focus();
+            });
+
+            // everytime the button is pushed, open the modal, and trigger the shown.bs.modal event
+            $('#addBtn').click(function () {
+                $('#modal-content').modal({
+                    show: true
+                });
+            });
+        </script>
+    </div>
+
+    <div class="portlet-body">
+
+        <div>
+            <table ng-table="tableParams"  show-filter="true" class="table table-striped table-hover table-bordered ng-table-responsive">
+                <tr ng-repeat="f in $data track by $index | orderBy:'function_id'">
+                    <td data-title="'Description'" sortable="'decription'" filter="{ 'decription': 'text' }">
+                        <span ng-if="!f.$edit">{{f.decription}}</span>
+                        <div ng-if="f.$edit"><input class="form-control" type="text" ng-model="f.decription" /></div>
+                    </td>
+                    <td data-title="'Definition'" filter="{ 'definition': 'text' }">
+                        <span ng-if="!f.$edit">{{f.definition}}</span>
+                        <div ng-if="f.$edit"><input class="form-control" type="text" ng-model="f.definition" /></div>
+                    </td>
+                    <td data-title="'Type'" >
+                        <span ng-if="!f.$edit">{{f.type}}</span>
+                        <div ng-if="f.$edit"><input class="form-control" type="text" ng-model="f.type" /></div>
+                    </td>
+                    <td data-title="'Actions'">
+                        <a href="javascript:;" ng-if="!f.$edit"
+                           ng-click="edit(f)">
+                            Edit </a>
+                        <a href="javascript:;" ng-if="f.$edit"
+                           ng-click="save(f)">
+                            Save </a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="javascript:;" ng-if="f.$edit"
+                           ng-click="cancel(f)">
+                            Cancel </a>
+                    </td>
+                </tr>
+
+            </table>
+            <br/>
+        </div>
+
+        <div id="modal-content" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Add New Function</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-group">
+                                <label class="control-label">Description</label>
+                                <div>
+                                    <input type="text" class="form-control" id="txtDescription" placeholder="Enter Description" ng-model="func.decription" />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label class="control-label">Definition</label>
+                                <div >
+                                    <input type="text" class="form-control" placeholder="Enter Definition" ng-model="func.definition" />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label class="control-label">Type</label>
+                                <div >
+                                    <input type="text" class="form-control" placeholder="Enter Type" ng-model="func.type" />
+                                </div>
+                            </div>
+                        </div>
+
+                     </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+                        <a href="javascript:;" class="btn green" ng-click="addNew()">Insert</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

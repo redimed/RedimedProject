@@ -16,6 +16,7 @@ module.exports = {
     },
     edit: function(req,res){
         var f = req.body.f;
+        console.log(f);
         db.Function.update({
             decription: f.decription,
             definition: f.definition,
