@@ -62,6 +62,19 @@ angular.module('app.loggedIn.booking.list.controller',[])
             });
         }
 
+        $scope.changeBookingTime = function(b){
+            var modalInstance = $modal.open({
+               templateUrl: 'modules/onlineBooking/views/changeBookingTime.html',
+                controller: 'ChangeBookingController',
+                size: 'md',
+                resolve:{
+                    bookingId: function(){
+                        return b.Booking_id;
+                    }
+                }
+            });
+        }
+
     })
 
     .controller('BookingDetailController',function($scope,$modalInstance,OnlineBookingService, bookingId){
@@ -79,17 +92,29 @@ angular.module('app.loggedIn.booking.list.controller',[])
 
     })
 
-    .controller('CancelController',function($scope,$modalInstance,OnlineBookingService, bookingId){
+    .controller('CancelController',function($scope,$state,$modalInstance,OnlineBookingService, bookingId){
         $scope.cancel = function(){
             $modalInstance.dismiss('cancel');
         }
 
         $scope.okClick = function(){
             OnlineBookingService.cancelBooking(bookingId).then(function(data){
-                if(data[0].status === 'success')
+                if(data.status === 'success')
+                {
                     $modalInstance.dismiss('cancel');
+                    $state.go('loggedIn.bookingList', null, {"reload":true});
+                }
+
                 else
                     alert('Failed');
             })
         }
+    })
+
+    .controller('ChangeBookingController',function($scope,$state,$modalInstance,OnlineBookingService, bookingId){
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+
     })
