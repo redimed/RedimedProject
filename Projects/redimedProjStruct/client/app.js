@@ -1,5 +1,6 @@
 angular.module("app", [
     "ui.router",                // ANGULAR UI ROUTER
+    "ui.bootstrap",             // ANGULAR BOOTSTRAP
     "restangular",              // RESTANGULAR
     "ngCookies",                // ANGULAR COOKIES
     "pascalprecht.translate",   // ANGULAR TRANSLATE

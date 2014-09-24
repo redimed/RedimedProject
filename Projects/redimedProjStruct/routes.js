@@ -63,6 +63,8 @@ app.post('/api/company/getSub',CompanyController.subCompany);
 app.post('/api/booking/package', BookingController.packageList);
 app.post('/api/booking/packageAss',BookingController.packageAss);
 app.post('/api/booking/list',BookingController.bookingList);
+app.post('/api/booking/detail',BookingController.bookingDetail);
+app.post('/api/booking/cancel',BookingController.cancelBooking);
 
 app.get('/api/rlob/rl_types/list',rl_types.list);
 app.get('/api/rlob/cln_specialties/list',cln_specialties.list);

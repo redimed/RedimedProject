@@ -15,6 +15,8 @@ angular.module("app.security.login.controller",[
                 UserService.detail().then(function(response){
                     if(typeof response.userInfo !== 'undefined')
                         $cookieStore.put("userInfo", response.userInfo);
+                    if(typeof response.companyInfo !== 'undefined')
+                        $cookieStore.put("companyInfo", response.companyInfo);
                     $state.go("loggedIn.home");
                 });
             }, function(error){

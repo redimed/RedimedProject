@@ -1,0 +1,113 @@
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12">
+            <i class="font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 25px;">Online Booking</span>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="portlet light bordered ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class=" glyphicon glyphicon-align-justify font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Make Booking</span>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="row">
+            <div class="col-md-4">
+                <label class='control-label'>Company Name</label>
+            </div>
+            <div class="col-md-8">
+                <label>{{companyName}}</label>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Subsidiary</label>
+            </div>
+            <div class="col-md-4">
+                <select ng-model="c.CompanyId" class="form-control" ng-options="com.id as com.Company_name for com in companyList" >
+                    <option value="">---Select Sub Company---</option>
+                </select>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                 <label class="control-label">Purchase Order Number</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" ng-model="c.PO_number"  class="form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Email for receiving results</label>
+            </div>
+            <div class="col-md-7">
+                <input type="text" ng-model="c.result_email" class="form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Email for receiving invoices</label>
+            </div>
+            <div class="col-md-7">
+                <input type="text" ng-model="c.invoice_email" class="form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Project Identification</label>
+            </div>
+            <div class="col-md-7">
+                <input type="text" ng-model="c.Project" class="form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Comments</label>
+            </div>
+            <div class="col-md-7">
+                <input type="text" ng-model="c.Comment" class="form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Package</label>
+            </div>
+            <div class="col-md-4">
+                <select ng-model="c.PackId" ng-change="packageChange(c.PackId)" class="form-control" ng-options="p.id as p.package_name for p in packageList" >
+                    <option value="">---Select Package---</option>
+                </select>
+            </div>
+        </div>
+        <br/>
+        <div class="row" ng-repeat="ass in packAss">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <label class="control-label">
+                    {{ass.ass_name}}
+                </label>
+            </div>
+        </div>
+        <br/>
+        <div class='row'>
+            <div class='col-md-2'>
+                <a href="javascript:;"  class="btn green">New Candidate</a>
+            </div>
+            <div class='col-md-2'>
+                <a href="javascript:;"  class="btn btn-primary">Submit Booking</a>
+            </div>
+        </div>
+    </div>
+
+</div>

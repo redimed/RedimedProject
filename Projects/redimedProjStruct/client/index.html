@@ -55,6 +55,9 @@
 	<script type="text/javascript" src="theme/assets/global/plugins/uniform/jquery.uniform.min.js"></script>
 	<!-- END UNIFORM PLUGINS -->
 
+    <!--JSPDF-->
+    <script type="text/javascript" src="theme/assets/global/plugins/jspdf.min.js"></script>
+
 	<!-- ANGULAR BOOTSTRAP -->
 	<script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap.min.js"></script>
 	<script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -143,7 +146,11 @@
     <script type="text/javascript" src="modules/telehealth/controllers/TelehealthFormController.js"></script>
     <script type="text/javascript" src="modules/telehealth/services/TelehealthService.js"></script>
 
-    <script type="text/javascript" src="modules/test/test.js"></script>
+    <!--MODULE ONLINE-BOOKING -->
+    <script type="text/javascript" src="modules/onlineBooking/OnlineBooking.js"></script>
+    <script type="text/javascript" src="modules/onlineBooking/controllers/MakeBookingController.js"></script>
+    <script type="text/javascript" src="modules/onlineBooking/controllers/BookingListController.js"></script>
+    <script type="text/javascript" src="modules/onlineBooking/services/OnlineBookingService.js"></script>
 
 
 	<!-- CUSTOM CSS -->
@@ -193,7 +200,7 @@
         });
     </script>
 </head>
-<body class="page-boxed page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-closed-hide-logo">
+<body class="page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-footer-fixed1">
 	<!-- ROOT -->
 	<div ui-view="root"></div>
 	<!-- END ROOT VIEW -->

@@ -5,7 +5,8 @@ angular.module("app.loggedIn",[
 	"app.loggedIn.user"	,	// USER MODULE
     "app.loggedIn.function", //FUNCTION MODULE
     "app.loggedIn.menu", //MENU MODULE
-    "app.loggedIn.telehealth" //Telehealth MODULE
+    "app.loggedIn.telehealth", //Telehealth MODULE
+    "app.loggedIn.booking" //ONLINE-BOOKING MODULE
 ])
 
 .config(function($stateProvider){
