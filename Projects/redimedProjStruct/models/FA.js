@@ -22,19 +22,6 @@ module.export = function(sequelize, DataTypes){
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = function(sequelize,DataTypes){
     var Menu = sequelize.define('Menu',{
         menu_id  : DataTypes.INTEGER,

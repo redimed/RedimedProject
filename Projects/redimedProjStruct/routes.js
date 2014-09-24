@@ -8,6 +8,8 @@ var MenuController = require('./controllers/MenuController');
 var CompanyController = require('./controllers/CompanyController');
 var FunctionController = require('./controllers/FunctionController');
 var BookingController = require('./controllers/BookingController');
+var DocumentController = require('./controllers/DocumentController');
+
 
 var rl_types=require('./routes/rl_types');
 var cln_specialties=require('./routes/cln_specialities');
@@ -85,3 +87,26 @@ app.post('/api/menu/insertChild',MenuController.insertChild);
 app.get('/api/function/list',FunctionController.list);
 app.post('/api/function/edit',FunctionController.edit);
 app.post('/api/function/insert',FunctionController.insert);
+
+//app.get('/api/doc/list',DocumentController.listFA);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
