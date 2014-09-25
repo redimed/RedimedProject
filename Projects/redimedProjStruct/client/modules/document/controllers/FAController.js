@@ -19,20 +19,40 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         var faList = [];
         $scope.fa = [];
 
-        DocumentService.menuList().then(function(data){
-            MenuService.functionList().then(function(data){
-                $scope.functionList = data;
-            })
+//        DocumentService.menuList().then(function(data){
+//
+//            menuList = data;
+//            for(var i = 0;i<menuList.length;i++)
+//            {
+//                if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
+//                    $scope.data.push(menuList[i]);
+//
+//            }
+//        })
 
-            menuList = data;
-            for(var i = 0;i<menuList.length;i++)
-            {
-                if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
-                    $scope.data.push(menuList[i]);
-
-            }
-        })
-
-
+//        DocumentService.newFA().then(function(response){
+//            if(response['status'] === 'success') {
+//                alert("Insert Successfully!");
+//            }
+//            else
+//            {
+//                alert("Insert Failed!");
+//            }
+//        });
+//
+//        newFA: function(req,res)
+//        {
+//            db.sequelize.query("").success(function(data){
+//                if(err)
+//                {
+//                    res.json({status:"fail"});
+//                }
+//                else
+//                {
+//                    res.json(rows);
+//
+//                }
+//            })
+//        }
 
     });

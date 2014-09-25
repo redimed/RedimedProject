@@ -6,19 +6,9 @@ angular.module('app.loggedIn.document.services',[])
         var documentService = {};
         var api = Restangular.all("api");
 
-        documentService.faList = function(){
-            var faList = api.one("document/list");
-            return faList.get();
-        }
-
-        documentService.saveFunction = function(f){
-            var saveApi = api.all("document/edit");
-            return saveApi.post({f:f});
-        }
-
-        documentService.insertFunction = function(f){
-            var insertApi = api.all("document/insert");
-            return insertApi.post({f:f});
+        documentService.newFA = function(){
+            var newFA = api.one("document/newFA");
+            return newFA.get();
         }
 
         return documentService;

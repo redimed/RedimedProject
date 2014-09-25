@@ -3,18 +3,7 @@
  */
 var db = require('../models');
 module.export = {
-    listFA: function(req,res)
-    {
-//        db.sequelize.query("").success(function(data){
-//            if(err)
-//            {
-//                res.json({status:"fail"});
-//            }
-//            else
-//            {
-//                res.json(rows);
-//
-//            }
-//        })
-    }
+
+
+
 };
