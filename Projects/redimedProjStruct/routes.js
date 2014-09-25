@@ -88,10 +88,8 @@ app.get('/api/function/list',FunctionController.list);
 app.post('/api/function/edit',FunctionController.edit);
 app.post('/api/function/insert',FunctionController.insert);
 
-//app.get('/api/document/newFA',DocumentController.newFA);
-
-//app.get('/api/doc/list',DocumentController.listFA);
-
+app.get('/api/document/newFA',DocumentController.newFA);
+app.get('/api/document/loadFA',DocumentController.loadFA);
 
 
 

@@ -11,5 +11,10 @@ angular.module('app.loggedIn.document.services',[])
             return newFA.get();
         }
 
+        documentService.loadFA = function(){
+            var loadFA = api.one("document/loadFA");
+            return loadFA.get();
+        }
+
         return documentService;
     })
