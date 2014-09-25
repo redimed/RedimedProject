@@ -111,10 +111,135 @@ angular.module('app.loggedIn.booking.list.controller',[])
         }
     })
 
-    .controller('ChangeBookingController',function($scope,$state,$modalInstance,OnlineBookingService, bookingId){
+    .controller('ChangeBookingController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, bookingId){
+        $scope.info = {
+            siteId:'',
+            fromDate: '',
+            toDate: '',
+            calId:'',
+            appointmentTime: '',
+            submitTime: ''
+        };
+        $scope.siteList = [];
+        $scope.calList = [];
         $scope.cancel = function(){
             $modalInstance.dismiss('cancel');
         }
 
+        OnlineBookingService.getSite().then(function(data){
+            $scope.siteList = data;
+        })
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
+        $scope.siteChange = function(){
+            if(typeof $scope.info.siteId !== 'undefined' && $scope.info.siteId !== null && typeof $scope.info.fromDate !== 'undefined' && typeof $scope.info.toDate !== 'undefined')
+            {
+                var id = $scope.info.siteId;
+                var from = $filter('date')($scope.info.fromDate,'yyyy-MM-dd');
+                var to = $filter('date')($scope.info.toDate,'yyyy-MM-dd');
+
+                OnlineBookingService.getCalendar(id,from,to).then(function(data){
+                    $scope.calList = data;
+                })
+            }
+            else
+            {
+                $scope.calList = [];
+                $scope.info.appointmentTime = '';
+            }
+
+        }
+
+        $scope.fromDateChange = function()
+        {
+            if(typeof $scope.info.siteId !== 'undefined' && typeof $scope.info.fromDate !== 'undefined' && typeof $scope.info.toDate !== 'undefined')
+            {
+                var id = $scope.info.siteId;
+                var from = $filter('date')($scope.info.fromDate,'yyyy-MM-dd');
+                var to = $filter('date')($scope.info.toDate,'yyyy-MM-dd');
+
+                OnlineBookingService.getCalendar(id,from,to).then(function(data){
+                    $scope.calList = data;
+                })
+            }
+            else
+            {
+                $scope.calList = [];
+                $scope.info.appointmentTime = '';
+            }
+
+
+
+        }
+
+        $scope.toDateChange = function()
+        {
+            if(typeof $scope.info.siteId !== 'undefined' && typeof $scope.info.fromDate !== 'undefined' && typeof $scope.info.toDate !== 'undefined')
+            {
+                var id = $scope.info.siteId;
+                var from = $filter('date')($scope.info.fromDate,'yyyy-MM-dd');
+                var to = $filter('date')($scope.info.toDate,'yyyy-MM-dd');
+
+                OnlineBookingService.getCalendar(id,from,to).then(function(data){
+                    $scope.calList = data;
+                })
+            }
+            else
+            {
+                $scope.calList = [];
+                $scope.info.appointmentTime = '';
+            }
+        }
+
+        $scope.calChange = function()
+        {
+            if($scope.info.calId !== null && typeof $scope.info.calId !== 'undefined')
+            {
+                var calId = $scope.info.calId;
+
+                OnlineBookingService.getAppointmentTime(calId).then(function(data){
+
+                    var date = $filter('date')(data[0].From_time,'dd/MM/yyyy HH:mm:ss')
+                    var submitDate = $filter('date')(data[0].From_time,'yyyy-MM-dd HH:mm:ss');
+                    $scope.info.appointmentTime = date;
+                    $scope.info.submitTime = submitDate;
+
+                })
+            }
+            else
+            {
+                $scope.info.appointmentTime = '';
+            }
+
+        }
+
+        $scope.submit = function(){
+            if($scope.info.siteId !== null && typeof $scope.info.fromDate !== 'undefined' && typeof $scope.info.toDate !== 'undefined' && $scope.info.calId !== null)
+            {
+                var siteId = $scope.info.siteId;
+                var from = $filter('date')($scope.info.fromDate,'yyyy-MM-dd');
+                var to = $filter('date')($scope.info.toDate,'yyyy-MM-dd');
+                var calId = $scope.info.calId;
+                var time = $scope.info.submitTime;
+
+                OnlineBookingService.changeBookingTime(siteId,from,to,calId,time,bookingId).then(function(data){
+                    if(data.status === 'success')
+                    {
+                        $modalInstance.dismiss('cancel');
+                        alert('Submit Successfully!');
+                        $state.go('loggedIn.bookingList', null, {"reload":true});
+                    }
+                    else
+                    {
+                        alert('Submit Failed!');
+                    }
+                })
+
+            }
+        }
 
     })

@@ -40,6 +40,7 @@ angular.module("app.loggedIn.controller",[
     //Logout
     $scope.logout = function(){
         $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
         $state.go("security.login");
     }
 

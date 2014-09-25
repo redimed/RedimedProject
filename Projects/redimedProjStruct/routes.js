@@ -8,6 +8,7 @@ var MenuController = require('./controllers/MenuController');
 var CompanyController = require('./controllers/CompanyController');
 var FunctionController = require('./controllers/FunctionController');
 var BookingController = require('./controllers/BookingController');
+var RedimedSiteController = require('./controllers/RedimedSiteController');
 
 var rl_types=require('./routes/rl_types');
 var cln_specialties=require('./routes/cln_specialities');
@@ -65,6 +66,9 @@ app.post('/api/booking/packageAss',BookingController.packageAss);
 app.post('/api/booking/list',BookingController.bookingList);
 app.post('/api/booking/detail',BookingController.bookingDetail);
 app.post('/api/booking/cancel',BookingController.cancelBooking);
+app.post('/api/booking/calendar',BookingController.calendarList);
+app.post('/api/booking/appointmentTime',BookingController.appointmentTime);
+app.post('/api/booking/changeBookingTime',BookingController.changeBookingTime);
 
 app.get('/api/rlob/rl_types/list',rl_types.list);
 app.get('/api/rlob/cln_specialties/list',cln_specialties.list);
@@ -87,3 +91,5 @@ app.post('/api/menu/insertChild',MenuController.insertChild);
 app.get('/api/function/list',FunctionController.list);
 app.post('/api/function/edit',FunctionController.edit);
 app.post('/api/function/insert',FunctionController.insert);
+
+app.get('/api/redimedsite/list',RedimedSiteController.list);

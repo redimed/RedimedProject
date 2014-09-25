@@ -45,6 +45,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                         }
 
                         $scope.packAss = arrAss;
+
                     }
                 })
             }else

@@ -210,6 +210,8 @@ angular.module("crm.directive.common", [])
 	}	
 })
 
+
+
 // LOADING
 .directive('ngLoading', function($compile) {
 	return {
@@ -238,4 +240,18 @@ angular.module("crm.directive.common", [])
 			});
 		}
 	};
+})
+
+.filter('utc', function(){
+
+    return function(val){
+        var date = new Date(val);
+        return new Date(date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate(),
+            date.getUTCHours(),
+            date.getUTCMinutes(),
+            date.getUTCSeconds());
+    };
+
 });

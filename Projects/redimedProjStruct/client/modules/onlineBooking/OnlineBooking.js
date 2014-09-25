@@ -4,6 +4,7 @@
 angular.module('app.loggedIn.booking',
     ['app.loggedIn.booking.make.controller'
     ,'app.loggedIn.booking.list.controller'
+    ,'app.loggedIn.booking.package.controller'
     ,'app.loggedIn.booking.services'])
     .config(function($stateProvider){
         $stateProvider
@@ -19,5 +20,11 @@ angular.module('app.loggedIn.booking',
                 url:'/onlineBooking/booking',
                 templateUrl: 'modules/onlineBooking/views/booking.html',
                 controller: 'BookingListController'
+            })
+
+            .state('loggedIn.package',{
+                url:'/onlineBooking/package',
+                templateUrl: 'modules/onlineBooking/views/package.html',
+                controller: 'PackageController'
             })
     });
