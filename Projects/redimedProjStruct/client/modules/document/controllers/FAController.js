@@ -30,6 +30,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
         });
 
+        $scope.listFA = [];
+
 
         DocumentService.loadFA().then(function(response){
             if(response['status'] === 'fail') {
@@ -37,10 +39,9 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
             else
             {
-                //$scope.listFA.push(response);
                 $scope.listFA = response;
-            }
 
+            }
         });
 
         var items = [];
@@ -117,40 +118,3 @@ angular.module('app.loggedIn.document.FA.controllers',[])
 
 
 
-{
-//                    alert($scope.listFA.length);
-//                    var i = 0;
-//                    angular.forEach(response, function(list){
-//
-//                        if($scope.listFA.length === 0)
-//                        {
-//                            $scope.listFA.push({"list": {"header" : list.FA_NAME, "listS": []}});
-//                        }else
-//                        {
-//                            var j = 0;
-//                            angular.forEach($scope.listFA, function(listH) {
-//                                if (listH.list.header !== list.FA_NAME) {
-//                                    $scope.listFA.push({"list": {"header" : list.FA_NAME, "listS": []}});
-//
-//                                        if($scope.listFA.list.listS.length === 0)
-//                                        {
-//                                            $scope.listFA.list.listS.push({"section":list.SECTION_NAME});
-//                                        }else
-//                                        {
-//                                            var b = 0;
-//                                            angular.forEach($scope.listFA.list.listS, function(listS) {
-//                                                if (listS.sections !== list.SECTION_NAME) {
-//                                                    $scope.listFA.list.listS.push({"section":list.SECTION_NAME});
-//
-//                                                }
-//                                                b++;
-//                                            });
-//                                        }
-//                                }
-//                                j++;
-//                            });
-//                        }
-//
-//                        i++;
-//                    });
-}

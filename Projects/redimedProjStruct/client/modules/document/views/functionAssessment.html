@@ -23,23 +23,33 @@
                             </a>
                         </div>
                     </div>
-                    <div class="portlet-body" >
+                    <div class="portlet-body form" ng-repeat="(nameL,nameLList) in nameSList | groupBy: 'LINE_ID'">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"></h3>
+                                <h3 class="panel-title">{{getLineByID(nameL)}}</h3>
                             </div>
                             <div class="panel-body">
-                                <div ng-repeat="(nameL,nameLList) in nameSList | groupBy: 'LINE_ID'">
-                                    <label class="bold">{{getLineByID(nameL)}}</label>
-                                    <div ng-repeat="(nameD,nameDList) in nameLList | groupBy: 'DETAIL_ID'">
-                                        <label>{{getLineDetailByID(nameD)}}</label>
-                                        <div ng-repeat="(nameC,nameCList) in nameDList | groupBy: 'FA_COMMENT_ID'">
-                                            <label class="text-info">{{getCommentByID(nameC)}}</label>
+                                <div ng-repeat="(nameD,nameDList) in nameLList | groupBy: 'DETAIL_ID'">
+                                    <label class="bold">{{getLineDetailByID(nameD)}}</label>
+                                    <div class="row">
+                                        <div ng-repeat="(name1,name1List) in nameDList | groupBy: 'VAL1_NAME'">
+                                            <label class="col-md-2" style="margin-top: 5px" >
+                                                <span ng-if="name1 != 'null'">{{name1}}</span>
+                                            </label>
                                         </div>
+                                        <div ng-repeat="(name2,name2List) in nameDList | groupBy: 'VAL2_NAME'">
+                                            <label class="col-md-2" style="margin-top: 5px" >
+                                                <span ng-if="name2 != 'null'">{{name2}}</span>
+                                            </label>
+                                        </div>
+                                        <div ng-repeat="(com,comList) in nameDList | groupBy: 'IsCommentText'">
+                                            <label class="col-md-2" style="margin-top: 5px" >
+                                                <span ng-if="com != 'null'">{{name.VAL1_NAME}}</span>
+                                            </label>
+                                        </div>
+
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
