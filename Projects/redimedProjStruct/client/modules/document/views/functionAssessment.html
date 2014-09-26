@@ -1,38 +1,53 @@
-<!--Title-->
-<div class="caption">
-    <div class="row">
-        <div class="col-md-12">
-            <p style="font-size: xx-large;text-align: center;font-weight: bolder">FUNCTIONAL ASSESSMENTaaaaaaaaaa</p>
-        </div>
-    </div>
-</div>
 
-
-<div class="row">
-    <div class="col-md-12">
-
-        <div class="portlet box grey-cascade" ng-repeat="f in listFA">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-gift"></i>{{f.list.header}}
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse">
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
+    <div ng-repeat="(nameH,nameHList) in listFA | groupBy: 'FA_ID'">
+        <!--Title-->
+        <div class="caption">
+            <div class="row">
+                <div class="col-md-12">
+                    <p style="font-size: xx-large;text-align: center;font-weight: bolder">{{getHeaderByID(nameH)}}</p>
                 </div>
             </div>
         </div>
 
 
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="portlet box grey-cascade" ng-repeat="(nameS,nameSList) in nameHList | groupBy: 'SECTION_ID'">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-gift"></i> {{getSectionByID(nameS)}}
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body" >
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ng-repeat="(nameL,nameLList) in nameSList | groupBy: 'LINE_ID'">
+                                    <label class="bold">{{getLineByID(nameL)}}</label>
+                                    <div ng-repeat="(nameD,nameDList) in nameLList | groupBy: 'DETAIL_ID'">
+                                        <label>{{getLineDetailByID(nameD)}}</label>
+                                        <div ng-repeat="(nameC,nameCList) in nameDList | groupBy: 'FA_COMMENT_ID'">
+                                            <label class="text-info">{{getCommentByID(nameC)}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
     </div>
-</div>
+

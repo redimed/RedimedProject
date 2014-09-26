@@ -17,8 +17,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             var info = $scope.info;
         };
 
-        $scope.listFA = [];
 
+        $scope.listFA = [];
 
         DocumentService.newFA().then(function(response){
             if(response['status'] === 'success') {
@@ -31,36 +31,126 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         });
 
 
-            // Start load
-            DocumentService.loadFA().then(function(response){
-                if(response['status'] === 'fail') {
-                    alert("load fail!");
-                }
-                else
+        DocumentService.loadFA().then(function(response){
+            if(response['status'] === 'fail') {
+                alert("load fail!");
+            }
+            else
+            {
+                //$scope.listFA.push(response);
+                $scope.listFA = response;
+            }
+
+        });
+
+        var items = [];
+        $scope.getSectionByID = function(id){
+            items = $scope.listFA;
+            var item ={};
+            for(var i=0;i<items.length;i++)
+            {
+                if(items[i].SECTION_ID == id)
                 {
-                    alert($scope.listFA.length);
-                    var i = 0;
-                    angular.forEach(response, function(list){
-
-                        if($scope.listFA.length === 0)
-                        {
-                            $scope.listFA.push({"list": {"listH":{"header" : list.FA_NAME}});
-                        }else
-                        {
-                            var j = 0;
-                            angular.forEach($scope.listFA, function(listH) {
-                                if (listH.list.header !== list.FA_NAME) {
-                                    $scope.listFA.push({"list": {"header" : list.FA_NAME}});
-
-                                }
-                                j++;
-                            });
-                        }
-
-                        i++;
-                    });
+                    item = items[i];
+                    return item.SECTION_NAME;
                 }
+            }
+        };
 
-            });
-            // END load
+        $scope.getHeaderByID = function(id){
+            items = $scope.listFA;
+            var item ={};
+            for(var i=0;i<items.length;i++)
+            {
+                if(items[i].FA_ID == id)
+                {
+                    item = items[i];
+                    return item.FA_NAME;
+                }
+            }
+        };
+
+        $scope.getLineByID = function(id){
+            items = $scope.listFA;
+            var item ={};
+            for(var i=0;i<items.length;i++)
+            {
+                if(items[i].LINE_ID == id)
+                {
+                    item = items[i];
+                    return item.LINE_QUESTION;
+                }
+            }
+        };
+
+        $scope.getLineDetailByID = function(id){
+            items = $scope.listFA;
+            var item ={};
+            for(var i=0;i<items.length;i++)
+            {
+                if(items[i].DETAIL_ID == id)
+                {
+                    item = items[i];
+                    return item.DETAIL_QUESTION;
+                }
+            }
+        };
+
+        $scope.getCommentByID = function(id){
+            items = $scope.listFA;
+            var item ={};
+            for(var i=0;i<items.length;i++)
+            {
+                if(items[i].FA_COMMENT_ID == id)
+                {
+                    item = items[i];
+                    return item.NAME;
+                }
+            }
+        };
+
+
+
+
     });
+
+
+
+
+{
+//                    alert($scope.listFA.length);
+//                    var i = 0;
+//                    angular.forEach(response, function(list){
+//
+//                        if($scope.listFA.length === 0)
+//                        {
+//                            $scope.listFA.push({"list": {"header" : list.FA_NAME, "listS": []}});
+//                        }else
+//                        {
+//                            var j = 0;
+//                            angular.forEach($scope.listFA, function(listH) {
+//                                if (listH.list.header !== list.FA_NAME) {
+//                                    $scope.listFA.push({"list": {"header" : list.FA_NAME, "listS": []}});
+//
+//                                        if($scope.listFA.list.listS.length === 0)
+//                                        {
+//                                            $scope.listFA.list.listS.push({"section":list.SECTION_NAME});
+//                                        }else
+//                                        {
+//                                            var b = 0;
+//                                            angular.forEach($scope.listFA.list.listS, function(listS) {
+//                                                if (listS.sections !== list.SECTION_NAME) {
+//                                                    $scope.listFA.list.listS.push({"section":list.SECTION_NAME});
+//
+//                                                }
+//                                                b++;
+//                                            });
+//                                        }
+//                                }
+//                                j++;
+//                            });
+//                        }
+//
+//                        i++;
+//                    });
+}

@@ -23,12 +23,11 @@ module.exports = {
 
     loadFA: function(req,res){
 
-        db.sequelize.query("SELECT s.`PATIENT_ID`,s.`CAL_ID`,s.`SECTION_NAME`, l.`QUESTION`, d.`QUESTION`,d.`VAL1_NAME`," +
-            " d.`VAL1_ISVALUE`,d.`VAL2_NAME`,d.`VAL2_ISVALUE`, h.`FA_NAME`, c.`NAME`FROM `cln_fa_df_sections` AS s " +
-            "INNER JOIN `cln_fa_df_lines` AS l ON s.`SECTION_ID` = " +
-            "l.`SECTION_ID` INNER JOIN `cln_fa_df_line_details` AS d ON l.`LINE_ID` = d.`LINE_ID` INNER JOIN" +
-            " `cln_fa_df_headers` AS h ON h.`FA_ID` = s.`FA_ID` INNER JOIN `cln_fa_df_comments` AS c ON c.`LINE_ID` " +
-            "= l.`LINE_ID` ").success(function(data){
+        db.sequelize.query("SELECT s.`PATIENT_ID`,s.`CAL_ID`,s.`SECTION_ID`,s.`SECTION_NAME`,l.`LINE_ID`, l.`QUESTION` AS LINE_QUESTION,d.`DETAIL_ID`, d.`QUESTION` AS DETAIL_QUESTION,d.`VAL1_NAME`," +
+            " d.`VAL1_ISVALUE`,d.`VAL2_NAME`,d.`VAL2_ISVALUE`,h.`FA_ID`, h.`FA_NAME`,c.`FA_COMMENT_ID`, c.`NAME`FROM `cln_fa_df_sections` AS s INNER" +
+            " JOIN `cln_fa_df_headers` AS h ON h.`FA_ID` = s.`FA_ID` LEFT JOIN `cln_fa_df_lines` AS l ON s.`SECTION_ID` " +
+            "= l.`SECTION_ID` LEFT JOIN `cln_fa_df_comments` AS c ON c.`LINE_ID` = l.`LINE_ID` LEFT JOIN `cln_fa_df_line_details`" +
+            " AS d ON l.`LINE_ID` = d.`LINE_ID`  ").success(function(data){
                 res.json(data);
             })
             .error(function(err){

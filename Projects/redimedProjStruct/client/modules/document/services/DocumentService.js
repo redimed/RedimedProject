@@ -16,5 +16,7 @@ angular.module('app.loggedIn.document.services',[])
             return loadFA.get();
         }
 
-        return documentService;
+
+    return documentService;
     })
+
