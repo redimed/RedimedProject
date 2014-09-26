@@ -15,7 +15,7 @@ module.exports = {
                 res.json({status:'error',err:err});
             })
     },
-    packageAss: function(req,res){
+    packageAssById: function(req,res){
         var packId = req.body.id;
 
         db.sequelize.query('SELECT p.pack_id, p.ass_id, p.ass_name, a.HEADER_ID, a.period, h.ass_name AS HeaderName FROM `packages_assessments` p INNER JOIN assessments a ON p.`ass_id` = a.`id` LEFT JOIN assessment_headers h ON a.HEADER_ID = h.id WHERE p.pack_id = ?',null,{raw:true},[packId])
@@ -25,6 +25,15 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error',err:err});
             })
+    },
+    packageAss: function(req,res){
+      db.sequelize.query('SELECT * FROM packages_assessments')
+          .success(function(data){
+              res.json({status:'success',rs:data});
+          })
+          .error(function(err){
+              res.json({status:'error',err:err});
+          })
     },
     bookingList: function(req,res){
         var comId = req.body.id;
@@ -104,6 +113,53 @@ module.exports = {
             })
             .error(function(err){
                 res.json({status:'error'});
+            })
+    },
+    removePackage: function(req,res){
+        var packId = req.body.id;
+        var comId = req.body.comId;
+        db.sequelize.query('DELETE FROM packages WHERE id=? AND company_id=?',null,{raw:true},[packId,comId])
+            .success(function(data){
+                db.sequelize.query('DELETE FROM packages_assessments WHERE pack_id=?',null,{raw:true},[packId])
+                    .success(function(data){
+                        res.json({status:'success'});
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                    })
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    insertPackage: function(req,res){
+        var packName = req.body.name;
+        var comId = req.body.comId;
+        db.sequelize.query('INSERT INTO packages(package_name,company_id) VALUES(?,?)',null,{raw:true},[packName,comId])
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    assList: function(req,res){
+        db.sequelize.query('SELECT * FROM assessment_v',null,{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    positionList: function(req,res){
+        var comId = req.body.comId;
+        db.sequelize.query('SELECT * FROM positions WHERE company_id = ?',null,{raw:true},[comId])
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:"error"});
             })
     }
 };

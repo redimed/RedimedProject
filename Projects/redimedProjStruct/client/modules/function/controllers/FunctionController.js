@@ -2,7 +2,7 @@
  * Created by meditech on 23/09/2014.
  */
 angular.module('app.loggedIn.function.controller',[])
-.controller("FunctionController",function($scope,$filter,ngTableParams,FunctionService,$http,toastr){
+.controller("FunctionController",function($scope,$state,$filter,ngTableParams,FunctionService,$http,toastr){
     $scope.data=[];
 
     FunctionService.getList().then(function(response){
@@ -43,6 +43,7 @@ angular.module('app.loggedIn.function.controller',[])
             if(response['status'] === 'success') {
                 alert("Edit Successfully!");
                 f.$edit = false;
+                $state.go('loggedIn.function', null, {"reload":true});
             }
             else
             {
@@ -57,9 +58,8 @@ angular.module('app.loggedIn.function.controller',[])
         FunctionService.insertFunction($scope.func).then(function(response){
             if(response['status'] === 'success') {
                 alert("Insert Successfully!");
-                $scope.data.push($scope.func);
                 $scope.func = "";
-                $scope.tableParams.reload();
+                $state.go('loggedIn.function', null, {"reload":true});
             }
             else
             {

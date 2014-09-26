@@ -1,0 +1,109 @@
+<div class="modal-header">
+</div>
+<form id="candidateForm" ng-submit="submitCandidate()" method="post" novalidate>
+<div class="modal-body">
+
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Candidate Name <span class="required">
+											* </span></label>
+            </div>
+            <div class="col-md-8">
+                <input ng-model="info.name" type="text" class="col-md-12 form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Date Of Birth <span class="required">
+											* </span></label>
+            </div>
+            <div class="col-md-8">
+                <input type="text" class="form-control col-md-12"  datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob" is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Position</label>
+            </div>
+            <div class="col-md-8">
+                <select class="col-md-12 form-control" ng-model="info.position"  ng-options="p.Position_name as p.Position_name for p in positionList">
+                    <option value="">--Select Position--</option>
+                </select>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Phone <span class="required">
+											* </span></label>
+            </div>
+            <div class="col-md-8">
+                <input ng-model="info.phone" type="text" class="col-md-12 form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Email <span class="required">
+											* </span></label>
+            </div>
+            <div class="col-md-8">
+                <input ng-model="info.email" type="text" class="col-md-12 form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Preferred REDiMED Site <span class="required">
+											* </span></label>
+            </div>
+            <div class="col-md-8">
+                <select class="col-md-12 form-control" ng-model="info.siteId" ng-change="siteChange()" ng-options="site.id as site.Site_name for site in siteList">
+                    <option value="">--Select Site--</option>
+                </select>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Preferred Date From <span class="required">
+											* </span></label>
+            </div>
+            <div class="col-md-8">
+
+                <input type="text" class="form-control col-md-12" ng-change="fromDateChange()" datepicker-popup="dd/MM/yyyy" data-ng-model="info.fromDate" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Preferred Date To <span class="required">
+											* </span></label>
+            </div>
+            <div class="col-md-8">
+
+                <input type="text" class="form-control col-md-12" ng-change="toDateChange()"   datepicker-popup="dd/MM/yyyy" data-ng-model="info.toDate" is-open="openTo" ng-click="openTo = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">Calendar <span class="required">
+											* </span></label>
+            </div>
+            <div class="col-md-8">
+                <select class="col-md-12 form-control" ng-model="info.calId" ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
+                    <option value="">--Select Calendar--</option>
+                </select>
+            </div>
+        </div>
+
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
+    <button type="submit" class="btn green">OK</button>
+</div>
+</form>

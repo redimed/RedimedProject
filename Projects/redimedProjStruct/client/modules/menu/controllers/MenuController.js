@@ -2,7 +2,7 @@
  * Created by meditech on 23/09/2014.
  */
 angular.module('app.loggedIn.menu.controller',[])
-    .controller("MenuController",function($scope,$filter,ngTableParams,MenuService,$http) {
+    .controller("MenuController",function($scope,$state,$filter,ngTableParams,MenuService,$http) {
         var menuList = [];
         var parentId;
         $scope.functionList = [];
@@ -72,6 +72,7 @@ angular.module('app.loggedIn.menu.controller',[])
                 if(data['status'] === 'success') {
                     alert("Edit Successfully!");
                     m.$edit = false;
+                    $state.go('loggedIn.menu',null,{reload:true});
                 }
                 else
                 {
@@ -95,6 +96,7 @@ angular.module('app.loggedIn.menu.controller',[])
                 if(data['status'] === 'success') {
                     alert("Edit Successfully!");
                     c.$edit = false;
+                    $state.go('loggedIn.menu',null,{reload:true});
                 }
                 else
                 {
@@ -139,10 +141,9 @@ angular.module('app.loggedIn.menu.controller',[])
             }).success(function(data){
                 if(data['status'] === 'success') {
                     alert("Insert Successfully!");
-                    $scope.data.push($scope.menu);
-                    console.log($scope.data);
+
                     $scope.menu = "";
-                    $scope.tableParams.reload();
+                    $state.go('loggedIn.menu',null,{reload:true});
                 }
                 else
                 {
@@ -160,9 +161,9 @@ angular.module('app.loggedIn.menu.controller',[])
             }).success(function(data){
                 if(data['status'] === 'success') {
                     alert("Insert Successfully!");
-                    $scope.data1.push($scope.child);
+
                     $scope.child = "";
-                    $scope.tableParams2.reload();
+                    $state.go('loggedIn.menu',null,{reload:true});
                 }
                 else
                 {

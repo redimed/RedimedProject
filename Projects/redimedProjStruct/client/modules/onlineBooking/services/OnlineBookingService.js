@@ -16,10 +16,16 @@ angular.module('app.loggedIn.booking.services',[])
             return package.post({id:id});
         }
 
-        bookingService.getPackageAss = function(id){
-            var ass = api.all('booking/packageAss');
+        bookingService.getPackageAssById = function(id){
+            var ass = api.all('booking/packageAssById');
             return ass.post({id:id});
         }
+
+        bookingService.getPackageAss = function(){
+            var ass = api.one('booking/packageAss');
+            return ass.get();
+        }
+
 
         bookingService.getBookingList = function(id){
             var list = api.all('booking/list');
@@ -54,6 +60,26 @@ angular.module('app.loggedIn.booking.services',[])
         bookingService.changeBookingTime = function(siteId,from,to,calId,appTime,bookId){
             var submit = api.all('booking/changeBookingTime');
             return submit.post({siteId:siteId,from:from,to:to,calId:calId,appTime:appTime, bookId:bookId});
+        }
+
+        bookingService.deletePackage = function(id,comId){
+            var delPackage = api.all('booking/deletePackage');
+            return delPackage.post({id:id,comId:comId});
+        }
+
+        bookingService.insertPackage = function(name,comId){
+            var insert = api.all('booking/insertPackage');
+            return insert.post({name:name,comId:comId});
+        }
+
+        bookingService.getAssList = function(){
+            var assList = api.one('booking/assList');
+            return assList.get();
+        }
+
+        bookingService.getPositionList = function(comId){
+            var position = api.all('booking/positionList');
+            return position.post({comId:comId});
         }
 
 
