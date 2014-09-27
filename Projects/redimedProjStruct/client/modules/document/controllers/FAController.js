@@ -26,7 +26,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
             else
             {
-                alert("Insert Failed!");
+                //alert("Insert Failed!");
             }
         });
 
@@ -40,7 +40,6 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             else
             {
                 $scope.listFA = response;
-
             }
         });
 
