@@ -39,10 +39,22 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
             else
             {
-                $scope.listFA = response;
+                var data = response[0];
+                var dataH = data.Header[0];
+                var dataS = data.Section;
+                $scope.listFA.push({ "header_name": dataH.FA_NAME, "section":[]});
+                angular.forEach(data.Section, function(dataS){
+                    $scope.listFA[0].section.push({ "section_name": dataS.SECTION_NAME, "line":[]});
+                    angular.forEach(data.Line, function(dataL){
+                        if(dataL.SECTION_ID == dataS.SECTION_ID)
+                        {
+                            console.log(dataL.SECTION_ID + " " + dataS.SECTION_ID);
+                            $scope.listFA[0].section[0].line.push({ "line_name": dataL.LINE_NAME, "detail":[]});
+                        }
+                    });
+                });
+
                 console.log(JSON.stringify($scope.listFA));
-
-
             }
         });
 

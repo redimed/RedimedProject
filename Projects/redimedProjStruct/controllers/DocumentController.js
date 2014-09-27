@@ -23,12 +23,12 @@ module.exports = {
 
     loadFA: function(req,res){
         var data = [];
-        db.sequelize.query("SELECT h.`FA_ID`,h.`FA_NAME` FROM `cln_fa_df_headers` h").success(function(dataH){
-            db.sequelize.query("SELECT s.`SECTION_ID`,s.`SECTION_NAME` FROM `cln_fa_df_sections` s;").success(function(dataS){
-                db.sequelize.query("SELECT l.`LINE_ID`, l.`QUESTION` FROM `cln_fa_df_lines` l;").success(function(dataL){
-                    db.sequelize.query("SELECT d.`DETAIL_ID`, d.`QUESTION` FROM `cln_fa_df_line_details` d;").success(function(dataD){
-                        db.sequelize.query("SELECT c.`FA_COMMENT_ID`, c.`NAME` FROM `cln_fa_df_comments` c;").success(function(dataC){
-                            data = [{"Header": dataH, "Section" : dataS,"Line": dataL,"Detail" : dataD,"Comment" : dataC}]
+        db.sequelize.query("SELECT h.`FA_ID`,h.`FA_NAME` FROM `cln_fa_df_headers` h",null,{raw:true}).success(function(dataH){
+            db.sequelize.query("SELECT s.`SECTION_ID`,s.`SECTION_NAME` FROM `cln_fa_df_sections` s;",null,{raw:true}).success(function(dataS){
+                db.sequelize.query("SELECT l.`LINE_ID`, l.`QUESTION` AS LINE_NAME, l.`SECTION_ID`  FROM `cln_fa_df_lines` l;",null,{raw:true}).success(function(dataL){
+                    db.sequelize.query("SELECT d.`DETAIL_ID`, d.`QUESTION` AS DETAIL_NAME FROM `cln_fa_df_line_details` d;",null,{raw:true}).success(function(dataD){
+                        db.sequelize.query("SELECT c.`FA_COMMENT_ID`, c.`NAME` FROM `cln_fa_df_comments` c;",null,{raw:true}).success(function(dataC){
+                            data = [{"Header": dataH, "Section" : dataS,"Line": dataL,"Detail" : dataD,"Comment" : dataC}];
                             res.json(data);
                         });
                     });
