@@ -40,74 +40,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             else
             {
                 $scope.listFA = response;
+                console.log(JSON.stringify($scope.listFA));
+
+
             }
         });
-
-        var items = [];
-        $scope.getSectionByID = function(id){
-            items = $scope.listFA;
-            var item ={};
-            for(var i=0;i<items.length;i++)
-            {
-                if(items[i].SECTION_ID == id)
-                {
-                    item = items[i];
-                    return item.SECTION_NAME;
-                }
-            }
-        };
-
-        $scope.getHeaderByID = function(id){
-            items = $scope.listFA;
-            var item ={};
-            for(var i=0;i<items.length;i++)
-            {
-                if(items[i].FA_ID == id)
-                {
-                    item = items[i];
-                    return item.FA_NAME;
-                }
-            }
-        };
-
-        $scope.getLineByID = function(id){
-            items = $scope.listFA;
-            var item ={};
-            for(var i=0;i<items.length;i++)
-            {
-                if(items[i].LINE_ID == id)
-                {
-                    item = items[i];
-                    return item.LINE_QUESTION;
-                }
-            }
-        };
-
-        $scope.getLineDetailByID = function(id){
-            items = $scope.listFA;
-            var item ={};
-            for(var i=0;i<items.length;i++)
-            {
-                if(items[i].DETAIL_ID == id)
-                {
-                    item = items[i];
-                    return item.DETAIL_QUESTION;
-                }
-            }
-        };
-
-        $scope.getCommentByID = function(id){
-            items = $scope.listFA;
-            var item ={};
-            for(var i=0;i<items.length;i++)
-            {
-                if(items[i].FA_COMMENT_ID == id)
-                {
-                    item = items[i];
-                    return item.NAME;
-                }
-            }
-        };
 
 
 
