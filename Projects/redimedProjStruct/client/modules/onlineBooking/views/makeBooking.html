@@ -15,101 +15,132 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <div class="row">
-            <div class="col-md-4">
-                <label class='control-label'>Company Name</label>
+        <form name="bookingForm" ng-submit="submitBooking(bookingForm)" method="post" novalidate>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label class='control-label'>Company Name</label>
+                </div>
+                <div class="col-md-8">
+                    <label class="bold">{{companyName}}</label>
+                </div>
             </div>
-            <div class="col-md-8">
-                <label>{{companyName}}</label>
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label">Subsidiary</label>
-            </div>
-            <div class="col-md-4">
-                <select ng-model="c.CompanyId" class="form-control" ng-options="com.id as com.Company_name for com in companyList" >
-                    <option value="">---Select Sub Company---</option>
-                </select>
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                 <label class="control-label">Purchase Order Number</label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" ng-model="c.PO_number"  class="form-control" />
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label">Email for receiving results</label>
-            </div>
-            <div class="col-md-7">
-                <input type="text" ng-model="c.result_email" class="form-control" />
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label">Email for receiving invoices</label>
-            </div>
-            <div class="col-md-7">
-                <input type="text" ng-model="c.invoice_email" class="form-control" />
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label">Project Identification</label>
-            </div>
-            <div class="col-md-7">
-                <input type="text" ng-model="c.Project" class="form-control" />
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label">Comments</label>
-            </div>
-            <div class="col-md-7">
-                <input type="text" ng-model="c.Comment" class="form-control" />
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label">Package</label>
-            </div>
-            <div class="col-md-4">
-                <select ng-model="c.PackId" ng-change="packageChange(c.PackId)" class="form-control" ng-options="p.id as p.package_name for p in packageList" >
-                    <option value="">---Select Package---</option>
-                </select>
-            </div>
-        </div>
-        <br/>
-        <div class="row" ng-repeat="ass in packAss">
-            <div class="col-md-4"></div>
-            <div class="col-md-8">
-                <label class="control-label">
-                    &nbsp;&nbsp;{{ass.ass_name}}
-                </label>
-            </div>
-        </div>
-        <br/>
-        <div class='row'>
-            <div class='col-md-2'>
-                <a href="javascript:;" ng-click="newCandidate()"  class="btn green">New Candidate</a>
-            </div>
-            <div class='col-md-2'>
-                <a href="javascript:;" ng-click="submitBooking()"  class="btn btn-primary">Submit Booking</a>
-            </div>
-        </div>
-    </div>
 
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label class="control-label">Subsidiary</label>
+                </div>
+                <div class="col-md-4">
+                    <select ng-model="c.SubCompanyId" ng-change="subChange(c.SubCompanyId)" class="form-control" ng-options="com.id as com.Company_name for com in companyList" >
+                        <option value="">---Select Sub Company---</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && bookingForm.orderNum.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                         <label class="control-label">Purchase Order Number</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" ng-model="c.PO_number" required name="orderNum"  class="form-control" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && bookingForm.orderNum.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-7">
+                        <span for="orderNum" class="help-block">Order Number is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && bookingForm.resultMail.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Email for receiving results</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" name="resultMail" required ng-model="c.result_email" class="form-control" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && bookingForm.resultMail.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-7">
+                        <span for="resultMail" class="help-block">Result Email is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && bookingForm.invoiceMail.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Email for receiving invoices</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" name="invoiceMail" required ng-model="c.invoice_email" class="form-control" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && bookingForm.invoiceMail.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-7">
+                        <span for="invoiceMail" class="help-block">Invoice Email is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label class="control-label">Project Identification</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" ng-model="c.Project" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label class="control-label">Comments</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" ng-model="c.Comment" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && bookingForm.package.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Package</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="c.PackId" name="package" required ng-change="packageChange(c.PackId)" class="form-control" ng-options="p.id as p.package_name for p in packageList" >
+                            <option value="">---Select Package---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && bookingForm.package.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="package" class="help-block">Please select a package.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row" ng-repeat="ass in packAss">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <label class="control-label">
+                        &nbsp;&nbsp;{{ass.ass_name}}
+                    </label>
+                </div>
+            </div>
+
+            <div class='form-group row'>
+                <div class='col-md-5 row' style="margin-left: 5px;">
+                    <a href="javascript:;" ng-click="newCandidate()"  class="btn green">New Candidate</a>
+                    <button type="submit"  class="btn btn-primary">Submit Booking</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <div class="portlet light bordered ">
     <div class="portlet-title">
@@ -122,37 +153,37 @@
         <div class="table-scrollable">
             <table ng-table="tableParams"  class="table table-striped table-hover table-bordered table-responsive">
                 <tr ng-repeat="b in $data">
-                    <td class="col-md-2" data-title="'Candidate Name'" >
+                    <td data-title="'Candidate Name'" >
                         <span>{{b.name}}</span>
                     </td>
-                    <td class="col-md-2" data-title="'Date Of Birth'" >
-                        <span>{{b.dob}}</span>
+                    <td data-title="'Date Of Birth'" >
+                        <span>{{b.dob | date:'dd/MM/yyyy'}}</span>
                     </td>
-                    <td class="col-md-2" data-title="'Phone'" >
+                    <td data-title="'Phone'" >
                         <span>{{b.phone}}</span>
                     </td>
-                    <td class="col-md-2" data-title="'Email'">
+                    <td data-title="'Email'">
                         <span>{{b.email}}</span>
                     </td>
-                    <td class="col-md-2" data-title="'Position'" >
+                    <td data-title="'Position'" >
                         <span>{{b.position}}</span>
                     </td>
-                    <td class="col-md-2" data-title="'Preferred REDiMED Site'">
-                        <span>{{b.siteId}}</span>
+                    <td data-title="'Preferred REDiMED Site'">
+                        <span>{{b.siteName}}</span>
                     </td>
                     <td data-title="'From Date'">
-                        <span>{{b.fromDate}}</span>
+                        <span>{{b.fromDate | date:'dd/MM/yyyy'}}</span>
                     </td>
                     <td data-title="'To Date'" >
-                        <span>{{b.toDate}}</span>
+                        <span>{{b.toDate | date:'dd/MM/yyyy'}}</span>
                     </td>
                     <td data-title="'Calendar'" >
-                        <span>{{b.calId}}</span>
+                        <span>{{b.displayDate}}</span>
                     </td>
                     <td class="col-md-2" data-title="'Actions'">
-                        <a href="javascript:;" class="btn btn-primary">Edit</a>
+                        <a href="javascript:;" ng-click="editCandidate(b)" class="btn btn-primary">Edit</a>
 
-                        <a href="javascript:;" class="btn btn-danger">Delete</a>
+                        <a href="javascript:;" ng-click="deleteCandidate(b)" class="btn btn-danger">Delete</a>
 
                     </td>
                 </tr>

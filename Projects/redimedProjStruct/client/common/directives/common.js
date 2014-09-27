@@ -1,4 +1,4 @@
-angular.module("crm.directive.common", [])
+angular.module("app.directive.common", [])
 
 .directive("minHeight", function(){
 	return{

@@ -15,26 +15,7 @@ module.exports = {
                 res.json({status:'error',err:err});
             })
     },
-    packageAssById: function(req,res){
-        var packId = req.body.id;
 
-        db.sequelize.query('SELECT p.pack_id, p.ass_id, p.ass_name, a.HEADER_ID, a.period, h.ass_name AS HeaderName FROM `packages_assessments` p INNER JOIN assessments a ON p.`ass_id` = a.`id` LEFT JOIN assessment_headers h ON a.HEADER_ID = h.id WHERE p.pack_id = ?',null,{raw:true},[packId])
-            .success(function(data){
-                res.json({status:'success',rs:data});
-            })
-            .error(function(err){
-                res.json({status:'error',err:err});
-            })
-    },
-    packageAss: function(req,res){
-      db.sequelize.query('SELECT * FROM packages_assessments')
-          .success(function(data){
-              res.json({status:'success',rs:data});
-          })
-          .error(function(err){
-              res.json({status:'error',err:err});
-          })
-    },
     bookingList: function(req,res){
         var comId = req.body.id;
         db.sequelize.query('SELECT * FROM booking_cadidates_v WHERE company_id = ?',null,{raw:true},[comId])
@@ -132,17 +113,7 @@ module.exports = {
                 res.json({status:'error'});
             })
     },
-    insertPackage: function(req,res){
-        var packName = req.body.name;
-        var comId = req.body.comId;
-        db.sequelize.query('INSERT INTO packages(package_name,company_id) VALUES(?,?)',null,{raw:true},[packName,comId])
-            .success(function(data){
-                res.json({status:'success'});
-            })
-            .error(function(err){
-                res.json({status:'error'});
-            })
-    },
+
     assList: function(req,res){
         db.sequelize.query('SELECT * FROM assessment_v',null,{raw:true})
             .success(function(data){
@@ -160,6 +131,36 @@ module.exports = {
             })
             .error(function(err){
                 res.json({status:"error"});
+            })
+    },
+    submitBooking: function(req,res){
+        var info = req.body.info;
+        var head = req.body.header;
+
+        //console.log(info);
+
+
+        db.sequelize.query('INSERT INTO booking_headers(Booking_id,PO_number,result_email,invoice_email,Project_Identofication,Comments,package_id,company_id,Booking_person,contact_number,sub_company_id,contact_email) ' +
+                            'VALUES((SELECT MAX(Booking_id)+1 FROM booking_headers),?,?,?,?,?,?,?,?,?,?,?',null,{raw:true},[
+                                            head.PO_number,
+                                            head.result_email,
+                                            head.invoice_email,
+                                            head.ProjectIdentification,
+                                            head.Comment,
+                                            head.PackageId,
+                                            head.CompanyId,
+                                            head.Booking_Person,
+                                            head.contact_number,
+                                            head.subCompany_Id,
+                                            head.contact_email
+                                     ])
+            .success(function(data){
+                res.json({status:'success'});
+                console.log(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
             })
     }
 };

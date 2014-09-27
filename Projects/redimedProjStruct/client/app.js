@@ -12,7 +12,7 @@ angular.module("app", [
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
 
 
-    "crm.directive.common"      // CUSTOM DIRECTIVES
+    "app.directive.common"      // CUSTOM DIRECTIVES
 ])
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider) {

@@ -7,22 +7,22 @@ angular.module('app.loggedIn.booking.services',[])
         var api = Restangular.all('api');
 
         bookingService.getSubCompany = function(id){
-            var sub = api.all('company/getSub');
+            var sub = api.all('company/sub');
             return sub.post({id:id});
         }
 
         bookingService.getPackage = function(id){
-            var package = api.all('booking/package');
+            var package = api.all('booking/packageList');
             return package.post({id:id});
         }
 
         bookingService.getPackageAssById = function(id){
-            var ass = api.all('booking/packageAssById');
+            var ass = api.all('package/assessment/id');
             return ass.post({id:id});
         }
 
         bookingService.getPackageAss = function(){
-            var ass = api.one('booking/packageAss');
+            var ass = api.one('package/assessment');
             return ass.get();
         }
 
@@ -68,7 +68,7 @@ angular.module('app.loggedIn.booking.services',[])
         }
 
         bookingService.insertPackage = function(name,comId){
-            var insert = api.all('booking/insertPackage');
+            var insert = api.all('package/insert');
             return insert.post({name:name,comId:comId});
         }
 
@@ -81,6 +81,18 @@ angular.module('app.loggedIn.booking.services',[])
             var position = api.all('booking/positionList');
             return position.post({comId:comId});
         }
+
+        bookingService.submitBook = function(info,head){
+            var submit = api.all('booking/submit');
+            return submit.post({info:info,header:head});
+        }
+
+        bookingService.getSubCompanyInfo = function(id){
+            var sub = api.all('company/sub/info');
+            return sub.post({comId:id});
+        }
+
+
 
 
         return bookingService;

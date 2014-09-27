@@ -25,5 +25,13 @@ module.exports = {
         }).error(function(err){
             res.json({status:'error',err:err});
         })
+    },
+    subCompanyInfo: function(req,res){
+        var id = req.body.comId;
+        db.Company.find({where:{id:id}},{raw:true}).success(function(data){
+            res.json(data);
+        }).error(function(err){
+            res.json({status:'error'});
+        })
     }
 };

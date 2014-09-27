@@ -9,6 +9,7 @@ var CompanyController = require('./controllers/CompanyController');
 var FunctionController = require('./controllers/FunctionController');
 var BookingController = require('./controllers/BookingController');
 var RedimedSiteController = require('./controllers/RedimedSiteController');
+var PackageController = require('./controllers/PackageController');
 
 var rl_types=require('./routes/rl_types');
 var cln_specialties=require('./routes/cln_specialities');
@@ -60,10 +61,14 @@ app.get('/api/users/loggedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
 
-app.post('/api/company/getSub',CompanyController.subCompany);
-app.post('/api/booking/package', BookingController.packageList);
-app.post('/api/booking/packageAssById',BookingController.packageAssById);
-app.get('/api/booking/packageAss',BookingController.packageAss);
+app.post('/api/package/assessment/id',PackageController.packageAssById);
+app.get('/api/package/assessment',PackageController.packageAss);
+app.post('/api/package/insert',PackageController.insertPackage);
+
+app.post('/api/company/sub',CompanyController.subCompany);
+app.post('/api/company/sub/info',CompanyController.subCompanyInfo);
+
+app.post('/api/booking/packageList', BookingController.packageList);
 app.post('/api/booking/list',BookingController.bookingList);
 app.post('/api/booking/detail',BookingController.bookingDetail);
 app.post('/api/booking/cancel',BookingController.cancelBooking);
@@ -71,9 +76,10 @@ app.post('/api/booking/calendar',BookingController.calendarList);
 app.post('/api/booking/appointmentTime',BookingController.appointmentTime);
 app.post('/api/booking/changeBookingTime',BookingController.changeBookingTime);
 app.post('/api/booking/deletePackage',BookingController.removePackage);
-app.post('/api/booking/insertPackage',BookingController.insertPackage);
+
 app.get('/api/booking/assList',BookingController.assList);
 app.post('/api/booking/positionList',BookingController.positionList);
+app.post('/api/booking/submit',BookingController.submitBooking);
 
 app.get('/api/rlob/rl_types/list',rl_types.list);
 app.get('/api/rlob/cln_specialties/list',cln_specialties.list);
