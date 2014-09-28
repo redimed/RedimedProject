@@ -6,18 +6,20 @@ angular.module('app.loggedIn.booking.make.controller',[])
         var companyInfo;
         var userInfo;
 
-        if($cookieStore.get('companyInfo') !== 'undefined')
+        if(typeof $cookieStore.get('companyInfo') !== 'undefined')
         {
             companyInfo = $cookieStore.get('companyInfo');
         }
 
-        if($cookieStore.get('userInfo') !== 'undefined')
+        if(typeof $cookieStore.get('userInfo') !== 'undefined')
         {
             userInfo = $cookieStore.get('userInfo');
         }
 
-
-        $scope.companyName = companyInfo[0].Company_name;
+      
+        $scope.companyName = companyInfo[0].Company_name === null ? '':companyInfo[0].Company_name;
+      
+        
         $scope.companyList = [];
         $scope.packageList = [];
         $scope.data = [];
@@ -238,7 +240,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
             fromDate: '',
             toDate: '',
             calId:'',
-            name:'',
+            candidateName:'',
             dob:'',
             position:'',
             phone:'',
@@ -351,7 +353,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     fromDate: '',
                     toDate: '',
                     calId: '',
-                    name: '',
+                    candidateName: '',
                     dob: '',
                     position: '',
                     phone: '',
@@ -361,7 +363,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     displayDate: ''
 
                 };
-                $scope.candidateInfo.name = $scope.info.name;
+                $scope.candidateInfo.candidateName = $scope.info.candidateName;
                 $scope.candidateInfo.dob = $filter('date')($scope.info.dob, 'yyyy-MM-dd');
                 $scope.candidateInfo.position = $scope.info.position;
                 $scope.candidateInfo.phone = $scope.info.phone;

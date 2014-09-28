@@ -134,33 +134,74 @@ module.exports = {
             })
     },
     submitBooking: function(req,res){
+
         var info = req.body.info;
         var head = req.body.header;
 
         //console.log(info);
+    
+        db.sequelize.query('SELECT MAX(Booking_id) AS Id FROM booking_headers',null,{raw:true})
+            .success(function(id){
+                db.BookingHeader.create({
+                    Booking_id: id[0].Id + 1,
+                    PO_Number: head.PO_number,
+                    result_email: head.result_email,
+                    invoice_email: head.invoice_email,
+                    Project_Identofication: head.ProjectIdentification,
+                    Comments: head.Comment,
+                    package_id: head.PackageId,
+                    company_id: head.CompanyId,
+                    Booking_Person: head.Booking_Person,
+                    contact_number: head.contact_number,
+                    sub_company_id: head.subCompany_Id,
+                    contact_email: head.contact_email
+                })
+                    .success(function(data){
+                        var count = 0;
+                        for(var i=0;i < info.length; i++)
+                        {
+                            var cInfo = info[i];
+                            db.sequelize.query('SELECT MAX(Candidate_id) AS Id FROM booking_candidates',null,{raw:true})
+                                .success(function(candidateId){
+                                     db.BookingCandidate.create({
+                                        Booking_id: data['dataValues'].Booking_id,
+                                        Candidate_id: candidateId[0].Id + 1,
+                                        Candidates_name: cInfo.candidateName,
+                                        DoB: cInfo.dob,
+                                        Phone: cInfo.phone,
+                                        Email: cInfo.email,
+                                        Position: cInfo.position,
+                                        Appointment_time: cInfo.submitDate,
+                                        Appointment_status: 'Pending',
+                                        SITE_ID: cInfo.siteId,
+                                        FROM_DATE: cInfo.fromDate,
+                                        TO_DATE: cInfo.toDate,
+                                        CALENDAR_ID: cInfo.calId
+                                    })
+                                     .success(function(){
+                                            count++;
+                                     })
+                                     .error(function(err){
+                                           res.json({status:'error'})
+                                           console.log(err);   
+                                     })
+                                })
+                            
+                            console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
 
+                            
+                           
+                        }
 
-        db.sequelize.query('INSERT INTO booking_headers(Booking_id,PO_number,result_email,invoice_email,Project_Identofication,Comments,package_id,company_id,Booking_person,contact_number,sub_company_id,contact_email) ' +
-                            'VALUES((SELECT MAX(Booking_id)+1 FROM booking_headers),?,?,?,?,?,?,?,?,?,?,?',null,{raw:true},[
-                                            head.PO_number,
-                                            head.result_email,
-                                            head.invoice_email,
-                                            head.ProjectIdentification,
-                                            head.Comment,
-                                            head.PackageId,
-                                            head.CompanyId,
-                                            head.Booking_Person,
-                                            head.contact_number,
-                                            head.subCompany_Id,
-                                            head.contact_email
-                                     ])
-            .success(function(data){
-                res.json({status:'success'});
-                console.log(data);
-            })
-            .error(function(err){
-                res.json({status:'error'});
-                console.log(err);
+                        console.log(count);
+                        if(count === info.length){
+                            res.json({status:'success'})
+                        }
+                    })
+                    .error(function(err){
+                        res.json({status:'error'})
+                        console.log(err);
+                    })
             })
     }
 };
