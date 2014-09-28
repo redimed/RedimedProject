@@ -20,71 +20,65 @@
                             </a>
                         </div>
                     </div>
-                    <!--<div class="portlet-body form" ng-repeat="(nameL,nameLList) in nameSList | groupBy: 'LINE_ID'">-->
-                        <!--<div class="panel panel-default">-->
-                            <!--<div class="panel-heading">-->
-                                <!--<h3 class="panel-title">{{getLineByID(nameL)}}</h3>-->
-                            <!--</div>-->
-                            <!--<div class="panel-body">-->
-                                <!--<div ng-repeat="(nameD,nameDList) in nameLList | groupBy: 'DETAIL_ID'">-->
-                                    <!--<label class="bold">{{getLineDetailByID(nameD)}}</label>-->
-                                    <!--<div ng-repeat="name in nameDList | unique : 'DETAIL_ID'">-->
-                                        <!--<div class="row">-->
-                                            <!--<div>-->
-                                                <!--<div ng-if="name.VAL1_NAME != null" ng-class="{'col-md-2' : name.VAL1_NAME != null}">-->
-                                                    <!--<label  style="margin-top: 5px" ng-class="{'pull-right' : name.VAL1_NAME != null}" >-->
-                                                        <!--{{name.VAL1_NAME}}-->
+                    <div class="portlet-body form" ng-repeat="line in section.line">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{line.line_name}}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ng-repeat="detail in line.detail">
+                                    <label class="bold">{{detail.detail_name}}</label>
+                                    <div class="row">
+                                        <div ng-if="detail.val1_name != null" ng-class="{'col-md-2' : detail.val1_name != null}">
+                                            <label  style="margin-top: 5px" ng-class="{'pull-right' : detail.val1_name != null}" >
+                                                {{detail.val1_name}}
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2' : detail.val1_isvalue == 1}">
+                                                <input type="text" placeholder="1"  class="form-control">
+                                            </div>
+                                            <!--<div ng-if="detail.val1_ischeckbox == 1" ng-class="{'col-md-2' : detail.val1_ischeckbox == 1}">-->
+                                                <!--<div class="btn-group btn-group-circle" data-toggle="buttons">-->
+                                                    <!--<label class="btn grey">-->
+                                                        <!--<input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes-->
                                                     <!--</label>-->
-                                                <!--</div>-->
-                                                <!--<div>-->
-                                                    <!--<div ng-if="name.VAL1_ISVALUE == 1" ng-class="{'col-md-2' : name.VAL1_ISVALUE == 1}">-->
-                                                        <!--<input type="text" placeholder="1"  class="form-control">-->
-                                                    <!--</div>-->
-                                                    <!--<div ng-if="name.VAL1_ISCHECKBOX == 1" ng-class="{'col-md-2' : name.VAL1_ISCHECKBOX == 1}">-->
-                                                        <!--<div class="btn-group btn-group-circle" data-toggle="buttons">-->
-                                                            <!--<label class="btn grey">-->
-                                                                <!--<input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes-->
-                                                            <!--</label>-->
-                                                            <!--<label class="btn grey">-->
-                                                                <!--<input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No-->
-                                                            <!--</label>-->
-                                                        <!--</div>-->
-                                                    <!--</div>-->
-
-
+                                                    <!--<label class="btn grey">-->
+                                                        <!--<input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No-->
+                                                    <!--</label>-->
                                                 <!--</div>-->
                                             <!--</div>-->
-                                            <!--<div>-->
-                                                <!--<div ng-if="name.VAL2_NAME != null" ng-class="{'col-md-2' : name.VAL2_NAME != null}">-->
-                                                    <!--<label  style="margin-top: 5px" ng-class="{'pull-right' : name.VAL2_NAME != null}" >-->
-                                                        <!--{{name.VAL2_NAME}}-->
-                                                    <!--</label>-->
-                                                <!--</div>-->
-                                                <!--<div>-->
-                                                    <!--<div ng-if="name.VAL2_ISVALUE == 1" ng-class="{'col-md-2' : name.VAL2_ISVALUE == 1}">-->
-                                                        <!--<input type="text" placeholder="2" class="form-control">-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
+                                        </div>
+                                        <!--<div>-->
+                                            <!--<div ng-if="name.VAL2_NAME != null" ng-class="{'col-md-2' : name.VAL2_NAME != null}">-->
+                                                <!--<label  style="margin-top: 5px" ng-class="{'pull-right' : name.VAL2_NAME != null}" >-->
+                                                    <!--{{name.VAL2_NAME}}-->
+                                                <!--</label>-->
                                             <!--</div>-->
                                             <!--<div>-->
-                                                <!--<div ng-if="name.IsCommentText != null">-->
-                                                    <!--<label class="col-md-1" style="margin-top: 5px" >-->
-                                                        <!--Comment-->
-                                                    <!--</label>-->
-                                                    <!--<div class="col-md-2">-->
-                                                        <!--<input type="text" class="form-control">-->
-                                                    <!--</div>-->
+                                                <!--<div ng-if="name.VAL2_ISVALUE == 1" ng-class="{'col-md-2' : name.VAL2_ISVALUE == 1}">-->
+                                                    <!--<input type="text" placeholder="2" class="form-control">-->
                                                 <!--</div>-->
                                             <!--</div>-->
                                         <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="row" ng-repeat="nameC in nameLList | unique: 'NAME'">-->
-                                    <!--<label ng-if="nameC.NAME != 'null'" class="text-info control-label"> {{nameC.NAME}} </label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                                        <!--<div>-->
+                                            <!--<div ng-if="name.IsCommentText != null">-->
+                                                <!--<label class="col-md-1" style="margin-top: 5px" >-->
+                                                    <!--Comment-->
+                                                <!--</label>-->
+                                                <!--<div class="col-md-2">-->
+                                                    <!--<input type="text" class="form-control">-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <div class="row" ng-repeat="nameC in line.comment">
+                                    <label ng-if="nameC.comment_name != 'null'" class="text-info control-label"> {{nameC.comment_name}} </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 

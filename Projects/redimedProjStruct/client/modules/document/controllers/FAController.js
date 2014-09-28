@@ -55,6 +55,13 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                 if(dataD.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                 {
                                     $scope.listFA[0].section[i].line[j].detail.push({ "detail_name": dataD.DETAIL_NAME});
+                                    $scope.listFA[0].section[i].line[j].detail.push({ "val1_name": dataD.VAL1_NAME});
+                                    $scope.listFA[0].section[i].line[j].detail.push({ "val2_name": dataD.VAL2_NAME});
+                                    $scope.listFA[0].section[i].line[j].detail.push({ "val1_isvalue": dataD.VAL1_ISVALUE});
+                                    $scope.listFA[0].section[i].line[j].detail.push({ "val2_isvalue": dataD.VAL2_ISVALUE});
+                                    $scope.listFA[0].section[i].line[j].detail.push({ "val1_ischeckbox": dataD.VAL1_ISCHECKBOX});
+                                    $scope.listFA[0].section[i].line[j].detail.push({ "val2_ischeckbox": dataD.VAL2_ISCHECKBOX});
+                                    $scope.listFA[0].section[i].line[j].detail.push({ "comment_text": dataD.IsCommentText});
                                 }
                             });
                             angular.forEach(data.Comment, function(dataC){
