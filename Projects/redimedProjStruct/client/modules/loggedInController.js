@@ -13,9 +13,6 @@ angular.module("app.loggedIn.controller",[
         UserService.menu().then(function(response){
             var i = 0;
             angular.forEach(response, function(menu){
-
-
-
                 if(menu.Parent_Id === -1)
                     $scope.loggedInMenus.push({"parent": {"name": menu.Description, "definition":menu.Definition , "menu_id": menu.Menu_Id, "childs":[]}});
                 else{

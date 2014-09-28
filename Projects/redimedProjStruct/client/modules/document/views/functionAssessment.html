@@ -1,25 +1,25 @@
 
-    <!--<div ng-repeat="(nameH, nameHList) in listFA |groupBy: 'FA_ID'">-->
+    <div ng-repeat="header in listFA">
 
-        <!--<div class="caption">-->
-            <!--<div class="row">-->
-                <!--<div class="col-md-12">-->
-                    <!--<p style="font-size: xx-large;text-align: center;font-weight: bolder">{{getHeaderByID(nameH)}}</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<div class="col-md-12">-->
-                <!--<div class="portlet box grey-cascade" ng-repeat="(nameS, nameSList) in nameHList |groupBy: 'SECTION_ID'">-->
-                    <!--<div class="portlet-title">-->
-                        <!--<div class="caption">-->
-                            <!--<i class="fa fa-gift"></i> {{getSectionByID(nameS)}}-->
-                        <!--</div>-->
-                        <!--<div class="tools">-->
-                            <!--<a href="javascript:;" class="collapse">-->
-                            <!--</a>-->
-                        <!--</div>-->
-                    <!--</div>-->
+        <div class="caption">
+            <div class="row">
+                <div class="col-md-12">
+                    <p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.header_name}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box grey-cascade" ng-repeat="section in header.section">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-gift"></i> {{section.section_name}}
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse">
+                            </a>
+                        </div>
+                    </div>
                     <!--<div class="portlet-body form" ng-repeat="(nameL,nameLList) in nameSList | groupBy: 'LINE_ID'">-->
                         <!--<div class="panel panel-default">-->
                             <!--<div class="panel-heading">-->
@@ -85,11 +85,11 @@
                             <!--</div>-->
                         <!--</div>-->
                     <!--</div>-->
-                <!--</div>-->
+                </div>
 
 
-            <!--</div>-->
-        <!--</div>-->
+            </div>
+        </div>
 
-    <!--</div>-->
+    </div>
 
