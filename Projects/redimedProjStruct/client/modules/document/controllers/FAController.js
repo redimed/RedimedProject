@@ -50,18 +50,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     angular.forEach(data.Line, function(dataL){
                         if(dataL.SECTION_ID ==  $scope.listFA[0].section[i].section_id )
                         {
-                            $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"line_name": dataL.LINE_NAME, "detail":[],"comment":[]});
+                            $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"line_name": dataL.LINE_NAME,"line_type": dataL.LineType, "detail":[],"comment":[]});
                             angular.forEach(data.Detail, function(dataD){
                                 if(dataD.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                 {
-                                    $scope.listFA[0].section[i].line[j].detail.push({ "detail_name": dataD.DETAIL_NAME});
-                                    $scope.listFA[0].section[i].line[j].detail.push({ "val1_name": dataD.VAL1_NAME});
-                                    $scope.listFA[0].section[i].line[j].detail.push({ "val2_name": dataD.VAL2_NAME});
-                                    $scope.listFA[0].section[i].line[j].detail.push({ "val1_isvalue": dataD.VAL1_ISVALUE});
-                                    $scope.listFA[0].section[i].line[j].detail.push({ "val2_isvalue": dataD.VAL2_ISVALUE});
-                                    $scope.listFA[0].section[i].line[j].detail.push({ "val1_ischeckbox": dataD.VAL1_ISCHECKBOX});
-                                    $scope.listFA[0].section[i].line[j].detail.push({ "val2_ischeckbox": dataD.VAL2_ISCHECKBOX});
-                                    $scope.listFA[0].section[i].line[j].detail.push({ "comment_text": dataD.IsCommentText});
+                                    $scope.listFA[0].section[i].line[j].detail.push({ "detail_name": dataD.DETAIL_NAME, "val1_name": dataD.VAL1_NAME, "val2_name": dataD.VAL2_NAME,"val1_isvalue": dataD.VAL1_ISVALUE,"val2_isvalue": dataD.VAL2_ISVALUE,"val1_ischeckbox": dataD.VAL1_ISCHECKBOX,"val2_ischeckbox": dataD.VAL2_ISCHECKBOX, "comment_text": dataD.IsCommentText});
                                 }
                             });
                             angular.forEach(data.Comment, function(dataC){

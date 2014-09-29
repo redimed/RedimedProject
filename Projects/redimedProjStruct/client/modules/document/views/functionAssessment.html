@@ -20,8 +20,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="portlet-body form" ng-repeat="line in section.line">
-                        <div class="panel panel-default">
+                    <div class="portlet-body" ng-repeat="line in section.line">
+                        <div ng-if="line.line_type != 1" class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">{{line.line_name}}</h3>
                             </div>
@@ -34,56 +34,212 @@
                                                 {{detail.val1_name}}
                                             </label>
                                         </div>
-                                        <div>
-                                            <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2' : detail.val1_isvalue == 1}">
-                                                <input type="text" placeholder="1"  class="form-control">
-                                            </div>
-                                            <!--<div ng-if="detail.val1_ischeckbox == 1" ng-class="{'col-md-2' : detail.val1_ischeckbox == 1}">-->
-                                                <!--<div class="btn-group btn-group-circle" data-toggle="buttons">-->
-                                                    <!--<label class="btn grey">-->
-                                                        <!--<input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes-->
-                                                    <!--</label>-->
-                                                    <!--<label class="btn grey">-->
-                                                        <!--<input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No-->
-                                                    <!--</label>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
+                                        <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2' : detail.val1_isvalue == 1}">
+                                            <input type="text" placeholder="1"  class="form-control">
                                         </div>
-                                        <!--<div>-->
-                                            <!--<div ng-if="name.VAL2_NAME != null" ng-class="{'col-md-2' : name.VAL2_NAME != null}">-->
-                                                <!--<label  style="margin-top: 5px" ng-class="{'pull-right' : name.VAL2_NAME != null}" >-->
-                                                    <!--{{name.VAL2_NAME}}-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div>-->
-                                                <!--<div ng-if="name.VAL2_ISVALUE == 1" ng-class="{'col-md-2' : name.VAL2_ISVALUE == 1}">-->
-                                                    <!--<input type="text" placeholder="2" class="form-control">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div>-->
-                                            <!--<div ng-if="name.IsCommentText != null">-->
-                                                <!--<label class="col-md-1" style="margin-top: 5px" >-->
-                                                    <!--Comment-->
-                                                <!--</label>-->
-                                                <!--<div class="col-md-2">-->
-                                                    <!--<input type="text" class="form-control">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                        <div ng-if="detail.val1_ischeckbox == 1" ng-class="{'col-md-1' : detail.val1_ischeckbox == 1}">
+                                            <input class="form-control" type="checkbox" />
+                                        </div>
+                                        <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4' : detail.val1_ischeckbox == 2}">
+                                            <div class="btn-group btn-group-circle" data-toggle="buttons">
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> UNABLE
+                                                </label>
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> PARTIAL
+                                                </label>
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ABLE
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2' : detail.val1_ischeckbox == 3}">
+                                            <div class="btn-group btn-group-circle" data-toggle="buttons">
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                                                </label>
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div ng-if="detail.val2_name != null" ng-class="{'col-md-2' : detail.val2_name != null}">
+                                            <label  style="margin-top: 5px" ng-class="{'pull-right' : detail.val2_name != null}" >
+                                                {{detail.val2_name}}
+                                            </label>
+                                        </div>
+                                        <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-2' : detail.val2_isvalue == 1}">
+                                            <input type="text" placeholder="1"  class="form-control">
+                                        </div>
+                                        <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1' : detail.val2_ischeckbox == 1}">
+                                            <input class="form-control" type="checkbox" />
+                                        </div>
+                                        <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4' : detail.val2_ischeckbox == 2}">
+                                            <div class="btn-group btn-group-circle" data-toggle="buttons">
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> UNABLE
+                                                </label>
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> PARTIAL
+                                                </label>
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ABLE
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div ng-if="detail.val2_ischeckbox == 3" ng-class="{'col-md-2' : detail.val2_ischeckbox == 3}">
+                                            <div class="btn-group btn-group-circle" data-toggle="buttons">
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                                                </label>
+                                                <label class="btn grey">
+                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div ng-if="detail.comment_text == 1">
+                                            <label class="col-md-1" style="margin-top: 5px" >
+                                                Comment
+                                            </label>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row" ng-repeat="nameC in line.comment">
-                                    <label ng-if="nameC.comment_name != 'null'" class="text-info control-label"> {{nameC.comment_name}} </label>
+                                </br>
+                                <div ng-class="{'panel panel-default' : line.comment.length > 0}" >
+                                    <div ng-class="{'panel-body' : line.comment.length > 0}">
+                                        <label ng-if="line.comment.length > 0" class="control-label bold">Question Comments</label>
+                                        <div ng-repeat="nameC in line.comment">
+                                            <div class="row">
+                                                <div class="col-md-5 ">
+                                                    <label ng-if="nameC.comment_name != 'null'" class="text-info control-label pull-right"> {{nameC.comment_name}} </label>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
             </div>
         </div>
 
-    </div>
+
+        <div class="caption">
+            <div class="row">
+                <div class="col-md-12">
+                    <p style="font-size: xx-large;text-align: center;font-weight: bolder">FUNCTIONAL ASSESSMENT SUMMARY</p>
+                </div>
+            </div>
+        </div>
+        <div >
+            <div class="row" ng-repeat="section in header.section">
+                <div class="col-md-12" ng-repeat="line in section.line">
+                    <div class="portlet box grey-cascade"  ng-if="line.line_type == 1">
+                        <div class="portlet-title">
+                            <div class="caption" >
+                                <i class="fa fa-gift"></i> {{line.line_name}}
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body" ng-repeat="detail in line.detail">
+                            <div>
+                                <label class="bold">{{detail.detail_name}}</label>
+                                <div class="row">
+                                    <div ng-if="detail.val1_name != null" ng-class="{'col-md-2' : detail.val1_name != null}">
+                                        <label  style="margin-top: 5px" ng-class="{'pull-right' : detail.val1_name != null}" >
+                                            {{detail.val1_name}}
+                                        </label>
+                                    </div>
+                                    <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2' : detail.val1_isvalue == 1}">
+                                        <input type="text" placeholder="1"  class="form-control">
+                                    </div>
+                                    <div ng-if="detail.val1_ischeckbox == 1" ng-class="{'col-md-1' : detail.val1_ischeckbox == 1}">
+                                        <input class="form-control" type="checkbox" />
+                                    </div>
+                                    <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4' : detail.val1_ischeckbox == 2}">
+                                        <div class="btn-group btn-group-circle" data-toggle="buttons">
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> UNABLE
+                                            </label>
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> PARTIAL
+                                            </label>
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ABLE
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2' : detail.val1_ischeckbox == 3}">
+                                        <div class="btn-group btn-group-circle" data-toggle="buttons">
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                                            </label>
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div ng-if="detail.val2_name != null" ng-class="{'col-md-2' : detail.val2_name != null}">
+                                        <label  style="margin-top: 5px" ng-class="{'pull-right' : detail.val2_name != null}" >
+                                            {{detail.val2_name}}
+                                        </label>
+                                    </div>
+                                    <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-2' : detail.val2_isvalue == 1}">
+                                        <input type="text" placeholder="1"  class="form-control">
+                                    </div>
+                                    <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1' : detail.val2_ischeckbox == 1}">
+                                        <input class="form-control" type="checkbox" />
+                                    </div>
+                                    <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4' : detail.val2_ischeckbox == 2}">
+                                        <div class="btn-group btn-group-circle" data-toggle="buttons">
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> UNABLE
+                                            </label>
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> PARTIAL
+                                            </label>
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ABLE
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div ng-if="detail.val2_ischeckbox == 3" ng-class="{'col-md-2' : detail.val2_ischeckbox == 3}">
+                                        <div class="btn-group btn-group-circle" data-toggle="buttons">
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                                            </label>
+                                            <label class="btn grey">
+                                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div ng-if="detail.comment_text == 1">
+                                        <label class="col-md-1" style="margin-top: 5px" >
+                                            Comment
+                                        </label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
 
