@@ -111,7 +111,7 @@ angular.module('app.loggedIn.booking.list.controller',[])
         }
     })
 
-    .controller('ChangeBookingController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, bookingId){
+    .controller('ChangeBookingController',function($scope,$filter,$state,$modalInstance,OnlineBookingService,toastr, bookingId){
         $scope.info = {
             siteId:'',
             fromDate: '',
@@ -230,12 +230,12 @@ angular.module('app.loggedIn.booking.list.controller',[])
                     if(data.status === 'success')
                     {
                         $modalInstance.dismiss('cancel');
-                        alert('Submit Successfully!');
+                        toastr.success("Submit Successfully!","Success");
                         $state.go('loggedIn.bookingList', null, {"reload":true});
                     }
                     else
                     {
-                        alert('Submit Failed!');
+                        toastr.error("Submit Failed!", "Error");
                     }
                 })
 

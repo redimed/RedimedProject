@@ -85,6 +85,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
+
 db.sequelize
     // sync để tự động tạo các bảng trong database
     //.sync({ force: true })
@@ -102,3 +103,4 @@ db.sequelize
         }
     }
 );
+

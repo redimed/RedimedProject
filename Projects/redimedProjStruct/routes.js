@@ -10,6 +10,7 @@ var FunctionController = require('./controllers/FunctionController');
 var BookingController = require('./controllers/BookingController');
 var RedimedSiteController = require('./controllers/RedimedSiteController');
 var PackageController = require('./controllers/PackageController');
+var UserController = require('./controllers/UserController');
 
 var rl_types=require('./routes/rl_types');
 var cln_specialties=require('./routes/cln_specialities');
@@ -52,19 +53,19 @@ app.all('/api/users/logout', function(req, res) {
 });
 
 app.post('/api/users/home',MenuController.loadSideMenu);
-
 app.get('/api/users/companyList',CompanyController.companyList);
-
 app.post('/api/users/register',AuthenticationController.register);
-
 app.get('/api/users/loggedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
+app.post('/api/users/company',UserController.userByCompany);
 
 app.post('/api/package/assessment/id',PackageController.packageAssById);
 app.get('/api/package/assessment',PackageController.packageAss);
+app.post('/api/package/assessment/update',PackageController.updateAss);
 app.post('/api/package/insert',PackageController.insertPackage);
-
+app.post('/api/package/assessment/delete',PackageController.deleteAss);
+app.post('/api/package/assessment/insert',PackageController.insertAss);
 app.post('/api/company/sub',CompanyController.subCompany);
 app.post('/api/company/sub/info',CompanyController.subCompanyInfo);
 
@@ -78,7 +79,9 @@ app.post('/api/booking/changeBookingTime',BookingController.changeBookingTime);
 app.post('/api/booking/deletePackage',BookingController.removePackage);
 
 app.get('/api/booking/assList',BookingController.assList);
-app.post('/api/booking/positionList',BookingController.positionList);
+app.post('/api/booking/position/list',BookingController.positionList);
+app.post('/api/booking/position/delete',BookingController.deletePosition);
+app.post('/api/booking/position/insert',BookingController.insertPosition);
 app.post('/api/booking/submit',BookingController.submitBooking);
 
 app.get('/api/rlob/rl_types/list',rl_types.list);

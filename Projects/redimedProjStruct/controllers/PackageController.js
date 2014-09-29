@@ -34,5 +34,52 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error'});
             })
+    },
+    updateAss: function(req,res){
+        var oldId = req.body.oldId;
+        var newId = req.body.newId;
+        var packId = req.body.packId;
+
+        db.sequelize.query('SELECT ass_name FROM assessments WHERE id=?',null,{raw:true},[newId])
+            .success(function(data){
+                db.sequelize.query('UPDATE packages_assessments SET ass_id = ?, ass_name=? WHERE pack_id = ? AND ass_id = ?',null,{raw:true},[newId,data[0].ass_name,packId,oldId])
+                    .success(function(data){
+                        res.json({status:'success'});
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+            })
+
+
+    },
+    deleteAss: function(req,res){
+        var id = req.body.id;
+        var packId = req.body.packId;
+        db.sequelize.query('DELETE FROM packages_assessments WHERE pack_id=? AND ass_id=?',null,{raw:true},[packId,id])
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    insertAss: function(req,res){
+        var id = req.body.id;
+        var packId = req.body.packId;
+        db.sequelize.query('SELECT ass_name FROM assessments WHERE id=?',null,{raw:true},[id])
+            .success(function(data){
+                db.sequelize.query('INSERT INTO packages_assessments(pack_id,ass_id,ass_name) VALUES(?,?,?)',null,{raw:true},[packId,id,data[0].ass_name])
+                    .success(function(data){
+                        res.json({status:'success'});
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+            })
+
     }
 }

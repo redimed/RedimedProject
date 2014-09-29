@@ -1,8 +1,10 @@
 /**
  * Created by meditech on 24/09/2014.
  */
+
+
 angular.module('app.loggedIn.booking.make.controller',[])
-    .controller('MakeBookingController',function($scope,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore,$window){
+    .controller('MakeBookingController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore){
         var companyInfo;
         var userInfo;
 
@@ -85,7 +87,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
         $scope.packageChange = function(PackId){
             var arrAss = [];
-            var arrHead = [];
+            var arrM = [];
 
             if(PackId !== null)
             {
@@ -94,14 +96,16 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     {
                         for(var i=0; i<data.rs.length; i++)
                         {
-                            arrAss.push(data.rs[i]);
-
+                            arrAss.push({head_name:data.rs[i].HeaderName,ass_name:data.rs[i].ass_name});
                         }
 
-                        $scope.packAss = arrAss;
+                       $scope.packAss = _.groupBy(arrAss,"head_name");
+
 
                     }
                 })
+
+                //$scope.newCandidate();
             }else
             {
                 $scope.packAss = [];
@@ -221,9 +225,12 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 if($scope.data != null){
                     OnlineBookingService.submitBook($scope.data,$scope.headInfo).then(function(data){
                         if(data.status === 'success')
-                            alert('Submit Booking Successfully!')
+                        {
+                            toastr.success("Submit Booking Successfully!","Success");
+                            $state.go('loggedIn.makeBooking', null, {"reload":true});
+                        }
                         else if(data.status === 'error')
-                            alert('Submit Booking Failed!')
+                            toastr.error("Submit Booking Failed!", "Error");
 
                     })
                 }
