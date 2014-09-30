@@ -14,6 +14,7 @@ module.exports = {
             })
     },
 
+
     findById: function(req,res){
         var id = req.body.id;
         var rs = [];
@@ -28,6 +29,7 @@ module.exports = {
 
     edit: function(req,res){
     var f = req.body.f;
+        var id = req.body.id;
     db.PmProperties.update({
           property_id : f.property_id
           ,Address : f.Address
@@ -42,7 +44,7 @@ module.exports = {
           ,isCancellation : f.isCancellation
           ,isInsurance : f.isInsurance
           ,Avatar_Pic_path : f.Avatar_Pic_path
-   },{property_id: f.property_id})
+   },{property_id: id})
        .success(function(){
            res.json({status:'success'});
        })
@@ -72,5 +74,8 @@ module.exports = {
     })
         .error(function(err){
             res.json({status:'fail'});
+            console.log(err);
         });
+
+
 }}

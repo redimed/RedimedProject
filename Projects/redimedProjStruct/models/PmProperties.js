@@ -3,7 +3,7 @@
 */
 module.exports = function(sequelize,DataTypes){
    var PmProperties = sequelize.define('PmProperties',{
-       property_id : DataTypes.INTEGER(11) 
+       property_id : {type:DataTypes.INTEGER(11), primaryKey:true} 
        ,Address : DataTypes.STRING(100) 
        ,Suburb : DataTypes.STRING(30) 
        ,Zipcode : DataTypes.STRING(10) 
@@ -15,7 +15,8 @@ module.exports = function(sequelize,DataTypes){
        ,isInsurance : DataTypes.INTEGER(11) 
        ,Avatar_Pic_path : DataTypes.STRING(200) 
    },{ 
-       tableName: 'pm_properties'
+       tableName: 'pm_properties',
+       timestamps: false
    }); 
    return PmProperties;
 };

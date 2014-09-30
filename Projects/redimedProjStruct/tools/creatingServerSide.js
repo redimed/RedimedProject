@@ -7,6 +7,9 @@ var fs = require('fs');
 var _s = require('underscore.string');
 var readline = require('readline');
 
+//var input = fs.createReadStream('sakila_redi_functions.sql');
+//readLines(input, func);
+
 
 var rl = readline.createInterface({
     input: process.stdin,
@@ -23,7 +26,7 @@ rl.question("Please enter the table name in Sakila schema ? ", function(answer) 
         if (exists) {
             console.log('../models/'+becomeModel+'.js  change to ../models/'+becomeModel+"_"+getDateTime()+'.js');
             fs.rename('../models/'+becomeModel+'.js','../models/'+becomeModel+"_"+getDateTime()+'.js');
-
+            fs.rename('../controllers/'+becomeModel+'Controller.js','../controllers/'+becomeModel+"Controller_"+getDateTime()+'.js');
             main(answer,becomeModel);
         }else
         {
@@ -35,6 +38,7 @@ rl.question("Please enter the table name in Sakila schema ? ", function(answer) 
     rl.close();
 });
 
+///// main function to make the file ///////
 function main(tableName,becomeModel) {
     var fs = require('fs');
     var insertUpdateStatement = "";
@@ -73,16 +77,27 @@ function main(tableName,becomeModel) {
             if (i != 0) {
                 isComma = ',';
             }
-            if (data[i].DATA_TYPE === 'int') {
-                wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.INTEGER(11) \n');
-            } else if (data[i].DATA_TYPE === 'varchar') {
-                wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + ') \n');
-            } else if (data[i].DATA_TYPE === 'datetime') {
-                wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.DATE \n');
-            }
+
+
 
             if(data[i].COLUMN_KEY === 'PRI'){
                 primaryKeyColumnName = data[i].COLUMN_NAME;
+                if (data[i].DATA_TYPE === 'int') {
+                    wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.INTEGER(11), primaryKey:true} \n');
+                } else if (data[i].DATA_TYPE === 'varchar') {
+                    wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + '), primaryKey:true} \n');
+                } else if (data[i].DATA_TYPE === 'datetime') {
+                    wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.DATE, primaryKey:true} \n');
+                }
+            }else
+            {
+                if (data[i].DATA_TYPE === 'int') {
+                    wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.INTEGER(11) \n');
+                } else if (data[i].DATA_TYPE === 'varchar') {
+                    wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + ') \n');
+                } else if (data[i].DATA_TYPE === 'datetime') {
+                    wstream.write("       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.DATE \n');
+                }
             }
 
             insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
@@ -91,7 +106,8 @@ function main(tableName,becomeModel) {
 
         wstream.write(
                 "   " + "},{ \n" +
-                "       " + "tableName: '"+tableName+"'\n" +
+                "       " + "tableName: '"+tableName+"',\n" +
+                "       " + "timestamps: false\n" +
                 "   " + "}); \n" +
                 "   " + "return "+becomeModel+";\n" +
                 "};"
@@ -116,13 +132,24 @@ function main(tableName,becomeModel) {
         "            .error(function(err){\n" +
         "                res.json({status:'fail'});\n" +
         "            })\n" +
+        "    },\n\n" +
+        "    findById: function(req,res){\n" +
+        "        var id = req.body.id;\n" +
+        "        var rs = [];\n" +
+        "        db."+becomeModel+".findAll({where:{"+primaryKeyColumnName+":id}},{raw: true})\n" +
+        "            .success(function(data){\n" +
+        "                res.json(data);\n" +
+        "            })\n" +
+        "            .error(function(err){\n" +
+        "                res.json({status:'fail'});\n" +
+        "            })\n" +
         "    },\n\n"
         );
 
 
         if(primaryKeyColumnName.length > 1){
             wstreamController.write(
-                    "    update: function(req,res){\n" +
+                    "    edit: function(req,res){\n" +
                     "    var f = req.body.f;\n" +
                     "    db."+becomeModel+".update({\n" +
                     insertUpdateStatement +
@@ -159,7 +186,7 @@ function main(tableName,becomeModel) {
 }
 
 
-
+/// function to get Datetime
 function getDateTime() {
 
     var date = new Date();
@@ -184,3 +211,36 @@ function getDateTime() {
     return year + "" + month + "" + day + "" + hour + "" + min + "" + sec;
 
 }
+
+//// Read line by line
+
+function readLines(input, func) {
+
+
+    var remaining = '';
+
+    input.on('data', function(data) {
+        remaining += data;
+        var index = remaining.indexOf('\n');
+        while (index > -1) {
+            var line = remaining.substring(0, index);
+            remaining = remaining.substring(index + 1);
+            func(line);
+            index = remaining.indexOf('\n');
+        }
+    });
+
+    input.on('end', function() {
+        if (remaining.length > 0) {
+            func(remaining);
+        }
+    });
+}
+
+function func(data) {
+    console.log('Line: ' + data);
+    if(data.contain('UNLOCK TABLES')){
+
+    }
+}
+
