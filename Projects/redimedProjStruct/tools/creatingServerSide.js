@@ -1,6 +1,35 @@
 /**
  * Created by phuongnm on 27/09/2014.
  * use to make model file automatically by enter table name and path of destination
+
+ create table SYS_FORMS(
+ FORM_ID int primary key,
+ MASTER_TABLE_NAME VARCHAR(100),
+ MASTER_SEQ VARCHAR(100),
+ DETAIL_TABLE_NAME VARCHAR(100),
+ DETAIL_SEQ VARCHAR(100),
+ FORM_DESCRIPTION VARCHAR(250),
+ FORM_TYPE VARCHAR(20)
+ );
+
+ CREATE TABLE SYS_FORM_DETAILS(
+ FORM_ID INT,
+ FORM_DETAIL_ID INT PRIMARY KEY,
+ ORDINAL_POSITION INT,
+ COLUMN_NAME VARCHAR(100),
+ IS_NULLABLE VARCHAR(3),
+ DATA_TYPE VARCHAR(64),
+ CHARACTER_MAXIMUM_LENGTH bigINT,
+ COLUMN_KEY VARCHAR(3),
+ DISPLAY_NAME VARCHAR(250),
+ ISDISPLAY INT,
+ ISNEW INT,
+ ISUPDATE INT,
+ ISREQUIRE INT,
+ INPUT_TYPE VARCHAR(100),
+ LOV_SQL VARCHAR(2000)
+ );
+
  */
 var db = require('../models');
 var fs = require('fs');
@@ -66,6 +95,14 @@ function main(tableName,becomeModel) {
         }
     );
 
+    db.SysForms.getPK(function(id){
+        //viet trong nay di a
+        // a cung tinh vay, nhu no se phat sinh nhieu tang, nhieu lop wa hehehe
+        // neu ko lam dc thi cung phai danh chiu vay thoi e
+        // e lam cai booking insert nhieu thang cung luc cung bi loi nay hoai
+
+    });
+
 
     //find all columns of the table and write to file
     db.SYSCOLUMNS.findAll({where: {TABLE_NAME: tableName.toUpperCase()}}, {raw: true}).success(function (data) {
@@ -77,8 +114,6 @@ function main(tableName,becomeModel) {
             if (i != 0) {
                 isComma = ',';
             }
-
-
 
             if(data[i].COLUMN_KEY === 'PRI'){
                 primaryKeyColumnName = data[i].COLUMN_NAME;

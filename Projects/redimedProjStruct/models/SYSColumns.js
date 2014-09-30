@@ -8,6 +8,7 @@ module.exports = function(sequelize,DataTypes){
         TABLE_NAME : DataTypes.STRING(64) ,
         COLUMN_NAME : DataTypes.STRING(64) ,
         DATA_TYPE : DataTypes.STRING(64) ,
+        IS_NULLABLE : DataTypes.STRING(3) ,
         ORDINAL_POSITION : DataTypes.BIGINT,
         CHARACTER_MAXIMUM_LENGTH : DataTypes.BIGINT,
         COLUMN_KEY : DataTypes.STRING(64)
