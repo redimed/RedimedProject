@@ -54,13 +54,13 @@ angular.module('app.loggedIn.booking.services',[])
         }
 
         bookingService.getBookingList = function(id){
-            var list = api.all('booking/list');
+            var list = api.all('booking/list/companyId');
             return list.post({id:id});
         }
 
-        bookingService.getBookingDetail = function(id){
+        bookingService.getBookingDetail = function(id,canId){
             var detail = api.all('booking/detail');
-            return detail.post({id:id});
+            return detail.post({id:id,canId:canId});
         }
 
         bookingService.cancelBooking = function(id){

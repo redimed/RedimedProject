@@ -43,6 +43,9 @@ angular.module('app.loggedIn.booking.list.controller',[])
                 resolve: {
                     bookingId: function(){
                         return b.Booking_id;
+                    },
+                    candidateId: function(){
+                        return b.Candidate_id;
                     }
                 }
             });
@@ -75,25 +78,38 @@ angular.module('app.loggedIn.booking.list.controller',[])
             });
         }
 
+        $scope.submitInfo = function(){
+            $state.go('a',{a:'b'});
+        }
+
     })
 
-    .controller('BookingDetailController',function($scope,$modalInstance,OnlineBookingService, bookingId){
+    .controller('BookingDetailController',function($scope,$modalInstance,OnlineBookingService, bookingId, candidateId){
         $scope.cancel = function(){
             $modalInstance.dismiss('cancel');
         };
 
-        OnlineBookingService.getBookingDetail(bookingId).then(function(data){
-
-            console.log(data.rs[0]);
-
+        OnlineBookingService.getBookingDetail(bookingId,candidateId).then(function(data){
+            var arrAss = [];
             $scope.detail = data.rs[0];
 
-            var str = data.rs[0].ass_name;
+            if(typeof data.rs[0].package_id !== 'undefined'){
+                OnlineBookingService.getPackageAssById(data.rs[0].package_id).then(function(data){
+                    if(data.status === 'success')
+                    {
+                        for(var i=0; i<data.rs.length; i++)
+                        {
+                            arrAss.push({head_name:data.rs[i].HeaderName,ass_name:data.rs[i].ass_name});
+                        }
 
-            $scope.detail.ass = str.split(' - ');
+                        $scope.detail.ass = _.groupBy(arrAss,"head_name");
+
+
+                    }
+                })
+            }
+
         })
-
-
 
     })
 

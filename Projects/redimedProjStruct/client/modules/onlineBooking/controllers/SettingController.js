@@ -38,4 +38,8 @@ angular.module('app.loggedIn.booking.setting.controller',[])
                 }
             });
         })
+
+        $scope.submit = function(){
+            
+        }
 })

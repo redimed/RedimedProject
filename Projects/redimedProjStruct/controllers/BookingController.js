@@ -16,9 +16,9 @@ module.exports = {
                 res.json({status:'error',err:err});
             })
     },
-    bookingList: function(req,res){
+    bookingListByCompany: function(req,res){
         var comId = req.body.id;
-        db.sequelize.query('SELECT * FROM booking_cadidates_v WHERE company_id = ? ORDER BY Candidate_id DESC',null,{raw:true},[comId])
+        db.sequelize.query('SELECT * FROM booking_cadidates_v WHERE company_id = ? ORDER BY Booking_id DESC',null,{raw:true},[comId])
             .success(function(data){
                 res.json({status:'success',rs:data});
             })
@@ -26,9 +26,19 @@ module.exports = {
                 res.json({status:'error',err:err});
             })
     },
+    bookingList: function(req,res){
+      db.sequelize.query('SELECT * FROM booking_cadidates_v ORDER BY Booking_id DESC',null,{raw:true})
+          .success(function(data){
+              res.json({status:'success',rs:data});
+          })
+          .error(function(err){
+              res.json({status:'error',err:err});
+          })
+    },
     bookingDetail: function(req,res){
         var bookId = req.body.id;
-        db.sequelize.query('SELECT * FROM booking_cadidates_v WHERE Booking_id = ?',null,{raw:true},[bookId])
+        var canId = req.body.canId;
+        db.sequelize.query('SELECT * FROM booking_cadidates_v WHERE Booking_id = ? AND Candidate_id=?',null,{raw:true},[bookId,canId])
             .success(function(data){
                 res.json({status:'success',rs:data});
             })
@@ -219,38 +229,51 @@ module.exports = {
                             })
                                 .success(function(data){
 
-                                    res.json({status:'success'})
+                                    //res.json({status:'success'})
+
+                                    var siteId = data['dataValues'].SITE_ID;
+
+                                    db.sequelize.query('SELECT Site_name FROM redimedsites WHERE id=?',null,{raw:true},[siteId])
+                                        .success(function(rs){
+                                            var siteName = rs[0].Site_name;
+                                            var candidateEmail = data['dataValues'].Email;
+                                            var appointmentDate = data['dataValues'].Appointment_time;
 
 
-                                    //Begin Send Email
-                                    var smtpTransport = nodemailer.createTransport("SMTP",{
-                                        service: "Gmail",  // sets automatically host, port and connection security settings
-                                        auth: {
-                                            user: "luannguyen141194@gmail.com",
-                                            pass: "legend090"
-                                        }
-                                    });
+                                            //Begin Send Email
+                                            var smtpTransport = nodemailer.createTransport("direct",{
+                                                debug:true
+                                            });
 
-                                    var mailOptions = {
-                                        from: "Luan Nguyen <luannguyen141194@gmail.com>", // sender address.  Must be the same as authenticated user if using Gmail.
-                                        to: data['dataValues'].Email, // receiver
-                                        subject: "Booking Comfirm ✔", // Subject line
-                                        text: "TEST" // plaintext body
-                                        //html: "<b>Hello world ✔</b>" // html body
-                                    }
+                                            var mailOptions = {
+                                                from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
+                                                to: candidateEmail, // receiver
+                                                subject: "✔ REDiMED Booking Confirm", // Subject line
+                                                html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
+                                                    "<br>Your medical assessment has been booked at the following:</b><br>"+
+                                                    "Date / Time: <b>" + appointmentDate +"</b> <br>" +
+                                                    "Location: <b>REDiMED " + siteName + "</b><br>" +
+                                                    "<br>" +
+                                                    "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
+                                                    "<br>" +
+                                                    "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
+                                                    "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
+                                                    "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
+                                                    "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
+                                                    "- For any queries, please call 92300990.<br>"
 
-                                    smtpTransport.sendMail(mailOptions, function(error, response){  //callback
-                                        if(error){
-                                            console.log(error);
-                                        }else{
-                                            console.log("Message sent: " + response.message);
-                                        }
-                                        smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
-                                    });
-                                    //End Send Email
+                                            }
 
-
-
+                                            smtpTransport.sendMail(mailOptions, function(error, response){  //callback
+                                                if(error){
+                                                    console.log(error);
+                                                }else{
+                                                    console.log("Message sent: " + response.message);
+                                                }
+                                                smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                                            });
+                                            //End Send Email
+                                        })
                                 })
                                 .error(function(err){
                                     res.json({status:'error'})
