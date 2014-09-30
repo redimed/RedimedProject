@@ -83,12 +83,17 @@ angular.module('app.loggedIn.booking.list.controller',[])
         };
 
         OnlineBookingService.getBookingDetail(bookingId).then(function(data){
+
+            console.log(data.rs[0]);
+
             $scope.detail = data.rs[0];
 
             var str = data.rs[0].ass_name;
 
             $scope.detail.ass = str.split(' - ');
         })
+
+
 
     })
 

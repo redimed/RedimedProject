@@ -87,7 +87,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
         $scope.packageChange = function(PackId){
             var arrAss = [];
-            var arrM = [];
+
 
             if(PackId !== null)
             {

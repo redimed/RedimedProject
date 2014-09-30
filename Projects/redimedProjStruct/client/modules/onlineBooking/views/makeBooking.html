@@ -124,12 +124,12 @@
                 </div>
             </div>
 
-            <div class="form-group row" data-ng-repeat="head_name in packAss ">
+            <div class="form-group row" ng-repeat="(head,ass) in packAss ">
                 <div class="col-md-4"></div>
                 <div class="col-md-8">
-                    <b>{{head_name}}</b>
+                    <b>{{head}}</b>
                     <br/>
-                    <div data-ng-repeat="a in head_name">
+                    <div ng-repeat="a in ass">
                         <label class="control-label" >
                             &nbsp;&nbsp;{{a.ass_name}}
                         </label>

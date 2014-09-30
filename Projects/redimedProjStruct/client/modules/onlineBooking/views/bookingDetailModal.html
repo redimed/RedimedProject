@@ -59,11 +59,16 @@
                 <td colspan="4" style="border:1px solid gray">
                 </td>
             </tr>
-            <tr ng-repeat="a in detail.ass">
+            <tr ng-repeat="(head,ass) in detail.ass">
                 <td colspan="4" style="border:1px solid gray" >
-
-                    &nbsp;&nbsp;{{a}}
-
+                    <b>{{head}}</b>
+                    <br/>
+                    <div ng-repeat="a in ass">
+                        <label class="control-label" >
+                            &nbsp;&nbsp;{{a.ass_name}}
+                        </label>
+                        <br/>
+                    </div>
                 </td>
             </tr>
             <tr><td bgcolor="Silver" colspan="4"><b>Appointment Details</b></td></tr>
