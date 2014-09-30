@@ -23,11 +23,10 @@ angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
 
     var id = $stateParams.id;
 
-    if(typeof id != 'undefined') {
-       PmPropertiesService.getDataById(id).then(function(data){
+   if(typeof id != 'undefined') {       PmPropertiesService.getDataById(id).then(function(data){
            $scope.info = data[0];
        })
-    }
+   }
     $scope.save = function(){
 
         console.log($scope.info);

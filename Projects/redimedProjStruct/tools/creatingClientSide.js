@@ -300,7 +300,7 @@ function main(tableName,becomeModel) {
                 "       "+becomeModel+"Service.getDataById(id).then(function(data){\n" +
                 "           $scope.info = data[0];\n" +
                 "       })\n" +
-                "    }\n" +
+                "    }\n\n" +
                 "    $scope.save = function(){\n" +
                 "\n" +
                 "        console.log($scope.info);\n" +
