@@ -104,3 +104,5 @@ db.sequelize
     }
 );
 
+var siteName;
+
