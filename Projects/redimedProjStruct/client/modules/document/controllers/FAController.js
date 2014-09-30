@@ -50,7 +50,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     angular.forEach(data.Line, function(dataL){
                         if(dataL.SECTION_ID ==  $scope.listFA[0].section[i].section_id )
                         {
-                            $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"line_name": dataL.LINE_NAME,"line_type": dataL.LineType, "detail":[],"comment":[]});
+                            $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"line_name": dataL.LINE_NAME,"line_type": dataL.LineType, "line_comment" : dataL.IsCommentsText, "line_isscore1" : dataL.ISSCORE1,"line_isscore2" : dataL.ISSCORE2,"line_israting1" : dataL.ISRATING1,"line_israting2" : dataL.ISRATING2,"score_type1" : dataL.SCORE_TYPE1,"score_type2" : dataL.SCORE_TYPE2, "detail":[],"comment":[]});
                             angular.forEach(data.Detail, function(dataD){
                                 if(dataD.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                 {
@@ -61,7 +61,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
 
                                 if(dataC.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                 {
-                                    $scope.listFA[0].section[i].line[j].comment.push({ "comment_name": dataC.NAME});
+                                    $scope.listFA[0].section[i].line[j].comment.push({ "comment_name": dataC.NAME, "comment_type": dataC.Comment_Type});
                                 }
                             });
                             j++;
