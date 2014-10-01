@@ -2,6 +2,135 @@
  * Created by phuongnm on 27/09/2014.
  * use to make model file automatically by enter table name and path of destination
 
+ use sakila;
+
+ create table pm_departments
+ (
+ dept_id int primary key,
+ dept_name varchar(100),
+ isEnable int,
+ isAllowToCancel int,
+ isAllowToInsurance int,
+ email_title varchar(100),
+ email_content varchar(1000)
+ );
+
+ create table pm_dept_users(
+ dept_id int,
+ user_id int
+ );
+
+ create table pm_process(
+ process_id int primary key,
+ dept_id int,
+ seq int,
+ process_name varchar(100),
+ remind_after int,
+ isDailyRemins int,
+ remind_title varchar(100),
+ remind_content varchar(1000),
+ isDoc int,
+ isPicture int
+ );
+
+ create table pm_process_prev
+ (
+ process_id int,
+ prev_process_id int,
+ groupNo int
+ );
+
+ create table pm_process_next
+ (
+ process_id int,
+ prev_process_id int,
+ groupNo int
+ );
+
+ create table pm_costs(
+ cost_id int primary key,
+ cost_name varchar(100),
+ isEnable int
+ );
+
+ drop table pm_properties;
+
+ create table pm_properties(
+ property_id int primary key,
+ Address varchar(100),
+ Suburb varchar(30),
+ Zipcode varchar(10),
+ State varchar(30),
+ Country varchar(30),
+ Price float,
+ purchase_date date,
+ note varchar(1000),
+ Cancellation_reason varchar(1000),
+ isCancellation int,
+ isInsurance int,
+ Avatar_Pic_path varchar(200),
+ Created_by	int(11),
+ Creation_date	datetime,
+ Last_updated_by	int(11),
+ Last_update_date datetime
+ );
+
+ desc users;
+
+ create table pm_property_process(
+ process_id int,
+ property_id int,
+ isCurrent int,
+ From_time datetime,
+ To_time datetime,
+ Note varchar(1000)
+ );
+
+ create table pm_property_costs(
+ process_id int,
+ property_id int,
+ cost_id int,
+ cost float,
+ Cost_date date,
+ Note varchar(1000)
+ );
+
+ create table pm_property_documents(
+ doc_id int primary key,
+ doc_name varchar(100),
+ doc_path varchar(500),
+ process_id int,
+ property_id int,
+ cost_id int
+ );
+
+ create table pm_room_types(
+ room_type_id int primary key,
+ room_type_name varchar(100),
+ isEnable int
+ );
+
+ create table pm_property_pictures(
+ pic_id int primary key,
+ pic_name varchar(100),
+ room_type_id int,
+ before_picture_path varchar(500),
+ after_picture_path varchar(500),
+ note varchar(500),
+ process_id int,
+ property_id int
+ );
+
+
+ select * from redi_functions;
+ select * from redi_menus;
+
+ select * from INFORMATION_SCHEMA.COLUMNS where table_name = 'USERS';
+
+ select * from pm_properties;
+
+ drop table sys_forms;
+
  create table SYS_FORMS(
  FORM_ID int primary key,
  MASTER_TABLE_NAME VARCHAR(100),
@@ -12,8 +141,11 @@
  FORM_TYPE VARCHAR(20)
  );
 
+ drop table sys_form_details;
+
  CREATE TABLE SYS_FORM_DETAILS(
  FORM_ID INT,
+ TABLE_NAME VARCHAR(100),
  FORM_DETAIL_ID INT PRIMARY KEY,
  ORDINAL_POSITION INT,
  COLUMN_NAME VARCHAR(100),
@@ -29,6 +161,14 @@
  INPUT_TYPE VARCHAR(100),
  LOV_SQL VARCHAR(2000)
  );
+
+
+
+
+
+
+
+
 
  */
 var db = require('../models');
