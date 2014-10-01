@@ -1,5 +1,5 @@
 /** 
-* Created by meditech on 2014:10:01 17:21:33.
+* Created by meditech on 2014:10:01 17:05:28.
 */
 module.exports = function(sequelize,DataTypes){
    var PmProperties = sequelize.define('PmProperties',{
@@ -21,8 +21,6 @@ module.exports = function(sequelize,DataTypes){
    },{ 
        tableName: 'pm_properties',
        timestamps: false,
-        createdAt : 'CREATION_DATE',
-      updatedAt : 'LAST_UPDATE_DATE',
        classMethods:{
            getPK:function(callback){
                sequelize.query("SELECT get_pk_value('pm_properties') AS PK").success(function(data){

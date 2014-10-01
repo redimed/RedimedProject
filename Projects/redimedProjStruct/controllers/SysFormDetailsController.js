@@ -30,6 +30,7 @@ module.exports = {
     var f = req.body.f;
     db.SysFormDetails.update({
           FORM_ID : f.FORM_ID
+          ,TABLE_NAME : f.TABLE_NAME
           ,FORM_DETAIL_ID : f.FORM_DETAIL_ID
           ,ORDINAL_POSITION : f.ORDINAL_POSITION
           ,COLUMN_NAME : f.COLUMN_NAME
@@ -57,6 +58,7 @@ module.exports = {
     var f = req.body.f;
     db.SysFormDetails.create({
           FORM_ID : f.FORM_ID
+          ,TABLE_NAME : f.TABLE_NAME
           ,FORM_DETAIL_ID : f.FORM_DETAIL_ID
           ,ORDINAL_POSITION : f.ORDINAL_POSITION
           ,COLUMN_NAME : f.COLUMN_NAME
@@ -71,7 +73,7 @@ module.exports = {
           ,ISREQUIRE : f.ISREQUIRE
           ,INPUT_TYPE : f.INPUT_TYPE
           ,LOV_SQL : f.LOV_SQL
-    },['FORM_ID','FORM_DETAIL_ID','ORDINAL_POSITION','COLUMN_NAME','IS_NULLABLE','DATA_TYPE','CHARACTER_MAXIMUM_LENGTH','COLUMN_KEY','DISPLAY_NAME','ISDISPLAY','ISNEW','ISUPDATE','ISREQUIRE','INPUT_TYPE','LOV_SQL']).success(function(){
+    },['FORM_ID','TABLE_NAME','FORM_DETAIL_ID','ORDINAL_POSITION','COLUMN_NAME','IS_NULLABLE','DATA_TYPE','CHARACTER_MAXIMUM_LENGTH','COLUMN_KEY','DISPLAY_NAME','ISDISPLAY','ISNEW','ISUPDATE','ISREQUIRE','INPUT_TYPE','LOV_SQL']).success(function(){
         res.json({status:'success'});
     })
         .error(function(err){

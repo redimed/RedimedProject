@@ -4,6 +4,7 @@
 module.exports = function(sequelize,DataTypes){
    var SysFormDetails = sequelize.define('SysFormDetails',{
        FORM_ID : DataTypes.INTEGER(11) 
+       ,TABLE_NAME : DataTypes.STRING(100) 
        ,FORM_DETAIL_ID : {type:DataTypes.INTEGER(11), primaryKey:true} 
        ,ORDINAL_POSITION : DataTypes.INTEGER(11) 
        ,COLUMN_NAME : DataTypes.STRING(100) 
@@ -19,7 +20,14 @@ module.exports = function(sequelize,DataTypes){
        ,LOV_SQL : DataTypes.STRING(2000) 
    },{ 
        tableName: 'sys_form_details',
-       timestamps: false
+       timestamps: false,
+       classMethods:{
+           getPK:function(callback){
+               sequelize.query("SELECT get_pk_value('sys_form_details') AS PK").success(function(data){
+                   callback(data[0].PK);
+               })
+           }
+       }
    }); 
    return SysFormDetails;
 };

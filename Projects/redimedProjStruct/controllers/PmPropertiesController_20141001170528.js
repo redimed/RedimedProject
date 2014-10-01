@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:01 17:21:33.
+        * Created by meditech on 2014:10:01 17:00:51.
 */
 var db = require('../models');
 module.exports = {
@@ -42,10 +42,6 @@ module.exports = {
           ,isCancellation : f.isCancellation
           ,isInsurance : f.isInsurance
           ,Avatar_Pic_path : f.Avatar_Pic_path
-          ,Created_by : f.Created_by
-          ,Creation_date : f.Creation_date
-          ,Last_updated_by : f.Last_updated_by
-          ,Last_update_date : f.Last_update_date
    },{property_id: f.property_id})
        .success(function(){
            res.json({status:'success'});
@@ -71,11 +67,7 @@ module.exports = {
           ,isCancellation : f.isCancellation
           ,isInsurance : f.isInsurance
           ,Avatar_Pic_path : f.Avatar_Pic_path
-          ,Created_by : f.Created_by
-          ,Creation_date : f.Creation_date
-          ,Last_updated_by : f.Last_updated_by
-          ,Last_update_date : f.Last_update_date
-    },['property_id','Address','Suburb','Zipcode','State','Country','Price','purchase_date','note','Cancellation_reason','isCancellation','isInsurance','Avatar_Pic_path','Created_by','Creation_date','Last_updated_by','Last_update_date']).success(function(){
+    },['property_id','Address','Suburb','Zipcode','State','Country','Price','purchase_date','note','Cancellation_reason','isCancellation','isInsurance','Avatar_Pic_path']).success(function(){
         res.json({status:'success'});
     })
         .error(function(err){
