@@ -11,6 +11,7 @@ var BookingController = require('./controllers/BookingController');
 var RedimedSiteController = require('./controllers/RedimedSiteController');
 var PackageController = require('./controllers/PackageController');
 var UserController = require('./controllers/UserController');
+var AssessmentController = require('./controllers/AssessmentController');
 
 var rl_types=require('./routes/rl_types');
 var cln_specialties=require('./routes/cln_specialities');
@@ -60,6 +61,9 @@ app.get('/api/users/loggedin', function(req, res) {
 });
 app.post('/api/users/company',UserController.userByCompany);
 
+app.get('/api/assessment/header',AssessmentController.headerList);
+app.get('/api/assessment',AssessmentController.getAssessment);
+
 app.post('/api/package/assessment/id',PackageController.packageAssById);
 app.get('/api/package/assessment',PackageController.packageAss);
 app.post('/api/package/assessment/update',PackageController.updateAss);
@@ -78,12 +82,13 @@ app.post('/api/booking/calendar',BookingController.calendarList);
 app.post('/api/booking/appointmentTime',BookingController.appointmentTime);
 app.post('/api/booking/changeBookingTime',BookingController.changeBookingTime);
 app.post('/api/booking/deletePackage',BookingController.removePackage);
-
 app.get('/api/booking/assList',BookingController.assList);
 app.post('/api/booking/position/list',BookingController.positionList);
 app.post('/api/booking/position/delete',BookingController.deletePosition);
 app.post('/api/booking/position/insert',BookingController.insertPosition);
 app.post('/api/booking/submit',BookingController.submitBooking);
+app.post('/api/booking/edit',BookingController.editBooking);
+app.post('/api/booking/confirm',BookingController.confirmBooking);
 
 app.get('/api/rlob/rl_types/list',rl_types.list);
 app.get('/api/rlob/cln_specialties/list',cln_specialties.list);

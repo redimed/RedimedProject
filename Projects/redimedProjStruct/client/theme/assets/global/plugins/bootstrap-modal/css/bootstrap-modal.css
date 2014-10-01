@@ -42,7 +42,7 @@
 	position: absolute;
 	margin-top: 0;
 	top: 50%;
-	overflow: visible; /* allow content to popup out (i.e tooltips) */
+	overflow: visible; /* allow content to popover out (i.e tooltips) */
 }
 
 .modal.fade {

@@ -28,6 +28,8 @@
     "angular-toastr": "~0.4.0",
     "angular-cookies": "~1.2.25",
     "angular-loading-bar": "~0.6.0",
-    "bootstrapvalidator": "~0.5.2"
+    "bootstrapvalidator": "~0.5.2",
+    "angular-file-upload": "~1.1.1",
+    "angular-strap": "~2.1.1"
   }
 }

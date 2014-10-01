@@ -2,12 +2,16 @@
  * Created by meditech on 30/09/2014.
  */
 angular.module('app.loggedIn.booking.admin.booking.controller',[])
-    .controller('BookingController',function($scope,$modal,$filter,ngTableParams,OnlineBookingAdminService,OnlineBookingService,$http,toastr,$cookieStore){
+    .controller('BookingController',function($scope,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,OnlineBookingService,$http,toastr,$cookieStore){
         $scope.data = [];
+        $scope.isSelected = false
 
-        $scope.info = {
+        $scope.info = {};
 
-        }
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
 
         OnlineBookingAdminService.getList().then(function(data){
             if(data.status === 'success')
@@ -53,26 +57,73 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
         }
 
         $scope.showDetail = function(b){
+            $scope.isSelected = true;
             OnlineBookingService.getBookingDetail(b.Booking_id, b.Candidate_id).then(function(data){
                 var arrAss = [];
                 $scope.info = data.rs[0];
 
-                if(typeof data.rs[0].package_id !== 'undefined'){
-                    OnlineBookingService.getPackageAssById(data.rs[0].package_id).then(function(data){
-                        if(data.status === 'success')
+                var date = new Date(data.rs[0].Appointment_time);
+                $scope.info.Appointment_time =  new Date(date.getUTCFullYear(),
+                    date.getUTCMonth(),
+                    date.getUTCDate(),
+                    date.getUTCHours(),
+                    date.getUTCMinutes(),
+                    date.getUTCSeconds());
+
+                OnlineBookingService.getSite().then(function(rs){
+                    $scope.siteList = rs;
+                })
+
+                var from = $filter('date')(data.rs[0].from_date,'yyyy-MM-dd');
+                var to = $filter('date')(data.rs[0].to_date,'yyyy-MM-dd');
+
+                OnlineBookingService.getCalendar(data.rs[0].site_id,from,to).then(function(data){
+                    $scope.calList = data;
+                })
+
+                OnlineBookingService.getPackageAssById(data.rs[0].package_id).then(function(data){
+                    if(data.status === 'success')
+                    {
+                        for(var i=0; i<data.rs.length; i++)
                         {
-                            for(var i=0; i<data.rs.length; i++)
-                            {
-                                arrAss.push({head_name:data.rs[i].HeaderName,ass_name:data.rs[i].ass_name});
-                            }
-
-                            $scope.detail.ass = _.groupBy(arrAss,"head_name");
-
-
+                            arrAss.push({head_name:data.rs[i].HeaderName,ass_name:data.rs[i].ass_name});
                         }
-                    })
-                }
 
+                        $scope.packAss = _.groupBy(arrAss,"head_name");
+
+
+                    }
+                })
+
+            })
+        }
+
+        $scope.saveInfo = function(){
+
+            OnlineBookingAdminService.editBookingInfo($scope.info).then(function(data){
+                if(data.status === 'success')
+                {
+                    toastr.success("Edit Successfully!","Success");
+                    //$state.go('loggedIn.package',null,{reload:true});
+                }
+                else
+                {
+                    toastr.error("Edit Failed!","Error");
+                }
+            })
+        }
+
+        $scope.sendEmail = function(){
+            OnlineBookingAdminService.confirmBooking($scope.info).then(function(data){
+                if(data.status === 'success')
+                {
+                    toastr.success("Send Mail Successfully! Please check your email!","Success");
+                    //$state.go('loggedIn.package',null,{reload:true});
+                }
+                else
+                {
+                    toastr.error("Send Mail Failed!","Error");
+                }
             })
         }
 

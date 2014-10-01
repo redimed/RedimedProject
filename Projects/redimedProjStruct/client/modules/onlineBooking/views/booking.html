@@ -20,27 +20,40 @@
                 </a>
             </div>
         </div>
+        <div>
+            <div class="btn-group pull-right">
+                <button ng-click="search()" popover-placement="bottom" popover-template="template.html" class="btn grey" >
+                    Search &nbsp;&nbsp; <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+        <script id="template.html" type="text/ng-template">
+            <strong>HTML</strong> allowed.<br />
+            Binding allowed: {{ value }}<br />
+            <button ng-click="value = 2">Test</button>
+        </script>
+
     </div>
     <div class="portlet-body form">
         <div class="table-scrollable">
-            <table ng-table="tableParams" class="table table-striped table-hover table-bordered table-responsive">
+            <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
                 <tr ng-repeat="b in $data" >
                     <td data-title="'ID'" >
                         <span>{{b.Booking_id}}</span>
                     </td>
-                    <td data-title="'Company'" >
-                        <span>{{b.company_name}}</span>
+                    <td class="col-md-12" data-title="'Company'" sortable="'company_name'" filter="{'company_name':'text'}">
+                        <span >{{b.company_name}}</span>
                     </td>
-                    <td data-title="'Candidates'" sortable="'Candidates_name'" >
+                    <td  data-title="'Candidates'" sortable="'Candidates_name'" filter="{'Candidates_name':'text'}">
                         <a href="javascript:;" ng-click="openDetail(b)">{{b.Candidates_name}}</a>
                     </td>
-                    <td data-title="'Appointment Time'" sortable="'Appointment_time'" >
-                        <span>{{b.Appointment_time | utc | date:'dd/MM/yyyy - HH:mm:ss'}}</span>
+                    <td class="col-md-12" data-title="'Appointment Time'" sortable="'Appointment_time'" >
+                        <span>{{b.Appointment_time | utc | date:'dd/MM/yyyy - HH:mm'}}</span>
                     </td>
                     <td data-title="'Site Name'" sortable="'site_name'" >
                         <span>{{b.site_name}}</span>
                     </td>
-                    <td data-title="'Booking Person'" sortable="'Booking_Person'">
+                    <td data-title="'Booking Person'" sortable="'Booking_Person'" filter="{'Booking_Person':'text'}">
                         <span>{{b.Booking_Person}}</span>
                     </td>
                     <td data-title="'Appointment Notes'" sortable="'Appointment_notes'">
@@ -52,16 +65,17 @@
                     <td data-title="'RediMed Notes'" sortable="'RediMed_note'" >
                         <span>{{b.RediMed_note}}</span>
                     </td>
-                    <td class="col-md-11" data-title="'Actions'">
+                    <td class="col-md-12" data-title="'Actions'">
                         <a href="javascript:;" ng-click="openDetail(b)"  class="btn btn-primary">Booking Details</a>
 
                         <a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="changeBookingTime(b)" class="btn btn-info">Change Booking Time</a>
 
-                        <a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="cancelBooking(b)" class="btn btn-danger col-md-3">Cancel</a>
+                        <a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="cancelBooking(b)" class="btn btn-danger col-md-5">Cancel</a>
                     </td>
                 </tr>
 
             </table>
+
         </div>
 
     </div>

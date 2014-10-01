@@ -64,29 +64,65 @@
 
     </div>
 </div>
-<br/>
 <div class="portlet light bordered">
     <div class="portlet-title">
-        <div class="caption">
+        <div class="caption col-md-6">
             <i class="icon icon-clock font-blue-hoki"></i>
             <span class="caption-subject font-blue-hoki bold uppercase">Booking Details</span>
         </div>
+
+        <div>
+            <div class="btn-group pull-right">
+                <a ng-class="{disabled: isSelected === false}" ng-click="sendEmail()" href="javascript:;" class="btn btn-success" >
+                    Send Confirm Email &nbsp;&nbsp; <i class="fa fa-mail-forward"></i>
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <div class="btn-group pull-right">
+                <a ng-class="{disabled: isSelected === false}" ng-click="saveInfo()" href="javascript:;" class="btn blue" >
+                    Save &nbsp;&nbsp; <i class="glyphicon glyphicon-save"></i>
+                </a>
+            </div>
+        </div>
+
+
     </div>
     <div class="portlet-body form">
         <div class="row">
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <label class="control-label bold">CandidateID:</label>
+                </div>
+                <div class="col-md-8">
+                    {{info.Candidate_id}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-4">
+                    <label class="control-label bold">BookingID:</label>
+                </div>
+                <div class="col-md-8">
+                    {{info.Booking_id}}
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">Booking Person</label>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     {{info.Booking_Person}}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">Contact Number</label>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     {{info.contact_number}}
                 </div>
             </div>
@@ -94,10 +130,10 @@
         <br/>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="control-label bold">Comments</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8 pull-left">
                     {{info.Comments}}
                 </div>
             </div>
@@ -105,18 +141,18 @@
         <br/>
         <div class="row">
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">Project Identification</label>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     {{info.Project_Identofication}}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">Appointment Status</label>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <select ng-model="info.Appointment_status">
                         <option value="Pending">Pending</option>
                         <option value="Confirmed">Confirmed</option>
@@ -129,18 +165,18 @@
         <br/>
         <div class="row">
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">From Date</label>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     {{info.from_date | date:'dd/MM/yyyy'}}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">To Date</label>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     {{info.to_date | date:'dd/MM/yyyy'}}
                 </div>
             </div>
@@ -148,58 +184,85 @@
         <br/>
         <div class="row">
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">Site</label>
                 </div>
-                <div class="col-md-6">
-                    <select ng-model="info.site_id" ng-options="s.site_id as s.site_name for s in siteList"></select>
+                <div class="col-md-8">
+                    <select ng-model="info.site_id" ng-options="s.id as s.Site_name for s in siteList"></select>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">Calendar</label>
                 </div>
-                <div class="col-md-6">
-                    AAAAAAA
+                <div class="col-md-8">
+                    <select class="col-md-12 form-control" ng-model="info.calendar_id" name="calendar" required ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | utc | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
+                    </select>
                 </div>
             </div>
         </div>
         <br/>
         <div class="row">
             <div class="col-md-6">
-                <div class="col-md-6">
-                    <label class="control-label bold">Appointment Notes</label>
+                <div class="col-md-4">
+                    <label style="margin-top: 28px;" class="control-label bold">Appointment Notes</label>
                 </div>
-                <div class="col-md-6">
-                    {{info.Appointment_notes}}
+                <div class="col-md-8">
+                    <input style="margin-top: 28px;" type="text" class="form-control" ng-model="info.Appointment_notes" />
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4" style="margin-top: 28px;">
                     <label class="control-label bold">Appointment Time</label>
                 </div>
-                <div class="col-md-6">
-                    AAAAAAA
+                <div class="col-md-4" style="margin-top: 28px;">
+                    <input type="text" class="form-control col-md-12" name="fromDate"  datepicker-popup="dd/MM/yyyy" data-ng-model="info.Appointment_time" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                </div>
+                <div class="col-md-4">
+                    <timepicker ng-model="info.Appointment_time"  hour-step="1" minute-step="15" show-meridian="false"></timepicker>
                 </div>
             </div>
         </div>
         <br/>
         <div class="row">
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">REDiMED Notes</label>
                 </div>
-                <div class="col-md-6">
-                    AAAAAAA
+                <div class="col-md-8">
+                    <input type="text" class="form-control" ng-model="info.RediMed_note"  />
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="control-label bold">Result File</label>
                 </div>
-                <div class="col-md-6">
-                    AAAAAAA
+                <div class="col-md-8">
+                    {{info.resultFile}}
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon icon-clock font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Assessment Details</span>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="form-group row" ng-repeat="(head,ass) in packAss ">
+            <div class="col-md-8">
+                <b>{{head}}</b>
+                <br/>
+                <div ng-repeat="a in ass">
+                    <label class="control-label" >
+                        &nbsp;&nbsp;{{a.ass_name}}
+                    </label>
+                    <br/>
+                </div>
+
             </div>
         </div>
     </div>

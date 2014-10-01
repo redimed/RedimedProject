@@ -1125,7 +1125,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     }, 0 , false);
   };
 
-  // Listen for focus requests from popup directive
+  // Listen for focus requests from popover directive
   $scope.$on('datepicker.focus', focusElement);
 
   $scope.keydown = function( evt ) {
@@ -1435,8 +1435,8 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
           ngModel.$render();
       });
 
-      // popup element used to display calendar
-      var popupEl = angular.element('<div datepicker-popup-wrap><div datepicker></div></div>');
+      // popover element used to display calendar
+      var popupEl = angular.element('<div datepicker-popover-wrap><div datepicker></div></div>');
       popupEl.attr({
         'ng-model': 'date',
         'ng-change': 'dateSelection()'
@@ -1590,7 +1590,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
     restrict:'EA',
     replace: true,
     transclude: true,
-    templateUrl: 'template/datepicker/popup.html',
+    templateUrl: 'template/datepicker/popover.html',
     link:function (scope, element, attrs) {
       element.bind('click', function(event) {
         event.preventDefault();
@@ -2455,7 +2455,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
       var startSym = $interpolate.startSymbol();
       var endSym = $interpolate.endSymbol();
       var template =
-        '<div '+ directiveName +'-popup '+
+        '<div '+ directiveName +'-popover '+
           'title="'+startSym+'tt_title'+endSym+'" '+
           'content="'+startSym+'tt_content'+endSym+'" '+
           'placement="'+startSym+'tt_placement'+endSym+'" '+
@@ -2523,7 +2523,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
               });
             }
 
-            // Show the tooltip popup element.
+            // Show the tooltip popover element.
             function show() {
 
               popupTimeout = null;
@@ -2564,7 +2564,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
               return positionTooltip;
             }
 
-            // Hide the tooltip popup element.
+            // Hide the tooltip popover element.
             function hide() {
               // First things first: we don't show it anymore.
               scope.tt_isOpen = false;
@@ -2683,7 +2683,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
     restrict: 'EA',
     replace: true,
     scope: { content: '@', placement: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-popup.html'
+    templateUrl: 'template/tooltip/tooltip-popover.html'
   };
 })
 
@@ -2696,7 +2696,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
     restrict: 'EA',
     replace: true,
     scope: { content: '@', placement: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'template/tooltip/tooltip-html-unsafe-popup.html'
+    templateUrl: 'template/tooltip/tooltip-html-unsafe-popover.html'
   };
 })
 
@@ -2705,7 +2705,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 }]);
 
 /**
- * The following features are still outstanding: popup delay, animation as a
+ * The following features are still outstanding: popover delay, animation as a
  * function, placement as a function, inside, support for more triggers than
  * just mouse enter/leave, html popovers, and selector delegatation.
  */
@@ -3466,7 +3466,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       //minimal wait time after last character typed before typehead kicks-in
       var waitTime = originalScope.$eval(attrs.typeaheadWaitMs) || 0;
 
-      //should it restrict model values to the ones selected from the popup only?
+      //should it restrict model values to the ones selected from the popover only?
       var isEditable = originalScope.$eval(attrs.typeaheadEditable) !== false;
 
       //binding to a variable that indicates if matches are being retrieved asynchronously
@@ -3505,7 +3505,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       });
 
       //pop-up element used to display matches
-      var popUpEl = angular.element('<div typeahead-popup></div>');
+      var popUpEl = angular.element('<div typeahead-popover></div>');
       popUpEl.attr({
         id: popupId,
         matches: 'matches',
@@ -3746,7 +3746,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
         select:'&'
       },
       replace:true,
-      templateUrl:'template/typeahead/typeahead-popup.html',
+      templateUrl:'template/typeahead/typeahead-popover.html',
       link:function (scope, element, attrs) {
 
         scope.templateUrl = attrs.templateUrl;

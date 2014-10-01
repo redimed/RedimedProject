@@ -811,7 +811,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                    } else if($.fn.editabletypes.dateuifield) {
                        type = 'dateuifield';
                    }
-               //popup
+               //popover
                } else {
                    if($.fn.editabletypes.date) {
                        type = 'date';
@@ -897,7 +897,7 @@ Applied as jQuery method.
         containerName: null, //method to call container on element
         containerDataName: null, //object name in element's .data()
         innerCss: null, //tbd in child class
-        containerClass: 'editable-container editable-popup', //css class applied to container element
+        containerClass: 'editable-container editable-popover', //css class applied to container element
         init: function(element, options) {
             this.$element = $(element);
             //since 1.4.1 container do not use data-* directly as they already merged into options.
@@ -1363,11 +1363,11 @@ Applied as jQuery method.
         anim: false,
         
         /**
-        Mode of editable, can be `popup` or `inline` 
+        Mode of editable, can be `popover` or `inline`
         
         @property mode 
         @type string         
-        @default 'popup'
+        @default 'popover'
         @since 1.4.0        
         **/        
         mode: 'popup'        
@@ -5933,7 +5933,7 @@ Bootstrap-datepicker.
 Description and examples: https://github.com/eternicode/bootstrap-datepicker.  
 For **i18n** you should include js file from here: https://github.com/eternicode/bootstrap-datepicker/tree/master/js/locales
 and set `language` option.  
-Since 1.4.0 date has different appearance in **popup** and **inline** modes. 
+Since 1.4.0 date has different appearance in **popover** and **inline** modes.
 
 @class date
 @extends abstractinput
@@ -6160,7 +6160,7 @@ $(function(){
 
 /**
 Bootstrap datefield input - modification for inline mode.
-Shows normal <input type="text"> and binds popup datepicker.  
+Shows normal <input type="text"> and binds popover datepicker.
 Automatically shown in inline mode.
 
 @class datefield
@@ -6485,7 +6485,7 @@ $(function(){
 }(window.jQuery));
 /**
 Bootstrap datetimefield input - datetime input for inline mode.
-Shows normal <input type="text"> and binds popup datetimepicker.  
+Shows normal <input type="text"> and binds popover datetimepicker.
 Automatically shown in inline mode.
 
 @class datetimefield

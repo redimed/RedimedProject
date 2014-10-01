@@ -165,6 +165,83 @@ module.exports = {
                 res.json({status:'error'});
             })
     },
+    editBooking : function(req,res){
+        var info = req.body.info;
+
+        var calId;
+        if(info.calendar_id === null || typeof info.calendar_id === 'undefined' || info.calendar_id === '')
+        {
+            calId = null;
+        }
+        else
+        {
+            calId = info.calendar_id;
+        }
+
+        db.BookingCandidate.update({
+            Appointment_status: info.Appointment_status,
+            SITE_ID: info.site_id,
+            CALENDAR_ID: calId,
+            Appointment_notes: info.Appointment_notes,
+            RediMed_note: info.RediMed_note,
+            Appointment_time: info.Appointment_time
+        },{Booking_id: info.Booking_id, Candidate_id: info.Candidate_id})
+            .success(function(){
+                res.json({status:"success"});
+            })
+            .error(function(err){
+                res.json({status:"fail"});
+            });
+
+    },
+    confirmBooking : function(req,res){
+        var info = req.body.info;
+
+        var appointmentTime = new Date(info.Appointment_time).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+
+
+        var smtpTransport = nodemailer.createTransport("SMTP", {
+            host: "mail.redimed.com.au", // hostname
+            secureConnection: true, // use SSL
+            port: 25, // port for secure SMTP
+            auth: {
+                user: "programmer2",
+                pass: "Hello8080"
+            }
+        });
+
+        var mailOptions = {
+            from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
+            to: info.Email, // receiver
+            subject: "✔ REDiMED Booking Confirm", // Subject line
+            html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
+                "<br>Your medical assessment has been booked at the following:</b><br>"+
+                "Date / Time: <b>" + appointmentTime +"</b> <br>" +
+                "Location: <b>REDiMED " + info.site_name + "</b><br>" +
+                "<br>" +
+                "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
+                "<br>" +
+                "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
+                "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
+                "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
+                "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
+                "- For any queries, please call 92300990.<br>"
+
+        }
+
+        smtpTransport.sendMail(mailOptions, function(error, response){  //callback
+            if(error){
+                console.log(error);
+                res.json({status:"fail"});
+            }else{
+                console.log("Message sent: " + response.message);
+                res.json({status:"success"});
+            }
+            smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+        });
+
+
+    },
     submitBooking: function(req,res){
 
         var info = req.body.info;
@@ -229,7 +306,7 @@ module.exports = {
                             })
                                 .success(function(data){
 
-                                    //res.json({status:'success'})
+                                    res.json({status:'success'})
 
                                     var siteId = data['dataValues'].SITE_ID;
 
