@@ -121,7 +121,6 @@
  property_id int
  );
 
-
  select * from redi_functions;
  select * from redi_menus;
 
@@ -164,17 +163,12 @@
 
 
 
-
-
-
-
-
-
  */
 var db = require('../models');
 var fs = require('fs');
 var _s = require('underscore.string');
 var readline = require('readline');
+var colors = require('colors');
 
 //var input = fs.createReadStream('sakila_redi_functions.sql');
 //readLines(input, func);
@@ -216,6 +210,7 @@ function main(tableName,becomeModel) {
     var modelBody = "";
     var creationDate = "";
     var lastUpdateDate = "";
+    var recordOfTable ;
 
     db.sequelize
         // sync để tự động tạo các bảng trong database
@@ -236,9 +231,58 @@ function main(tableName,becomeModel) {
 
         //find all columns of the table and write to file
         db.SYSCOLUMNS.findAll({where: {TABLE_NAME: tableName.toUpperCase()}}, {raw: true}).success(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY );
 
+            //Begin insert table information into SYS_Forms : header of form
+            //,['FORM_ID','MASTER_TABLE_NAME','MASTER_SEQ','DETAIL_TABLE_NAME','DETAIL_SEQ','FORM_DESCRIPTION','FORM_TYPE']
+            db.SysForms.create({
+                FORM_ID : id
+                ,MASTER_TABLE_NAME : tableName
+                ,MASTER_SEQ : tableName
+                ,DETAIL_TABLE_NAME : ''
+                ,DETAIL_SEQ : ''
+                ,FORM_DESCRIPTION : 'Generate Form Automatically'
+                ,FORM_TYPE : 'Single'
+            }).success(function(){
+                console.log('Inserting into SYS_Forms successfully !'.green);
+            })
+            .error(function(err){
+                    console.log('Error during Inserting into SYS_Forms !'.red);
+            });
+            //End insert table information into SYS_Forms : header of form
+
+            for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY );
+                recordOfTable = data[i];
+                console.log(recordOfTable.COLUMN_NAME.rainbow);
+                //Begin inserting into Form Detail
+                db.SysFormDetails.getPK(function(detailId){
+                    console.log("ID = " + detailId  + " sysFormDetail".green);
+                    //console.log(recordOfTable);
+                    db.SysFormDetails.create({
+                        FORM_ID : id
+                        ,TABLE_NAME : tableName
+                        ,FORM_DETAIL_ID : detailId
+                        ,ORDINAL_POSITION : recordOfTable.ORDINAL_POSITION
+                        ,COLUMN_NAME : recordOfTable.COLUMN_NAME
+                        ,IS_NULLABLE : recordOfTable.IS_NULLABLE
+                        ,DATA_TYPE : recordOfTable.DATA_TYPE
+                        ,CHARACTER_MAXIMUM_LENGTH : recordOfTable.CHARACTER_MAXIMUM_LENGTH
+                        ,COLUMN_KEY : recordOfTable.COLUMN_KEY
+                        ,DISPLAY_NAME : _s.humanize(recordOfTable.COLUMN_NAME)
+                        ,ISDISPLAY : 1
+                        ,ISNEW : 1
+                        ,ISUPDATE : 1
+                        ,ISREQUIRE : 0
+                        ,INPUT_TYPE : 'TextBox'
+                        ,LOV_SQL : ''
+                    }).success(function(){
+                        console.log('Inserting '.green +recordOfTable.COLUMN_NAME.green+' into SYS_Form_Details successfully !'.green);
+                    })
+                    .error(function(err){
+                        console.log('Error during Inserting '.red + recordOfTable.COLUMN_NAME.red +' into SYS_Form_Details !'.red);
+                    });
+                });
+                //End inserting into Form Detail
                 var isComma = '';
 
                 if (i != 0) {
@@ -266,11 +310,11 @@ function main(tableName,becomeModel) {
                 }
 
                 if ((data[i].COLUMN_NAME).toUpperCase() === ('CREATION_DATE')){
-                    creationDate = "        createdAt : 'CREATION_DATE',\n";
+                    creationDate = "       createdAt : 'CREATION_DATE',\n";
                 }
 
                 if ((data[i].COLUMN_NAME).toUpperCase() === ('LAST_UPDATE_DATE')){
-                    lastUpdateDate = "      updatedAt : 'LAST_UPDATE_DATE',\n";
+                    lastUpdateDate = "       updatedAt : 'LAST_UPDATE_DATE',\n";
                 }
 
                 insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";

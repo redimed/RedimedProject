@@ -23,6 +23,7 @@
     "passport-local": "^1.0.0",
     "sequelize": "^1.7.10",
     "underscore.string": "latest",
+    "colors": "latest",
     "static-favicon": "~1.0.0"
   }
 }

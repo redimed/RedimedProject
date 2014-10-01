@@ -1,12 +1,12 @@
 /** 
-* Created by meditech on 19/09/2014.
+* Created by meditech on 2014:10:01 22:00:01.
 */
 module.exports = function(sequelize,DataTypes){
    var SysFormDetails = sequelize.define('SysFormDetails',{
        FORM_ID : DataTypes.INTEGER(11) 
        ,TABLE_NAME : DataTypes.STRING(100) 
        ,FORM_DETAIL_ID : {type:DataTypes.INTEGER(11), primaryKey:true} 
-       ,ORDINAL_POSITION : DataTypes.INTEGER(11) 
+       ,ORDINAL_POSITION : DataTypes.BIGINT
        ,COLUMN_NAME : DataTypes.STRING(100) 
        ,IS_NULLABLE : DataTypes.STRING(3) 
        ,DATA_TYPE : DataTypes.STRING(64) 
