@@ -1,5 +1,5 @@
 /** 
-* Created by meditech on 2014:10:02 16:02:23.
+* Created by meditech on 2014:10:02 15:59:55.
 */
 module.exports = function(sequelize,DataTypes){
    var PmProperties = sequelize.define('PmProperties',{

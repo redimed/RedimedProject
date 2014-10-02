@@ -170,6 +170,7 @@ var _s = require('underscore.string');
 var readline = require('readline');
 var colors = require('colors');
 
+
 //var input = fs.createReadStream('sakila_redi_functions.sql');
 //readLines(input, func);
 
@@ -253,35 +254,9 @@ function main(tableName,becomeModel) {
             for (var i = 0; i < data.length; i++) {
                 //console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY );
                 recordOfTable = data[i];
-                console.log(recordOfTable.COLUMN_NAME.rainbow);
+                //console.log(recordOfTable.COLUMN_NAME.rainbow);
                 //Begin inserting into Form Detail
-                db.SysFormDetails.getPK(function(detailId){
-                    console.log("ID = " + detailId  + " sysFormDetail".green);
-                    //console.log(recordOfTable);
-                    db.SysFormDetails.create({
-                        FORM_ID : id
-                        ,TABLE_NAME : tableName
-                        ,FORM_DETAIL_ID : detailId
-                        ,ORDINAL_POSITION : recordOfTable.ORDINAL_POSITION
-                        ,COLUMN_NAME : recordOfTable.COLUMN_NAME
-                        ,IS_NULLABLE : recordOfTable.IS_NULLABLE
-                        ,DATA_TYPE : recordOfTable.DATA_TYPE
-                        ,CHARACTER_MAXIMUM_LENGTH : recordOfTable.CHARACTER_MAXIMUM_LENGTH
-                        ,COLUMN_KEY : recordOfTable.COLUMN_KEY
-                        ,DISPLAY_NAME : _s.humanize(recordOfTable.COLUMN_NAME)
-                        ,ISDISPLAY : 1
-                        ,ISNEW : 1
-                        ,ISUPDATE : 1
-                        ,ISREQUIRE : 0
-                        ,INPUT_TYPE : 'TextBox'
-                        ,LOV_SQL : ''
-                    }).success(function(){
-                        console.log('Inserting '.green +recordOfTable.COLUMN_NAME.green+' into SYS_Form_Details successfully !'.green);
-                    })
-                    .error(function(err){
-                        console.log('Error during Inserting '.red + recordOfTable.COLUMN_NAME.red +' into SYS_Form_Details !'.red);
-                    });
-                });
+                insertFormDetail(id,recordOfTable);
                 //End inserting into Form Detail
                 var isComma = '';
 
@@ -508,3 +483,35 @@ function func(data) {
     }
 }
 
+
+function insertFormDetail(id,recordOfTable){
+    db.SysFormDetails.getPK(function(detailId){
+        //console.log("ID = " + detailId  + " sysFormDetail".green + "  " + recordOfTable.COLUMN_NAME.rainbow);
+        //console.log(recordOfTable);
+
+         db.SysFormDetails.create({
+             FORM_ID : id
+             ,TABLE_NAME : recordOfTable.COLUMN_NAME
+             ,FORM_DETAIL_ID : detailId
+             ,ORDINAL_POSITION : recordOfTable.ORDINAL_POSITION
+             ,COLUMN_NAME : recordOfTable.COLUMN_NAME
+             ,IS_NULLABLE : recordOfTable.IS_NULLABLE
+             ,DATA_TYPE : recordOfTable.DATA_TYPE
+             ,CHARACTER_MAXIMUM_LENGTH : recordOfTable.CHARACTER_MAXIMUM_LENGTH
+             ,COLUMN_KEY : recordOfTable.COLUMN_KEY
+             ,DISPLAY_NAME : _s.humanize(recordOfTable.COLUMN_NAME)
+             ,ISDISPLAY : 1
+             ,ISNEW : 1
+             ,ISUPDATE : 1
+             ,ISREQUIRE : 0
+             ,INPUT_TYPE : 'TextBox'
+             ,LOV_SQL : ''
+         }).success(function(){
+            console.log('Inserting '.green +recordOfTable.COLUMN_NAME.green+' into SYS_Form_Details successfully !'.green);
+         })
+         .error(function(err){
+            console.log('Error during Inserting '.red + recordOfTable.COLUMN_NAME.red +' into SYS_Form_Details !'.red);
+         });
+
+    });
+}
