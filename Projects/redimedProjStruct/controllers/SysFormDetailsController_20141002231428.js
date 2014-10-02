@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:02 23:14:28.
+        * Created by meditech on 2014:10:01 22:00:01.
 */
 var db = require('../models');
 module.exports = {
@@ -39,8 +39,7 @@ module.exports = {
           ,CHARACTER_MAXIMUM_LENGTH : f.CHARACTER_MAXIMUM_LENGTH
           ,COLUMN_KEY : f.COLUMN_KEY
           ,DISPLAY_NAME : f.DISPLAY_NAME
-          ,ISDISPLAY_ON_LIST : f.ISDISPLAY_ON_LIST
-          ,ISDISPLAY_ON_FORM : f.ISDISPLAY_ON_FORM
+          ,ISDISPLAY : f.ISDISPLAY
           ,ISNEW : f.ISNEW
           ,ISUPDATE : f.ISUPDATE
           ,ISREQUIRE : f.ISREQUIRE
@@ -68,14 +67,13 @@ module.exports = {
           ,CHARACTER_MAXIMUM_LENGTH : f.CHARACTER_MAXIMUM_LENGTH
           ,COLUMN_KEY : f.COLUMN_KEY
           ,DISPLAY_NAME : f.DISPLAY_NAME
-          ,ISDISPLAY_ON_LIST : f.ISDISPLAY_ON_LIST
-          ,ISDISPLAY_ON_FORM : f.ISDISPLAY_ON_FORM
+          ,ISDISPLAY : f.ISDISPLAY
           ,ISNEW : f.ISNEW
           ,ISUPDATE : f.ISUPDATE
           ,ISREQUIRE : f.ISREQUIRE
           ,INPUT_TYPE : f.INPUT_TYPE
           ,LOV_SQL : f.LOV_SQL
-    },['FORM_ID','TABLE_NAME','FORM_DETAIL_ID','ORDINAL_POSITION','COLUMN_NAME','IS_NULLABLE','DATA_TYPE','CHARACTER_MAXIMUM_LENGTH','COLUMN_KEY','DISPLAY_NAME','ISDISPLAY_ON_LIST','ISDISPLAY_ON_FORM','ISNEW','ISUPDATE','ISREQUIRE','INPUT_TYPE','LOV_SQL']).success(function(){
+    },['FORM_ID','TABLE_NAME','FORM_DETAIL_ID','ORDINAL_POSITION','COLUMN_NAME','IS_NULLABLE','DATA_TYPE','CHARACTER_MAXIMUM_LENGTH','COLUMN_KEY','DISPLAY_NAME','ISDISPLAY','ISNEW','ISUPDATE','ISREQUIRE','INPUT_TYPE','LOV_SQL']).success(function(){
         res.json({status:'success'});
     })
         .error(function(err){

@@ -146,23 +146,21 @@
  FORM_ID INT,
  TABLE_NAME VARCHAR(100),
  FORM_DETAIL_ID INT PRIMARY KEY,
- ORDINAL_POSITION INT,
+ ORDINAL_POSITION bigINT,
  COLUMN_NAME VARCHAR(100),
  IS_NULLABLE VARCHAR(3),
  DATA_TYPE VARCHAR(64),
  CHARACTER_MAXIMUM_LENGTH bigINT,
  COLUMN_KEY VARCHAR(3),
  DISPLAY_NAME VARCHAR(250),
- ISDISPLAY INT,
+ ISDISPLAY_ON_LIST INT,
+ ISDISPLAY_ON_FORM INT,
  ISNEW INT,
  ISUPDATE INT,
  ISREQUIRE INT,
  INPUT_TYPE VARCHAR(100),
  LOV_SQL VARCHAR(2000)
  );
-
-
-
  */
 var db = require('../models');
 var fs = require('fs');
@@ -235,20 +233,23 @@ function main(tableName,becomeModel) {
 
             //Begin insert table information into SYS_Forms : header of form
             //,['FORM_ID','MASTER_TABLE_NAME','MASTER_SEQ','DETAIL_TABLE_NAME','DETAIL_SEQ','FORM_DESCRIPTION','FORM_TYPE']
-            db.SysForms.create({
-                FORM_ID : id
-                ,MASTER_TABLE_NAME : tableName
-                ,MASTER_SEQ : tableName
-                ,DETAIL_TABLE_NAME : ''
-                ,DETAIL_SEQ : ''
-                ,FORM_DESCRIPTION : 'Generate Form Automatically'
-                ,FORM_TYPE : 'Single'
-            }).success(function(){
-                console.log('Inserting into SYS_Forms successfully !'.green);
-            })
-            .error(function(err){
-                    console.log('Error during Inserting into SYS_Forms !'.red);
-            });
+            if(tableName.toUpperCase() != 'SYS_FORMS' && tableName.toUpperCase() != 'SYS_FORM_DETAILS' ){
+                db.SysForms.create({
+                    FORM_ID : id
+                    ,MASTER_TABLE_NAME : tableName
+                    ,MASTER_SEQ : tableName
+                    ,DETAIL_TABLE_NAME : ''
+                    ,DETAIL_SEQ : ''
+                    ,FORM_DESCRIPTION : 'Generate Form Automatically'
+                    ,FORM_TYPE : 'Single'
+                }).success(function(){
+                    console.log('Inserting into SYS_Forms successfully !'.green);
+                })
+                    .error(function(err){
+                        console.log('Error during Inserting into SYS_Forms !'.red);
+                    });
+            }
+
             //End insert table information into SYS_Forms : header of form
 
             for (var i = 0; i < data.length; i++) {
@@ -256,7 +257,9 @@ function main(tableName,becomeModel) {
                 recordOfTable = data[i];
                 //console.log(recordOfTable.COLUMN_NAME.rainbow);
                 //Begin inserting into Form Detail
-                insertFormDetail(id,recordOfTable);
+                if(tableName.toUpperCase() != 'SYS_FORMS' && tableName.toUpperCase() != 'SYS_FORM_DETAILS' ) {
+                    insertFormDetail(id, tableName, recordOfTable);
+                }
                 //End inserting into Form Detail
                 var isComma = '';
 
@@ -484,14 +487,14 @@ function func(data) {
 }
 
 
-function insertFormDetail(id,recordOfTable){
+function insertFormDetail(id,tableName,recordOfTable){
     db.SysFormDetails.getPK(function(detailId){
         //console.log("ID = " + detailId  + " sysFormDetail".green + "  " + recordOfTable.COLUMN_NAME.rainbow);
         //console.log(recordOfTable);
 
          db.SysFormDetails.create({
              FORM_ID : id
-             ,TABLE_NAME : recordOfTable.COLUMN_NAME
+             ,TABLE_NAME : tableName
              ,FORM_DETAIL_ID : detailId
              ,ORDINAL_POSITION : recordOfTable.ORDINAL_POSITION
              ,COLUMN_NAME : recordOfTable.COLUMN_NAME
@@ -500,7 +503,8 @@ function insertFormDetail(id,recordOfTable){
              ,CHARACTER_MAXIMUM_LENGTH : recordOfTable.CHARACTER_MAXIMUM_LENGTH
              ,COLUMN_KEY : recordOfTable.COLUMN_KEY
              ,DISPLAY_NAME : _s.humanize(recordOfTable.COLUMN_NAME)
-             ,ISDISPLAY : 1
+             ,ISDISPLAY_ON_LIST : 1
+             ,ISDISPLAY_ON_FORM : 1
              ,ISNEW : 1
              ,ISUPDATE : 1
              ,ISREQUIRE : 0

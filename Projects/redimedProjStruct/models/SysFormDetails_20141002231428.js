@@ -1,18 +1,18 @@
 /** 
-* Created by meditech on 2014:10:02 23:14:28.
+* Created by meditech on 2014:10:01 22:00:01.
 */
 module.exports = function(sequelize,DataTypes){
    var SysFormDetails = sequelize.define('SysFormDetails',{
        FORM_ID : DataTypes.INTEGER(11) 
        ,TABLE_NAME : DataTypes.STRING(100) 
        ,FORM_DETAIL_ID : {type:DataTypes.INTEGER(11), primaryKey:true} 
+       ,ORDINAL_POSITION : DataTypes.BIGINT
        ,COLUMN_NAME : DataTypes.STRING(100) 
        ,IS_NULLABLE : DataTypes.STRING(3) 
        ,DATA_TYPE : DataTypes.STRING(64) 
        ,COLUMN_KEY : DataTypes.STRING(3) 
        ,DISPLAY_NAME : DataTypes.STRING(250) 
-       ,ISDISPLAY_ON_LIST : DataTypes.INTEGER(11) 
-       ,ISDISPLAY_ON_FORM : DataTypes.INTEGER(11) 
+       ,ISDISPLAY : DataTypes.INTEGER(11) 
        ,ISNEW : DataTypes.INTEGER(11) 
        ,ISUPDATE : DataTypes.INTEGER(11) 
        ,ISREQUIRE : DataTypes.INTEGER(11) 

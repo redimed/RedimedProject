@@ -210,8 +210,6 @@ function main(tableName,becomeModel) {
                 primaryKeyColumnName = data[i].COLUMN_NAME;
             }
 
-            //insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
-            //insertUpdateStatement2 +=  isComma + "'"+ data[i].COLUMN_NAME + "'";
         }
 
         wstreamView.write(
@@ -433,6 +431,6 @@ var mkdirSync = function (path) {
     try {
         fs.mkdirSync(path);
     } catch(e) {
-        if ( e.code != 'EEXIST' ) throw e;
+        if ( e.code != 'EXIST' ) throw e;
     }
 }
