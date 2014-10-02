@@ -104,5 +104,8 @@ db.sequelize
     }
 );
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 9854671... commit

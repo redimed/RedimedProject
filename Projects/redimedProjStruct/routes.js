@@ -74,8 +74,7 @@ app.post('/api/company/sub',CompanyController.subCompany);
 app.post('/api/company/sub/info',CompanyController.subCompanyInfo);
 
 app.post('/api/booking/packageList', BookingController.packageList);
-app.post('/api/booking/list/companyId',BookingController.bookingListByCompany);
-app.get('/api/booking/list',BookingController.bookingList);
+app.post('/api/booking/list',BookingController.bookingList);
 app.post('/api/booking/detail',BookingController.bookingDetail);
 app.post('/api/booking/cancel',BookingController.cancelBooking);
 app.post('/api/booking/calendar',BookingController.calendarList);
