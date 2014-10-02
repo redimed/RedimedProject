@@ -4,18 +4,14 @@
 var db = require('../models');
 module.exports = {
     companyList: function(req,res){
-        req.getConnection(function(err,connection){
-            var query = connection.query("SELECT * FROM companies ORDER BY Company_name ASC",function(err,rows){
-                if(err)
-                {
-                    res.json({status:'fail', error:err});
-                }
-                else
-                {
-                    res.json(rows);
-                }
-            });
-        });
+        db.Company.findAll()
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'})
+            })
+
     },
     subCompany: function(req,res)
     {
@@ -26,7 +22,7 @@ module.exports = {
             res.json({status:'error',err:err});
         })
     },
-    subCompanyInfo: function(req,res){
+    companyInfo: function(req,res){
         var id = req.body.comId;
         db.Company.find({where:{id:id}},{raw:true}).success(function(data){
             res.json(data);

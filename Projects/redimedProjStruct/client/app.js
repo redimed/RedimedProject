@@ -1,9 +1,8 @@
 angular.module("app", [
     "ui.router",                // ANGULAR UI ROUTER
-    "ui.bootstrap",             // ANGULAR BOOTSTRAP
     "angularFileUpload",        // ANGULAR FILE UPLOAD
     "restangular",              // RESTANGULAR
-    "mgcrea.ngStrap",           //ANGULAR STRAP
+    "ui.bootstrap",             // ANGULAR BOOTSTRAP
     "ngCookies",                // ANGULAR COOKIES
     "pascalprecht.translate",   // ANGULAR TRANSLATE
     "ui.select",                // ANGULAR UI SELECT

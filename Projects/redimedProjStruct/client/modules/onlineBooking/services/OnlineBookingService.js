@@ -11,6 +11,10 @@ angular.module('app.loggedIn.booking.services',[])
             return sub.post({id:id});
         }
 
+        bookingService.getSubCompanyInfo = function(id){
+            var sub = api.all('company/info');
+            return sub.post({comId:id});
+        }
 
 
         bookingService.getPackage = function(id){
@@ -113,14 +117,31 @@ angular.module('app.loggedIn.booking.services',[])
             return submit.post({info:info,header:head});
         }
 
-        bookingService.getSubCompanyInfo = function(id){
-            var sub = api.all('company/sub/info');
-            return sub.post({comId:id});
-        }
+
 
         bookingService.getUserByCompany = function(comId){
             var user = api.all('users/company');
             return user.post({comId:comId});
+        }
+
+        bookingService.insertNewUser = function(info){
+            var user = api.all('users/insert');
+            return user.post({info:info});
+        }
+
+        bookingService.getUserInfo = function(id){
+            var user = api.all('users/id');
+            return user.post({id:id});
+        }
+
+        bookingService.editUserInfo = function(info){
+            var user = api.all('users/edit');
+            return user.post({info:info});
+        }
+
+        bookingService.changeUserPassword = function(info){
+            var pass = api.all('users/changePass');
+            return pass.post({info:info});
         }
 
 

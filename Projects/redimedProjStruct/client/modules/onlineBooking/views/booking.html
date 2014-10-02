@@ -22,16 +22,13 @@
         </div>
         <div>
             <div class="btn-group pull-right">
-                <button ng-click="search()" popover-placement="bottom" popover-template="template.html" class="btn grey" >
+                <button ng-click="search()" data-container="body" data-toggle="popover" data-placement="bottom" template="<strong>HTML</strong> allowed.<br />
+            Binding allowed: {{ value }}<br />
+            <button ng-click='value = 2'>Test</button>" class="btn grey" >
                     Search &nbsp;&nbsp; <i class="glyphicon glyphicon-search"></i>
                 </button>
             </div>
         </div>
-        <script id="template.html" type="text/ng-template">
-            <strong>HTML</strong> allowed.<br />
-            Binding allowed: {{ value }}<br />
-            <button ng-click="value = 2">Test</button>
-        </script>
 
     </div>
     <div class="portlet-body form">
@@ -66,11 +63,16 @@
                         <span>{{b.RediMed_note}}</span>
                     </td>
                     <td class="col-md-12" data-title="'Actions'">
-                        <a href="javascript:;" ng-click="openDetail(b)"  class="btn btn-primary">Booking Details</a>
-
-                        <a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="changeBookingTime(b)" class="btn btn-info">Change Booking Time</a>
-
-                        <a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="cancelBooking(b)" class="btn btn-danger col-md-5">Cancel</a>
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown">
+                                Menu <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:;" ng-click="openDetail(b)">Booking Details</a></li>
+                                <li><a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="changeBookingTime(b)">Change Booking Time</a></li>
+                                <li><a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="cancelBooking(b)">Cancel</a></li>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
 

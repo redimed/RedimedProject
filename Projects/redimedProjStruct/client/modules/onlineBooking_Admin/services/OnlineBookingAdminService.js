@@ -31,7 +31,40 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return a.get();
         }
 
+        adminBooking.deleteHeaderAssessment = function(id){
+            var del = api.all('assessment/header/remove');
+            return del.post({id:id});
+        }
 
+        adminBooking.addNewHeaderAssessment = function(info){
+            var add = api.all('assessment/header/insert');
+            return add.post({info:info});
+        }
+
+        adminBooking.deleteAssessment = function(id){
+            var del = api.all('assessment/remove');
+            return del.post({id:id});
+        }
+
+        adminBooking.addNewAssessment = function(info){
+            var add = api.all('assessment/insert');
+            return add.post({info:info});
+        }
+
+        adminBooking.getCompanyList = function(){
+            var list = api.one('company/list');
+            return list.get();
+        }
+
+        adminBooking.getSubCompany = function(id){
+            var sub = api.all('company/sub');
+            return sub.post({id:id});
+        }
+
+        adminBooking.getCompanyInfo = function(id){
+            var sub = api.all('company/info');
+            return sub.post({comId:id});
+        }
 
         return adminBooking;
 })

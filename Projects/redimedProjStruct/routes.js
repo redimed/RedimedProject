@@ -53,16 +53,27 @@ app.all('/api/users/logout', function(req, res) {
     res.redirect('/');
 });
 
+app.get('/api/company/list',CompanyController.companyList);
+app.post('/api/company/sub',CompanyController.subCompany);
+app.post('/api/company/info',CompanyController.companyInfo);
+
 app.post('/api/users/home',MenuController.loadSideMenu);
-app.get('/api/users/companyList',CompanyController.companyList);
 app.post('/api/users/register',AuthenticationController.register);
 app.get('/api/users/loggedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
 app.post('/api/users/company',UserController.userByCompany);
+app.post('/api/users/id',UserController.getUserById);
+app.post('/api/users/insert',UserController.insertUser);
+app.post('/api/users/edit',UserController.editUser);
+app.post('/api/users/changePass',UserController.changePass);
 
 app.get('/api/assessment/header',AssessmentController.headerList);
+app.post('/api/assessment/header/remove',AssessmentController.removeHeader);
+app.post('/api/assessment/header/insert',AssessmentController.insertHeader);
 app.get('/api/assessment',AssessmentController.getAssessment);
+app.post('/api/assessment/remove',AssessmentController.removeAssessment);
+app.post('/api/assessment/insert',AssessmentController.insertAssessment);
 
 app.post('/api/package/assessment/id',PackageController.packageAssById);
 app.get('/api/package/assessment',PackageController.packageAss);
@@ -70,11 +81,11 @@ app.post('/api/package/assessment/update',PackageController.updateAss);
 app.post('/api/package/insert',PackageController.insertPackage);
 app.post('/api/package/assessment/delete',PackageController.deleteAss);
 app.post('/api/package/assessment/insert',PackageController.insertAss);
-app.post('/api/company/sub',CompanyController.subCompany);
-app.post('/api/company/sub/info',CompanyController.subCompanyInfo);
+
 
 app.post('/api/booking/packageList', BookingController.packageList);
-app.post('/api/booking/list',BookingController.bookingList);
+app.post('/api/booking/list/companyId',BookingController.bookingListByCompany);
+app.get('/api/booking/list',BookingController.bookingList);
 app.post('/api/booking/detail',BookingController.bookingDetail);
 app.post('/api/booking/cancel',BookingController.cancelBooking);
 app.post('/api/booking/calendar',BookingController.calendarList);

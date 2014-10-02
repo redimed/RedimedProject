@@ -4,7 +4,8 @@
 angular.module('app.loggedIn.booking.admin',[
     'app.loggedIn.booking.admin.services',
     'app.loggedIn.booking.admin.booking.controller',
-    'app.loggedIn.booking.admin.assessment.controller'
+    'app.loggedIn.booking.admin.assessment.controller',
+    'app.loggedIn.booking.admin.company.controller'
 ])
 .config(function($stateProvider){
         $stateProvider
@@ -18,5 +19,11 @@ angular.module('app.loggedIn.booking.admin',[
                 url:'/admin/booking/assessment',
                 templateUrl: 'modules/onlineBooking_Admin/views/assessment.html',
                 controller: 'AssessmentController'
+            })
+
+            .state('loggedIn.admin_company',{
+                url:'/admin/booking/companies',
+                templateUrl: 'modules/onlineBooking_Admin/views/companies.html',
+                controller: 'CompanyController'
             })
     })

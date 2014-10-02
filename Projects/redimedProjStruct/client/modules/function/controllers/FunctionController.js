@@ -59,6 +59,7 @@ angular.module('app.loggedIn.function.controller',[])
             if(response['status'] === 'success') {
                 alert("Insert Successfully!");
                 $scope.func = "";
+
                 $state.go('loggedIn.function', null, {"reload":true});
             }
             else

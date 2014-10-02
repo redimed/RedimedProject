@@ -10,7 +10,7 @@ angular.module("app.security.services", [])
     }
 
     securityService.company = function(){
-        var companyList = securityApi.one('users/companyList');
+        var companyList = securityApi.one('company/list');
         return companyList.get();
     }
 

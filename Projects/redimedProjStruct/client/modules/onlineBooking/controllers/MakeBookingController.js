@@ -160,6 +160,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
             },function(err){
                 console.log(err);
             });
+
         };
 
         $scope.editCandidate = function(b){

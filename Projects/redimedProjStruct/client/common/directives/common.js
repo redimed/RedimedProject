@@ -210,8 +210,6 @@ angular.module("app.directive.common", [])
 	}	
 })
 
-
-
 // LOADING
 .directive('ngLoading', function($compile) {
 	return {

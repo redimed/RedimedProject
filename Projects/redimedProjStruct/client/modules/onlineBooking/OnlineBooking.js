@@ -42,4 +42,16 @@ angular.module('app.loggedIn.booking',
                 controller:'SettingController'
             })
 
+            .state('loggedIn.newUser',{
+                url:'/onlineBooking/setting/newUser',
+                templateUrl: 'modules/onlineBooking/views/newUser.html',
+                controller:'NewUserController'
+            })
+
+            .state('loggedIn.editUser',{
+                url:'/onlineBooking/setting/editUser/:id',
+                templateUrl:'modules/onlineBooking/views/newUser.html',
+                controller:'EditUserController'
+            })
+
     });
