@@ -3,6 +3,7 @@ angular.module("app", [
     "ui.bootstrap",             // ANGULAR BOOTSTRAP
     "angularFileUpload",        // ANGULAR FILE UPLOAD
     "restangular",              // RESTANGULAR
+    "mgcrea.ngStrap",           //ANGULAR STRAP
     "ngCookies",                // ANGULAR COOKIES
     "pascalprecht.translate",   // ANGULAR TRANSLATE
     "ui.select",                // ANGULAR UI SELECT
