@@ -25,17 +25,21 @@ module.exports = {
     },
     list: function(req,res)
     {
-        db.sequelize.query("SELECT m.menu_id as MenuID, m.`parent_id` as ParentID ,m.Description as MenuDescription,m.`isEnable` as MenuEnable,m.`type` as MenuType, m.definition as MenuDefinition ,f.`function_id` as FunctionID, f.`decription` as FunctionName FROM redi_menus m LEFT JOIN redi_functions f ON m.function_id = f.function_id ORDER BY m.menu_id").success(function(data){
-            if(err)
-            {
-                res.json({status:"fail"});
-            }
-            else
-            {
-                res.json(rows);
+        req.getConnection(function(err,connection) {
 
-            }
-        })
+            var query=connection.query("SELECT m.menu_id as MenuID, m.`parent_id` as ParentID ,m.Description as MenuDescription,m.`isEnable` as MenuEnable,m.`type` as MenuType, m.definition as MenuDefinition ,f.`function_id` as FunctionID, f.`decription` as FunctionName FROM redi_menus m LEFT JOIN redi_functions f ON m.function_id = f.function_id ORDER BY m.menu_id",function(err,rows){
+
+                if(err)
+                {
+                    res.json({status:"fail"});
+                }
+                else
+                {
+                    res.json(rows);
+
+                }
+            });
+        });
     },
     edit: function(req,res)
     {

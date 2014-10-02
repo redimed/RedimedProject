@@ -6,6 +6,8 @@ angular.module("app.loggedIn.document",[
     "app.loggedIn.document.cat2.controllers",
     "app.loggedIn.document.cat3.controllers",
     "app.loggedIn.document.FA.controllers",
+    "app.loggedIn.document.MA.controllers",
+    "app.loggedIn.document.IDS.controllers",
     "app.loggedIn.document.gorgonFA.controllers",
     "app.loggedIn.document.gorgonMA.controllers",
     "app.loggedIn.document.gorgonMH.controllers",
@@ -36,6 +38,22 @@ angular.module("app.loggedIn.document",[
 
                 templateUrl: "modules/document/views/functionAssessment.html",
                 controller: 'FAController'
+
+            })
+
+            .state("loggedIn.MA",{
+                url:"/MA",
+
+                templateUrl: "modules/document/views/medicalAssessment.html",
+                controller: 'MAController'
+
+            })
+
+            .state("loggedIn.IDS",{
+                url:"/IDS",
+
+                templateUrl: "modules/document/views/instantScreen.html",
+                controller: 'IDSController'
 
             })
 

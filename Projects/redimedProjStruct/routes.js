@@ -90,9 +90,10 @@ app.post('/api/function/insert',FunctionController.insert);
 
 app.get('/api/document/newFA',DocumentController.newFA);
 app.get('/api/document/loadFA',DocumentController.loadFA);
-
-
-
+app.get('/api/document/newMA',DocumentController.newMA);
+app.get('/api/document/loadMA',DocumentController.loadMA);
+app.get('/api/document/newIDS',DocumentController.newIDS);
+app.get('/api/document/loadIDS',DocumentController.loadIDS);
 
 
 

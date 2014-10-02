@@ -16,6 +16,26 @@ angular.module('app.loggedIn.document.services',[])
             return loadFA.get();
         }
 
+        documentService.newMA = function(){
+            var newMA = api.one("document/newMA");
+            return newMA.get();
+        }
+
+        documentService.loadMA = function(){
+            var loadMA = api.one("document/loadMA");
+            return loadMA.get();
+        }
+
+        documentService.newIDS = function(){
+            var newIDS = api.one("document/newIDS");
+            return newIDS.get();
+        }
+
+        documentService.loadIDS = function(){
+            var loadIDS = api.one("document/loadIDS");
+            return loadIDS.get();
+        }
+
 
     return documentService;
     })

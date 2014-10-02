@@ -1,0 +1,461 @@
+
+<div ng-repeat="header in listMA">
+    <div class="caption">
+        <div class="row">
+            <div class="col-md-12">
+                <p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.header_name}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title bold">Checklist</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <label class="control-label col-md-2">CANDIDATE NAME:</label>
+                <label class="control-label col-md-3"> John Smith</label>
+                <label class="control-label col-md-1">D.O.B</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <label class="control-label col-md-2">HEIGHT(cms):</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+                <label class="control-label col-md-2">WEIGHT(kg):</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+                <label class="control-label col-md-1">BMI:</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            </br>
+
+            <div class="row">
+                <div class="col-md-2 btn-group">
+                    <label class="control-label text-info bold" >BMI</label></br>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/> < 18.5
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="0"/> 18.5 - 24.9
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/> 25.0 - 29.9
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="0"/> 30.0
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label" style="margin-top: 35px">Underweight</label></br>
+                    <label class="control-label " style="margin-top: 10px">Normal</label></br>
+                    <label class="control-label" style="margin-top: 10px">Overweight</label></br>
+                    <label class="control-label" style="margin-top: 10px">Obese</label>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label text-info bold">Rating</label></br>
+                    <label class="control-label" style="margin-top: 8px">Conditional</label></br>
+                    <label class="control-label" style="margin-top: 10px">Satisfactory</label></br>
+                    <label class="control-label" style="margin-top: 10px">Conditional</label></br>
+                    <label class="control-label" style="margin-top: 10px">Unsatisfactory</label>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label class="control-label col-md-3">URINALYSIS:</label>
+                <div class="col-md-7 btn-group">
+                    <label class="btn">
+                        <input type="radio" name='a' value="0"/>NORMAL
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/> ABNORMAL
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="0"/>  DISCUSSED
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <label class="control-label col-md-3">URINALYSIS COMMENT:</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <label class="control-label col-md-3">BSL(MMOL/L):</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+            </div></br>
+            <div class="row">
+                <label class="control-label col-md-3">WAIST CIRCUMFERENCE(cm):</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+            </div></br>
+            <div class="row">
+                <label class="control-label col-md-3">HIP CIRCUMFERENCE(cm):</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+            </div></br>
+            <div class="row">
+                <label class="control-label col-md-3">WAIST TO HIP RATIO:</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-2 btn-group">
+                    <label class="control-label text-info bold" >RISK</label></br>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/>Low
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="0"/>Medium
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/>High
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label text-info bold">FEMALE</label></br>
+                    <label class="control-label" style="margin-top: 8px">< 0.80</label></br>
+                    <label class="control-label " style="margin-top: 10px">0.80 - 0.85</label></br>
+                    <label class="control-label" style="margin-top: 10px"> > 0.85</label>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label text-info bold">MALE</label></br>
+                    <label class="control-label" style="margin-top: 8px">< 0.90</label></br>
+                    <label class="control-label" style="margin-top: 10px">0.90 - 0.95</label></br>
+                    <label class="control-label" style="margin-top: 10px"> > 0.95</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="portlet box grey-cascade">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>1. VISUAL ACUITY
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="border" style="border-color: #808080; border-style: dotted;" >
+                    <div class="row" >
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <label class="control-label bold" style="margin-top: 30px;">DISTANCE VISION:</label>
+                            </div>
+                            <div class="col-md-5" style="text-align: center">
+                                <div class="row">
+                                    <label>Uncorrected:</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/6</label>
+                                            <input type="text" style="width: 60px"/>
+                                        </div>
+                                        <div class="col-md-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/6</label>
+                                            <input type="text" style="width: 60px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5" style="text-align: center">
+                                <div class="row">
+                                    <label>Corrected:</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/6</label>
+                                            <input type="text" style="width: 60px"/>
+                                        </div>
+                                        <div class="col-md-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/6</label>
+                                            <input type="text" style="width: 60px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </br>
+
+                <div class="border" style="border-color: #808080; border-style: dotted;" >
+                    <div class="row" >
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <label class="control-label bold" style="margin-top: 30px;">NEAR VISION:</label>
+                            </div>
+                            <div class="col-md-5" style="text-align: center">
+                                <div class="row">
+                                    <label>Uncorrected:</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/N</label>
+                                            <input type="text" style="width: 60px"/>
+                                        </div>
+                                        <div class="col-md-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/N</label>
+                                            <input type="text" style="width: 60px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5" style="text-align: center">
+                                <div class="row">
+                                    <label>Corrected:</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/N</label>
+                                            <input type="text" style="width: 60px"/>
+                                        </div>
+                                        <div class="col-md-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/N</label>
+                                            <input type="text" style="width: 60px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                <div class="row">
+                    <label class="control-label bold col-md-4">PERIPHERAL VISION NORMAL</label>
+                    <div class="col-md-7 btn-group">
+                        <label class="btn">
+                            <input type="radio" name='a' value="0"/>Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name='a' value="1"/> No
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="control-label bold col-md-4">VISUAL AIDS TO BE WORN AT WORK</label>
+                    <div class="col-md-2 btn-group">
+                        <label class="btn">
+                            <input type="radio" name='a' value="0"/>Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name='a' value="1"/> No
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control">
+                            <option>No Selection</option>
+                            <option>GLASSES</option>
+                            <option>CONTACTS</option>
+                            <option>GLASSES-CONTACTS</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="control-label bold col-md-4">COLOUR VISION NORMAL</label>
+                    <div class="col-md-2 btn-group">
+                        <label class="btn">
+                            <input type="radio" name='a' value="0"/>Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name='a' value="1"/> No
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" style="width: 70px;margin-top: 10px">/17
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="portlet box grey-cascade" ng-repeat="group in header.group">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> {{group.group_name}}
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body" ng-repeat="line in group.line">
+                <label class="control-label bold">{{line.line_name}}</label>
+                <div class="row" >
+                    <div class="btn-group btn-group-circle col-md-2" ng-if="line.yesno == 2" data-toggle="buttons" >
+                        <label class="btn grey">
+                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                        </label>
+                        <label class="btn grey">
+                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                        </label>
+                    </div>
+                    <div ng-if="line.yesno == 3" >
+                        <div ng-if="line.value1 != null && line.value2 != null">
+                            <label class="col-md-1">{{line.value1}}</label>
+                            <div class="col-md-1">
+                                <input type="text" class="form-control">
+                            </div>
+                            <label class="col-md-1">{{line.value2}}</label>
+                            <div class="col-md-1">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons" >
+                            <label class="btn grey">
+                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                            </label>
+                            <label class="btn grey">
+                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Abnormal
+                            </label>
+                        </div>
+                    </div>
+                    <div ng-if="line.yesno == 1"  >
+                        <label class="col-md-1">{{line.value1}}</label>
+                        <div class="col-md-1">
+                            <input type="text" class="form-control">
+                        </div>
+                        <label class="col-md-1">{{line.value2}}</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control">
+                        </div>
+                        <label class="col-md-1"> PREDICTED (%)	</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <label class="control-label col-md-1">Comment</label>
+                    <div class="col-md-3">
+                        <textarea class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title bold">Fitness Report</h3>
+        </div>
+        <div class="panel-body">
+            <label class="control-label">
+                Is candidate mentally and physically fit to undertake assignment now, and for the foreseeable future?
+            </label>
+            <div class="row">
+                <div class="col-md-2 btn-group">
+                    <label class="btn">
+                        <input type="radio" name='a' value="0"/>Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/> No
+                    </label>
+                </div>
+                <div class="col-md-8">
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+            <label class="control-label">
+                Is candidate’s life expectancy or mobility likely to be adversely affected by anything revealed by your examination?
+            </label>
+            <div class="row">
+                <div class="col-md-2 btn-group">
+                    <label class="btn">
+                        <input type="radio" name='a' value="0"/>Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/> No
+                    </label>
+                </div>
+                <div class="col-md-8">
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <label class="control-label col-md-2">
+                    I have examined:
+                </label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control">
+                </div>
+                <label class="control-label col-md-2">
+                    and report:
+                </label>
+            </div>
+            <label class="control-label">
+                That the proposed occupation
+                <label class="btn">
+                    <input type="radio" name='a' value="0"/>* would
+                </label>
+                <label class="btn">
+                    <input type="radio" name='a' value="1"/> would not
+                </label>
+                not require special services or facilities to be provided in order to be suitable for the applicant.
+            </label>
+            <div class="row">
+                <label class="control-label col-md-2">*Comments</label>
+                <div class="col-md-10">
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <label class="control-label col-md-2">Final Assessment</label>
+                <div class="col-md-6 btn-group">
+                    <label class="btn">
+                        <input type="radio" name='a' value="0"/>FIT
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/> UNFIT
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' value="1"/> Fit with Restrictions
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <label class="control-label col-md-2">Comments</label>
+                <div class="col-md-10">
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+            <!--signature of doctor-->
+        </div>
+    </div>
+
+</div>
