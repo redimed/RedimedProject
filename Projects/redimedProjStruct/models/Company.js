@@ -3,7 +3,7 @@
  */
 module.exports = function(sequelize,DataTypes){
     var Company = sequelize.define('Company',{
-        id : DataTypes.INTEGER(11),
+        id : {type:DataTypes.INTEGER(11), primaryKey: true},
         Company_name : DataTypes.STRING(100) ,
         Industry : DataTypes.STRING(50) ,
         Addr : DataTypes.STRING(100) ,
@@ -38,7 +38,9 @@ module.exports = function(sequelize,DataTypes){
         User_id : DataTypes.INTEGER(11) ,
         isPO : DataTypes.INTEGER(11) 
     },{
-        tableName: 'companies'
+        tableName: 'companies',
+        createdAt:'Creation_date',
+        updatedAt: 'Last_update_date'
     });
 
     return Company;

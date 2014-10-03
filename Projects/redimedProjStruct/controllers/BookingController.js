@@ -3,6 +3,8 @@
  */
 var db = require('../models');
 var nodemailer = require("nodemailer");
+var smtpTransport = require('nodemailer-smtp-transport');
+var smtpPool = require('nodemailer-smtp-pool');
 
 module.exports = {
     packageList: function (req, res) {
@@ -200,15 +202,17 @@ module.exports = {
         var appointmentTime = new Date(info.Appointment_time).toISOString().replace(/T/, ' ').replace(/\..+/, '')
 
 
-        var smtpTransport = nodemailer.createTransport("SMTP", {
+
+        var transport = nodemailer.createTransport(smtpPool({
             host: "mail.redimed.com.au", // hostname
-            secureConnection: true, // use SSL
+            secure: true,
+            ignoreTLS: false,
             port: 25, // port for secure SMTP
             auth: {
                 user: "programmer2",
                 pass: "Hello8080"
             }
-        });
+        }));
 
         var mailOptions = {
             from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
@@ -229,7 +233,7 @@ module.exports = {
 
         }
 
-        smtpTransport.sendMail(mailOptions, function(error, response){  //callback
+        transport.sendMail(mailOptions, function(error, response){  //callback
             if(error){
                 console.log(error);
                 res.json({status:"fail"});
@@ -237,7 +241,7 @@ module.exports = {
                 console.log("Message sent: " + response.message);
                 res.json({status:"success"});
             }
-            smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+            transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
         });
 
 

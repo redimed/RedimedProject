@@ -8,6 +8,7 @@ angular.module('app.loggedIn.booking.admin.assessment.controller',[])
         $scope.selectedHeader = '';
         var ass = [];
         $scope.isSelected = false;
+        $scope.selectedId = null;
         OnlineBookingAdminService.getAssHeader().then(function(data){
             $scope.data = data;
             $scope.tableParams = new ngTableParams({
@@ -54,6 +55,7 @@ angular.module('app.loggedIn.booking.admin.assessment.controller',[])
 
         $scope.showChild = function(p)
         {
+            $scope.selectedId = p.id;
             $scope.data1 = [];
             $scope.isSelected = true;
             $scope.selectedHeader = p.id;

@@ -1,3 +1,9 @@
+<style>
+    .selected {
+        background-color: #ffca87;
+    }
+</style>
+
 <div class="caption">
     <div class="row">
         <div class="col-md-12">
@@ -23,55 +29,56 @@
     </div>
     <div class="portlet-body form">
         <div class="table-scrollable">
-            <table ng-table="tableParams"  class="table table-striped table-hover table-bordered table-responsive">
-                <tr ng-repeat="b in $data" ng-click="showSubCompany(b)">
+            <table ng-table="tableParams"  class="table table-bordered table-condensed  table-responsive">
+                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showSubCompany(b)" ng-class="{selected : b.id === selectedId}">
                     <td data-title="'Company Name'" >
-                        <span>{{b.Company_name}}</span>
+                        <a href="javascript:;" ng-click="editCompany(b)">{{b.Company_name}}</a>
                     </td>
                     <td data-title="'Industry'" >
-                        <span>{{b.Industry}}</span>
+                        <label>{{b.Industry}}</label>
                     </td>
                     <td data-title="'Address'" >
-                        <span>{{b.Addr}}</span>
+                        <label >{{b.Addr}}</label>
+
                     </td>
                     <td data-title="'Post Code'" >
-                        <span>{{b.postcode}}</span>
+                        <label>{{b.postcode}}</label>
                     </td>
                     <td data-title="'State'" >
-                        <span>{{b.State}}</span>
+                        <label>{{b.State}}</label>
                     </td>
                     <td data-title="'Country'"  >
-                        <span>{{b.country}}</span>
+                        <label>{{b.country}}</label>
                     </td>
                     <td data-title="'Description'" >
-                        <span>{{b.Description}}</span>
+                        <label>{{b.Description}}</label>
                     </td>
                     <td data-title="'PO Number'"  >
-                        <span>{{b.PO_number}}</span>
+                        <label>{{b.PO_number}}</label>
                     </td>
                     <td data-title="'Is Invoice Email'"  >
-                        <span>{{b.isInvoiceEmailToUser == 1 ? 'Yes':'No'}}</span>
+                        <label>{{b.isInvoiceEmailToUser == 1 ? 'Yes':'No'}}</label>
                     </td>
                     <td data-title="'Invoice Email'" >
-                        <span>{{b.invoice_email}}</span>
+                        <label>{{b.invoice_email}}</label>
                     </td>
                     <td data-title="'Contact Email In Result'" >
-                        <span>{{b.isAddContactEmailToResult == 1 ? 'Yes':'No'}}</span>
+                        <label>{{b.isAddContactEmailToResult == 1 ? 'Yes':'No'}}</label>
                     </td>
                     <td data-title="'Result Email'"  >
-                        <span>{{b.result_email}}</span>
+                        <label>{{b.result_email}}</label>
                     </td>
                     <td data-title="'Report To Email'"  >
-                        <span>{{b.report_to_email}}</span>
+                        <label>{{b.report_to_email}}</label>
                     </td>
                     <td data-title="'Status'"  >
-                        <span>{{b.default_status}}</span>
+                        <label>{{b.default_status}}</label>
                     </td>
                     <td data-title="'Is Project'"  >
-                        <span>{{b.isProject == 1 ? 'Yes':'No'}}</span>
+                        <label>{{b.isProject == 1 ? 'Yes':'No'}}</label>
                     </td>
                     <td data-title="'Required PO'"  >
-                        <span>{{b.isPO == 1? 'Yes':'No'}}</span>
+                        <label>{{b.isPO == 1? 'Yes':'No'}}</label>
                     </td>
                 </tr>
 
@@ -85,43 +92,50 @@
             <i class="icon icon-clock font-blue-hoki"></i>
             <span class="caption-subject font-blue-hoki bold uppercase">Sub Companies</span>
         </div>
+        <div>
+            <div class="btn-group pull-right" ng-show="isSelected">
+                <a ng-click="addSubCompany()" href="javascript:;" class="btn green" >
+                    Add New Company &nbsp;&nbsp;<i class="fa fa-plus"></i>
+                </a>
+            </div>
+        </div>
     </div>
     <div class="portlet-body form">
         <div class="table-scrollable">
             <table ng-table="tableParams2"  class="table table-striped table-hover table-bordered table-responsive">
-                <tr ng-repeat="a in $data">
+                <tr style="white-space: nowrap" align="center" ng-repeat="a in $data" >
                     <td data-title="'Company Name'" >
-                        <span>{{a.Company_name}}</span>
+                        <a href="javascript:;" ng-click="editSubCompany(a)">{{a.Company_name}}</a>
                     </td>
                     <td data-title="'Industry'" >
-                        <span>{{a.Industry}}</span>
+                        <label>{{a.Industry}}</label>
                     </td>
-                    <td data-title="'Address'" >
-                        <span>{{a.Addr}}</span>
+                    <td  data-title="'Address'" >
+                        <label >{{a.Addr}}</label>
                     </td>
                     <td data-title="'Post Code'" >
-                        <span>{{a.postcode}}</span>
+                        <label>{{a.postcode}}</label>
                     </td>
                     <td data-title="'State'" >
-                        <span>{{a.State}}</span>
+                        <label>{{a.State}}</label>
                     </td>
                     <td data-title="'Country'"  >
-                        <span>{{a.country}}</span>
+                        <label>{{a.country}}</label>
                     </td>
                     <td data-title="'Description'" >
-                        <span>{{a.Description}}</span>
+                        <label>{{a.Description}}</label>
                     </td>
                     <td data-title="'PO Number'"  >
-                        <span>{{a.PO_number}}</span>
+                        <label>{{a.PO_number}}</label>
                     </td>
                     <td data-title="'Invoice Email'" >
-                        <span>{{a.invoice_email}}</span>
+                        <label>{{a.invoice_email}}</label>
                     </td>
                     <td data-title="'Result Email'"  >
-                        <span>{{a.result_email}}</span>
+                        <label>{{a.result_email}}</label>
                     </td>
                     <td data-title="'Is Project'"  >
-                        <span>{{a.isProject == 1 ? 'Yes':'No'}}</span>
+                        <label>{{a.isProject == 1 ? 'Yes':'No'}}</label>
                     </td>
 
                 </tr>

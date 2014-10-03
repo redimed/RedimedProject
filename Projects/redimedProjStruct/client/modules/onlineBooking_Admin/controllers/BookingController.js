@@ -5,6 +5,8 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
     .controller('BookingController',function($scope,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,OnlineBookingService,$http,toastr,$cookieStore){
         $scope.data = [];
         $scope.isSelected = false
+        $scope.selectedCanId = null;
+        $scope.selectedBookId = null;
 
         $scope.info = {};
 
@@ -57,6 +59,8 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
         }
 
         $scope.showDetail = function(b){
+            $scope.selectedCanId = b.Candidate_id;
+            $scope.selectedBookId = b.Booking_id;
             $scope.isSelected = true;
             OnlineBookingService.getBookingDetail(b.Booking_id, b.Candidate_id).then(function(data){
                 var arrAss = [];

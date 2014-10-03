@@ -5,6 +5,16 @@ var bcrypt = require('bcrypt-nodejs');
 var db = require('../models');
 
 module.exports = {
+    list: function(req,res){
+        db.sequelize.query('SELECT u.*, c.Company_name, h.Employee_Code, h.FirstName AS EmployeeFName, h.LastName AS EmployeeLName FROM users u LEFT JOIN companies c ON u.company_id = c.id LEFT JOIN hr_employee h ON u.employee_id = h.Employee_ID',null,{raw:true})
+            .success(function(data){
+
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
     userByCompany: function(req,res){
         var comId = req.body.comId;
 
@@ -22,6 +32,8 @@ module.exports = {
 
         var hashPass = bcrypt.hashSync(info.password);
 
+        console.log(info);
+
         db.User.create({
             Booking_Person: info.bookPerson,
             Contact_email: info.email,
@@ -38,7 +50,17 @@ module.exports = {
             isBooking: info.isShowBooking,
             isAllCompanyData: info.isViewAllData,
             company_id: info.companyId,
-            user_type: 'Company'
+            user_type: info.userType,
+            PO_number: info.poNum,
+            invoiceemail: info.invoiceEmail,
+            result_email: info.resultEmail,
+            Report_To_email:info.reportEmail,
+            function_id: info.function_id,
+            employee_id: info.empId,
+            isCalendar: info.isCalendar,
+            isProject: info.isProject,
+            isAdmin: info.isAdmin,
+            isReceiveEmailAfterHour:info.isReceiveEmail
         },{raw:true})
             .success(function(data){
                 res.json({status:'success'});
@@ -107,6 +129,15 @@ module.exports = {
         var id = req.body.id;
 
         db.User.find({where:{id:id}},{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    employeeList: function(req,res){
+        db.sequelize.query('SELECT * FROM hr_employee',null,{raw:true})
             .success(function(data){
                 res.json(data);
             })

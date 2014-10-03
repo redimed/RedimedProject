@@ -49,7 +49,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
         }
 })
 
-.controller('NewUserController',function($scope,$state,OnlineBookingService,toastr,$cookieStore){
+.controller('NewUserSettingController',function($scope,$state,OnlineBookingService,toastr,$cookieStore){
 
     var companyInfo;
         $scope.isEdit = false;
@@ -61,23 +61,36 @@ angular.module('app.loggedIn.booking.setting.controller',[])
     }
 
 
-    $scope.info = {
-        bookPerson:'',
-        email: '',
-        isDownload: "1",
-        isEnable: "1",
-        isMakeBooking: "1",
-        isPackage: "1",
-        isPosition:"1",
-        isSetting:"1",
-        isShowAll:"1",
-        isShowBooking:"1",
-        isViewAllData:"1",
-        password:'',
-        phone:'',
-        username:'',
-        companyId:companyInfo[0].id
-    };
+        $scope.info = {
+            bookPerson:null,
+            email: null,
+            isDownload: "1",
+            isEnable: "1",
+            isMakeBooking: "1",
+            isPackage: "1",
+            isPosition:"1",
+            isSetting:"1",
+            isShowAll:"1",
+            isShowBooking:"1",
+            isViewAllData:"1",
+            password:null,
+            phone:null,
+            username:null,
+            userType:'Company',
+            companyId:companyInfo[0].id,
+            poNum:null,
+            invoiceEmail:null,
+            resultEmail:null,
+            reportEmail:null,
+            function_id:null,
+            empId:null,
+            isCalendar:null,
+            isProject:null,
+            isAdmin:null,
+            isReceiveEmail: null
+        };
+
+
 
     $scope.submitUser = function(userForm){
         $scope.showClickedValidation = true;
@@ -97,7 +110,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
     }
 })
 
-.controller('EditUserController',function($scope,$state,$stateParams,$modal,OnlineBookingService,toastr,$cookieStore){
+.controller('EditUserSettingController',function($scope,$state,$stateParams,$modal,OnlineBookingService,toastr,$cookieStore){
         var companyInfo;
 
         $scope.isEdit = true;
@@ -111,8 +124,8 @@ angular.module('app.loggedIn.booking.setting.controller',[])
 
         $scope.info = {
             userId: $stateParams.id,
-            bookPerson:'',
-            email: '',
+            bookPerson:null,
+            email: null,
             isDownload: "1",
             isEnable: "1",
             isMakeBooking: "1",
@@ -122,8 +135,8 @@ angular.module('app.loggedIn.booking.setting.controller',[])
             isShowAll:"1",
             isShowBooking:"1",
             isViewAllData:"1",
-            phone:'',
-            username:'',
+            phone:null,
+            username:null,
             companyId:companyInfo[0].id
         };
 
@@ -162,7 +175,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
         $scope.changePass = function(){
             var modalInstance = $modal.open({
                 templateUrl: 'modules/onlineBooking/views/changePassModal.html',
-                controller: 'ChangePassController',
+                controller: 'ChangePassSettingController',
                 size: 'md',
                 resolve:{
                     userId: function(){
@@ -174,10 +187,10 @@ angular.module('app.loggedIn.booking.setting.controller',[])
         }
 })
 
-.controller('ChangePassController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, userId, toastr){
+.controller('ChangePassSettingController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, userId, toastr){
         $scope.info = {
-            oldPass:'',
-            newPass:'',
+            oldPass:null,
+            newPass:null,
             id:userId
         }
 

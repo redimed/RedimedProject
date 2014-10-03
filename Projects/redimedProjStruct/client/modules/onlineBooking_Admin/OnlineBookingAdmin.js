@@ -5,7 +5,8 @@ angular.module('app.loggedIn.booking.admin',[
     'app.loggedIn.booking.admin.services',
     'app.loggedIn.booking.admin.booking.controller',
     'app.loggedIn.booking.admin.assessment.controller',
-    'app.loggedIn.booking.admin.company.controller'
+    'app.loggedIn.booking.admin.company.controller',
+    'app.loggedIn.booking.admin.user.controller'
 ])
 .config(function($stateProvider){
         $stateProvider
@@ -26,4 +27,42 @@ angular.module('app.loggedIn.booking.admin',[
                 templateUrl: 'modules/onlineBooking_Admin/views/companies.html',
                 controller: 'CompanyController'
             })
+
+            .state('loggedIn.admin_company_new',{
+                url:'/admin/booking/company/new',
+                templateUrl: 'modules/onlineBooking_Admin/views/addNewCompany.html',
+                controller:'NewCompanyController'
+            })
+
+            .state('loggedIn.admin_subCompany_new',{
+                url:'/admin/booking/company/:id/new',
+                templateUrl: 'modules/onlineBooking_Admin/views/addNewCompany.html',
+                controller:'NewCompanyController'
+            })
+
+            .state('loggedIn.admin_company_edit',{
+                url:'/admin/booking/company/:id',
+                templateUrl:'modules/onlineBooking_Admin/views/addNewCompany.html',
+                controller:'EditCompanyController'
+            })
+
+            .state('loggedIn.admin_user',{
+                url:'/admin/booking/user',
+                templateUrl:'modules/onlineBooking_Admin/views/user.html',
+                controller:'UserController'
+            })
+
+            .state('loggedIn.admin_user_new',{
+                url:'/admin/booking/user/new',
+                templateUrl:'modules/onlineBooking_Admin/views/newUser.html',
+                controller:'NewUserController'
+            })
+
+            .state('loggedIn.admin_user_edit',{
+                url:'/admin/booking/user/:id',
+                templateUrl: 'modules/onlineBooking_Admin/views/newUser.html',
+                controller:'EditUserController'
+            })
+
+
     })

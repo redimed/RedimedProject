@@ -56,6 +56,8 @@ app.all('/api/users/logout', function(req, res) {
 app.get('/api/company/list',CompanyController.companyList);
 app.post('/api/company/sub',CompanyController.subCompany);
 app.post('/api/company/info',CompanyController.companyInfo);
+app.post('/api/company/insert',CompanyController.insert);
+app.post('/api/company/edit',CompanyController.edit);
 
 app.post('/api/users/home',MenuController.loadSideMenu);
 app.post('/api/users/register',AuthenticationController.register);
@@ -67,6 +69,8 @@ app.post('/api/users/id',UserController.getUserById);
 app.post('/api/users/insert',UserController.insertUser);
 app.post('/api/users/edit',UserController.editUser);
 app.post('/api/users/changePass',UserController.changePass);
+app.get('/api/users/list',UserController.list);
+app.get('/api/users/employee/list',UserController.employeeList);
 
 app.get('/api/assessment/header',AssessmentController.headerList);
 app.post('/api/assessment/header/remove',AssessmentController.removeHeader);
