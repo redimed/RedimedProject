@@ -176,9 +176,10 @@ function main(tableName,becomeModel) {
         }
     );
 
+    db.SysForms.getColumns(tableName.toUpperCase(),function(data){
 
     //find all columns of the table and write to file
-    db.SYSCOLUMNS.findAll({where: {TABLE_NAME: tableName.toUpperCase()}}, {raw: true}).success(function (data) {
+    //db.SYSCOLUMNS.findAll({where: {TABLE_NAME: tableName.toUpperCase()}}, {raw: true}).success(function (data) {
         for (var i = 0; i < data.length; i++) {
             console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY );
 

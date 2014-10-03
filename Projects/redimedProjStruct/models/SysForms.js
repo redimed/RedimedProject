@@ -18,6 +18,11 @@ module.exports = function(sequelize,DataTypes){
                sequelize.query("SELECT get_pk_value('sys_forms') AS PK").success(function(data){
                    callback(data[0].PK);
                })
+           },
+           getColumns:function(tableName,callback){
+               sequelize.query("select * from sys_form_details where form_id = (select max(form_id) from sys_forms where upper(master_table_name) = '"+tableName+"') order by ordinal_position").success(function(data){
+                   callback(data);
+               })
            }
        }
    }); 

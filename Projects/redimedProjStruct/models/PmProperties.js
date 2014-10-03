@@ -20,9 +20,9 @@ module.exports = function(sequelize,DataTypes){
        ,Last_update_date : DataTypes.DATE 
    },{ 
        tableName: 'pm_properties',
-       timestamps: false,
-       createdAt : 'CREATION_DATE',
-       updatedAt : 'LAST_UPDATE_DATE',
+       timestamps: true,
+       createdAt : 'Creation_date',
+       updatedAt : 'Last_update_date',
        classMethods:{
            getPK:function(callback){
                sequelize.query("SELECT get_pk_value('pm_properties') AS PK").success(function(data){

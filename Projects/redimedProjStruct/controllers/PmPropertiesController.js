@@ -72,9 +72,9 @@ module.exports = {
           ,isInsurance : f.isInsurance
           ,Avatar_Pic_path : f.Avatar_Pic_path
           ,Created_by : f.Created_by
-          ,Creation_date : f.Creation_date
+          //,Creation_date : f.Creation_date
           ,Last_updated_by : f.Last_updated_by
-          ,Last_update_date : f.Last_update_date
+          //,Last_update_date : f.Last_update_date
     },['property_id','Address','Suburb','Zipcode','State','Country','Price','purchase_date','note','Cancellation_reason','isCancellation','isInsurance','Avatar_Pic_path','Created_by','Creation_date','Last_updated_by','Last_update_date']).success(function(){
         res.json({status:'success'});
     })

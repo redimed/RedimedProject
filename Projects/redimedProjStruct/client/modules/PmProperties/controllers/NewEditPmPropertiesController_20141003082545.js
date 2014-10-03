@@ -18,10 +18,6 @@ angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
              ,isCancellation : ''
              ,isInsurance : ''
              ,Avatar_Pic_path : ''
-             ,Created_by : ''
-             ,Creation_date : ''
-             ,Last_updated_by : ''
-             ,Last_update_date : ''
         
     };
 
@@ -32,7 +28,6 @@ angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
            $scope.info = data[0];
        })
     }
-
     $scope.save = function(){
 
         console.log($scope.info);
