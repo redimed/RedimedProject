@@ -195,7 +195,73 @@
    });
    return SysForms;
 };
+
+
+
+
+ code cua Vuong
+
+ <!-- BREADCRUMB -->
+ <div class="page-bar">
+ <ul class="page-breadcrumb">
+ <li>
+ <i class="fa fa-home"></i>
+ <a ui-sref="loggedIn.patient.list">Patients</a>
+ </li>
+ </ul>
+ </div>
+ <!-- END BREADCRUMB -->
+
+ <!-- PAGINATION -->
+ <div class="row">
+ <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+ <pagination boundary-links="true" total-items="patients.length" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" items-per-page="20" rotate="false">
+ </pagination>
+ </div>
+ <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-right" style="padding-top: 15px;">
+ <b>Total: </b>{{patients.length}} patients
+ </div>
+ </div>
+ <!-- END PAGINATION -->
+
+ <div class="portlet light">
+ <div class="portlet-body">
+
+ <div class="row">
+ <div class="col-md-12">
+
+ <!-- LIST OF EMPLOYEES -->
+ <table class="table">
+ <thead>
+ <tr>
+ <th>Fullname</th>
+ <th>Suburb</th>
+ <th>Postcode</th>
+ <th>Date of Birth</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr ng-repeat="patient in patients | limitTo: 3000 | offset: currentPage">
+ <td>
+ <a ui-sref="loggedIn.patient.detail({patientId:patient.id})">
+ {{patient.salut_text}} {{patient.gname}} {{patient.fname}}
+ </a>
+ </td>
+ <td>{{patient.suburb}}</td>
+ <td>{{patient.postcode}}</td>
+ <td>{{patient.dob}}</td>
+ </tr>
+ </tbody>
+ </table>
+ <!-- END LIST OF EMPLOYEES -->
+
+ </div>
+ </div>
+ </div> <!-- END PORTLET BODY -->
+ </div> <!-- END PORTLET -->
  */
+
+    
 var db = require('../models');
 var fs = require('fs');
 var _s = require('underscore.string');
