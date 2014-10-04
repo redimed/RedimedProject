@@ -67,6 +67,14 @@
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
+                <label class="pull-right">Country</label>
+            </div>
+            <div class="col-md-6">
+                <input  type = 'text'  class="form-control" ng-model="info.Country" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2" style="margin-top:5px;" >
                 <label class="pull-right">State</label>
             </div>
             <div class="col-md-6">
@@ -75,10 +83,10 @@
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Country</label>
+                <label class="pull-right">Purchase date</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Country" />
+                <input  type = 'date'  class="form-control" ng-model="info.purchase_date" />
             </div>
         </div>
         <div class="row">
@@ -91,10 +99,10 @@
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Purchase date</label>
+                <label class="pull-right">Note</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'date'  class="form-control" ng-model="info.purchase_date" />
+                <input  type = 'text'  class="form-control" ng-model="info.note" />
             </div>
         </div>
         <div class="row">
@@ -111,14 +119,6 @@
             </div>
             <div class="col-md-6">
                 <input  type = 'checkbox' ng-true-value='1' ng-false-value='0'  class="form-control" ng-model="info.isCancellation" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Note</label>
-            </div>
-            <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.note" />
             </div>
         </div>
         <div class="row">

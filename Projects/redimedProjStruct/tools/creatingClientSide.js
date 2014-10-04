@@ -57,7 +57,9 @@ function main(tableName,becomeModel) {
     var bodyNewEditScript = "";
     var newEditInfoVar = "";
     var newEditGetDataController = "";
-
+    var listHeader = "";
+    var listBody = "";
+    var listType = "";
     //create setting file at root of module
     var wstream = fs.createWriteStream('../client/modules/'+becomeModel+'/'+becomeModel+'.js'); // create the model file
     wstream.write(
@@ -125,45 +127,6 @@ function main(tableName,becomeModel) {
     );
     wstreamService.end;
 
-    //create view file at the view directory
-    var wstreamView = fs.createWriteStream('../client/modules/'+becomeModel+'/views/'+becomeModel+'.html'); // create the model file
-    wstreamView.write(
-            "<div class=\"portlet light bordered\">\n" +
-            "    <div class=\"portlet-title\">\n" +
-            "\n" +
-            "        <!--<p><strong>Page:</strong> {{tableParams.page()}}-->\n" +
-            "        <!--<p><strong>Count per page:</strong> {{tableParams.count()}}-->\n" +
-            "        <div class=\"caption\">\n" +
-            "            <i class=\"icon-anchor font-green-sharp\"></i>\n" +
-            "            <span class=\"caption-subject font-green-sharp bold uppercase\">" + becomeModel + "</span>\n" +
-            "\n" +
-            "        </div>\n" +
-            "\n" +
-            "        <div>\n" +
-            "            <div class=\"btn-group pull-right\">\n" +
-            "                <a href=\"javascript:;\" ng-click=\"addNew()\" class=\"btn green\" id=\"addBtn\">\n" +
-            "                    Add New <i class=\"fa fa-plus\"></i>\n" +
-            "                </a>\n" +
-            "            </div>\n" +
-            "        </div>\n" +
-            "\n" +
-            "        <script type=\"text/javascript\">\n" +
-            "            $('#modal-content').on('shown.bs.modal', function () {\n" +
-            "                $(\"#txtDescription\").focus();\n" +
-            "            });\n" +
-            "\n" +
-            "            // everytime the button is pushed, open the modal, and trigger the shown.bs.modal event\n" +
-            "            $('#addBtn').click(function () {\n" +
-            "                $('#modal-content').modal({\n" +
-            "                    show: true\n" +
-            "                });\n" +
-            "            });\n" +
-            "        </script>\n" +
-            "    </div>\n" +
-            "\n"
-    );
-
-
     db.sequelize
         // sync để tự động tạo các bảng trong database
         //.sync({ force: true })
@@ -191,11 +154,19 @@ function main(tableName,becomeModel) {
             }
 
             if(data[i].ISDISPLAY_ON_LIST === 1){
-                bodyTableScript +=
-                    "                    <td data-title=\"'"+data[i].DISPLAY_NAME+"'\"  >\n" +
-                    "                        <span ng-if='!f.$edit'>{{f."+data[i].COLUMN_NAME+"}}</span>\n" +
-                    "                        <div ng-if='f.$edit'><input class='form-control' "+data[i].INPUT_TYPE+" ng-model='f."+data[i].COLUMN_NAME+"' /></div>\n" +
-                    "                    </td>\n";
+                if(data[i].LIST_FORM_TYPE === 'table'){
+                    listType = "table";
+                    bodyTableScript +=
+                        "                    <td data-title=\"'"+data[i].DISPLAY_NAME+"'\"  >\n" +
+                        "                        <span ng-if='!f.$edit'>{{f."+data[i].COLUMN_NAME+"}}</span>\n" +
+                        "                        <div ng-if='f.$edit'><input class='form-control' "+data[i].INPUT_TYPE+" ng-model='f."+data[i].COLUMN_NAME+"' /></div>\n" +
+                        "                    </td>\n";
+                }else if(data[i].LIST_FORM_TYPE === 'list'){
+                    listType = "list";
+                    listHeader += "                             <th>"+data[i].DISPLAY_NAME+"</th>\n";
+                    listBody +=  "                             <td>{{f."+data[i].COLUMN_NAME+"}}</td>\n";
+                }
+
             }
 
             if(data[i].ISDISPLAY_ON_FORM === 1) {
@@ -221,26 +192,111 @@ function main(tableName,becomeModel) {
                 newEditGetDataController += "           $scope.info."+data[i].COLUMN_NAME+" = data[0]."+data[i].COLUMN_NAME+" == 1 ? '1':'0';\n";
             }
         }
-        ///$scope.info.isCancellation = data[0].isCancellation == 1 ? '1':'0';
+
+
+        //create view file at the view directory
+        var wstreamView = fs.createWriteStream('../client/modules/'+becomeModel+'/views/'+becomeModel+'.html'); // create the model file
         wstreamView.write(
-                "    <div class=\"portlet-body\">\n" +
+                "<div class=\"portlet light bordered\">\n" +
+                "    <div class=\"portlet-title\">\n" +
+                "\n" +
+                "        <!--<p><strong>Page:</strong> {{tableParams.page()}}-->\n" +
+                "        <!--<p><strong>Count per page:</strong> {{tableParams.count()}}-->\n" +
+                "        <div class=\"caption\">\n" +
+                "            <i class=\"icon-anchor font-green-sharp\"></i>\n" +
+                "            <span class=\"caption-subject font-green-sharp bold uppercase\">" + becomeModel + "</span>\n" +
+                "\n" +
+                "        </div>\n" +
                 "\n" +
                 "        <div>\n" +
-                "            <table ng-table=\"tableParams\"  class=\"table table-striped table-hover table-bordered ng-table-responsive\">\n" +
-                "                <tr ng-repeat=\"f in $data track by $index | orderBy:'"+primaryKeyColumnName+"'\"  ng-click='editForm(f)' >\n"
-        );
-
-        wstreamView.write(bodyTableScript);
-
-        wstreamView.write(
-                "                </tr>\n" +
-                "\n" +
-                "            </table>\n" +
-                "            <br/>\n" +
+                "            <div class=\"btn-group pull-right\">\n" +
+                "                <a href=\"javascript:;\" ng-click=\"addNew()\" class=\"btn green\" id=\"addBtn\">\n" +
+                "                    Add New <i class=\"fa fa-plus\"></i>\n" +
+                "                </a>\n" +
+                "            </div>\n" +
                 "        </div>\n" +
+                "\n" +
+                "        <script type=\"text/javascript\">\n" +
+                "            $('#modal-content').on('shown.bs.modal', function () {\n" +
+                "                $(\"#txtDescription\").focus();\n" +
+                "            });\n" +
+                "\n" +
+                "            // everytime the button is pushed, open the modal, and trigger the shown.bs.modal event\n" +
+                "            $('#addBtn').click(function () {\n" +
+                "                $('#modal-content').modal({\n" +
+                "                    show: true\n" +
+                "                });\n" +
+                "            });\n" +
+                "        </script>\n" +
                 "    </div>\n" +
-                "    </div>"
+                "\n"
         );
+
+        ///$scope.info.isCancellation = data[0].isCancellation == 1 ? '1':'0';
+        console.log('listType = ' + listType);
+        if(listType === 'table'){
+            wstreamView.write(
+                    "    <div class=\"portlet-body\">\n" +
+                    "\n" +
+                    "        <div>\n" +
+                    "            <table ng-table=\"tableParams\"  class=\"table table-striped table-hover table-bordered ng-table-responsive\">\n" +
+                    "                <tr ng-repeat=\"f in $data track by $index | orderBy:'"+primaryKeyColumnName+"'\"  ng-click='editForm(f)' >\n"
+            );
+
+            wstreamView.write(bodyTableScript);
+
+            wstreamView.write(
+                    "                </tr>\n" +
+                    "\n" +
+                    "            </table>\n" +
+                    "            <br/>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    </div>"
+            );
+        }
+        else if(listType === 'list'){
+                wstreamView.write(
+                        "<!-- PAGINATION -->\n" +
+                        "<div class=\"row\">\n" +
+                        "	<div class=\"col-lg-6 col-md-6 col-sm-12 col-xs-12\">\n" +
+                        "		<pagination boundary-links=\"true\" total-items=\"data.length\" ng-model=\"currentPage\" class=\"pagination-sm\" previous-text=\"&lsaquo;\" next-text=\"&rsaquo;\" first-text=\"&laquo;\" last-text=\"&raquo;\" max-size=\"5\" items-per-page=\"20\" rotate=\"false\">\n" +
+                        "		</pagination>\n" +
+                        "	</div>\n" +
+                        "	<div class=\"col-lg-6 col-md-6 col-sm-12 col-xs-12 text-right\" style=\"padding-top: 15px;\">\n" +
+                        "		<b>Total: </b>{{data.length}} records\n" +
+                        "	</div>\n" +
+                        "</div>\n" +
+                        "<!-- END PAGINATION -->" +
+
+
+                        "<div class=\"portlet light\">\n" +
+                        "	<div class=\"portlet-body\">\n" +
+                        "\n" +
+                        "		<div class=\"row\">\n" +
+                        "			<div class=\"col-md-12\">\n" +
+                        "\n" +
+                        "				<!-- LIST OF EMPLOYEES -->\n" +
+                        "				<table class=\"table\">\n" +
+                        "					<thead>\n" +
+                        "						<tr>\n" +
+                            listHeader +
+                        "						</tr>\n" +
+                        "					</thead>\n" +
+                        "					<tbody>\n" +
+                        "						<tr ng-repeat=\"f in data  | orderBy:'"+primaryKeyColumnName+"'\"  ng-click='editForm(f)' >\n" + ///| limitTo: 3000 | offset: currentPage
+                            listBody +
+                        "						</tr>\n" +
+                        "					</tbody>\n" +
+                        "				</table>\n" +
+                        "				<!-- END LIST OF EMPLOYEES -->\n" +
+                        "\n" +
+                        "			</div>\n" +
+                        "		</div>\n" +
+                        "	</div> <!-- END PORTLET BODY -->\n" +
+                        "</div> <!-- END PORTLET -->"
+            );
+        }
 
         wstreamView.end();
 

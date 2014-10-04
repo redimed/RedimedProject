@@ -198,67 +198,6 @@
 
 
 
-
- code cua Vuong
-
- <!-- BREADCRUMB -->
- <div class="page-bar">
- <ul class="page-breadcrumb">
- <li>
- <i class="fa fa-home"></i>
- <a ui-sref="loggedIn.patient.list">Patients</a>
- </li>
- </ul>
- </div>
- <!-- END BREADCRUMB -->
-
- <!-- PAGINATION -->
- <div class="row">
- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
- <pagination boundary-links="true" total-items="patients.length" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" items-per-page="20" rotate="false">
- </pagination>
- </div>
- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-right" style="padding-top: 15px;">
- <b>Total: </b>{{patients.length}} patients
- </div>
- </div>
- <!-- END PAGINATION -->
-
- <div class="portlet light">
- <div class="portlet-body">
-
- <div class="row">
- <div class="col-md-12">
-
- <!-- LIST OF EMPLOYEES -->
- <table class="table">
- <thead>
- <tr>
- <th>Fullname</th>
- <th>Suburb</th>
- <th>Postcode</th>
- <th>Date of Birth</th>
- </tr>
- </thead>
- <tbody>
- <tr ng-repeat="patient in patients | limitTo: 3000 | offset: currentPage">
- <td>
- <a ui-sref="loggedIn.patient.detail({patientId:patient.id})">
- {{patient.salut_text}} {{patient.gname}} {{patient.fname}}
- </a>
- </td>
- <td>{{patient.suburb}}</td>
- <td>{{patient.postcode}}</td>
- <td>{{patient.dob}}</td>
- </tr>
- </tbody>
- </table>
- <!-- END LIST OF EMPLOYEES -->
-
- </div>
- </div>
- </div> <!-- END PORTLET BODY -->
- </div> <!-- END PORTLET -->
  */
 
     
@@ -271,37 +210,55 @@ var colors = require('colors');
 
 //var input = fs.createReadStream('sakila_redi_functions.sql');
 //readLines(input, func);
-
-
 var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-rl.question("Please enter the table name in Sakila schema ? ", function(answer) {
-    var becomeModel = _s.classify(answer);//change name from table name to Javascript name
-    console.log("The table :", answer);
-    console.log(" is made to :", becomeModel);
+rl.question("Type of form ( S:Single| M:Master Details) ? ", function(answer) {
+    console.log(answer);
+    if(answer === 'S'){
+        rl.question("Please enter the table name in Sakila schema ? ", function(answer) {
+            var becomeModel = _s.classify(answer);//change name from table name to Javascript name
 
+            fs.exists('../models/'+becomeModel+'.js', function(exists) {
+                if (exists) {
+                    console.log('../models/'+becomeModel+'.js  change to ../models/'+becomeModel+"_"+getDateTime()+'.js');
+                    fs.rename('../models/'+becomeModel+'.js','../models/'+becomeModel+"_"+getDateTime()+'.js');
+                    fs.rename('../controllers/'+becomeModel+'Controller.js','../controllers/'+becomeModel+"Controller_"+getDateTime()+'.js');
+                    main(answer,becomeModel);
+                }else
+                {
+                    main(answer,becomeModel);
+                }
+            });
+            rl.close();
+        });
+    }else if(answer === 'M'){
+        rl.question("Please enter the master table name in Sakila schema ? ", function(masterTableName) {
+            var becomeModelMasterTableName = _s.classify(masterTableName);//change name from table name to Javascript name
+            rl.question("Please enter the detail table name in Sakila schema ? ", function(detailTableName) {
+                var becomeModelDetailTableName = _s.classify(detailTableName);//change name from table name to Javascript name
 
-    fs.exists('../models/'+becomeModel+'.js', function(exists) {
-        if (exists) {
-            console.log('../models/'+becomeModel+'.js  change to ../models/'+becomeModel+"_"+getDateTime()+'.js');
-            fs.rename('../models/'+becomeModel+'.js','../models/'+becomeModel+"_"+getDateTime()+'.js');
-            fs.rename('../controllers/'+becomeModel+'Controller.js','../controllers/'+becomeModel+"Controller_"+getDateTime()+'.js');
-            main(answer,becomeModel);
-        }else
-        {
-            main(answer,becomeModel);
-        }
-    });
-
-
-    rl.close();
+                fs.exists('../models/'+becomeModelMasterTableName+'.js', function(exists) {
+                    if (exists) {
+                        console.log('../models/'+becomeModelMasterTableName+'.js  change to ../models/'+becomeModelMasterTableName+"_"+getDateTime()+'.js');
+                        fs.rename('../models/'+becomeModelMasterTableName+'.js','../models/'+becomeModelMasterTableName+"_"+getDateTime()+'.js');
+                        fs.rename('../controllers/'+becomeModelMasterTableName+'Controller.js','../controllers/'+becomeModelMasterTableName+"Controller_"+getDateTime()+'.js');
+                        masterDetail(masterTableName,becomeModelMasterTableName,detailTableName,becomeModelDetailTableName);
+                    }else
+                    {
+                        masterDetail(masterTableName,becomeModelMasterTableName,detailTableName,becomeModelDetailTableName);
+                    }
+                });
+                rl.close();
+            });
+        });
+    }
 });
 
 ///// main function to make the file ///////
-function main(tableName,becomeModel) {
+function masterDetail(tableName,becomeModel,detailTableName,detailBecomeModel) {
     var fs = require('fs');
     var insertUpdateStatement = "";
     var insertUpdateStatement2 = "";
@@ -325,32 +282,13 @@ function main(tableName,becomeModel) {
     );
 
     db.SysForms.getPK(function(id){
-
         console.log('sys_form_id = ' + id);
-
-        //find all columns of the table and write to file
+        //find all columns of the table and write to file of master table
         db.SYSCOLUMNS.findAll({where: {TABLE_NAME: tableName.toUpperCase()}}, {raw: true}).success(function (data) {
-
             //Begin insert table information into SYS_Forms : header of form
             //,['FORM_ID','MASTER_TABLE_NAME','MASTER_SEQ','DETAIL_TABLE_NAME','DETAIL_SEQ','FORM_DESCRIPTION','FORM_TYPE']
-            if(tableName.toUpperCase() != 'SYS_FORMS' && tableName.toUpperCase() != 'SYS_FORM_DETAILS' ){
-                db.SysForms.create({
-                    FORM_ID : id
-                    ,MASTER_TABLE_NAME : tableName
-                    ,MASTER_SEQ : tableName
-                    ,DETAIL_TABLE_NAME : ''
-                    ,DETAIL_SEQ : ''
-                    ,FORM_DESCRIPTION : 'Generate Form Automatically'
-                    ,FORM_TYPE : 'Single'
-                    ,LIST_FORM_TYPE : 'table' //list
-                    ,NEW_EDIT_FORM_TYPE : 'form'
-                }).success(function(){
-                    console.log('Inserting into SYS_Forms successfully !'.green);
-                })
-                    .error(function(err){
-                        console.log('Error during Inserting into SYS_Forms !'.red);
-                    });
-            }
+
+            insertIntoSysForms(id,tableName,detailTableName);
 
             //End insert table information into SYS_Forms : header of form
 
@@ -400,109 +338,173 @@ function main(tableName,becomeModel) {
                     lastUpdateDate = "       updatedAt : '"+data[i].COLUMN_NAME+"',\n";
                 }
 
+            }
+
+            createModelFile(fs.createWriteStream('../models/'+becomeModel+'.js'),becomeModel,tableName,modelBody,creationDate,lastUpdateDate);
+
+            createControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,insertUpdateStatement,insertUpdateStatement2);
+
+        })//db.SYSCOLUMNS.findAll
+
+        //reset var
+        var insertUpdateStatementD = "";
+        var insertUpdateStatement2D = "";
+        var primaryKeyColumnNameD = "";
+        var modelBodyD = "";
+        var creationDateD = "       createdAt : false,\n";
+        var lastUpdateDateD = "       updatedAt: false,\n";
+
+        //// detail table
+        db.SYSCOLUMNS.findAll({where: {TABLE_NAME: detailTableName.toUpperCase()}}, {raw: true}).success(function (data) {
+
+            for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY );
+                recordOfTable = data[i];
+                //console.log(recordOfTable.COLUMN_NAME.rainbow);
+                //Begin inserting into Form Detail
+                if(detailTableName.toUpperCase() != 'SYS_FORMS' && detailTableName.toUpperCase() != 'SYS_FORM_DETAILS' ) {
+                    insertFormDetail(id, detailTableName, recordOfTable);
+                }
+                //End inserting into Form Detail
+                var isComma = '';
+
+                if (i != 0) {
+                    isComma = ',';
+                }
+
+                if ((data[i].COLUMN_NAME).toUpperCase() !== ('CREATION_DATE') && (data[i].COLUMN_NAME).toUpperCase() !== ('LAST_UPDATE_DATE')) {
+                    if (data[i].COLUMN_KEY === 'PRI') {
+                        primaryKeyColumnNameD = data[i].COLUMN_NAME;
+                        if (data[i].DATA_TYPE === 'int') {
+                            modelBodyD += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.INTEGER(11), primaryKey:true} \n';
+                        } else if (data[i].DATA_TYPE === 'varchar') {
+                            modelBodyD += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + '), primaryKey:true} \n';
+                        } else if (data[i].DATA_TYPE === 'datetime' || data[i].DATA_TYPE === 'date' ) {
+                            modelBodyD += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.DATE, primaryKey:true} \n';
+                        }
+                    } else {
+                        if (data[i].DATA_TYPE === 'int') {
+                            modelBodyD += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.INTEGER(11) \n';
+                        } else if (data[i].DATA_TYPE === 'varchar') {
+                            modelBodyD += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + ') \n';
+                        } else if (data[i].DATA_TYPE === 'datetime' || data[i].DATA_TYPE === 'date' ) {
+                            modelBodyD += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.DATE \n';
+                        }
+                    }
+                    insertUpdateStatementD += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
+                    insertUpdateStatement2D +=  isComma + "'"+ data[i].COLUMN_NAME + "'";
+                }
+
+                if ((data[i].COLUMN_NAME).toUpperCase() === ('CREATION_DATE')){
+                    creationDateD = "       createdAt : '"+data[i].COLUMN_NAME+"',\n";
+                }
+
+                if ((data[i].COLUMN_NAME).toUpperCase() === ('LAST_UPDATE_DATE')){
+                    lastUpdateDateD = "       updatedAt : '"+data[i].COLUMN_NAME+"',\n";
+                }
 
             }
 
-            //creating model for table in mySql
-            var wstreamModel = fs.createWriteStream('../models/'+becomeModel+'.js'); // create the model file
-            wstreamModel.write(
-                    "/** \n" +
-                    "* Created by meditech on " + getAusFormatDateTime() + ".\n" +
-                    "*/\n" +
-                    "module.exports = function(sequelize,DataTypes){\n" +
-                    "   var "+becomeModel+" = sequelize.define('"+becomeModel+"',{\n" +
+            createModelFile(fs.createWriteStream('../models/'+detailBecomeModel+'.js'),detailBecomeModel,detailTableName,modelBodyD,creationDateD,lastUpdateDateD);
 
-                    modelBody +
-
-                    "   " + "},{ \n" +
-                    "       " + "tableName: '"+tableName+"',\n" +
-                    "       " + "timestamps: true,\n" +
-                    creationDate +
-                    lastUpdateDate +
-                    "       " + "classMethods:{\n" +
-                    "       " + "    getPK:function(callback){\n" +
-                    "       " + "        sequelize.query(\"SELECT get_pk_value('"+tableName+"') AS PK\").success(function(data){\n" +
-                    "       " + "            callback(data[0].PK);\n" +
-                    "       " + "        })\n" +
-                    "       " + "    }\n" +
-                    "       " + "}\n" +
-                    "   " + "}); \n" +
-                    "   " + "return "+becomeModel+";\n" +
-                    "};"
-            );
-
-            wstreamModel.end();
-
-            ///Creating Controller file for Model
-            var wstreamController = fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'); // create the model file
-            wstreamController.write(
-                    "/**\n" +
-                    "        * Created by meditech on " + getAusFormatDateTime() + ".\n" +
-                    "*/\n" +
-                    "var db = require('../models');\n" +
-                    "module.exports = {\n" +
-                    "    list: function(req,res){\n" +
-                    "        var rs = [];\n" +
-                    "        db."+becomeModel+".findAll({},{raw: true})\n" +
-                    "            .success(function(data){\n" +
-                    "                res.json(data);\n" +
-                    "            })\n" +
-                    "            .error(function(err){\n" +
-                    "                res.json({status:'fail'});\n" +
-                    "            })\n" +
-                    "    },\n\n" +
-                    "    findById: function(req,res){\n" +
-                    "        var id = req.body.id;\n" +
-                    "        var rs = [];\n" +
-                    "        db."+becomeModel+".findAll({where:{"+primaryKeyColumnName+":id}},{raw: true})\n" +
-                    "            .success(function(data){\n" +
-                    "                res.json(data);\n" +
-                    "            })\n" +
-                    "            .error(function(err){\n" +
-                    "                res.json({status:'fail'});\n" +
-                    "            })\n" +
-                    "    },\n\n"
-            );
-
-
-            if(primaryKeyColumnName.length > 1){
-                wstreamController.write(
-                        "    edit: function(req,res){\n" +
-                        "    var f = req.body.f;\n" +
-                        "    db."+becomeModel+".update({\n" +
-                        insertUpdateStatement +
-                        "   },{"+primaryKeyColumnName+": f."+primaryKeyColumnName+"})\n" +
-                        "       .success(function(){\n" +
-                        "           res.json({status:'success'});\n" +
-                        "       })\n" +
-                        "            .error(function(err){\n" +
-                        "                res.json({status:'fail'});\n" +
-                        "           });\n" +
-                        "   },\n\n"
-                );
-            }
-
-            wstreamController.write(
-                    "    insert: function(req,res){\n" +
-                    "    var f = req.body.f;\n" +
-                    "    db."+becomeModel+".create({\n" +
-                    insertUpdateStatement +
-                    "    },["+insertUpdateStatement2+"]).success(function(){\n" +
-                    "        res.json({status:'success'});\n" +
-                    "    })\n" +
-                    "        .error(function(err){\n" +
-                    "            res.json({status:'fail'});\n" +
-                    "        });\n" +
-                    "}"
-            );
-
-            wstreamController.write("}");
-            wstreamController.end();
+            createControllerFile(fs.createWriteStream('../controllers/'+detailBecomeModel+'Controller.js'),detailBecomeModel,primaryKeyColumnNameD,insertUpdateStatementD,insertUpdateStatement2D);
 
         })//db.SYSCOLUMNS.findAll
 
     });///db.SysForms.getPK(function(id)
 
+}///function masterDetail(tableName,becomeModel)
+
+///// main function to make the file ///////
+function main(tableName,becomeModel) {
+    var fs = require('fs');
+    var insertUpdateStatement = "";
+    var insertUpdateStatement2 = "";
+    var primaryKeyColumnName = "";
+    var modelBody = "";
+    var creationDate = "       createdAt : false,\n";
+    var lastUpdateDate = "       updatedAt: false,\n";
+    var recordOfTable ;
+
+    db.sequelize
+        // sync để tự động tạo các bảng trong database
+        //.sync({ force: true })
+        .authenticate()
+        .complete(function (err) {
+            if (err) {
+                throw err[0];
+            } else {
+
+            }
+        }
+    );
+
+    db.SysForms.getPK(function(id){
+        console.log('sys_form_id = ' + id);
+        //find all columns of the table and write to file
+        db.SYSCOLUMNS.findAll({where: {TABLE_NAME: tableName.toUpperCase()}}, {raw: true}).success(function (data) {
+            //Begin insert table information into SYS_Forms : header of form
+            //,['FORM_ID','MASTER_TABLE_NAME','MASTER_SEQ','DETAIL_TABLE_NAME','DETAIL_SEQ','FORM_DESCRIPTION','FORM_TYPE']
+
+            insertIntoSysForms(id,tableName,'');
+
+            //End insert table information into SYS_Forms : header of form
+
+            for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY );
+                recordOfTable = data[i];
+                //console.log(recordOfTable.COLUMN_NAME.rainbow);
+                //Begin inserting into Form Detail
+                if(tableName.toUpperCase() != 'SYS_FORMS' && tableName.toUpperCase() != 'SYS_FORM_DETAILS' ) {
+                    insertFormDetail(id, tableName, recordOfTable);
+                }
+                //End inserting into Form Detail
+                var isComma = '';
+
+                if (i != 0) {
+                    isComma = ',';
+                }
+
+                if ((data[i].COLUMN_NAME).toUpperCase() !== ('CREATION_DATE') && (data[i].COLUMN_NAME).toUpperCase() !== ('LAST_UPDATE_DATE')) {
+                    if (data[i].COLUMN_KEY === 'PRI') {
+                        primaryKeyColumnName = data[i].COLUMN_NAME;
+                        if (data[i].DATA_TYPE === 'int') {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.INTEGER(11), primaryKey:true} \n';
+                        } else if (data[i].DATA_TYPE === 'varchar') {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + '), primaryKey:true} \n';
+                        } else if (data[i].DATA_TYPE === 'datetime' || data[i].DATA_TYPE === 'date' ) {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.DATE, primaryKey:true} \n';
+                        }
+                    } else {
+                        if (data[i].DATA_TYPE === 'int') {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.INTEGER(11) \n';
+                        } else if (data[i].DATA_TYPE === 'varchar') {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + ') \n';
+                        } else if (data[i].DATA_TYPE === 'datetime' || data[i].DATA_TYPE === 'date' ) {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.DATE \n';
+                        }
+                    }
+                    insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
+                    insertUpdateStatement2 +=  isComma + "'"+ data[i].COLUMN_NAME + "'";
+                }
+
+                if ((data[i].COLUMN_NAME).toUpperCase() === ('CREATION_DATE')){
+                    creationDate = "       createdAt : '"+data[i].COLUMN_NAME+"',\n";
+                }
+
+                if ((data[i].COLUMN_NAME).toUpperCase() === ('LAST_UPDATE_DATE')){
+                    lastUpdateDate = "       updatedAt : '"+data[i].COLUMN_NAME+"',\n";
+                }
+
+            }
+
+            createModelFile(fs.createWriteStream('../models/'+becomeModel+'.js'),becomeModel,tableName,modelBody,creationDate,lastUpdateDate);
+
+            createControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,insertUpdateStatement,insertUpdateStatement2);
+
+        })//db.SYSCOLUMNS.findAll
+
+    });///db.SysForms.getPK(function(id)
 
 }///function main(tableName,becomeModel)
 
@@ -631,4 +633,133 @@ function insertFormDetail(id,tableName,recordOfTable){
          });
 
     });
+}
+
+
+function createControllerFile(wstreamController,becomeModel,primaryKeyColumnName,insertUpdateStatement,insertUpdateStatement2){
+    ///Creating Controller file for Model
+    //var wstreamController = fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'); // create the model file
+    wstreamController.write(
+            "/**\n" +
+            "        * Created by meditech on " + getAusFormatDateTime() + ".\n" +
+            "*/\n" +
+            "var db = require('../models');\n" +
+            "module.exports = {\n" +
+            "    list: function(req,res){\n" +
+            "        var rs = [];\n" +
+            "        db."+becomeModel+".findAll({},{raw: true})\n" +
+            "            .success(function(data){\n" +
+            "                res.json(data);\n" +
+            "            })\n" +
+            "            .error(function(err){\n" +
+            "                res.json({status:'fail'});\n" +
+            "            })\n" +
+            "    },\n\n" +
+            "    findById: function(req,res){\n" +
+            "        var id = req.body.id;\n" +
+            "        var rs = [];\n" +
+            "        db."+becomeModel+".findAll({where:{"+primaryKeyColumnName+":id}},{raw: true})\n" +
+            "            .success(function(data){\n" +
+            "                res.json(data);\n" +
+            "            })\n" +
+            "            .error(function(err){\n" +
+            "                res.json({status:'fail'});\n" +
+            "            })\n" +
+            "    },\n\n"
+    );
+
+
+    if(primaryKeyColumnName.length > 1){
+        wstreamController.write(
+                "    edit: function(req,res){\n" +
+                "    var f = req.body.f;\n" +
+                "    db."+becomeModel+".update({\n" +
+                insertUpdateStatement +
+                "   },{"+primaryKeyColumnName+": f."+primaryKeyColumnName+"})\n" +
+                "       .success(function(){\n" +
+                "           res.json({status:'success'});\n" +
+                "       })\n" +
+                "            .error(function(err){\n" +
+                "                res.json({status:'fail'});\n" +
+                "           });\n" +
+                "   },\n\n"
+        );
+    }
+
+    wstreamController.write(
+            "    insert: function(req,res){\n" +
+            "    var f = req.body.f;\n" +
+            "    db."+becomeModel+".create({\n" +
+            insertUpdateStatement +
+            "    },["+insertUpdateStatement2+"]).success(function(){\n" +
+            "        res.json({status:'success'});\n" +
+            "    })\n" +
+            "        .error(function(err){\n" +
+            "            res.json({status:'fail'});\n" +
+            "        });\n" +
+            "}"
+    );
+
+    wstreamController.write("}");
+    wstreamController.end();
+}
+
+function createModelFile(wstreamModel,becomeModel,tableName,modelBody,creationDate,lastUpdateDate){
+    //creating model for table in mySql
+    //var wstreamModel = fs.createWriteStream('../models/'+becomeModel+'.js'); // create the model file
+    console.log("\n\n\n"+modelBody+"\n\n\n");
+    wstreamModel.write(
+            "/** \n" +
+            "* Created by meditech on " + getAusFormatDateTime() + ".\n" +
+            "*/\n" +
+            "module.exports = function(sequelize,DataTypes){\n" +
+            "   var "+becomeModel+" = sequelize.define('"+becomeModel+"',{\n" +
+
+            modelBody +
+
+            "   " + "},{ \n" +
+            "       " + "tableName: '"+tableName+"',\n" +
+            "       " + "timestamps: true,\n" +
+            creationDate +
+            lastUpdateDate +
+            "       " + "classMethods:{\n" +
+            "       " + "    getPK:function(callback){\n" +
+            "       " + "        sequelize.query(\"SELECT get_pk_value('"+tableName+"') AS PK\").success(function(data){\n" +
+            "       " + "            callback(data[0].PK);\n" +
+            "       " + "        })\n" +
+            "       " + "    }\n" +
+            "       " + "}\n" +
+            "   " + "}); \n" +
+            "   " + "return "+becomeModel+";\n" +
+            "};"
+    );
+
+    wstreamModel.end();
+}
+
+function insertIntoSysForms(id,tableName,detailTableName){
+    var formType = "";
+    if(detailTableName === ''){
+        formType = 'Single';
+    }else{
+        formType = 'Master Details';
+    }
+    if(tableName.toUpperCase() != 'SYS_FORMS' && tableName.toUpperCase() != 'SYS_FORM_DETAILS' ){
+        db.SysForms.create({
+            FORM_ID : id
+            ,MASTER_TABLE_NAME : tableName
+            ,MASTER_SEQ : tableName
+            ,DETAIL_TABLE_NAME : detailTableName
+            ,DETAIL_SEQ : detailTableName
+            ,FORM_DESCRIPTION : 'Generate Form Automatically'
+            ,FORM_TYPE : formType
+            ,LIST_FORM_TYPE : 'table' //list
+            ,NEW_EDIT_FORM_TYPE : 'form'
+        }).success(function(){
+            console.log('Inserting into SYS_Forms successfully !'.green);
+        })
+            .error(function(err){
+                console.log('Error during Inserting into SYS_Forms !'.red);
+            });
+    }
 }
