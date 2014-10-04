@@ -13,9 +13,9 @@ angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
              ,Country : ''
              ,Price : ''
              ,purchase_date : ''
-             ,note : ''
              ,Cancellation_reason : ''
              ,isCancellation : ''
+             ,note : ''
              ,isInsurance : ''
              ,Avatar_Pic_path : ''
              ,Created_by : ''
@@ -30,6 +30,8 @@ angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
     if(typeof id != 'undefined') {
        PmPropertiesService.getDataById(id).then(function(data){
            $scope.info = data[0];
+           $scope.info.isCancellation = data[0].isCancellation == 1 ? '1':'0';
+           $scope.info.isInsurance = data[0].isInsurance == 1 ? '1':'0';
        })
     }
 

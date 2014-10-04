@@ -1,5 +1,5 @@
 /** 
-* Created by meditech on 2014:10:02 20:33:30.
+* Created by meditech on 2014:10:03 15:26:27.
 */
 module.exports = function(sequelize,DataTypes){
    var PmProperties = sequelize.define('PmProperties',{
@@ -9,20 +9,19 @@ module.exports = function(sequelize,DataTypes){
        ,Zipcode : DataTypes.STRING(10) 
        ,State : DataTypes.STRING(30) 
        ,Country : DataTypes.STRING(30) 
+       ,purchase_date : DataTypes.DATE 
        ,note : DataTypes.STRING(1000) 
        ,Cancellation_reason : DataTypes.STRING(1000) 
        ,isCancellation : DataTypes.INTEGER(11) 
        ,isInsurance : DataTypes.INTEGER(11) 
        ,Avatar_Pic_path : DataTypes.STRING(200) 
        ,Created_by : DataTypes.INTEGER(11) 
-       ,Creation_date : DataTypes.DATE 
        ,Last_updated_by : DataTypes.INTEGER(11) 
-       ,Last_update_date : DataTypes.DATE 
    },{ 
        tableName: 'pm_properties',
-       timestamps: false,
-       createdAt : 'CREATION_DATE',
-       updatedAt : 'LAST_UPDATE_DATE',
+       timestamps: true,
+       createdAt : 'Creation_date',
+       updatedAt : 'Last_update_date',
        classMethods:{
            getPK:function(callback){
                sequelize.query("SELECT get_pk_value('pm_properties') AS PK").success(function(data){

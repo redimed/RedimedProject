@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:02 16:02:23.
+        * Created by meditech on 2014:10:02 23:23:33.
 */
 var db = require('../models');
 module.exports = {
@@ -72,10 +72,10 @@ module.exports = {
           ,isInsurance : f.isInsurance
           ,Avatar_Pic_path : f.Avatar_Pic_path
           ,Created_by : f.Created_by
-          ,Creation_date : f.Creation_date
+          //,Creation_date : f.Creation_date
           ,Last_updated_by : f.Last_updated_by
-          ,Last_update_date : f.Last_update_date
-    },['property_id','Address','Suburb','Zipcode','State','Country','Price','purchase_date','note','Cancellation_reason','isCancellation','isInsurance','Avatar_Pic_path','Created_by','Creation_date','Last_updated_by','Last_update_date']).success(function(){
+          //,Last_update_date : f.Last_update_date
+    },['property_id','Address','Suburb','Zipcode','State','Country','Price','purchase_date','note','Cancellation_reason','isCancellation','isInsurance','Avatar_Pic_path','Created_by','Last_updated_by']).success(function(){
         res.json({status:'success'});
     })
         .error(function(err){

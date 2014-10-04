@@ -1,5 +1,5 @@
 /** 
-* Created by meditech on 2014:10:01 21:59:48.
+* Created by meditech on 2014:10:03 15:23:11.
 */
 module.exports = function(sequelize,DataTypes){
    var SysForms = sequelize.define('SysForms',{
@@ -10,9 +10,13 @@ module.exports = function(sequelize,DataTypes){
        ,DETAIL_SEQ : DataTypes.STRING(100) 
        ,FORM_DESCRIPTION : DataTypes.STRING(250) 
        ,FORM_TYPE : DataTypes.STRING(20) 
+       ,LIST_FORM_TYPE : DataTypes.STRING(20) 
+       ,NEW_EDIT_FORM_TYPE : DataTypes.STRING(20) 
    },{ 
        tableName: 'sys_forms',
-       timestamps: false,
+       timestamps: true,
+       createdAt : false,
+       updatedAt: false,
        classMethods:{
            getPK:function(callback){
                sequelize.query("SELECT get_pk_value('sys_forms') AS PK").success(function(data){
@@ -25,6 +29,6 @@ module.exports = function(sequelize,DataTypes){
                })
            }
        }
-   }); 
-   return SysForms;
+   });
+    return SysForms;
 };

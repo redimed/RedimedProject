@@ -1,5 +1,5 @@
 /** 
-* Created by meditech on 2014:10:02 23:14:28.
+* Created by meditech on 2014:10:03 15:23:39.
 */
 module.exports = function(sequelize,DataTypes){
    var SysFormDetails = sequelize.define('SysFormDetails',{
@@ -16,11 +16,14 @@ module.exports = function(sequelize,DataTypes){
        ,ISNEW : DataTypes.INTEGER(11) 
        ,ISUPDATE : DataTypes.INTEGER(11) 
        ,ISREQUIRE : DataTypes.INTEGER(11) 
+       ,ISLIST_LINK : DataTypes.INTEGER(11) 
        ,INPUT_TYPE : DataTypes.STRING(100) 
        ,LOV_SQL : DataTypes.STRING(2000) 
    },{ 
        tableName: 'sys_form_details',
-       timestamps: false,
+       timestamps: true,
+       createdAt : false,
+       updatedAt: false,
        classMethods:{
            getPK:function(callback){
                sequelize.query("SELECT get_pk_value('sys_form_details') AS PK").success(function(data){

@@ -56,6 +56,7 @@ function main(tableName,becomeModel) {
     var bodyTableScript = "";
     var bodyNewEditScript = "";
     var newEditInfoVar = "";
+    var newEditGetDataController = "";
 
     //create setting file at root of module
     var wstream = fs.createWriteStream('../client/modules/'+becomeModel+'/'+becomeModel+'.js'); // create the model file
@@ -189,21 +190,25 @@ function main(tableName,becomeModel) {
                 isComma = ',';
             }
 
-            bodyTableScript +=
-                    "                    <td data-title=\"'"+data[i].COLUMN_NAME+"'\"  >\n" +
+            if(data[i].ISDISPLAY_ON_LIST === 1){
+                bodyTableScript +=
+                    "                    <td data-title=\"'"+data[i].DISPLAY_NAME+"'\"  >\n" +
                     "                        <span ng-if='!f.$edit'>{{f."+data[i].COLUMN_NAME+"}}</span>\n" +
-                    "                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f."+data[i].COLUMN_NAME+"' /></div>\n" +
+                    "                        <div ng-if='f.$edit'><input class='form-control' "+data[i].INPUT_TYPE+" ng-model='f."+data[i].COLUMN_NAME+"' /></div>\n" +
                     "                    </td>\n";
+            }
 
-            bodyNewEditScript +=
+            if(data[i].ISDISPLAY_ON_FORM === 1) {
+                bodyNewEditScript +=
                     "        <div class=\"row\">\n" +
-                    "            <div class=\"col-md-2\">\n" +
-                    "                <label class=\"pull-right\">"+data[i].COLUMN_NAME+"</label>\n" +
+                    "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
+                    "                <label class=\"pull-right\">" + data[i].DISPLAY_NAME + "</label>\n" +
                     "            </div>\n" +
                     "            <div class=\"col-md-6\">\n" +
-                    "                <input  class=\"form-control\" ng-model=\"info."+data[i].COLUMN_NAME+"\" />\n" +
+                    "                <input "+data[i].INPUT_TYPE+" class=\"form-control\" ng-model=\"info." + data[i].COLUMN_NAME + "\" />\n" +
                     "            </div>\n" +
                     "        </div>\n";
+            }
 
             newEditInfoVar += "             " + isComma + data[i].COLUMN_NAME + " : ''\n";
 
@@ -211,8 +216,12 @@ function main(tableName,becomeModel) {
                 primaryKeyColumnName = data[i].COLUMN_NAME;
             }
 
+            if(data[i].COLUMN_NAME.substring(0,2) === 'is')
+            {
+                newEditGetDataController += "           $scope.info."+data[i].COLUMN_NAME+" = data[0]."+data[i].COLUMN_NAME+" == 1 ? '1':'0';\n";
+            }
         }
-
+        ///$scope.info.isCancellation = data[0].isCancellation == 1 ? '1':'0';
         wstreamView.write(
                 "    <div class=\"portlet-body\">\n" +
                 "\n" +
@@ -298,6 +307,7 @@ function main(tableName,becomeModel) {
                 "    if(typeof id != 'undefined') {\n" +
                 "       "+becomeModel+"Service.getDataById(id).then(function(data){\n" +
                 "           $scope.info = data[0];\n" +
+                newEditGetDataController +
                 "       })\n" +
                 "    }\n\n" +
                 "    $scope.save = function(){\n" +
@@ -432,6 +442,6 @@ var mkdirSync = function (path) {
     try {
         fs.mkdirSync(path);
     } catch(e) {
-        if ( e.code != 'EXIST' ) throw e;
+        if ( e.code != 'EEXIST' ) throw e;
     }
 }

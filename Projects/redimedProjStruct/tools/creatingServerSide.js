@@ -137,7 +137,9 @@
  DETAIL_TABLE_NAME VARCHAR(100),
  DETAIL_SEQ VARCHAR(100),
  FORM_DESCRIPTION VARCHAR(250),
- FORM_TYPE VARCHAR(20)
+ FORM_TYPE VARCHAR(20),
+ LIST_FORM_TYPE VARCHAR(20),
+ NEW_EDIT_FORM_TYPE VARCHAR(20)
  );
 
  drop table sys_form_details;
@@ -158,9 +160,41 @@
  ISNEW INT,
  ISUPDATE INT,
  ISREQUIRE INT,
+ ISLIST_LINK INT,
  INPUT_TYPE VARCHAR(100),
  LOV_SQL VARCHAR(2000)
  );
+
+
+
+
+ module.exports = function(sequelize,DataTypes){
+   var SysForms = sequelize.define('SysForms',{
+       FORM_ID : {type:DataTypes.INTEGER(11), primaryKey:true}
+       ,MASTER_TABLE_NAME : DataTypes.STRING(100)
+       ,MASTER_SEQ : DataTypes.STRING(100)
+       ,DETAIL_TABLE_NAME : DataTypes.STRING(100)
+       ,DETAIL_SEQ : DataTypes.STRING(100)
+       ,FORM_DESCRIPTION : DataTypes.STRING(250)
+       ,FORM_TYPE : DataTypes.STRING(20)
+   },{
+       tableName: 'sys_forms',
+       timestamps: false,
+       classMethods:{
+           getPK:function(callback){
+               sequelize.query("SELECT get_pk_value('sys_forms') AS PK").success(function(data){
+                   callback(data[0].PK);
+               })
+           },
+           getColumns:function(tableName,callback){
+               sequelize.query("select * from sys_form_details where form_id = (select max(form_id) from sys_forms where upper(master_table_name) = '"+tableName+"') order by ordinal_position").success(function(data){
+                   callback(data);
+               })
+           }
+       }
+   });
+   return SysForms;
+};
  */
 var db = require('../models');
 var fs = require('fs');
@@ -207,8 +241,8 @@ function main(tableName,becomeModel) {
     var insertUpdateStatement2 = "";
     var primaryKeyColumnName = "";
     var modelBody = "";
-    var creationDate = "";
-    var lastUpdateDate = "";
+    var creationDate = "       createdAt : false,\n";
+    var lastUpdateDate = "       updatedAt: false,\n";
     var recordOfTable ;
 
     db.sequelize
@@ -242,6 +276,8 @@ function main(tableName,becomeModel) {
                     ,DETAIL_SEQ : ''
                     ,FORM_DESCRIPTION : 'Generate Form Automatically'
                     ,FORM_TYPE : 'Single'
+                    ,LIST_FORM_TYPE : 'table' //list
+                    ,NEW_EDIT_FORM_TYPE : 'form'
                 }).success(function(){
                     console.log('Inserting into SYS_Forms successfully !'.green);
                 })
@@ -267,36 +303,38 @@ function main(tableName,becomeModel) {
                     isComma = ',';
                 }
 
-                if(data[i].COLUMN_KEY === 'PRI'){
-                    primaryKeyColumnName = data[i].COLUMN_NAME;
-                    if (data[i].DATA_TYPE === 'int') {
-                        modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.INTEGER(11), primaryKey:true} \n';
-                    } else if (data[i].DATA_TYPE === 'varchar') {
-                        modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + '), primaryKey:true} \n';
-                    } else if (data[i].DATA_TYPE === 'datetime') {
-                        modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.DATE, primaryKey:true} \n';
+                if ((data[i].COLUMN_NAME).toUpperCase() !== ('CREATION_DATE') && (data[i].COLUMN_NAME).toUpperCase() !== ('LAST_UPDATE_DATE')) {
+                    if (data[i].COLUMN_KEY === 'PRI') {
+                        primaryKeyColumnName = data[i].COLUMN_NAME;
+                        if (data[i].DATA_TYPE === 'int') {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.INTEGER(11), primaryKey:true} \n';
+                        } else if (data[i].DATA_TYPE === 'varchar') {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + '), primaryKey:true} \n';
+                        } else if (data[i].DATA_TYPE === 'datetime' || data[i].DATA_TYPE === 'date' ) {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : {type:DataTypes.DATE, primaryKey:true} \n';
+                        }
+                    } else {
+                        if (data[i].DATA_TYPE === 'int') {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.INTEGER(11) \n';
+                        } else if (data[i].DATA_TYPE === 'varchar') {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + ') \n';
+                        } else if (data[i].DATA_TYPE === 'datetime' || data[i].DATA_TYPE === 'date' ) {
+                            modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.DATE \n';
+                        }
                     }
-                }else
-                {
-                    if (data[i].DATA_TYPE === 'int') {
-                        modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.INTEGER(11) \n';
-                    } else if (data[i].DATA_TYPE === 'varchar') {
-                        modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.STRING(' + data[i].CHARACTER_MAXIMUM_LENGTH + ') \n';
-                    } else if (data[i].DATA_TYPE === 'datetime') {
-                        modelBody += "       " + isComma + data[i].COLUMN_NAME + ' : DataTypes.DATE \n';
-                    }
+                    insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
+                    insertUpdateStatement2 +=  isComma + "'"+ data[i].COLUMN_NAME + "'";
                 }
 
                 if ((data[i].COLUMN_NAME).toUpperCase() === ('CREATION_DATE')){
-                    creationDate = "       createdAt : 'CREATION_DATE',\n";
+                    creationDate = "       createdAt : '"+data[i].COLUMN_NAME+"',\n";
                 }
 
                 if ((data[i].COLUMN_NAME).toUpperCase() === ('LAST_UPDATE_DATE')){
-                    lastUpdateDate = "       updatedAt : 'LAST_UPDATE_DATE',\n";
+                    lastUpdateDate = "       updatedAt : '"+data[i].COLUMN_NAME+"',\n";
                 }
 
-                insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
-                insertUpdateStatement2 +=  isComma + "'"+ data[i].COLUMN_NAME + "'";
+
             }
 
             //creating model for table in mySql
@@ -312,7 +350,7 @@ function main(tableName,becomeModel) {
 
                     "   " + "},{ \n" +
                     "       " + "tableName: '"+tableName+"',\n" +
-                    "       " + "timestamps: false,\n" +
+                    "       " + "timestamps: true,\n" +
                     creationDate +
                     lastUpdateDate +
                     "       " + "classMethods:{\n" +
@@ -491,6 +529,14 @@ function insertFormDetail(id,tableName,recordOfTable){
     db.SysFormDetails.getPK(function(detailId){
         //console.log("ID = " + detailId  + " sysFormDetail".green + "  " + recordOfTable.COLUMN_NAME.rainbow);
         //console.log(recordOfTable);
+        var inputType = " type = 'text' ";
+        if(recordOfTable.COLUMN_NAME.substring(0,2) === 'is')
+        {
+            inputType = " type = 'checkbox' ng-true-value='1' ng-false-value='0' ";
+        }
+        if (recordOfTable.DATA_TYPE.indexOf('date') > -1 ){
+            inputType = " type = 'date' ";
+        }
 
          db.SysFormDetails.create({
              FORM_ID : id
@@ -508,7 +554,8 @@ function insertFormDetail(id,tableName,recordOfTable){
              ,ISNEW : 1
              ,ISUPDATE : 1
              ,ISREQUIRE : 0
-             ,INPUT_TYPE : 'TextBox'
+             ,ISLIST_LINK : 1
+             ,INPUT_TYPE : inputType
              ,LOV_SQL : ''
          }).success(function(){
             console.log('Inserting '.green +recordOfTable.COLUMN_NAME.green+' into SYS_Form_Details successfully !'.green);

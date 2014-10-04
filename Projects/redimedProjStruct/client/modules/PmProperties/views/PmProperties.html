@@ -36,73 +36,73 @@
         <div>
             <table ng-table="tableParams"  class="table table-striped table-hover table-bordered ng-table-responsive">
                 <tr ng-repeat="f in $data track by $index | orderBy:'property_id'"  ng-click='editForm(f)' >
-                    <td data-title="'property_id'"  >
+                    <td data-title="'Property'"  >
                         <span ng-if='!f.$edit'>{{f.property_id}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.property_id' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.property_id' /></div>
                     </td>
                     <td data-title="'Address'"  >
                         <span ng-if='!f.$edit'>{{f.Address}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Address' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Address' /></div>
                     </td>
                     <td data-title="'Suburb'"  >
                         <span ng-if='!f.$edit'>{{f.Suburb}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Suburb' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Suburb' /></div>
                     </td>
                     <td data-title="'Zipcode'"  >
                         <span ng-if='!f.$edit'>{{f.Zipcode}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Zipcode' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Zipcode' /></div>
                     </td>
                     <td data-title="'State'"  >
                         <span ng-if='!f.$edit'>{{f.State}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.State' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.State' /></div>
                     </td>
                     <td data-title="'Country'"  >
                         <span ng-if='!f.$edit'>{{f.Country}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Country' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Country' /></div>
                     </td>
                     <td data-title="'Price'"  >
                         <span ng-if='!f.$edit'>{{f.Price}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Price' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Price' /></div>
                     </td>
-                    <td data-title="'purchase_date'"  >
+                    <td data-title="'Purchase date'"  >
                         <span ng-if='!f.$edit'>{{f.purchase_date}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.purchase_date' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'date'  ng-model='f.purchase_date' /></div>
                     </td>
-                    <td data-title="'note'"  >
-                        <span ng-if='!f.$edit'>{{f.note}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.note' /></div>
-                    </td>
-                    <td data-title="'Cancellation_reason'"  >
+                    <td data-title="'Cancellation reason'"  >
                         <span ng-if='!f.$edit'>{{f.Cancellation_reason}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Cancellation_reason' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Cancellation_reason' /></div>
                     </td>
-                    <td data-title="'isCancellation'"  >
+                    <td data-title="'Is cancellation'"  >
                         <span ng-if='!f.$edit'>{{f.isCancellation}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.isCancellation' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'checkbox' ng-true-value='1' ng-false-value='0'  ng-model='f.isCancellation' /></div>
                     </td>
-                    <td data-title="'isInsurance'"  >
+                    <td data-title="'Note'"  >
+                        <span ng-if='!f.$edit'>{{f.note}}</span>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.note' /></div>
+                    </td>
+                    <td data-title="'Is insurance'"  >
                         <span ng-if='!f.$edit'>{{f.isInsurance}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.isInsurance' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'checkbox' ng-true-value='1' ng-false-value='0'  ng-model='f.isInsurance' /></div>
                     </td>
-                    <td data-title="'Avatar_Pic_path'"  >
+                    <td data-title="'Avatar pic path'"  >
                         <span ng-if='!f.$edit'>{{f.Avatar_Pic_path}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Avatar_Pic_path' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Avatar_Pic_path' /></div>
                     </td>
-                    <td data-title="'Created_by'"  >
+                    <td data-title="'Created by'"  >
                         <span ng-if='!f.$edit'>{{f.Created_by}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Created_by' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Created_by' /></div>
                     </td>
-                    <td data-title="'Creation_date'"  >
+                    <td data-title="'Creation date'"  >
                         <span ng-if='!f.$edit'>{{f.Creation_date}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Creation_date' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'date'  ng-model='f.Creation_date' /></div>
                     </td>
-                    <td data-title="'Last_updated_by'"  >
+                    <td data-title="'Last updated by'"  >
                         <span ng-if='!f.$edit'>{{f.Last_updated_by}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Last_updated_by' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Last_updated_by' /></div>
                     </td>
-                    <td data-title="'Last_update_date'"  >
+                    <td data-title="'Last update date'"  >
                         <span ng-if='!f.$edit'>{{f.Last_update_date}}</span>
-                        <div ng-if='f.$edit'><input class='form-control' type='text' ng-model='f.Last_update_date' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'date'  ng-model='f.Last_update_date' /></div>
                     </td>
                 </tr>
 
