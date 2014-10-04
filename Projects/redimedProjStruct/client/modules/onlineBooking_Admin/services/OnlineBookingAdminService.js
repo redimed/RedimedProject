@@ -101,5 +101,40 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return user.post({info:info});
         }
 
+        adminBooking.getSiteList = function(){
+            var list = api.one('redimedsite/list');
+            return list.get();
+        }
+
+        adminBooking.getSiteInfo = function(id){
+            var info = api.all('redimedsite/info');
+            return info.post({id:id});
+        }
+
+        adminBooking.insertNewSite = function(info){
+            var insert = api.all('redimedsite/insert');
+            return insert.post({info:info});
+        }
+
+        adminBooking.editSiteInfo = function(info){
+            var edit = api.all('redimedsite/edit');
+            return edit.post({info:info});
+        }
+
+        adminBooking.getCalendarBySiteId = function(id){
+            var info = api.all('calendar/siteId');
+            return info.post({id:id});
+        }
+
+        adminBooking.getCalendarById = function(id){
+            var info = api.all('calendar/id');
+            return info.post({id:id});
+        }
+
+        adminBooking.submitNewCalendar = function(info){
+            var submit = api.all('calendar/submit');
+            return submit.post({info:info});
+        }
+
         return adminBooking;
 })

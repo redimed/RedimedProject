@@ -2,7 +2,7 @@
  * Created by meditech on 30/09/2014.
  */
 angular.module('app.loggedIn.booking.admin.booking.controller',[])
-    .controller('BookingController',function($scope,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,OnlineBookingService,$http,toastr,$cookieStore){
+    .controller('AdminBookingController',function($scope,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,OnlineBookingService,$http,toastr,$cookieStore){
         $scope.data = [];
         $scope.isSelected = false
         $scope.selectedCanId = null;
@@ -44,7 +44,7 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
 
             var modalInstance = $modal.open({
                 templateUrl: 'modules/onlineBooking_Admin/views/bookingDetailModal.html',
-                controller: 'BookingDetailController',
+                controller: 'AdminBookingDetailController',
                 size: 'lg',
                 resolve: {
                     bookingId: function(){
@@ -133,7 +133,7 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
 
     })
 
-    .controller('BookingDetailController',function($scope,$modalInstance,OnlineBookingService, bookingId, candidateId){
+    .controller('AdminBookingDetailController',function($scope,$modalInstance,OnlineBookingService, bookingId, candidateId){
         $scope.cancel = function(){
             $modalInstance.dismiss('cancel');
         };

@@ -26,7 +26,7 @@
             <table ng-table="tableParams"  class="table table-bordered table-responsive">
                 <tr style="white-space: nowrap" ng-repeat="b in $data" >
                     <td data-title="'Username'" >
-                        <label>{{b.user_name}}</label>
+                        <a href="javascript:;" ng-click="editUser(b)">{{b.user_name}}</a>
                     </td>
                     <td data-title="'Booking Person'" >
                         <label>{{b.Booking_Person}}</label>

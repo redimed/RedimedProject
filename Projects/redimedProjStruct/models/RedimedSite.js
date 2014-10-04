@@ -3,7 +3,7 @@
  */
 module.exports = function(sequelize,DataTypes){
     var RedimedSite = sequelize.define('RedimedSite',{
-        id : DataTypes.INTEGER(11) ,
+        id : {type:DataTypes.INTEGER(11),primaryKey: true} ,
         Site_name : DataTypes.STRING(100) ,
         Site_addr : DataTypes.STRING(100) ,
         postcode : DataTypes.INTEGER(11) ,
@@ -19,7 +19,9 @@ module.exports = function(sequelize,DataTypes){
         Last_update_date : DataTypes.DATE ,
         isPreEmpBK : DataTypes.INTEGER(11)
     },{
-        tableName: 'redimedsites'
+        tableName: 'redimedsites',
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_update_date'
     });
 
     return RedimedSite;

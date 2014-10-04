@@ -4,6 +4,10 @@
 angular.module('app.loggedIn.booking.list.controller',[])
     .controller('BookingListController',function($scope,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore){
         var companyInfo;
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
         if($cookieStore.get('companyInfo') !== 'undefined')
         {
             companyInfo = $cookieStore.get('companyInfo');

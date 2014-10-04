@@ -12,6 +12,7 @@ var RedimedSiteController = require('./controllers/RedimedSiteController');
 var PackageController = require('./controllers/PackageController');
 var UserController = require('./controllers/UserController');
 var AssessmentController = require('./controllers/AssessmentController');
+var CalendarController = require('./controllers/CalendarController');
 
 var rl_types=require('./routes/rl_types');
 var cln_specialties=require('./routes/cln_specialities');
@@ -127,3 +128,11 @@ app.post('/api/function/edit',FunctionController.edit);
 app.post('/api/function/insert',FunctionController.insert);
 
 app.get('/api/redimedsite/list',RedimedSiteController.list);
+app.post('/api/redimedsite/info',RedimedSiteController.siteInfo);
+app.post('/api/redimedsite/insert',RedimedSiteController.insert);
+app.post('/api/redimedsite/edit',RedimedSiteController.edit);
+
+app.get('/api/calendar/list',CalendarController.list);
+app.post('/api/calendar/siteId',CalendarController.getBySite);
+app.post('/api/calendar/id',CalendarController.getById);
+app.post('/api/calendar/submit',CalendarController.submit);

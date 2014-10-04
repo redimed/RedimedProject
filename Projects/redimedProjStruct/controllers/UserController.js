@@ -87,7 +87,19 @@ module.exports = {
             isSetting: info.isSetting,
             isAll: info.isShowAll,
             isBooking: info.isShowBooking,
-            isAllCompanyData: info.isViewAllData
+            isAllCompanyData: info.isViewAllData,
+            company_id: info.companyId,
+            user_type: info.userType,
+            PO_number: info.poNum,
+            invoiceemail: info.invoiceEmail,
+            result_email: info.resultEmail,
+            Report_To_email:info.reportEmail,
+            function_id: info.function_id,
+            employee_id: info.empId,
+            isCalendar: info.isCalendar,
+            isProject: info.isProject,
+            isAdmin: info.isAdmin,
+            isReceiveEmailAfterHour:info.isReceiveEmail
         },{id: info.userId},{raw:true})
             .success(function(data){
                 res.json({status:'success'});

@@ -49,7 +49,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
         }
 })
 
-.controller('NewUserSettingController',function($scope,$state,OnlineBookingService,toastr,$cookieStore){
+.controller('NewUserController',function($scope,$state,OnlineBookingService,toastr,$cookieStore){
 
     var companyInfo;
         $scope.isEdit = false;
@@ -110,7 +110,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
     }
 })
 
-.controller('EditUserSettingController',function($scope,$state,$stateParams,$modal,OnlineBookingService,toastr,$cookieStore){
+.controller('EditUserController',function($scope,$state,$stateParams,$modal,OnlineBookingService,toastr,$cookieStore){
         var companyInfo;
 
         $scope.isEdit = true;
@@ -175,7 +175,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
         $scope.changePass = function(){
             var modalInstance = $modal.open({
                 templateUrl: 'modules/onlineBooking/views/changePassModal.html',
-                controller: 'ChangePassSettingController',
+                controller: 'ChangePassController',
                 size: 'md',
                 resolve:{
                     userId: function(){
@@ -187,7 +187,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
         }
 })
 
-.controller('ChangePassSettingController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, userId, toastr){
+.controller('ChangePassController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, userId, toastr){
         $scope.info = {
             oldPass:null,
             newPass:null,

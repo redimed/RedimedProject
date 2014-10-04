@@ -45,13 +45,13 @@ angular.module('app.loggedIn.booking',
             .state('loggedIn.newUser',{
                 url:'/onlineBooking/setting/newUser',
                 templateUrl: 'modules/onlineBooking/views/newUser.html',
-                controller:'NewUserSettingController'
+                controller:'NewUserController'
             })
 
             .state('loggedIn.editUser',{
                 url:'/onlineBooking/setting/editUser/:id',
                 templateUrl:'modules/onlineBooking/views/newUser.html',
-                controller:'EditUserSettingController'
+                controller:'EditUserController'
             })
 
     });

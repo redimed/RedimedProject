@@ -34,7 +34,8 @@ module.exports = function(sequelize, DataTypes) {
       employee_id : DataTypes.INTEGER(11)
 }, {
         tableName: 'users', // đặt tên bảng
-        timestamps: false // đặt false để ko tự động tạo các cột timestamp
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_updated_date'
     });
 
     return User;

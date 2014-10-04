@@ -2,7 +2,7 @@
  * Created by meditech on 02/10/2014.
  */
 angular.module('app.loggedIn.booking.admin.company.controller',[])
-    .controller('CompanyController',function($scope,$state,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,toastr){
+    .controller('AdminCompanyController',function($scope,$state,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,toastr){
         $scope.data = [];
         var comArr = [];
         var subArr = [];
@@ -97,7 +97,7 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
 
     })
 
-.controller('NewCompanyController',function($scope,$state,$stateParams,toastr,$cookieStore,OnlineBookingAdminService){
+.controller('AdminNewCompanyController',function($scope,$state,$stateParams,toastr,$cookieStore,OnlineBookingAdminService){
     $scope.isEdit = false;
         var comId;
         if($stateParams.id !== null || $stateParams.id !== '' || typeof $stateParams.id !== 'undefined')
@@ -142,7 +142,7 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
     }
 })
 
-.controller('EditCompanyController',function($scope,$state,$stateParams,OnlineBookingService,toastr,$cookieStore,OnlineBookingAdminService){
+.controller('AdminEditCompanyController',function($scope,$state,$stateParams,OnlineBookingService,toastr,$cookieStore,OnlineBookingAdminService){
     $scope.isEdit = true;
 
     $scope.info = {

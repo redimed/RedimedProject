@@ -2,7 +2,7 @@
  * Created by meditech on 01/10/2014.
  */
 angular.module('app.loggedIn.booking.admin.assessment.controller',[])
-    .controller('AssessmentController',function($scope,$state,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,OnlineBookingService,$http,toastr,$cookieStore){
+    .controller('AdminAssessmentController',function($scope,$state,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,OnlineBookingService,$http,toastr,$cookieStore){
         $scope.data = [];
         $scope.data1 = [];
         $scope.selectedHeader = '';
