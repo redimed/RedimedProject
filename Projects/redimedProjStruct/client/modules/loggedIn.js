@@ -7,7 +7,8 @@ angular.module("app.loggedIn",[
     "app.loggedIn.menu", //MENU MODULE
     "app.loggedIn.telehealth", //Telehealth MODULE
     "app.loggedIn.booking", //ONLINE-BOOKING MODULE
-    "app.loggedIn.PmProperties" //PROPERTY MODULE
+    "app.loggedIn.PmProperties", //PROPERTY MODULE
+    "app.loggedIn.SysForms2" //forms MODULE
 ])
 
 .config(function($stateProvider){

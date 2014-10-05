@@ -1,5 +1,5 @@
 /** 
-* Created by meditech on 2014:10:04 21:03:36.
+* Created by meditech on 2014:10:05 10:37:54.
 */
 module.exports = function(sequelize,DataTypes){
    var SysForms = sequelize.define('SysForms',{
@@ -12,6 +12,7 @@ module.exports = function(sequelize,DataTypes){
        ,FORM_TYPE : DataTypes.STRING(20) 
        ,LIST_FORM_TYPE : DataTypes.STRING(20) 
        ,NEW_EDIT_FORM_TYPE : DataTypes.STRING(20) 
+       ,FORM_PROPERTIES : DataTypes.STRING(2000) 
    },{ 
        tableName: 'sys_forms',
        timestamps: true,
@@ -24,7 +25,12 @@ module.exports = function(sequelize,DataTypes){
                })
            },
            getColumns:function(tableName,callback){
-               sequelize.query("select f.MASTER_TABLE_NAME,f.MASTER_SEQ,f.DETAIL_TABLE_NAME,f.DETAIL_SEQ,f.FORM_DESCRIPTION,f.FORM_TYPE,f.LIST_FORM_TYPE,f.NEW_EDIT_FORM_TYPE, d.* from sys_form_details d, sys_forms f where d.form_id = f.form_id and d.form_id = (select max(form_id) from sys_forms where upper(master_table_name) = '"+tableName+"') order by ordinal_position").success(function(data){
+               sequelize.query("select f.MASTER_TABLE_NAME,f.MASTER_SEQ,f.DETAIL_TABLE_NAME,f.DETAIL_SEQ,f.FORM_DESCRIPTION,f.FORM_TYPE,f.LIST_FORM_TYPE,f.NEW_EDIT_FORM_TYPE,f.FORM_PROPERTIES, d.* from sys_form_details d, sys_forms f where d.form_id = f.form_id and f.MASTER_TABLE_NAME = d.Table_name and d.form_id = (select max(form_id) from sys_forms where upper(master_table_name) = '"+tableName+"') order by ordinal_position").success(function(data){
+                   callback(data);
+               })
+           },
+           getDetailColumns:function(tableName,callback){
+               sequelize.query("select f.MASTER_TABLE_NAME,f.MASTER_SEQ,f.DETAIL_TABLE_NAME,f.DETAIL_SEQ,f.FORM_DESCRIPTION,f.FORM_TYPE,f.LIST_FORM_TYPE,f.NEW_EDIT_FORM_TYPE,f.FORM_PROPERTIES, d.* from sys_form_details d, sys_forms f where d.form_id = f.form_id and f.DETAIL_TABLE_NAME = d.Table_name and d.form_id = (select max(form_id) from sys_forms where upper(master_table_name) = '"+tableName+"') order by ordinal_position").success(function(data){
                    callback(data);
                })
            }

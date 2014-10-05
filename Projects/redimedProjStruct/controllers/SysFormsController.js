@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:04 21:03:36.
+        * Created by meditech on 2014:10:05 10:41:52.
 */
 var db = require('../models');
 module.exports = {
@@ -38,6 +38,7 @@ module.exports = {
           ,FORM_TYPE : f.FORM_TYPE
           ,LIST_FORM_TYPE : f.LIST_FORM_TYPE
           ,NEW_EDIT_FORM_TYPE : f.NEW_EDIT_FORM_TYPE
+          ,FORM_PROPERTIES : f.FORM_PROPERTIES
    },{FORM_ID: f.FORM_ID})
        .success(function(){
            res.json({status:'success'});
@@ -59,7 +60,8 @@ module.exports = {
           ,FORM_TYPE : f.FORM_TYPE
           ,LIST_FORM_TYPE : f.LIST_FORM_TYPE
           ,NEW_EDIT_FORM_TYPE : f.NEW_EDIT_FORM_TYPE
-    },['FORM_ID','MASTER_TABLE_NAME','MASTER_SEQ','DETAIL_TABLE_NAME','DETAIL_SEQ','FORM_DESCRIPTION','FORM_TYPE','LIST_FORM_TYPE','NEW_EDIT_FORM_TYPE']).success(function(){
+          ,FORM_PROPERTIES : f.FORM_PROPERTIES
+    },['FORM_ID','MASTER_TABLE_NAME','MASTER_SEQ','DETAIL_TABLE_NAME','DETAIL_SEQ','FORM_DESCRIPTION','FORM_TYPE','LIST_FORM_TYPE','NEW_EDIT_FORM_TYPE','FORM_PROPERTIES']).success(function(){
         res.json({status:'success'});
     })
         .error(function(err){
