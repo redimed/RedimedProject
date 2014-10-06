@@ -1,3 +1,10 @@
+<style>
+    .selected {
+        background-color: #ffca87;
+    }
+
+</style>
+
 <div class="portlet light bordered">
     <div class="portlet-title">
 
@@ -11,64 +18,37 @@
 
         <div>
             <div class="btn-group pull-right">
-                <a href="javascript:;" class="btn green" id="addMenu">
-                    Add New<i class="fa fa-plus"></i>
+                <a href="javascript:;" class="btn green" ng-click="addNewMenu()">
+                    Add New Menu &nbsp;&nbsp; <i class="fa fa-plus"></i>
                 </a>
             </div>
         </div>
-
-        <script type="text/javascript">
-            $('#modal-content').on('shown.bs.modal', function () {
-                $("#txtDescription").focus();
-            });
-
-            // everytime the button is pushed, open the modal, and trigger the shown.bs.modal event
-            $('#addMenu').click(function () {
-                $('#modal-content').modal({
-                    show: true
-                });
-            });
-            $('#addSub').click(function () {
-                $('#insertSubMenu').modal({
-                    show: true
-                });
-            });
-        </script>
     </div>
     <div class="portlet-body">
 
         <div>
-            <table ng-table="tableParams"  show-filter="true" class="table table-striped table-hover table-bordered ng-table-responsive">
-                <tr ng-repeat="m in $data | orderBy:'MenuID'" ng-click="showChild(m)">
+            <table ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered ng-table-responsive">
+                <tr ng-repeat="m in $data | orderBy:'MenuID'" ng-click="showChild(m)" ng-class="{selected : m.MenuID == selectedId}">
+                    <td data-title="'ID'" sortable="'MenuID'">
+                        <label>{{m.MenuID}}</label>
+                    </td>
                     <td data-title="'Description'" sortable="'MenuDescription'" filter="{ 'MenuDescription': 'text' }">
-                        <span ng-if="!m.$edit">{{m.MenuDescription}}</span>
-                        <div ng-if="m.$edit"><input class="form-control" type="text" ng-model="m.MenuDescription" /></div>
+                        <label >{{m.MenuDescription}}</label>
                     </td>
                     <td data-title="'Definition'" sortable="'MenuDefinition'">
-                        <span ng-if="!m.$edit">{{m.MenuDefinition}}</span>
-                        <div ng-if="m.$edit"><input class="form-control" type="text" ng-model="m.MenuDefinition" /></div>
+                        <label >{{m.MenuDefinition}}</label>
                     </td>
                     <td data-title="'Type'" sortable="'MenuType'" filter="{ 'MenuType': 'text' }">
-                        <span ng-if="!m.$edit">{{m.MenuType}}</span>
-                        <div ng-if="m.$edit"><input class="form-control" type="text" ng-model="m.MenuType" /></div>
+                        <label >{{m.MenuType}}</label>
                     </td>
                     <td data-title="'Enable'" >
-                        <span ng-if="m.MenuEnable===1 && !m.$edit" ><input  class="form-control" type="checkbox" disabled   checked /></span>
-                        <span ng-if="m.MenuEnable!==1 && !m.$edit" ><input  class="form-control" type="checkbox" disabled  /></span>
-                        <span ng-if="m.MenuEnable===1 && m.$edit" ><input  class="form-control" type="checkbox" ng-model="m.MenuEnable" ng-checked="true" ng-true-value="1" ng-false-value="0" /></span>
-                        <span ng-if="m.MenuEnable!==1 && m.$edit" ><input  class="form-control" type="checkbox" ng-model="m.MenuEnable" ng-true-value="1" ng-false-value="0" /></span>
+                        <label ng-if="m.MenuEnable===1" ><input  class="form-control" type="checkbox" disabled   checked /></label>
+                        <label ng-if="m.MenuEnable!==1" ><input  class="form-control" type="checkbox" disabled  /></label>
                     </td>
                     <td data-title="'Actions'">
-                        <a href="javascript:;" ng-if="!m.$edit"
-                           ng-click="edit(m)">
+                        <a href="javascript:;" class="btn btn-primary"
+                           ng-click="editMenu(m)">
                             Edit </a>
-                        <a href="javascript:;" ng-if="m.$edit"
-                           ng-click="save(m)">
-                            Save </a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:;" ng-if="m.$edit"
-                           ng-click="cancel(m)">
-                            Cancel </a>
                     </td>
 
                 </tr>
@@ -78,57 +58,6 @@
         </div>
         <br/>
 
-        <div id="modal-content" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Add New Menu</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="form-group">
-                                <label class="control-label">Description</label>
-                                <div>
-                                    <input type="text" class="form-control" id="txtDescription" placeholder="Enter Description" ng-model="menu.MenuDescription" />
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="form-group">
-                                <label class="control-label">Definition</label>
-                                <div >
-                                    <input type="text" class="form-control" placeholder="Enter Definition" ng-model="menu.MenuDefinition" />
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="form-group">
-                                <label class="control-label">Type</label>
-                                <div >
-                                    <input type="text" class="form-control" placeholder="Enter Type" ng-model="menu.MenuType" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="form-group">
-                                <label class="control-label">Enable</label>
-                                <div >
-                                    <input type="checkbox" class="form-control" ng-model="menu.MenuEnable" ng-true-value="1" ng-false-value="0" />
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
-                        <a href="javascript:;" class="btn green" ng-click="addNew()">Insert</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>
@@ -147,8 +76,8 @@
 
         <div>
             <div class="btn-group pull-right" ng-show="isSelected">
-                <a href="javascript:;"  class="btn green" id="addSub">
-                    Add New <i class="fa fa-plus"></i>
+                <a href="javascript:;" ng-click="addNewSubMenu()"  class="btn green" >
+                    Add New Menu &nbsp;&nbsp; <i class="fa fa-plus"></i>
                 </a>
             </div>
         </div>
@@ -156,36 +85,24 @@
     <div class="portlet-body">
         <div>
             <table ng-table="tableParams2"  show-filter="true" class="table table-striped table-hover table-bordered ng-table-responsive">
-                <tr ng-repeat="c in $data | orderBy:'MenuID'">
+                <tr ng-repeat="m in $data | orderBy:'MenuID'">
                     <td data-title="'Description'" sortable="'MenuDescription'" filter="{ 'MenuDescription': 'text' }">
-                        <span ng-if="!c.$edit">{{c.MenuDescription}}</span>
-                        <div ng-if="c.$edit"><input class="form-control" type="text" ng-model="c.MenuDescription" /></div>
+                        <label>{{m.MenuDescription}}</label>
                     </td>
                     <td data-title="'Type'" sortable="'MenuType'" filter="{ 'MenuType': 'text' }">
-                        <span ng-if="!c.$edit">{{c.MenuType}}</span>
-                        <div ng-if="c.$edit"><input class="form-control" type="text" ng-model="c.MenuType" /></div>
+                        <label >{{m.MenuType}}</label>
                     </td>
                     <td data-title="'Function'">
-                        <span ng-if="!c.$edit">{{c.FunctionName}}</span>
-                        <select ng-if="c.$edit" ng-model="c.FunctionID" ng-options="func.function_id as func.decription for func in functionList"></select>
+                        <label >{{m.FunctionName}}</label>
                     </td>
                     <td data-title="'Enable'" >
-                        <span ng-if="c.MenuEnable===1 && !c.$edit" ><input  class="form-control" type="checkbox" disabled   checked /></span>
-                        <span ng-if="c.MenuEnable!==1 && !c.$edit" ><input  class="form-control" type="checkbox" disabled  /></span>
-                        <span ng-if="c.MenuEnable===1 && c.$edit" ><input  class="form-control" type="checkbox" ng-model="c.MenuEnable" ng-checked="true" ng-true-value="1" ng-false-value="0" /></span>
-                        <span ng-if="c.MenuEnable!==1 && c.$edit" ><input  class="form-control" type="checkbox" ng-model="c.MenuEnable" ng-true-value="1" ng-false-value="0" /></span>
+                        <label ng-if="m.MenuEnable===1" ><input  class="form-control" type="checkbox" disabled   checked /></label>
+                        <label ng-if="m.MenuEnable!==1" ><input  class="form-control" type="checkbox" disabled  /></label>
                     </td>
                     <td data-title="'Actions'">
-                        <a href="javascript:;" ng-if="!c.$edit"
-                           ng-click="editChild(c)">
+                        <a href="javascript:;" class="btn btn-primary"
+                           ng-click="editSubMenu(m)">
                             Edit </a>
-                        <a href="javascript:;" ng-if="c.$edit"
-                           ng-click="saveChild(c)">
-                            Save </a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:;" ng-if="c.$edit"
-                           ng-click="cancelChild(c)">
-                            Cancel </a>
                     </td>
 
                 </tr>
@@ -194,59 +111,6 @@
             </table>
         </div>
         <br/>
-        <div id="insertSubMenu" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Add {{childTitle}} Sub Menu</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="form-group">
-                                <label class="control-label">Description</label>
-                                <div>
-                                    <input type="text" class="form-control" placeholder="Enter Description" ng-model="child.MenuDescription" />
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="form-group">
-                                <label class="control-label">Type</label>
-                                <div >
-                                    <input type="text" class="form-control" placeholder="Enter Type" ng-model="child.MenuType" />
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="form-group">
-                                <label class="control-label">Function</label>
-                                <div >
-                                    <select ng-model="child.FunctionID" ng-options="func.function_id as func.decription for func in functionList"></select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="form-group">
-                                <label class="control-label">Enable</label>
-                                <div >
-                                    <input type="checkbox" class="form-control" ng-model="child.MenuEnable" ng-true-value="1" ng-false-value="0" />
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
-                        <a href="javascript:;" class="btn green" ng-click="addNewChild()">Insert</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
     </div>
 
 </div>

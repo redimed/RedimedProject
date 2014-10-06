@@ -41,5 +41,15 @@ module.exports = {
             .error(function(err){
                 res.json({status:"fail"});
             });
+    },
+    findById: function(req,res){
+        var id = req.body.id;
+        db.Function.find({where:{function_id:id}},{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
     }
 };

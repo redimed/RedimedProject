@@ -21,5 +21,10 @@ angular.module('app.loggedIn.function.services',[])
             return insertApi.post({f:f});
         }
 
+        functionService.getFunctionInfo = function(id){
+            var info = api.all('function/id');
+            return info.post({id:id});
+        }
+
         return functionService;
     })

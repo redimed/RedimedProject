@@ -16,5 +16,20 @@ angular.module('app.loggedIn.menu.services',[])
             return functionList.get();
         }
 
+        menuService.insertMenu = function(info){
+            var insert = api.all('menu/insert');
+            return insert.post({info:info});
+        }
+
+        menuService.editMenu = function(info){
+            var edit = api.all('menu/edit');
+            return edit.post({info:info});
+        }
+
+        menuService.menuInfo = function(id){
+            var info = api.all('menu/id');
+            return info.post({id:id});
+        }
+
         return menuService;
     });

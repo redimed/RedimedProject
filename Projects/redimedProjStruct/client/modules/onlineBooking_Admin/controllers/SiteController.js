@@ -94,24 +94,9 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
             OnlineBookingAdminService.getCalendarById(b.cal_id).then(function(data){
                 $scope.info = data;
 
-                var fromDate = new Date(data.From_time);
-                $scope.info.From_time =  new Date(fromDate.getUTCFullYear(),
-                    fromDate.getUTCMonth(),
-                    fromDate.getUTCDate(),
-                    fromDate.getUTCHours(),
-                    fromDate.getUTCMinutes(),
-                    fromDate.getUTCSeconds());
 
-                var toDate = new Date(data.to_time);
-                $scope.info.to_time =  new Date(toDate.getUTCFullYear(),
-                    toDate.getUTCMonth(),
-                    toDate.getUTCDate(),
-                    toDate.getUTCHours(),
-                    toDate.getUTCMinutes(),
-                    toDate.getUTCSeconds());
             })
 
-            console.log($scope.info);
 
         }
 

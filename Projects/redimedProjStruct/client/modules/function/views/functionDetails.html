@@ -1,0 +1,32 @@
+<div class="modal-header">
+</div>
+<div class="modal-body">
+    <div>
+        <div class="form-group">
+            <label class="control-label">Description</label>
+            <div>
+                <input type="text" class="form-control" id="txtDescription" placeholder="Enter Description" ng-model="info.decription" />
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-group">
+            <label class="control-label">Definition</label>
+            <div >
+                <input type="text" class="form-control" placeholder="Enter Definition" ng-model="info.definition" />
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-group">
+            <label class="control-label">Type</label>
+            <div >
+                <input type="text" class="form-control" placeholder="Enter Type" ng-model="info.type" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
+    <a href="javascript:;" class="btn green" ng-click="submitFunction()"  >Submit</a>
+</div>

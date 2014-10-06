@@ -208,6 +208,7 @@ module.exports = {
             secure: true,
             ignoreTLS: false,
             port: 25, // port for secure SMTP
+            debug: true,
             auth: {
                 user: "programmer2",
                 pass: "Hello8080"

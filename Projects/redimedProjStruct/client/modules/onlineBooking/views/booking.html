@@ -3,13 +3,6 @@
         background-color: #ffca87;
     }
 
-    snap-content {
-        background-color: #fff;
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-        width: 1000px;
-    }
-
 </style>
 
 <div class="caption">
@@ -53,8 +46,8 @@
         </div>
 
         <div class="table-scrollable" id="content">
-            <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
-                <tr ng-repeat="b in $data" style="white-space: nowrap">
+            <table ng-table="tableParams" show-filter="true" class="table table-hover table-bordered table-responsive">
+                <tr ng-repeat="b in $data" style="white-space: nowrap" ng-click="bookingSelected(b)" ng-class="{selected : b.Candidate_id === selectedCanId && b.Booking_id === selectedBookId}">
                     <td data-title="'ID'" >
                         <label>{{b.Booking_id}}</label>
                     </td>
@@ -65,7 +58,7 @@
                         <a href="javascript:;" ng-click="openDetail(b)">{{b.Candidates_name}}</a>
                     </td>
                     <td class="col-md-12" data-title="'Appointment Time'" sortable="'Appointment_time'" >
-                        <label>{{b.Appointment_time | utc | date:'dd/MM/yyyy - HH:mm'}}</label>
+                        <label>{{b.Appointment_time | date:'dd/MM/yyyy - HH:mm'}}</label>
                     </td>
                     <td data-title="'Site Name'" sortable="'site_name'" >
                         <label>{{b.site_name}}</label>

@@ -4,6 +4,8 @@
 angular.module('app.loggedIn.booking.list.controller',[])
     .controller('BookingListController',function($scope,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore){
         var companyInfo;
+        $scope.selectedCanId = null;
+        $scope.selectedBookId = null;
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -37,6 +39,11 @@ angular.module('app.loggedIn.booking.list.controller',[])
                 });
             }
         })
+
+        $scope.bookingSelected = function(b){
+            $scope.selectedCanId = b.Candidate_id;
+            $scope.selectedBookId = b.Booking_id;
+        }
 
         $scope.openDetail = function(b){
 

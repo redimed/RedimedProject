@@ -167,7 +167,7 @@
                                                 * </span></label>
                 </div>
                 <div class="col-md-8">
-                    <select class="col-md-12 form-control" ng-model="info.calId" name="calendar" required ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | utc | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
+                    <select class="col-md-12 form-control" ng-model="info.calId" name="calendar" required ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
                         <option value="">--Select Calendar--</option>
                     </select>
                 </div>

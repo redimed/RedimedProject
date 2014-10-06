@@ -51,7 +51,7 @@
                         <label>{{b.site_name}}</label>
                     </td>
                     <td data-title="'Appointment Time'"  >
-                        <label>{{b.Appointment_time | utc | date:'dd/MM/yyyy - HH:mm:ss'}}</label>
+                        <label>{{b.Appointment_time | date:'dd/MM/yyyy - HH:mm:ss'}}</label>
                     </td>
                     <td data-title="'Appointment Notes'" >
                         <label>{{b.Appointment_notes}}</label>
@@ -201,7 +201,7 @@
                     <label class="control-label bold">Calendar</label>
                 </div>
                 <div class="col-md-8">
-                    <select class="col-md-12 form-control" ng-model="info.calendar_id" name="calendar" required ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | utc | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
+                    <select class="col-md-12 form-control" ng-model="info.calendar_id" name="calendar" required ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
                     </select>
                 </div>
             </div>

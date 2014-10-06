@@ -2,13 +2,14 @@
  * Created by meditech on 23/09/2014.
  */
 angular.module('app.loggedIn.menu.controller',[])
-    .controller("MenuController",function($scope,$state,$filter,ngTableParams,MenuService,$http) {
+    .controller("MenuController",function($scope,$modal,$state,$filter,ngTableParams,MenuService,$http) {
         var menuList = [];
         var parentId;
         $scope.functionList = [];
         $scope.data=[];
         $scope.data1=[];
         $scope.isSelected = false;
+        $scope.selectedId = null;
 
         MenuService.menuList().then(function(data){
             MenuService.functionList().then(function(data){
@@ -63,119 +64,10 @@ angular.module('app.loggedIn.menu.controller',[])
 
         })
 
-        $scope.save = function(m) {
-            $http({
-                method:"POST",
-                url:"/api/menu/edit",
-                data:{m:m}
-            }).success(function(data){
-                if(data['status'] === 'success') {
-                    alert("Edit Successfully!");
-                    m.$edit = false;
-                    $state.go('loggedIn.menu',null,{reload:true});
-                }
-                else
-                {
-                    alert("Edit Failed!");
-                }
-            })
-
-        };
-
-        $scope.saveChild = function(c) {
-
-            $http({
-                method:"POST",
-                url:"/api/menu/editChild",
-                data:{des: c.MenuDescription,
-                    type: c.MenuType,
-                    funcId: c.FunctionID,
-                    isEnable: c.MenuEnable,
-                    menuId: c.MenuID}
-            }).success(function(data){
-                if(data['status'] === 'success') {
-                    alert("Edit Successfully!");
-                    c.$edit = false;
-                    $state.go('loggedIn.menu',null,{reload:true});
-                }
-                else
-                {
-                    alert("Edit Failed!");
-                }
-            })
-
-        };
-
-
-        var previousDes;
-        var previousDefi;
-        var previousEnable;
-        var previousType;
-        var pDes;
-        var pEnable;
-        var pType;
-        var pFunc;
-
-        $scope.edit = function(m) {
-            m.$edit = true;
-
-            $scope.previousDes = m.MenuDescription;
-            $scope.previousEnable = m.MenuEnable;
-            $scope.previousType = m.MenuType;
-            $scope.previousDefi = m.MenuDefinition
-        };
-
-        $scope.editChild = function(c) {
-            c.$edit = true;
-            $scope.pFunc = c.FunctionName;
-            $scope.pDes = c.MenuDescription;
-            $scope.pEnable = c.MenuEnable;
-            $scope.pType = c.MenuType;
-        };
-
-        $scope.addNew = function(){
-            $http({
-                method:"POST",
-                url:"/api/menu/insert",
-                data:{m:$scope.menu}
-            }).success(function(data){
-                if(data['status'] === 'success') {
-                    alert("Insert Successfully!");
-
-                    $scope.menu = "";
-                    $state.go('loggedIn.menu',null,{reload:true});
-                }
-                else
-                {
-                    alert("Insert Failed!");
-                }
-            })
-        };
-
-        $scope.addNewChild = function(){
-            $http({
-                method:"POST",
-                url:"/api/menu/insertChild",
-                data:{c: $scope.child,
-                    parentId: parentId}
-            }).success(function(data){
-                if(data['status'] === 'success') {
-                    alert("Insert Successfully!");
-
-                    $scope.child = "";
-                    $state.go('loggedIn.menu',null,{reload:true});
-                }
-                else
-                {
-                    alert("Insert Failed!");
-                }
-            })
-        };
-
-
 
         $scope.showChild = function(m) {
             $scope.childTitle = m.MenuDescription;
+            $scope.selectedId = m.MenuID;
             $scope.isSelected = true;
             parentId = m.MenuID;
             $scope.data1 = [];
@@ -185,28 +77,164 @@ angular.module('app.loggedIn.menu.controller',[])
                 if(menuList[i].ParentID === id)
                     $scope.data1.push(menuList[i]);
             }
-
-
             $scope.tableParams2.reload();
 
-
         };
 
-        $scope.cancel = function(m) {
-            m.$edit = false;
-            m.MenuDescription = $scope.previousDes;
-            m.MenuEnable = $scope.previousEnable;
-            m.MenuType = $scope.previousType;
-            m.MenuDefinition = $scope.previousDefi;
-        };
+        $scope.addNewMenu = function(){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/menu/views/menuDetails.html',
+                controller:'NewMenuController',
+                size:'md',
+                resolve:{
+                    isSub: function(){
+                        return false;
+                    },
+                    parentId: function(){
+                        return null;
+                    }
+                }
+            })
+        }
 
-        $scope.cancelChild = function(c) {
-            c.$edit = false;
-            c.FunctionName = $scope.pFunc;
-            c.MenuDescription = $scope.pDes;
-            c.MenuEnable = $scope.pEnable;
-            c.MenuType = $scope.pType;
-        };
+        $scope.editMenu = function(m){
+
+            var modalInstance = $modal.open({
+                templateUrl:'modules/menu/views/menuDetails.html',
+                controller:'EditMenuController',
+                size:'md',
+                resolve:{
+                    menuId: function(){
+                        return m.MenuID;
+                    },
+                    isSub: function(){
+                        return false;
+                    }
+                }
+            })
+        }
+
+        $scope.addNewSubMenu = function(){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/menu/views/menuDetails.html',
+                controller:'NewMenuController',
+                size:'md',
+                resolve:{
+                    isSub: function(){
+                        return true;
+                    },
+                    parentId: function(){
+                        return $scope.selectedId;
+                    }
+                }
+            })
+        }
+
+        $scope.editSubMenu = function(m){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/menu/views/menuDetails.html',
+                controller:'EditMenuController',
+                size:'md',
+                resolve:{
+                    menuId: function(){
+                        return m.MenuID;
+                    },
+                    isSub: function(){
+                        return true;
+                    }
+                }
+            })
+        }
 
 
-    });
+    })
+
+    .controller('NewMenuController',function($scope,$filter,$state,$modalInstance,MenuService,isSub, parentId, toastr){
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.info = {
+            MenuDescription: null,
+            MenuDefinition: null,
+            MenuType: null,
+            MenuEnable: null,
+            FunctionID: null,
+            ParentID: parentId
+        }
+
+        $scope.isSub = isSub;
+
+        if($scope.isSub == true)
+        {
+            MenuService.functionList().then(function(data){
+                $scope.functionList = data;
+            })
+
+        }
+
+
+        $scope.submitMenu = function(){
+            MenuService.insertMenu($scope.info).then(function(data){
+                if(data['status'] === 'success') {
+                    toastr.success("Insert New Menu Successfully!","Success");
+                    $modalInstance.dismiss('cancel');
+                    $state.go('loggedIn.menu', null, {"reload":true});
+                }
+                else
+                {
+                    toastr.error("Insert New Menu Failed!","Error");
+                }
+            })
+        }
+    })
+
+    .controller('EditMenuController',function($scope,$filter,$state,$modalInstance,MenuService,isSub, menuId, toastr){
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        console.log(menuId);
+
+        $scope.isSub = isSub;
+
+        if($scope.isSub == true){
+            MenuService.functionList().then(function(data){
+                $scope.functionList = data;
+            })
+        }
+
+        $scope.info = {
+            MenuID: null,
+            MenuDescription: null,
+            MenuDefinition: null,
+            MenuEnable: null,
+            MenuType: null,
+            FunctionID: null
+        }
+
+        MenuService.menuInfo(menuId).then(function(data){
+            $scope.info.MenuID = data.menu_id;
+            $scope.info.MenuDescription = data.description;
+            $scope.info.MenuDefinition = data.definition;
+            $scope.info.MenuEnable = data.isEnable == 1 ? '1':'0';
+            $scope.info.MenuType = data.type;
+            $scope.info.FunctionID = data.function_id != null || data.function_id != '' ? data.function_id : null;
+        })
+
+
+        $scope.submitMenu = function(){
+
+            MenuService.editMenu($scope.info).then(function(data){
+                if(data['status'] === 'success') {
+                    toastr.success("Edit Menu Successfully!","Success");
+                    $modalInstance.dismiss('cancel');
+                    $state.go('loggedIn.menu', null, {"reload":true});
+                }
+                else
+                {
+                    toastr.error("Edit Menu Failed!","Error");
+                }
+            })
+        }
+    })

@@ -66,14 +66,6 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
                 var arrAss = [];
                 $scope.info = data.rs[0];
 
-                var date = new Date(data.rs[0].Appointment_time);
-                $scope.info.Appointment_time =  new Date(date.getUTCFullYear(),
-                    date.getUTCMonth(),
-                    date.getUTCDate(),
-                    date.getUTCHours(),
-                    date.getUTCMinutes(),
-                    date.getUTCSeconds());
-
                 OnlineBookingService.getSite().then(function(rs){
                     $scope.siteList = rs;
                 })

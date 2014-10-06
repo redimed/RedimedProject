@@ -3,10 +3,10 @@
  */
 module.exports = function(sequelize,DataTypes){
     var Function = sequelize.define('Function',{
-        function_id: DataTypes.INTEGER(11),
+        function_id: {type:DataTypes.INTEGER(11), primaryKey:true},
         decription: DataTypes.STRING(60),
         definition: DataTypes.STRING(200),
-        type: DataTypes.STRING(1)
+        type: DataTypes.STRING(50)
     },{
         tableName : 'redi_functions',
         timestamps: false
