@@ -166,8 +166,6 @@
  );
 
 
-
-
  module.exports = function(sequelize,DataTypes){
    var SysForms = sequelize.define('SysForms',{
        FORM_ID : {type:DataTypes.INTEGER(11), primaryKey:true}
@@ -177,9 +175,14 @@
        ,DETAIL_SEQ : DataTypes.STRING(100)
        ,FORM_DESCRIPTION : DataTypes.STRING(250)
        ,FORM_TYPE : DataTypes.STRING(20)
+       ,LIST_FORM_TYPE : DataTypes.STRING(20)
+       ,NEW_EDIT_FORM_TYPE : DataTypes.STRING(20)
+       ,FORM_PROPERTIES : DataTypes.STRING(2000)
    },{
        tableName: 'sys_forms',
-       timestamps: false,
+       timestamps: true,
+       createdAt : false,
+       updatedAt: false,
        classMethods:{
            getPK:function(callback){
                sequelize.query("SELECT get_pk_value('sys_forms') AS PK").success(function(data){
@@ -187,13 +190,18 @@
                })
            },
            getColumns:function(tableName,callback){
-               sequelize.query("select * from sys_form_details where form_id = (select max(form_id) from sys_forms where upper(master_table_name) = '"+tableName+"') order by ordinal_position").success(function(data){
+               sequelize.query("select f.MASTER_TABLE_NAME,f.MASTER_SEQ,f.DETAIL_TABLE_NAME,f.DETAIL_SEQ,f.FORM_DESCRIPTION,f.FORM_TYPE,f.LIST_FORM_TYPE,f.NEW_EDIT_FORM_TYPE,f.FORM_PROPERTIES, d.* from sys_form_details d, sys_forms f where d.form_id = f.form_id and f.MASTER_TABLE_NAME = d.Table_name and d.form_id = (select max(form_id) from sys_forms where upper(master_table_name) = '"+tableName+"') order by ordinal_position").success(function(data){
+                   callback(data);
+               })
+           },
+           getDetailColumns:function(tableName,callback){
+               sequelize.query("select f.MASTER_TABLE_NAME,f.MASTER_SEQ,f.DETAIL_TABLE_NAME,f.DETAIL_SEQ,f.FORM_DESCRIPTION,f.FORM_TYPE,f.LIST_FORM_TYPE,f.NEW_EDIT_FORM_TYPE,f.FORM_PROPERTIES, d.* from sys_form_details d, sys_forms f where d.form_id = f.form_id and f.DETAIL_TABLE_NAME = d.Table_name and d.form_id = (select max(form_id) from sys_forms where upper(master_table_name) = '"+tableName+"') order by ordinal_position").success(function(data){
                    callback(data);
                })
            }
        }
    });
-   return SysForms;
+    return SysForms;
 };
 
 
@@ -342,7 +350,7 @@ function masterDetail(tableName,becomeModel,detailTableName,detailBecomeModel) {
 
             createModelFile(fs.createWriteStream('../models/'+becomeModel+'.js'),becomeModel,tableName,modelBody,creationDate,lastUpdateDate);
 
-            createControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,insertUpdateStatement,insertUpdateStatement2);
+            createControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,"",insertUpdateStatement,insertUpdateStatement2);
 
         })//db.SYSCOLUMNS.findAll
 
@@ -407,7 +415,7 @@ function masterDetail(tableName,becomeModel,detailTableName,detailBecomeModel) {
 
             createModelFile(fs.createWriteStream('../models/'+detailBecomeModel+'.js'),detailBecomeModel,detailTableName,modelBodyD,creationDateD,lastUpdateDateD);
 
-            createControllerFile(fs.createWriteStream('../controllers/'+detailBecomeModel+'Controller.js'),detailBecomeModel,primaryKeyColumnNameD,insertUpdateStatementD,insertUpdateStatement2D);
+            createControllerFile(fs.createWriteStream('../controllers/'+detailBecomeModel+'Controller.js'),detailBecomeModel,primaryKeyColumnNameD,primaryKeyColumnName,insertUpdateStatementD,insertUpdateStatement2D);
 
         })//db.SYSCOLUMNS.findAll
 
@@ -500,7 +508,7 @@ function main(tableName,becomeModel) {
 
             createModelFile(fs.createWriteStream('../models/'+becomeModel+'.js'),becomeModel,tableName,modelBody,creationDate,lastUpdateDate);
 
-            createControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,insertUpdateStatement,insertUpdateStatement2);
+            createControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,"",insertUpdateStatement,insertUpdateStatement2);
 
         })//db.SYSCOLUMNS.findAll
 
@@ -636,7 +644,7 @@ function insertFormDetail(id,tableName,recordOfTable){
 }
 
 
-function createControllerFile(wstreamController,becomeModel,primaryKeyColumnName,insertUpdateStatement,insertUpdateStatement2){
+function createControllerFile(wstreamController,becomeModel,primaryKeyColumnName,primaryKeyColumnNameM,insertUpdateStatement,insertUpdateStatement2){
     ///Creating Controller file for Model
     //var wstreamController = fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'); // create the model file
     wstreamController.write(
@@ -658,7 +666,7 @@ function createControllerFile(wstreamController,becomeModel,primaryKeyColumnName
             "    findById: function(req,res){\n" +
             "        var id = req.body.id;\n" +
             "        var rs = [];\n" +
-            "        db."+becomeModel+".findAll({where:{"+primaryKeyColumnName+":id}},{raw: true})\n" +
+            "        db."+becomeModel+".findAll({where:{"+primaryKeyColumnName+":id},order:'"+primaryKeyColumnName+"'},{raw: true})\n" +
             "            .success(function(data){\n" +
             "                res.json(data);\n" +
             "            })\n" +
@@ -668,6 +676,21 @@ function createControllerFile(wstreamController,becomeModel,primaryKeyColumnName
             "    },\n\n"
     );
 
+    if(primaryKeyColumnNameM.length > 1){
+        wstreamController.write(
+                "    findByMasterId: function(req,res){\n" +
+                "        var id = req.body.id;\n" +
+                "        var rs = [];\n" +
+                "        db."+becomeModel+".findAll({where:{"+primaryKeyColumnNameM+":id},order:'"+primaryKeyColumnName+"'},{raw: true})\n" +
+                "            .success(function(data){\n" +
+                "                res.json(data);\n" +
+                "            })\n" +
+                "            .error(function(err){\n" +
+                "                res.json({status:'fail'});\n" +
+                "            })\n" +
+                "    },\n\n"
+        );
+    }
 
     if(primaryKeyColumnName.length > 1){
         wstreamController.write(

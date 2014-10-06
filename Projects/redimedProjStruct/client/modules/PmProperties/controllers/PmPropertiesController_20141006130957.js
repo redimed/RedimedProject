@@ -1,11 +1,11 @@
 /**
  * Created by meditech on 23/09/2014.
  */
-angular.module('app.loggedIn.SysForms2.controller',[])
-.controller('SysForms2Controller',function($scope,$state,$filter,ngTableParams,SysForms2Service,$http,toastr){
+angular.module('app.loggedIn.PmProperties.controller',[])
+.controller('PmPropertiesController',function($scope,$state,$filter,ngTableParams,PmPropertiesService,$http,toastr){
     $scope.data=[];
        
-    SysForms2Service.getList().then(function(response){
+    PmPropertiesService.getList().then(function(response){
         $scope.data=response;
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
@@ -28,9 +28,9 @@ angular.module('app.loggedIn.SysForms2.controller',[])
     });
 
     $scope.addNew = function(){
-        $state.go('loggedIn.NewEditSysForms2');
+        $state.go('loggedIn.NewEditPmProperties');
     }
 
     $scope.editForm = function(f){
-        $state.go('loggedIn.EditSysForms2',{id: f.FORM_ID});
+        $state.go('loggedIn.EditPmProperties',{id: f.property_id});
     }})

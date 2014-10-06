@@ -21,7 +21,7 @@
               }) 
 
                .state('loggedIn.EditPmProperties',{
-                   url:'/EditPmProperties/:id',
+                   url:'/Edit/:id',
                    templateUrl: 'modules/PmProperties/views/NewEditPmProperties.html',
                    controller: 'NewEditPmPropertiesController'
                })       });

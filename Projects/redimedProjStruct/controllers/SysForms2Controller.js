@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:05 10:44:57.
+        * Created by meditech on 2014:10:06 14:40:56.
 */
 var db = require('../models');
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     findById: function(req,res){
         var id = req.body.id;
         var rs = [];
-        db.SysForms2.findAll({where:{FORM_ID:id}},{raw: true})
+        db.SysForms2.findAll({where:{FORM_ID:id},order:'FORM_ID'},{raw: true})
             .success(function(data){
                 res.json(data);
             })

@@ -1,32 +1,31 @@
 angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
-.controller('NewEditPmPropertiesController',function($scope,$state,$stateParams,$filter,ngTableParams,PmPropertiesService){
+.controller('NewEditPmPropertiesController',function($scope,$state,$stateParams,PmPropertiesService){
+    $scope.backToList = function(){
+        $state.go('loggedIn.PmProperties');
+    }
 
     $scope.info = {
-             Suburb : ''
+             property_id : ''
+             ,Address : ''
+             ,Suburb : ''
              ,Zipcode : ''
              ,State : ''
              ,Country : ''
              ,Price : ''
-             ,purchase_date : ''
              ,note : ''
+             ,purchase_date : ''
              ,Cancellation_reason : ''
              ,isCancellation : ''
              ,isInsurance : ''
              ,Avatar_Pic_path : ''
              ,Created_by : ''
              ,Creation_date : ''
-             ,Last_update_date : ''
              ,Last_updated_by : ''
-             ,property_id : ''
-             ,Address : ''
+             ,Last_update_date : ''
         
     };
 
     var id = $stateParams.id;
-
-    $scope.backToList = function(){
-        $state.go('loggedIn.PmProperties');
-    }
 
     if(typeof id != 'undefined') {
        PmPropertiesService.getDataById(id).then(function(data){

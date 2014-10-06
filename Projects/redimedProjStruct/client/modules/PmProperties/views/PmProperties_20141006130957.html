@@ -36,6 +36,14 @@
         <div>
             <table ng-table="tableParams"  class="table table-striped table-hover table-bordered ng-table-responsive">
                 <tr ng-repeat="f in $data track by $index | orderBy:'property_id'"  ng-click='editForm(f)' >
+                    <td data-title="'Property'"  >
+                        <span ng-if='!f.$edit'>{{f.property_id}}</span>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.property_id' /></div>
+                    </td>
+                    <td data-title="'Address'"  >
+                        <span ng-if='!f.$edit'>{{f.Address}}</span>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Address' /></div>
+                    </td>
                     <td data-title="'Suburb'"  >
                         <span ng-if='!f.$edit'>{{f.Suburb}}</span>
                         <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Suburb' /></div>
@@ -56,13 +64,13 @@
                         <span ng-if='!f.$edit'>{{f.Price}}</span>
                         <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Price' /></div>
                     </td>
-                    <td data-title="'Purchase date'"  >
-                        <span ng-if='!f.$edit'>{{f.purchase_date}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'date'  ng-model='f.purchase_date' /></div>
-                    </td>
                     <td data-title="'Note'"  >
                         <span ng-if='!f.$edit'>{{f.note}}</span>
                         <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.note' /></div>
+                    </td>
+                    <td data-title="'Purchase date'"  >
+                        <span ng-if='!f.$edit'>{{f.purchase_date}}</span>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'date'  ng-model='f.purchase_date' /></div>
                     </td>
                     <td data-title="'Cancellation reason'"  >
                         <span ng-if='!f.$edit'>{{f.Cancellation_reason}}</span>
@@ -88,21 +96,13 @@
                         <span ng-if='!f.$edit'>{{f.Creation_date}}</span>
                         <div ng-if='f.$edit'><input class='form-control'  type = 'date'  ng-model='f.Creation_date' /></div>
                     </td>
-                    <td data-title="'Last update date'"  >
-                        <span ng-if='!f.$edit'>{{f.Last_update_date}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'date'  ng-model='f.Last_update_date' /></div>
-                    </td>
                     <td data-title="'Last updated by'"  >
                         <span ng-if='!f.$edit'>{{f.Last_updated_by}}</span>
                         <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Last_updated_by' /></div>
                     </td>
-                    <td data-title="'Property'"  >
-                        <span ng-if='!f.$edit'>{{f.property_id}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.property_id' /></div>
-                    </td>
-                    <td data-title="'Address'"  >
-                        <span ng-if='!f.$edit'>{{f.Address}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.Address' /></div>
+                    <td data-title="'Last update date'"  >
+                        <span ng-if='!f.$edit'>{{f.Last_update_date}}</span>
+                        <div ng-if='f.$edit'><input class='form-control'  type = 'date'  ng-model='f.Last_update_date' /></div>
                     </td>
                 </tr>
 

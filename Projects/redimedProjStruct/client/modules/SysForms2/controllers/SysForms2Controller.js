@@ -33,4 +33,5 @@ angular.module('app.loggedIn.SysForms2.controller',[])
 
     $scope.editForm = function(f){
         $state.go('loggedIn.EditSysForms2',{id: f.FORM_ID});
-    }})
+    }
+})

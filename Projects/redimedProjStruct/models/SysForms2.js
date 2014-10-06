@@ -1,5 +1,5 @@
 /** 
-* Created by meditech on 2014:10:05 10:44:57.
+* Created by meditech on 2014:10:06 14:40:56.
 */
 module.exports = function(sequelize,DataTypes){
    var SysForms2 = sequelize.define('SysForms2',{
@@ -14,7 +14,7 @@ module.exports = function(sequelize,DataTypes){
        ,NEW_EDIT_FORM_TYPE : DataTypes.STRING(20) 
        ,FORM_PROPERTIES : DataTypes.STRING(2000) 
    },{ 
-       tableName: 'sys_forms',
+       tableName: 'sys_forms2',
        timestamps: true,
        createdAt : false,
        updatedAt: false,

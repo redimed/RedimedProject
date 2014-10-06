@@ -1,8 +1,25 @@
 angular.module('app.loggedIn.SysForms2.NewEdit.controller',[])
-.controller('NewEditSysForms2Controller',function($scope,$state,$stateParams,SysForms2Service){
+.controller('NewEditSysForms2Controller',function($scope,$state,$stateParams,$filter,ngTableParams,SysForms2Service){
+
+    $scope.info = {
+             FORM_ID : ''
+             ,MASTER_TABLE_NAME : ''
+             ,MASTER_SEQ : ''
+             ,DETAIL_TABLE_NAME : ''
+             ,DETAIL_SEQ : ''
+             ,FORM_DESCRIPTION : ''
+             ,FORM_TYPE : ''
+             ,LIST_FORM_TYPE : ''
+             ,NEW_EDIT_FORM_TYPE : ''
+             ,FORM_PROPERTIES : ''
+        
+    };
+
+    var id = $stateParams.id;
+
     $scope.data=[];
        
-    SysForms2Service.getDetailList().then(function(response){
+    SysForms2Service.getDataByMasterIdD(id).then(function(response){
         $scope.data=response;
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
@@ -24,27 +41,14 @@ angular.module('app.loggedIn.SysForms2.NewEdit.controller',[])
         });
     });
 
-angular.module('app.loggedIn.SysForms2.NewEdit.controller',[])
-.controller('NewEditSysForms2Controller',function($scope,$state,$stateParams,SysForms2Service){
+    $scope.editDetailForm = function(f){
+        alert('I am here');
+        $state.go('loggedIn.EditDetailSysForms2',{id: f.FORM_DETAIL_ID,headerId:id});
+    }
+
     $scope.backToList = function(){
         $state.go('loggedIn.SysForms2');
     }
-
-    $scope.info = {
-             FORM_ID : ''
-             ,MASTER_TABLE_NAME : ''
-             ,MASTER_SEQ : ''
-             ,DETAIL_TABLE_NAME : ''
-             ,DETAIL_SEQ : ''
-             ,FORM_DESCRIPTION : ''
-             ,FORM_TYPE : ''
-             ,LIST_FORM_TYPE : ''
-             ,NEW_EDIT_FORM_TYPE : ''
-             ,FORM_PROPERTIES : ''
-        
-    };
-
-    var id = $stateParams.id;
 
     if(typeof id != 'undefined') {
        SysForms2Service.getDataById(id).then(function(data){

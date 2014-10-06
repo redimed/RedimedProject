@@ -4,6 +4,7 @@
    angular.module('app.loggedIn.SysForms2',[ 
        'app.loggedIn.SysForms2.controller', 
        'app.loggedIn.SysForms2.NewEdit.controller', 
+       'app.loggedIn.SysForms2.NewEditDetail.controller', 
        'app.loggedIn.SysForms2.services' 
    ]) 
        .config(function($stateProvider){ 
@@ -24,4 +25,12 @@
                    url:'/EditSysForms2/:id',
                    templateUrl: 'modules/SysForms2/views/NewEditSysForms2.html',
                    controller: 'NewEditSysForms2Controller'
-               })       });
+               })
+
+               .state('loggedIn.EditDetailSysForms2',{
+                   url:'/EditDetailSysForms2/:id',
+                   templateUrl: 'modules/SysForms2/views/NewEditDetailSysForms2.html',
+                   controller: 'NewEditDetailSysForms2Controller'
+               })
+
+       });

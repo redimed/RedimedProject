@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="icon-anchor font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">PmProperties</span>
+            <span class="caption-subject font-green-sharp bold uppercase">SysForms2</span>
 
         </div>
 
@@ -35,138 +35,154 @@
     <div class="portlet-body">
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Suburb</label>
+                <label class="pull-right">Form detail</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Suburb" />
+                <input  type = 'text'  class="form-control" ng-model="info.FORM_DETAIL_ID" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Zipcode</label>
+                <label class="pull-right">Table name</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Zipcode" />
+                <input  type = 'text'  class="form-control" ng-model="info.TABLE_NAME" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">State</label>
+                <label class="pull-right">Form</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.State" />
+                <input  type = 'text'  class="form-control" ng-model="info.FORM_ID" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Country</label>
+                <label class="pull-right">Ordinal position</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Country" />
+                <input  type = 'text'  class="form-control" ng-model="info.ORDINAL_POSITION" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Price</label>
+                <label class="pull-right">Column name</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Price" />
+                <input  type = 'text'  class="form-control" ng-model="info.COLUMN_NAME" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Purchase date</label>
+                <label class="pull-right">Is nullable</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'date'  class="form-control" ng-model="info.purchase_date" />
+                <input  type = 'text'  class="form-control" ng-model="info.IS_NULLABLE" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Note</label>
+                <label class="pull-right">Data type</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.note" />
+                <input  type = 'text'  class="form-control" ng-model="info.DATA_TYPE" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Cancellation reason</label>
+                <label class="pull-right">Character maximum length</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Cancellation_reason" />
+                <input  type = 'text'  class="form-control" ng-model="info.CHARACTER_MAXIMUM_LENGTH" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Is cancellation</label>
+                <label class="pull-right">Column key</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox' ng-true-value='1' ng-false-value='0'  class="form-control" ng-model="info.isCancellation" />
+                <input  type = 'text'  class="form-control" ng-model="info.COLUMN_KEY" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Is insurance</label>
+                <label class="pull-right">Display name</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox' ng-true-value='1' ng-false-value='0'  class="form-control" ng-model="info.isInsurance" />
+                <input  type = 'text'  class="form-control" ng-model="info.DISPLAY_NAME" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Avatar pic path</label>
+                <label class="pull-right">Isdisplay on list</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Avatar_Pic_path" />
+                <input  type = 'text'  class="form-control" ng-model="info.ISDISPLAY_ON_LIST" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Created by</label>
+                <label class="pull-right">Isdisplay on form</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Created_by" />
+                <input  type = 'text'  class="form-control" ng-model="info.ISDISPLAY_ON_FORM" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Creation date</label>
+                <label class="pull-right">Isnew</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'date'  class="form-control" ng-model="info.Creation_date" />
+                <input  type = 'text'  class="form-control" ng-model="info.ISNEW" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Last update date</label>
+                <label class="pull-right">Isupdate</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'date'  class="form-control" ng-model="info.Last_update_date" />
+                <input  type = 'text'  class="form-control" ng-model="info.ISUPDATE" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Last updated by</label>
+                <label class="pull-right">Isrequire</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Last_updated_by" />
+                <input  type = 'text'  class="form-control" ng-model="info.ISREQUIRE" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Property</label>
+                <label class="pull-right">Input type</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.property_id" />
+                <input  type = 'text'  class="form-control" ng-model="info.INPUT_TYPE" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Address</label>
+                <label class="pull-right">Islist link</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Address" />
+                <input  type = 'text'  class="form-control" ng-model="info.ISLIST_LINK" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2" style="margin-top:5px;" >
+                <label class="pull-right">Lov sql</label>
+            </div>
+            <div class="col-md-6">
+                <input  type = 'text'  class="form-control" ng-model="info.LOV_SQL" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2" style="margin-top:5px;" >
+                <label class="pull-right">Attribute properties</label>
+            </div>
+            <div class="col-md-6">
+                <input  type = 'text'  class="form-control" ng-model="info.ATTRIBUTE_PROPERTIES" />
             </div>
         </div>
     </div>
