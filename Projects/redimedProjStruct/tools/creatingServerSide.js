@@ -606,7 +606,7 @@ function insertFormDetail(id,tableName,recordOfTable){
         //console.log("ID = " + detailId  + " sysFormDetail".green + "  " + recordOfTable.COLUMN_NAME.rainbow);
         //console.log(recordOfTable);
         var inputType = " type = 'text' ";
-        if(recordOfTable.COLUMN_NAME.substring(0,2) === 'is')
+        if(recordOfTable.COLUMN_NAME.substring(0,2).toUpperCase() === 'IS')
         {
             inputType = " type = 'checkbox' ng-true-value='1' ng-false-value='0' ";
         }
