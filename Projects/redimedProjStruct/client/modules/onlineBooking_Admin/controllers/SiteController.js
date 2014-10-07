@@ -72,6 +72,7 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
 
         $scope.showSiteCalendar = function(b){
             $scope.selectedId = b.id;
+            $scope.selectedCal = null;
             $scope.arr = [];
             $scope.rs = [];
             OnlineBookingAdminService.getCalendarBySiteId(b.id).then(function(data){

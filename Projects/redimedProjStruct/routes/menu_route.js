@@ -8,3 +8,4 @@ app.post('/api/menu/edit',MenuController.edit);
 app.post('/api/menu/insert',MenuController.insert);
 app.post('/api/users/home',MenuController.loadSideMenu);
 app.post('/api/menu/id',MenuController.findById);
+app.get('/api/menu/listRoot',MenuController.listRoot);

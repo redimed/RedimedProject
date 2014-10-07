@@ -4,6 +4,8 @@ angular.module("app.security.login.controller",[
 .controller("SecurityLoginController", function($scope, $state, $cookieStore, UserService, SecurityService, toastr){
     $scope.showClickedValidation = false;
 
+
+
     // SUBMIT LOGIN
     $scope.login = function(){
         $scope.showClickedValidation = true;
@@ -17,7 +19,17 @@ angular.module("app.security.login.controller",[
                         $cookieStore.put("userInfo", response.userInfo);
                     if(typeof response.companyInfo !== 'undefined')
                         $cookieStore.put("companyInfo", response.companyInfo);
-                    $state.go("loggedIn.home");
+
+                    if(response.userInfo['function_id'] != null){
+                        UserService.getFunction(response.userInfo['function_id']).then(function(data){
+                                $state.go(data.definition);
+
+                        })
+                    }
+                    else
+                    {
+                        $state.go('loggedIn.home');
+                    }
                 });
             }, function(error){
                 toastr.error("Wrong Username Or Password!", "Error");

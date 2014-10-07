@@ -136,5 +136,30 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return submit.post({info:info});
         }
 
+        adminBooking.getUserMenu = function(id){
+            var list = api.all('users/menu');
+            return list.post({id:id});
+        }
+
+        adminBooking.getMenuList = function(){
+            var list = api.one('menu/listRoot');
+            return list.get();
+        }
+
+        adminBooking.getUserMenuDetails = function(id){
+            var detail = api.all('users/menu/details');
+            return detail.post({id:id});
+        }
+
+        adminBooking.editUserMenu = function(info){
+            var edit = api.all('users/menu/edit');
+            return edit.post({info:info});
+        }
+
+        adminBooking.insertUserMenu = function(info){
+            var insert = api.all('users/menu/insert');
+            return insert.post({info:info});
+        }
+
         return adminBooking;
 })

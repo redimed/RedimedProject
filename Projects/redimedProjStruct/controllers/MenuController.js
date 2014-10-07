@@ -5,11 +5,11 @@ var db = require('../models');
 module.exports = {
     loadSideMenu: function(req,res)
     {
-        db.sequelize.query("SELECT m.Menu_Id,m.Description,IFNULL(f.Definition,' ') " +
-            "AS Definition,IFNULL(m.Parent_Id,-1) AS" +
-            " Parent_Id,f.Type,m.Seq,m.Is_Mutiple_Instance" +
-            " FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id WHERE" +
-            " m.isEnable = 1 ORDER BY m.Menu_Id")
+        var id = req.body.id;
+        db.sequelize.query("SELECT m.Menu_Id,m.Description,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.Seq,m.Is_Mutiple_Instance " +
+                            "FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id" +
+                            " WHERE m.isEnable = 1 AND m.Menu_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1) " +
+                            "OR m.Parent_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1) ORDER BY m.Menu_Id",null,{raw:true},[id,id])
             .success(function(data){
                 res.json(data);
             })
@@ -71,6 +71,15 @@ module.exports = {
         var id = req.body.id;
 
         db.Menu.find({where:{menu_id:id}},{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:"fail"});
+            })
+    },
+    listRoot: function(req,res){
+        db.Menu.findAll({where:{parent_id:null}},{raw:true})
             .success(function(data){
                 res.json(data);
             })

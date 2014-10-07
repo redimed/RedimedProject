@@ -31,11 +31,12 @@ module.exports = function(sequelize, DataTypes) {
       isReceiveEmailAfterHour : DataTypes.INTEGER(11) ,
       function_id : DataTypes.INTEGER(11) ,
       function_taskFlow : DataTypes.STRING(100) ,
-      employee_id : DataTypes.INTEGER(11)
+      employee_id : DataTypes.INTEGER(11),
+      img: DataTypes.TEXT
 }, {
         tableName: 'users', // đặt tên bảng
         createdAt: 'Creation_date',
-        updatedAt: 'Last_updated_date'
+        updatedAt: 'Last_update_date'
     });
 
     return User;

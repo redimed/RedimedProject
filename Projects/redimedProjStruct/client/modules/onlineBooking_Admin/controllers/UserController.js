@@ -3,6 +3,19 @@
  */
 angular.module('app.loggedIn.booking.admin.user.controller',[])
 .controller('AdminUserController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingAdminService,toastr){
+        $scope.selectedId = null;
+        $scope.selectedRow = null;
+        $scope.arr = [];
+
+        $scope.info = {
+            id: null,
+            user_id: null,
+            user_name : null,
+            menu_id: null,
+            isEnable: null
+        }
+
+
         OnlineBookingAdminService.getListUser().then(function(data){
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
@@ -22,6 +35,25 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
                     $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                 }
             });
+
+            $scope.tableParams2 = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: $scope.arr.length, // length of data
+                getData: function($defer, params) {
+                    var filteredData = params.filter() ?
+                        $filter('filter')($scope.arr, params.filter()) :
+                        $scope.arr;
+
+                    var orderedData = params.sorting() ?
+                        $filter('orderBy')(filteredData, params.orderBy()) :
+                        $scope.arr;
+
+                    params.total(orderedData.length);
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
         })
 
         $scope.addNewUser = function(){
@@ -31,6 +63,117 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         $scope.editUser = function(b)
         {
             $state.go('loggedIn.admin_user_edit',{id: b.id});
+        }
+
+        $scope.showMenu = function(b){
+            $scope.selectedId = b.id;
+            $scope.selectedRow = null;
+            $scope.arr = [];
+            $scope.rs = [];
+            OnlineBookingAdminService.getUserMenu(b.id).then(function(data){
+                $scope.rs = data;
+            })
+
+            $scope.$watch('rs',function(rs){
+                $scope.arr = rs;
+                $scope.tableParams2.reload();
+            })
+
+        }
+
+        $scope.showMenuDetails = function(b){
+            $scope.selectedRow = b.id;
+
+
+            OnlineBookingAdminService.getMenuList().then(function(data){
+                $scope.menuList = data;
+            })
+
+            OnlineBookingAdminService.getUserMenuDetails(b.id).then(function(data){
+
+                $scope.info.id = data[0].id;
+                $scope.info.user_id = data[0].user_id;
+                $scope.info.user_name = data[0].user_name;
+                $scope.info.menu_id = data[0].menu_id;
+                $scope.info.isEnable = data[0].isEnable == 1 ? '1':'0';
+            })
+
+        }
+
+        $scope.submitUserMenu = function(menuForm){
+            $scope.showClickedValidation = true;
+            if(menuForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else {
+
+                    OnlineBookingAdminService.editUserMenu($scope.info).then(function (data) {
+                        if(data.status === 'success') {
+                            toastr.success("Edit Successfully!", "Success");
+                            OnlineBookingAdminService.getUserMenu($scope.info.id).then(function (data) {
+                                $scope.rs = data;
+                            })
+
+
+                            $scope.$watch('rs', function (rs) {
+                                $scope.arr = rs;
+                                $scope.tableParams2.reload();
+                            })
+                        }
+                        else{
+                            toastr.success("Edit Failed!", "Error");
+                        }
+                    })
+            }
+        }
+
+        $scope.addNewUserMenu = function(){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/onlineBooking_Admin/views/newSubMenu.html',
+                controller:'AddNewUserMenuController',
+                size:'md',
+                resolve:{
+                    userId:function(){
+                        return $scope.selectedId;
+                    }
+                }
+            })
+        }
+})
+
+.controller('AddNewUserMenuController',function($scope,$state,$modal,$modalInstance,$filter,ngTableParams,OnlineBookingAdminService,userId,toastr){
+        $scope.info = {
+            user_id: userId,
+            menu_id: null,
+            isEnable: null
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        };
+
+        OnlineBookingAdminService.getMenuList().then(function(data){
+            $scope.menuList = data;
+        })
+
+        $scope.addNew = function(menuForm){
+            $scope.showClickedValidation = true;
+            if(menuForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else {
+                OnlineBookingAdminService.insertUserMenu($scope.info).then(function (data) {
+                    if(data.status === 'success') {
+                        toastr.success("Insert Successfully!", "Success");
+
+                        $modalInstance.dismiss('cancel');
+
+                        $state.go('loggedIn.admin_user',null,{reload:true});
+                    }
+                    else{
+                        toastr.success("Insert Failed!", "Error");
+                    }
+                })
+
+            }
         }
 })
 

@@ -30,6 +30,7 @@
     "angular-loading-bar": "~0.6.0",
     "angular-file-upload": "~1.1.1",
     "snap": "*",
-    "angular-snap": "~1.6.0"
+    "angular-snap": "~1.6.0",
+    "jasny-bootstrap": "~3.1.3"
   }
 }

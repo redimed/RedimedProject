@@ -1,3 +1,8 @@
+<style>
+    .selected {
+        background-color: #ffca87;
+    }
+</style>
 <div class="caption">
     <div class="row">
         <div class="col-md-12">
@@ -23,16 +28,19 @@
     </div>
     <div class="portlet-body form">
         <div class="table-scrollable">
-            <table ng-table="tableParams"  class="table table-bordered table-responsive">
-                <tr style="white-space: nowrap" ng-repeat="b in $data" >
-                    <td data-title="'Username'" >
+            <table ng-table="tableParams" show-filter="true"  class="table table-bordered table-responsive">
+                <tr style="white-space: nowrap" ng-repeat="b in $data" ng-click="showMenu(b)" ng-class="{selected : b.id == selectedId}">
+                    <td data-title="'Username'" filter="{ 'user_name': 'text' }" >
                         <a href="javascript:;" ng-click="editUser(b)">{{b.user_name}}</a>
                     </td>
-                    <td data-title="'Booking Person'" >
+                    <td data-title="'Booking Person'" filter="{ 'Booking_Person': 'text' }">
                         <label>{{b.Booking_Person}}</label>
                     </td>
                     <td data-title="'User Type'"  >
                         <label>{{b.user_type}}</label>
+                    </td>
+                    <td data-title="'Function'">
+                        <label>{{b.FunctionName}}</label>
                     </td>
                     <td data-title="'Company'" >
                         <label>{{b.Company_name}}</label>
@@ -107,5 +115,95 @@
             </table>
         </div>
 
+    </div>
+</div>
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon icon-users font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Menus</span>
+        </div>
+        <div>
+            <div class="btn-group pull-right">
+                <a ng-click="addNewUserMenu()" ng-class="{disabled : selectedId == null}" href="javascript:;" class="btn green" >
+                    Add New &nbsp;&nbsp;<i class="fa fa-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form name="menuForm" ng-submit="submitUserMenu(menuForm)" method="post" novalidate>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-1">
+                        <label>Username </label>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="bold">{{info.user_name}}</label>
+                    </div>
+                </div>
+                <br/>
+                <div class="form-group" ng-class="{'has-error':showClickedValidation && menuForm.menu.$invalid}">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-1">
+                            <label>Menu <span class="required">
+                                                    * </span></label>
+                        </div>
+                        <div class="col-md-5">
+                            <select name="menu"  ng-model="info.menu_id" ng-options="menu.menu_id as menu.description for menu in menuList" class="form-control" required>
+                                <option value="">--Select Menu--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="showClickedValidation && menuForm.menu.$invalid">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <span for="menu" class="help-block">Menu is required.</span>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-1">
+                        <label>Enable </label>
+                    </div>
+                    <div class="col-md-5">
+                        <input ng-class="{disabled : selectedRow == null}"   type="checkbox" ng-model="info.isEnable" ng-true-value="1" ng-false-value="0" />
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-5">
+                        <button ng-class="{disabled : selectedRow == null}" type="submit" class="btn blue">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="table-scrollable">
+            <table ng-table="tableParams2"  class="table table-bordered table-responsive">
+                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showMenuDetails(b)" ng-class="{selected : b.id == selectedRow}">
+                    <td data-title="'Username'" >
+                        <label>{{b.user_name}}</label>
+                    </td>
+                    <td data-title="'Menu'" >
+                        <label>{{b.MenuTitle}}</label>
+                    </td>
+                    <td data-title="'User Type'"  >
+                        <label>{{b.user_type}}</label>
+                    </td>
+                    <td data-title="'Enable'"  >
+                        <input ng-if="b.isEnable == 1" type="checkbox" checked disabled />
+                        <input ng-if="b.isEnable == 0 || b.isEnable == null" type="checkbox" disabled />
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

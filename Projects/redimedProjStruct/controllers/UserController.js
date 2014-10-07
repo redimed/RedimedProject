@@ -6,7 +6,8 @@ var db = require('../models');
 
 module.exports = {
     list: function(req,res){
-        db.sequelize.query('SELECT u.*, c.Company_name, h.Employee_Code, h.FirstName AS EmployeeFName, h.LastName AS EmployeeLName FROM users u LEFT JOIN companies c ON u.company_id = c.id LEFT JOIN hr_employee h ON u.employee_id = h.Employee_ID',null,{raw:true})
+        db.sequelize.query('SELECT u.*, c.Company_name, h.Employee_Code, h.FirstName AS EmployeeFName, h.LastName AS EmployeeLName, f.decription AS FunctionName ' +
+                            'FROM users u LEFT JOIN companies c ON u.company_id = c.id LEFT JOIN hr_employee h ON u.employee_id = h.Employee_ID LEFT JOIN redi_functions f ON u.function_id = f.function_id',null,{raw:true})
             .success(function(data){
 
                 res.json(data);
@@ -67,6 +68,7 @@ module.exports = {
             })
             .error(function(err){
                 res.json({status:'error'});
+                console.log(err);
             })
     },
     editUser: function(req,res){
@@ -106,6 +108,7 @@ module.exports = {
             })
             .error(function(err){
                 res.json({status:'error'});
+                console.log(err);
             })
     },
     changePass: function(req,res){
@@ -152,6 +155,88 @@ module.exports = {
         db.sequelize.query('SELECT * FROM hr_employee',null,{raw:true})
             .success(function(data){
                 res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    userMenu: function(req,res){
+        var id = req.body.id;
+        db.sequelize.query('SELECT r.*,m.description AS MenuTitle, u.user_name, u.user_type ' +
+                            'FROM redi_user_menus r LEFT JOIN redi_menus m ON r.menu_id = m.menu_id LEFT JOIN users u ON r.user_id = u.id WHERE r.user_id = ?',null,{raw:true},[id])
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    userMenuDetails: function(req,res){
+        var id = req.body.id;
+        db.sequelize.query('SELECT r.*, u.user_name FROM redi_user_menus r LEFT JOIN users u ON r.user_id = u.id WHERE r.id = ?',null,{raw:true},[id])
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    editMenuInfo: function(req,res){
+        var info = req.body.info;
+
+        db.UserMenu.update({
+            menu_id: info.menu_id,
+            isEnable: info.isEnable == '1' ? 1 : 0,
+            user_id: info.user_id
+        },{id:info.id})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+
+    },
+    insertNewUserMenu: function(req,res){
+        var info  = req.body.info;
+
+        db.UserMenu.create({
+            menu_id: info.menu_id,
+            user_id: info.user_id,
+            isEnable: info.isEnable == '1' ? 1 : 0
+        })
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    editProfile: function(req,res){
+        var info = req.body.info;
+
+        db.User.update({
+            Booking_Person: info.Booking_Person,
+            Contact_email: info.Contact_email,
+            Contact_number: info.Contact_number,
+            company_id: info.company_id,
+            img: info.img,
+            invoiceemail: info.invoiceemail,
+            result_email: info.result_email
+        },{id:info.id})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    getUserImg: function(req,res){
+        var id = req.body.id;
+
+        db.User.find({where:{id:id}},{raw:true})
+            .success(function(data){
+                res.json(data.img);
             })
             .error(function(err){
                 res.json({status:'error'});
