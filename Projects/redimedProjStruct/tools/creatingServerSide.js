@@ -223,46 +223,46 @@ var rl = readline.createInterface({
     output: process.stdout
 });
 
-rl.question("Type of form ( S:Single| M:Master Details) ? ", function(answer) {
-    console.log(answer);
-    if(answer === 'S'){
-        rl.question("Please enter the table name in Sakila schema ? ", function(answer) {
-            var becomeModel = _s.classify(answer);//change name from table name to Javascript name
+rl.question("Do you want to overwrite the source code (Y|N) ? ", function(overwrite) {
+    rl.question("Type of form ( S:Single| M:Master Details) ? ", function (answer) {
+        console.log(answer);
+        if (answer === 'S') {
+            rl.question("Please enter the table name in Sakila schema ? ", function (answer) {
+                var becomeModel = _s.classify(answer);//change name from table name to Javascript name
 
-            fs.exists('../models/'+becomeModel+'.js', function(exists) {
-                if (exists) {
-                    console.log('../models/'+becomeModel+'.js  change to ../models/'+becomeModel+"_"+getDateTime()+'.js');
-                    fs.rename('../models/'+becomeModel+'.js','../models/'+becomeModel+"_"+getDateTime()+'.js');
-                    fs.rename('../controllers/'+becomeModel+'Controller.js','../controllers/'+becomeModel+"Controller_"+getDateTime()+'.js');
-                    main(answer,becomeModel);
-                }else
-                {
-                    main(answer,becomeModel);
-                }
-            });
-            rl.close();
-        });
-    }else if(answer === 'M'){
-        rl.question("Please enter the master table name in Sakila schema ? ", function(masterTableName) {
-            var becomeModelMasterTableName = _s.classify(masterTableName);//change name from table name to Javascript name
-            rl.question("Please enter the detail table name in Sakila schema ? ", function(detailTableName) {
-                var becomeModelDetailTableName = _s.classify(detailTableName);//change name from table name to Javascript name
-
-                fs.exists('../models/'+becomeModelMasterTableName+'.js', function(exists) {
-                    if (exists) {
-                        console.log('../models/'+becomeModelMasterTableName+'.js  change to ../models/'+becomeModelMasterTableName+"_"+getDateTime()+'.js');
-                        fs.rename('../models/'+becomeModelMasterTableName+'.js','../models/'+becomeModelMasterTableName+"_"+getDateTime()+'.js');
-                        fs.rename('../controllers/'+becomeModelMasterTableName+'Controller.js','../controllers/'+becomeModelMasterTableName+"Controller_"+getDateTime()+'.js');
-                        masterDetail(masterTableName,becomeModelMasterTableName,detailTableName,becomeModelDetailTableName);
-                    }else
-                    {
-                        masterDetail(masterTableName,becomeModelMasterTableName,detailTableName,becomeModelDetailTableName);
+                fs.exists('../models/' + becomeModel + '.js', function (exists) {
+                    if (exists && overwrite === 'N') {
+                        console.log('../models/' + becomeModel + '.js  change to ../models/' + becomeModel + "_" + getDateTime() + '.js');
+                        fs.rename('../models/' + becomeModel + '.js', '../models/' + becomeModel + "_" + getDateTime() + '.js');
+                        fs.rename('../controllers/' + becomeModel + 'Controller.js', '../controllers/' + becomeModel + "Controller_" + getDateTime() + '.js');
+                        main(answer, becomeModel);
+                    } else {
+                        main(answer, becomeModel);
                     }
                 });
                 rl.close();
             });
-        });
-    }
+        } else if (answer === 'M') {
+            rl.question("Please enter the master table name in Sakila schema ? ", function (masterTableName) {
+                var becomeModelMasterTableName = _s.classify(masterTableName);//change name from table name to Javascript name
+                rl.question("Please enter the detail table name in Sakila schema ? ", function (detailTableName) {
+                    var becomeModelDetailTableName = _s.classify(detailTableName);//change name from table name to Javascript name
+
+                    fs.exists('../models/' + becomeModelMasterTableName + '.js', function (exists) {
+                        if (exists && overwrite === 'N') {
+                            console.log('../models/' + becomeModelMasterTableName + '.js  change to ../models/' + becomeModelMasterTableName + "_" + getDateTime() + '.js');
+                            fs.rename('../models/' + becomeModelMasterTableName + '.js', '../models/' + becomeModelMasterTableName + "_" + getDateTime() + '.js');
+                            fs.rename('../controllers/' + becomeModelMasterTableName + 'Controller.js', '../controllers/' + becomeModelMasterTableName + "Controller_" + getDateTime() + '.js');
+                            masterDetail(masterTableName, becomeModelMasterTableName, detailTableName, becomeModelDetailTableName);
+                        } else {
+                            masterDetail(masterTableName, becomeModelMasterTableName, detailTableName, becomeModelDetailTableName);
+                        }
+                    });
+                    rl.close();
+                });
+            });
+        }
+    });
 });
 
 ///// main function to make the file ///////
@@ -605,10 +605,10 @@ function insertFormDetail(id,tableName,recordOfTable){
     db.SysFormDetails.getPK(function(detailId){
         //console.log("ID = " + detailId  + " sysFormDetail".green + "  " + recordOfTable.COLUMN_NAME.rainbow);
         //console.log(recordOfTable);
-        var inputType = " type = 'text' ";
+        var inputType = " type ='text'";
         if(recordOfTable.COLUMN_NAME.substring(0,2).toUpperCase() === 'IS')
         {
-            inputType = " type = 'checkbox' ng-true-value='1' ng-false-value='0' ";
+            inputType = " type = 'checkbox' ";
         }
         if (recordOfTable.DATA_TYPE.indexOf('date') > -1 ){
             inputType = " type = 'date' ";

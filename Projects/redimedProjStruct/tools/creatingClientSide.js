@@ -16,37 +16,37 @@ var rl = readline.createInterface({
     output: process.stdout
 });
 
-rl.question("Please enter the table name in Sakila schema to create the single form input? ", function(answer) {
-    var becomeModel = _s.classify(answer);//change name from table name to Javascript name
-    console.log("The table :", answer);
-    console.log(" is made to :", becomeModel);
+rl.question("Do you want to overwrite the source code (Y|N) ? ", function(overwrite) {
+    rl.question("Please enter the table name in Sakila schema to create the single form input? ", function (answer) {
+        var becomeModel = _s.classify(answer);//change name from table name to Javascript name
+        console.log("The table :", answer);
+        console.log(" is made to :", becomeModel);
 
-    mkdirSync('../client/modules/'+becomeModel);
-    mkdirSync('../client/modules/'+becomeModel+'/controllers');
-    mkdirSync('../client/modules/'+becomeModel+'/services');
-    mkdirSync('../client/modules/'+becomeModel+'/views');
+        mkdirSync('../client/modules/' + becomeModel);
+        mkdirSync('../client/modules/' + becomeModel + '/controllers');
+        mkdirSync('../client/modules/' + becomeModel + '/services');
+        mkdirSync('../client/modules/' + becomeModel + '/views');
 
-    fs.exists('../client/modules/'+becomeModel+'/'+becomeModel+'.js', function(exists) {
-        if (exists) {
-            console.log('../client/modules/'+becomeModel+'/'+becomeModel+'.js');
-            fs.rename('../client/modules/'+becomeModel+'/controllers/'+becomeModel+'Controller.js',  '../client/modules/'+becomeModel+'/controllers/'+becomeModel+'Controller_' +getDateTime()+'.js');
-            fs.rename('../client/modules/'+becomeModel+'/controllers/NewEdit'+becomeModel+'Controller.js',  '../client/modules/'+becomeModel+'/controllers/NewEdit'+becomeModel+'Controller_' +getDateTime()+'.js');
-            fs.rename('../client/modules/'+becomeModel+'/services/'+becomeModel+'Service.js',  '../client/modules/'+becomeModel+'/services/'+becomeModel+'Service_' +getDateTime()+'.js');
-            fs.rename('../client/modules/'+becomeModel+'/views/'+becomeModel+'.html',  '../client/modules/'+becomeModel+'/views/'+becomeModel+'_' +getDateTime()+'.html');
-            fs.rename('../client/modules/'+becomeModel+'/views/NewEdit'+becomeModel+'.html',  '../client/modules/'+becomeModel+'/views/NewEdit'+becomeModel+'_' +getDateTime()+'.html');
-            fs.rename('../client/modules/'+becomeModel+'/'+becomeModel+'.js',  '../client/modules/'+becomeModel+'/'+becomeModel+'_' +getDateTime()+'.js');
-            main(answer,becomeModel);
-        }else
-        {
-            console.log(' \n\n- Begin to create file without rename old files.........\n\n');
-            main(answer,becomeModel);
-        }
+        fs.exists('../client/modules/' + becomeModel + '/' + becomeModel + '.js', function (exists) {
+            if (exists && overwrite === 'N') {
+                console.log('../client/modules/' + becomeModel + '/' + becomeModel + '.js');
+                fs.rename('../client/modules/' + becomeModel + '/controllers/' + becomeModel + 'Controller.js', '../client/modules/' + becomeModel + '/controllers/' + becomeModel + 'Controller_' + getDateTime() + '.js');
+                fs.rename('../client/modules/' + becomeModel + '/controllers/NewEdit' + becomeModel + 'Controller.js', '../client/modules/' + becomeModel + '/controllers/NewEdit' + becomeModel + 'Controller_' + getDateTime() + '.js');
+                fs.rename('../client/modules/' + becomeModel + '/services/' + becomeModel + 'Service.js', '../client/modules/' + becomeModel + '/services/' + becomeModel + 'Service_' + getDateTime() + '.js');
+                fs.rename('../client/modules/' + becomeModel + '/views/' + becomeModel + '.html', '../client/modules/' + becomeModel + '/views/' + becomeModel + '_' + getDateTime() + '.html');
+                fs.rename('../client/modules/' + becomeModel + '/views/NewEdit' + becomeModel + '.html', '../client/modules/' + becomeModel + '/views/NewEdit' + becomeModel + '_' + getDateTime() + '.html');
+                fs.rename('../client/modules/' + becomeModel + '/' + becomeModel + '.js', '../client/modules/' + becomeModel + '/' + becomeModel + '_' + getDateTime() + '.js');
+                main(answer, becomeModel);
+            } else {
+                console.log(' \n\n- Begin to create file without rename old files.........\n\n');
+                main(answer, becomeModel);
+            }
+        });
+
+
+        rl.close();
     });
-
-
-    rl.close();
 });
-
 ///// main function to make the file ///////
 function main(tableName,becomeModel) {
     var fs = require('fs');
@@ -109,7 +109,8 @@ function main(tableName,becomeModel) {
             }
 
             if(data[i].ISDISPLAY_ON_FORM === 1) {
-                bodyNewEditScript +=
+                bodyNewEditScript += getDisplayOnForm(data[i].DISPLAY_NAME,data[i].INPUT_TYPE,data[i].COLUMN_NAME);
+                    /*
                     "        <div class=\"row\">\n" +
                     "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
                     "                <label class=\"pull-right\">" + data[i].DISPLAY_NAME + "</label>\n" +
@@ -118,6 +119,7 @@ function main(tableName,becomeModel) {
                     "                <input "+data[i].INPUT_TYPE+" class=\"form-control\" ng-model=\"info." + data[i].COLUMN_NAME + "\" />\n" +
                     "            </div>\n" +
                     "        </div>\n";
+                    */
             }
 
             newEditInfoVar += "             " + isComma + data[i].COLUMN_NAME + " : ''\n";
@@ -159,7 +161,8 @@ function main(tableName,becomeModel) {
                     }
 
                     if(data[i].ISDISPLAY_ON_FORM === 1) {
-                        bodyNewEditScriptD +=
+                        bodyNewEditScriptD += getDisplayOnForm(data[i].DISPLAY_NAME,data[i].INPUT_TYPE,data[i].COLUMN_NAME);
+                            /*
                             "        <div class=\"row\">\n" +
                             "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
                             "                <label class=\"pull-right\">" + data[i].DISPLAY_NAME + "</label>\n" +
@@ -168,6 +171,7 @@ function main(tableName,becomeModel) {
                             "                <input "+data[i].INPUT_TYPE+" class=\"form-control\" ng-model=\"info." + data[i].COLUMN_NAME + "\" />\n" +
                             "            </div>\n" +
                             "        </div>\n";
+                            */
                     }
 
                     newEditInfoVarD += "             " + isComma2 + data[i].COLUMN_NAME + " : ''\n";
@@ -281,6 +285,36 @@ var mkdirSync = function (path) {
     }
 }
 
+function getDisplayOnForm(displayName,inputType,columnName){
+    var str = "";
+
+    if(inputType.indexOf('checkbox') > -1){
+        str =
+            "        <div class=\"row\">\n" +
+            "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
+            "                <label class=\"pull-right\">" + displayName + "</label>\n" +
+            "            </div>\n" +
+            "            <div class=\"col-md-6\">\n" +
+            "                <input "+inputType+" class=\"form-control\" ng-model=\"info." + columnName + "\" ng-true-value='1' ng-false-value='0' ng-checked='info." + columnName + "' />\n" +
+            "            </div>\n" +
+            "        </div>\n";
+
+    }
+    else{
+        str =
+            "        <div class=\"row\">\n" +
+            "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
+            "                <label class=\"pull-right\">" + displayName + "</label>\n" +
+            "            </div>\n" +
+            "            <div class=\"col-md-6\">\n" +
+            "                <input "+inputType+" class=\"form-control\" ng-model=\"info." + columnName + "\" />\n" +
+            "            </div>\n" +
+            "        </div>\n";
+
+    }
+
+    return str;
+}
 
 function createRootJS(isDetail,becomeModel){
     var wstream = fs.createWriteStream('../client/modules/'+becomeModel+'/'+becomeModel+'.js'); // create the model file

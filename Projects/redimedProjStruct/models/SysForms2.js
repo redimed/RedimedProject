@@ -1,5 +1,5 @@
 /** 
-* Created by meditech on 2014:10:06 21:42:41.
+* Created by meditech on 2014:10:07 14:38:23.
 */
 module.exports = function(sequelize,DataTypes){
    var SysForms2 = sequelize.define('SysForms2',{

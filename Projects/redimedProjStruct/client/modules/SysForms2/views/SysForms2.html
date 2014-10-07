@@ -38,43 +38,43 @@
                 <tr ng-repeat="f in $data track by $index | orderBy:'FORM_ID'"  ng-click='editForm(f)' >
                     <td data-title="'Form'"  >
                         <span ng-if='!f.$edit'>{{f.FORM_ID}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.FORM_ID' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.FORM_ID' /></div>
                     </td>
                     <td data-title="'Master table name'"  >
                         <span ng-if='!f.$edit'>{{f.MASTER_TABLE_NAME}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.MASTER_TABLE_NAME' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.MASTER_TABLE_NAME' /></div>
                     </td>
                     <td data-title="'Master seq'"  >
                         <span ng-if='!f.$edit'>{{f.MASTER_SEQ}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.MASTER_SEQ' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.MASTER_SEQ' /></div>
                     </td>
                     <td data-title="'Detail table name'"  >
                         <span ng-if='!f.$edit'>{{f.DETAIL_TABLE_NAME}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.DETAIL_TABLE_NAME' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.DETAIL_TABLE_NAME' /></div>
                     </td>
                     <td data-title="'Detail seq'"  >
                         <span ng-if='!f.$edit'>{{f.DETAIL_SEQ}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.DETAIL_SEQ' /></div>
-                    </td>
-                    <td data-title="'Form description'"  >
-                        <span ng-if='!f.$edit'>{{f.FORM_DESCRIPTION}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.FORM_DESCRIPTION' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.DETAIL_SEQ' /></div>
                     </td>
                     <td data-title="'Form type'"  >
                         <span ng-if='!f.$edit'>{{f.FORM_TYPE}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.FORM_TYPE' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.FORM_TYPE' /></div>
+                    </td>
+                    <td data-title="'Form description'"  >
+                        <span ng-if='!f.$edit'>{{f.FORM_DESCRIPTION}}</span>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.FORM_DESCRIPTION' /></div>
                     </td>
                     <td data-title="'List form type'"  >
                         <span ng-if='!f.$edit'>{{f.LIST_FORM_TYPE}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.LIST_FORM_TYPE' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.LIST_FORM_TYPE' /></div>
                     </td>
                     <td data-title="'New edit form type'"  >
                         <span ng-if='!f.$edit'>{{f.NEW_EDIT_FORM_TYPE}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.NEW_EDIT_FORM_TYPE' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.NEW_EDIT_FORM_TYPE' /></div>
                     </td>
                     <td data-title="'Form properties'"  >
                         <span ng-if='!f.$edit'>{{f.FORM_PROPERTIES}}</span>
-                        <div ng-if='f.$edit'><input class='form-control'  type = 'text'  ng-model='f.FORM_PROPERTIES' /></div>
+                        <div ng-if='f.$edit'><input class='form-control'  type ='text' ng-model='f.FORM_PROPERTIES' /></div>
                     </td>
                 </tr>
 
