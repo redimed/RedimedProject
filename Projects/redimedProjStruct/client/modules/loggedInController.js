@@ -6,6 +6,12 @@ angular.module("app.loggedIn.controller",[
     $scope.loggedInMenus = [];
     $scope.user = userInfo.Booking_Person;
 
+    UserService.getUserInfo(userInfo.id).then(function(data){
+       $scope.img = data.img;
+    })
+
+    
+
 
     // Load before logged in    
     var loadLoggedIn = function(){

@@ -27,11 +27,11 @@ angular.module('app.loggedIn.user.profile.controller',[])
             invoiceemail: userInfo.invoiceemail
         }
 
-        UserService.getImg(userInfo.id).then(function(data){
-            $scope.detail.img = data;
-            
-            console.log($scope.detail.img.replace("",''));
+        UserService.getUserInfo(userInfo.id).then(function(data){
+           $scope.detail.img = data.img;
         })
+
+
 
         UserService.getCompany().then(function(data){
             $scope.companyList = data;
@@ -81,6 +81,44 @@ angular.module('app.loggedIn.user.profile.controller',[])
 
         }
 
+        $scope.changeUserPassword = function(){
+            var modalInstance = $modal.open({
+                templateUrl: 'modules/user/views/changePassModal.html',
+                controller: 'UserChangePassController',
+                size: 'md',
+                resolve:{
+                    userId: function(){
+                        return userInfo.id;
+                    }
+
+                }
+            });
+        }
 
 
+
+    })
+
+.controller('UserChangePassController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, userId, toastr){
+        $scope.info = {
+            oldPass:null,
+            newPass:null,
+            id:userId
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.okClick = function(){
+            OnlineBookingService.changeUserPassword($scope.info).then(function(data){
+                if(data.status === 'success')
+                {
+                    toastr.success("Change Password Successfully","Success");
+                    $modalInstance.dismiss('cancel');
+                }
+                else if(data.status === 'error')
+                    toastr.error("Change Password Failed", "Error");
+            })
+        }
     })

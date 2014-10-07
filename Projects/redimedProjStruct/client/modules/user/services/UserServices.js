@@ -29,9 +29,9 @@ angular.module("app.loggedIn.user.services", [])
         return edit.post({info:info});
     }
 
-    userService.getImg = function(id){
-        var img = userApi.all('users/img');
-        return img.post({id:id});
+    userService.getUserInfo = function(id){
+        var info = userApi.all('users/id');
+        return info.post({id:id});
     }
 
     return userService;

@@ -361,6 +361,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
                 if(data.status === 'success')
                 {
                     toastr.success("Change Password Successfully","Success");
+                    $modalInstance.dismiss('cancel');
                 }
                 else if(data.status === 'error')
                     toastr.error("Change Password Failed", "Error");
