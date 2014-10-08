@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:07 14:38:23.
+        * Created by meditech on 2014:10:08 23:48:46.
 */
 var db = require('../models');
 module.exports = {
@@ -42,11 +42,11 @@ module.exports = {
     var f = req.body.f;
     db.SysFormDetails2.update({
           FORM_ID : f.FORM_ID
-          ,TABLE_NAME : f.TABLE_NAME
           ,FORM_DETAIL_ID : f.FORM_DETAIL_ID
-          ,ORDINAL_POSITION : f.ORDINAL_POSITION
-          ,COLUMN_NAME : f.COLUMN_NAME
           ,IS_NULLABLE : f.IS_NULLABLE
+          ,ORDINAL_POSITION : f.ORDINAL_POSITION
+          ,TABLE_NAME : f.TABLE_NAME
+          ,COLUMN_NAME : f.COLUMN_NAME
           ,DATA_TYPE : f.DATA_TYPE
           ,CHARACTER_MAXIMUM_LENGTH : f.CHARACTER_MAXIMUM_LENGTH
           ,COLUMN_KEY : f.COLUMN_KEY
@@ -73,11 +73,11 @@ module.exports = {
     var f = req.body.f;
     db.SysFormDetails2.create({
           FORM_ID : f.FORM_ID
-          ,TABLE_NAME : f.TABLE_NAME
           ,FORM_DETAIL_ID : f.FORM_DETAIL_ID
-          ,ORDINAL_POSITION : f.ORDINAL_POSITION
-          ,COLUMN_NAME : f.COLUMN_NAME
           ,IS_NULLABLE : f.IS_NULLABLE
+          ,ORDINAL_POSITION : f.ORDINAL_POSITION
+          ,TABLE_NAME : f.TABLE_NAME
+          ,COLUMN_NAME : f.COLUMN_NAME
           ,DATA_TYPE : f.DATA_TYPE
           ,CHARACTER_MAXIMUM_LENGTH : f.CHARACTER_MAXIMUM_LENGTH
           ,COLUMN_KEY : f.COLUMN_KEY
@@ -91,7 +91,7 @@ module.exports = {
           ,INPUT_TYPE : f.INPUT_TYPE
           ,LOV_SQL : f.LOV_SQL
           ,ATTRIBUTE_PROPERTIES : f.ATTRIBUTE_PROPERTIES
-    },['FORM_ID','TABLE_NAME','FORM_DETAIL_ID','ORDINAL_POSITION','COLUMN_NAME','IS_NULLABLE','DATA_TYPE','CHARACTER_MAXIMUM_LENGTH','COLUMN_KEY','DISPLAY_NAME','ISDISPLAY_ON_LIST','ISDISPLAY_ON_FORM','ISNEW','ISUPDATE','ISREQUIRE','ISLIST_LINK','INPUT_TYPE','LOV_SQL','ATTRIBUTE_PROPERTIES']).success(function(){
+    },['FORM_ID','FORM_DETAIL_ID','IS_NULLABLE','ORDINAL_POSITION','TABLE_NAME','COLUMN_NAME','DATA_TYPE','CHARACTER_MAXIMUM_LENGTH','COLUMN_KEY','DISPLAY_NAME','ISDISPLAY_ON_LIST','ISDISPLAY_ON_FORM','ISNEW','ISUPDATE','ISREQUIRE','ISLIST_LINK','INPUT_TYPE','LOV_SQL','ATTRIBUTE_PROPERTIES']).success(function(){
         res.json({status:'success'});
     })
         .error(function(err){

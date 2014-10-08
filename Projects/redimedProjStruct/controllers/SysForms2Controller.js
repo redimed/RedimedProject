@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:07 14:38:23.
+        * Created by meditech on 2014:10:08 23:48:46.
 */
 var db = require('../models');
 module.exports = {
@@ -34,8 +34,8 @@ module.exports = {
           ,MASTER_SEQ : f.MASTER_SEQ
           ,DETAIL_TABLE_NAME : f.DETAIL_TABLE_NAME
           ,DETAIL_SEQ : f.DETAIL_SEQ
-          ,FORM_DESCRIPTION : f.FORM_DESCRIPTION
           ,FORM_TYPE : f.FORM_TYPE
+          ,FORM_DESCRIPTION : f.FORM_DESCRIPTION
           ,LIST_FORM_TYPE : f.LIST_FORM_TYPE
           ,NEW_EDIT_FORM_TYPE : f.NEW_EDIT_FORM_TYPE
           ,FORM_PROPERTIES : f.FORM_PROPERTIES
@@ -56,12 +56,12 @@ module.exports = {
           ,MASTER_SEQ : f.MASTER_SEQ
           ,DETAIL_TABLE_NAME : f.DETAIL_TABLE_NAME
           ,DETAIL_SEQ : f.DETAIL_SEQ
-          ,FORM_DESCRIPTION : f.FORM_DESCRIPTION
           ,FORM_TYPE : f.FORM_TYPE
+          ,FORM_DESCRIPTION : f.FORM_DESCRIPTION
           ,LIST_FORM_TYPE : f.LIST_FORM_TYPE
           ,NEW_EDIT_FORM_TYPE : f.NEW_EDIT_FORM_TYPE
           ,FORM_PROPERTIES : f.FORM_PROPERTIES
-    },['FORM_ID','MASTER_TABLE_NAME','MASTER_SEQ','DETAIL_TABLE_NAME','DETAIL_SEQ','FORM_DESCRIPTION','FORM_TYPE','LIST_FORM_TYPE','NEW_EDIT_FORM_TYPE','FORM_PROPERTIES']).success(function(){
+    },['FORM_ID','MASTER_TABLE_NAME','MASTER_SEQ','DETAIL_TABLE_NAME','DETAIL_SEQ','FORM_TYPE','FORM_DESCRIPTION','LIST_FORM_TYPE','NEW_EDIT_FORM_TYPE','FORM_PROPERTIES']).success(function(){
         res.json({status:'success'});
     })
         .error(function(err){

@@ -61,6 +61,8 @@ function main(tableName,becomeModel) {
     var listBody = "";
     var listType = "";
     var formType = "";
+    var detailTableName = "";
+    var becomeModelD = "";
 
 
     db.sequelize
@@ -85,12 +87,17 @@ function main(tableName,becomeModel) {
             console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY + '      ' + data[i].LIST_FORM_TYPE );
 
             formType = data[i].FORM_TYPE;
+            detailTableName = data[i].DETAIL_TABLE_NAME;
+            becomeModelD = _s.classify(detailTableName);
 
             var isComma = '';
 
             if (i != 0) {
                 isComma = ',';
             }
+
+            insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
+            insertUpdateStatement2 +=  isComma + "'"+ data[i].COLUMN_NAME + "'";
 
             if(data[i].ISDISPLAY_ON_LIST === 1){
                 if(data[i].LIST_FORM_TYPE === 'table'){
@@ -133,6 +140,10 @@ function main(tableName,becomeModel) {
                 newEditGetDataController += "           $scope.info."+data[i].COLUMN_NAME+" = data[0]."+data[i].COLUMN_NAME+" == 1 ? '1':'0';\n";
             }
         }
+
+        //create Master Controller for server
+        createControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,"",insertUpdateStatement,insertUpdateStatement2);
+
         //// for details
         console.log(formType);
         var isComma2 = '';
@@ -141,6 +152,8 @@ function main(tableName,becomeModel) {
         var newEditInfoVarD = "";
         var primaryKeyColumnNameD = "";
         var newEditGetDataControllerD = "";
+        var insertUpdateStatementD = "";
+        var insertUpdateStatement2D = "";
 
         if(formType === 'Master Details'){
             db.SysForms.getDetailColumns(tableName.toUpperCase(),function(data) {
@@ -151,6 +164,10 @@ function main(tableName,becomeModel) {
                     if (i != 0) {
                         isComma2 = ',';
                     }
+
+                    insertUpdateStatementD += "          " + isComma2 + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
+
+                    insertUpdateStatement2D +=  isComma2 + "'"+ data[i].COLUMN_NAME + "'";
 
                     if(data[i].ISDISPLAY_ON_LIST === 1){
                         bodyTableScriptD +=
@@ -185,8 +202,12 @@ function main(tableName,becomeModel) {
                         newEditGetDataControllerD += "           $scope.info."+data[i].COLUMN_NAME+" = data[0]."+data[i].COLUMN_NAME+" == 1 ? '1':'0';\n";
                     }
                 }
+                //create Detail Controller for server
+                createControllerFile(fs.createWriteStream('../controllers/'+becomeModelD+'Controller.js'),becomeModelD,primaryKeyColumnNameD,primaryKeyColumnName,insertUpdateStatementD,insertUpdateStatement2D);
                 //create setting file at root of module
                 createRootJS(true,becomeModel);
+                // create route in server
+                createRouteJS(true,becomeModel,becomeModelD);
                 //create services file at services diectory of module
                 createServiceFile(true,becomeModel);
                 /// create new edit view with detail list
@@ -200,8 +221,11 @@ function main(tableName,becomeModel) {
             });
 
         }else{
+
             //create setting file at root of module
             createRootJS(false,becomeModel);
+            // create route in server
+            createRouteJS(false,becomeModel,"");
             //create services file at services diectory of module
             createServiceFile(false,becomeModel);
             /// create new edit view
@@ -244,6 +268,32 @@ function getDateTime() {
 
 }
 
+
+/// function to get Datetime
+function getAusFormatDateTime() {
+
+    var date = new Date();
+
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    var year = date.getFullYear();
+
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+
+    return year + ":" + month + ":" + day + " " + hour + ":" + min + ":" + sec;
+
+}
 //// Read line by line
 
 function readLines(input, func) {
@@ -366,6 +416,39 @@ function createRootJS(isDetail,becomeModel){
     );
     wstream.end;
 }
+
+
+function createRouteJS(isDetail,becomeModel,becomeModelD){
+
+    var wstream = fs.createWriteStream('../routes/'+becomeModel+'Routes.js'); // create the model file
+
+    wstream.write(
+            "/** \n" +
+            "* Created by meditech on 23/09/2014. \n" +
+            "*/ \n" +
+            "var "+becomeModel+"Controller = require('./controllers/"+becomeModel+"Controller');\n\n" +
+
+            "//////sys forms 2\n" +
+
+            "app.get('/api/"+becomeModel+"/list',"+becomeModel+"Controller.list);\n" +
+            "app.post('/api/"+becomeModel+"/findById',"+becomeModel+"Controller.findById);\n" +
+            "app.post('/api/"+becomeModel+"/edit',"+becomeModel+"Controller.edit);\n" +
+            "app.post('/api/"+becomeModel+"/insert',"+becomeModel+"Controller.insert);\n\n"
+    );
+    if(isDetail){
+        wstream.write(
+                "var "+becomeModelD+"Controller = require('./controllers/"+becomeModelD+"Controller');\n\n" +
+                "app.get('/api/"+becomeModel+"/listD',"+becomeModelD+"Controller.list);\n" +
+                "app.post('/api/"+becomeModel+"/findByIdD',"+becomeModelD+"Controller.findById);\n" +
+                "app.post('/api/"+becomeModel+"/findByMasterIdD',"+becomeModelD+"Controller.findByMasterId);\n" +
+                "app.post('/api/"+becomeModel+"/editD',"+becomeModelD+"Controller.edit);\n" +
+                "app.post('/api/"+becomeModel+"/insertD',"+becomeModelD+"Controller.insert);\n"
+
+        );
+    }
+    wstream.end;
+}
+
 
 function createServiceFile(isDetail,becomeModel){
     var wstreamService = fs.createWriteStream('../client/modules/'+becomeModel+'/services/'+becomeModel+'Service.js'); // create the model file
@@ -868,4 +951,87 @@ function listView(becomeModel,listType,primaryKeyColumnName,bodyTableScript,list
     }
 
     wstreamView.end();
+}
+
+function createControllerFile(wstreamController,becomeModel,primaryKeyColumnName,primaryKeyColumnNameM,insertUpdateStatement,insertUpdateStatement2){
+    ///Creating Controller file for Model
+    //var wstreamController = fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'); // create the model file
+    wstreamController.write(
+            "/**\n" +
+            "        * Created by meditech on " + getAusFormatDateTime() + ".\n" +
+            "*/\n" +
+            "var db = require('../models');\n" +
+            "module.exports = {\n" +
+            "    list: function(req,res){\n" +
+            "        var rs = [];\n" +
+            "        db."+becomeModel+".findAll({},{raw: true})\n" +
+            "            .success(function(data){\n" +
+            "                res.json(data);\n" +
+            "            })\n" +
+            "            .error(function(err){\n" +
+            "                res.json({status:'fail'});\n" +
+            "            })\n" +
+            "    },\n\n" +
+            "    findById: function(req,res){\n" +
+            "        var id = req.body.id;\n" +
+            "        var rs = [];\n" +
+            "        db."+becomeModel+".findAll({where:{"+primaryKeyColumnName+":id},order:'"+primaryKeyColumnName+"'},{raw: true})\n" +
+            "            .success(function(data){\n" +
+            "                res.json(data);\n" +
+            "            })\n" +
+            "            .error(function(err){\n" +
+            "                res.json({status:'fail'});\n" +
+            "            })\n" +
+            "    },\n\n"
+    );
+
+    if(primaryKeyColumnNameM.length > 1){
+        wstreamController.write(
+                "    findByMasterId: function(req,res){\n" +
+                "        var id = req.body.id;\n" +
+                "        var rs = [];\n" +
+                "        db."+becomeModel+".findAll({where:{"+primaryKeyColumnNameM+":id},order:'"+primaryKeyColumnName+"'},{raw: true})\n" +
+                "            .success(function(data){\n" +
+                "                res.json(data);\n" +
+                "            })\n" +
+                "            .error(function(err){\n" +
+                "                res.json({status:'fail'});\n" +
+                "            })\n" +
+                "    },\n\n"
+        );
+    }
+
+    if(primaryKeyColumnName.length > 1){
+        wstreamController.write(
+                "    edit: function(req,res){\n" +
+                "    var f = req.body.f;\n" +
+                "    db."+becomeModel+".update({\n" +
+                insertUpdateStatement +
+                "   },{"+primaryKeyColumnName+": f."+primaryKeyColumnName+"})\n" +
+                "       .success(function(){\n" +
+                "           res.json({status:'success'});\n" +
+                "       })\n" +
+                "            .error(function(err){\n" +
+                "                res.json({status:'fail'});\n" +
+                "           });\n" +
+                "   },\n\n"
+        );
+    }
+
+    wstreamController.write(
+            "    insert: function(req,res){\n" +
+            "    var f = req.body.f;\n" +
+            "    db."+becomeModel+".create({\n" +
+            insertUpdateStatement +
+            "    },["+insertUpdateStatement2+"]).success(function(){\n" +
+            "        res.json({status:'success'});\n" +
+            "    })\n" +
+            "        .error(function(err){\n" +
+            "            res.json({status:'fail'});\n" +
+            "        });\n" +
+            "}"
+    );
+
+    wstreamController.write("}");
+    wstreamController.end();
 }

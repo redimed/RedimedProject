@@ -10,8 +10,7 @@ var FunctionController = require('./controllers/FunctionController');
 var BookingController = require('./controllers/BookingController');
 var RedimedSiteController = require('./controllers/RedimedSiteController');
 var PmPropertiesController = require('./controllers/PmPropertiesController');
-var SysForms2Controller = require('./controllers/SysForms2Controller');
-var SysFormDetails2Controller = require('./controllers/SysFormDetails2Controller');
+
 
 var rl_types=require('./routes/rl_types');
 var cln_specialties=require('./routes/cln_specialities');
@@ -111,16 +110,3 @@ app.post('/api/PmProperties/edit',PmPropertiesController.edit);
 app.post('/api/PmProperties/insert',PmPropertiesController.insert);
 
 
-//////sys forms 2
-
-app.get('/api/SysForms2/list',SysForms2Controller.list);
-app.post('/api/SysForms2/findById',SysForms2Controller.findById)
-app.post('/api/SysForms2/edit',SysForms2Controller.edit);
-app.post('/api/SysForms2/insert',SysForms2Controller.insert);
-
-
-app.get('/api/SysForms2/listD',SysFormDetails2Controller.list);
-app.post('/api/SysForms2/findByIdD',SysFormDetails2Controller.findById);
-app.post('/api/SysForms2/findByMasterIdD',SysFormDetails2Controller.findByMasterId);
-app.post('/api/SysForms2/editD',SysFormDetails2Controller.edit);
-app.post('/api/SysForms2/insertD',SysFormDetails2Controller.insert);
