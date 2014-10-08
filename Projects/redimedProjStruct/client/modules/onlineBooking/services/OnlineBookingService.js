@@ -144,6 +144,16 @@ angular.module('app.loggedIn.booking.services',[])
             return pass.post({info:info});
         }
 
+        bookingService.getSiteState = function(id){
+            var state = api.all('redimedsite/state');
+            return state.post({id:id});
+        }
+
+        bookingService.getStateSuburb = function(id){
+            var suburb = api.all('redimedsite/state/suburb');
+            return suburb.post({id:id});
+        }
+
 
 
         return bookingService;

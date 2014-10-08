@@ -68,5 +68,29 @@ module.exports = {
                 res.json({status:'error'});
                 console.log(err);
             })
+    },
+    stateBySite: function(req,res){
+        var id = req.body.id;
+
+        db.sequelize.query('SELECT * FROM redimedsite_states WHERE site_id=?',null,{raw:true},[id])
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    suburbByState: function(req,res){
+        var id = req.body.id;
+
+        db.sequelize.query('SELECT * FROM redimedsite_state_suburbs WHERE state_id = ?',null,{raw:true},[id])
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
     }
 };

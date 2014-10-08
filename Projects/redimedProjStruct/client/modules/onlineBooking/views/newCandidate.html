@@ -121,6 +121,39 @@
                 </div>
             </div>
         </div>
+        <br ng-if="haveState == true || info.stateId !== null"/>
+        <div ng-if="haveState == true || info.stateId !== null"  class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.state.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Preferred State <span class="required">
+                                                    * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <select class="col-md-12 form-control" ng-model="info.stateId" name="state" required ng-change="siteStateChange(info.stateId)" ng-options="s.state_id as s.state_name for s in stateList">
+                        <option value="">--Select State--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.state.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="state" class="help-block">Please select state.</span>
+                </div>
+            </div>
+        </div>
+        <br ng-if="haveSuburb == true || info.suburbId !== null"/>
+        <div ng-if="haveSuburb == true || info.suburbId !== null"  class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Preferred Suburb</label>
+                </div>
+                <div class="col-md-8">
+                    <select class="col-md-12 form-control" ng-model="info.suburbId" ng-options="s.suburb_id as s.suburb_name for s in suburbList">
+                        <option value="">--Select Suburb--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <br/>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.fromDate.$invalid}">
             <div class="row">
@@ -160,24 +193,18 @@
             </div>
         </div>
         <br/>
-        <div  class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.calendar.$invalid}">
+        <div class="form-group" >
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label">Calendar <span class="required">
-                                                * </span></label>
+                    <label class="control-label">Calendar </label>
                 </div>
                 <div class="col-md-8">
-                    <select class="col-md-12 form-control" ng-model="info.calId" name="calendar" required ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
+                    <select class="col-md-12 form-control" ng-model="info.calId" name="calendar" ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
                         <option value="">--Select Calendar--</option>
                     </select>
                 </div>
             </div>
-            <div class="row" ng-show="showClickedValidation && candidateForm.calendar.$invalid">
-                <div class="col-md-4"></div>
-                <div class="col-md-8">
-                    <span for="calendar" class="help-block">Please select appointment time.</span>
-                </div>
-            </div>
+
         </div>
 
 </div>

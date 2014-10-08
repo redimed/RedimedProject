@@ -9,23 +9,20 @@ angular.module("app", [
     "toastr",                   // ANGULAR TOASTR
     "angular-loading-bar",      // ANGULAR LOADING BAR
     "ngTable",                  // ANGULAR TABLE
+    "ngIdle",                   // Ng-Idle
     "app.loggedIn",             // MODULES LOGGED IN
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
     'angular.filter',
-
+    "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
 
     "app.directive.common"      // CUSTOM DIRECTIVES
 ])
 
-.config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider) {
-    // TRANSLATE LANGUAGE
-    /*$translateProvider.useStaticFilesLoader({
-        prefix: "/antele/languages/",
-        suffix: ".json"
-    });
-
-    $translateProvider.preferredLanguage("en");*/
-    // END TRANSLATE LANGUAGE
+.config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider) {
+    //IDLE TIME
+    $idleProvider.idleDuration(5);
+    $idleProvider.warningDuration(5);
+    $keepaliveProvider.interval(10);
 
     // RESTANGULAR DEFAULT
     RestangularProvider.setBaseUrl("");
@@ -53,11 +50,24 @@ angular.module("app", [
             }
         }
     })
+
+        .state('lockscreen',{
+            url:'/lockscreen',
+            views:{
+                "root":{
+                    templateUrl: "common/views/lockscreen.html",
+                    controller:'lockscreenController'
+                }
+            }
+
+        })
     /* END */
 })
 
 //When update any route
-.run(function($cookieStore, $state, $rootScope){
+.run(function($cookieStore, $state, $rootScope, $idle, $log, $keepalive){
+    $idle.watch();
+    $log.debug('app started.');
     // Use when update any state
     $rootScope.$on("$stateChangeSuccess", function(e, toState, fromState, fromParams){
         if(!$cookieStore.get("userInfo")){
