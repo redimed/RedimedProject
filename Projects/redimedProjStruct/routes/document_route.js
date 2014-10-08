@@ -1,11 +1,13 @@
 /**
  * Created by meditech on 08/10/2014.
  */
-var DocumentController = require('./controllers/DocumentController');
+var FAController = require('./controllers/DocumentController/FAController');
+var MAController = require('./controllers/DocumentController/MAController');
+var IDSController = require('./controllers/DocumentController/IDSController');
 
-app.get('/api/document/newFA',DocumentController.newFA);
-app.get('/api/document/loadFA',DocumentController.loadFA);
-app.get('/api/document/newMA',DocumentController.newMA);
-app.get('/api/document/loadMA',DocumentController.loadMA);
-app.get('/api/document/newIDS',DocumentController.newIDS);
-app.get('/api/document/loadIDS',DocumentController.loadIDS);
+app.get('/api/document/newFA',FAController.newFA);
+app.get('/api/document/loadFA',FAController.loadFA);
+app.get('/api/document/newMA',MAController.newMA);
+app.get('/api/document/loadMA',MAController.loadMA);
+app.get('/api/document/newIDS',IDSController.newIDS);
+app.get('/api/document/loadIDS',IDSController.loadIDS);
