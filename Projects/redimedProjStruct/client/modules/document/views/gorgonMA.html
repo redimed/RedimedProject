@@ -22,14 +22,14 @@
 <div class="portlet light bordered">
     </br>
         <div class="row">
-            <div class="col-md-5" style="margin-left: 14px">
+            <div class="col-md-5 col-sm-6" style="margin-left: 14px">
                 <div class="form-group">
                     <label class="control-label">Family Name: </label>
                     <label class="control-label text-info" >nguyen minh</label>
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-6" style="margin-left: 14px">
                 <div class="form-group">
                     <label class="control-label">Givent Name:</label>
                     <label class="control-label text-info">phuong self</label>
@@ -37,16 +37,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-7 ">
                 <div class="form-group">
-                    <label class="control-label col-md-7" style="margin-top: 10px;">Photo - ID has been sighted (compulsory)</label>
+                    <label class="control-label col-md-6 col-sm-6" style="margin-top: 10px;">Photo - ID has been sighted (compulsory)</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Confirmed
+                        <div class="btn-group col-sm-6" >
+                            <label class="btn">
+                                <input type="radio" name='a' /> Confirmed
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Not sighted
+                            <label class="btn">
+                                <input type="radio" name='a' /> Not sighted
                             </label>
                         </div>
                     </div>
@@ -54,14 +54,14 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <label class="control-label col-md-5" style="margin-top: 10px;">Hand Dominance</label>
+                    <label class="control-label col-md-5 col-sm-3" style="margin-top: 10px;">Hand Dominance</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Right
+                        <div class="btn-group col-sm-6" >
+                            <label class="btn">
+                                <input type="radio" name='a1' /> Right
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Left
+                            <label class="btn">
+                                <input type="radio" name='a1' /> Left
                             </label>
                         </div>
                     </div>
@@ -72,17 +72,17 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-2">
                     <label class="control-label" style="font-weight: bold">Height</label>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3">
                     <input type="text" style="width: 60px;"/>
                     <label> cms</label>
                 </div>
-                <div class="col-md-1" style="font-weight: bold">
+                <div class="col-md-1 col-sm-2" style="font-weight: bold">
                     <label class="control-label" style="font-weight: bold">Weight</label>
                 </div>
-                <div  class="col-md-2">
+                <div  class="col-md-2 col-sm-3">
                     <input type="text" style="width: 60px;"/>
                     <label> kg</label>
                 </div>
@@ -108,99 +108,99 @@
     <div class="portlet-body form">
         </br>
         <div class="row">
-            <div class="col-md-5">
-                <label class="control-label col-md-4" style="margin-top: 10px;">Protein</label>
+            <div class="col-md-6">
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Protein</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-md-10 col-sm-10" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Trace
+                        <label class="btn">
+                            <input type="radio" name='a' /> Trace
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +
+                        <label class="btn">
+                            <input type="radio" name='a' /> +
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ++
+                        <label class="btn">
+                            <input type="radio" name='a' /> ++
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +++
+                        <label class="btn">
+                            <input type="radio" name='a' /> +++
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="col-md-3" style="font-weight: bold">
-                    <label class="control-label">Comment</label>
+            <div class="col-md-6">
+                <div class="col-md-2 col-sm-2" style="font-weight: bold">
+                    <label class="control-label" style="margin-top: 7px">Comment</label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-10 col-sm-10">
                     <input type="text" ng-model="info.name" class="form-control" >
                 </div>
             </div>
         </div>
         </br>
         <div class="row">
-            <div class="col-md-5">
-                <label class="control-label col-md-4" style="margin-top: 10px;">Glucose</label>
+            <div class="col-md-6">
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Glucose</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-md-10 col-sm-10" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Trace
+                        <label class="btn">
+                            <input type="radio" name='a' /> Trace
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +
+                        <label class="btn">
+                            <input type="radio" name='a' /> +
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ++
+                        <label class="btn">
+                            <input type="radio" name='a' /> ++
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +++
+                        <label class="btn">
+                            <input type="radio" name='a' /> +++
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="col-md-3" style="font-weight: bold">
-                    <label class="control-label">Comment</label>
+            <div class="col-md-6">
+                <div class="col-md-2 col-sm-2" style="font-weight: bold">
+                    <label class="control-label" style="margin-top: 7px">Comment</label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-10 col-sm-10">
                     <input type="text" ng-model="info.name" class="form-control" >
                 </div>
             </div>
         </div>
         </br>
         <div class="row">
-            <div class="col-md-5">
-                <label class="control-label col-md-4" style="margin-top: 10px;">Blood</label>
+            <div class="col-md-6">
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Blood</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-md-10 col-sm-10" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Trace
+                        <label class="btn">
+                            <input type="radio" name='a' /> Trace
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +
+                        <label class="btn">
+                            <input type="radio" name='a' /> +
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ++
+                        <label class="btn">
+                            <input type="radio" name='a' /> ++
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +++
+                        <label class="btn">
+                            <input type="radio" name='a' /> +++
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="col-md-3" style="font-weight: bold">
-                    <label class="control-label">Comment</label>
+            <div class="col-md-6">
+                <div class="col-md-2 col-sm-2" style="font-weight: bold">
+                    <label class="control-label" style="margin-top: 7px">Comment</label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-10 col-sm-10">
                     <input type="text" ng-model="info.name" class="form-control" >
                 </div>
             </div>
@@ -223,63 +223,31 @@
     <div class="portlet-body form">
         </br>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-6">
                 <div class="form-group">
-                    <label class="control-label col-md-4" style="margin-top: 10px;">Cannabis</label>
+                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Cannabis</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> -ve
+                        <div class="btn-group col-sm-8 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> -ve
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +ve
+                            <label class="btn">
+                                <input type="radio" name='a' /> +ve
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-6">
                 <div class="form-group">
-                    <label class="control-label col-md-4" style="margin-top: 10px;">Benzo’s</label>
+                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Benzo’s</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> -ve
+                        <div class="btn-group col-sm-8 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> -ve
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5">
-                <div class="form-group">
-                    <label class="control-label col-md-4" style="margin-top: 10px;">Opiates</label>
-                    <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> -ve
-                            </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group">
-                    <label class="control-label col-md-4" style="margin-top: 10px;">Cocain</label>
-                    <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> -ve
-                            </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +ve
+                            <label class="btn">
+                                <input type="radio" name='a' /> +ve
                             </label>
                         </div>
                     </div>
@@ -287,31 +255,31 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-6">
                 <div class="form-group">
-                    <label class="control-label col-md-4" style="margin-top: 10px;">Amphet’s</label>
+                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Opiates</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> -ve
+                        <div class="btn-group col-sm-8 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> -ve
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +ve
+                            <label class="btn">
+                                <input type="radio" name='a' /> +ve
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-6">
                 <div class="form-group">
-                    <label class="control-label col-md-4" style="margin-top: 10px;">Methamph</label>
+                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Cocain</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> -ve
+                        <div class="btn-group col-sm-8 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> -ve
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +ve
+                            <label class="btn">
+                                <input type="radio" name='a' /> +ve
                             </label>
                         </div>
                     </div>
@@ -319,16 +287,48 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-6">
                 <div class="form-group">
-                    <label class="control-label col-md-4" style="margin-top: 10px;">Alcohol</label>
+                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Amphet’s</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> -ve
+                        <div class="btn-group col-sm-8 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> -ve
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> +ve
+                            <label class="btn">
+                                <input type="radio" name='a' /> +ve
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-6">
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Methamph</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-8 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> -ve
+                            </label>
+                            <label class="btn">
+                                <input type="radio" name='a' /> +ve
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-sm-6">
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Alcohol</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-8 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> -ve
+                            </label>
+                            <label class="btn">
+                                <input type="radio" name='a' /> +ve
                             </label>
                         </div>
                     </div>
@@ -361,30 +361,30 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3">
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>500Hz</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>1000Hz</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>1500Hz</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>2000Hz</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>3000Hz</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>4000Hz</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>6000Hz</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>8000Hz</label>
                 </div>
             </div>
@@ -392,31 +392,31 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3">
                     <label class="control-label" >Right Ear(dB)</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1" >
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
             </div>
@@ -424,31 +424,31 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3">
                     <label class="control-label" >Left Ear(dB)</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
             </div>
@@ -476,15 +476,15 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3">
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>FEV1</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>FVC</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <label>PERFR</label>
                 </div>
             </div>
@@ -492,28 +492,28 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3">
                     <label class="control-label" >Pre-Br/dilator</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1" >
                     <input type="text" style="width: 60px"/>
                 </div>
             </div>
@@ -521,28 +521,28 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3">
                     <label class="control-label" >Pre-Br/dilator</label>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-1">
                     <input type="text" style="width: 60px"/>
                 </div>
             </div>
@@ -552,14 +552,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label col-md-6" style="margin-top: 10px;">Is Spirometry satisfactory?</label>
+                    <label class="control-label col-md-6 col-sm-4" style="margin-top: 10px;">Is Spirometry satisfactory?</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> Yes
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                            <label class="btn">
+                                <input type="radio" name='a' /> No
                             </label>
                         </div>
                     </div>
@@ -569,14 +569,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label col-md-6" style="margin-top: 10px;">Candidate ever used a puffer?</label>
+                    <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Candidate ever used a puffer?</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> Yes
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                            <label class="btn">
+                                <input type="radio" name='a' /> No
                             </label>
                         </div>
                     </div>
@@ -586,14 +586,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label col-md-6" style="margin-top: 10px;">If Yes to either of above, was there any respiratory problem?</label>
+                    <label class="control-label col-md-6 col-sm-8" style="margin-top: 10px;">If Yes to either of above, was there any respiratory problem?</label>
                     <div class="clearfix">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" name='a' /> Yes
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                            <label class="btn">
+                                <input type="radio" name='a' /> No
                             </label>
                         </div>
                     </div>
@@ -631,21 +631,21 @@
         <div class="border" style="border-color: #808080; border-style: dotted;" >
             <div class="row" >
                 <div class="col-md-10">
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-sm-12">
                         <label class="control-label text-info bold" style="margin-top: 30px;">Visual Acuity:</label>
                     </div>
-                    <div class="col-md-5" style="text-align: center">
+                    <div class="col-md-5 col-sm-6" style="text-align: center">
                         <div class="row">
                             <label>Uncorrected:</label>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-6" style="text-align: center">
+                                <div class="col-md-6 col-sm-6" style="text-align: center">
                                     <label>L</label><br>
                                     <label>/6</label>
                                     <input type="text" style="width: 60px"/>
                                 </div>
-                                <div class="col-md-6" style="text-align: center">
+                                <div class="col-md-6 col-sm-6" style="text-align: center">
                                     <label>R</label><br>
                                     <label>/6</label>
                                     <input type="text" style="width: 60px"/>
@@ -653,18 +653,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5" style="text-align: center">
+                    <div class="col-md-5 col-sm-6" style="text-align: center">
                         <div class="row">
                             <label>Corrected:</label>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-6" style="text-align: center">
+                                <div class="col-md-6 col-sm-6" style="text-align: center">
                                     <label>L</label><br>
                                     <label>/6</label>
                                     <input type="text" style="width: 60px"/>
                                 </div>
-                                <div class="col-md-6" style="text-align: center">
+                                <div class="col-md-6 col-sm-6" style="text-align: center">
                                     <label>R</label><br>
                                     <label>/6</label>
                                     <input type="text" style="width: 60px"/>
@@ -681,21 +681,21 @@
         <div class="border" style="border-color: #808080; border-style: dotted;" >
             <div class="row" >
                 <div class="col-md-10">
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-s-12">
                         <label class="control-label text-info bold" style="margin-top: 30px;">Near Vision:</label>
                     </div>
-                    <div class="col-md-5" style="text-align: center">
+                    <div class="col-md-5 col-sm-6" style="text-align: center">
                         <div class="row">
                             <label>Uncorrected:</label>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-6" style="text-align: center">
+                                <div class="col-md-6 col-sm-6" style="text-align: center">
                                     <label>L</label><br>
                                     <label>/N</label>
                                     <input type="text" style="width: 60px"/>
                                 </div>
-                                <div class="col-md-6" style="text-align: center">
+                                <div class="col-md-6 col-sm-6" style="text-align: center">
                                     <label>R</label><br>
                                     <label>/N</label>
                                     <input type="text" style="width: 60px"/>
@@ -703,18 +703,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5" style="text-align: center">
+                    <div class="col-md-5 col-sm-6" style="text-align: center">
                         <div class="row">
                             <label>Corrected:</label>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-6" style="text-align: center">
+                                <div class="col-md-6 col-sm-6" style="text-align: center">
                                     <label>L</label><br>
                                     <label>/N</label>
                                     <input type="text" style="width: 60px"/>
                                 </div>
-                                <div class="col-md-6" style="text-align: center">
+                                <div class="col-md-6 col-sm-6" style="text-align: center">
                                     <label>R</label><br>
                                     <label>/N</label>
                                     <input type="text" style="width: 60px"/>
@@ -733,27 +733,27 @@
         </label>
         <div class="row">
             <div class="col-md-4">
-                <label class="control-label col-md-4" style="margin-top: 10px;">Left</label>
+                <label class="control-label col-md-2 col-sm-1" style="margin-top: 10px;">Left</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-4 col-md-10" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <45°
+                        <label class="btn">
+                            <input type="radio" name='a' /> <45°
                         </label>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <label class="control-label col-md-4" style="margin-top: 10px;">Right</label>
+                <label class="control-label col-md-2 col-sm-1" style="margin-top: 10px;">Right</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-4 col-md-10" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <45°
+                        <label class="btn">
+                            <input type="radio" name='a' /> <45°
                         </label>
                     </div>
                 </div>
@@ -814,20 +814,20 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Heart Rhythm:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Heart Rhythm:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-8 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> AF
+                        <label class="btn">
+                            <input type="radio" name='a' /> AF
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Occ.Ectopics
+                        <label class="btn">
+                            <input type="radio" name='a' /> Occ.Ectopics
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Freq. Ectopics
+                        <label class="btn">
+                            <input type="radio" name='a' /> Freq. Ectopics
                         </label>
                     </div>
                 </div>
@@ -836,14 +836,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Heart Sounds:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Heart Sounds:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-6 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Abnormal
+                        <label class="btn">
+                            <input type="radio" name='a' /> Abnormal
                         </label>
                     </div>
                 </div>
@@ -852,14 +852,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Pacemaker:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Pacemaker:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Yes
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                        <label class="btn">
+                            <input type="radio" name='a' /> No
                         </label>
                     </div>
                 </div>
@@ -886,14 +886,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Chest:</label>
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px;font-weight: bold">Chest:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-6 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Reduced (<5cm)
+                        <label class="btn">
+                            <input type="radio" name='a' /> Reduced (<5cm)
                         </label>
                     </div>
                 </div>
@@ -903,14 +903,14 @@
         <label class="text-info" style="font-weight: bold;margin-left: 15px">Air Entry:</label>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-left: 20px;">Upper Zones:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-left: 20px;">Upper Zones:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-6 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Reduced (<5cm)
+                        <label class="btn">
+                            <input type="radio" name='a' /> Reduced (<5cm)
                         </label>
                     </div>
                 </div>
@@ -919,14 +919,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-left: 20px;">Lower Zones:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-left: 20px;">Lower Zones:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-6 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Reduced (<5cm)
+                        <label class="btn">
+                            <input type="radio" name='a' /> Reduced (<5cm)
                         </label>
                     </div>
                 </div>
@@ -935,23 +935,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Added Sounds:</label>
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Added Sounds:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-12 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Widespread crackles
+                        <label class="btn">
+                            <input type="radio" name='a' /> Widespread crackles
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Basal crackles
+                        <label class="btn">
+                            <input type="radio" name='a' /> Basal crackles
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Wheezes
+                        <label class="btn">
+                            <input type="radio" name='a' /> Wheezes
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Rub
+                        <label class="btn">
+                            <input type="radio" name='a' /> Rub
                         </label>
                     </div>
                 </div>
@@ -978,45 +978,43 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-3" style="margin-top: 10px;font-weight: bold">External Canals:</label>
-                <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
-                        </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Dermatitis
-                        </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Fungal infection
-                        </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Structural abnormality
-                        </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Wax
-                        </label>
-                    </div>
+                <label class="control-label col-md-3 col-sm-3" style="margin-top: 10px;font-weight: bold">External Canals:</label>
+                <div class="btn-group col-sm-3 col-md-9" >
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' />  Dermatitis
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' /> Fungal infection
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' /> Structural abnormality
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a' /> Wax
+                    </label>
                 </div>
             </div>
         </div>
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-3" style="margin-top: 10px;font-weight: bold">Tympanic Membranes:</label>
+                <label class="control-label col-md-3 col-sm-4" style="margin-top: 10px;font-weight: bold">Tympanic Membranes:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-3 col-md-9" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Effusion
+                        <label class="btn">
+                            <input type="radio" name='a' /> Effusion
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Wet perforation
+                        <label class="btn">
+                            <input type="radio" name='a' /> Wet perforation
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Dry perforation
+                        <label class="btn">
+                            <input type="radio" name='a' /> Dry perforation
                         </label>
                     </div>
                 </div>
@@ -1042,20 +1040,20 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-left: 30px;">Eczema/dermatitis</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Eczema/dermatitis</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-8 col-md-8" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Mild
+                        <label class="btn">
+                            <input type="radio" name='a' />Mild
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Moderate
+                        <label class="btn">
+                            <input type="radio" name='a' /> Moderate
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Severe
+                        <label class="btn">
+                            <input type="radio" name='a' /> Severe
                         </label>
                     </div>
                 </div>
@@ -1064,20 +1062,20 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-left: 30px;">Psoriasis</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Psoriasis</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-8 col-md-8" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Mild
+                        <label class="btn">
+                            <input type="radio" name='a' />Mild
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Moderate
+                        <label class="btn">
+                            <input type="radio" name='a' /> Moderate
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Severe
+                        <label class="btn">
+                            <input type="radio" name='a' /> Severe
                         </label>
                     </div>
                 </div>
@@ -1086,20 +1084,20 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-left: 30px;">Tinea</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Tinea</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-8 col-md-8" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Mild
+                        <label class="btn">
+                            <input type="radio" name='a' />Mild
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Moderate
+                        <label class="btn">
+                            <input type="radio" name='a' /> Moderate
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Severe
+                        <label class="btn">
+                            <input type="radio" name='a' /> Severe
                         </label>
                     </div>
                 </div>
@@ -1108,20 +1106,20 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-left: 30px;">Solar damage</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Solar damage</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-8 col-md-8" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Mild
+                        <label class="btn">
+                            <input type="radio" name='a' />Mild
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Moderate
+                        <label class="btn">
+                            <input type="radio" name='a' /> Moderate
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Severe
+                        <label class="btn">
+                            <input type="radio" name='a' /> Severe
                         </label>
                     </div>
                 </div>
@@ -1130,20 +1128,20 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-left: 30px;">Folliculitis</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Folliculitis</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-8 col-md-8" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Mild
+                        <label class="btn">
+                            <input type="radio" name='a' />Mild
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Moderate
+                        <label class="btn">
+                            <input type="radio" name='a' /> Moderate
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Severe
+                        <label class="btn">
+                            <input type="radio" name='a' /> Severe
                         </label>
                     </div>
                 </div>
@@ -1152,20 +1150,20 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-left: 30px;">Other</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Other</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-8 col-md-8" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Mild
+                        <label class="btn">
+                            <input type="radio" name='a' />Mild
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Moderate
+                        <label class="btn">
+                            <input type="radio" name='a' /> Moderate
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Severe
+                        <label class="btn">
+                            <input type="radio" name='a' /> Severe
                         </label>
                     </div>
                 </div>
@@ -1203,26 +1201,26 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label col-md-1 text-info" style="font-weight: bold">Scars: </label>
+                    <label class="control-label col-md-1 col-sm-12 text-info" style="font-weight: bold">Scars: </label>
 
-                    <label class="control-label col-md-1" style="margin-top: 10px;text-align: right">Nil</label>
-                    <div class="col-md-1">
+                    <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Nil</label>
+                    <div class="col-md-1 col-sm-1">
                         <input class="form-control" type="checkbox" />
                     </div>
-                    <label class="control-label col-md-1" style="margin-top: 10px;text-align: right">Appendix</label>
-                    <div class="col-md-1">
+                    <label class="control-label col-md-1 col-sm-2" style="margin-top: 10px;text-align: right">Appendix</label>
+                    <div class="col-md-1 col-sm-1">
                         <input class="form-control" type="checkbox" />
                     </div>
-                    <label class="control-label col-md-1" style="margin-top: 10px;text-align: right">Gallbladder</label>
-                    <div class="col-md-1">
+                    <label class="control-label col-md-1 col-sm-2" style="margin-top: 10px;text-align: right">Gallbladder</label>
+                    <div class="col-md-1 col-sm-1">
                         <input class="form-control" type="checkbox" />
                     </div>
-                    <label class="control-label col-md-1" style="margin-top: 10px;text-align: right">Hernia</label>
-                    <div class="col-md-1">
+                    <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Hernia</label>
+                    <div class="col-md-1 col-sm-1">
                         <input class="form-control" type="checkbox" />
                     </div>
-                    <label class="control-label col-md-1" style="margin-top: 10px;text-align: right">Other</label>
-                    <div class="col-md-1">
+                    <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Other</label>
+                    <div class="col-md-1 col-sm-1">
                         <input class="form-control" type="checkbox" />
                     </div>
                 </div>
@@ -1232,21 +1230,21 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                    <label class="control-label col-md-2 text-info" style="font-weight: bold">Hernial orifices: </label>
-                        <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <label class="control-label col-md-2 col-sm-3 text-info" style="font-weight: bold;margin-top: 7px">Hernial orifices: </label>
+                        <div class="btn-group  col-md-4 col-sm-5">
+                            <label class="btn">
+                                <input type="radio" name='a' /> Normal
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Inguinal hernia
+                            <label class="btn">
+                                <input type="radio" name='a' />Inguinal hernia
                             </label>
                         </div>
-                        <label class="control-label col-md-1" style="font-weight: bold;margin-top: 10px;text-align: right">L</label>
-                    <div class="col-md-1">
+                        <label class="control-label col-md-1 col-sm-1" style="font-weight: bold;margin-top: 10px;text-align: right">L</label>
+                    <div class="col-md-1 col-sm-1">
                         <input class="form-control" type="checkbox" />
                     </div>
-                    <label class="control-label col-md-1" style="font-weight: bold;margin-top: 10px;text-align: right">R</label>
-                    <div class="col-md-1">
+                    <label class="control-label col-md-1 col-sm-1" style="font-weight: bold;margin-top: 10px;text-align: right">R</label>
+                    <div class="col-md-1 col-sm-1">
                         <input class="form-control" type="checkbox" />
                     </div>
             </div>
@@ -1254,14 +1252,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2 text-info" style="font-weight: bold">Rectus muscles: </label>
+                <label class="control-label col-md-2 col-sm-3 text-info" style="font-weight: bold;margin-top: 7px">Rectus muscles: </label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-5 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Weak/bulging
+                        <label class="btn">
+                            <input type="radio" name='a' />Weak/bulging
                         </label>
                     </div>
                 </div>
@@ -1287,14 +1285,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Muscle tone:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle tone:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-5 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Reduced
+                        <label class="btn">
+                            <input type="radio" name='a' />  Reduced
                         </label>
                     </div>
                 </div>
@@ -1303,14 +1301,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Muscle power:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle power:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-5 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Reduced
+                        <label class="btn">
+                            <input type="radio" name='a' />  Reduced
                         </label>
                     </div>
                 </div>
@@ -1319,14 +1317,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Muscle wasting:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle wasting:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-5 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Present
+                        <label class="btn">
+                            <input type="radio" name='a' />  Present
                         </label>
                     </div>
                 </div>
@@ -1335,14 +1333,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Tremor:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Tremor:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Nil
+                    <div class="btn-group col-sm-5 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Nil
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Resting
+                        <label class="btn">
+                            <input type="radio" name='a' /> Resting
                         </label>
                     </div>
                 </div>
@@ -1351,14 +1349,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Gait:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Gait:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-5 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Reduced
+                        <label class="btn">
+                            <input type="radio" name='a' />  Reduced
                         </label>
                     </div>
                 </div>
@@ -1369,27 +1367,27 @@
         <label class="text-info control-label" style="font-weight: bold">Lower limb reflexes:</label>
         <div class="row">
             <div class="col-md-4">
-                <label class="control-label col-md-4 text-info" style="font-weight: bold">Left:</label>
+                <label class="control-label col-md-2 col-sm-2 text-info" style="margin-top: 10px;font-weight: bold">Left:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-5 col-md-10" >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Reduced
+                        <label class="btn">
+                            <input type="radio" name='a' />  Reduced
                         </label>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <label class="control-label col-md-4 text-info" style="font-weight: bold">Right:</label>
+                <label class="control-label col-md-2 col-sm-2 text-info" style="margin-top: 10px;font-weight: bold">Right:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-5 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Reduced
+                        <label class="btn">
+                            <input type="radio" name='a' />  Reduced
                         </label>
                     </div>
                 </div>
@@ -1426,14 +1424,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Posture:</label>
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Posture:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-5  " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Scoliosis
+                        <label class="btn">
+                            <input type="radio" name='a' />  Scoliosis
                         </label>
                     </div>
                 </div>
@@ -1442,14 +1440,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Rhythm:</label>
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhythm:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-5 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Jerky/painful
+                        <label class="btn">
+                            <input type="radio" name='a' />  Jerky/painful
                         </label>
                     </div>
                 </div>
@@ -1458,23 +1456,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Flexion:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Flexion:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> >=75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> >=75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 50-75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 50-75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 25-50%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 25-50%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <25%
+                        <label class="btn">
+                            <input type="radio" name='a' /> <25%
                         </label>
                     </div>
                 </div>
@@ -1483,23 +1481,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Extension:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Extension:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> >=75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> >=75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 50-75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 50-75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 25-50%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 25-50%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <25%
+                        <label class="btn">
+                            <input type="radio" name='a' /> <25%
                         </label>
                     </div>
                 </div>
@@ -1508,23 +1506,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Lateral flexion:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Lateral flexion:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> >=75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> >=75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 50-75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 50-75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 25-50%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 25-50%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <25%
+                        <label class="btn">
+                            <input type="radio" name='a' /> <25%
                         </label>
                     </div>
                 </div>
@@ -1533,23 +1531,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Rotation:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Rotation:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> >=75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> >=75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 50-75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 50-75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 25-50%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 25-50%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <25%
+                        <label class="btn">
+                            <input type="radio" name='a' /> <25%
                         </label>
                     </div>
                 </div>
@@ -1576,17 +1574,17 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Posture:</label>
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Posture:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Scoliosis
+                        <label class="btn">
+                            <input type="radio" name='a' />  Scoliosis
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Kyphosis
+                        <label class="btn">
+                            <input type="radio" name='a' />  Kyphosis
                         </label>
                     </div>
                 </div>
@@ -1595,14 +1593,14 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;font-weight: bold">Rhythm:</label>
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhythm:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  Jerky/painful
+                        <label class="btn">
+                            <input type="radio" name='a' />  Jerky/painful
                         </label>
                     </div>
                 </div>
@@ -1611,23 +1609,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Flexion:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Flexion:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> >=75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> >=75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 50-75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 50-75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 25-50%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 25-50%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <25%
+                        <label class="btn">
+                            <input type="radio" name='a' /> <25%
                         </label>
                     </div>
                 </div>
@@ -1636,23 +1634,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Extension:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Extension:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> >=75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> >=75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 50-75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 50-75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 25-50%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 25-50%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <25%
+                        <label class="btn">
+                            <input type="radio" name='a' /> <25%
                         </label>
                     </div>
                 </div>
@@ -1661,23 +1659,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Lateral flexion:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Lateral flexion:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> >=75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> >=75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 50-75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 50-75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 25-50%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 25-50%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <25%
+                        <label class="btn">
+                            <input type="radio" name='a' /> <25%
                         </label>
                     </div>
                 </div>
@@ -1686,23 +1684,23 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="margin-top: 10px;">Rotation:</label>
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Rotation:</label>
                 <div class="clearfix">
-                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                    <div class="btn-group col-sm-9 col-md-10 " >
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> >=75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> >=75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 50-75%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 50-75%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> 25-50%
+                        <label class="btn">
+                            <input type="radio" name='a' /> 25-50%
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> <25%
+                        <label class="btn">
+                            <input type="radio" name='a' /> <25%
                         </label>
                     </div>
                 </div>
@@ -1739,17 +1737,17 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2">Shoulder: </label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Shoulder: </label>
+                <div class="btn-group col-sm-5 col-md-3">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Reduced
+                    <label class="btn">
+                        <input type="radio" name='a' />Reduced
                     </label>
                 </div>
-                <label class="control-label col-md-1" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1">
+                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                <div class="col-md-1 col-sm-1">
                     <input class="form-control" type="checkbox" />
                 </div>
             </div>
@@ -1757,17 +1755,17 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2 " >Elbows: </label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Elbows: </label>
+                <div class="btn-group col-sm-5 col-md-3">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Reduced
+                    <label class="btn">
+                        <input type="radio" name='a' />Reduced
                     </label>
                 </div>
-                <label class="control-label col-md-1" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1">
+                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                <div class="col-md-1 col-sm-1">
                     <input class="form-control" type="checkbox" />
                 </div>
             </div>
@@ -1775,17 +1773,17 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" >Wrists: </label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Wrists: </label>
+                <div class="btn-group col-sm-5 col-md-3">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Reduced
+                    <label class="btn">
+                        <input type="radio" name='a' />Reduced
                     </label>
                 </div>
-                <label class="control-label col-md-1" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1">
+                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                <div class="col-md-1 col-sm-1">
                     <input class="form-control" type="checkbox" />
                 </div>
             </div>
@@ -1793,17 +1791,17 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2">Knees: </label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Knees: </label>
+                <div class="btn-group col-sm-5 col-md-3">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Reduced
+                    <label class="btn">
+                        <input type="radio" name='a' />Reduced
                     </label>
                 </div>
-                <label class="control-label col-md-1" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1">
+                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                <div class="col-md-1 col-sm-1">
                     <input class="form-control" type="checkbox" />
                 </div>
             </div>
@@ -1811,17 +1809,17 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2 " >Ankles: </label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Ankles: </label>
+                <div class="btn-group col-sm-5 col-md-3">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Reduced
+                    <label class="btn">
+                        <input type="radio" name='a' />Reduced
                     </label>
                 </div>
-                <label class="control-label col-md-1" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1">
+                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                <div class="col-md-1 col-sm-1">
                     <input class="form-control" type="checkbox" />
                 </div>
             </div>
@@ -1830,13 +1828,13 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="font-weight: bold">Grip Strength</label>
-                    <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Grip Strength</label>
+                    <div class="btn-group  col-md-3">
+                        <label class="btn">
+                            <input type="radio" name='a' /> Normal
                         </label>
-                        <label class="btn grey">
-                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Abnormal
+                        <label class="btn">
+                            <input type="radio" name='a' />Abnormal
                         </label>
                     </div>
             </div>
@@ -1844,13 +1842,13 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="font-weight: bold">Epicondyles</label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Epicondyles</label>
+                <div class="btn-group  col-md-3">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Abnormal
+                    <label class="btn">
+                        <input type="radio" name='a' />Abnormal
                     </label>
                 </div>
             </div>
@@ -1859,13 +1857,13 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="font-weight: bold">Heel Walk</label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Heel Walk</label>
+                <div class="btn-group  col-md-3">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Abnormal
+                    <label class="btn">
+                        <input type="radio" name='a' />Abnormal
                     </label>
                 </div>
             </div>
@@ -1873,13 +1871,13 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="font-weight: bold">Duck Walk</label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Duck Walk</label>
+                <div class="btn-group  col-md-3 col-sm-5">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Abnormal
+                    <label class="btn">
+                        <input type="radio" name='a' />Abnormal
                     </label>
                 </div>
                 <label class="control-label text-info ">(walk in HALF squat position)</label>
@@ -1888,13 +1886,13 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="font-weight: bold">Toe Walk</label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Toe Walk</label>
+                <div class="btn-group  col-md-3 col-sm-5">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Abnormal
+                    <label class="btn">
+                        <input type="radio" name='a' />Abnormal
                     </label>
                 </div>
             </div>
@@ -1903,13 +1901,13 @@
         </br>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-2" style="font-weight: bold">Rhomberg's</label>
-                <div class="btn-group btn-group-circle col-md-3" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Normal
+                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhomberg's</label>
+                <div class="btn-group  col-md-3">
+                    <label class="btn">
+                        <input type="radio" name='a' /> Normal
                     </label>
-                    <label class="btn grey">
-                        <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>Abnormal
+                    <label class="btn">
+                        <input type="radio" name='a' />Abnormal
                     </label>
                 </div>
             </div>

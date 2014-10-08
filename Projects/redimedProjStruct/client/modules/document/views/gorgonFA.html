@@ -22,14 +22,14 @@
 <br/>
 <div class="portlet light">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-7">
             <div class="form-group">
                 <label class="control-label">Full Name</label>
                 <input type="text" ng-model="info.name" class="form-control" >
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-5">
             <div class="form-group">
                 <label class="control-label">Date Of Birth</label>
                 <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
@@ -42,14 +42,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-7">
             <div class="form-group">
                 <label class="control-label">Job Applying For</label>
                 <input type="text" ng-model="info.job" class="form-control" >
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-5">
             <div class="form-group">
                 <label class="control-label">Date Of Assessment</label>
                 <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
@@ -83,16 +83,20 @@
                 <div class="form-group">
                     <label class="control-label col-md-7" style="margin-top: 10px;">Is there any reason that you could not perform the work fitness assessment today?</label>
                     <div class="clearfix">
-                        <div class="btn-group col-md-5">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                        <div class="col-md-2 btn-group">
+                            <label class="btn">
+                                <input type="radio" name='a' value="0"/>Yes
+                            </label>
+                            <label class="btn">
+                                <input type="radio" name='a' value="1"/> No
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-7">
                 <div class="form-group">
                     <label class="control-label col-md-3" style="margin-top: 5px;">Signature</label>
                     <a href="#" id="signBtn" class="btn green">Sign</a>
@@ -108,7 +112,7 @@
 
             </script>
 
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-5">
                 <div class="form-group">
                     <label class="control-label col-md-2" style="margin-top: 5px;">Date</label>
                     <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
@@ -143,17 +147,17 @@
     </div>
     <div class="portlet-body form">
         <div class="clearfix" style="margin-top: 15px;">
-            <div class="btn-group btn-group-circle col-md-12" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Sedentary </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Light </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Medium </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Heavy </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Very Heavy </label>
+            <div class="btn-group  col-md-12">
+                <label class="btn">
+                    <input type="radio" name="a"> Sedentary </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Light </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Medium </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Heavy </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Very Heavy </label>
             </div>
         </div>
         <br/>
@@ -163,7 +167,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
+            <div class="col-md-8 col-sm-10" style="margin-left: 15px;">
                 <textarea class="form-control"></textarea>
             </div>
         </div>
@@ -186,116 +190,116 @@
     <div class="portlet-body form">
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Heart Conditions</label>
+            <div class="col-md-4 col-sm-3">
+                <label class="control-label" style="margin-top: 7px">Heart Conditions</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Yes </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> No </label>
+            <div class="btn-group col-md-4 col-sm-3">
+                <label class="btn">
+                    <input type="radio" name="a"> Yes </label>
+                <label class="btn">
+                    <input type="radio" name="a"> No </label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6 ">
                 <input type="text" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Lungs Conditions/Asthma</label>
+            <div class="col-md-4 col-sm-3">
+                <label class="control-label" style="margin-top: 7px">Lungs Conditions/Asthma</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Yes </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> No </label>
+            <div class="btn-group col-sm-3 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Yes </label>
+                <label class="btn">
+                    <input type="radio" name="a"> No </label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <input type="text" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Diabetes</label>
+            <div class="col-md-4 col-sm-3">
+                <label class="control-label" style="margin-top: 7px">Diabetes</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Yes </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> No </label>
+            <div class="btn-group col-sm-3 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Yes </label>
+                <label class="btn">
+                    <input type="radio" name="a"> No </label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <input type="text" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Fits/Seizures</label>
+            <div class="col-md-4 col-sm-3">
+                <label class="control-label" style="margin-top: 7px">Fits/Seizures</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Yes </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> No </label>
+            <div class="btn-group col-sm-3 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Yes </label>
+                <label class="btn">
+                    <input type="radio" name="a"> No </label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <input type="text" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Medication</label>
+            <div class="col-md-4 col-sm-3">
+                <label class="control-label" style="margin-top: 7px">Medication</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Yes </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> No </label>
+            <div class="btn-group col-sm-3 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Yes </label>
+                <label class="btn">
+                    <input type="radio" name="a"> No </label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <input type="text" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Others(ie Surgery,Physio)</label>
+            <div class="col-md-4 col-sm-3">
+                <label class="control-label" style="margin-top: 7px">Others(ie Surgery,Physio)</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Yes </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> No </label>
+            <div class="btn-group col-sm-3 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Yes </label>
+                <label class="btn">
+                    <input type="radio" name="a"> No </label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <input type="text" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-6">
-                <label class="control-label ">Maximum Heart Rate For Assessment</label>
+            <div class="col-md-6 col-sm-5">
+                <label class="control-label" style="margin-top: 7px">Maximum Heart Rate For Assessment</label>
             </div>
-            <div class="col-md-6" >
-                <label class="control-label ">(220 - 32) x 85%= 159.8 bpm</label>
+            <div class="col-md-6 col-sm-7" >
+                <label class="control-label" style="margin-top: 7px">(220 - 32) x 85%= 159.8 bpm</label>
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-6">
-                <label class="control-label ">Maximum Weight For Manual Handling Assessment</label>
+            <div class="col-md-6 col-sm-5">
+                <label class="control-label" style="margin-top: 7px">Maximum Weight For Manual Handling Assessment</label>
             </div>
-            <div class="col-md-6" >
-                <label class="control-label ">(candidates weight)</label>
+            <div class="col-md-6 col-sm-7" >
+                <label class="control-label" style="margin-top: 7px">(candidates weight)</label>
                 <input type="text" style="width: 50px;"/>
                 <label>kg x 60% = </label>
                 <input type="text" style="width: 50px;"/>
@@ -304,10 +308,10 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-6">
-                <label class="control-label ">Blood Pressure</label>
+            <div class="col-md-6 col-sm-5">
+                <label class="control-label" style="margin-top: 7px">Blood Pressure</label>
             </div>
-            <div class="col-md-6" >
+            <div class="col-md-6 col-sm-5" >
                 <input type="text" style="width: 50px;"/>
                 <label>/</label>
                 <input type="text" style="width: 50px;"/>
@@ -315,10 +319,10 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-6">
-                <label class="control-label ">Resting Heart Rate</label>
+            <div class="col-md-6 col-sm-5">
+                <label class="control-label" style="margin-top: 7px">Resting Heart Rate</label>
             </div>
-            <div class="col-md-6" >
+            <div class="col-md-6 col-sm-5" >
                 <input type="text" style="width: 50px;"/>
                 <label> bpm</label>
             </div>
@@ -341,142 +345,142 @@
     <div class="portlet-body form">
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Neck</label>
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Neck</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
-            </div>
-        </div>
-        <br/>
-        <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Thoratic</label>
-            </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Lumbar</label>
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Thoratic</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
-            </div>
-        </div>
-        <br/>
-        <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Shoulder</label>
-            </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Elbow</label>
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Lumbar</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
-            </div>
-        </div>
-        <br/>
-        <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Wrist</label>
-            </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Fingers/Thumb</label>
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Shoulder</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
-            </div>
-        </div>
-        <br/>
-        <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Hips</label>
-            </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Knees</label>
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Elbow</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4">
-                <label class="control-label ">Ankles</label>
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Wrist</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-4" data-toggle="buttons">
-                <label class="btn grey active">
-                    <input type="radio" class="toggle active"> Normal </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Restricted </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Painful </label>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
+            </div>
+        </div>
+        <br/>
+        <div class="row" style="margin-left:10px;margin-right:10px;">
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Fingers/Thumb</label>
+            </div>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
+            </div>
+        </div>
+        <br/>
+        <div class="row" style="margin-left:10px;margin-right:10px;">
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Hips</label>
+            </div>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
+            </div>
+        </div>
+        <br/>
+        <div class="row" style="margin-left:10px;margin-right:10px;">
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Knees</label>
+            </div>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
+            </div>
+        </div>
+        <br/>
+        <div class="row" style="margin-left:10px;margin-right:10px;">
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label" style="margin-top: 7px">Ankles</label>
+            </div>
+            <div class="btn-group col-sm-8 col-md-4" >
+                <label class="btn">
+                    <input type="radio" name="a"> Normal </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Restricted </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Painful </label>
             </div>
         </div>
         <br/>
@@ -486,7 +490,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
+            <div class="col-md-8 col-sm-10" style="margin-left: 15px;">
                 <textarea class="form-control"></textarea>
             </div>
         </div>
@@ -494,7 +498,7 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4"></div>
-            <div class="col-md-4 pull-right" style="margin-top: 15px;">
+            <div class="col-md-4 col-sm-6 pull-right" style="margin-top: 15px;">
                 <label class="bold">Total:</label>
                 <label class="bold">20/20</label>
 
@@ -523,60 +527,63 @@
                 <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 15px;">Heart Rate</span>
             </div>
         </div>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        30 secs
-                    </th>
-                    <th>
-                        1 min
-                    </th>
-                    <th>
-                        1 min 30 secs
-                    </th>
-                    <th>
-                        2 mins
-                    </th>
-                    <th>
-                        2 mins 30 secs
-                    </th>
-                    <th>
-                        30 secs
-                    </th>
-                    <th>
-                        1 min post
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <input type="text" style="width:100px;" />
-                    </td>
-                    <td>
-                        <input type="text" style="width:100px;" />
-                    </td>
-                    <td>
-                        <input type="text" style="width:100px;" />
-                    </td>
-                    <td>
-                        <input type="text" style="width:100px;" />
-                    </td>
-                    <td>
-                        <input type="text" style="width:100px;" />
-                    </td>
-                    <td>
-                        <input type="text" style="width:100px;" />
-                    </td>
-                    <td>
-                        <input type="text" style="width:100px;" />
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="col-md-12 col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            30 secs
+                        </th>
+                        <th>
+                            1 min
+                        </th>
+                        <th>
+                            1 min 30 secs
+                        </th>
+                        <th>
+                            2 mins
+                        </th>
+                        <th>
+                            2 mins 30 secs
+                        </th>
+                        <th>
+                            30 secs
+                        </th>
+                        <th>
+                            1 min post
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" style="width:100px;" />
+                        </td>
+                        <td>
+                            <input type="text" style="width:100px;" />
+                        </td>
+                        <td>
+                            <input type="text" style="width:100px;" />
+                        </td>
+                        <td>
+                            <input type="text" style="width:100px;" />
+                        </td>
+                        <td>
+                            <input type="text" style="width:100px;" />
+                        </td>
+                        <td>
+                            <input type="text" style="width:100px;" />
+                        </td>
+                        <td>
+                            <input type="text" style="width:100px;" />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
         <br/>
         <div class="row">
             <div class="col-md-12" style="margin-left: 15px;">
@@ -585,32 +592,32 @@
         </div>
         <br/>
         <div class="row">
-            <div class="col-md-4">
-                <label class="control-label" style="margin-left:15px;">Results</label>
+            <div class="col-md-1 col-sm-2">
+                <label class="control-label" style="margin-left:15px;margin-top: 7px">Results</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-6" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Poor </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Below Average </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Average </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Good </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Excellent </label>
+            <div class="btn-group col-md-8 col-sm-10">
+                <label class="btn">
+                    <input type="radio" name="a"> Poor </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Below Average </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Average </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Good </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Excellent </label>
             </div>
         </div>
         <br/>
         <div class="row">
-            <div class="col-md-4">
-                <label class="control-label" style="margin-left:15px;">Correct pace maintained for duration of assessment</label>
+            <div class="col-md-5 col-sm-7">
+                <label class="control-label" style="margin-left:15px;margin-top: 7px">Correct pace maintained for duration of assessment</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-6" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle active"> Yes </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> No </label>
+            <div class="btn-group col-md-2 col-sm-4">
+                <label class="btn">
+                    <input type="radio" name="a"> Yes </label>
+                <label class="btn">
+                    <input type="radio" name="a"> No </label>
             </div>
         </div>
         <br/>
@@ -620,7 +627,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
+            <div class="col-md-8 col-sm-10" style="margin-left: 15px;">
                 <textarea class="form-control"></textarea>
             </div>
         </div>
@@ -628,7 +635,7 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4"></div>
-            <div class="col-md-4 pull-right" style="margin-top: 15px;">
+            <div class="col-md-4 col-sm-6 pull-right" style="margin-top: 15px;">
                 <label class="bold">Total:</label>
                 <label class="bold">0/5</label>
 
@@ -659,26 +666,23 @@
         </div>
         <br/>
         <div class="row">
-            <div class="col-md-4">
-                <label class="control-label" style="margin-left:15px;">Right</label>
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label" style="margin-left:15px;margin-top: 10px">Right</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-6" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle active"> Positive </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Negative </label>
+            <div class="btn-group col-md-4 col-sm-4">
+                <label class="btn">
+                    <input type="radio" name="a"> Positive </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Negative </label>
             </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label" style="margin-left:15px;">Left</label>
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label" style="margin-left:15px;margin-top: 10px">Left</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-6" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle active"> Positive </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Negative </label>
+            <div class="btn-group col-md-4 col-sm-4">
+                <label class="btn">
+                    <input type="radio" name="a"> Positive </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Negative </label>
             </div>
         </div>
         <br/>
@@ -689,26 +693,23 @@
         </div>
         <br/>
         <div class="row">
-            <div class="col-md-4">
-                <label class="control-label" style="margin-left:15px;">Right</label>
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label" style="margin-left:15px;margin-top: 10px">Right</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-6" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle active"> Positive </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Negative </label>
+            <div class="btn-group col-md-4 col-sm-4">
+                <label class="btn">
+                    <input type="radio" name="a"> Positive </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Negative </label>
             </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label" style="margin-left:15px;">Left</label>
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label" style="margin-left:15px;margin-top: 10px">Left</label>
             </div>
-            <div class="btn-group btn-group-circle col-md-6" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle active"> Positive </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> Negative </label>
+            <div class="btn-group col-md-4 col-sm-4">
+                <label class="btn">
+                    <input type="radio" name="a"> Positive </label>
+                <label class="btn">
+                    <input type="radio" name="a"> Negative </label>
             </div>
         </div>
         <br/>
@@ -719,13 +720,13 @@
         </div>
         <br/>
         <div class="row">
-            <div class="btn-group btn-group-circle col-md-4" style="margin-left:15px;" data-toggle="buttons">
-                <label class="btn grey">
-                    <input type="radio" class="toggle active"> RHD </label>
-                <label class="btn grey">
-                    <input type="radio" class="toggle"> LHD </label>
+            <div class="btn-group col-md-3 col-sm-4" style="margin-left:15px">
+                <label class="btn">
+                    <input type="radio" name="a"> RHD </label>
+                <label class="btn">
+                    <input type="radio" name="a"> LHD </label>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-4" style="margin-top: 10px">
                 <input type="text" style="width:50px;">
                 <label>/</label>
                 <input type="text" style="width:50px;">
@@ -760,7 +761,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
+            <div class="col-md-8 col-sm-10" style="margin-left: 15px;">
                 <textarea class="form-control"></textarea>
             </div>
         </div>
@@ -768,7 +769,7 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4"></div>
-            <div class="col-md-4 pull-right" style="margin-top: 15px;">
+            <div class="col-md-4 col-sm-6 pull-right" style="margin-top: 15px;">
                 <label class="bold">Total:</label>
                 <label class="bold">0.0/20</label>
 
@@ -814,11 +815,11 @@
                 <label >Total</label>
                 <input type="text" style="width:100px;" />
                 <label class="control-label" style="margin-left:15px;">Crepitus</label>
-                <div class="btn-group btn-group-circle" data-toggle="buttons">
-                    <label class="btn grey">
-                        <input type="radio" class="toggle active"> Yes </label>
-                    <label class="btn grey">
-                        <input type="radio" class="toggle"> No </label>
+                <div class="btn-group" >
+                    <label class="btn">
+                        <input type="radio" name="a"> Yes </label>
+                    <label class="btn">
+                        <input type="radio" name="a"> No </label>
                 </div>
             </div>
 
@@ -841,7 +842,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
+            <div class="col-md-8 col-sm-10" style="margin-left: 15px;">
                 <textarea class="form-control"></textarea>
             </div>
         </div>
@@ -849,7 +850,7 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4"></div>
-            <div class="col-md-4 pull-right" style="margin-top: 15px;">
+            <div class="col-md-4 col-sm-6 pull-right" style="margin-top: 15px;">
                 <label class="bold">Total:</label>
                 <label class="bold">0/15</label>
 
@@ -879,17 +880,17 @@
         </div>
         <br/>
 
-        <div class="btn-group btn-group-circle col-md-12" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle"> Severe Change </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Moderate Change </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Mild Change </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Slight Change </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Normal </label>
+        <div class="btn-group  col-md-12">
+            <label class="btn">
+                <input type="radio" name="a"> Severe Change </label>
+            <label class="btn">
+                <input type="radio" name="a"> Moderate Change </label>
+            <label class="btn">
+                <input type="radio" name="a"> Mild Change </label>
+            <label class="btn">
+                <input type="radio" name="a"> Slight Change </label>
+            <label class="btn">
+                <input type="radio" name="a"> Normal </label>
         </div>
 
 
@@ -898,19 +899,17 @@
                 <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 15px;">5b. Hover (on toes)</span>
             </div>
         </div>
-        <br/>
-
-        <div class="btn-group btn-group-circle col-md-12" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle"> Unable To Complete </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> 0-9 secs </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> 10-19 secs </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> 20-30 secs </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> +30 secs </label>
+        <div class="btn-group  col-md-12">
+            <label class="btn">
+                <input type="radio" name="a"> Unable To Complete </label>
+            <label class="btn">
+                <input type="radio" name="a"> 0-9 secs </label>
+            <label class="btn">
+                <input type="radio" name="a"> 10-19 secs </label>
+            <label class="btn">
+                <input type="radio" name="a"> 20-30 secs </label>
+            <label class="btn">
+                <input type="radio" name="a"> +30 secs </label>
         </div>
 
         <br/>
@@ -941,19 +940,17 @@
                 <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 15px;">5e. Waiters Bow</span>
             </div>
         </div>
-        <br/>
-
-        <div class="btn-group btn-group-circle col-md-12" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle"> Unable To Complete </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> 0-29° </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> 30-49° </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> 50-70° </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> +70° </label>
+        <div class="btn-group  col-md-12">
+            <label class="btn">
+                <input type="radio" name="a"> Unable To Complete </label>
+            <label class="btn">
+                <input type="radio" name="a"> 0-29° </label>
+            <label class="btn">
+                <input type="radio" name="a"> 30-49° </label>
+            <label class="btn">
+                <input type="radio" name="a"> 50-70° </label>
+            <label class="btn">
+                <input type="radio" name="a"> +70° </label>
         </div>
 
         <br/>
@@ -963,33 +960,35 @@
             </div>
         </div>
         <br/>
-        <div class="col-md-12 bold" style="font-size:15px;">Right</div>
-        <div class="btn-group btn-group-circle col-md-12" style="margin-top: 10px;" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle">Hip flexion < 160°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Hip flexion 160°-180°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Hip flexion 180°- Knee flexion<90°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Hip flexion 180°- Knee flexion 90°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Hip flexion > 180°</label>
+        <div class="row">
+            <div class="btn-group col-md-4 col-sm-5" style="margin-left: 20px">
+                <label class="bold ">Right</label><br/>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion < 160°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion 160°-180°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion 180°- Knee flexion<90°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion 180°- Knee flexion 90°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion > 180°</label>
+            </div>
+            <div class="btn-group  col-md-4 col-sm-5" style="margin-left: 20px">
+                <label class="bold">Left</label><br/>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion < 160°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion 160°-180°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion 180°- Knee flexion<90°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion 180°- Knee flexion 90°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Hip flexion > 180°</label>
+            </div>
         </div>
-        <br/>
-        <div class="col-md-12 bold" style="font-size: 15px;">Left</div>
-        <div class="btn-group btn-group-circle col-md-12" style="margin-top: 10px;" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle">Hip flexion < 160°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Hip flexion 160°-180°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Hip flexion 180°- Knee flexion<90°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Hip flexion 180°- Knee flexion 90°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Hip flexion > 180°</label>
-        </div>
+
         <br/>
         <div class="row">
             <div class="col-md-12" style="margin-left: 15px;">
@@ -997,41 +996,37 @@
             </div>
         </div>
         <br/>
-        <div class="col-md-12 bold" style="font-size:15px;">Right</div>
-        <div class="btn-group btn-group-circle col-md-12" style="margin-top: 10px;" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle">Knee Extension < 120°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Knee Extension 120°-139°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Knee Extension 140°-159°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Knee Extension 160°-179°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Knee Extension 180°</label>
+        <div class="row">
+            <div class="btn-group col-md-4 col-sm-5" style="margin-left: 20px">
+                <label class="bold control-label">Right</label><br/>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension < 120°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension 120°-139°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension 140°-159°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension 160°-179°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension 180°</label>
+            </div>
+            <div class="btn-group col-md-4 col-sm-5" style="margin-left: 20px">
+                <label class="bold">Left</label><br/>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension < 120°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension 120°-139°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension 140°-159°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension 160°-179°</label>
+                <label class="btn">
+                    <input type="radio" name="a">Knee Extension 180°</label>
+            </div>
         </div>
-        <br/>
-        <div class="col-md-12 bold" style="font-size: 15px;">Left</div>
-        <div class="btn-group btn-group-circle col-md-12" style="margin-top: 10px;" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle">Knee Extension < 120°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Knee Extension 120°-139°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Knee Extension 140°-159°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Knee Extension 160°-179°</label>
-            <label class="btn grey">
-                <input type="radio" class="toggle">Knee Extension 180°</label>
-        </div>
-        <br/>
-
 
         <div class="row">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4 pull-right" style="margin-top: 15px;">
+            <div class="col-md-4 col-sm-6 pull-right" style="margin-top: 15px;">
                 <label class="bold">Total:</label>
                 <label class="bold">0/35</label>
 
@@ -1065,17 +1060,17 @@
             <input type="text" style="width:100px;" />
             <label>kg</label>
         </div>
-        <div class="btn-group btn-group-circle col-md-12" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle"> Sedentary </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Light </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Medium </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Heavy </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Very Heavy </label>
+        <div class="btn-group  col-md-12">
+            <label class="btn">
+                <input type="radio" name="a"> Sedentary </label>
+            <label class="btn">
+                <input type="radio" name="a"> Light </label>
+            <label class="btn">
+                <input type="radio" name="a"> Medium </label>
+            <label class="btn">
+                <input type="radio" name="a"> Heavy </label>
+            <label class="btn">
+                <input type="radio" name="a"> Very Heavy </label>
         </div>
         <br/>
         <div class="row">
@@ -1089,17 +1084,17 @@
             <input type="text" style="width:100px;" />
             <label>kg</label>
         </div>
-        <div class="btn-group btn-group-circle col-md-12" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle"> Sedentary </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Light </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Medium </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Heavy </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Very Heavy </label>
+        <div class="btn-group  col-md-12">
+            <label class="btn">
+                <input type="radio" name="a"> Sedentary </label>
+            <label class="btn">
+                <input type="radio" name="a"> Light </label>
+            <label class="btn">
+                <input type="radio" name="a"> Medium </label>
+            <label class="btn">
+                <input type="radio" name="a"> Heavy </label>
+            <label class="btn">
+                <input type="radio" name="a"> Very Heavy </label>
         </div>
         <br/>
         <div class="row">
@@ -1109,62 +1104,62 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
-                <label>Kept load close to body</label>
+            <div class="col-md-5 col-sm-4">
+                <label style="margin-top: 10px">Kept load close to body</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <input class="form-control" type="checkbox" />
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
-                <label>Kept a natural spine</label>
+            <div class="col-md-5 col-sm-4">
+                <label style="margin-top: 10px">Kept a natural spine</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <input class="form-control" type="checkbox" />
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
-                <label>Demonstrated good squat position to lift load</label>
+            <div class="col-md-5 col-sm-4">
+                <label style="margin-top: 10px">Demonstrated good squat position to lift load</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <input class="form-control" type="checkbox" />
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
-                <label>Avoids trunk rotation</label>
+            <div class="col-md-5 col-sm-4">
+                <label style="margin-top: 10px">Avoids trunk rotation</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <input class="form-control" type="checkbox" />
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
-                <label>Demonstrated good base of support</label>
+            <div class="col-md-5 col-sm-4">
+                <label style="margin-top: 10px">Demonstrated good base of support</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1  col-sm-1">
                 <input class="form-control" type="checkbox" />
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5  col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
@@ -1174,7 +1169,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
+            <div class="col-md-8 col-sm-10" style="margin-left: 15px;">
                 <textarea class="form-control"></textarea>
             </div>
         </div>
@@ -1182,7 +1177,7 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4"></div>
-            <div class="col-md-4 pull-right" style="margin-top: 15px;">
+            <div class="col-md-4 col-sm-6 pull-right" style="margin-top: 15px;">
                 <label class="bold">Total:</label>
                 <label class="bold">0/5</label>
 
@@ -1207,105 +1202,105 @@
         <br/>
 
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-4">
                 <label>1.Range of Motion</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <label>20/20</label>
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-4">
                 <label>2.Cardio-Vascular Fitness</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <label>0/5</label>
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-4">
                 <label>3.Upper Limb Fitness</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <label>0.0/20</label>
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-4">
                 <label>4.Lower Limb Fitness</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <label>3/15</label>
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-4">
                 <label>5.Back Fitness</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <label>7.0/35</label>
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-4">
                 <label>6.Manual Handling Technique</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <label>0/5</label>
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-4">
                 <label>Lifting Floor to Bench(900mm)</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <label>Kg</label>
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-4">
                 <label>Lifting Floor to Bench(900mm) to Shoulder</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-sm-1">
                 <label>Kg</label>
             </div>
-            <div class="col-md-6">
-                <input style="width:400px;" placeholder="Comment" type="text" />
+            <div class="col-md-5 col-sm-6">
+                <input class="form-control" placeholder="Comment" type="text" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
             </div>
             <div class="col-md-4"></div>
-            <div class="col-md-4 pull-right" style="margin-top: 15px;">
+            <div class="col-md-4 col-sm-6 pull-right" style="margin-top: 15px;">
                 <label class="bold">Total:</label>
                 <label class="bold">0/100</label>
 
@@ -1315,33 +1310,33 @@
         <div class="row" style="margin-left:10px;">
             <label class="col-md-12">Estimated Physical Demand Classification of Job Applying For (Please refer to Appendix 1 for definitions)</label>
         </div>
-        <div class="btn-group btn-group-circle col-md-12" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle"> Sedentary </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Light </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Medium </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Heavy </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Very Heavy </label>
+        <div class="btn-group  col-md-12">
+            <label class="btn">
+                <input type="radio" name="a"> Sedentary </label>
+            <label class="btn">
+                <input type="radio" name="a"> Light </label>
+            <label class="btn">
+                <input type="radio" name="a"> Medium </label>
+            <label class="btn">
+                <input type="radio" name="a"> Heavy </label>
+            <label class="btn">
+                <input type="radio" name="a"> Very Heavy </label>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
             <label class="col-md-12">Assessed Physical Capacity (Please refer to Appendix 1 for definitions)</label>
         </div>
-        <div class="btn-group btn-group-circle col-md-12" data-toggle="buttons">
-            <label class="btn grey active">
-                <input type="radio" class="toggle"> Sedentary </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Light </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Medium </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Heavy </label>
-            <label class="btn grey">
-                <input type="radio" class="toggle"> Very Heavy </label>
+        <div class="btn-group  col-md-12">
+            <label class="btn">
+                <input type="radio" name="a"> Sedentary </label>
+            <label class="btn">
+                <input type="radio" name="a"> Light </label>
+            <label class="btn">
+                <input type="radio" name="a"> Medium </label>
+            <label class="btn">
+                <input type="radio" name="a"> Heavy </label>
+            <label class="btn">
+                <input type="radio" name="a"> Very Heavy </label>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
@@ -1351,7 +1346,7 @@
             <label class="col-md-12">Please document any physical restrictions from the assessment that may place the applicant at risk of performing his /her physical duties. Please document any recommendations/restrictions the applicant requires to minimize any risk of injury in the workplace.</label>
         </div>
         <div class="row" style="margin-left: 10px;">
-            <div class="col-md-8" >
+            <div class="col-md-8 col-sm-10">
                 <textarea class="form-control"></textarea>
             </div>
         </div>
@@ -1362,14 +1357,14 @@
 </div>
 <div class="portlet light">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
             <div class="form-group">
                 <label class="control-label">Signature</label>
                 <input type="text" class="form-control" >
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
             <div class="form-group">
                 <label class="control-label">Date</label>
                 <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
@@ -1382,14 +1377,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
             <div class="form-group">
                 <label class="control-label">Name</label>
                 <input type="text" class="form-control" >
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
             <div class="form-group">
                 <label class="control-label">Position</label>
                 <input type="text" class="form-control" >

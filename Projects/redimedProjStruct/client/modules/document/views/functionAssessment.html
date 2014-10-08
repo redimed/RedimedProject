@@ -29,80 +29,82 @@
                                 <div ng-repeat="detail in line.detail">
                                     <label class="bold">{{detail.detail_name}}</label>
                                     <div class="row">
-                                        <div ng-if="detail.val1_name != null" ng-class="{'col-md-2' : detail.val1_name != null}">
-                                            <label  style="margin-top: 5px" ng-class="{'pull-right' : detail.val1_name != null}" >
+                                        <div ng-if="detail.val1_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
+                                            <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val1_name != null}">
                                                 {{detail.val1_name}}
                                             </label>
                                         </div>
-                                        <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2' : detail.val1_isvalue == 1}">
+                                        <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val1_isvalue == 1}">
                                             <input type="text"   class="form-control">
                                         </div>
-                                        <div ng-if="detail.val1_ischeckbox == 1" ng-class="{'col-md-1' : detail.val1_ischeckbox == 1}">
+                                        <div ng-if="detail.val1_ischeckbox == 1"  ng-class="{'col-md-1 col-sm-1' : detail.val1_ischeckbox == 1}">
                                             <input class="form-control" type="checkbox" />
                                         </div>
-                                        <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4' : detail.val1_ischeckbox == 2}">
-                                            <div class="btn-group btn-group-circle" data-toggle="buttons">
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> UNABLE
+                                        <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val1_ischeckbox == 2}">
+                                            <div class="btn-group ">
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> UNABLE
                                                 </label>
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> PARTIAL
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> PARTIAL
                                                 </label>
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ABLE
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2' : detail.val1_ischeckbox == 3}">
-                                            <div class="btn-group btn-group-circle" data-toggle="buttons">
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
-                                                </label>
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> ABLE
                                                 </label>
                                             </div>
                                         </div>
-                                        <div ng-if="detail.val2_name != null" ng-class="{'col-md-2' : detail.val2_name != null}">
-                                            <label  style="margin-top: 5px" ng-class="{'pull-right' : detail.val2_name != null}" >
+                                        <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val1_ischeckbox == 3}">
+                                            <div class="btn-group ">
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> Yes
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div ng-if="detail.val2_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}">
+                                            <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val2_name != null}" >
                                                 {{detail.val2_name}}
                                             </label>
                                         </div>
-                                        <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-2' : detail.val2_isvalue == 1}">
+                                        <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val2_isvalue == 1}">
                                             <input type="text"   class="form-control">
                                         </div>
-                                        <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1' : detail.val2_ischeckbox == 1}">
+                                        <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1 col-sm-1' : detail.val2_ischeckbox == 1}">
                                             <input class="form-control" type="checkbox" />
                                         </div>
-                                        <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4' : detail.val2_ischeckbox == 2}">
-                                            <div class="btn-group btn-group-circle" data-toggle="buttons">
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> UNABLE
+                                        <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val2_ischeckbox == 2}">
+                                            <div class="btn-group ">
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> UNABLE
                                                 </label>
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> PARTIAL
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> PARTIAL
                                                 </label>
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ABLE
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> ABLE
                                                 </label>
                                             </div>
                                         </div>
-                                        <div ng-if="detail.val2_ischeckbox == 3" ng-class="{'col-md-2' : detail.val2_ischeckbox == 3}">
-                                            <div class="btn-group btn-group-circle" data-toggle="buttons">
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                                        <div ng-if="detail.val2_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val2_ischeckbox == 3}">
+                                            <div class="btn-group ">
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> Yes
                                                 </label>
-                                                <label class="btn grey">
-                                                    <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                                                <label class="btn">
+                                                    <input type="radio" name='a' /> No
                                                 </label>
                                             </div>
                                         </div>
                                         <div ng-if="detail.comment_text == 1">
-                                            <label class="col-md-1" style="margin-top: 5px" >
-                                                Comment
-                                            </label>
-                                            <div class="col-md-3">
-                                                <input type="text" class="form-control">
+                                            <div class="form-group col-sm-8 col-md-6">
+                                                <label class="col-md-4 col-sm-3" style="margin-top: 10px">
+                                                    Comment
+                                                </label>
+                                                <div class="col-md-8 col-sm-9 " style="margin-top: 5px">
+                                                    <input type="text" class="form-control">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -112,33 +114,33 @@
                                     <div ng-if="line.line_israting1 == 1">
                                         <div ng-if="line.score_type1 == 3">
                                             <div class="row" style="margin-top: 15px">
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Score(AVG)</label>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <input type="text" readonly class="form-control">
                                                 </div>
                                                 <div ng-if="line.line_isscore2 == 1 && line.line_israting2 == 1 && line.score_type2 == 3">
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-2 col-sm-3">
                                                         <label  style="margin-top: 5px" class="pull-right" >Score(AVG)</label>
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-2 col-sm-3">
                                                         <input type="text" readonly class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-top: 15px">
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Rating</label>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <input type="text" readonly class="form-control">
                                                 </div>
                                                 <div ng-if="line.line_isscore2 == 1 && line.line_israting2 == 1 && line.score_type2 == 3">
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-2 col-sm-3">
                                                         <label  style="margin-top: 5px" class="pull-right" >Rating</label>
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-2 col-sm-3">
                                                         <input type="text" readonly class="form-control">
                                                     </div>
                                                 </div>
@@ -146,46 +148,46 @@
                                         </div>
                                         <div ng-if="line.score_type1 == 4">
                                             <div class="row" style="margin-top: 15px">
-                                                <div class="col-md-2">
+                                                <div class="col-md-1 col-sm-1">
                                                     <label  style="margin-top: 5px" class="pull-right" >Rating</label>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <input type="text" readonly class="form-control">
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 50px">
-                                                <label class="bold control-label col-md-10">Age predicted max HR max: 196 </label></br>
-                                                <label class="text-info control-label col-md-10">85% Max HR: 166.6 bpm</label>
+                                                <label class="bold control-label col-md-10 col-sm-10">Age predicted max HR max: 196 </label></br>
+                                                <label class="text-info control-label col-md-10 col-sm-10">85% Max HR: 166.6 bpm</label>
                                             </div>
                                         </div>
                                         <div ng-if="line.score_type1 == 6">
                                             <div class="row" style="margin-top: 15px">
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Rating</label>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <input type="text" readonly class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div ng-if="line.score_type1 == 8">
                                             <div class="row" style="margin-top: 15px">
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Score/Rating: </label>
                                                 </div>
-                                                <div class="col-md-10">
-                                                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> EXCELLENT
+                                                <div class="col-md-10 col-sm-9">
+                                                    <div class="btn-group ">
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> EXCELLENT
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> GOOD
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> GOOD
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> FAIR
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> FAIR
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> POOR
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> POOR
                                                         </label>
                                                     </div>
                                                 </div>
@@ -196,19 +198,19 @@
                                     <div ng-if="line.line_israting1 == null || line.line_israting1 == 0">
                                         <div ng-if="line.score_type1 == 7">
                                             <div class="row"  style="margin-top: 15px">
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Score/Rating</label>
                                                 </div>
-                                                <div class="col-md-5">
-                                                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> UNABLE
+                                                <div class="col-md-5 col-sm-8">
+                                                    <div class="btn-group ">
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> UNABLE
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> PARTIAL
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> PARTIAL
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ABLE
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> ABLE
                                                         </label>
                                                     </div>
                                                 </div>
@@ -216,27 +218,27 @@
                                         </div>
                                         <div ng-if="line.score_type1 == 9">
                                             <div class="row"  style="margin-top: 15px">
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <label class="pull-right">Manage </label>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <input type="text"  readonly style="width: 50px;background-color: lightgrey"><label>kg</label>
                                                 </div>
                                             </div>
                                             <div class="row"  style="margin-top: 15px">
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Score/Rating</label>
                                                 </div>
-                                                <div class="col-md-5">
-                                                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> UNABLE
+                                                <div class="col-md-5 col-sm-8">
+                                                    <div class="btn-group ">
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> UNABLE
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> PARTIAL
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> PARTIAL
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> ABLE
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> ABLE
                                                         </label>
                                                     </div>
                                                 </div>
@@ -251,45 +253,45 @@
                                         <label ng-if="line.comment.length > 0" class="control-label bold">Question Comments</label>
                                         <div ng-repeat="nameC in line.comment">
                                             <div class="row">
-                                                <div class="col-md-5">
+                                                <div class="col-md-5 col-sm-7">
                                                     <label ng-if="nameC.comment_name != 'null'" class="text-info control-label" style="margin-top: 10px"> {{nameC.comment_name}} </label>
                                                 </div>
-                                                <div ng-if="nameC.comment_type == 1" ng-class="{'col-md-1' : nameC.comment_type == 1}">
+                                                <div ng-if="nameC.comment_type == 1" ng-class="{'col-md-1 col-sm-1' : nameC.comment_type == 1}">
                                                     <input class="form-control" type="checkbox"/>
                                                 </div>
-                                                <div ng-if="nameC.comment_type == 3" ng-class="{'col-md-2' : nameC.comment_type == 2}">
-                                                    <div class="btn-group btn-group-circle" data-toggle="buttons" style="margin-top: 10px">
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                                                <div ng-if="nameC.comment_type == 3" ng-class="{'col-md-2 col-sm-3' : nameC.comment_type == 2}">
+                                                    <div class="btn-group " >
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> Yes
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div ng-if="nameC.comment_type == 4" ng-class="{'col-md-4' : nameC.comment_type == 4}">
-                                                    <div class="btn-group btn-group-circle" data-toggle="buttons" style="margin-top: 10px">
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> GOOD
-                                                        </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> AVERAGE
-                                                        </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> POOR
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> No
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div ng-if="nameC.comment_type == 5" ng-class="{'col-md-4' : nameC.comment_type == 5}">
-                                                    <div class="btn-group btn-group-circle" data-toggle="buttons" style="margin-top: 10px">
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> MINIMAL
+                                                <div ng-if="nameC.comment_type == 4" ng-class="{'col-md-4 col-sm-6' : nameC.comment_type == 4}">
+                                                    <div class="btn-group " >
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> GOOD
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> MODERATE
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> AVERAGE
                                                         </label>
-                                                        <label class="btn grey">
-                                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> MAXIMAL
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> POOR
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="nameC.comment_type == 5" ng-class="{'col-md-5 col-sm-8' : nameC.comment_type == 5}">
+                                                    <div class="btn-group " >
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> MINIMAL
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> MODERATE
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" name='a' /> MAXIMAL
                                                         </label>
                                                     </div>
                                                 </div>
@@ -342,63 +344,63 @@
                         </div>
                         <div ng-if="line.line_isscore1 != 1" class="portlet-body" ng-repeat="detail in line.detail">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <label class="bold">{{detail.detail_name}}</label>
+                                <div class="col-md-3 col-sm-5">
+                                    <label class="bold" style="margin-top: 10px">{{detail.detail_name}}</label>
                                 </div>
-                                <div ng-if="detail.val1_name != null" ng-class="{'col-md-2' : detail.val1_name != null}">
-                                    <label  style="margin-top: 5px" ng-class="{'pull-right' : detail.val1_name != null}" >
+                                <div ng-if="detail.val1_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val1_name != null}">
+                                    <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val1_name != null}" >
                                         {{detail.val1_name}}
                                     </label>
                                 </div>
-                                <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2' : detail.val1_ischeckbox == 3}">
-                                    <div class="btn-group btn-group-circle" data-toggle="buttons">
-                                        <label class="btn grey">
-                                            <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                                <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val1_ischeckbox == 3}">
+                                    <div class="btn-group ">
+                                        <label class="btn">
+                                            <input type="radio" name='a' /> Yes
                                         </label>
-                                        <label class="btn grey">
-                                            <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> No
+                                        <label class="btn">
+                                            <input type="radio" name='a' /> No
                                         </label>
                                     </div>
                                 </div>
                                 <div ng-if="detail.comment_text == 1">
-                                    <label class="col-md-1" style="margin-top: 5px" >
+                                    <label class="col-md-1 col-sm-2" style="margin-top: 10px" >
                                         Comment
                                     </label>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 col-sm-8">
                                         <textarea class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="line.line_isscore1 == 1 && line.line_israting1 == 1 && line.score_type1 == 5" class="portlet-body">
+                        <div ng-if="line.line_isscore1 == 1  && line.score_type1 == 5" class="portlet-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-sm-6">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-3">
                                     <label class="bold">Score</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-3">
                                     <label class="bold">Rating</label>
                                 </div>
                             </div>
                             <div class="row" ng-repeat="detail in line.detail">
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-sm-6">
                                     <label class="bold">{{detail.detail_name}}</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-3">
                                     <label>/4</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-3">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-sm-6">
                                     <label class="bold">Total</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-3">
                                     <label class="bold">/{{line.detail.length * 4}}</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-3">
                                     <label class="bold"></label>
                                 </div>
                             </div>
@@ -412,19 +414,17 @@
             <div class="panel-body">
                 <label class="control-label text-info bold">Risk Rating</label>
                 <div class="row">
-                    <label class="bold col-md-2">Risk Rating: </label>
-                    <div class="col-md-5">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Low Risk
-                            </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> Medium Risk
-                            </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/> High Risk
-                            </label>
-                        </div>
+                    <label class="bold col-md-2 col-sm-2" style="margin-top: 10px">Risk Rating: </label>
+                    <div class="btn-group col-sm-9 col-md-9">
+                        <label class="btn">
+                            <input type="radio" name='a' /> Low Risk
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name='a' /> Medium Risk
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name='a' /> High Risk
+                        </label>
                     </div>
                 </div>
                 </br>
@@ -436,56 +436,56 @@
                 </div>
                 </br>
                 <div class="row">
-                    <label class="bold col-md-5">Health and Rehab Coorinator Review Recommended: </label>
-                    <div class="col-md-5">
-                        <div class="btn-group btn-group-circle" data-toggle="buttons">
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="1" class="toggle" ng-model="info.consentCheck"/> Yes
+                    <label class="bold col-md-5 col-sm-8" style="margin-top: 10px">Health and Rehab Coorinator Review Recommended: </label>
+                    <div class="col-md-5 col-sm-4">
+                        <div class="btn-group ">
+                            <label class="btn">
+                                <input type="radio" name='a' /> Yes
                             </label>
-                            <label class="btn grey">
-                                <input type="radio" name='consentCheck' value="0" class="toggle" ng-model="info.consentCheck"/>  No
+                            <label class="btn">
+                                <input type="radio" name='a' />  No
                             </label>
                         </div>
                     </div>
                 </div>
                 <label class="control-label text-info bold">Additional Tests Attached: </label>
                 <div class="row">
-                    <div class="col-md-3" style="margin-top: 10px">
+                    <div class="col-md-3 col-sm-3" style="margin-top: 10px">
                         <label class="pull-right"> Flexibility</label>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-sm-1">
                         <input type="checkbox" class="form-control">
                     </div>
-                    <div class="col-md-3" style="margin-top: 10px">
+                    <div class="col-md-3 col-sm-3" style="margin-top: 10px">
                         <label class="pull-right"> Score Stability</label>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-sm-1">
                         <input type="checkbox" class="form-control">
                     </div>
-                    <div class="col-md-3" style="margin-top: 10px">
+                    <div class="col-md-3 col-sm-3" style="margin-top: 10px">
                         <label class="pull-right"> Wrist/elbow function</label>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-sm-1">
                         <input type="checkbox" class="form-control">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3" style="margin-top: 10px">
+                    <div class="col-md-3 col-sm-3" style="margin-top: 10px">
                         <label class="pull-right"> Shoulder function</label>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-sm-1">
                         <input type="checkbox" class="form-control">
                     </div>
-                    <div class="col-md-3" style="margin-top: 10px">
+                    <div class="col-md-3 col-sm-3" style="margin-top: 10px">
                         <label class="pull-right">Lower limb function</label>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-sm-1">
                         <input type="checkbox" class="form-control">
                     </div>
-                    <div class="col-md-3" style="margin-top: 10px">
+                    <div class="col-md-3 col-sm-3" style="margin-top: 10px">
                         <label class="pull-right">Balance</label>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-sm-1">
                         <input type="checkbox" class="form-control">
                     </div>
                 </div>
