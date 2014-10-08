@@ -17,8 +17,8 @@ angular.module("app.loggedIn.controller",[
     var loadLoggedIn = function(){
         // MENU
 
-        UserService.menu(userInfo.id).then(function(response){
 
+        UserService.menu(userInfo.id).then(function(response){
 
             var i = 0;
             angular.forEach(response, function(menu){

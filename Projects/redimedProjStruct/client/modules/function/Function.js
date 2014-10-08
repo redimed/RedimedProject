@@ -10,7 +10,6 @@ angular.module("app.loggedIn.function",[
 
         .state("loggedIn.function",{
             url:"/functions",
-
             templateUrl: "modules/function/views/function.html",
             controller: 'FunctionController'
 

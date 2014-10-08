@@ -11,6 +11,7 @@ angular.module("app", [
     "ngTable",                  // ANGULAR TABLE
     "app.loggedIn",             // MODULES LOGGED IN
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
+    'angular.filter',
 
 
     "app.directive.common"      // CUSTOM DIRECTIVES
