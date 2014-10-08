@@ -7,7 +7,7 @@ angular.module("app.loggedIn",[
     "app.loggedIn.menu", //MENU MODULE
     "app.loggedIn.telehealth", //Telehealth MODULE
     "app.loggedIn.booking", //ONLINE-BOOKING MODULE
-    "app.loggedIn.booking.admin"
+    "app.loggedIn.booking.admin",
     "app.loggedIn.document" // Document telehealth
 ])
 
