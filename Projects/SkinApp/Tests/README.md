@@ -1,4 +1,0 @@
-RedimedProject
-==============
-
-Redimed Projects
