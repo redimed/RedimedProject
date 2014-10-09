@@ -175,7 +175,7 @@
                         <label>{{b.position}}</label>
                     </td>
                     <td data-title="'Preferred REDiMED Site'">
-                        <label>{{b.siteName}}</label>
+                        <label>{{b.siteName+ ' - ' + b.stateName + ' - ' + b.suburbName }}</label>
                     </td>
                     <td data-title="'From Date'">
                         <label>{{b.fromDate | date:'dd/MM/yyyy'}}</label>
@@ -185,13 +185,6 @@
                     </td>
                     <td data-title="'Calendar'" >
                         <label>{{b.displayDate}}</label>
-                    </td>
-
-                    <td  data-title="'State'">
-                        <label>{{b.stateId}}</label>
-                    </td>
-                    <td  data-title="'Suburb'">
-                        <label>{{b.suburbId}}</label>
                     </td>
 
                     <td class="col-md-2" data-title="'Actions'">

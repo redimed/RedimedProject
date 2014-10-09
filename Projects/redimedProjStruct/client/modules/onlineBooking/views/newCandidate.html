@@ -29,7 +29,7 @@
                                                 * </span></label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" class="form-control col-md-12" name="dob" required datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob" is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <input type="text" max-date="maxDate" class="form-control col-md-12" name="dob" required datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob" is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                 </div>
             </div>
             <div class="row" ng-show="showClickedValidation && candidateForm.dob.$invalid">
@@ -162,7 +162,7 @@
                                                 * </span></label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" class="form-control col-md-12" name="fromDate" ng-change="fromDateChange()" datepicker-popup="dd/MM/yyyy" data-ng-model="info.fromDate" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <input type="text" min-date="minDate" class="form-control col-md-12" name="fromDate" ng-change="fromDateChange()" datepicker-popup="dd/MM/yyyy" data-ng-model="info.fromDate" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                 </div>
             </div>
             <div class="row" ng-show="showClickedValidation && candidateForm.fromDate.$invalid">
@@ -181,7 +181,7 @@
                 </div>
                 <div class="col-md-8">
 
-                    <input type="text" class="form-control col-md-12" ng-change="toDateChange()" name="toDate"  datepicker-popup="dd/MM/yyyy" data-ng-model="info.toDate" is-open="openTo" ng-click="openTo = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <input type="text" min-date="minDate" class="form-control col-md-12" ng-change="toDateChange()" name="toDate"  datepicker-popup="dd/MM/yyyy" data-ng-model="info.toDate" is-open="openTo" ng-click="openTo = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
 
                 </div>
             </div>

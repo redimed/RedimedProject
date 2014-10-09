@@ -288,7 +288,11 @@ module.exports = {
                                 "email":info[i].email,
                                 "siteName":info[i].siteName,
                                 "submitDate":info[i].submitDate,
-                                "displayDate":info[i].displayDate
+                                "displayDate":info[i].displayDate,
+                                "stateId": info[i].stateId,
+                                "suburbId":info[i].suburbId,
+                                "stateName": info[i].stateName,
+                                "suburbName": info[i].suburbName
                             })
                         }
 
@@ -302,12 +306,17 @@ module.exports = {
                                 Phone: list[i].phone,
                                 Email: list[i].email,
                                 Position: list[i].position,
-                                Appointment_time: list[i].submitDate,
+                                Appointment_time: list[i].submitDate == '' || list[i].submitDate == null ? null : list[i].submitDate,
                                 Appointment_status: 'Pending',
                                 SITE_ID: list[i].siteId,
                                 FROM_DATE: list[i].fromDate,
                                 TO_DATE: list[i].toDate,
-                                CALENDAR_ID: list[i].calId
+                                CALENDAR_ID: list[i].calId == '' || list[i].calId == null ? null : list[i].calId,
+                                state_id: list[i].stateId == '' || list[i].stateId == null ? null : list[i].stateId,
+                                suburb_id: list[i].suburbId == '' || list[i].suburbId == null ? null : list[i].suburbId,
+                                state_name: list[i].stateName == '' || list[i].stateName == null ? null : list[i].stateName,
+                                suburb_name: list[i].suburbName == '' || list[i].suburbName == null ? null : list[i].suburbName
+
                             })
                                 .success(function(data){
 
@@ -321,11 +330,17 @@ module.exports = {
                                             var candidateEmail = data['dataValues'].Email;
                                             var appointmentDate = data['dataValues'].Appointment_time;
 
-
-                                            //Begin Send Email
-                                            var smtpTransport = nodemailer.createTransport("direct",{
-                                                debug:true
-                                            });
+                                            var transport = nodemailer.createTransport(smtpPool({
+                                                host: "mail.redimed.com.au", // hostname
+                                                secure: true,
+                                                ignoreTLS: false,
+                                                port: 25, // port for secure SMTP
+                                                debug: true,
+                                                auth: {
+                                                    user: "programmer2",
+                                                    pass: "Hello8080"
+                                                }
+                                            }));
 
                                             var mailOptions = {
                                                 from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
@@ -346,15 +361,16 @@ module.exports = {
 
                                             }
 
-                                            smtpTransport.sendMail(mailOptions, function(error, response){  //callback
+                                            transport.sendMail(mailOptions, function(error, response){  //callback
                                                 if(error){
                                                     console.log(error);
+                                                    res.json({status:"fail"});
                                                 }else{
                                                     console.log("Message sent: " + response.message);
+                                                    res.json({status:"success"});
                                                 }
-                                                smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                                                transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
                                             });
-                                            //End Send Email
                                         })
                                 })
                                 .error(function(err){
