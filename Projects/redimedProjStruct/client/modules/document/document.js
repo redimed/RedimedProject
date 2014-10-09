@@ -12,7 +12,12 @@ angular.module("app.loggedIn.document",[
     "app.loggedIn.document.gorgonMA.controllers",
     "app.loggedIn.document.gorgonMH.controllers",
     "app.loggedIn.document.gorgonUQ.controllers",
-    "app.loggedIn.document.services"
+    "app.loggedIn.document.services",
+    "app.loggedIn.document.MH.controllers",
+    "app.loggedIn.document.MRS.controllers",
+    "app.loggedIn.document.AUD1.controllers",
+    "app.loggedIn.document.AUD2.controllers",
+    "app.loggedIn.document.form18.controllers"
 ])
     .config(function($stateProvider){
         $stateProvider
@@ -88,5 +93,41 @@ angular.module("app.loggedIn.document",[
                 controller: 'gorgonUQController'
 
             })
+
+            .state("loggedIn.Form18", {
+                url: "/Form18",
+
+                templateUrl: "modules/document/views/form18.html",
+                controller: 'form18Controller'
+            })
+
+            .state("loggedIn.MH", {
+                url: "/MH",
+
+                templateUrl: "modules/document/views/medicalhistory.html",
+                controller: 'MHController'
+            })
+
+            .state("loggedIn.MRS", {
+                url: "/MRS",
+
+                templateUrl: "modules/document/views/medicalresultsummary.html",
+                controller: 'MRSController'
+            })
+
+            .state("loggedIn.AUD1", {
+                url: "/AUD1",
+
+                templateUrl: "modules/document/views/audiogramresults1.html",
+                controller: 'AUD1Controller'
+            })
+
+            .state("loggedIn.AUD2", {
+                url: "/AUD2",
+
+                templateUrl: "modules/document/views/audiogramresults2.html",
+                controller: 'AUD2Controller'
+            })
+
 
     });
