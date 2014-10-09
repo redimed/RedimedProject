@@ -249,147 +249,327 @@ module.exports = {
     },
     submitBooking: function(req,res){
 
+        function insertCustomAss(packId,assId,assName)
+        {
+            db.sequelize.query('INSERT INTO packages_assessments(pack_id,ass_id,ass_name) VALUES(?,?,?)',null,{raw:true},[packId,assId,'   -  '+assName])
+                .success(function(data){
+                    console.log('success');
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+
+        }
+
         var info = req.body.info;
         var head = req.body.header;
 
         var list = [];
+        var ass = [];
 
-        db.BookingHeader.max('Booking_id').success(function(max){
-            db.BookingHeader.create({
-                Booking_id: max + 1,
-                PO_Number: head.PO_number,
-                result_email: head.result_email,
-                invoice_email: head.invoice_email,
-                Project_Identofication: head.ProjectIdentification,
-                Comments: head.Comment,
-                package_id: head.PackageId,
-                company_id: head.CompanyId,
-                Booking_Person: head.Booking_Person,
-                contact_number: head.contact_number,
-                sub_company_id: head.subCompany_Id,
-                contact_email: head.contact_email
+        console.log(head);
+
+        if(head.PackageId == -1)
+        {
+            db.Package.create({
+                package_name: 'Custom Package'
             })
                 .success(function(data){
+                    db.Package.max('id')
+                        .success(function(packMax)
+                        {
+                            for(var i=0; i< head.arrCustomAss.length; i++)
+                            {
+                                insertCustomAss(packMax,head.arrCustomAss[i].ass_id,head.arrCustomAss[i].ass_name);
+                            }
 
-                    db.BookingCandidate.max('Candidate_id').success(function(max){
+                            db.BookingHeader.max('Booking_id').success(function(max){
+                                db.BookingHeader.create({
+                                    Booking_id: max + 1,
+                                    PO_Number: head.PO_number,
+                                    result_email: head.result_email,
+                                    invoice_email: head.invoice_email,
+                                    Project_Identofication: head.ProjectIdentification,
+                                    Comments: head.Comment,
+                                    package_id: packMax,
+                                    company_id: head.CompanyId,
+                                    Booking_Person: head.Booking_Person,
+                                    contact_number: head.contact_number,
+                                    sub_company_id: head.subCompany_Id,
+                                    contact_email: head.contact_email
+                                })
+                                    .success(function(data){
 
-                        for(var i=0; i<info.length; i++){
-                            list.push({
-                                "bookingId":data['dataValues'].Booking_id,
-                                "candidateId":max = max + 1,
-                                "siteId":info[i].siteId,
-                                "fromDate":info[i].fromDate,
-                                "toDate":info[i].toDate,
-                                "calId":info[i].calId,
-                                "candidateName":info[i].candidateName,
-                                "dob":info[i].dob,
-                                "position":info[i].position,
-                                "phone":info[i].phone,
-                                "email":info[i].email,
-                                "siteName":info[i].siteName,
-                                "submitDate":info[i].submitDate,
-                                "displayDate":info[i].displayDate,
-                                "stateId": info[i].stateId,
-                                "suburbId":info[i].suburbId,
-                                "stateName": info[i].stateName,
-                                "suburbName": info[i].suburbName
-                            })
-                        }
+                                        db.BookingCandidate.max('Candidate_id').success(function(max){
 
-                        for(var i=0; i<list.length; i++){
-
-                            db.BookingCandidate.create({
-                                Booking_id: list[i].bookingId,
-                                Candidate_id: list[i].candidateId,
-                                Candidates_name: list[i].candidateName,
-                                DoB: list[i].dob,
-                                Phone: list[i].phone,
-                                Email: list[i].email,
-                                Position: list[i].position,
-                                Appointment_time: list[i].submitDate == '' || list[i].submitDate == null ? null : list[i].submitDate,
-                                Appointment_status: 'Pending',
-                                SITE_ID: list[i].siteId,
-                                FROM_DATE: list[i].fromDate,
-                                TO_DATE: list[i].toDate,
-                                CALENDAR_ID: list[i].calId == '' || list[i].calId == null ? null : list[i].calId,
-                                state_id: list[i].stateId == '' || list[i].stateId == null ? null : list[i].stateId,
-                                suburb_id: list[i].suburbId == '' || list[i].suburbId == null ? null : list[i].suburbId,
-                                state_name: list[i].stateName == '' || list[i].stateName == null ? null : list[i].stateName,
-                                suburb_name: list[i].suburbName == '' || list[i].suburbName == null ? null : list[i].suburbName
-
-                            })
-                                .success(function(data){
-
-                                    res.json({status:'success'})
-
-                                    var siteId = data['dataValues'].SITE_ID;
-
-                                    db.sequelize.query('SELECT Site_name FROM redimedsites WHERE id=?',null,{raw:true},[siteId])
-                                        .success(function(rs){
-                                            var siteName = rs[0].Site_name;
-                                            var candidateEmail = data['dataValues'].Email;
-                                            var appointmentDate = data['dataValues'].Appointment_time;
-
-                                            var transport = nodemailer.createTransport(smtpPool({
-                                                host: "mail.redimed.com.au", // hostname
-                                                secure: true,
-                                                ignoreTLS: false,
-                                                port: 25, // port for secure SMTP
-                                                debug: true,
-                                                auth: {
-                                                    user: "programmer2",
-                                                    pass: "Hello8080"
-                                                }
-                                            }));
-
-                                            var mailOptions = {
-                                                from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
-                                                to: candidateEmail, // receiver
-                                                subject: "✔ REDiMED Booking Confirm", // Subject line
-                                                html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
-                                                    "<br>Your medical assessment has been booked at the following:</b><br>"+
-                                                    "Date / Time: <b>" + appointmentDate +"</b> <br>" +
-                                                    "Location: <b>REDiMED " + siteName + "</b><br>" +
-                                                    "<br>" +
-                                                    "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
-                                                    "<br>" +
-                                                    "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
-                                                    "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
-                                                    "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
-                                                    "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
-                                                    "- For any queries, please call 92300990.<br>"
-
+                                            for(var i=0; i<info.length; i++){
+                                                list.push({
+                                                    "bookingId":data['dataValues'].Booking_id,
+                                                    "candidateId":max = max + 1,
+                                                    "siteId":info[i].siteId,
+                                                    "fromDate":info[i].fromDate,
+                                                    "toDate":info[i].toDate,
+                                                    "calId":info[i].calId,
+                                                    "candidateName":info[i].candidateName,
+                                                    "dob":info[i].dob,
+                                                    "position":info[i].position,
+                                                    "phone":info[i].phone,
+                                                    "email":info[i].email,
+                                                    "siteName":info[i].siteName,
+                                                    "submitDate":info[i].submitDate,
+                                                    "displayDate":info[i].displayDate,
+                                                    "stateId": info[i].stateId,
+                                                    "suburbId":info[i].suburbId,
+                                                    "stateName": info[i].stateName,
+                                                    "suburbName": info[i].suburbName
+                                                })
                                             }
 
-                                            transport.sendMail(mailOptions, function(error, response){  //callback
-                                                if(error){
-                                                    console.log(error);
-                                                    res.json({status:"fail"});
-                                                }else{
-                                                    console.log("Message sent: " + response.message);
-                                                    res.json({status:"success"});
-                                                }
-                                                transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
-                                            });
-                                        })
-                                })
-                                .error(function(err){
-                                    res.json({status:'error'})
-                                    console.log(err);
-                                })
-                        }
-                    })
-                        .error(function(err){
-                            res.json({status:'error'})
-                            console.log(err);
-                        })
+                                            for(var i=0; i<list.length; i++){
 
+                                                db.BookingCandidate.create({
+                                                    Booking_id: list[i].bookingId,
+                                                    Candidate_id: list[i].candidateId,
+                                                    Candidates_name: list[i].candidateName,
+                                                    DoB: list[i].dob,
+                                                    Phone: list[i].phone,
+                                                    Email: list[i].email,
+                                                    Position: list[i].position,
+                                                    Appointment_time: list[i].submitDate == '' || list[i].submitDate == null ? null : list[i].submitDate,
+                                                    Appointment_status: 'Pending',
+                                                    SITE_ID: list[i].siteId,
+                                                    FROM_DATE: list[i].fromDate,
+                                                    TO_DATE: list[i].toDate,
+                                                    CALENDAR_ID: list[i].calId == '' || list[i].calId == null ? null : list[i].calId,
+                                                    state_id: list[i].stateId == '' || list[i].stateId == null ? null : list[i].stateId,
+                                                    suburb_id: list[i].suburbId == '' || list[i].suburbId == null ? null : list[i].suburbId,
+                                                    state_name: list[i].stateName == '' || list[i].stateName == null ? null : list[i].stateName,
+                                                    suburb_name: list[i].suburbName == '' || list[i].suburbName == null ? null : list[i].suburbName
+
+                                                })
+                                                    .success(function(data){
+
+                                                        res.json({status:'success'})
+
+                                                        var siteId = data['dataValues'].SITE_ID;
+
+                                                        db.sequelize.query('SELECT Site_name FROM redimedsites WHERE id=?',null,{raw:true},[siteId])
+                                                            .success(function(rs){
+                                                                var siteName = rs[0].Site_name;
+                                                                var candidateEmail = data['dataValues'].Email;
+                                                                var appointmentDate = data['dataValues'].Appointment_time;
+
+                                                                var transport = nodemailer.createTransport(smtpPool({
+                                                                    host: "mail.redimed.com.au", // hostname
+                                                                    secure: true,
+                                                                    ignoreTLS: false,
+                                                                    port: 25, // port for secure SMTP
+                                                                    debug: true,
+                                                                    auth: {
+                                                                        user: "programmer2",
+                                                                        pass: "Hello8080"
+                                                                    }
+                                                                }));
+
+                                                                var mailOptions = {
+                                                                    from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
+                                                                    to: candidateEmail, // receiver
+                                                                    subject: "✔ REDiMED Booking Confirm", // Subject line
+                                                                    html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
+                                                                        "<br>Your medical assessment has been booked at the following:</b><br>"+
+                                                                        "Date / Time: <b>" + appointmentDate +"</b> <br>" +
+                                                                        "Location: <b>REDiMED " + siteName + "</b><br>" +
+                                                                        "<br>" +
+                                                                        "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
+                                                                        "<br>" +
+                                                                        "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
+                                                                        "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
+                                                                        "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
+                                                                        "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
+                                                                        "- For any queries, please call 92300990.<br>"
+
+                                                                }
+
+                                                                transport.sendMail(mailOptions, function(error, response){  //callback
+                                                                    if(error){
+                                                                        console.log(error);
+                                                                        res.json({status:"fail"});
+                                                                    }else{
+                                                                        console.log("Message sent: " + response.message);
+                                                                        res.json({status:"success"});
+                                                                    }
+                                                                    transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                                                                });
+                                                            })
+                                                    })
+                                                    .error(function(err){
+                                                        res.json({status:'error'})
+                                                        console.log(err);
+                                                    })
+                                            }
+                                        })
+                                            .error(function(err){
+                                                res.json({status:'error'})
+                                                console.log(err);
+                                            })
+
+                                    })
+                                    .error(function(err){
+                                        res.json({status:'error'})
+                                        console.log(err);
+                                    })
+
+                            })
+
+
+                        })
                 })
                 .error(function(err){
-                    res.json({status:'error'})
                     console.log(err);
                 })
 
-        })
+        }
+        else
+        {
+            db.BookingHeader.max('Booking_id').success(function(max){
+                db.BookingHeader.create({
+                    Booking_id: max + 1,
+                    PO_Number: head.PO_number,
+                    result_email: head.result_email,
+                    invoice_email: head.invoice_email,
+                    Project_Identofication: head.ProjectIdentification,
+                    Comments: head.Comment,
+                    package_id: head.PackageId,
+                    company_id: head.CompanyId,
+                    Booking_Person: head.Booking_Person,
+                    contact_number: head.contact_number,
+                    sub_company_id: head.subCompany_Id,
+                    contact_email: head.contact_email
+                })
+                    .success(function(data){
+
+                        db.BookingCandidate.max('Candidate_id').success(function(max){
+
+                            for(var i=0; i<info.length; i++){
+                                list.push({
+                                    "bookingId":data['dataValues'].Booking_id,
+                                    "candidateId":max = max + 1,
+                                    "siteId":info[i].siteId,
+                                    "fromDate":info[i].fromDate,
+                                    "toDate":info[i].toDate,
+                                    "calId":info[i].calId,
+                                    "candidateName":info[i].candidateName,
+                                    "dob":info[i].dob,
+                                    "position":info[i].position,
+                                    "phone":info[i].phone,
+                                    "email":info[i].email,
+                                    "siteName":info[i].siteName,
+                                    "submitDate":info[i].submitDate,
+                                    "displayDate":info[i].displayDate,
+                                    "stateId": info[i].stateId,
+                                    "suburbId":info[i].suburbId,
+                                    "stateName": info[i].stateName,
+                                    "suburbName": info[i].suburbName
+                                })
+                            }
+
+                            for(var i=0; i<list.length; i++){
+
+                                db.BookingCandidate.create({
+                                    Booking_id: list[i].bookingId,
+                                    Candidate_id: list[i].candidateId,
+                                    Candidates_name: list[i].candidateName,
+                                    DoB: list[i].dob,
+                                    Phone: list[i].phone,
+                                    Email: list[i].email,
+                                    Position: list[i].position,
+                                    Appointment_time: list[i].submitDate == '' || list[i].submitDate == null ? null : list[i].submitDate,
+                                    Appointment_status: 'Pending',
+                                    SITE_ID: list[i].siteId,
+                                    FROM_DATE: list[i].fromDate,
+                                    TO_DATE: list[i].toDate,
+                                    CALENDAR_ID: list[i].calId == '' || list[i].calId == null ? null : list[i].calId,
+                                    state_id: list[i].stateId == '' || list[i].stateId == null ? null : list[i].stateId,
+                                    suburb_id: list[i].suburbId == '' || list[i].suburbId == null ? null : list[i].suburbId,
+                                    state_name: list[i].stateName == '' || list[i].stateName == null ? null : list[i].stateName,
+                                    suburb_name: list[i].suburbName == '' || list[i].suburbName == null ? null : list[i].suburbName
+
+                                })
+                                    .success(function(data){
+
+                                        res.json({status:'success'})
+
+                                        var siteId = data['dataValues'].SITE_ID;
+
+                                        db.sequelize.query('SELECT Site_name FROM redimedsites WHERE id=?',null,{raw:true},[siteId])
+                                            .success(function(rs){
+                                                var siteName = rs[0].Site_name;
+                                                var candidateEmail = data['dataValues'].Email;
+                                                var appointmentDate = data['dataValues'].Appointment_time;
+
+                                                var transport = nodemailer.createTransport(smtpPool({
+                                                    host: "mail.redimed.com.au", // hostname
+                                                    secure: true,
+                                                    ignoreTLS: false,
+                                                    port: 25, // port for secure SMTP
+                                                    debug: true,
+                                                    auth: {
+                                                        user: "programmer2",
+                                                        pass: "Hello8080"
+                                                    }
+                                                }));
+
+                                                var mailOptions = {
+                                                    from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
+                                                    to: candidateEmail, // receiver
+                                                    subject: "✔ REDiMED Booking Confirm", // Subject line
+                                                    html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
+                                                        "<br>Your medical assessment has been booked at the following:</b><br>"+
+                                                        "Date / Time: <b>" + appointmentDate +"</b> <br>" +
+                                                        "Location: <b>REDiMED " + siteName + "</b><br>" +
+                                                        "<br>" +
+                                                        "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
+                                                        "<br>" +
+                                                        "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
+                                                        "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
+                                                        "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
+                                                        "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
+                                                        "- For any queries, please call 92300990.<br>"
+
+                                                }
+
+                                                transport.sendMail(mailOptions, function(error, response){  //callback
+                                                    if(error){
+                                                        console.log(error);
+                                                        res.json({status:"fail"});
+                                                    }else{
+                                                        console.log("Message sent: " + response.message);
+                                                        res.json({status:"success"});
+                                                    }
+                                                    transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                                                });
+                                            })
+                                    })
+                                    .error(function(err){
+                                        res.json({status:'error'})
+                                        console.log(err);
+                                    })
+                            }
+                        })
+                            .error(function(err){
+                                res.json({status:'error'})
+                                console.log(err);
+                            })
+
+                    })
+                    .error(function(err){
+                        res.json({status:'error'})
+                        console.log(err);
+                    })
+
+            })
+        }
+
+
     }
 };

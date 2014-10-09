@@ -154,6 +154,11 @@ angular.module('app.loggedIn.booking.services',[])
             return suburb.post({id:id});
         }
 
+        bookingService.customPackage = function(id){
+            var pack = api.all('package/custom');
+            return pack.post({id:id});
+        }
+
 
 
         return bookingService;

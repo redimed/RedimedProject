@@ -80,6 +80,48 @@ angular.module("app.directive.common", [])
 	}
 })
 
+.directive("checkList", [function () {
+    return {
+        restrict: "A",
+        scope: {
+            selectedItemsArray: "=",
+            value: "@"
+        },
+        link: function (scope, elem) {
+            scope.$watchCollection("selectedItemsArray", function(newValue){
+                if (_.contains(newValue, scope.value)) {
+                    elem.prop("checked", true);
+                }
+                else{
+                    elem.prop("checked", false);
+                }
+            });
+            if (_.contains(scope.selectedItemsArray, scope.value)) {
+                elem.prop("checked", true);
+            }
+            elem.on("change", function () {
+                if (elem.prop("checked")) {
+                    if (!_.contains(scope.selectedItemsArray, scope.value)) {
+                        scope.$apply(
+                            function(){
+                                scope.selectedItemsArray.push(scope.value);
+                            }
+                        );
+                    }
+                } else {
+                    if (_.contains(scope.selectedItemsArray, scope.value)) {
+                        var index = scope.selectedItemsArray.indexOf(scope.value);
+                        scope.$apply(
+                            function(){
+                                scope.selectedItemsArray.splice(index, 1);
+                            });
+                    }
+                }
+            });
+        }
+    }
+}])
+
 
 // SIDEBAR MENU RESPONSIVE
 .directive("sidebarRes", function(){
