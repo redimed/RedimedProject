@@ -1,0 +1,224 @@
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12">
+            <i class="font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 25px;">Office Site</span>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="portlet light bordered ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon icon-user font-blue-hoki"></i>
+            <span ng-if="isEdit === false" class="caption-subject font-blue-hoki bold uppercase">New Site</span>
+            <span ng-if="isEdit === true" class="caption-subject font-blue-hoki bold uppercase">Edit Site</span>
+        </div>
+        <div>
+            <div class="btn-group pull-right">
+                <a ui-sref="loggedIn.admin_sites" href="javascript:;" class="btn green" >
+                    Back &nbsp;&nbsp;<i class="fa fa-backward"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form name="siteForm" ng-submit="submitSite(siteForm)" method="post" novalidate>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.name.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Site Name <span class="required">
+                                                * </span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <input required ng-model="info.Site_name" name="name" class="form-control pull-left"  />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.name.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="name" class="help-block">Site Name is required.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.addr.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Site Address <span class="required">
+                                                * </span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" required ng-model="info.Site_addr" name="addr" class="form-control pull-left" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.addr.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="addr" class="help-block">Address is required.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.postcode.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Post Code <span class="required">
+                                                * </span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" required ng-model="info.postcode" ng-pattern="/^[0-9]+$/" name="postcode" class="form-control pull-left" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.postcode.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="postcode" class="help-block">Post Code is required.</span>
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.postcode.$error.pattern">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="postcode" class="help-block">Postcode is invalid. Must be number.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.state.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">State<span class="required">
+                                                * </span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" required ng-model="info.State" name="state" class="form-control pull-left" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.state.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="state" class="help-block">State is required.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.country.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Country<span class="required">
+                                                * </span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" required ng-model="info.country" name="country" class="form-control pull-left" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.country.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="country" class="help-block">Country is required.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.latitude.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Latitude</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" ng-model="info.latitude" name="latitude" ng-pattern="/^[0-9]+$/" class="form-control pull-left" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.latitude.$error.pattern">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="latitude" class="help-block">Latitude must be number.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.longitude.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Longitude</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" ng-model="info.longitude" name="longitude" ng-pattern="/^[0-9]+$/" class="form-control pull-left" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.longitude.$error.pattern">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="longitude" class="help-block">Longitude must be number.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.default.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Available Default <span class="required">
+                                                * </span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" required ng-model="info.Available_def" ng-pattern="/^[0-9]+$/" name="default" class="form-control pull-left" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.default.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="default" class="help-block">Available Default is required.</span>
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.default.$error.pattern">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="default" class="help-block">Available Default is invalid. Must be number.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && siteForm.status.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Booking Status <span class="required">
+                                                * </span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="info.booking_status" class="form-control pull-left"  required name="status">
+                            <option value=""></option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Reschedule">Reschedule</option>
+                            <option value="Cancel">Cancel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && siteForm.status.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <span for="status" class="help-block">Booking Status is required.</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label pull-right">Is Pre-Employment Booking?</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" ng-model="info.isPreEmpBK" ng-true-value="1" ng-false-value="0" />
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn green">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

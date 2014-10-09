@@ -1,0 +1,27 @@
+<!--
+<div>
+    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww wwwwwwwwwwwww wwwwwwwwwwww
+    <br/>
+
+    <input type="text" ng-model="person.firstName"/>
+    <input type="text" ng-model="person.lastName"/>
+    Hello world {{person.firstName+ ' '+person.lastName}}
+</div>-->
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Phone</th>
+    </tr>
+    <tr ng-repeat="customer in customers">
+        <td>{{customer.id}}</td>
+        <td>{{customer.name}}</td>
+        <td>{{customer.address}}</td>
+        <td>{{customer.email}}</td>
+        <td>{{customer.phone}}</td>
+    </tr>
+</table>
+

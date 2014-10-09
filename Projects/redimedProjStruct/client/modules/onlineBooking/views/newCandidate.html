@@ -1,0 +1,216 @@
+
+<div class="modal-header">
+</div>
+<form name="candidateForm" ng-submit="submitCandidate(candidateForm)" method="post" novalidate>
+<div class="modal-body">
+
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.name.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Candidate Name <span class="required">
+                                                * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <input ng-model="info.candidateName" required name="name" type="text" class="col-md-12 form-control" />
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.name.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="name" class="help-block">Candidate name is required.</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.dob.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Date Of Birth <span class="required">
+                                                * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" max-date="maxDate" class="form-control col-md-12" name="dob" required datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob" is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.dob.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="dob" class="help-block">Date Of Birth is required.</span>
+                </div>
+            </div>
+
+        </div>
+        <br/>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Position</label>
+                </div>
+                <div class="col-md-8">
+                    <select class="col-md-12 form-control" name="position" ng-model="info.position"  ng-options="p.Position_name as p.Position_name for p in positionList">
+                        <option value="">--Select Position--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.phone.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Phone <span class="required">
+                                                * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <input ng-model="info.phone" ng-pattern="/^[0-9]{9,11}$/" required name="phone" type="text" class="col-md-12 form-control" />
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.phone.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="phone" class="help-block">Phone is required.</span>
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.phone.$error.pattern">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="phone" class="help-block">Phone is invalid. Must be number and between 9-11 digits.</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.email.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Email <span class="required">
+                                                * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <input ng-model="info.email" name="email" email ng-pattern="" required type="text" class="col-md-12 form-control" />
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.email.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="email" class="help-block">Email is required.</span>
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.email.$error.email">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="email" class="help-block">Email is invalid. Must be format: aaa@aaa.aaa</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div  class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.site.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Preferred REDiMED Site <span class="required">
+                                                * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <select class="col-md-12 form-control" ng-model="info.siteId" name="site" required ng-change="siteChange()" ng-options="site.id as site.Site_name for site in siteList">
+                        <option value="">--Select Site--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.site.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="site" class="help-block">Please select site.</span>
+                </div>
+            </div>
+        </div>
+        <br ng-if="haveState == true || info.stateId !== null"/>
+        <div ng-if="haveState == true || info.stateId !== null"  class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.state.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Preferred State <span class="required">
+                                                    * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <select class="col-md-12 form-control" ng-model="info.stateId" name="state" required ng-change="siteStateChange(info.stateId)" ng-options="s.state_id as s.state_name for s in stateList">
+                        <option value="">--Select State--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.state.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="state" class="help-block">Please select state.</span>
+                </div>
+            </div>
+        </div>
+        <br ng-if="haveSuburb == true || info.suburbId !== null"/>
+        <div ng-if="haveSuburb == true || info.suburbId !== null"  class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Preferred Suburb</label>
+                </div>
+                <div class="col-md-8">
+                    <select class="col-md-12 form-control" ng-model="info.suburbId" ng-options="s.suburb_id as s.suburb_name for s in suburbList">
+                        <option value="">--Select Suburb--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.fromDate.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Preferred Date From <span class="required">
+                                                * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" min-date="minDate" class="form-control col-md-12" name="fromDate" ng-change="fromDateChange()" datepicker-popup="dd/MM/yyyy" data-ng-model="info.fromDate" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.fromDate.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="fromDate" class="help-block">Preferred Date From is required.</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && candidateForm.toDate.$invalid}">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Preferred Date To <span class="required">
+                                                * </span></label>
+                </div>
+                <div class="col-md-8">
+
+                    <input type="text" min-date="minDate" class="form-control col-md-12" ng-change="toDateChange()" name="toDate"  datepicker-popup="dd/MM/yyyy" data-ng-model="info.toDate" is-open="openTo" ng-click="openTo = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && candidateForm.toDate.$invalid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <span for="toDate" class="help-block">Preferred Date To is required.</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="form-group" >
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Calendar </label>
+                </div>
+                <div class="col-md-8">
+                    <select class="col-md-12 form-control" ng-model="info.calId" name="calendar" ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
+                        <option value="">--Select Calendar--</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
+    <button type="submit" class="btn green">OK</button>
+</div>
+</form>
+

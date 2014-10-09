@@ -1,0 +1,177 @@
+<form name="userForm" ng-submit="updateUserProfile(userForm)" method="post" novalidate>
+<div class="portlet light bordered ">
+<div id="tab_1_1">
+<div class="row">
+<div class="col-md-3">
+    <ul class="list-unstyled profile-nav">
+        <li>
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-new thumbnail"  style="width: 200px; height: 200px;">
+                    <img ng-src="{{detail.img}}" alt="Select Image">
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
+                <div>
+                    <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>
+                        <input type="file" name="..." ng-model="detail.img" accept="image/*" app-filereader></span>
+                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                </div>
+            </div>
+
+        </li>
+    </ul>
+</div>
+<div class="col-md-9">
+<div class="row">
+    <div class="col-md-10 profile-info">
+        <h1>{{info.name}}</h1>
+        <ul class="list-inline" ng-if="isCompany == true">
+            <li>
+                Company:
+            </li>
+            <li ng-if="info.companyName != null">
+                <i class="fa fa-user"></i> {{info.companyName}}
+            </li>
+            <li ng-if="info.companyIndustry != null">
+                <i class="fa fa-briefcase"></i> {{info.companyIndustry}}
+            </li>
+            <li ng-if="info.companyAddr != null">
+                <i class="fa fa-map-marker"></i> {{info.companyAddr}}
+            </li>
+            <li ng-if="info.companyState != null">
+                <i class="fa fa-home"></i>{{info.companyState}}
+            </li>
+        </ul>
+        <ul class="list-inline" ng-if="isCompany == true">
+            <li>
+                User:
+            </li>
+            <li ng-if="info.username != null">
+                <i class="fa fa-user"></i> {{info.username}}
+            </li>
+            <li ng-if="info.userType != null">
+                <i class="fa fa-briefcase"></i> {{info.userType}}
+            </li>
+            <li ng-if="info.phone != null">
+                <i class="fa fa-phone"></i> {{info.phone}}
+            </li>
+            <li ng-if="info.email != null">
+                <i class="fa fa-mail-reply"></i>{{info.email}}
+            </li>
+        </ul>
+        <ul class="list-inline" ng-if="isCompany == false">
+            <li>
+                User:
+            </li>
+            <li ng-if="info.username != null">
+                <i class="fa fa-user"></i> {{info.username}}
+            </li>
+            <li ng-if="info.userType != null">
+                <i class="fa fa-briefcase"></i> {{info.userType}}
+            </li>
+            <li ng-if="info.phone != null">
+                <i class="fa fa-phone"></i> {{info.phone}}
+            </li>
+            <li ng-if="info.email != null">
+                <i class="fa fa-mail-reply"></i>{{info.email}}
+            </li>
+        </ul>
+    </div>
+    <!--end col-md-8-->
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success pull-right">Submit</button>
+    </div>
+    <!--end col-md-4-->
+</div>
+<!--end row-->
+<div class="tabbable tabbable-custom tabbable-custom-profile">
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="javascript:;">
+            Information </a>
+    </li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active" id="tab_1_11">
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-2">
+                <label class="control-label">Username:</label>
+            </div>
+            <div class="col-md-5">
+                <label class="bold">{{info.username}}</label>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="control-label">Password:</label>
+            </div>
+            <div class="col-md-5">
+                <a href="javascript:;"  class="btn btn-primary" ng-click="changeUserPassword()">Change Password</a>
+            </div>
+        </div>
+        <br/>
+        <div class="row" ng-if="isCompany == true">
+            <div class="col-md-2">
+                <label class="control-label">Company:</label>
+            </div>
+            <div class="col-md-5">
+                <select class="form-control" ng-options="comp.id as comp.Company_name for comp in companyList" ng-model="detail.company_id">
+                    <option value="">--Select Company--</option>
+                </select>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="control-label">Full Name:</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" ng-model="detail.Booking_Person" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="control-label">Phone:</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" ng-model="detail.Contact_number" />
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="control-label">Email:</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" ng-model="detail.Contact_email" />
+            </div>
+        </div>
+        <br/>
+        <div class="row" ng-if="isCompany == true">
+            <div class="col-md-2">
+                <label class="control-label">Result Email:</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" ng-model="detail.result_email" />
+            </div>
+        </div>
+        <br/>
+        <div class="row" ng-if="isCompany == true">
+            <div class="col-md-2">
+                <label class="control-label">Invoice Email:</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" ng-model="detail.invoiceemail" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>

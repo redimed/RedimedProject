@@ -1,0 +1,233 @@
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12">
+            <i class="font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 25px;">Office Site</span>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="portlet light bordered ">
+<div class="portlet-title">
+    <div class="caption">
+        <i class="icon icon-user font-blue-hoki"></i>
+        <span ng-if="isEdit === false" class="caption-subject font-blue-hoki bold uppercase">New Company</span>
+        <span ng-if="isEdit === true" class="caption-subject font-blue-hoki bold uppercase">Edit Company</span>
+    </div>
+    <div>
+        <div class="btn-group pull-right">
+            <a ui-sref="loggedIn.admin_company" href="javascript:;" class="btn green" >
+                Back &nbsp;&nbsp;<i class="fa fa-backward"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="portlet-body form">
+<form name="companyForm" ng-submit="submitCompany(companyForm)" method="post" novalidate>
+<div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.name.$invalid}">
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">Company Name <span class="required">
+                                                * </span></label>
+        </div>
+        <div class="col-md-4">
+            <input required ng-model="info.companyName" name="name" class="form-control pull-left"  />
+        </div>
+    </div>
+    <div class="row" ng-show="showClickedValidation && companyForm.name.$invalid">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <span for="name" class="help-block">Company name is required.</span>
+        </div>
+    </div>
+</div>
+<br >
+<div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.industry.$invalid}">
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">Industry <span class="required">
+                                                * </span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" required ng-model="info.industry" name="industry" class="form-control pull-left" />
+        </div>
+    </div>
+    <div class="row" ng-show="showClickedValidation && companyForm.industry.$invalid">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <span for="industry" class="help-block">Industry is required.</span>
+        </div>
+    </div>
+
+</div>
+<br/>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">Address</label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" ng-model="info.addr" class="form-control pull-left" />
+        </div>
+    </div>
+</div>
+<br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Post Code</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" ng-model="info.postCode" class="form-control pull-left" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">State</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" ng-model="info.state" class="form-control pull-left" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Country</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" ng-model="info.country" class="form-control pull-left" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Description</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" ng-model="info.description" class="form-control pull-left" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">PO Number</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" ng-model="info.poNum" class="form-control pull-left" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Is Invoice Email?</label>
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" class="form-control pull-left" ng-model="info.isInvoice" ng-true-value="1" ng-false-value="0" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Invoice Email</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control pull-left" ng-model="info.invoiceEmail"  />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Contact Email In Result?</label>
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" class="form-control pull-left" ng-model="info.isResult" ng-true-value="1" ng-false-value="0" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Result Email</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control pull-left" ng-model="info.resultEmail"  />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Report To Email</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control pull-left" ng-model="info.reportEmail"  />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Status</label>
+            </div>
+            <div class="col-md-4">
+                <select class="form-control pull-left" ng-model="info.status">
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Reschedule">Reschedule</option>
+                    <option value="Cancel">Cancel</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Is Project?</label>
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" class="form-control pull-left" ng-model="info.isProject" ng-true-value="1" ng-false-value="0" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Is Required PO?</label>
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" class="form-control pull-left" ng-model="info.isPO" ng-true-value="1" ng-false-value="0" />
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+            <button type="submit" class="btn green">Submit</button>
+        </div>
+    </div>
+</form>
+</div>
+
+</div>
+

@@ -1,0 +1,63 @@
+<div class="modal-header">
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label">Site</label>
+        </div>
+        <div class="col-md-8">
+            <select class="col-md-12 form-control" ng-model="info.siteId" ng-change="siteChange()" ng-options="site.id as site.Site_name for site in siteList">
+                <option value="">--Select Site--</option>
+            </select>
+
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label">From Date</label>
+        </div>
+        <div class="col-md-8">
+
+                <input type="text" class="form-control col-md-12" ng-change="fromDateChange()" datepicker-popup="dd/MM/yyyy" data-ng-model="info.fromDate" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label">To Date</label>
+        </div>
+        <div class="col-md-8">
+
+                <input type="text" class="form-control col-md-12" ng-change="toDateChange()"   datepicker-popup="dd/MM/yyyy" data-ng-model="info.toDate" is-open="openTo" ng-click="openTo = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label">Calendar</label>
+        </div>
+        <div class="col-md-8">
+            <select class="col-md-12 form-control" ng-change="calChange()" ng-model="info.calId" ng-options="cal.cal_id as cal.Site_name + '  ' + (cal.From_time | date:'dd/MM/yyyy HH:mm:ss') + '  ' + cal.available  for cal in calList">
+                <option value="">--Select Calendar--</option>
+            </select>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label">Appointment Time</label>
+        </div>
+        <div class="col-md-8">
+            <label class="control-label bold">{{info.appointmentTime}}</label>
+        </div>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
+    <a href="javascript:;" class="btn green" ng-click="submit()" >Submit</a>
+</div>

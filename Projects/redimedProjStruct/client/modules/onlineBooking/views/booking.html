@@ -1,0 +1,110 @@
+<style>
+    .selected {
+        background-color: #ffca87;
+    }
+
+</style>
+
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12">
+            <i class="font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 25px;">Online Booking</span>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="portlet light bordered ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class=" glyphicon glyphicon-align-justify font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Booking</span>
+        </div>
+        <div>
+            <div class="btn-group pull-right">
+                <a ng-click="submitInfo()" href="javascript:;" class="btn blue" >
+                    Submit
+                </a>
+            </div>
+        </div>
+        <div>
+            <div class="btn-group pull-right">
+                <a href="javascript:;" data-contentwrapper="#searchPopover" rel="popover" class="btn grey" >
+                    Search &nbsp;&nbsp; <i class="glyphicon glyphicon-search"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="portlet-body form">
+        <div id="searchPopover" style="display: none;">
+            Company:<input class=form-control type="text"/>
+            <br/>
+            Candidate:<input class="form-control" type="text" />
+            <br/>
+            From Date:<input type="text" class="form-control"/>
+        </div>
+
+        <div class="table-scrollable" id="content">
+            <table ng-table="tableParams" show-filter="true" class="table table-hover table-bordered table-responsive">
+                <tr ng-repeat="b in $data" style="white-space: nowrap" ng-click="bookingSelected(b)" ng-class="{selected : b.Candidate_id === selectedCanId && b.Booking_id === selectedBookId}">
+                    <td data-title="'ID'" >
+                        <label>{{b.Booking_id}}</label>
+                    </td>
+                    <td class="col-md-12" data-title="'Company'" sortable="'company_name'" filter="{'company_name':'text'}">
+                        <label >{{b.company_name}}</label>
+                    </td>
+                    <td  data-title="'Candidates'" sortable="'Candidates_name'" filter="{'Candidates_name':'text'}">
+                        <a href="javascript:;" ng-click="openDetail(b)">{{b.Candidates_name}}</a>
+                    </td>
+                    <td class="col-md-12" data-title="'Appointment Time'" sortable="'Appointment_time'" >
+                        <label>{{b.Appointment_time | date:'dd/MM/yyyy - HH:mm'}}</label>
+                    </td>
+                    <td data-title="'Site Name'" sortable="'site_name'" >
+                        <label>{{b.site_name}}</label>
+                    </td>
+                    <td data-title="'Booking Person'" sortable="'Booking_Person'" filter="{'Booking_Person':'text'}">
+                        <label>{{b.Booking_Person}}</label>
+                    </td>
+                    <td data-title="'Appointment Notes'" sortable="'Appointment_notes'">
+                        <textarea type="text" class="form-control" ng-model="b.Appointment_notes" ></textarea>
+                    </td>
+                    <td data-title="'Appointment Status'" sortable="'Appointment_status'" >
+                        <label>{{b.Appointment_status}}</label>
+                    </td>
+                    <td data-title="'RediMed Notes'" sortable="'RediMed_note'" >
+                        <label>{{b.RediMed_note}}</label>
+                    </td>
+                    <td class="col-md-12" data-title="'Actions'">
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown">
+                                Menu <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:;" ng-click="openDetail(b)">Booking Details</a></li>
+                                <li><a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="changeBookingTime(b)">Change Booking Time</a></li>
+                                <li><a ng-if="b.Appointment_status !== 'Cancelled'" href="javascript:;" ng-click="cancelBooking(b)">Cancel</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+    <script>
+    $('[rel=popover]').popover({
+        html:true,
+        placement:'bottom',
+        content:function(){
+            return $($(this).data('contentwrapper')).html();
+        }
+    });
+    </script>
+
+
