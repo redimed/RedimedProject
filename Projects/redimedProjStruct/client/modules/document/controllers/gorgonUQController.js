@@ -1,27 +1,34 @@
 
 angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
-    .controller("gorgonUQController",function($scope,DocumentService,$http,$cookieStore) {
+    .controller("gorgonUQController",function($scope,DocumentService,$http,$cookieStore,$state) {
 
-        $scope.data = [];
-        var data = $scope.data;
+        $scope.info = [];
         var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
-        console.log(userinfo);
-        $scope.data = {
+        $scope.info = {
             name : userinfo.Booking_Person,
+            Patient_Id : userinfo.id,
             age : '',
             sex : '',
             height : '',
             weight : ''
         };
 
-//        DocumentService.insertUQ(data).then(function(response){
-//            if(response['status'] === 'success') {
-//                alert("Insert Successfully!");
-//            }
-//            else
-//            {
-//                alert("Insert Failed!");
-//            }
-//        });
+        $scope.submit = function(){
+
+            var info = $scope.info;
+            console.log(info);
+            DocumentService.insertUQ(info).then(function(response){
+                if(response['status'] === 'success') {
+                    alert("Insert Successfully!");
+                    //$state.go('loggedIn.home');
+                }
+                else
+                {
+                    alert("Insert Failed!");
+                }
+            });
+        };
+
+
 
     });

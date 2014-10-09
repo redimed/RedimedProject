@@ -36,10 +36,10 @@ angular.module('app.loggedIn.document.services',[])
             return loadIDS.get();
         }
 
-//        documentService.insertUQ = function(data){
-//            var insertUQ = api.all("document/insertUQ");
-//            return insertUQ.post({data:data});
-//        }
+        documentService.insertUQ = function(info){
+            var insertUQ = api.all("document/insertUQ");
+            return insertUQ.post({info:info});
+        }
 
     return documentService;
     })
