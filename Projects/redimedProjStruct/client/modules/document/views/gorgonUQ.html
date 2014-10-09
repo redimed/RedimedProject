@@ -39,7 +39,7 @@
             <label class="control-label">2. Your Name:</label>
         </div>
         <div class="col-md-5 col-sm-7">
-            <label class="control-label">phuong sefl nguyen minh</label>
+            <label class="control-label">{{data.name}}</label>
         </div>
     </div>
     <div class="row">
@@ -47,7 +47,7 @@
             <label class="control-label">3. Your Age (to nearest year):</label>
         </div>
         <div class="col-md-5  col-sm-7">
-            <label class="control-label">32</label>
+            <label class="control-label" >{{data.age}}</label>
         </div>
     </div>
     <div class="row">
@@ -55,7 +55,7 @@
             <label class="control-label">4. Sex (circle one):</label>
         </div>
         <div class="col-md-5  col-sm-7">
-            <label class="control-label">male</label>
+            <label class="control-label">{{data.sex}}</label>
         </div>
     </div>
 
@@ -65,7 +65,7 @@
         </div>
         <div class="col-md-5   col-sm-7">
             <label style="font-weight: bold">*</label>
-            <input type="text" style="width: 250px">
+            <input type="text" ng-model="data.height" style="width: 250px">
         </div>
     </div>
     <div class="row">
@@ -74,7 +74,7 @@
         </div>
         <div class="col-md-5  col-sm-7">
             <label style="font-weight: bold">*</label>
-            <input type="text" style="width: 250px">
+            <input type="text" ng-model="data.weight" style="width: 250px">
         </div>
     </div>
     <div class="row">
