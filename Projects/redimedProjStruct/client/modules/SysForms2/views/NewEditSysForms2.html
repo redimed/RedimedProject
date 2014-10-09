@@ -54,8 +54,7 @@
                 <label class="pull-right">Master seq</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.MASTER_SEQ" />
-            </div>
+                <select ng-model="info.MASTER_SEQ" ng-options='MASTER_SEQLOV.name for MASTER_SEQLOV in MASTER_SEQLOVs'></select>            </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >

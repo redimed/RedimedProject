@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:08 23:48:46.
+        * Created by meditech on 2014:10:09 15:49:45.
 */
 var db = require('../models');
 module.exports = {
@@ -18,6 +18,19 @@ module.exports = {
         var id = req.body.id;
         var rs = [];
         db.SysForms2.findAll({where:{FORM_ID:id},order:'FORM_ID'},{raw: true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'fail'});
+            })
+    },
+
+
+    getMASTER_SEQLOV: function(req,res){
+        var id = req.body.id;
+        var rs = [];
+        db.sequelize.query('SELECT USER_NAME as name FROM USERS WHERE 1=1',null,{raw:true})
             .success(function(data){
                 res.json(data);
             })

@@ -21,7 +21,7 @@ module.exports = function(sequelize,DataTypes){
        ,LOV_SQL : DataTypes.STRING(2000) 
        ,ATTRIBUTE_PROPERTIES : DataTypes.STRING(2000) 
    },{ 
-       tableName: 'sys_form_details2',
+       tableName: 'sys_form_details',
        timestamps: true,
        createdAt : false,
        updatedAt: false,

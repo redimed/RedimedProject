@@ -26,6 +26,12 @@ angular.module('app.loggedIn.SysForms2.services',[])
             return list.post({id:id});
         }
 
+
+        SysForms2Service.getSysForms2MASTER_SEQLOV = function(){
+            var list = api.one('SysForms2/getSysForms2MASTER_SEQLOV');
+            return list.get();
+        }
+
         SysForms2Service.getListD = function(){
             var list = api.one('SysForms2/listD');
             return list.get();

@@ -27,6 +27,9 @@ angular.module('app.loggedIn.SysForms2.NewEditDetail.controller',[])
     var id = $stateParams.id;
     var headerId = $stateParams.headerId;
 
+
+
+
     $scope.backToList = function(){
         $state.go('loggedIn.EditSysForms2',{id:headerId});
     }

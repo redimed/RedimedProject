@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:08 23:48:46.
+        * Created by meditech on 2014:10:09 15:49:45.
 */
 var db = require('../models');
 module.exports = {
@@ -25,6 +25,7 @@ module.exports = {
                 res.json({status:'fail'});
             })
     },
+
 
     findByMasterId: function(req,res){
         var id = req.body.id;

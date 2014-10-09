@@ -14,7 +14,7 @@ module.exports = function(sequelize,DataTypes){
        ,NEW_EDIT_FORM_TYPE : DataTypes.STRING(20) 
        ,FORM_PROPERTIES : DataTypes.STRING(2000) 
    },{ 
-       tableName: 'sys_forms2',
+       tableName: 'sys_forms',
        timestamps: true,
        createdAt : false,
        updatedAt: false,

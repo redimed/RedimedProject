@@ -17,6 +17,13 @@ angular.module('app.loggedIn.SysForms2.NewEdit.controller',[])
 
     var id = $stateParams.id;
 
+
+    $scope.MASTER_SEQLOVs = []
+
+    SysForms2Service.getSysForms2MASTER_SEQLOV().then(function(response){
+           $scope.MASTER_SEQLOVs = response;
+    })
+
     $scope.data=[];
        
     SysForms2Service.getDataByMasterIdD(id).then(function(response){

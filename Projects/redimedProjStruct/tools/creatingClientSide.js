@@ -63,7 +63,12 @@ function main(tableName,becomeModel) {
     var formType = "";
     var detailTableName = "";
     var becomeModelD = "";
-
+    var lovStatement = "\n";
+    var lovStatementD = "\n";
+    var lovStatementServer = "\n";
+    var lovStatementServerD = "\n";
+    var lovStatementService = "\n";
+    var lovStatementRoute = "\n";
 
     db.sequelize
         // sync để tự động tạo các bảng trong database
@@ -84,7 +89,7 @@ function main(tableName,becomeModel) {
     //db.SYSCOLUMNS.findAll({where: {TABLE_NAME: tableName.toUpperCase()}}, {raw: true}).success(function (data) {
         for (var i = 0; i < data.length; i++) {
 
-            console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY + '      ' + data[i].LIST_FORM_TYPE );
+            console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY + '      ' + data[i].LIST_FORM_TYPE + '  lov=' + data[i].LOV_SQL);
 
             formType = data[i].FORM_TYPE;
             detailTableName = data[i].DETAIL_TABLE_NAME;
@@ -95,9 +100,16 @@ function main(tableName,becomeModel) {
             if (i != 0) {
                 isComma = ',';
             }
-
+            // for controller at server
             insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
             insertUpdateStatement2 +=  isComma + "'"+ data[i].COLUMN_NAME + "'";
+            //for LOV of controller at cleint
+            if(data[i].LOV_SQL.toUpperCase().indexOf('SELECT') > -1 && data[i].LOV_SQL.toUpperCase().indexOf('FROM') > -1 && data[i].LOV_SQL.toUpperCase().indexOf('WHERE') > -1 ){
+                lovStatement += getLOVForClientController(becomeModel,becomeModel,data[i].COLUMN_NAME);
+                lovStatementServer += getLOVForServerController(becomeModel,data[i].COLUMN_NAME,data[i].LOV_SQL);
+                lovStatementRoute += getLOVForRoute(becomeModel,becomeModel,data[i].COLUMN_NAME);
+                lovStatementService += getLOVForService(becomeModel,becomeModel,data[i].COLUMN_NAME);
+            }
 
             if(data[i].ISDISPLAY_ON_LIST === 1){
                 if(data[i].LIST_FORM_TYPE === 'table'){
@@ -115,18 +127,9 @@ function main(tableName,becomeModel) {
 
             }
 
+
             if(data[i].ISDISPLAY_ON_FORM === 1) {
-                bodyNewEditScript += getDisplayOnForm(data[i].DISPLAY_NAME,data[i].INPUT_TYPE,data[i].COLUMN_NAME);
-                    /*
-                    "        <div class=\"row\">\n" +
-                    "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
-                    "                <label class=\"pull-right\">" + data[i].DISPLAY_NAME + "</label>\n" +
-                    "            </div>\n" +
-                    "            <div class=\"col-md-6\">\n" +
-                    "                <input "+data[i].INPUT_TYPE+" class=\"form-control\" ng-model=\"info." + data[i].COLUMN_NAME + "\" />\n" +
-                    "            </div>\n" +
-                    "        </div>\n";
-                    */
+                bodyNewEditScript += getDisplayOnForm(data[i].DISPLAY_NAME,data[i].INPUT_TYPE,data[i].COLUMN_NAME,data[i].LOV_SQL);
             }
 
             newEditInfoVar += "             " + isComma + data[i].COLUMN_NAME + " : ''\n";
@@ -142,7 +145,7 @@ function main(tableName,becomeModel) {
         }
 
         //create Master Controller for server
-        createControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,"",insertUpdateStatement,insertUpdateStatement2);
+        createServerControllerFile(fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'),becomeModel,primaryKeyColumnName,"",insertUpdateStatement,insertUpdateStatement2,lovStatementServer);
 
         //// for details
         console.log(formType);
@@ -159,7 +162,7 @@ function main(tableName,becomeModel) {
             db.SysForms.getDetailColumns(tableName.toUpperCase(),function(data) {
                 for (var i = 0; i < data.length; i++) {
 
-                    console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY + '      ' + data[i].LIST_FORM_TYPE );
+                    console.log(data[i].COLUMN_NAME + '              type = ' + data[i].DATA_TYPE + '    ' + data[i].CHARACTER_MAXIMUM_LENGTH + '       ' + data[i].COLUMN_KEY + '      ' + data[i].LIST_FORM_TYPE  + '  lov=' + data[i].LOV_SQL);
 
                     if (i != 0) {
                         isComma2 = ',';
@@ -168,6 +171,14 @@ function main(tableName,becomeModel) {
                     insertUpdateStatementD += "          " + isComma2 + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
 
                     insertUpdateStatement2D +=  isComma2 + "'"+ data[i].COLUMN_NAME + "'";
+
+                    if(data[i].LOV_SQL.toUpperCase().indexOf('SELECT') > -1 && data[i].LOV_SQL.toUpperCase().indexOf('FROM') > -1 && data[i].LOV_SQL.toUpperCase().indexOf('WHERE') > -1 ){
+
+                        lovStatementD += getLOVForClientController(becomeModel,becomeModelD,data[i].COLUMN_NAME);
+                        lovStatementServerD += getLOVForServerController(becomeModelD,data[i].COLUMN_NAME,data[i].LOV_SQL);
+                        lovStatementRoute += getLOVForRoute(becomeModel,becomeModelD,data[i].COLUMN_NAME);
+                        lovStatementService += getLOVForService(becomeModel,becomeModelD,data[i].COLUMN_NAME);
+                    }
 
                     if(data[i].ISDISPLAY_ON_LIST === 1){
                         bodyTableScriptD +=
@@ -178,17 +189,7 @@ function main(tableName,becomeModel) {
                     }
 
                     if(data[i].ISDISPLAY_ON_FORM === 1) {
-                        bodyNewEditScriptD += getDisplayOnForm(data[i].DISPLAY_NAME,data[i].INPUT_TYPE,data[i].COLUMN_NAME);
-                            /*
-                            "        <div class=\"row\">\n" +
-                            "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
-                            "                <label class=\"pull-right\">" + data[i].DISPLAY_NAME + "</label>\n" +
-                            "            </div>\n" +
-                            "            <div class=\"col-md-6\">\n" +
-                            "                <input "+data[i].INPUT_TYPE+" class=\"form-control\" ng-model=\"info." + data[i].COLUMN_NAME + "\" />\n" +
-                            "            </div>\n" +
-                            "        </div>\n";
-                            */
+                        bodyNewEditScriptD += getDisplayOnForm(data[i].DISPLAY_NAME,data[i].INPUT_TYPE,data[i].COLUMN_NAME,data[i].LOV_SQL);
                     }
 
                     newEditInfoVarD += "             " + isComma2 + data[i].COLUMN_NAME + " : ''\n";
@@ -203,20 +204,20 @@ function main(tableName,becomeModel) {
                     }
                 }
                 //create Detail Controller for server
-                createControllerFile(fs.createWriteStream('../controllers/'+becomeModelD+'Controller.js'),becomeModelD,primaryKeyColumnNameD,primaryKeyColumnName,insertUpdateStatementD,insertUpdateStatement2D);
+                createServerControllerFile(fs.createWriteStream('../controllers/'+becomeModelD+'Controller.js'),becomeModelD,primaryKeyColumnNameD,primaryKeyColumnName,insertUpdateStatementD,insertUpdateStatement2D,lovStatementServerD);
                 //create setting file at root of module
                 createRootJS(true,becomeModel);
                 // create route in server
-                createRouteJS(true,becomeModel,becomeModelD);
+                createRouteJS(true,becomeModel,becomeModelD,lovStatementRoute);
                 //create services file at services diectory of module
-                createServiceFile(true,becomeModel);
+                createServiceFile(true,becomeModel,lovStatementService);
                 /// create new edit view with detail list
                 newEditView(true,becomeModel,bodyNewEditScript,becomeModel,"table",primaryKeyColumnNameD,bodyTableScriptD);
                 // create controller file on controller directory
-                createNewEditController(true,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD);
+                createNewEditController(true,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatement);
 
 
-                createNewEditDetailController(false,becomeModel,newEditInfoVarD,newEditGetDataControllerD,primaryKeyColumnNameD);
+                createNewEditDetailController(false,becomeModel,newEditInfoVarD,newEditGetDataControllerD,primaryKeyColumnNameD,lovStatementD);
                 newEditDetailView(false,becomeModel,bodyNewEditScriptD,becomeModel,"table","","");
             });
 
@@ -225,13 +226,13 @@ function main(tableName,becomeModel) {
             //create setting file at root of module
             createRootJS(false,becomeModel);
             // create route in server
-            createRouteJS(false,becomeModel,"");
+            createRouteJS(false,becomeModel,"",lovStatementRoute);
             //create services file at services diectory of module
-            createServiceFile(false,becomeModel);
+            createServiceFile(false,becomeModel,lovStatementService);
             /// create new edit view
             newEditView(false,becomeModel,bodyNewEditScript,becomeModel,"table",primaryKeyColumnNameD,bodyTableScriptD);
             // create controller file on controller directory
-            createNewEditController(false,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD);
+            createNewEditController(false,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatementD);
         }
 
         listView(becomeModel,listType,primaryKeyColumnName,bodyTableScript,listHeader,listBody);
@@ -335,10 +336,72 @@ var mkdirSync = function (path) {
     }
 }
 
-function getDisplayOnForm(displayName,inputType,columnName){
+function getLOVForClientController(becomeModel,tableName,columnName){
+    var str ="";
+
+    str =
+        "    $scope." + columnName + "LOVs = []\n\n"+
+        "    "+becomeModel+"Service.get" + tableName + columnName + "LOV().then(function(response){\n" +
+        "           $scope." + columnName + "LOVs = response;\n" +
+        "    })";
+
+
+    return str;
+}
+
+function getLOVForServerController(becomeModel,columnName,lovSql){
+    var str = "";
+    str =
+        "    get"+columnName+"LOV: function(req,res){\n" +
+        "        var id = req.body.id;\n" +
+        "        var rs = [];\n" +
+        "        db.sequelize.query('"+lovSql+"',null,{raw:true})\n" +
+        "            .success(function(data){\n" +
+        "                res.json(data);\n" +
+        "            })\n" +
+        "            .error(function(err){\n" +
+        "                res.json({status:'fail'});\n" +
+        "            })\n" +
+        "    },\n\n";
+    return str;
+}
+
+function getLOVForRoute(becomeModel,tableName,columnName){
+    var str = "";
+    str =  "app.get('/api/"+becomeModel+"/get"+tableName+columnName+"LOV',"+tableName+"Controller.get"+columnName+"LOV);\n"
+    return str;
+}
+
+function getLOVForService(becomeModel,tableName,columnName){
     var str = "";
 
-    if(inputType.indexOf('checkbox') > -1){
+    str =
+        "        "+becomeModel+"Service.get"+tableName+columnName+"LOV = function(){\n" +
+        "            var list = api.one('"+becomeModel+"/get"+tableName+columnName+"LOV');\n" +
+        "            return list.get();\n" +
+        "        }\n" +
+        "\n";
+
+    return str;
+}
+
+function getDisplayOnForm(displayName,inputType,columnName,lov){
+    var str = "";
+
+    if(lov.toUpperCase().indexOf('SELECT') > -1 && lov.toUpperCase().indexOf('FROM') > -1 && lov.toUpperCase().indexOf('WHERE') > -1 ){
+        str =
+            "        <div class=\"row\">\n" +
+            "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
+            "                <label class=\"pull-right\">" + displayName + "</label>\n" +
+            "            </div>\n" +
+            "            <div class=\"col-md-6\">\n" +
+            "                <select ng-model=\"info." + columnName + "\" ng-options='" + columnName + "LOV.name for " + columnName + "LOV in " + columnName + "LOVs'></select>" +
+            //"                <input "+inputType+" class=\"form-control\" ng-model=\"info." + columnName + "\" ng-true-value='1' ng-false-value='0' ng-checked='info." + columnName + "' />\n" +
+            "            </div>\n" +
+            "        </div>\n";
+
+    }
+    else if(inputType.indexOf('checkbox') > -1){
         str =
             "        <div class=\"row\">\n" +
             "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
@@ -418,7 +481,7 @@ function createRootJS(isDetail,becomeModel){
 }
 
 
-function createRouteJS(isDetail,becomeModel,becomeModelD){
+function createRouteJS(isDetail,becomeModel,becomeModelD,lovStatementRoute){
 
     var wstream = fs.createWriteStream('../routes/'+becomeModel+'Routes.js'); // create the model file
 
@@ -446,11 +509,12 @@ function createRouteJS(isDetail,becomeModel,becomeModelD){
 
         );
     }
+    wstream.write(lovStatementRoute);
     wstream.end;
 }
 
 
-function createServiceFile(isDetail,becomeModel){
+function createServiceFile(isDetail,becomeModel,lovStatementService){
     var wstreamService = fs.createWriteStream('../client/modules/'+becomeModel+'/services/'+becomeModel+'Service.js'); // create the model file
     wstreamService.write(
             "/**\n" +
@@ -479,7 +543,8 @@ function createServiceFile(isDetail,becomeModel){
             "        "+becomeModel+"Service.getDataById = function(id){\n" +
             "            var list = api.all('"+becomeModel+"/findById');\n" +
             "            return list.post({id:id});\n" +
-            "        }\n\n"
+            "        }\n\n" +
+            lovStatementService
     );
     if(isDetail){
         wstreamService.write(
@@ -689,7 +754,7 @@ function newEditDetailView(isDetail,becomeModel,bodyNewEditScript,becomeModel,li
     wstreamNewEditView.end();
 }
 
-function createNewEditController(isDetail,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD){
+function createNewEditController(isDetail,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatement){
     /// Create new edit controller
     var wstreamNewEditController = fs.createWriteStream('../client/modules/'+becomeModel+'/controllers/NewEdit'+becomeModel+'Controller.js'); // create the model file
 
@@ -702,7 +767,9 @@ function createNewEditController(isDetail,becomeModel,newEditInfoVar,newEditGetD
             "    };\n\n" +
 
             "    var id = $stateParams.id;\n" +
-            "\n"
+            "\n" +
+            lovStatement +
+            "\n\n"
     );
     if(isDetail){
 
@@ -766,7 +833,7 @@ function createNewEditController(isDetail,becomeModel,newEditInfoVar,newEditGetD
     wstreamNewEditController.end();
 }
 
-function createNewEditDetailController(isDetail,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD){
+function createNewEditDetailController(isDetail,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatement){
     /// Create new edit controller
     var wstreamNewEditController = fs.createWriteStream('../client/modules/'+becomeModel+'/controllers/NewEditDetail'+becomeModel+'Controller.js'); // create the model file
 
@@ -780,7 +847,9 @@ function createNewEditDetailController(isDetail,becomeModel,newEditInfoVar,newEd
 
             "    var id = $stateParams.id;\n" +
             "    var headerId = $stateParams.headerId;\n" +
-            "\n"
+            "\n" +
+            lovStatement +
+            "\n\n"
     );
     if(isDetail){
 
@@ -953,7 +1022,7 @@ function listView(becomeModel,listType,primaryKeyColumnName,bodyTableScript,list
     wstreamView.end();
 }
 
-function createControllerFile(wstreamController,becomeModel,primaryKeyColumnName,primaryKeyColumnNameM,insertUpdateStatement,insertUpdateStatement2){
+function createServerControllerFile(wstreamController,becomeModel,primaryKeyColumnName,primaryKeyColumnNameM,insertUpdateStatement,insertUpdateStatement2,lovStatement){
     ///Creating Controller file for Model
     //var wstreamController = fs.createWriteStream('../controllers/'+becomeModel+'Controller.js'); // create the model file
     wstreamController.write(
@@ -982,7 +1051,8 @@ function createControllerFile(wstreamController,becomeModel,primaryKeyColumnName
             "            .error(function(err){\n" +
             "                res.json({status:'fail'});\n" +
             "            })\n" +
-            "    },\n\n"
+            "    },\n\n" +
+            lovStatement
     );
 
     if(primaryKeyColumnNameM.length > 1){
