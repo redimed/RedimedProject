@@ -3,7 +3,7 @@
  */
 module.exports = function (sequelize, DataTypes) {
     var Category3 = sequelize.define("Category3", {
-        "cat_id": DataTypes.INTEGER(11),
+        "cat_id": {type: DataTypes.INTEGER(11), primaryKey: true},
         "cal_id": DataTypes.INTEGER(11),
         "patient_id": DataTypes.INTEGER(11),
         "q1_4": DataTypes.INTEGER(11),

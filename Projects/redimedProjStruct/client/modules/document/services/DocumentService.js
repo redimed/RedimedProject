@@ -111,7 +111,7 @@ angular.module('app.loggedIn.document.services', [])
          * begin category 3
          */
         documentService.insertCat3 = function (info) {
-            var insertCat3 = api.all('document/insertCat3');
+            var insertCat3 = api.all("document/insertCat3");
             return insertCat3.post({info: info});
         }
         return documentService;

@@ -19,7 +19,7 @@ app.get('/api/document/loadIDS', IDSController.loadIDS);
 /**
  * begin category 3
  */
-app.get('/api/document/insertCat3', Cat3Controller.insertCat3);
+app.post('/api/document/insertCat3', Cat3Controller.insertCat3);
 /**
  * end category 3
  */

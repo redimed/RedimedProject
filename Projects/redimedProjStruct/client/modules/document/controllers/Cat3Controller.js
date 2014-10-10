@@ -14,6 +14,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     alert('Install success!');
                 else if (response['status'] === 'fail')
                     alert('Install fail!');
-            })
+                alert("sasasasasa");
+            });
         };
     });
