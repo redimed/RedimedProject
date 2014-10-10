@@ -3,18 +3,7 @@
  */
 angular.module('app.loggedIn.document.MH.controllers', [])
     .controller("MHController", function ($scope, DocumentService, $http, $cookieStore) {
-        //Date picker
-        var initPickers = function () {
-            //init date pickers
-            $('.date-picker').datepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            }).on('changeDate', function (evn) {
-
-            });
-
-        }
-        initPickers();
+        
         $scope.submit = function () {
             var info = $scope.info;
         };

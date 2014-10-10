@@ -14,6 +14,10 @@ angular.module('app.loggedIn.document.AUD1.controllers', [])
             });
 
         }
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
         initPickers();
         $scope.submit = function () {
             var info = $scope.info;

@@ -389,7 +389,7 @@
                                         </div>
                                         <div class="col-md-3 col-sm-3">
                                             <a href="javascript:;" id="signBtn" class="btn green"
-                                               style="margin-top: 15%;">Sign</a>
+                                               style="margin-top: 10%;">Sign</a>
                                         </div>
                                         <script type="text/javascript">
                                             $('#signBtn').click(function () {
@@ -409,18 +409,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-3">
                                             <label class="control-label">Date:</label>
                                         </div>
-                                        <div class="col-md-10 col-sm-9" style="margin-top: 3%;">
-                                            <div class="input-group input-medium date date-picker"
-                                                 data-date="12-02-2012"
-                                                 data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                                <input type="text" ng-model="info.consentDate" class="form-control"
-                                                       readonly style="width: 80%;">
-                                                <button class="btn default" type="button"><i class="fa fa-calendar"></i>
-                                                </button>
-                                            </div>
+                                        <div class="col-md-4 col-sm-5" style="margin-top: 1%;">
+                                            <input type="text" class="form-control col-md-12" name="dob" required
+                                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                                   is-open="openDOB" ng-click="openDOB = true"
+                                                   datepicker-options="dateOptions" ng-required="true"
+                                                   close-text="Close"/>
                                         </div>
                                     </div>
                                 </div>

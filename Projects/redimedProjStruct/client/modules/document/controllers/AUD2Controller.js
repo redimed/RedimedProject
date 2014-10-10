@@ -15,6 +15,10 @@ angular.module('app.loggedIn.document.AUD2.controllers', [])
 
         }
         initPickers();
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
         $scope.submit = function () {
             var info = $scope.info;
         };

@@ -195,6 +195,17 @@
                 <hr/>
             </div>
             <div ng-if="line.line_type == 1">
+                <div ng-if="line.line_ord == 8">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-12 col-sm-12">
+                                <label class="control-label bold" style="text-align: left;">{{line.line_name}}</label>
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
                 <div ng-if="line.line_ord == 9">
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
@@ -211,17 +222,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div ng-if="line.line_ord == 8">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-12 col-sm-12">
-                                <label class="control-label bold" style="text-align: left;">{{line.line_name}}</label>
-                                <textarea class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
                 </div>
             </div>
         </div>
@@ -324,18 +324,15 @@
             </div>
         </div>
         <div class="col-md-4 col-sm-4">
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label class="control-label">Date:</label>
             </div>
-            <div class="col-md-3 col-sm-3" style="width: 80%; margin-left: 5%;">
-                <div class="input-group date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy"
-                     data-date-viewmode="years">
-                    <input type="text" ng-model="info.consentDate" class="form-control" readonly>
-                                                <span class="input-group-btn">
-                                                <button class="btn default" type="button"><i class="fa fa-calendar"></i>
-                                                </button>
-                                                </span>
-                </div>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control col-md-12" name="dob" required
+                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                       is-open="openDOB" ng-click="openDOB = true"
+                       datepicker-options="dateOptions3" ng-required="true"
+                       close-text="Close"/>
             </div>
         </div>
     </div>

@@ -66,21 +66,17 @@
                         </div>
                     </div>
                     <div class="=row">
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3 col-sm-4">
                             <label class="control-label">Time of test</label>
                             <input type="text" class="form-control"/>
                         </div>
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3 col-sm-4">
                             <label class="control-label">Date of test</label>
-
-                            <div class="input-group input-medium date date-picker" data-date="12-02-2012"
-                                 data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                <input type="text" ng-model="info.consentDate" class="form-control" readonly>
-                                                <span class="input-group-btn">
-                                                <button class="btn default" type="button"><i class="fa fa-calendar"></i>
-                                                </button>
-                                                </span>
-                            </div>
+                            <input type="text" class="form-control col-md-12" name="dob" required
+                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                   is-open="openDOB" ng-click="openDOB = true"
+                                   datepicker-options="dateOptions" ng-required="true"
+                                   close-text="Close"/>
                         </div>
                     </div>
                     <div class="=row">
@@ -111,13 +107,18 @@
                         <div class="col-md-3 col-sm-3" style="margin-top: 80px;">
                             <label class="control-label">Date</label>
 
-                            <div class="input-group input-medium date date-picker" data-date="12-02-2012"
-                                 data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                <input type="text" ng-model="info.consentDate" class="form-control" readonly
-                                       style="width: 52%;">
-                                <button class="btn default" type="button"><i class="fa fa-calendar"></i>
-                                </button>
-                            </div>
+                            <!--<div class="input-group input-medium date date-picker" data-date="12-02-2012"-->
+                                 <!--data-date-format="dd-mm-yyyy" data-date-viewmode="years">-->
+                                <!--<input type="text" ng-model="info.consentDate" class="form-control" readonly-->
+                                       <!--style="width: 52%;">-->
+                                <!--<button class="btn default" type="button"><i class="fa fa-calendar"></i>-->
+                                <!--</button>-->
+                            <!--</div>-->
+                            <input type="text" class="form-control col-md-12" name="dob" required
+                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                   is-open="openDOB" ng-click="openDOB = true"
+                                   datepicker-options="dateOptions1" ng-required="true"
+                                   close-text="Close"/>
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-sm-4">
@@ -170,18 +171,13 @@
                                     <textarea class="form-control"></textarea>
                                     <label class="control-label">Worker's signature</label>
                                 </div>
-                                <div class="col-md-3 col-sm-3">
+                                <div class="col-md-3 col-sm-4">
                                     <label class="control-label">Date</label>
-
-                                    <div class="input-group input-medium date date-picker" data-date="12-02-2012"
-                                         data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                        <input type="text" ng-model="info.consentDate" class="form-control"
-                                               readonly>
-                                                <span class="input-group-btn">
-                                                <button class="btn default" type="button"><i class="fa fa-calendar"></i>
-                                                </button>
-                                                </span>
-                                    </div>
+                                    <input type="text" class="form-control col-md-12" name="dob" required
+                                           datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                           is-open="openDOB" ng-click="openDOB = true"
+                                           datepicker-options="dateOptions2" ng-required="true"
+                                           close-text="Close"/>
                                 </div>
                             </div>
                         </div>
@@ -190,17 +186,13 @@
                                 <textarea class="form-control" style="margin-top: 25px;"></textarea>
                                 <label class="control-label">Tester's signature</label>
                             </div>
-                            <div class="col-md-3 col-sm-3">
+                            <div class="col-md-3 col-sm-4">
                                 <label class="control-label">Date</label>
-
-                                <div class="input-group input-medium date date-picker" data-date="12-02-2012"
-                                     data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                    <input type="text" ng-model="info.consentDate" class="form-control" readonly>
-                                                <span class="input-group-btn">
-                                                <button class="btn default" type="button"><i class="fa fa-calendar"></i>
-                                                </button>
-                                                </span>
-                                </div>
+                                <input type="text" class="form-control col-md-12" name="dob" required
+                                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                       is-open="openDOB" ng-click="openDOB = true"
+                                       datepicker-options="dateOptions3" ng-required="true"
+                                       close-text="Close"/>
                             </div>
                         </div>
                         <br/>

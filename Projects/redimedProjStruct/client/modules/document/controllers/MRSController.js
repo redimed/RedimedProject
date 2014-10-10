@@ -3,18 +3,10 @@
  */
 angular.module('app.loggedIn.document.MRS.controllers', [])
     .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore) {
-        //Date picker
-        var initPickers = function () {
-            //init date pickers
-            $('.date-picker').datepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            }).on('changeDate', function (evn) {
-
-            });
-
-        }
-        initPickers();
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
         $scope.submit = function () {
             var info = $scope.info;
         };
