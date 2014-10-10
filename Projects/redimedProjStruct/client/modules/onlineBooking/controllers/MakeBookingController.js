@@ -547,6 +547,8 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     }
                 }
 
+
+
                 $modalInstance.close($scope.candidateInfo);
             }
 

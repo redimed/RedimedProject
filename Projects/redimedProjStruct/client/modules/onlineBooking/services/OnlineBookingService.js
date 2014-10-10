@@ -159,6 +159,16 @@ angular.module('app.loggedIn.booking.services',[])
             return pack.post({id:id});
         }
 
+        bookingService.searchBooking = function(info){
+            var search = api.all('booking/search');
+            return search.post({info:info});
+        }
+
+        bookingService.updateNote = function(info){
+            var note = api.all('booking/edit/note');
+            return note.post({info:info});
+        }
+
 
 
         return bookingService;

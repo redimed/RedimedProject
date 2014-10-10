@@ -571,5 +571,42 @@ module.exports = {
         }
 
 
+    },
+    search: function(req,res){
+        var info = req.body.info;
+
+        var date = new Date();
+
+        var companyId = info.companyId == null ? '%' : info.companyId;
+        var companyName = info.companyName == null ? '%' : '%'+info.companyName+'%';
+        var candidateName = info.candidateName == null ? '%' : '%'+info.candidateName+'%';
+        var bookingPerson = info.bookingPerson == null ? '%' : '%'+info.bookingPerson+'%';
+        var status = info.status == null ? '%' : info.status;
+        var fromDate = info.fromDate == null ? '1-1-1' : info.fromDate;
+        var toDate = info.toDate == null ? date : info.toDate;
+        var siteName = info.siteName == null ? '%' : '%'+info.siteName+'%';
+
+        db.sequelize.query("SELECT * FROM booking_cadidates_v " +
+                            "WHERE company_id LIKE ? AND company_name LIKE ? AND site_name LIKE ? AND Candidates_name LIKE ? AND Booking_Person LIKE ? AND Appointment_status LIKE ? AND Appointment_time BETWEEN ? AND ?",null,{raw:true},[companyId,companyName,siteName,candidateName,bookingPerson,status,fromDate,toDate])
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error',err:err});
+                console.log(err);
+            })
+    },
+    editAppointmentNote: function(req,res){
+        var info = req.body.info;
+
+        db.BookingCandidate.update({
+            Appointment_notes: info.note
+        },{Booking_id:info.bookingId, Candidate_id:info.candidateId})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
     }
 };

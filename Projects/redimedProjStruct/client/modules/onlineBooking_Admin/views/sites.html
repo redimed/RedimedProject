@@ -68,134 +68,268 @@
         </div>
     </div>
 </div>
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon icon-calendar font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Calendar</span>
-        </div>
-    </div>
-    <div class="portlet-body form">
-        <form name="calendarForm" ng-submit="submitCalendar(calendarForm)" method="post" novalidate>
-            <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.fromTime.$invalid}">
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1">
-                        <label style="margin-top: 28px;">From Time <span class="required">
+<div class="tabbable tabbable-custom tabbable-custom-profile">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="admin/booking/site#tab_1_1" data-toggle="tab">
+                Calendar </a>
+        </li>
+        <li>
+            <a href="admin/booking/site#tab_1_2" data-toggle="tab">
+                State </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1_1">
+            <div class="portlet-body form">
+                <form name="calendarForm" ng-submit="submitCalendar(calendarForm)" method="post" novalidate>
+                    <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.fromTime.$invalid}">
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1">
+                                <label style="margin-top: 28px;">From Time <span class="required">
                                                     * </span></label>
+                            </div>
+                            <div class="col-md-3">
+                                <input style="margin-top: 28px;" type="text" class="form-control" name="fromTime"  required datepicker-popup="dd/MM/yyyy" data-ng-model="info.From_time" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" close-text="Close" />
+                            </div>
+                            <div class="col-md-2">
+                                <timepicker ng-model="info.From_time"  hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="showClickedValidation && calendarForm.fromTime.$invalid">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <span for="fromTime" class="help-block">From Time is required.</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <input style="margin-top: 28px;" type="text" class="form-control" name="fromTime"  required datepicker-popup="dd/MM/yyyy" data-ng-model="info.From_time" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" close-text="Close" />
-                    </div>
-                    <div class="col-md-2">
-                        <timepicker ng-model="info.From_time"  hour-step="1" minute-step="15" show-meridian="false"></timepicker>
-                    </div>
-                </div>
-                <div class="row" ng-show="showClickedValidation && calendarForm.fromTime.$invalid">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <span for="fromTime" class="help-block">From Time is required.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.toTime.$invalid}">
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1">
-                        <label style="margin-top: 28px;">To Time <span class="required">
+                    <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.toTime.$invalid}">
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1">
+                                <label style="margin-top: 28px;">To Time <span class="required">
                                                     * </span></label>
-                    </div>
-                    <div class="col-md-3">
-                        <input style="margin-top: 28px;" type="text" class="form-control" name="toTime" required datepicker-popup="dd/MM/yyyy" data-ng-model="info.to_time" is-open="openTo" ng-click="openTo = true"  datepicker-options="dateOptions" close-text="Close" />
-                    </div>
-                    <div class="col-md-2">
-                        <timepicker ng-model="info.to_time"  hour-step="1" minute-step="15" show-meridian="false"></timepicker>
-                    </div>
-                </div>
-                <div class="row" ng-show="showClickedValidation && calendarForm.toTime.$invalid">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <span for="toTime" class="help-block">To Time is required.</span>
-                    </div>
+                            </div>
+                            <div class="col-md-3">
+                                <input style="margin-top: 28px;" type="text" class="form-control" name="toTime" required datepicker-popup="dd/MM/yyyy" data-ng-model="info.to_time" is-open="openTo" ng-click="openTo = true"  datepicker-options="dateOptions" close-text="Close" />
+                            </div>
+                            <div class="col-md-2">
+                                <timepicker ng-model="info.to_time"  hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="showClickedValidation && calendarForm.toTime.$invalid">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <span for="toTime" class="help-block">To Time is required.</span>
+                            </div>
 
-                </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.available.$invalid}">
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1">
-                        <label>Available <span class="required">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.available.$invalid}">
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1">
+                                <label>Available <span class="required">
                                                     * </span></label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" ng-model="info.available" ng-pattern="/^[0-9]+$/" required name="available" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row" ng-show="showClickedValidation && calendarForm.available.$invalid">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <span for="available" class="help-block">Available is required.</span>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="showClickedValidation && calendarForm.available.$error.pattern">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <span for="available" class="help-block">Available must be number.</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <input type="text" ng-model="info.available" ng-pattern="/^[0-9]+$/" required name="available" class="form-control" />
+                    <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.booking.$invalid}">
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1">
+                                <label>Booking</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" ng-model="info.booking" ng-pattern="/^[0-9]+$/" name="booking" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row" ng-show="showClickedValidation && calendarForm.booking.$error.pattern">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <span for="booking" class="help-block">Booking must be number.</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row" ng-show="showClickedValidation && calendarForm.available.$invalid">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <span for="available" class="help-block">Available is required.</span>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-3">
+                            <button ng-class="{disabled : selectedCal == null}" type="submit" class="btn blue">Submit</button>
+                        </div>
                     </div>
-                </div>
-                <div class="row" ng-show="showClickedValidation && calendarForm.available.$error.pattern">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <span for="available" class="help-block">Available must be number.</span>
-                    </div>
+                </form>
+                <br/>
+                <div class="table-scrollable">
+                    <table ng-table="tableParams2"  class="table table-bordered table-condensed  table-responsive">
+                        <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showCalendarDetail(b)" ng-class="{selected : b.cal_id === selectedCal}">
+                            <td data-title="'Site ID'">
+                                <label>{{b.site_id}}</label>
+                            </td>
+                            <td data-title="'From Time'" >
+                                <label>{{b.From_time | date:'dd/MM/yyyy - HH:mm'}}</label>
+                            </td>
+                            <td data-title="'To Time'" >
+                                <label>{{b.to_time | date:'dd/MM/yyyy - HH:mm'}}</label>
+                            </td>
+                            <td data-title="'Available'" >
+                                <label >{{b.available}}</label>
+                            </td>
+                            <td data-title="'Remain'" >
+                                <label>({{b.available - b.booking <= 0 ? 0 : b.available - b.booking}} available(s))</label>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.booking.$invalid}">
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1">
-                        <label>Booking</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" ng-model="info.booking" ng-pattern="/^[0-9]+$/" name="booking" class="form-control" />
-                    </div>
-                </div>
-                <div class="row" ng-show="showClickedValidation && calendarForm.booking.$error.pattern">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <span for="booking" class="help-block">Booking must be number.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-1">
-                </div>
+        </div>
+        <div class="tab-pane" id="tab_1_2">
+            <div class="row profile-account">
                 <div class="col-md-3">
-                    <button ng-class="{disabled : selectedCal == null}" type="submit" class="btn blue">Submit</button>
+                    <ul class="ver-inline-menu tabbable margin-bottom-10">
+                        <li class="active">
+                            <a data-toggle="tab" href="admin/booking/site#tab_1-1">
+                                <i class="fa fa-cog"></i> State </a>
+													<span class="after">
+													</span>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="admin/booking/sitel#tab_2-2">
+                                <i class="fa fa-picture-o"></i> City </a>
+                        </li>
+                    </ul>
                 </div>
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <div id="tab_1-1" class="tab-pane active">
+                            <form name="stateForm" ng-submit="submitState(stateForm)" novalidate method="post">
+                                <div class="form-group" ng-class="{'has-error':showStateValidation && stateForm.name.$invalid}">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>State Name <span class="required">
+                                                    * </span></label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input ng-model="stateInfo.state_name" type="text" class="form-control" name="name" required />
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="showStateValidation && stateForm.name.$invalid">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-4">
+                                            <span for="name" class="help-block">State Name is required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>Is Enable</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input ng-model="stateInfo.isenable" type="checkbox" ng-true-value="1" ng-false-value="0" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <button ng-class="{disabled : selectedState == null}" type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="javascript:;" ng-if="selectedId != null" ng-click="addNewState()" class="btn green">Add New</a>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <table ng-table="tableParams3"  class="table table-bordered table-condensed  table-responsive">
+                                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showStateDetail(b)" ng-class="{selected : b.state_id === selectedState}">
+                                    <td data-title="'State Name'" width="70%">
+                                        <label>{{b.state_name}}</label>
+                                    </td>
+                                    <td data-title="'Is Enable'" width="30%">
+                                        <input ng-if="b.isenable == 1" type="checkbox" checked disabled />
+                                        <input ng-if="b.isenable == 0 || b.isenable == null" type="checkbox" disabled />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="tab_2-2" class="tab-pane">
+                            <form name="suburbForm" ng-submit="submitSuburb(suburbForm)" novalidate method="post">
+                                <div class="form-group" ng-class="{'has-error':showSuburbValidation && suburbForm.name.$invalid}">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>Suburb Name <span class="required">
+                                                    * </span></label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input ng-model="suburbInfo.suburb_name" type="text" class="form-control" name="name" required />
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="showSuburbValidation && suburbForm.name.$invalid">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-4">
+                                            <span for="name" class="help-block">Suburb Name is required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>Is Enable</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input ng-model="suburbInfo.isenable" type="checkbox" ng-true-value="1" ng-false-value="0" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <button ng-class="{disabled : selectedSuburb == null}" type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="javascript:;" ng-if="selectedState != null" ng-click="addNewSuburb()" class="btn green">Add New</a>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <table ng-table="tableParams4"  class="table table-bordered table-condensed  table-responsive">
+                                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showSuburbDetail(b)" ng-class="{selected : b.suburb_id === selectedSuburb}">
+                                    <td data-title="'Suburb Name'" width="70%">
+                                        <label>{{b.suburb_name}}</label>
+                                    </td>
+                                    <td data-title="'Is Enable'" width="30%">
+                                        <input ng-if="b.isenable == 1" type="checkbox" checked disabled />
+                                        <input ng-if="b.isenable == 0 || b.isenable == null" type="checkbox" disabled />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </form>
-        <br/>
-        <div class="table-scrollable">
-            <table ng-table="tableParams2"  class="table table-bordered table-condensed  table-responsive">
-                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showCalendarDetail(b)" ng-class="{selected : b.cal_id === selectedCal}">
-                    <td data-title="'Site ID'">
-                        <label>{{b.site_id}}</label>
-                    </td>
-                    <td data-title="'From Time'" >
-                        <label>{{b.From_time | date:'dd/MM/yyyy - HH:mm'}}</label>
-                    </td>
-                    <td data-title="'To Time'" >
-                        <label>{{b.to_time | date:'dd/MM/yyyy - HH:mm'}}</label>
-                    </td>
-                    <td data-title="'Available'" >
-                        <label >{{b.available}}</label>
-                    </td>
-                    <td data-title="'Remain'" >
-                        <label>({{b.available - b.booking <= 0 ? 0 : b.available - b.booking}} available(s))</label>
-                    </td>
-                </tr>
-            </table>
         </div>
     </div>
 </div>
+

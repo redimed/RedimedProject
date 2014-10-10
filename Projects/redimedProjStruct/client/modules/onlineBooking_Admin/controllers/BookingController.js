@@ -96,17 +96,19 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
 
         $scope.saveInfo = function(){
 
-            OnlineBookingAdminService.editBookingInfo($scope.info).then(function(data){
-                if(data.status === 'success')
-                {
-                    toastr.success("Edit Successfully!","Success");
-                    //$state.go('loggedIn.package',null,{reload:true});
-                }
-                else
-                {
-                    toastr.error("Edit Failed!","Error");
-                }
-            })
+            console.log($scope.info);
+
+//            OnlineBookingAdminService.editBookingInfo($scope.info).then(function(data){
+//                if(data.status === 'success')
+//                {
+//                    toastr.success("Edit Successfully!","Success");
+//                    //$state.go('loggedIn.package',null,{reload:true});
+//                }
+//                else
+//                {
+//                    toastr.error("Edit Failed!","Error");
+//                }
+//            })
         }
 
         $scope.sendEmail = function(){
@@ -123,6 +125,65 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
             })
         }
 
+        $scope.searchModal = function(){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/onlineBooking/views/searchBookingModal.html',
+                controller:'SearchAdminBookingController',
+                size:'md',
+                resolve:{
+                    companyId: function(){
+                        return null;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(data){
+                $scope.data = data;
+
+                $scope.$watch('data',function(data){
+                    $scope.data = data;
+                    $scope.tableParams.reload();
+                })
+
+            })
+        }
+
+    })
+
+    .controller('SearchAdminBookingController',function($scope,$modalInstance,OnlineBookingService,OnlineBookingAdminService,companyId){
+        $scope.minDate = new Date();
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
+        $scope.info = {
+            companyId: companyId,
+            companyName: null,
+            candidateName: null,
+            fromDate: null,
+            toDate: null,
+            bookingPerson: null,
+            status: null,
+            siteName: null
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.search = function(){
+            OnlineBookingService.searchBooking($scope.info).then(function(data){
+                $modalInstance.close(data);
+            })
+        }
+
+        $scope.reset = function(){
+            OnlineBookingAdminService.getList().then(function(data){
+                $modalInstance.close(data.rs);
+            })
+        }
     })
 
     .controller('AdminBookingDetailController',function($scope,$modalInstance,OnlineBookingService, bookingId, candidateId){

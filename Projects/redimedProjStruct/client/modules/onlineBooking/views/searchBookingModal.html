@@ -1,0 +1,77 @@
+<div class="modal-header">
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">Company:</label>
+        </div>
+        <div class="col-md-7">
+            <input class="form-control" type="text" ng-model="info.companyName" />
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">Candidate:</label>
+        </div>
+        <div class="col-md-7">
+            <input class="form-control" type="text" ng-model="info.candidateName" />
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">From Date:</label>
+        </div>
+        <div class="col-md-7">
+            <input type="text"  class="form-control" datepicker-popup="dd/MM/yyyy" data-ng-model="info.fromDate" is-open="openFrom" ng-click="openFrom = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">To Date: </label>
+        </div>
+        <div class="col-md-7">
+            <input type="text"  class="form-control"  datepicker-popup="dd/MM/yyyy" data-ng-model="info.toDate" is-open="openTo" ng-click="openTo = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">Booking Person:</label>
+        </div>
+        <div class="col-md-7">
+            <input class="form-control" type="text" ng-model="info.bookingPerson" />
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">Site:</label>
+        </div>
+        <div class="col-md-7">
+            <input class="form-control" type="text" ng-model="info.siteName" />
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label pull-right">Status:</label>
+        </div>
+        <div class="col-md-7">
+            <select ng-model="info.status" class="form-control">
+                <option value="">--Select Status--</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Pending">Pending</option>
+                <option value="Reschedule">Reschedule</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
+    <a href="javascript:;" class="btn green" ng-click="search()"  >Search</a>
+    <a href="javascript:;" class="btn blue" ng-click="reset()">Reset</a>
+</div>
