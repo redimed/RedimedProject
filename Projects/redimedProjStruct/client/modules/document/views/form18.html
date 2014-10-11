@@ -1,0 +1,205 @@
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <a href="javascript:;" ng-click="submit()" class="btn green pull-right">Submit</a>
+            <a href="javascript:;" ng-click="print()" class="btn btn-primary blue pull-right">Print PDF</a>
+            <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+<div class="col-md-12 col-sm-12">
+    <div class="portlet box grey-cascade">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>NOTICE OF ARRANGEMENT OF
+                AUDIOMETRIC TEST
+                Form 18
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal form-bordered">
+                <div class="form-body">
+                    <div class="=row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">To: (Full legal name of worker)</label>
+                            <input type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="=row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Address of worker</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <p style="margin-left: 10px; margin-top: 20px;">Notice is hereby given that I have arranged
+                                for you
+                                to
+                                undergo an audiometric test to be conducted by:</p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="=row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Name of person approved under regulation
+                                19B</label>
+                            <input type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="=row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Name of clinic</label>
+                            <input type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="=row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Adress of clinic</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="=row">
+                        <div class="col-md-3 col-sm-4">
+                            <label class="control-label">Time of test</label>
+                            <input type="text" class="form-control"/>
+                        </div>
+                        <div class="col-md-3 col-sm-4">
+                            <label class="control-label">Date of test</label>
+                            <input type="text" class="form-control col-md-12" name="dob" required
+                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                   is-open="openDOB" ng-click="openDOB = true"
+                                   datepicker-options="dateOptions" ng-required="true"
+                                   close-text="Close"/>
+                        </div>
+                    </div>
+                    <div class="=row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Name of employer</label>
+                            <input type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-3" style="margin-left: 10px;">
+                            <label class="control-label">Location/worksite</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+                        <div class="col-md-1 col-sm-1">
+                            <label class="control-label" style="margin-left: 25%;margin-top: 100%;">WC</label>
+                        </div>
+                        <div class="col-md-5 col-sm-7">
+                            <label class="control-label" style="text-align: left;">Employer WorkCover No(obtainable from
+                                your insurer)</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="=row">
+                        <div class="col-md-4 col-sm-5">
+                            <textarea class="form-control" style="margin-top: 25px;height: 120px;"></textarea>
+                            <label class="control-label">Signature of person arranging test</label>
+                        </div>
+                        <div class="col-md-3 col-sm-3" style="margin-top: 80px;">
+                            <label class="control-label">Date</label>
+
+                            <!--<div class="input-group input-medium date date-picker" data-date="12-02-2012"-->
+                                 <!--data-date-format="dd-mm-yyyy" data-date-viewmode="years">-->
+                                <!--<input type="text" ng-model="info.consentDate" class="form-control" readonly-->
+                                       <!--style="width: 52%;">-->
+                                <!--<button class="btn default" type="button"><i class="fa fa-calendar"></i>-->
+                                <!--</button>-->
+                            <!--</div>-->
+                            <input type="text" class="form-control col-md-12" name="dob" required
+                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                   is-open="openDOB" ng-click="openDOB = true"
+                                   datepicker-options="dateOptions1" ng-required="true"
+                                   close-text="Close"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <label class="control-label">Name of person arranging test</label>
+                                <input type="text" class="form-control"/></br>
+                                <label class="control-label">Position</label>
+                                <input type="text" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" style="margin-top: 20px">
+                        <div class="col-md-2 col-sm-3">
+                            <p style="font-weight: bold;">Non attendance:</p></br>
+                            <p style="font-weight: bold;">Period of Quiet:</p>
+                        </div>
+                        <div class="col-md-10 col-sm-9">
+                            <p> A worker shall not, without reasonable excuse, fail to submit themselves for an
+                                audiometric test
+                                of
+                                which
+                                the worker has notice (regulation 19D(3)).</p>
+
+                            <p> An employer shall ensure that the worker is not knowingly exposed in the workplace, and
+                                the
+                                worker
+                                shall not knowingly permit himself to be exposed , to noise levels above 80dB(A) during
+                                16 hours
+                                immediately preceding the audiometric test (regulation 19D(2)).</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12" style="margin-left: 10px;">
+                                <p>To be completed at the start of the appointment</p>
+                            </div>
+                        </div>
+                        <div class="=row">
+                            <div class="col-md-7 col-sm-7">
+                                <div class="form-group">
+                                    <label class="control-label">I (Full legal name of worker)</label>
+                                    <input type="text" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="col-md-7 col-sm-7">
+                                    <label class="control-label">Confirm that i have observed the period od
+                                        quiet.</label>
+                                    <textarea class="form-control"></textarea>
+                                    <label class="control-label">Worker's signature</label>
+                                </div>
+                                <div class="col-md-3 col-sm-4">
+                                    <label class="control-label">Date</label>
+                                    <input type="text" class="form-control col-md-12" name="dob" required
+                                           datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                           is-open="openDOB" ng-click="openDOB = true"
+                                           datepicker-options="dateOptions2" ng-required="true"
+                                           close-text="Close"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 col-sm-7" style="margin-left: 10px">
+                                <textarea class="form-control" style="margin-top: 25px;"></textarea>
+                                <label class="control-label">Tester's signature</label>
+                            </div>
+                            <div class="col-md-3 col-sm-4">
+                                <label class="control-label">Date</label>
+                                <input type="text" class="form-control col-md-12" name="dob" required
+                                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                       is-open="openDOB" ng-click="openDOB = true"
+                                       datepicker-options="dateOptions3" ng-required="true"
+                                       close-text="Close"/>
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

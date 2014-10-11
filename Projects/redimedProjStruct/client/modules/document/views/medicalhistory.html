@@ -1,0 +1,842 @@
+<style>
+    #modalSign .modal-dialog {
+        width: 90%;
+        height: 80%;
+    }
+
+    #modalSign1 .modal-dialog {
+        width: 90%;
+        height: 80%;
+    }
+
+    #modalSign2 .modal-dialog {
+        width: 90%;
+        height: 80%;
+    }
+
+    #modalSign3 .modal-dialog {
+        width: 90%;
+        height: 80%;
+    }
+
+    #modalSign4 .modal-dialog {
+        width: 90%;
+        height: 80%;
+    }
+
+    #modalSign5 .modal-dialog {
+        width: 90%;
+        height: 80%;
+    }
+</style>
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <a href="javascript:;" ng-click="submit()" class="btn green pull-right">Submit</a>
+            <a href="javascript:;" ng-click="print()" class="btn btn-primary blue pull-right">Print PDF</a>
+            <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
+        </div>
+    </div>
+</div>
+<br/>
+<div ng-repeat="header in listMH">
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <h1 style="font-weight: bolder; text-align: center">{{header.header_name}}</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+<div class="col-md-12 col-sm-12">
+<div class="portlet box grey-cascade">
+<div class="portlet-body form">
+<!-- BEGIN FORM-->
+<form class="form-horizontal form-bordered">
+<div style="background-color: lightgrey; vertical-align: middle; height: 35px">
+    <label class="control-label bold" style="margin-left: 10px">Personal Details</label>
+    <label class="control-label">(to be filled in by Patient)</label>
+</div>
+<div class="form-body">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-6 col-sm-6" style="margin-top: 10px;">
+                <label class="control-label">Surname:</label>
+                <input type="text" class="form-control"/>
+            </div>
+            <div class="col-md-6 col-sm-6" style="margin-top: 10px;">
+                <label class="control-label">Given Names:</label>
+                <input type="text" class="form-control"/>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-3 col-sm-4">
+                <label class="control-label">Date of birth:</label>
+                <input type="text" class="form-control col-md-12" name="dob" required
+                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                       is-open="openDOB" ng-click="openDOB = true"
+                       datepicker-options="dateOptions3" ng-required="true"
+                       close-text="Close"/>
+            </div>
+            <div class="col-md-4 col-sm-5">
+                <div class="btn-group" style="margin-left:25%;margin-top: 10%;">
+                    <label class="btn">
+                        <input type="radio" name='a'/> Male
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name='a'/> Female
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-3">
+                <label class="control-label">Phone Extension:</label>
+                <input type="text" class="form-control"/>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-8 col-sm-8">
+            <label class="control-label" style="margin-left: 10px;">Home Address:</label>
+            <textarea class="form-control" style="margin-left: 10px;"></textarea>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Home Phone:</label>
+                <input type="text" class="form-control"/>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Mobile:</label>
+                <input type="text" class="form-control"/>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-4 col-sm-5">
+                <label class="control-label">Next of Kin/Emergency Contact:</label>
+                <textarea class="form-control"></textarea>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label">Relationship:</label>
+                <textarea class="form-control"></textarea>
+            </div>
+            <div class="col-md-4 col-sm-3">
+                <label class="control-label">Contact No (A/H):</label>
+                <input type="text" class="form-control"/>
+                <label class="control-label">Contact No (W/H):</label>
+                <input type="text" class="form-control"/>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-2">
+            <label class="control-label bold">Address: </label>
+        </div>
+        <div class="col-md-2 col-sm-2">
+            <label class="control-label">As above</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="checkbox" class="form-control"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12">
+            <textarea class="form-control"></textarea>
+        </div>
+    </div>
+</div>
+<br/>
+
+<div style="background-color: lightgrey; vertical-align: middle; height: 35px">
+    <label class="control-label bold" style="margin-left: 10px">Declaration</label>
+</div>
+<div class="form-group">
+    <div class="col-md-12 col-sm-12">
+        <p>I declare that the above information is true and correct, and that if any of this information changes, I will
+            inform my company immediately and update these details.</p>
+    </div>
+</div>
+<br/>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label">Name:</label>
+            <input type="text" class="form-control"/>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label">Sign:</label>
+            <br/>
+            <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
+            <script type="text/javascript">
+                $('#signBtn').click(function () {
+                    $('#modalSign').modal({
+                        show: true
+                    });
+                });
+
+            </script>
+            <img src="" id="signDisplay" ng-model="info.consentSign"
+                 style="width:300px;height: 150px;"/>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label">Date:</label>
+            <input type="text" class="form-control col-md-12" name="dob" required
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                   is-open="openDOB" ng-click="openDOB = true"
+                   datepicker-options="dateOptions3" ng-required="true"
+                   close-text="Close"/>
+        </div>
+    </div>
+</div>
+<br/>
+<label class="control-label bold" style="margin-left: 10px">Release of Medical Information</label>
+
+<div class="form-group">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-1" style="width: 5px;">
+            <label class="control-label">I,</label>
+        </div>
+        <div class="col-md-5 col-sm-5" style="margin-top: 10px;">
+            <input type="text" class="form-control"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label" style="width: 5px;margin-left: 10px;">DOB</label>
+        </div>
+        <div class="col-md-5 col-sm-5" style="margin-top: 10px;">
+            <input type="text" class="form-control"/>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label" style="margin-left: 200px;">(Print Name)</label>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <p>request to make available to the appropriate authorised management staff of my company, any details from my
+            medical examination which may affect my suitablility for the position which I have applied for.</p>
+    </div>
+    <br/>
+
+    <div class="col-md-12 col-sm-12">
+        <p>I understand that I will be tested for drugs as part of my Employment Medical Examination and that it is in
+            my interests
+            to reveal any prescription drugs that I am taking.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Signed:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <a href="javascript:;" id="signBtn1" class="btn green" style="margin-top: 5%;">Sign</a>
+        </div>
+        <script type="text/javascript">
+            $('#signBtn1').click(function () {
+                $('#modalSign1').modal({
+                    show: true
+                });
+            });
+
+        </script>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <img src="" id="signDisplay1" ng-model="info.consentSign"
+                 style="width:300px;height: 150px;"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Witness:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <a href="javascript:;" id="signBtn2" class="btn green" style="margin-top: 5%;">Sign</a>
+        </div>
+        <script type="text/javascript">
+            $('#signBtn2').click(function () {
+                $('#modalSign2').modal({
+                    show: true
+                });
+            });
+
+        </script>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6" style="margin-left:15px;">
+            <img src="" id="signDisplay2" ng-model="info.consentSign"
+                 style="width:300px;height: 150px;"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Date:</label>
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <input type="text" class="form-control col-md-12" name="dob" required
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                   is-open="openDOB" ng-click="openDOB = true"
+                   datepicker-options="dateOptions3" ng-required="true"
+                   close-text="Close"/>
+        </div>
+    </div>
+</div>
+<label class="control-label bold" style="margin-left: 10px">DECLARATION</label>
+
+<div class="form-group">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-1" style="width: 5px;">
+            <label class="control-label">I,</label>
+        </div>
+        <div class="col-md-5 col-sm-5" style="margin-top: 10px;">
+            <input type="text" class="form-control"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label" style="width: 5px;margin-left: 10px;">DOB</label>
+        </div>
+        <div class="col-md-5 col-sm-5" style="margin-top: 10px;">
+            <input type="text" class="form-control"/>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label" style="margin-left: 200px;">(Print Name)</label>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <p>Declare that to the best of my knowledge the answers in this application are correct and I understand that if
+            any false
+            or deliberately misleading information is given, or any material facts are withheld, I will not be accepted,
+            or if I am
+            employed, my employment may be terminated.</p>
+    </div>
+    <br/>
+
+    <div class="col-md-12 col-sm-12">
+        <p>I authorise the examining doctor to release any information acquired from my medical history, examination and
+            urine
+            drug screen to the appropriate management staff of my company.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Signed:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <a href="javascript:;" id="signBtn3" class="btn green" style="margin-top: 5%;">Sign</a>
+        </div>
+        <script type="text/javascript">
+            $('#signBtn3').click(function () {
+                $('#modalSign3').modal({
+                    show: true
+                });
+            });
+
+        </script>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6" style="margin-left:15px;">
+            <img src="" id="signDisplay3" ng-model="info.consentSign"
+                 style="width:300px;height: 150px;"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Witness:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <a href="javascript:;" id="signBtn4" class="btn green" style="margin-top: 5%;">Sign</a>
+        </div>
+        <script type="text/javascript">
+            $('#signBtn4').click(function () {
+                $('#modalSign4').modal({
+                    show: true
+                });
+            });
+
+        </script>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6" style="margin-left:15px;">
+            <img src="" id="signDisplay4" ng-model="info.consentSign"
+                 style="width:300px;height: 150px;"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Date:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <input type="text" class="form-control col-md-12" name="dob" required
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                   is-open="openDOB" ng-click="openDOB = true"
+                   datepicker-options="dateOptions3" ng-required="true"
+                   close-text="Close"/>
+        </div>
+    </div>
+</div>
+
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <h3 style="text-align: center;">
+                Medical History/Questionnaire
+            </h3>
+
+            <h3 style="text-align: center;">
+                (To be filled out prior to Doctors visit)
+            </h3>
+
+            <h3 style="text-align: center;font-weight: bolder;">
+                Please answer the following as fully as possible.
+            </h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet box grey-cascade" ng-repeat="group in header.group">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> {{group.group_name}}
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form" ng-repeat="line in group.line">
+                <div class="panel-heading">
+                    <label class="control-label bold" style="text-align: left;">{{line.line_ord + ". " +
+                        line.line_name}}</label>
+
+                    <div class="row">
+                        <div class="clo-md-12">
+                            <div class="col-md-1 col-sm-2">
+                                <label class="control-label">Answer:</label>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="btn-group">
+                                    <label class="btn">
+                                        <input type="radio" name='a'/> Yes
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='a'/> No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="line.subquestion.length == 0" style="margin-top: 10px; text-align: left;">
+                        <div class="col-md-1 col-sm-2">
+                            <label class="control-label">Comment:</label>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <input type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <div ng-repeat="subquestion in line.subquestion">
+                        <label class="control-label bold" style="margin-top: 10px;text-align: left;">{{line.line_ord +
+                            ". " +
+                            subquestion.subquestion_ord + ". "
+                            + subquestion.subquestion_name}}</label>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="col-md-1 col-sm-2" style="margin-top: 15px">
+                                    <label>Answer:</label>
+                                </div>
+                                <div class="col-md-4 col-sm-4" style="margin-top: 10px;">
+                                    <div class="btn-group">
+                                        <label class="btn">
+                                            <input type="radio" name='a'/> Yes
+                                        </label>
+                                        <label class="btn">
+                                            <input type="radio" name='a'/> No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1 col-sm-2">
+                                <label class="control-label">Comment:</label>
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <input type="text" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="line.line_id != group.line[group.line.length - 1].line_id">
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12" style="margin-left: 10px; font-weight: bold;">
+        <p><u>Statement</u></p>
+    </div>
+    <div class="col-md-12 col-sm-12" style="margin-left: 10px; font-weight: bold;">
+        <p>Section 79 of the Western Australian Workers' Compensation and Injury Management Act 1981
+            gives an arbitrator discretion to refuse to award compensation which would otherwise be payable
+            where it is proved that the worker has, at the time of seeking or entering employment in respect of
+            which he claims compensation for an injury, wilfully and falsely represented himself as not having
+            previously suffered from the injury.</p>
+    </div>
+    <div class="col-md-12 col-sm-12" style="margin-left: 10px;">
+        <p>I have read the above statements. The answers are correct, and no information concerning my present or
+            past health has been withheld.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Name:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <input type="text" class="form-control"/>
+        </div>
+    </div>
+</div>
+<br/>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Signed:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <a href="javascript:;" id="signBtn5" class="btn green">Sign</a>
+        </div>
+        <script type="text/javascript">
+            $('#signBtn5').click(function () {
+                $('#modalSign5').modal({
+                    show: true
+                });
+            });
+
+        </script>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-6 col-sm-6" style="margin-left:15px;">
+            <img src="" id="signDisplay5" ng-model="info.consentSign"
+                 style="width:300px;height: 150px;"/>
+        </div>
+    </div>
+</div>
+<br/>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Date:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <input type="text" class="form-control col-md-12" name="dob" required
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                   is-open="openDOB" ng-click="openDOB = true"
+                   datepicker-options="dateOptions3" ng-required="true"
+                   close-text="Close"/>
+        </div>
+    </div>
+</div>
+<hr/>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--=============================== Signature Form ============================================-->
+<div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalSign1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature1"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig1" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig1" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalSign2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature2"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig2" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig2" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalSign3" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature3"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig3" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig3" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalSign4" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature4"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig4" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig4" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalSign5" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature5"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig5" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig5" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+            $('#signDisplay').hide();
+            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 800, height: 500});
+
+            $('#resetSig').on('click', function () {
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig').on('click', function () {
+                var data = $sigdiv.jSignature('getData')
+                if (data != null) {
+                    $('#signDisplay').attr("src", data);
+                    $('#signDisplay').show();
+                }
+
+                $('#modalSign').modal('hide');
+
+            });
+
+        })
+    })(jQuery)
+</script>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+            $('#signDisplay1').hide();
+            var $sigdiv = $("#signature1").jSignature({lineWidth: 2, width: 800, height: 500});
+
+            $('#resetSig1').on('click', function () {
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig1').on('click', function () {
+                var data = $sigdiv.jSignature('getData')
+                if (data != null) {
+                    $('#signDisplay1').attr("src", data);
+                    $('#signDisplay1').show();
+                }
+
+                $('#modalSign1').modal('hide');
+
+            });
+
+        })
+    })(jQuery)
+</script>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+            $('#signDisplay2').hide();
+            var $sigdiv = $("#signature2").jSignature({lineWidth: 2, width: 800, height: 500});
+
+            $('#resetSig2').on('click', function () {
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig2').on('click', function () {
+                var data = $sigdiv.jSignature('getData')
+                if (data != null) {
+                    $('#signDisplay2').attr("src", data);
+                    $('#signDisplay2').show();
+                }
+
+                $('#modalSign2').modal('hide');
+
+            });
+
+        })
+    })(jQuery)
+</script>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+            $('#signDisplay3').hide();
+            var $sigdiv = $("#signature3").jSignature({lineWidth: 2, width: 800, height: 500});
+
+            $('#resetSig3').on('click', function () {
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig3').on('click', function () {
+                var data = $sigdiv.jSignature('getData')
+                if (data != null) {
+                    $('#signDisplay3').attr("src", data);
+                    $('#signDisplay3').show();
+                }
+
+                $('#modalSign3').modal('hide');
+
+            });
+
+        })
+    })(jQuery)
+</script>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+            $('#signDisplay4').hide();
+            var $sigdiv = $("#signature4").jSignature({lineWidth: 2, width: 800, height: 500});
+
+            $('#resetSig4').on('click', function () {
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig4').on('click', function () {
+                var data = $sigdiv.jSignature('getData')
+                if (data != null) {
+                    $('#signDisplay4').attr("src", data);
+                    $('#signDisplay4').show();
+                }
+
+                $('#modalSign4').modal('hide');
+
+            });
+
+        })
+    })(jQuery)
+</script>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+            $('#signDisplay5').hide();
+            var $sigdiv = $("#signature5").jSignature({lineWidth: 2, width: 800, height: 500});
+
+            $('#resetSig5').on('click', function () {
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig5').on('click', function () {
+                var data = $sigdiv.jSignature('getData')
+                if (data != null) {
+                    $('#signDisplay5').attr("src", data);
+                    $('#signDisplay5').show();
+                }
+
+                $('#modalSign5').modal('hide');
+
+            });
+
+        })
+    })(jQuery)
+</script>
+
+
+

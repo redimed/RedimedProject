@@ -1,40 +1,62 @@
 <style>
-    #modalSign .modal-dialog{
-        width: 900px;
-        height: 800px;
+    #modalSign .modal-dialog {
+        width: 90%;
+        height: 80%;
     }
-
 </style>
-
+        <form>
+            <div class="row">
+                <div class="col-md-12">
+                    <textarea name="sas" id="">{{data_client}}</textarea>                </div>
+            </div>
+        </form>
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <a href="javascript:;" ng-click="submit()" class="btn green pull-right">Submit</a>
+            <a href="javascript:;" ng-click="print()" class="btn btn-primary blue pull-right">Print PDF</a>
+            <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
+        </div>
+    </div>
+</div>
+<br/>
 <!--Title-->
 <div class="caption">
     <div class="row">
-        <div class="col-md-12">
-            <p style="font-size: x-large;text-align: center;font-weight: bolder">CATEGORY 3 (Around the Track Personnel Operating in an Uncontrolled Environment)</p>
-            <p class="uppercase" style="font-size: x-large;text-align: center;font-weight: bolder">Authorised health professional health assessment check list</p>
+        <div class="col-md-12 col-sm-12">
+            <p style="font-size: x-large;text-align: center;font-weight: bolder">CATEGORY 3 (Around the Track Personnel
+                Operating in an Uncontrolled Environment)</p>
+
+            <p class="uppercase" style="font-size: x-large;text-align: center;font-weight: bolder">Authorised health
+                professional health assessment check list</p>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-1"></div>
-        <div class="col-md-1">
-            <input class="form-control" type="checkbox" />
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-md-1 col-sm-1">
+            <input class="form-control" type="checkbox"/>
         </div>
-        <label class="control-label col-md-9 bold" style="margin-top: 10px;">Has the declaration sections on pages of the Health Assessment Form been signed by the candidate.</label>
+        <div class="col-md-10 col-sm-10">
+            <label class="control-label bold" style="margin-top: 10px;">Has the declaration sections on
+                pages of
+                the Health Assessment Form been signed by the candidate.</label>
+        </div>
     </div>
 </div>
 </br>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-1"></div>
-        <div class="col-md-1">
-            <input class="form-control" type="checkbox" />
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-md-1 col-sm-1">
+            <input class="form-control" type="checkbox"/>
         </div>
-        <div class="col-md-9 bold">
-            <label class="control-label bold" style="margin-top: 10px;">Have the following pathology tests been ordered.</label>
+        <div class="col-md-9 col-sm-9 bold">
+            <label class="control-label bold" style="margin-top: 10px;">Have the following pathology tests been
+                ordered.</label>
             <ul>
                 <li>Urine drug screen</li>
                 <li>Alcohol Breath Test</li>
@@ -46,12 +68,14 @@
 </br>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-1"></div>
-        <div class="col-md-1">
-            <input class="form-control" type="checkbox" />
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-md-1 col-sm-1">
+            <input class="form-control" type="checkbox"/>
         </div>
-        <label class="control-label col-md-9 bold" style="margin-top: 10px;">Audiometric Examination Conducted. (Unless already organised by the employer)</label>
+        <label class="control-label col-md-9 col-sm-9 bold" style="margin-top: 10px;">Audiometric Examination Conducted.
+            (Unless
+            already organised by the employer)</label>
     </div>
 </div>
 </br>
@@ -59,15 +83,18 @@
 <!--Title-->
 <div class="caption">
     <div class="row">
-        <div class="col-md-12">
-            <p class="uppercase" style="font-size: x-large;text-align: center;font-weight: bolder">health assessment form</p>
-            <p style="font-size: x-large;text-align: center;font-weight: bolder">CATEGORY 3 (Around the Track Personnel Operating in an Uncontrolled Environment)</p>
+        <div class="col-md-12 col-sm-12">
+            <p class="uppercase" style="font-size: x-large;text-align: center;font-weight: bolder">health assessment
+                form</p>
+
+            <p style="font-size: x-large;text-align: center;font-weight: bolder">CATEGORY 3 (Around the Track Personnel
+                Operating in an Uncontrolled Environment)</p>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="portlet box grey-cascade">
             <div class="portlet-title">
                 <div class="caption">
@@ -80,34 +107,36 @@
             </div>
             <div class="portlet-body form">
                 <!-- BEGIN FORM-->
-                <form  class="form-horizontal form-bordered">
+                <form class="form-horizontal form-bordered">
                     <div style="background-color: lightgrey; vertical-align: middle; height: 35px">
-                        <label class="control-label bold" style="margin-left: 10px">1.1 Employee/Applicant Details</label>
+                        <label class="control-label bold" style="margin-left: 10px">1.1 Employee/Applicant
+                            Details</label>
                     </div>
                     <div class="form-body">
                         <div class="form-group">
-                            <div class="col-md-6">
-                                <label>Surname:</label>
+                            <div class="col-md-6 col-sm-6">
+                                <label class="control-label">Surname:</label>
+                                <input type="text" class="form-control" ng-model="info.sur"/>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <label>First name:</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="col-md-12 col-sm-12">
                                 <label>Location:</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <label>Company Employment Number:</label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <label>Date Of Birth:</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="col-md-12 col-sm-12">
                                 <label>Prospective/Current Position:</label>
                             </div>
                         </div>
@@ -115,57 +144,58 @@
                             <label class="control-label bold" style="margin-left: 10px">1.2 Employer Details</label>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="col-md-12 col-sm-12">
                                 <label>Supervisor/Contact:</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-4">
                                 <label>Date of Request:</label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-4">
                                 <label>Phone:</label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-4">
                                 <label>Fax:</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="col-md-12 col-sm-12">
                                 <label>Account to be sent to:</label>
                             </div>
                         </div>
                         <div style="background-color: lightgrey; vertical-align: middle; height: 35px">
-                            <label class="control-label bold" style="margin-left: 10px">1.3 Health Assessment Appointment Details</label>
+                            <label class="control-label bold" style="margin-left: 10px">1.3 Health Assessment
+                                Appointment Details</label>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="col-md-12 col-sm-12">
                                 <label>Health Professional:</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="col-md-12 col-sm-12">
                                 <label>Address:</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <label>Phone:</label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <label>Fax</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <label>Appointment date:</label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <label>Appointment time:</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="col-md-12 col-sm-12">
                                 <label>Test Required: </label>
                                 <ul>
                                     <li>Audiometry</li>
@@ -175,49 +205,62 @@
                             </div>
                         </div>
                         <div style="background-color: lightgrey; vertical-align: middle; height: 35px">
-                            <label class="control-label bold" style="margin-left: 10px">1.4 Description of Duties (or see attached Job Description or Task Risk Assessment)</label>
+                            <label class="control-label bold" style="margin-left: 10px">1.4 Description of Duties (or
+                                see attached Job Description or Task Risk Assessment)</label>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="col-md-1">
-                                    <input class="form-control" type="checkbox" />
+                            <div class="col-md-12 col-sm-12">
+                                <div class="col-md-1 col-sm-1">
+                                    <input class="form-control" type="checkbox"/>
                                 </div>
-                                <label class="col-md-11" style="margin-top: 10px">Rail Safety Worker Risk Assessment Attached</label>
+                                <label class="col-md-11 col-sm-11" style="margin-top: 10px">Rail Safety Worker Risk
+                                    Assessment
+                                    Attached</label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" style="margin-left: 15px">Description</label>
-                            <div class="row">
-                                <div class="col-md-8" style="margin-left: 15px;">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="col-md-4 col-sm-4">
+                                    <label class="control-label" style="margin-left: 15px">Description</label>
+                                </div>
+                                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                                     <textarea class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
+                        <br/>
+
                         <div style="background-color: lightgrey; vertical-align: middle; height: 35px;">
-                            <label class="control-label bold" style="margin-left: 10px">1.5 Type of Assessment Required </label>
+                            <label class="control-label bold" style="margin-left: 10px">1.5 Type of Assessment
+                                Required </label>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="col-md-1">
-                                    <input class="form-control" type="checkbox" />
+                            <div class="col-md-12 col-sm-12">
+                                <div class="col-md-1 col-sm-1">
+                                    <input class="form-control" type="checkbox"/>
                                 </div>
-                                <label class="col-md-11" style="margin-top: 10px">Pre-employment/Change of Category Health Assessment</label>
+                                <label class="col-md-11 col-sm-11" style="margin-top: 10px">Pre-employment/Change of
+                                    Category
+                                    Health Assessment</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="col-md-1">
-                                    <input class="form-control" type="checkbox" />
+                            <div class="col-md-12 col-sm-12">
+                                <div class="col-md-1 col-sm-1">
+                                    <input class="form-control" type="checkbox"/>
                                 </div>
-                                <label class="col-md-11" style="margin-top: 10px">Periodic Health Assessment</label>
+                                <label class="col-md-11 col-sm-11" style="margin-top: 10px">Periodic Health
+                                    Assessment</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="col-md-1">
-                                    <input class="form-control" type="checkbox" />
+                            <div class="col-md-12 col-sm-12">
+                                <div class="col-md-1 col-sm-1">
+                                    <input class="form-control" type="checkbox"/>
                                 </div>
-                                <label class="col-md-11" style="margin-top: 10px">Triggered Health Assessment (specify reason)</label>
+                                <label class="col-md-11 col-sm-11" style="margin-top: 10px">Triggered Health Assessment
+                                    (specify
+                                    reason)</label>
                             </div>
                         </div>
 
@@ -230,7 +273,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="portlet box grey-cascade">
             <div class="portlet-title">
                 <div class="caption">
@@ -243,106 +286,146 @@
             </div>
             <div class="portlet-body form">
                 <!-- BEGIN FORM-->
-                <form  class="form-horizontal form-bordered">
+                <form class="form-horizontal form-bordered">
                     <div style="background-color: lightgrey; vertical-align: middle; height: 35px">
-                        <label class="control-label bold" style="margin-left: 10px">2.1 Important information to the employee/applicant</label>
+                        <label class="control-label bold" style="margin-left: 10px">2.1 Important information to the
+                            employee/applicant</label>
                     </div>
                     <div class="form-body">
                         <div class="form-group">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <ul>
                                     <li>
-                                        You are required to attend a health assessment as a condition of your employment, to assess your fitness for undertaking rail safety work.
+                                        You are required to attend a health assessment as a condition of your
+                                        employment, to assess your fitness for undertaking rail safety work.
                                     </li>
                                     <li>
-                                        The health assessment must be completed by the day show in section 1.3 of this form to ensure that you able to carry out your normal duties.
+                                        The health assessment must be completed by the day show in section 1.3 of this
+                                        form to ensure that you able to carry out your normal duties.
                                     </li>
                                     <li>
-                                        Take glasses, hearing aids or any other aids required for safety critical work to the appointment.
+                                        Take glasses, hearing aids or any other aids required for safety critical work
+                                        to the appointment.
                                     </li>
                                     <li>
-                                        Take all medication that you are currently taking to the appointment or a list of such medication.
+                                        Take all medication that you are currently taking to the appointment or a list
+                                        of such medication.
                                     </li>
                                     <li>
                                         Take photo identification with you to the appointment.
                                         </br>
                                         As you are a <span class="bold">Around the Track Personnel (ATTP) in an Uncontrolled Environment (Category 3)</span>
-                                        you will required to have a hearing and vision test and breathing test (spirometry)
+                                        you will required to have a hearing and vision test and breathing test
+                                        (spirometry)
                                         </br>
                                         You should not be exposed to loud noise 16 hours prior to the audiometric test.
                                         </br>
-                                        A urine sample will also be required for drug screening purposes. Avoid excessive intake of water prior to providing urine sample.
+                                        A urine sample will also be required for drug screening purposes. Avoid
+                                        excessive intake of water prior to providing urine sample.
                                     </li>
 
                                 </ul>
                                 <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
                                     What happens if the examining health professional ind a problem with your health?
                                 </p>
+
                                 <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                    If the examining health professional finds or suspects something is wrong with your health that you this not know about, they will ask your permission to inform your own health professional. The examining health professional will not treat any medical condition but will give you a letter to take to your own health professional.
+                                    If the examining health professional finds or suspects something is wrong with your
+                                    health that you this not know about, they will ask your permission to inform your
+                                    own health professional. The examining health professional will not treat any
+                                    medical condition but will give you a letter to take to your own health
+                                    professional.
                                     </br>
-                                    If the examining health professional finds that you do not meet all relevant medical criteria, your supervisor will discuss with you the appropriate action to be taken.
+                                    If the examining health professional finds that you do not meet all relevant medical
+                                    criteria, your supervisor will discuss with you the appropriate action to be taken.
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                                    DISCLOSURE O HEALTH INFORMATION  - PLEASE READ CAREFULLY AND SIGN TO INDICATE YOUR UNDERS TANDING  OF HOW YOUR HEALTH INORMATION IS REPORTED, STORED AND ACCESSED
+                                    DISCLOSURE O HEALTH INFORMATION - PLEASE READ CAREFULLY AND SIGN TO INDICATE YOUR
+                                    UNDERS TANDING OF HOW YOUR HEALTH INORMATION IS REPORTED, STORED AND ACCESSED
                                 </p>
+
                                 <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                    The details of your health assessment will remain confidential and will only be reported to your employer in terms of your fitness for duty.
+                                    The details of your health assessment will remain confidential and will only be
+                                    reported to your employer in terms of your fitness for duty.
                                     </br>
-                                    The examining health professional will retain all detailed health assessment papers including your responses to the questionnaire, test results and the completed record of clinical findings.
+                                    The examining health professional will retain all detailed health assessment papers
+                                    including your responses to the questionnaire, test results and the completed record
+                                    of clinical findings.
                                     </br>
-                                    The Examining Health Professional will review the clinical findings and test result and will provide a recommendation to your employer only in terms of your fitness for duty.
+                                    The Examining Health Professional will review the clinical findings and test result
+                                    and will provide a recommendation to your employer only in terms of your fitness for
+                                    duty.
                                     </br>
-                                    The Examining Health Professional will maintain confidentiality of the records and will ensure they are not made available to, or discussed with any other person within your company other than that person authorised to receive such results.
+                                    The Examining Health Professional will maintain confidentiality of the records and
+                                    will ensure they are not made available to, or discussed with any other person
+                                    within your company other than that person authorised to receive such results.
                                     </br>
-                                    Other than the above, no information will be disclosed to any other person or organisation without your written permission except where:
+                                    Other than the above, no information will be disclosed to any other person or
+                                    organisation without your written permission except where:
                                     </br>
                                 </p>
                                 <ul>
-                                    <li>A notifiable disease is diagnosed wich must, by law, be reported to the state authorities.</li>
+                                    <li>A notifiable disease is diagnosed wich must, by law, be reported to the state
+                                        authorities.
+                                    </li>
                                     <li>A report is subpoenaed by a court of law or</li>
-                                    <li>The rail safety regulator (or another person) is required to conduct an inquiry into a railway accident or incident.</li>
+                                    <li>The rail safety regulator (or another person) is required to conduct an inquiry
+                                        into a railway accident or incident.
+                                    </li>
                                 </ul>
                                 <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
                                     You have the right to access your health records, including those held by
                                     the examining health professional and reports held by your employer.
                                 </p>
+
                                 <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold; text-align: center">
                                     EMPLOYEE/APPLICANT DECLARATION
                                 </p>
+
                                 <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                    Certify that I have read and understand the above statement concerning the health information provide here in.
+                                    Certify that I have read and understand the above statement concerning the health
+                                    information provide here in.
                                 </p>
+
                                 <div class="row">
-                                    <div class="col-md-4">
-                                            <label class="control-label" style="margin-top: 5px;">Signature</label>
-                                            <a href="#" id="signBtn" class="btn green">Sign</a>
-                                    </div>
-                                    <script type="text/javascript">
-                                        $('#signBtn').click(function () {
-                                            $('#modalSign').modal({
-                                                show: true
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-2 col-sm-3">
+                                            <label class="control-label">Signature:</label>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3">
+                                            <a href="javascript:;" id="signBtn" class="btn green"
+                                               style="margin-top: 10%;">Sign</a>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $('#signBtn').click(function () {
+                                                $('#modalSign').modal({
+                                                    show: true
+                                                });
                                             });
-                                        });
 
-                                    </script>
-
-                                    <div class="col-md-8">
-                                            <label class="control-label col-md-2" style="margin-top: 5px;">Date</label>
-                                            <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" style="margin-top: 20px" >
-                                                <input type="text" ng-model="info.consentDate" class="form-control" readonly>
-                                                <span class="input-group-btn">
-                                                <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                                                </span>
-                                            </div>
+                                        </script>
                                     </div>
-
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6" style="margin-left:15px;">
-                                        <img  src="" id="signDisplay" ng-model="info.consentSign" style="width:300px;height: 150px;" />
+                                    <div class="col-md-6 col-sm-6">
+                                        <img src="" id="signDisplay" ng-model="info.consentSign"
+                                             style="width:300px;height:150px;"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-2 col-sm-3">
+                                            <label class="control-label">Date:</label>
+                                        </div>
+                                        <div class="col-md-4 col-sm-5" style="margin-top: 1%;">
+                                            <input type="text" class="form-control col-md-12" name="dob" required
+                                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                                                   is-open="openDOB" ng-click="openDOB = true"
+                                                   datepicker-options="dateOptions" ng-required="true"
+                                                   close-text="Close"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -356,11 +439,795 @@
 </div>
 
 <div class="row">
+<div class="col-md-12 col-sm-12">
+<div class="portlet box grey-cascade">
+<div class="portlet-title">
+    <div class="caption">
+        <i class="fa fa-gift"></i>SECTION 3: IMPORTANT INFORMATION TO THE EXAMINING HEALTH PROFESSIONAL
+    </div>
+    <div class="tools">
+        <a href="javascript:;" class="collapse">
+        </a>
+    </div>
+</div>
+<div class="portlet-body form">
+<!-- BEGIN FORM-->
+<form class="form-horizontal form-bordered">
+<div style="background-color: lightgrey; height: 35px">
+    <label class="control-label bold" style="margin-left: 10px;">3.1 Instructions to the Examining Health
+        Professional</label>
+</div>
+</br>
+<ul>
+    <li>
+        You are requested to conduct a category 3 health assessment to assess the employee/applicants fitness for rail
+        safety duties in accordance with the National Standard for Health Assessment of Rail Safety Worker, Volume 2:
+        Assessment
+        Procedures and Medical Criteria.
+    </li>
+    <li>
+        You must sight photo identification of the employee/applicant (eg Drivers Licence, Rail Safety Worker's Card)
+    </li>
+    <li>Please perform the assessment and record the finding in section 4.2 of this form.</li>
+    <li>
+        Should the employee/applicant be assessed as Temporarily/Permanently Unfit for Duty, please contact the employer
+        or
+        person who arranged this health assessment immediately so that appropriate actions can be taken.
+    </li>
+    <li>
+        Category 3 Around the Track Personnel in an Uncontrolled Environment/applicants are required to have audiometric
+        and
+        vision testing as part of this health assessment. The employee/applicant has been advised of these requirements
+        in section 2
+        of this form.
+        </br>
+        These test will be arranged separately and reports forwarded to you if facilities are not available at your
+        practice.
+    </li>
+    <li>
+        You may need to contact the employee/applicants nominated health professional to discuss conditions that may
+        effect
+        their fitness for rail safety work. Such contact should be made with the workers signed consent.
+    </li>
+</ul>
+<p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+    For more detailed information about the conduct of health assessments for rail safety employees see Volume 2
+    of the National Standard for Health Assessment of Rail Safety Workers.
+</p>
+
+<div style="background-color: lightgrey; height: auto;">
+    <label class="control-label bold" style="margin-left: 10px; text-align: left;">3.2 Category 3 ATTP Health Assessment
+        Examination - Examining Health Professional To Complete</label>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold text-info" style="margin-left: 10px;">1. Cardiovascular System:</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold" style="margin-left: 10px;">1.1 Blood Pressure</label>
+    </div>
+</div>
+<br/>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-1 col-sm-2">
+            <label class="control-label" style="margin-left: 10px;">Systolic</label>
+        </div>
+        <div class="col-md-2 col-sm-3">
+            <input type="text" style="width: 50%;"/>
+            <label> mm Hg</label>
+        </div>
+        <div class="col-md-1 col-sm-2">
+            <label class="control-label">Diastolic</label>
+        </div>
+        <div class="col-md-2 col-sm-3">
+            <input type="text" style="width: 50%;"/>
+            <label> mm Hg</label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-2 col-sm-3">
+        <label class="control-label bold" style="margin-left: 10px;">1.2 Pulse Rate:</label>
+    </div>
+    <div class="col-md-1 col-sm-2">
+        <input type="text" style="width: 80px;"/>
+    </div>
+    <div class="col-md-3 col-sm-4">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Regular
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Irregular
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-5">
+        <label class="control-label bold" style="margin-left: 10px">1.3 Heart Sounds:</label>
+    </div>
+    <div class="col-md-3 col-sm-7">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-5">
+        <label class="control-label bold" style="margin-left: 10px;">1.4 Peripheral Pulses:</label>
+    </div>
+    <div class="col-md-3 col-sm-7">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold text-info" style="margin-left: 10px;">2. HEARING</label>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-12">
+        <div class="col-md-1 col-sm-1">
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label>0.5KHz</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label>1.0KHz</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label>1.5KHz</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label>2.0KHz</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label>3.0KHz</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label>4.0KHz</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label>6.0KHz</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <label>8.0KHz</label>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Left</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label">Right</label>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <input type="text" style="width: 60px"/>
+        </div>
+    </div>
+
+</div>
+</br>
+<div class="row">
+    <div class="col-md-5 col-sm-7">
+        <label class="control-label bold" style="margin-left: 10px;text-align: left;">Has the applicant been quite for
+            the past 16
+            hours?</label>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Yes
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> No
+            </label>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold text-info" style="margin-left: 10px;">3. Neurological/Musculoskeletal:</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">3.1 Cervical spine rotation:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">3.2 Back movement:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold" style="margin-left: 10px">3.3 Upper Limbs:</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label" style="margin-left: 30px;">a) Appearance:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label" style="margin-left: 30px">b) Joint movements:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold" style="margin-left: 10px">3.4 Lower Limbs:</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label" style="margin-left: 30px;">a) Appearance:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label" style="margin-left: 30px">b) Joint movements:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">3.5 Gait:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">3.6 Romberg's Test:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label text-info bold text-info" style="margin-left: 10px;">4. Chest/Lungs:</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label text-info bold" style="margin-left: 10px">5. Vision:</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold" style="margin-left: 10px">5.1 Visual Acuity:</label>
+    </div>
+</div>
+</br>
+<div class="border" style="border-color: #808080; border-style: dotted;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2  col-sm-12">
+                <label class="control-label text-info bold" style="margin-top: 30px;">Visual Acuity:</label>
+            </div>
+            <div class="col-md-5  col-sm-6" style="text-align: center">
+                <div class="row">
+                    <label>Uncorrected:</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                            <label>L</label><br>
+                            <label>/6</label>
+                            <input type="text" style="width: 60px"/>
+                        </div>
+                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                            <label>R</label><br>
+                            <label>/6</label>
+                            <input type="text" style="width: 60px"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-6" style="text-align: center">
+                <div class="row">
+                    <label>Corrected:</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                            <label>L</label><br>
+                            <label>/6</label>
+                            <input type="text" style="width: 60px"/>
+                        </div>
+                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                            <label>R</label><br>
+                            <label>/6</label>
+                            <input type="text" style="width: 60px"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Are contact lenses worn?</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Yes
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> No
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-5 col-sm-7">
+        <label class="control-label " style="margin-left: 10px;"><span class="bold">5.2 Visual Fields:</span>
+            (Confrontation to each eye)</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Normal
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Abnormal
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-5 col-sm-7">
+        <label class="control-label" style="margin-left: 10px;"><span class="bold">5.3 Colour Vision:</span>
+            (Ishihara: ≥ 2 errors/12 plates is a fail)</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Pass
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Fail
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-5 col-sm-7">
+        <label class="control-label bold" style="margin-left: 10px;">5.4 Near Vision Test</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Pass
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Fail
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-5 col-sm-7">
+        <label class="control-label bold" style="margin-left: 10px;">5.5 Far Vision Test</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Pass
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Fail
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-5 col-sm-7">
+        <label class="control-label bold" style="margin-left: 10px;">5.6 Screen Based Examination</label>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> Pass
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> Fail
+            </label>
+        </div>
+    </div>
+</div>
+</br>
+<hr>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold text-info" style="margin-left: 10px;">6. Drug Screen:</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 col-sm-8" style="margin-left: 10px;">
+        <textarea class="form-control"></textarea>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Creatinine:</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label> mmol/L</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Sympathomimetic Amines:</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label> ng/mL</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Barbiturates(non-AS4308):</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label> ng/mL</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label  bold" style="margin-left: 10px;">Benzodiazepines:</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label>ng/mL</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Cocaine:</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label>ng/mL</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Methadone(non-AS308):</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label>ng/mL</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Cannabinoids:</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label>ng/mL</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Opiates:</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label>ng/mL</label>
+    </div>
+</div>
+</br>
+<div class="row">
+    <div class="col-md-3 col-sm-4">
+        <label class="control-label bold" style="margin-left: 10px;">Alcohol:</label>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div class="btn-group">
+            <label class="btn">
+                <input type="radio" name='a'/> NEG
+            </label>
+            <label class="btn">
+                <input type="radio" name='a'/> POS
+            </label>
+        </div>
+        <input type="text" style="width: 60px;"/>
+        <label>mg%</label>
+    </div>
+</div>
+</br>
+<hr>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <label class="control-label bold text-info" style="margin-left: 10px;">7.</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1 col-sm-1">
+        <label class="control-label" style="font-weight: bold;margin-left: 10px">Height</label>
+    </div>
+    <div class="col-md-2 col-sm-3">
+        <input type="text" style="width: 60px;"/>
+        <label> cms</label>
+    </div>
+    <div class="col-md-1 col-sm-1" style="font-weight: bold">
+        <label class="control-label" style="font-weight: bold">Weight</label>
+    </div>
+    <div class="col-md-2 col-sm-3">
+        <input type="text" style="width: 60px;"/>
+        <label> kg</label>
+    </div>
+</div>
+</br>
+<hr>
+</form>
+<!--END FORM-->
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
         <div class="portlet box grey-cascade">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>SECTION 3: IMPORTANT INFORMATION TO THE EXAMINING HEALTH PROFESSIONAL
+                    <i class="fa fa-gift"></i>SECTION 4: RELEVANT CLINICAL FINDINGS AND ACTION
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -369,62 +1236,325 @@
             </div>
             <div class="portlet-body form">
                 <!-- BEGIN FORM-->
-                <form  class="form-horizontal form-bordered">
-                    <div style="background-color: lightgrey; vertical-align: middle; height: 35px">
-                        <label class="control-label bold" style="margin-left: 10px">3.1 Instructions to the Examining Health Professional</label>
-                    </div>
-                    <div class="form-body">
-                        <div class="form-group">
-                            <ul>
-                                <li>You are requested to conduct a category 3 health assessment to assess the employee/applicants fitness for rail
-                                    safety duties in accordance with the National Standard for Health Assessment of Rail Safety Worker, Volume 2: Assessment
-                                    Procedures and Medical Criteria
-                                </li>
-                                <li>You must sight photo identification of the employee/applicant (eg Drivers Licence, Rail Safety Worker's Card)</li>
-                                <li>Please perform the assessment and record the finding in section 4.2 of this form.</li>
-                                <li>Should the employee/applicant be assessed as Temporarily/Permanently Unfit for Duty, please contact the employer or
-                                    person who arranged this health assessment immediately so that appropriate actions can be taken
-                                </li>
-                                <li>Category 3 Around the Track Personnel in an Uncontrolled Environment/applicants are required to have audiometric and
-                                    vision testing as part of this health assessment. The employee/applicant has been advised of these requirements in section 2
-                                    of this form.
-                                    </br>
-                                    These test will be arranged separately and reports forwarded to you if facilities are not available at your practice.
-                                </li>
-                                <li>You may need to contact the employee/applicants nominated health professional to discuss conditions that may effect
-                                    their fitness for rail safety work. Such contact should be made with the workers signed consent.
-                                </li>
-                            </ul>
-                            <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                For more detailed information about the conduct of health assessments for rail safety employees see Volume 2
-                                of the National Standard for Health Assessment of Rail Safety Workers.
-                            </p>
+                <form class="form-horizontal form-bordered">
+                    <p style="margin-left: 70px;margin-right: 70px;font-size: medium">
+                        <span class="bold"> Note Comments</span> on any relevant findings detected in the examination,
+                        making reference to the requirements of the standard.
+                    </p>
 
-                        </div>
-                        <div style="background-color: lightgrey; vertical-align: middle; height: 35px">
-                            <label class="control-label bold" style="margin-left: 10px">3.2 Category 3 ATTP Health Assessment Examination - Examining Health Professional To Complete</label>
+                    <div class="row">
+                        <div class="col-md-11 col-sm-11" style="margin-left: 40px">
+                            <textarea class="form-control" style="height: 350px"></textarea>
                         </div>
                     </div>
+                    <hr>
+                    <p style="margin-left: 50px;margin-right: 50px;font-size: medium" class="bold">
+                        I certify that I have examined the person named in accordance with the medical standards
+                        contained
+                        in the National Standard for Health Assessment of Rail Safety Workers, Volume 2: Assessment
+                        Procedures and Medical, and in my opinion the worker / applicant is (tick as appropriate):
+                    </p>
+                    <!--sign of doctor from database-->
+                    <p style="margin-left: 50px;margin-right: 50px;font-size: medium">
+                        <span class="bold">Note to examining Health Professional</span> - The results of this health
+                        examination are
+                        <span class="bold">not</span> to be returned to the company who arranged the health assessment,
+                        <span class="bold">only</span> the Recommendation of Examining Health Professional Form (page
+                        10). A
+                        copy of
+                        these forms may be retained for your records.
+                    </p>
+                    <!--sign applicant-->
+                    </br>
                 </form>
-                <!-- END FORM-->
+                <!--END FORM-->
             </div>
         </div>
     </div>
 </div>
 
+<div class="row">
+<div class="col-md-12 col-sm-12">
+<div class="portlet box grey-cascade">
+<div class="portlet-title">
+    <div class="caption">
+        <i class="fa fa-gift"></i>RECOMMENDATION OF THE EXAMINING HEALTH PROFESSIONAL
+    </div>
+    <div class="tools">
+        <a href="javascript:;" class="collapse">
+        </a>
+    </div>
+</div>
+<div class="portlet-body form">
+<!-- BEGIN FORM-->
+<form class="form-horizontal form-bordered">
+<p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+    I certify that I have reviewed the Health Assessment Examination Form for the person named in accordance with the
+    medical standards contained in the National Standard for Health Assessment of Rail Safety Workers, Volume 2:
+    Assessment Procedures and Medical, and in my opinion the worker / applicant is (tick as appropriate):
+</p>
 
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-4 col-sm-4" style="text-align: center;">
+            <label class=" control-label bold">Worker's Name</label>
+        </div>
+        <div class="col-md-4 col-sm-4" style="text-align: center;">
+            <label class=" control-label bold">Date of Birth</label>
+        </div>
+        <div class="col-md-4 col-sm-4" style="text-align: center;">
+            <label class="control-label bold">Employment Number</label>
+        </div>
+    </div>
+</div>
+</br>
 
+<hr>
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="col-md-2 col-sm-2">
+            <input class="form-control" type="checkbox"/>
+        </div>
+        <div class="col-md-10 col-sm-10">
+            <label class="bold" style="margin-top: 10px">Fit for Duty</label>
+            </br>
+            <label style="margin-top: 10px">Meets all relevant medical criteria for;</label>
+        </div>
+        <div class="col-md-2 col-sm-2">
+            <input class="form-control" type="checkbox"/>
+        </div>
+        <label class="col-md-10 col-sm-10" style="margin-top: 10px">Category 3 (Non Safety Critical Worker-Uncontrolled
+            Environment)</label>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <label class="bold" style="margin-top: 10px">I recommended: </label>
 
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input type="checkbox" class="form-control"/>
+            </div>
+            <div class="col-md-4 col-sm-5" style="width: 41%;">
+                <label class="control-label">Medical review in</label>
+            </div>
+            <div class="col-md-3 col-sm-3" style="width: 23%;">
+                <input type="text" class="form-control"/>
+            </div>
+            <div class="col-md-2 col-sm-1">
+                <label class="control-label">years</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input class="form-control" type="checkbox"/>
+            </div>
+            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Local doctor referral</label>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input class="form-control" type="checkbox"/>
+            </div>
+            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Conditional on corrective lenses</label>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input class="form-control" type="checkbox"/>
+            </div>
+            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Conditional on hearing aid</label>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input class="form-control" type="checkbox"/>
+            </div>
+            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Other condition (specify): </label>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2"></div>
+            <div class="col-md-9 col-sm-9">
+                <textarea class="form-control"></textarea>
+            </div>
 
+        </div>
+    </div>
+</div>
 
+<hr>
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="col-md-2 col-sm-2">
+            <input class="form-control" type="checkbox"/>
+        </div>
+        <div class="col-md-10 col-sm-10">
+            <label class="bold" style="margin-top: 10px">Fit for Duty, Subject to Review</label>
+            </br>
+            <label style="margin-top: 10px">
+                Does not meet all medical criteria, but could perform
+                the inherent requirements of the position if the condition is sufficiently under control
+                and worker / applicant is more frequently reviewed than prescribed under periodic review
+            </label>
+            </br>
+            <label style="margin-top: 10px; font-style: italic">
+                If pre employment-Recruitment &amp; Selection process suspended. Risk Assessment
+                required prior to engagement
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <label class="bold" style="margin-top: 10px">I recommended: </label>
 
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input type="checkbox" class="form-control"/>
+            </div>
+            <div class="col-md-4 col-sm-5" style="width: 41%;">
+                <label class="control-label">Medical review in</label>
+            </div>
+            <div class="col-md-3 col-sm-3" style="width: 23%;">
+                <input type="text" class="form-control"/>
+            </div>
+            <div class="col-md-2 col-sm-1">
+                <label class="control-label">years</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input class="form-control" type="checkbox"/>
+            </div>
+            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Specialist referral</label>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input class="form-control" type="checkbox"/>
+            </div>
+            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Local doctor referral</label>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input class="form-control" type="checkbox"/>
+            </div>
+            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Company Medical Officer referral</label>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <input class="form-control" type="checkbox"/>
+            </div>
+            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Laboratory tests </label>
+        </div>
+        <br/>
 
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-6 col-sm-8">
+                    <label class="control-label">This certificate is valid until: </label>
+                </div>
+                <div class="col-md-6 col-sm-4">
+                    <input type="text" class="form-control" width="100px">
+                </div>
+            </div>
+        </div>
 
+    </div>
+</div>
 
+<hr>
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="col-md-2 col-sm-2">
+            <input class="form-control" type="checkbox"/>
+        </div>
+        <div class="col-md-10 col-sm-10">
+            <label class="bold" style="margin-top: 10px">Fit for Duty, Subject to Job Modification</label>
+            </br>
+            <label style="margin-top: 10px">
+                Does not meet all medical criteria, but could perform the inherent requirements of the
+                position if suitable modifications were made to the duties
+            </label>
+            </br>
+            <label style="margin-top: 10px; font-style: italic">
+                If pre employment-Recruitment &amp; Selection process suspended. Risk Assessment
+                required prior to engagement
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <label class="bold" style="margin-top: 10px">I recommend the following job modifications: </label>
 
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+                <textarea style="margin-left: 20px;height: 100px" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
 
+<hr>
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="col-md-2 col-sm-2">
+            <input class="form-control" type="checkbox"/>
+        </div>
+        <div class="col-md-10 col-sm-10">
+            <label class="bold" style="margin-top: 10px">Temporarily Unfit for Duty, Subject to Review</label>
+            </br>
+            <label style="margin-top: 10px">
+                Does not meet all medical criteria and cannot perform the inherent requirements of the
+                position, but may perform alternative duties. May return to full duty pending improvement
+                in condition, response to treatment, confirmed diagnosis of undifferentiated illness
+            </label>
+            </br>
+            <label style="margin-top: 10px; font-style: italic">
+                If pre employment — Recruitment &amp; Selection process ceased. May reapply for position
+                when noticeable improvement in condition is verified by applicant's doctor. Re-examination
+                for pre-employment will be required.
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <label class="bold" style="margin-top: 10px">I recommend the following in terms of management and
+            review: </label>
 
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+                <textarea style="margin-left: 20px;height: 100px" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
 
+<hr>
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="col-md-2 col-sm-2">
+            <input class="form-control" type="checkbox"/>
+        </div>
+        <div class="col-md-10 col-sm-10">
+            <label class="bold" style="margin-top: 10px">Permanently Unfit for Duty</label>
+            </br>
+            <label style="margin-top: 10px">
+                Does not meet the medical criteria and cannot perform the job in the future
+            </label>
+            </br>
+            <label style="margin-top: 10px; font-style: italic">
+                If pre employment - Recruitment &amp; Selection process ceased.
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <label class="bold" style="margin-top: 10px">I recommend the following job modifications: </label>
+
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+                <textarea style="margin-left: 20px;height: 100px" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<!--signature-->
+</form>
+<!--END FORM-->
+</div>
+</div>
+</div>
+</div>
 
 <!--=============================== Signature Form ============================================-->
 <div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -447,25 +1577,23 @@
     </div>
 </div>
 
-
-<script src="../../../assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
+<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
 
 <script>
-    (function($){
-        $(document).ready(function() {
+    (function ($) {
+        $(document).ready(function () {
 
             $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 900, height: 500});
+            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 800, height: 500});
 
-            $('#resetSig').on('click',function(){
+            $('#resetSig').on('click', function () {
                 $sigdiv.jSignature('reset')
             });
 
-            $('#okSig').on('click',function(){
+            $('#okSig').on('click', function () {
                 var data = $sigdiv.jSignature('getData')
-                if(data != null)
-                {
-                    $('#signDisplay').attr("src",data);
+                if (data != null) {
+                    $('#signDisplay').attr("src", data);
                     $('#signDisplay').show();
                 }
 
