@@ -10,17 +10,18 @@ angular.module("app.loggedIn",[
     "app.loggedIn.document" // Document telehealth
 ])
 
-.config(function($stateProvider){
-	$stateProvider
+.config(function($stateProvider) {
+        $stateProvider
 
-	.state("loggedIn", {
-		abstract: true,
-		views: {
-			"root": {
-				templateUrl: "common/views/structure.html",
-				controller: "loggedInController"
-			}
-		}
-	})
+            .state("loggedIn", {
+                abstract: true,
+                views: {
+                    "root": {
+                        templateUrl: "common/views/structure.html",
+                        controller: "loggedInController"
+                    }
+                }
+            })
+    })
 
 

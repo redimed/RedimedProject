@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 08/10/2014.
  */
-<<<<<<< HEAD
+
 var FAController = require('./controllers/DocumentController/FAController');
 var MAController = require('./controllers/DocumentController/MAController');
 var IDSController = require('./controllers/DocumentController/IDSController');
