@@ -23,104 +23,69 @@
 <ul class="nav navbar-nav pull-right">
 <!-- BEGIN NOTIFICATION DROPDOWN -->
 <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-    <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+    <a  class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
         <i class="icon-bell"></i>
 						<span class="badge badge-danger">
-						7 </span>
+                            {{numbersBellUnread}}
+						</span>
     </a>
+
     <ul class="dropdown-menu">
         <li>
             <p>
-                You have 14 new notifications
+                You have {{numbersBellUnread}} new notifications
             </p>
+            <a ng-click="updateNotificationManual();">
+                Refresh
+                <span class="glyphicon glyphicon-refresh pull-right"></span>
+            </a>
         </li>
         <li>
-            <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-success">
-										<i class="fa fa-plus"></i>
-										</span>
-                        New user registered. <span class="time">
-										Just now </span>
+
+            <ul class="dropdown-menu-list scroller bell-dropdown" style="height: 250px;">
+                <!--<li>-->
+                <!--<a href="layout_fluid_page.html#">-->
+                <!--<span class="label label-sm label-icon label-warning">-->
+                <!--<i class="fa fa-bell-o"></i>-->
+                <!--</span>-->
+                <!--Server #2 not responding. <span class="time">-->
+                <!--22 mins </span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="layout_fluid_page.html#">-->
+                <!--<span class="label label-sm label-icon label-info">-->
+                <!--<i class="fa fa-bullhorn"></i>-->
+                <!--</span>-->
+                <!--Application error. <span class="time">-->
+                <!--40 mins </span>-->
+                <!--</a>-->
+                <!--</li>-->
+
+                <!--<li ng-repeat="bell in bellUnreadList" >-->
+                    <!--<a ng-click="setNotificationHaveRead(bell.id)" ui-sref="bell.link">-->
+                        <!--<span class="label label-sm label-icon label-danger">-->
+                        <!--<i class="fa fa-bell-o"></i>-->
+                        <!--</span>-->
+                        <!--{{bell.msg}}-->
+                    <!--</a>-->
+                <!--</li>-->
+                <li ng-repeat="bell in bellUnreadList" >
+                    <a ng-click="setNotificationHaveRead(bell.id)" ui-sref="{{bell.link}}">
+                        <span class="label label-sm label-icon label-danger">
+                        <i class="fa fa-bell-o"></i>
+                        </span>
+                        {{bell.msg}}
                     </a>
                 </li>
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-danger">
-										<i class="fa fa-bolt"></i>
-										</span>
-                        Server #12 overloaded. <span class="time">
-										15 mins </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-warning">
-										<i class="fa fa-bell-o"></i>
-										</span>
-                        Server #2 not responding. <span class="time">
-										22 mins </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-info">
-										<i class="fa fa-bullhorn"></i>
-										</span>
-                        Application error. <span class="time">
-										40 mins </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-danger">
-										<i class="fa fa-bolt"></i>
-										</span>
-                        Database overloaded 68%. <span class="time">
-										2 hrs </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-danger">
-										<i class="fa fa-bolt"></i>
-										</span>
-                        2 user IP blocked. <span class="time">
-										5 hrs </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-warning">
-										<i class="fa fa-bell-o"></i>
-										</span>
-                        Storage Server #4 not responding. <span class="time">
-										45 mins </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-info">
-										<i class="fa fa-bullhorn"></i>
-										</span>
-                        System Error. <span class="time">
-										55 mins </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="layout_fluid_page.html#">
-										<span class="label label-sm label-icon label-danger">
-										<i class="fa fa-bolt"></i>
-										</span>
-                        Database overloaded 68%. <span class="time">
-										2 hrs </span>
-                    </a>
-                </li>
+
             </ul>
+
+
         </li>
+
         <li class="external">
-            <a href="layout_fluid_page.html#">
+            <a ng-click="getListNotification('bell');">
                 See all notifications <i class="icon-arrow-right"></i>
             </a>
         </li>
@@ -132,96 +97,53 @@
     <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
         <i class="icon-envelope-open"></i>
 						<span class="badge badge-primary">
-						4 </span>
+						    {{numbersLetterUnread}}
+                        </span>
     </a>
     <ul class="dropdown-menu">
         <li>
             <p>
-                You have 12 new messages
+                You have {{numbersLetterUnread}} new letters
             </p>
+            <a ng-click="updateNotificationManual();">
+                Refresh
+                <span class="glyphicon glyphicon-refresh pull-right"></span>
+            </a>
         </li>
         <li>
-            <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                <li>
-                    <a href="inbox.html?a=view">
-										<span class="photo">
-										<img src="" alt=""/>
-										</span>
-										<span class="subject">
-										<span class="from">
-										Lisa Wong </span>
-										<span class="time">
-										Just Now </span>
-										</span>
-										<span class="message">
-										Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+            <ul class="dropdown-menu-list scroller letter-dropdown" style="height: 250px;">
+                <!--<li>-->
+                    <!--<a href="inbox.html?a=view">-->
+                        <!--<span class="photo">-->
+                            <!--<img src="" alt=""/>-->
+                        <!--</span>-->
+                        <!--<span class="subject">-->
+                            <!--<span class="from">-->
+                            <!--Lisa Wong-->
+                            <!--</span>-->
+                            <!--<span class="time">-->
+                            <!--Just Now-->
+                            <!--</span>-->
+                        <!--</span>-->
+                        <!--<span class="message">-->
+                            <!--Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh...-->
+                        <!--</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <li ng-repeat="letter in letterUnreadList" >
+                    <a ng-click="setNotificationHaveRead(letter.id)" ui-sref="{{letter.link}}">
+                        <span class="label label-sm label-icon label-primary">
+                        <i class="fa fa-envelope-o"></i>
+                        </span>
+                        {{letter.msg}}
                     </a>
                 </li>
-                <li>
-                    <a href="inbox.html?a=view">
-										<span class="photo">
-										<img src="" alt=""/>
-										</span>
-										<span class="subject">
-										<span class="from">
-										Richard Doe </span>
-										<span class="time">
-										16 mins </span>
-										</span>
-										<span class="message">
-										Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="inbox.html?a=view">
-										<span class="photo">
-										<img src="" alt=""/>
-										</span>
-										<span class="subject">
-										<span class="from">
-										Bob Nilson </span>
-										<span class="time">
-										2 hrs </span>
-										</span>
-										<span class="message">
-										Vivamus sed nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="inbox.html?a=view">
-										<span class="photo">
-										<img src="" alt=""/>
-										</span>
-										<span class="subject">
-										<span class="from">
-										Lisa Wong </span>
-										<span class="time">
-										40 mins </span>
-										</span>
-										<span class="message">
-										Vivamus sed auctor 40% nibh congue nibh... </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="inbox.html?a=view">
-										<span class="photo">
-										<img src="" alt=""/>
-										</span>
-										<span class="subject">
-										<span class="from">
-										Richard Doe </span>
-										<span class="time">
-										46 mins </span>
-										</span>
-										<span class="message">
-										Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                    </a>
-                </li>
+
             </ul>
         </li>
         <li class="external">
-            <a href="inbox.html">
-                See all messages <i class="icon-arrow-right"></i>
+            <a ng-click="getListNotification('letter');">
+                See all letters <i class="icon-arrow-right"></i>
             </a>
         </li>
     </ul>
@@ -231,143 +153,61 @@
 <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
     <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
         <i class="icon-calendar"></i>
-						<span class="badge badge-success">
-						3 </span>
+        <span class="badge badge-success">
+            {{numberAppointmentCalendarUpcoming}}
+        </span>
     </a>
     <ul class="dropdown-menu extended tasks">
         <li>
             <p>
-                You have 12 pending tasks
+                You have {{numberAppointmentCalendarUpcoming}} upcoming appointments
             </p>
-        </li>
-        <li>
-            <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                <li>
-                    <a href="page_todo.html">
-										<span class="task">
-										<span class="desc">
-										New release v1.2 </span>
-										<span class="percent">
-										30% </span>
-										</span>
-                        <div class="progress">
-                            <div style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                <div class="sr-only">
-                                    40% Complete
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="page_todo.html">
-										<span class="task">
-										<span class="desc">
-										Application deployment </span>
-										<span class="percent">
-										65% </span>
-										</span>
-                        <div class="progress progress-striped">
-                            <div style="width: 65%;" class="progress-bar progress-bar-danger" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                                <div class="sr-only">
-                                    65% Complete
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="page_todo.html">
-										<span class="task">
-										<span class="desc">
-										Mobile app release </span>
-										<span class="percent">
-										98% </span>
-										</span>
-                        <div class="progress">
-                            <div style="width: 98%;" class="progress-bar progress-bar-success" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">
-                                <div class="sr-only">
-                                    98% Complete
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="page_todo.html">
-										<span class="task">
-										<span class="desc">
-										Database migration </span>
-										<span class="percent">
-										10% </span>
-										</span>
-                        <div class="progress progress-striped">
-                            <div style="width: 10%;" class="progress-bar progress-bar-warning" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                                <div class="sr-only">
-                                    10% Complete
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="page_todo.html">
-										<span class="task">
-										<span class="desc">
-										Web server upgrade </span>
-										<span class="percent">
-										58% </span>
-										</span>
-                        <div class="progress progress-striped">
-                            <div style="width: 58%;" class="progress-bar progress-bar-info" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
-                                <div class="sr-only">
-                                    58% Complete
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="page_todo.html">
-										<span class="task">
-										<span class="desc">
-										Mobile development </span>
-										<span class="percent">
-										85% </span>
-										</span>
-                        <div class="progress progress-striped">
-                            <div style="width: 85%;" class="progress-bar progress-bar-success" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                <div class="sr-only">
-                                    85% Complete
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="page_todo.html">
-										<span class="task">
-										<span class="desc">
-										New UI release </span>
-										<span class="percent">
-										18% </span>
-										</span>
-                        <div class="progress progress-striped">
-                            <div style="width: 18%;" class="progress-bar progress-bar-important" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
-                                <div class="sr-only">
-                                    18% Complete
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="external">
-            <a href="page_todo.html">
-                See all tasks <i class="icon-arrow-right"></i>
+            <a ng-click="getAppointmentCalendarUpcoming();">
+                Refresh
+                <span class="glyphicon glyphicon-refresh pull-right"></span>
             </a>
         </li>
+        <li>
+            <ul class="dropdown-menu-list scroller appointments-upcoming-dropdown" style="height: 250px;">
+                <!--<li>-->
+                    <!--<a href="page_todo.html">-->
+										<!--<span class="task">-->
+										<!--<span class="desc">-->
+										<!--New release v1.2 </span>-->
+										<!--<span class="percent">-->
+										<!--30% </span>-->
+										<!--</span>-->
+                        <!--<div class="progress">-->
+                            <!--<div style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">-->
+                                <!--<div class="sr-only">-->
+                                    <!--40% Complete-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                <!--</li>-->
+
+                <li ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">
+                    <a ui-sref="{{appointmentUpcoming.link}}">
+                        <span class="task">
+                            <span class="desc">
+                                {{appointmentUpcoming.MESSAGE}}
+                            </span>
+                            <span class="percent">
+                                {{appointmentUpcoming.DATE_UPCOMING|date:'dd/MM/yyyy HH:mm'}}
+                            </span>
+                        </span>
+
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        <!--<li class="external">-->
+            <!--<a href="page_todo.html">-->
+                <!--See all tasks <i class="icon-arrow-right"></i>-->
+            <!--</a>-->
+        <!--</li>-->
     </ul>
 </li>
 <!-- END TODO DROPDOWN -->
@@ -493,3 +333,65 @@
     </div>
 </div>
 <!-- END FOOTER -->
+
+
+<!--Notification POPUP-->
+<!--TANNV.DTS@GMAIL.COM-->
+<!--BEGIN-->
+<div class='notifications top-right lob_notification_popup'></div>
+
+<div  id="list-notification-popup" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">List Notifications</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="notification-list" style="height: 350px;">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Time</th>
+                            <th>Message</th>
+                            <!--<th>Read</th>-->
+                        </tr>
+
+                        <tbody>
+                        <tr  ng-repeat="item in listNotifications"
+                             ng-click="setNotificationHaveRead2($index)"
+                             ng-class="{'alert alert-success':item.STATUS==0}">
+                            <td>{{item.time_created |date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                            <td>{{item.msg}}</td>
+                            <!--<td>-->
+                                <!--<input type="checkbox"   ng-model="item.STATUS" ng-true-value="1" ng-false-value="0" ng-checked="item.STATUS">-->
+                            <!--</td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <pagination total-items="totalItems"
+                            ng-model="currentPage"
+                            max-size="maxSize"
+                            class="pagination-sm"
+                            boundary-links="true"
+                            rotate="false"
+                            num-pages="numPages"
+                            items-per-page="itemsPerPage"
+                            ng-change="pagingHandler()">
+                </pagination>
+
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--END-->

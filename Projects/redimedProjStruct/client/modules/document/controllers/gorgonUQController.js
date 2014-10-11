@@ -152,7 +152,6 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 
         };
 
-
         $scope.submitGorgonUQ = function(gorgonUQForm){
             $scope.showClickedValidation = true;
             if(gorgonUQForm.$invalid){

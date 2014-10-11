@@ -1,6 +1,7 @@
 angular.module("app", [
     "ui.router",                // ANGULAR UI ROUTER
     "angularFileUpload",        // ANGULAR FILE UPLOAD
+    "ui.date",                  // ANGULAR DATE
     "restangular",              // RESTANGULAR
     "ui.bootstrap",             // ANGULAR BOOTSTRAP
     "ngCookies",                // ANGULAR COOKIES
@@ -12,10 +13,15 @@ angular.module("app", [
     "ngIdle",                   // Ng-Idle
     "app.loggedIn",             // MODULES LOGGED IN
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
-    'angular.filter',
+
     "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
 
-    "app.directive.common"      // CUSTOM DIRECTIVES
+    "app.directive.common",      // CUSTOM DIRECTIVES
+    'angular.filter',            //angular filter for group table--tannv.dts@gmail.com
+    
+    'uz.mailto',                 //angular mailto for [patientdetail]--tannv.dts@gmail.com
+    'ui.tree',                   // angular ui tree for [admin_booking]-- tannv.dts@gmail.com
+    'ng-context-menu'            // angular context menu (menu right click) for [admin_booking]-- tannv.dts@gmail.com
 ])
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider) {

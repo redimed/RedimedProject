@@ -7,7 +7,8 @@ angular.module("app.loggedIn",[
     "app.loggedIn.telehealth", //Telehealth MODULE
     "app.loggedIn.booking", //ONLINE-BOOKING MODULE
     "app.loggedIn.booking.admin",
-    "app.loggedIn.document" // Document telehealth
+    "app.loggedIn.document", // Document telehealth
+    "app.loggedIn.rlob" //Redi Legal Online Booking
 ])
 
 .config(function($stateProvider) {

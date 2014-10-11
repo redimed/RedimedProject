@@ -1,0 +1,498 @@
+<!--<script src="../../assets/global/plugins/moment.min.js" tx`ype="text/javascript"></script>-->
+<script src="/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<!--<script src="../../assets/global/plugins/bootstrap-datepaginator/bootstrap-datepaginator.min.js" type="text/javascript"></script>-->
+
+
+<div class="portlet light">
+    <div class="portlet-body">
+        <div class="tabbable">
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-12">
+                            <div class="portlet yellow-crusta box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>
+                                        Login details
+                                    </div>
+
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Surname
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{newBooking.ASS_SURNAME}}
+                                        </div>
+                                    </div>
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Other name:
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{newBooking.ASS_OTHERNAMES}}
+                                        </div>
+                                    </div>
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Contact number:
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{newBooking.ASS_CONTACT_NO}}
+                                        </div>
+                                    </div>
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Email address:
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{newBooking.ASS_EMAIL}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portlet yellow-crusta box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>
+                                        Summary of Booking
+                                    </div>
+
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Date:
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{booking_detail.date}}
+                                        </div>
+                                    </div>
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Time:
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{booking_detail.time}}
+                                        </div>
+                                    </div>
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Type of appointment:
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{booking_detail.type}}
+                                        </div>
+                                    </div>
+
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Doctor:
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{booking_detail.doctor_name}}
+                                        </div>
+                                    </div>
+                                    <div class="row static-info">
+                                        <div class="col-md-5 name">
+                                            Address:
+                                        </div>
+                                        <div class="col-md-7 value">
+                                            {{booking_detail.address}}
+                                        </div>
+                                    </div>
+
+                                    <div class="portlet light">
+                                        <div class="portlet-title">
+                                            <div class="tools">
+                                                <label style="font-weight: bolder; color: #585858">Show on map</label>
+                                                <a  class="collapse">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="row  portlet-body">
+                                            <div id="map-canvas" class="col-md-12" style="height: 200px;"></div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!--Start of Patient Detail-->
+                        <div class="col-md-7 col-sm-12">
+                            <form name="bookingForm" novalidate >
+                                <fieldset ng-disabled="isSaving">
+                                    <label style="font-weight: bolder; color: #585858; font-size: x-large">
+                                        Worker's detail
+
+                                    </label>
+                                    <div class="alert alert-danger display-hide errorSummary" style="display: block;" ng-show="bookingForm.$invalid && hadForcused">
+                                        <button data-close="alert" class="close"></button>
+                                        You have some form errors. Please check below.
+                                    </div>
+
+                                    <div class="alert alert-success display-hide bookingSuccess" style="display: block;" ng-show="!bookingForm.$invalid && bookingSuccess">
+                                        <button data-close="alert" class="close"></button>
+                                        Booking Success!
+                                    </div>
+
+
+                                    <div class="row form-group" ng-class="{ 'has-error': bookingForm.CLAIM_NO.$invalid  && hadForcused}">
+                                        <div class="col-md-3">
+                                            <label class="control-label" for="CLAIM_NO"></span>Claim number:
+                                                <span class="required" aria-required="true">*</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input  class="form-control" type="text"
+                                                    required
+                                                    ng-maxlength="20"
+                                                    ng-model="newBooking.CLAIM_NO" name="CLAIM_NO" id="CLAIM_NO" />
+                                            <small class="help-block pull-right" ng-show="bookingForm.CLAIM_NO.$error.required && hadForcused">
+                                                Claim Number is required.
+                                            </small>
+                                            <small class="help-block pull-right" ng-show="bookingForm.CLAIM_NO.$error.maxlength && hadForcused">
+                                                Claim Number cannot be longer than 20 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_SURNAME.$invalid  && hadForcused}">
+                                        <div class="col-md-3">
+                                            <label class="control-label" for="WRK_SURNAME">Surname:
+                                                <span class="required" aria-required="true">*</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control" type="text"
+                                                   required
+                                                   ng-maxlength="50"
+                                                   ng-model="newBooking.WRK_SURNAME" id="WRK_SURNAME" name="WRK_SURNAME" />
+
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_SURNAME.$error.required  && hadForcused">
+                                                Surname is required.
+                                            </small>
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_SURNAME.$error.maxlength  && hadForcused">
+                                                Surname cannot be longer than 50 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_OTHERNAMES.$invalid  && hadForcused}">
+                                        <div class="col-md-3">
+                                            <label class="control-label" for="WRK_OTHERNAMES">
+                                                Other name:
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control" type="text"
+                                                   ng-maxlength="50"
+                                                   ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES" name="WRK_OTHERNAMES"/>
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_OTHERNAMES.$error.maxlength && hadForcused">
+                                                Other name cannot be longer than 50 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_DOB.$invalid  && hadForcused}">
+                                        <div class="col-md-3">
+                                            <label class="control-label" for="WRK_DOB">Birthday:
+                                                <span class="required" aria-required="true">*</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-9">
+                                            <!--<div class="input-group date date-picker " style="width: 150px;" data-date-format="dd/mm/yyyy">-->
+                                                <!--<input ng-model="newBooking.WRK_DOB" id="WRK_DOB" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">-->
+                                                <!--<span class="input-group-btn">-->
+                                                    <!--<button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa glyphicon glyphicon-calendar "></i></button>-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+
+                                            <p class="input-group">
+                                                <!--<input id="WRK_DOB" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newBooking.WRK_DOB" is-open="opened" min-date="'1900-01-1'" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
+                                                <input id="WRK_DOB" name="WRK_DOB" type="text" class="form-control" datepicker-popup="{{format}}"
+                                                       ng-model="WRK_DOB_TEMP" is-open="opened" datepicker-options="dateOptions"
+                                                       ng-required="true"
+                                                       required
+                                                       close-text="Close" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </p>
+
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_DOB.$error.required  && hadForcused">
+                                                Birthday is required.
+                                            </small>
+
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_DOB.$error.date  && hadForcused">
+                                                Invalid date.
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_EMAIL.$invalid  && hadForcused}">
+                                        <div class="col-md-3">
+                                            <label class="control-label" for="WRK_EMAIL">Email address:
+                                                <span class="required" aria-required="true">*</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control" type="email" name="WRK_EMAIL"
+                                                   required
+                                                   ng-maxlength="50"
+                                                   ng-model="newBooking.WRK_EMAIL" id="WRK_EMAIL"/>
+
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.required  && hadForcused">
+                                                Email is required.
+                                            </small>
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.email  && hadForcused">
+                                                That is not a valid email. Please input a valid email.
+                                            </small>
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.maxlength  && hadForcused">
+                                                Email cannot be longer than 50 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_CONTACT_NO.$invalid  && hadForcused}">
+                                        <div class="col-md-3">
+                                            <label class="control-label" for="WRK_CONTACT_NO">Contact number:
+                                                <span class="required" aria-required="true">*</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control" type="text" name="WRK_CONTACT_NO"
+                                                   required
+                                                   ng-maxlength="20"
+                                                   ng-model="newBooking.WRK_CONTACT_NO" id="WRK_CONTACT_NO"/>
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_CONTACT_NO.$error.required  && hadForcused">
+                                                Contact number is required.
+                                            </small>
+
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_CONTACT_NO.$error.maxlength  && hadForcused">
+                                                Contact number cannot be longer than 20 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-3">
+                                            <label for="ISNEW">Is the patient new to REDiMED:</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW" id="ISNEW">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error':bookingForm.DESC_INJURY.$invalid  && hadForcused}">
+
+                                        <div class="col-md-12">
+                                            <textarea placeholder="Description of injury" class="form-control" rows="2"
+                                                      name="DESC_INJURY"
+                                                      ng-maxlength="200"
+                                                      ng-model="newBooking.DESC_INJURY"/>
+
+                                            <small class="help-block pull-right" ng-show="bookingForm.DESC_INJURY.$error.maxlength  && hadForcused">
+                                                Injury Description cannot be longer than 200 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+
+
+
+                                    <label style="font-weight: bolder; color: #585858; font-size: x-large">
+                                        Appointment
+                                    </label>
+                                    <p>
+                                        REDiLEGAL to contact the patient and arrage a time
+                                        <input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTPATIENT">
+                                    </p>
+                                    <p>
+                                        REDiLEGAL to contact the case manager to arrange a time for the worker
+                                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTMANAGER">
+                                    </p>
+                                    <p>
+                                        Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment
+                                        <input title="sdfasdfadsf" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.isUrgent">
+                                    </p>
+
+                                    <div class="row form-group" ng-class="{'has-error':bookingForm.NOTES.$invalid  && hadForcused}">
+                                        <div class="col-md-12 col-sm-12">
+                                            <textarea placeholder="Notes" class="form-control" rows="3" name="NOTES"
+                                                      ng-maxlength="200"
+                                                      ng-model="newBooking.NOTES"/>
+                                            <small class="help-block pull-right" ng-show="bookingForm.NOTES.$error.maxlength  && hadForcused">
+                                                Notes cannot be longer than 200 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <button ng-hide="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom"  ng-click="save()">Save</button>
+                                <a ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ui-sref="loggedIn.rlob_booking">Go to booking page</a>
+                                <a ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ng-click="showDialogSendDocument();">Send documents</a>
+
+
+                                <!--<div class="portlet yellow-crusta box">-->
+                                    <!--<div class="portlet-title">-->
+                                        <!--<div class="caption">-->
+                                            <!--<i class="fa fa-cogs"></i>-->
+                                            <!--Summary of Booking-->
+                                        <!--</div>-->
+
+                                    <!--</div>-->
+                                <!--</div>-->
+
+
+                            </form>
+
+                        </div>
+
+                        <!--Start of Upload File-->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="uploadBookmark"></a>
+
+<div  id="lob-client-add-booking-success" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Success</h4>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-success">Booking Success!</p>
+                <p>Do you want to upload documents or send email?</p>
+                <!--<p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="uploadDocument();">Upload Documents</button>
+                <button type="button" class="btn btn-primary" ng-click="sendEmail();">Send email</button>
+                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  id="lob-client-send-document-dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Send documents</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Do you want to upload documents or send email?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="uploadDocument();">Upload Documents</button>
+                <button type="button" class="btn btn-primary" ng-click="sendEmail();">Send email</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  id="lob-client-upload-dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Upload documents</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+                        <input style="background-color: burlywood" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th width="50%">Name</th>
+                                <th ng-show="uploader.isHTML5">Size</th>
+                                <th ng-show="uploader.isHTML5">Progress</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td><strong>{{ item.file.name }}</strong></td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td ng-show="uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                    </button>
+                                    <!--<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">-->
+                                    <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
+                                    <!--</button>-->
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div>
+                            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                <span class="glyphicon glyphicon-upload"></span> Upload all
+                            </button>
+                            <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
+                            <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel all-->
+                            <!--</button>-->
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                <span class="glyphicon glyphicon-trash"></span> Clear all
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<rlob-dialog dialog-class="patient-detail-msg-dialog" status="msgStatus" header="msgHeader" msg="msgContent"></rlob-dialog>
+
+<!--<script type="text/javascript">-->
+    <!--$("#myModal").modal('show');-->
+<!--</script>-->
+
+
+

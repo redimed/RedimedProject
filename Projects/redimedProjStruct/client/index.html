@@ -24,6 +24,10 @@
     <link href="/theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
     <link href="/theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
     <link href="/theme/assets/global/plugins/fontawesome-iconpicker.min.css" rel="stylesheet" type="text/css" />
+<!--tannv.dts add-->
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
+<script src="theme/assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<!----------------------->
 
 	<!-- END GLOBAL MANDATORY STYLES -->
 
@@ -46,13 +50,29 @@
 
 
 
-	<!-- BOOTSTRAP JS -->
-	<script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
-	<!-- END BOOTSTRAP JS -->
+<!-- BOOTSTRAP JS -->
+<script src="/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+<!-- END BOOTSTRAP JS -->
 
+
+<!-- BOOTSTRAP VALIDATOR-->
+<link href="vendor/bootstrapvalidator/dist/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css"/>
+<script src="vendor/bootstrapvalidator/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
+<!--END BOOTSTRAP VALIDATOR -->
 	<!-- ANGULAR -->
 	<script src="vendor/angular/angular.js"></script>
+<!--tannv.dts add-->
+<script src="/theme/assets/global/plugins/angular/angular-resource.min.js"></script>
+<script src="/theme/assets/global/plugins/angular/angular-route.min.js"></script>
+<script src="/theme/assets/global/plugins/angular/angular-cookies.min.js"></script>
+<script src="/theme/assets/global/plugins/angular/angular-filter.min.js"></script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-shim.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-sham.min.js"></script>
+<script src="/theme/assets/global/plugins/angular/angular-file-upload.min.js"></script>
+<script src="/theme/assets/global/plugins/angular/angular-mailto.js"></script>
+<!---------------------->
 	<!-- END ANGULAR -->
 
 	<!-- UNIFORM PLUGINS -->
@@ -66,9 +86,6 @@
 	<script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
 	<!-- END ANGULAR UI-ROUTER -->
 
-    <!-- ANGULAR FILTER -->
-    <script type="text/javascript" src="vendor/angular-filter/angular-filter.min.js"></script>
-    <!-- END ANGULAR FILTER -->
 
 	<!-- RESTANGULAR -->
 	<script type="text/javascript" src="vendor/lodash/dist/lodash.compat.min.js"></script>
@@ -203,12 +220,24 @@
     <script type="text/javascript" src="modules/document/controllers/gorgonUQController.js"></script>
     <!-- END MODULE DOCUMENT -->
 
-	<!-- CUSTOM CSS -->
-	<link rel="stylesheet" type="text/css" href="theme/custom.css">
-	<!-- END CUSTOM CSS -->
+<!-- CUSTOM CSS -->
+<link rel="stylesheet" type="text/css" href="theme/custom.css">
+<!-- END CUSTOM CSS -->
 
-    <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-    <script src="/theme/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+<script src="/theme/assets/global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+
+<!--tannv.dts: removed:-->
+<!--<script src="/theme/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>-->
+
+<!--------- BUI VUONG -------->
+<!-- ANGULAR DATE -->
+<link rel="stylesheet" type="text/css" href="/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css">
+<script type="text/javascript" src="/vendor/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/vendor/angular-ui-date/src/date.js"></script>
+<!-- END ANGULAR DATE -->
+
+<script src="/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="/theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
     <script src="/theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src="/theme/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
@@ -226,6 +255,7 @@
     <script type="text/javascript" src="/theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
     <!-- BEGIN PAGE booking -->
     <!--<script src="/theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>-->
+	<script src="/theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
     <script src="/theme/assets/global/plugins/bootstrap-datepaginator/bootstrap-datepaginator.min.js" type="text/javascript"></script>
 
     <script src="/theme/assets/global/scripts/metronic.js" type="text/javascript"></script>
@@ -233,6 +263,38 @@
     <script src="/theme/assets/admin/layout2/scripts/demo.js" type="text/javascript"></script>
     <script src="/theme/assets/admin/pages/scripts/ui-datepaginator.js"></script>
     <script src="/theme/assets/admin/pages/scripts/index.js" type="text/javascript"></script>
+<!--Redi Legal Online Booking-->
+
+<script src="/modules/rediLegalOnlineBooking/directives/rlob_directive.js"></script>
+<script src="/modules/rediLegalOnlineBooking/services/rlob_Service.js"></script>
+<script src="/modules/rediLegalOnlineBooking/rediLegalOnlineBooking.js"></script>
+
+<script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingController.js"></script>
+
+
+
+<script src="/modules/rediLegalOnlineBooking/controllers/rlob_patientDetailController.js"></script>
+
+<link href="/theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.min.css" rel="stylesheet" type="text/css"/>
+<link href="/theme/assets/global/plugins/angular/angular-ui-tree/my-custom.css" rel="stylesheet" type="text/css"/>
+<script src="/theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.js"></script>
+<script src="/theme/assets/global/plugins/angular/ng-context-menu.js"></script>
+<script src="/modules/rediLegalOnlineBooking/controllers/rlob_admin_bookingListController.js"></script>
+<script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingDetailController.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
+<script type="text/javascript" src="/theme/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/theme/assets/global/plugins/datatables/media/js/jquery.dataTables.columnFilter.js"></script>
+<script type="text/javascript" src="/theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script src="/modules/rediLegalOnlineBooking/js/table-editable-lob-edited.js"></script>
+<script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingListController.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/bootstrap-notify/css/bootstrap-notify.css"/>
+<script type="text/javascript" src="/theme/assets/global/plugins/bootstrap-notify/js/bootstrap-notify.js"></script>
+
+<script src="/modules/rediLegalOnlineBooking/js/my-date-paginator.js"></script>
+<link rel="stylesheet" href="/modules/rediLegalOnlineBooking/css/rob.css">
     <!--
     <script src="theme/sub/rediLegalOnlineBooking/js/table-editable-lob-edited.js"></script>
     <script src="theme/sub/rediLegalOnlineBooking/js/my-date-paginator.js" type="text/javascript"></script>
