@@ -5,6 +5,9 @@ var db = require('../models');
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
+var mkdirp = require('mkdirp');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 module.exports = {
     packageList: function (req, res) {
@@ -170,6 +173,8 @@ module.exports = {
     editBooking : function(req,res){
         var info = req.body.info;
 
+        console.log(info);
+
         var calId;
         if(info.calendar_id === null || typeof info.calendar_id === 'undefined' || info.calendar_id === '')
         {
@@ -187,6 +192,7 @@ module.exports = {
             Appointment_notes: info.Appointment_notes,
             RediMed_note: info.RediMed_note,
             Appointment_time: info.Appointment_time
+
         },{Booking_id: info.Booking_id, Candidate_id: info.Candidate_id})
             .success(function(){
                 res.json({status:"success"});
@@ -608,5 +614,8 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error'});
             })
+    },
+    uploadResultFile: function(req,res){
+
     }
 };

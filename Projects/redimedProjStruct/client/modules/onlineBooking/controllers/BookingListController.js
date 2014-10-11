@@ -89,10 +89,6 @@ angular.module('app.loggedIn.booking.list.controller',[])
             });
         }
 
-        $scope.submitInfo = function(){
-
-        }
-
         $scope.searchModal = function(){
             var modalInstance = $modal.open({
                 templateUrl:'modules/onlineBooking/views/searchBookingModal.html',

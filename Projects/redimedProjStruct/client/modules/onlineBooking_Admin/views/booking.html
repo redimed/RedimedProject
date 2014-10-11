@@ -250,19 +250,62 @@
                     <label class="control-label bold">Result File</label>
                 </div>
                 <div class="col-md-8">
-                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-                        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i>
-                            <span class="fileinput-filename"></span></div>
-                        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>
-                            <input type="file" name="..." ng-model="info.resultFile" app-filereader>
-                        </span>
-                        <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                    <input type="file" ng-click="uploader.clearQueue()" nv-file-select="" uploader="uploader" />
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <h3>Upload File</h3>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th width="50%">Name</th>
+                            <th ng-show="uploader.isHTML5">Size</th>
+                            <th ng-show="uploader.isHTML5">Progress</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in uploader.queue">
+                            <td><strong>{{ item.file.name }}</strong></td>
+                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                            <td ng-show="uploader.isHTML5">
+                                <div class="progress" style="margin-bottom: 0;">
+                                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                            </td>
+                            <td nowrap>
+                                <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                </button>
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                    <span class="glyphicon glyphicon-trash"></span> Remove
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div>
+                        <div>
+                            Progress:
+                            <div class="progress" style="">
+                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-            <a class="btn red" download="test.js" href="data:application/x-javascript;base64,dmFyIGV4cHJlc3MgPSByZXF1aXJlKCdleHByZXNzJyk7CnZhciBhcHAgPSBleHByZXNzKCk7CnZhciBqYXZhID0gcmVxdWlyZSgnamF2YScpOwpqYXZhLm9wdGlvbnMucHVzaCgiLURqYXZhLmF3dC5oZWFkbGVzcz10cnVlIik7CgpqYXZhLmNsYXNzcGF0aC5wdXNoKCdjb21tb25zLWxhbmczLTMuMS5qYXInKTsKamF2YS5jbGFzc3BhdGgucHVzaCgnY29tbW9ucy1pby5qYXInKTsKCmphdmEuY2xhc3NwYXRoLnB1c2goJ2xpYi9jb21tb25zLWJlYW51dGlscy0xLjguMi5qYXInKTsKamF2YS5jbGFzc3BhdGgucHVzaCgnbGliL2NvbW1vbnMtY29sbGVjdGlvbnMtMy4yLjEuamFyJyk7CmphdmEuY2xhc3NwYXRoLnB1c2goJ2xpYi9jb21tb25zLWRpZ2VzdGVyLTIuMS5qYXInKTsKamF2YS5jbGFzc3BhdGgucHVzaCgnbGliL2NvbW1vbnMtbG9nZ2luZy0xLjEuamFyJyk7CmphdmEuY2xhc3NwYXRoLnB1c2goJ2xpYi9ncm9vdnktYWxsLTIuMC4xLmphcicpOwpqYXZhLmNsYXNzcGF0aC5wdXNoKCdsaWIvaVRleHQtMi4xLjcuanMyLmphcicpOwpqYXZhLmNsYXNzcGF0aC5wdXNoKCdsaWIvamFzcGVycmVwb3J0cy01LjYuMC5qYXInKTsKamF2YS5jbGFzc3BhdGgucHVzaCgnbGliL215c3FsLWNvbm5lY3Rvci1qYXZhLTUuMS4xMy1iaW4uamFyJyk7Cgp2YXIgSGFzaE1hcCA9IGphdmEuaW1wb3J0KCdqYXZhLnV0aWwuSGFzaE1hcCcpOwp2YXIgSlJFeGNlcHRpb24gPSBqYXZhLmltcG9ydCgnbmV0LnNmLmphc3BlcnJlcG9ydHMuZW5naW5lLkpSRXhjZXB0aW9uJyk7CnZhciBKYXNwZXJFeHBvcnRNYW5hZ2VyID0gamF2YS5pbXBvcnQoJ25ldC5zZi5qYXNwZXJyZXBvcnRzLmVuZ2luZS5KYXNwZXJFeHBvcnRNYW5hZ2VyJyk7CnZhciBKYXNwZXJGaWxsTWFuYWdlciA9IGphdmEuaW1wb3J0KCduZXQuc2YuamFzcGVycmVwb3J0cy5lbmdpbmUuSmFzcGVyRmlsbE1hbmFnZXInKTsKdmFyIEphc3BlclByaW50ID0gamF2YS5pbXBvcnQoJ25ldC5zZi5qYXNwZXJyZXBvcnRzLmVuZ2luZS5KYXNwZXJQcmludCcpOwp2YXIgRHJpdmVyTWFuYWdlciA9IGphdmEuaW1wb3J0KCdqYXZhLnNxbC5Ecml2ZXJNYW5hZ2VyJyk7CnZhciBEcml2ZXIgPSBqYXZhLmltcG9ydCgnY29tLm15c3FsLmpkYmMuRHJpdmVyJyk7CnZhciBJbnB1dFN0cmVhbSA9IGphdmEuaW1wb3J0KCdqYXZhLmlvLklucHV0U3RyZWFtJyk7CnZhciBGaWxlSW5wdXRTdHJlYW0gPSBqYXZhLmltcG9ydCgnamF2YS5pby5GaWxlSW5wdXRTdHJlYW0nKTsKCgp2YXIgU2VxdWVsaXplID0gcmVxdWlyZSgnc2VxdWVsaXplJyk7CnZhciBzZXF1ZWxpemUgPSBuZXcgU2VxdWVsaXplKCdzYWtpbGEnLCdyb290Jywncm9vdCcsewogICAgaG9zdDogJ2xvY2FsaG9zdCcsCiAgICBwb3J0OiAzMzA2LAogICAgbWF4Q29uY3VycmVudFF1ZXJpZXM6MTAwLAogICAgcG9vbDp7CiAgICAgICAgbWF4Q29ubmVjdGlvbnM6IDUwLAogICAgICAgIG1heElkbGVUaW1lOiAzMDAwMAogICAgfQp9KTsKCnNlcXVlbGl6ZS5hdXRoZW50aWNhdGUoKS5jb21wbGV0ZShmdW5jdGlvbihlcnIpewogICAgaWYoISFlcnIpCiAgICB7CiAgICAgICAgY29uc29sZS5sb2coJ1VuYWJsZSB0byBjb25uZWN0IHRvIHRoZSBkYXRhYmFzZTonLGVycik7CiAgICB9CiAgICBlbHNlCiAgICB7CiAgICAgICAgY29uc29sZS5sb2coJ0Nvbm5lY3Rpb24gaGFzIGJlZW4gZXN0YWJsaXNoZWQgc3VjY2Vzc2Z1bGx5IScpOwogICAgfQp9KTsKCi8vRGVmaW5lIFVzZXIgbW9kZWwKdmFyIFVzZXIgPSBzZXF1ZWxpemUuZGVmaW5lKCdVc2VyJywgewogICAgaWQ6IFNlcXVlbGl6ZS5JTlRFR0VSLAogICAgdXNlcl9uYW1lOiBTZXF1ZWxpemUuVEVYVCwKICAgIHBhc3N3b3JkOiBTZXF1ZWxpemUuVEVYVAp9LCB7CiAgICBnZXR0ZXJNZXRob2RzICAgOiB7CiAgICAgICAgaWQgICAgICAgOiBmdW5jdGlvbigpICB7IHJldHVybiB0aGlzLmdldERhdGFWYWx1ZSgnaWQnKSB9LAogICAgICAgIHVuYW1lICA6IGZ1bmN0aW9uKCkgIHsgcmV0dXJuIHRoaXMuZ2V0RGF0YVZhbHVlKCd1c2VyX25hbWUnKSArICcgJyArIHRoaXMuZ2V0RGF0YVZhbHVlKCdwYXNzd29yZCcpIH0KICAgIH0sCiAgICBzZXR0ZXJNZXRob2RzICAgOiB7CgogICAgfSwKICAgIHRhYmxlTmFtZTogJ3VzZXJzJyAvL0Fzc2lnbiBkYXRhIGZyb20gJ3VzZXJzJyB0YWJsZSB0byBVc2VyIG1vZGVsCn0pOwoKYXBwLmdldCgnL3VzZXInLGZ1bmN0aW9uKHJlcSxyZXMpewogICAgLy9SYXcgUXVlcnkKLy8gICAgc2VxdWVsaXplLnF1ZXJ5KCdTRUxFQ1QgKiBGUk9NIHVzZXJzJykuc3VjY2VzcyhmdW5jdGlvbihycyl7Ci8vICAgICAgIGNvbnNvbGUubG9nKHJzKTsKLy8gICAgfSk7CgogICAgLy9Bc3NpZ24gc2VsZWN0IHJlc3VsdCB0byBkZWZpbmVkIG1vZGVsCiAgICBVc2VyLmZpbmRBbGwoKS5zdWNjZXNzKGZ1bmN0aW9uKGRhdGEpewogICAgICAgIGZvcih2YXIgaT0wOyBpPGRhdGEubGVuZ3RoOyBpKyspCiAgICAgICAgewogICAgICAgICAgICBjb25zb2xlLmxvZyhkYXRhW2ldLmlkICsgJyAnICsgZGF0YVtpXS51bmFtZSk7CiAgICAgICAgfQoKICAgIH0pOwp9KTsKCmFwcC5nZXQoJy9qYXZhJyxmdW5jdGlvbihyZXEscmVzKXsKCiAgICAgICAgdmFyIGNvbiA9IGphdmEuY2FsbFN0YXRpY01ldGhvZFN5bmMoJ2phdmEuc3FsLkRyaXZlck1hbmFnZXInLCdnZXRDb25uZWN0aW9uJywiamRiYzpteXNxbDovL2xvY2FsaG9zdDozMzA2L3Nha2lsYSIsInJvb3QiLCJyb290Iik7CgogICAgICAgIHZhciBwYXJhbU1hcCA9IG5ldyBIYXNoTWFwKCk7CgogICAgICAgIHBhcmFtTWFwLnB1dFN5bmMoImlkIiw3KTsKICAgICAgICBwYXJhbU1hcC5wdXRTeW5jKCJyZWFsUGF0aCIsInJlcG9ydHMvIik7CgoKICAgICAgICB2YXIgalByaW50ID0gamF2YS5jYWxsU3RhdGljTWV0aG9kU3luYygnbmV0LnNmLmphc3BlcnJlcG9ydHMuZW5naW5lLkphc3BlckZpbGxNYW5hZ2VyJywnZmlsbFJlcG9ydCcsJ3JlcG9ydHMvR29yZ29uRkNBUmVwb3J0Lmphc3BlcicscGFyYW1NYXAsY29uKTsKCiAgICAgICAgamF2YS5jYWxsU3RhdGljTWV0aG9kU3luYygnbmV0LnNmLmphc3BlcnJlcG9ydHMuZW5naW5lLkphc3BlckV4cG9ydE1hbmFnZXInLCdleHBvcnRSZXBvcnRUb1BkZkZpbGUnLGpQcmludCwnc2FtcGxlLnBkZicpOwoKICAgICAgICByZXMuZG93bmxvYWQoJ3NhbXBsZS5wZGYnKTsKCn0pOwoKCnZhciBzZXJ2ZXIgPSBhcHAubGlzdGVuKDQwMDAsZnVuY3Rpb24oKXsKICAgIGNvbnNvbGUubG9nKCdMaXN0ZW5pbmcgb24gcG9ydCAlZCcsIHNlcnZlci5hZGRyZXNzKCkucG9ydCk7Cn0pOwo=">download</a>
         </div>
     </div>
 </div>

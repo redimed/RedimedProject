@@ -94,21 +94,38 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
             })
         }
 
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/api/booking/upload'
+        });
+
         $scope.saveInfo = function(){
 
-            console.log($scope.info);
+            uploader.uploadAll();
 
-//            OnlineBookingAdminService.editBookingInfo($scope.info).then(function(data){
-//                if(data.status === 'success')
-//                {
-//                    toastr.success("Edit Successfully!","Success");
-//                    //$state.go('loggedIn.package',null,{reload:true});
-//                }
-//                else
-//                {
-//                    toastr.error("Edit Failed!","Error");
-//                }
-//            })
+            uploader.filters.push({
+                name: 'customFilter',
+                fn: function(item /*{File|FileLikeObject}*/, options) {
+                    return this.queue.length < 10;
+                }
+            });
+
+            uploader.onCompleteAll = function() {
+                console.info('onCompleteAll');
+            };
+
+            $scope.info.resultFileName = uploader.queue[0].file.name;
+
+            OnlineBookingAdminService.editBookingInfo($scope.info).then(function(data){
+                if(data.status === 'success')
+                {
+                    toastr.success("Edit Successfully!","Success");
+                    //$state.go('loggedIn.package',null,{reload:true});
+                }
+                else
+                {
+                    toastr.error("Edit Failed!","Error");
+                }
+            })
         }
 
         $scope.sendEmail = function(){
@@ -116,7 +133,6 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
                 if(data.status === 'success')
                 {
                     toastr.success("Send Mail Successfully! Please check your email!","Success");
-                    //$state.go('loggedIn.package',null,{reload:true});
                 }
                 else
                 {
