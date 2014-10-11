@@ -141,7 +141,7 @@
                 <label class="control-label">9. The best time to phone you on this number:</label>
             </div>
             <div class="col-md-5 col-sm-7" >
-                <input type="text" name="BestTime" required ng-model="info.BestTime" style="width: 250px" >
+                <input type="text" name="BestTime" ng-model="info.BestTime" style="width: 250px" >
             </div>
         </div>
         <div class="row">
@@ -196,7 +196,7 @@
                     <label class="control-label">If yes, what type(s):</label>
                 </div>
                 <div class="col-md-5 col-sm-7">
-                    <input type="text" name="RespiratorType" required ng-model="info.RespiratorType" class="form-control">
+                    <input type="text" name="RespiratorType" ng-required="info.isRespirator == 1 ? true : false" ng-model="info.RespiratorType" class="form-control">
                 </div>
             </div>
             <div class="row" ng-show="showClickedValidation && gorgonUQForm.RespiratorType.$invalid && info.isRespirator == 1">
@@ -467,7 +467,7 @@
                 </div>
                 <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.OtherLungComment.$invalid && info.isOtherLung == 1}">
                     <div class="col-md-4 col-sm-6">
-                        <input type="text" name="OtherLungComment" required ng-model="info.OtherLungComment"  class="form-control">
+                        <input type="text" name="OtherLungComment" ng-required="info.isOtherLung == 1 ? true : false" ng-model="info.OtherLungComment"  class="form-control">
                         <div for="OtherLungComment" ng-show="showClickedValidation && gorgonUQForm.OtherLungComment.$invalid && info.isOtherLung == 1">
                             <label  class="help-block" >
                                 Must be enter if yes
@@ -790,7 +790,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.OtherHeartComment.$invalid && info.isOtherHeart == 1}">
                 <div class="col-md-4 col-sm-6">
-                    <input type="text" name="OtherHeartComment" required ng-model="info.OtherHeartComment" class="form-control">
+                    <input type="text" name="OtherHeartComment" ng-required="info.isOtherHeart == 1 ? true : false" ng-model="info.OtherHeartComment" class="form-control">
                     <div for="OtherHeartComment" ng-show="showClickedValidation && gorgonUQForm.OtherHeartComment.$invalid && info.isOtherHeart == 1">
                         <label  class="help-block" >
                             Must be enter if yes
@@ -951,7 +951,7 @@
                 <label class="control-label col-md-3 col-sm-4 text-info" style="margin-top: 10px;font-weight: bold">Never used a respirator
                 </label>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" ng-model="info.isUseRespirator" type="checkbox"  />
+                    <input class="form-control" ng-model="info.isUseRespirator" ng-change="checkUseRespirator(info.isUseRespirator)" type="checkbox"  />
                 </div>
             </div>
         </div>
@@ -961,10 +961,10 @@
                 <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Eye irritation:</label>
                 <div class="btn-group" >
                     <label class="btn">
-                        <input type="radio" ng-model="info.isEyeIrritation" ng-disabled="info.isUseRespirator" ng-checked="!info.isUseRespirator" value="1"/> Yes
+                        <input type="radio" ng-model="info.isEyeIrritation"  ng-disabled="info.isUseRespirator"  value="1"/> Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isEyeIrritation" ng-disabled="info.isUseRespirator" ng-checked="!info.isUseRespirator" value="0"/> No
+                        <input type="radio" ng-model="info.isEyeIrritation" ng-disabled="info.isUseRespirator" value="0"/> No
                     </label>
                 </div>
             </div>
@@ -975,10 +975,10 @@
                 <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Skin allergies or rashes:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSkinAllergies" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSkinAllergies"  ng-disabled="info.isUseRespirator" value="1"/> Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSkinAllergies" value="0"/> No
+                        <input type="radio" ng-model="info.isSkinAllergies"  ng-disabled="info.isUseRespirator" value="0"/> No
                     </label>
                 </div>
             </div>
@@ -989,10 +989,10 @@
                 <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Anxiety:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAnxiety" value="1"/> Yes
+                        <input type="radio" ng-model="info.isAnxiety"  ng-disabled="info.isUseRespirator" value="1"/> Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAnxiety" value="0"/> No
+                        <input type="radio" ng-model="info.isAnxiety"  ng-disabled="info.isUseRespirator" value="0"/> No
                     </label>
                 </div>
             </div>
@@ -1003,10 +1003,10 @@
                 <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) General weakness or fatigue:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isGeneralWeakness" value="1"/> Yes
+                        <input type="radio" ng-model="info.isGeneralWeakness"  ng-disabled="info.isUseRespirator" value="1"/> Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isGeneralWeakness" value="0"/> No
+                        <input type="radio" ng-model="info.isGeneralWeakness"  ng-disabled="info.isUseRespirator" value="0"/> No
                     </label>
                 </div>
             </div>
@@ -1017,10 +1017,10 @@
                 <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e) Any other problem that interferes with your use of a respirator:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherProblem" value="1"/> Yes
+                        <input type="radio" ng-model="info.isOtherProblem"  ng-disabled="info.isUseRespirator" value="1"/> Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherProblem" value="0"/> No
+                        <input type="radio" ng-model="info.isOtherProblem"  ng-disabled="info.isUseRespirator" value="0"/> No
                     </label>
                 </div>
             </div>
@@ -1346,26 +1346,26 @@
 
             <div class="col-md-3 col-sm-4">
                 <label class="control-label">Employee:</label>
-                <input type="text" name="" required ng-model="info.Employee" class="form-control" >
+                <input type="text"  ng-model="info.Employee" class="form-control" >
             </div>
             <div class="col-md-3 col-sm-4">
                 <label class="control-label">Date of Birth:</label>
-                <input type="text" name="" required class="form-control col-md-12" ng-model="info.DOB" required datepicker-popup="dd/MM/yyyy"  is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <input type="text"  class="form-control col-md-12" ng-model="info.DOB"  datepicker-popup="dd/MM/yyyy"  is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions"  close-text="Close" />
             </div>
             <div class="col-md-3 col-sm-4">
                 <label class="control-label">Department:</label>
-                <input type="text" name="" required ng-model="info.Department" class="form-control" >
+                <input type="text"  ng-model="info.Department" class="form-control" >
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3 col-sm-4">
                 <label class="control-label">Social Secturity:</label>
-                <input type="text" name="" required ng-model="info.SocialSecurity" class="form-control" >
+                <input type="text"  ng-model="info.SocialSecurity" class="form-control" >
             </div>
             <div class="col-md-3 col-sm-4">
                 <label class="control-label">Supervisor:</label>
-                <input type="text" name="" required ng-model="info.Supervisor" class="form-control" >
+                <input type="text"  ng-model="info.Supervisor" class="form-control" >
             </div>
         </div>
         </br>
@@ -1481,7 +1481,7 @@
                 <label class="control-label text-info" style="font-weight: bold">Length of Time anticipated Effort in Hours:</label>
             </div>
             <div class="col-md-5" style="margin-left: 10px">
-                <input type="text" name="" required ng-model="info.LengthOfTime"  class="form-control">
+                <input type="text"  ng-model="info.LengthOfTime"  class="form-control">
             </div>
         </div>
         </br>
@@ -1512,7 +1512,7 @@
                 <label class="control-label text-info" style="font-weight: bold">HEALTH CARE PROFESSIONAL’S EVALUATION OF :</label>
             </div>
             <div class="col-md-5 col-sm-9">
-                <input type="text" name="" required ng-model="info.HealthCare"  class="form-control">
+                <input type="text"  ng-model="info.HealthCare"  class="form-control">
             </div>
             <div class="col-md-1 col-sm-3">
                 (EMPLOYEE)
@@ -1554,7 +1554,7 @@
                 <label class="control-label text-info" style="font-weight: bold">Examining Health Care Professional:</label>
             </div>
             <div class="col-md-5 col-sm-6">
-                <input type="text" name="" required ng-model="info.HealthCarePro" style="width: 150px">
+                <input type="text"  ng-model="info.HealthCarePro" style="width: 150px">
                 <label class="text-info">Date</label>
                 <label>18/09/2014  </label>
             </div>
