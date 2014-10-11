@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
@@ -34,11 +34,13 @@ var mysql = require('mysql');
 var connection = require('express-myconnection');
 app.use(connection(mysql, config.get('mysql'), 'pool'));
 
+
 //connect-multiparty FOR UPLOAD
 process.env.TMPDIR =path.join(__dirname, 'temp');
 var mkdirp = require('mkdirp');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+
 //Set request Handler
 //-------------------------------------------
 

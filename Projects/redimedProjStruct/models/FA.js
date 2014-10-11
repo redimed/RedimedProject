@@ -1,9 +1,11 @@
-//Model section
+﻿//Model section
 module.exports = function(sequelize, DataTypes){
     var Sections = sequelize.define('Sections',{
         patient_id : DataTypes.INTEGER(20),
         cal_id : DataTypes.INTEGER(11),
-        section_id : DataTypes.INTEGER(11),
+
+        section_id : {type:DataTypes.INTEGER(11), primaryKey:true},
+
         fa_id : DataTypes.INTEGER(11),
         section_name : DataTypes.STRING(50),
         isenable : DataTypes.INTEGER(11),
@@ -26,11 +28,13 @@ module.export = function(sequelize, DataTypes){
     var Lines = sequelize.define('Lines',{
         patient_id : DataTypes.INTEGER(20),
         cal_id : DataTypes.INTEGER(11),
-        line_id : DataTypes.INTEGER(11),
+
+        line_id : {type:DataTypes.INTEGER(11), primaryKey:true},
         section_id : DataTypes.INTEGER(11),
         fa_id : DataTypes.INTEGER(11),
         question : DataTypes.STRING(200),
-        picture : DataTypes.Blob,
+        picture : DataTypes.BLOB,
+
         isscore1 : DataTypes.INTEGER(11),
         score_type1 : DataTypes.INTEGER(11),
         score1 : DataTypes.INTEGER(11),
@@ -72,7 +76,9 @@ module.export = function(sequelize, DataTypes){
     var Details = sequelize.define('Details',{
         patient_id : DataTypes.INTEGER(20),
         cal_id : DataTypes.INTEGER(11),
-        detail_id : DataTypes.INTEGER(11),
+
+        detail_id : {type:DataTypes.INTEGER(11), primaryKey:true},
+
         line_id : DataTypes.INTEGER(11),
         question : DataTypes.STRING(200),
         val1_name : DataTypes.STRING(50),
@@ -86,7 +92,9 @@ module.export = function(sequelize, DataTypes){
         val2_ischeckbox : DataTypes.INTEGER(11),
         val2_checkbox : DataTypes.STRING(10),
         comments : DataTypes.STRING(200),
-        picture : DataTypes.Blob,
+
+        picture : DataTypes.BLOB,
+
         ord : DataTypes.INTEGER(11),
         isenable : DataTypes.INTEGER(11),
         created_by : DataTypes.INTEGER(11),
@@ -114,7 +122,9 @@ module.export = function(sequelize, DataTypes){
     var Headers = sequelize.define('Headers',{
         patient_id : DataTypes.INTEGER(20),
         cal_id : DataTypes.INTEGER(11),
-        fa_id : DataTypes.INTEGER(11),
+
+        fa_id : {type:DataTypes.INTEGER(11), primaryKey:true},
+
         entity_id : DataTypes.INTEGER(11),
         fa_type : DataTypes.STRING(10),
         fa_name : DataTypes.STRING(50),
@@ -133,7 +143,9 @@ module.export = function(sequelize, DataTypes){
         Att_Lower_Limb_func : DataTypes.INTEGER(11),
         Att_Balance : DataTypes.INTEGER(11),
         ASSESSED_ID : DataTypes.INTEGER(11),
-        ASSESSED_SIGN : DataTypes.Blob,
+
+        ASSESSED_SIGN : DataTypes.BLOB,
+
         ASSESSED_DATE : DataTypes.DATE,
         ASSESSED_NAME : DataTypes.STRING(100)
     },{
@@ -148,7 +160,9 @@ module.export = function(sequelize, DataTypes){
     var Comments = sequelize.define('Comments',{
         patient_id : DataTypes.INTEGER(20),
         cal_id : DataTypes.INTEGER(11),
-        fa_comment_id : DataTypes.INTEGER(11),
+
+        fa_comment_id : {type:DataTypes.INTEGER(11), primaryKey:true},
+
         line_id : DataTypes.INTEGER(11),
         name : DataTypes.STRING(50),
         value : DataTypes.STRING(20),

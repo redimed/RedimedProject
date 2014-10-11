@@ -82,6 +82,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
             if(data.status === 'success')
             {
                 $scope.packageList = data.rs;
+
                 $scope.packageList.push({id:-1,package_name:"Custom Package"});
             }
 
@@ -113,6 +114,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                         }
                     })
                 }
+
 
                 //$scope.newCandidate();
             }else
@@ -253,6 +255,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
 .controller('NewCandidateController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, companyId, editInfo, toastr){
 
         $scope.info = {
+
             siteId:null,
             fromDate: null,
             toDate: null,
@@ -266,6 +269,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
             suburbId:null,
             stateName:null,
             suburbName:null
+
         };
         $scope.siteList = [];
         $scope.calList = [];
@@ -277,6 +281,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
         if(editInfo !== null)
         {
             $scope.info = editInfo;
+
             console.log($scope.info);
             if($scope.info.stateId != null)
             {
@@ -311,14 +316,17 @@ angular.module('app.loggedIn.booking.make.controller',[])
             $scope.positionList = data;
         })
 
+
         $scope.minDate = new Date();
 
         $scope.maxDate = new Date();
+
 
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
+
         $scope.haveState = false;
         $scope.haveSuburb = false;
         $scope.siteChange = function(){
@@ -356,11 +364,13 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 $scope.info.suburbId = null;
                 $scope.haveState = false;
                 $scope.haveSuburb = false;
+
                 $scope.calList = [];
                 $scope.info.appointmentTime = '';
             }
 
         }
+
 
         $scope.siteStateChange = function(id){
             if(id != null)
@@ -381,6 +391,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 $scope.haveSuburb = false;
             }
         }
+
 
         $scope.fromDateChange = function()
         {
@@ -441,11 +452,13 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     email: '',
                     siteName: '',
                     submitDate: '',
+
                     displayDate: '',
                     stateId:'',
                     suburbId:'',
                     stateName:'',
                     suburbName:''
+
 
                 };
                 $scope.candidateInfo.candidateName = $scope.info.candidateName;
@@ -457,6 +470,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 $scope.candidateInfo.fromDate = $filter('date')($scope.info.fromDate, 'yyyy-MM-dd');
                 $scope.candidateInfo.toDate = $filter('date')($scope.info.toDate, 'yyyy-MM-dd');
                 $scope.candidateInfo.calId = $scope.info.calId;
+
                 $scope.candidateInfo.stateId = $scope.info.stateId;
                 $scope.candidateInfo.suburbId = $scope.info.suburbId;
                 if(typeof $scope.stateList !== 'undefined' || $scope.stateList != null)
@@ -476,6 +490,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                             $scope.candidateInfo.suburbName = $scope.suburbList[i].suburb_name;
                     }
                 }
+
 
                 if($scope.info.calId !== null) {
                     OnlineBookingService.getAppointmentTime($scope.info.calId).then(function (data) {

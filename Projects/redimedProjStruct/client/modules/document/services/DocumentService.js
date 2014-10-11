@@ -107,6 +107,7 @@ angular.module('app.loggedIn.document.services', [])
          * end audiogram 2
          */
 
+
         /**
          * begin category 3
          */
@@ -115,5 +116,14 @@ angular.module('app.loggedIn.document.services', [])
             return insertCat3.post({info: info});
         }
         return documentService;
+
+        documentService.insertUQ = function(info){
+            var insertUQ = api.all("document/insertUQ");
+            return insertUQ.post({info:info});
+        }
+
+
+    return documentService;
+
     })
 

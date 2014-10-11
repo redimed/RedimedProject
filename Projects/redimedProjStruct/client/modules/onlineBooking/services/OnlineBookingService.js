@@ -155,6 +155,5 @@ angular.module('app.loggedIn.booking.services',[])
         }
 
 
-
         return bookingService;
     })
