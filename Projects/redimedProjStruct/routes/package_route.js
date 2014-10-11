@@ -9,3 +9,4 @@ app.post('/api/package/assessment/update',PackageController.updateAss);
 app.post('/api/package/insert',PackageController.insertPackage);
 app.post('/api/package/assessment/delete',PackageController.deleteAss);
 app.post('/api/package/assessment/insert',PackageController.insertAss);
+app.post('/api/package/custom',PackageController.customPackAss);

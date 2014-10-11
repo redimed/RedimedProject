@@ -94,7 +94,26 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
             })
         }
 
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/api/booking/upload'
+        });
+
         $scope.saveInfo = function(){
+
+            uploader.uploadAll();
+
+            uploader.filters.push({
+                name: 'customFilter',
+                fn: function(item /*{File|FileLikeObject}*/, options) {
+                    return this.queue.length < 10;
+                }
+            });
+
+            uploader.onCompleteAll = function() {
+                console.info('onCompleteAll');
+            };
+
+            $scope.info.resultFileName = uploader.queue[0].file.name;
 
             OnlineBookingAdminService.editBookingInfo($scope.info).then(function(data){
                 if(data.status === 'success')
@@ -114,7 +133,6 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
                 if(data.status === 'success')
                 {
                     toastr.success("Send Mail Successfully! Please check your email!","Success");
-                    //$state.go('loggedIn.package',null,{reload:true});
                 }
                 else
                 {
@@ -123,6 +141,65 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
             })
         }
 
+        $scope.searchModal = function(){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/onlineBooking/views/searchBookingModal.html',
+                controller:'SearchAdminBookingController',
+                size:'md',
+                resolve:{
+                    companyId: function(){
+                        return null;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(data){
+                $scope.data = data;
+
+                $scope.$watch('data',function(data){
+                    $scope.data = data;
+                    $scope.tableParams.reload();
+                })
+
+            })
+        }
+
+    })
+
+    .controller('SearchAdminBookingController',function($scope,$modalInstance,OnlineBookingService,OnlineBookingAdminService,companyId){
+        $scope.minDate = new Date();
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
+        $scope.info = {
+            companyId: companyId,
+            companyName: null,
+            candidateName: null,
+            fromDate: null,
+            toDate: null,
+            bookingPerson: null,
+            status: null,
+            siteName: null
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.search = function(){
+            OnlineBookingService.searchBooking($scope.info).then(function(data){
+                $modalInstance.close(data);
+            })
+        }
+
+        $scope.reset = function(){
+            OnlineBookingAdminService.getList().then(function(data){
+                $modalInstance.close(data.rs);
+            })
+        }
     })
 
     .controller('AdminBookingDetailController',function($scope,$modalInstance,OnlineBookingService, bookingId, candidateId){

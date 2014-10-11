@@ -161,5 +161,35 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return insert.post({info:info});
         }
 
+        adminBooking.getStateById = function(id){
+            var state = api.all('redimedsite/state/id');
+            return state.post({id:id});
+        }
+
+        adminBooking.getSuburbById = function(id){
+            var suburb = api.all('redimedsite/state/suburb/id');
+            return suburb.post({id:id});
+        }
+
+        adminBooking.editStateInfo = function(info){
+            var edit = api.all('redimedsite/state/edit');
+            return edit.post({info:info});
+        }
+
+        adminBooking.editSuburbInfo = function(info){
+            var edit = api.all('redimedsite/state/suburb/edit');
+            return edit.post({info:info});
+        }
+
+        adminBooking.insertState = function(info){
+            var insert = api.all('redimedsite/state/insert');
+            return insert.post({info:info});
+        }
+
+        adminBooking.insertSuburb = function(info){
+            var insert = api.all('redimedsite/state/suburb/insert');
+            return insert.post({info:info});
+        }
+
         return adminBooking;
 })

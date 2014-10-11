@@ -4,7 +4,7 @@
 
 
 angular.module('app.loggedIn.booking.make.controller',[])
-    .controller('MakeBookingController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore){
+.controller('MakeBookingController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore){
         var companyInfo;
         var userInfo;
 
@@ -88,6 +88,8 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
         })
 
+
+        var arrCustomAss = [];
         $scope.packageChange = function(PackId){
             var arrAss = [];
 
@@ -95,17 +97,40 @@ angular.module('app.loggedIn.booking.make.controller',[])
             {
                 if(PackId == -1)
                 {
-                    console.log('aaaa');
+
                     $scope.packAss = [];
+
+                    var modalInstance = $modal.open({
+                        templateUrl:'modules/onlineBooking/views/customPackage.html',
+                        controller: 'CustomPackageController',
+                        size:'lg'
+                    })
+
+                    modalInstance.result.then(function (data){
+                        for(var i=0; i<data.length; i++)
+                        {
+                            arrAss.push({head_name:data[i].HeaderName == null || data[i].HeaderName == '' ? '' : data[i].HeaderName,ass_name:data[i].ass_name});
+                            arrCustomAss.push({ass_id:data[i].ass_id, ass_name:data[i].ass_name});
+                        }
+
+                        $scope.packAss = _.groupBy(arrAss,"head_name");
+
+
+                        $scope.newCandidate();
+
+                    },function(err){
+                        console.log(err);
+                    });
                 }
                 else
                 {
+                    arrCustomAss = [];
                     OnlineBookingService.getPackageAssById(PackId).then(function(data){
                         if(data.status === 'success')
                         {
                             for(var i=0; i<data.rs.length; i++)
                             {
-                                arrAss.push({head_name:data.rs[i].HeaderName,ass_name:data.rs[i].ass_name});
+                                arrAss.push({head_name:data.rs[i].HeaderName == null || data.rs[i].HeaderName == '' ? '' : data.rs[i].HeaderName,ass_name:data.rs[i].ass_name});
                             }
 
                             $scope.packAss = _.groupBy(arrAss,"head_name");
@@ -113,10 +138,10 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
                         }
                     })
+
+                    $scope.newCandidate();
                 }
 
-
-                //$scope.newCandidate();
             }else
             {
                 $scope.packAss = [];
@@ -225,7 +250,9 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 Booking_Person: userInfo.Booking_Person,
                 contact_number: userInfo.Contact_number,
                 subCompany_Id: $scope.c.SubCompanyId == null ? null : $scope.c.SubCompanyId,
-                contact_email: userInfo.Contact_email
+                contact_email: userInfo.Contact_email,
+                arrCustomAss : arrCustomAss.length <= 0 ? null : arrCustomAss
+
             };
 
             $scope.showClickedValidation = true;
@@ -234,7 +261,11 @@ angular.module('app.loggedIn.booking.make.controller',[])
             }else
             {
 
-                if($scope.data != null){
+                if($scope.data.length <= 0)
+                {
+                    toastr.error("Please Add Some Candidate For Booking!", "Error");
+                }
+               else{
                     OnlineBookingService.submitBook($scope.data,$scope.headInfo).then(function(data){
                         if(data.status === 'success')
                         {
@@ -246,10 +277,33 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
                     })
                 }
+
             }
 
         }
 
+})
+
+.controller('CustomPackageController',function($scope,$state,$modalInstance,OnlineBookingService , OnlineBookingAdminService, toastr){
+        $scope.info = {
+            checkedAss: []
+        }
+
+        OnlineBookingAdminService.getAssessment().then(function(data){
+            $scope.assList = data;
+        })
+
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.okClick = function(){
+
+            OnlineBookingService.customPackage($scope.info.checkedAss).then(function(data){
+                $modalInstance.close(data);
+            })
+        }
 })
 
 .controller('NewCandidateController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, companyId, editInfo, toastr){
@@ -269,6 +323,8 @@ angular.module('app.loggedIn.booking.make.controller',[])
             suburbId:null,
             stateName:null,
             suburbName:null
+
+
 
         };
         $scope.siteList = [];
@@ -452,13 +508,11 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     email: '',
                     siteName: '',
                     submitDate: '',
-
                     displayDate: '',
                     stateId:'',
                     suburbId:'',
                     stateName:'',
                     suburbName:''
-
 
                 };
                 $scope.candidateInfo.candidateName = $scope.info.candidateName;
@@ -470,6 +524,25 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 $scope.candidateInfo.fromDate = $filter('date')($scope.info.fromDate, 'yyyy-MM-dd');
                 $scope.candidateInfo.toDate = $filter('date')($scope.info.toDate, 'yyyy-MM-dd');
                 $scope.candidateInfo.calId = $scope.info.calId;
+                $scope.candidateInfo.stateId = $scope.info.stateId;
+                $scope.candidateInfo.suburbId = $scope.info.suburbId;
+                if(typeof $scope.stateList !== 'undefined' || $scope.stateList != null)
+                {
+                    for(var i = 0; i<$scope.stateList.length; i++)
+                    {
+                        if($scope.info.stateId == $scope.stateList[i].state_id)
+                            $scope.candidateInfo.stateName = $scope.stateList[i].state_name;
+                    }
+                }
+
+                if(typeof $scope.suburbList !== 'undefined' || $scope.suburbList != null)
+                {
+                    for(var i = 0; i<$scope.suburbList.length; i++)
+                    {
+                        if($scope.info.suburbId == $scope.suburbList[i].suburb_id)
+                            $scope.candidateInfo.suburbName = $scope.suburbList[i].suburb_name;
+                    }
+                }
 
                 $scope.candidateInfo.stateId = $scope.info.stateId;
                 $scope.candidateInfo.suburbId = $scope.info.suburbId;
@@ -506,6 +579,8 @@ angular.module('app.loggedIn.booking.make.controller',[])
                         $scope.candidateInfo.siteName = $scope.siteList[i].Site_name;
                     }
                 }
+
+
 
                 $modalInstance.close($scope.candidateInfo);
             }

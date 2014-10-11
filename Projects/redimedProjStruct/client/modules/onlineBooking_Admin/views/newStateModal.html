@@ -1,0 +1,38 @@
+<div class="modal-header">
+</div>
+<form name="stateForm" ng-submit="addState(stateForm)" novalidate method="post">
+<div class="modal-body">
+        <div class="form-group" ng-class="{'has-error':showStateValidation && stateForm.name.$invalid}">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>State Name <span class="required">
+                                                    * </span></label>
+                </div>
+                <div class="col-md-6">
+                    <input ng-model="stateInfo.state_name" type="text" class="form-control" name="name" required />
+                </div>
+            </div>
+            <div class="row" ng-show="showStateValidation && stateForm.name.$invalid">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <span for="name" class="help-block">State Name is required.</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Is Enable</label>
+                </div>
+                <div class="col-md-6">
+                    <input ng-model="stateInfo.isenable" type="checkbox" ng-true-value="1" ng-false-value="0" />
+                </div>
+            </div>
+        </div>
+
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
+    <button type="submit" class="btn green"  >Submit</button>
+</div>
+</form>

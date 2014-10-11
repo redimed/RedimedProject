@@ -22,14 +22,7 @@
         </div>
         <div>
             <div class="btn-group pull-right">
-                <a ng-click="submitInfo()" href="javascript:;" class="btn blue" >
-                    Submit
-                </a>
-            </div>
-        </div>
-        <div>
-            <div class="btn-group pull-right">
-                <a href="javascript:;" data-contentwrapper="#searchPopover" rel="popover" class="btn grey" >
+                <a href="javascript:;" ng-click="searchModal()"  class="btn grey" >
                     Search &nbsp;&nbsp; <i class="glyphicon glyphicon-search"></i>
                 </a>
             </div>
@@ -37,14 +30,6 @@
 
     </div>
     <div class="portlet-body form">
-        <div id="searchPopover" style="display: none;">
-            Company:<input class=form-control type="text"/>
-            <br/>
-            Candidate:<input class="form-control" type="text" />
-            <br/>
-            From Date:<input type="text" class="form-control"/>
-        </div>
-
         <div class="table-scrollable" id="content">
             <table ng-table="tableParams" show-filter="true" class="table table-hover table-bordered table-responsive">
                 <tr ng-repeat="b in $data" style="white-space: nowrap" ng-click="bookingSelected(b)" ng-class="{selected : b.Candidate_id === selectedCanId && b.Booking_id === selectedBookId}">
@@ -67,7 +52,8 @@
                         <label>{{b.Booking_Person}}</label>
                     </td>
                     <td data-title="'Appointment Notes'" sortable="'Appointment_notes'">
-                        <textarea type="text" class="form-control" ng-model="b.Appointment_notes" ></textarea>
+                        <a href="javascript:;" ng-click="showAppointmentNote(b)" ng-if="b.Appointment_notes != null || b.Appointment_notes != ''">{{b.Appointment_notes}}</a>
+                        <a href="javascript:;" class="btn blue" ng-click="showAppointmentNote(b)" ng-if="b.Appointment_notes == null || b.Appointment_notes == ''">Write Notes</a>
                     </td>
                     <td data-title="'Appointment Status'" sortable="'Appointment_status'" >
                         <label>{{b.Appointment_status}}</label>
@@ -97,14 +83,5 @@
 
 
 </div>
-    <script>
-    $('[rel=popover]').popover({
-        html:true,
-        placement:'bottom',
-        content:function(){
-            return $($(this).data('contentwrapper')).html();
-        }
-    });
-    </script>
 
 

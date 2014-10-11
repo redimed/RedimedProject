@@ -81,5 +81,21 @@ module.exports = {
                     })
             })
 
+    },
+    customPackAss: function(req,res){
+        var assId = req.body.id;
+
+
+        db.sequelize.query("SELECT a.HEADER_ID, h.ass_name AS HeaderName, a.id AS ass_id, a.ass_name " +
+                        "FROM assessments a LEFT JOIN assessment_headers h ON a.HEADER_ID = h.id  " +
+                        "WHERE a.id IN (?)",null,{raw:true}, [assId])
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+
     }
 }

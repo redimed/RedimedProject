@@ -142,7 +142,7 @@
             <div class='form-group row'>
                 <div class='col-md-5 row' style="margin-left: 5px;">
                     <a href="javascript:;" ng-click="newCandidate()"  class="btn green">New Candidate</a>
-                    <button type="submit"  class="btn btn-primary">Submit Booking</button>
+                    <button type="submit" class="btn btn-primary">Submit Booking</button>
                 </div>
             </div>
         </form>
@@ -175,9 +175,7 @@
                         <label>{{b.position}}</label>
                     </td>
                     <td data-title="'Preferred REDiMED Site'">
-
                         <label>{{b.siteName+ ' - ' + b.stateName + ' - ' + b.suburbName }}</label>
-
                     </td>
                     <td data-title="'From Date'">
                         <label>{{b.fromDate | date:'dd/MM/yyyy'}}</label>
@@ -186,7 +184,7 @@
                         <label>{{b.toDate | date:'dd/MM/yyyy'}}</label>
                     </td>
                     <td data-title="'Calendar'" >
-                        <label>{{b.displayDate}}</label>
+                        <label>{{b.siteName + '  '+ b.displayDate}}</label>
                     </td>
 
                     <td class="col-md-2" data-title="'Actions'">

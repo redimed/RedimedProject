@@ -2,14 +2,19 @@
  * Created by meditech on 04/10/2014.
  */
 angular.module('app.loggedIn.booking.admin.site.controller',[])
-    .controller('AdminSiteController',function($scope,$state,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,$http,toastr,$cookieStore){
+    .controller('AdminSiteController',function($scope,$state,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService, OnlineBookingService,$http,toastr,$cookieStore){
         $scope.selectedId = null;
         $scope.selectedCal = null;
+        $scope.selectedState = null;
+        $scope.selectedSuburb = null;
+
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
         $scope.arr = [];
+        $scope.arrState = [];
+        $scope.arrSuburb = [];
 
         $scope.info = {
             site_id: null,
@@ -18,6 +23,21 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
             to_time: null,
             available: null,
             booking: null
+        }
+
+        $scope.stateInfo = {
+            state_id:null,
+            site_id:null,
+            state_name: null,
+            isenable: null
+        }
+
+        $scope.suburbInfo = {
+            suburb_id:null,
+            state_id:null,
+            site_id:null,
+            suburb_name: null,
+            isenable: null
         }
 
         OnlineBookingAdminService.getSiteList().then(function(data){
@@ -59,6 +79,44 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
                 }
             });
 
+            $scope.tableParams3 = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: $scope.arrState.length, // length of data
+                getData: function($defer, params) {
+                    var filteredData = params.filter() ?
+                        $filter('filter')($scope.arrState, params.filter()) :
+                        $scope.arrState;
+
+                    var orderedData = params.sorting() ?
+                        $filter('orderBy')(filteredData, params.orderBy()) :
+                        $scope.arrState;
+
+                    params.total(orderedData.length);
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+
+            $scope.tableParams4 = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: $scope.arrSuburb.length, // length of data
+                getData: function($defer, params) {
+                    var filteredData = params.filter() ?
+                        $filter('filter')($scope.arrSuburb, params.filter()) :
+                        $scope.arrSuburb;
+
+                    var orderedData = params.sorting() ?
+                        $filter('orderBy')(filteredData, params.orderBy()) :
+                        $scope.arrSuburb;
+
+                    params.total(orderedData.length);
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+
 
         })
 
@@ -74,10 +132,18 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
             $scope.selectedId = b.id;
             $scope.selectedCal = null;
             $scope.arr = [];
+            $scope.arrState = [];
+            $scope.arrSuburb = [];
             $scope.rs = [];
+            $scope.rsState = [];
+            $scope.rsSuburb = [];
             OnlineBookingAdminService.getCalendarBySiteId(b.id).then(function(data){
                 $scope.rs = data;
 
+            })
+
+            OnlineBookingService.getSiteState(b.id).then(function(data){
+                $scope.rsState = data;
             })
 
             $scope.$watch('rs',function(rs){
@@ -85,8 +151,47 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
                 $scope.tableParams2.reload();
             })
 
+            $scope.$watch('rsState',function(rs){
+                $scope.arrState = rs;
+                $scope.tableParams3.reload();
+            })
 
+            $scope.$watch('rsSuburb',function(rs){
+                $scope.arrSuburb = rs;
+                $scope.tableParams4.reload();
+            })
 
+        }
+
+        $scope.showStateDetail = function(b)
+        {
+            $scope.selectedState = b.state_id;
+            $scope.arrSuburb = [];
+            $scope.rsSuburb = [];
+
+            OnlineBookingService.getStateSuburb(b.state_id).then(function(data){
+                $scope.rsSuburb = data;
+            })
+
+            $scope.$watch('rsSuburb',function(rs){
+                $scope.arrSuburb = rs;
+                $scope.tableParams4.reload();
+            })
+
+            OnlineBookingAdminService.getStateById(b.state_id).then(function(data){
+                $scope.stateInfo = data[0];
+                $scope.stateInfo.isenable = data[0].isenable == 1 ? '1':'0';
+            })
+
+        }
+
+        $scope.showSuburbDetail = function(b){
+            $scope.selectedSuburb = b.suburb_id;
+
+            OnlineBookingAdminService.getSuburbById(b.suburb_id).then(function(data){
+                $scope.suburbInfo = data[0];
+                $scope.suburbInfo.isenable = data[0].isenable == 1 ? '1':'0';
+            })
         }
 
         $scope.showCalendarDetail = function(b){
@@ -95,10 +200,55 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
             OnlineBookingAdminService.getCalendarById(b.cal_id).then(function(data){
                 $scope.info = data;
 
-
             })
+        }
 
+        $scope.submitState = function(stateForm){
+            $scope.showStateValidation = true;
+            if(stateForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else {
+                OnlineBookingAdminService.editStateInfo($scope.stateInfo).then(function(data){
+                    if(data.status === 'success')
+                    {
+                        toastr.success("Edit State Successfully!","Success");
+                        OnlineBookingService.getSiteState($scope.selectedId).then(function(data){
+                            $scope.rsState = data;
+                        })
 
+                        $scope.$watch('rsState',function(rs){
+                            $scope.arrState = rs;
+                            $scope.tableParams3.reload();
+                        })
+                    }
+                    else if(data.status === 'error')
+                        toastr.error("Edit State Failed!", "Error");
+                })
+            }
+        }
+
+        $scope.submitSuburb = function(suburbForm){
+            $scope.showSuburbValidation = true;
+            if(suburbForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else {
+                OnlineBookingAdminService.editSuburbInfo($scope.suburbInfo).then(function(data){
+                    if(data.status === 'success')
+                    {
+                        toastr.success("Edit Suburb Successfully!","Success");
+                        OnlineBookingService.getStateSuburb($scope.selectedState).then(function(data){
+                            $scope.rsSuburb = data;
+                        })
+
+                        $scope.$watch('rsSuburb',function(rs){
+                            $scope.arrSuburb = rs;
+                            $scope.tableParams4.reload();
+                        })
+                    }
+                    else if(data.status === 'error')
+                        toastr.error("Edit Suburb Failed!", "Error");
+                })
+            }
         }
 
         $scope.submitCalendar = function(calendarForm){
@@ -122,6 +272,121 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
                     }
                     else if(data.status === 'error')
                         toastr.error("Edit Calendar Failed!", "Error");
+                })
+            }
+        }
+
+        $scope.addNewState = function(){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/onlineBooking_Admin/views/newStateModal.html',
+                controller:'NewStateController',
+                size:'md',
+                resolve:{
+                    siteId:function(){
+                        return $scope.selectedId;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(){
+                OnlineBookingService.getSiteState($scope.selectedId).then(function(data){
+                    $scope.rsState = data;
+                })
+
+                $scope.$watch('rsState',function(rs){
+                    $scope.arrState = rs;
+                    $scope.tableParams3.reload();
+                })
+            })
+        }
+
+        $scope.addNewSuburb = function(){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/onlineBooking_Admin/views/newSuburbModal.html',
+                controller:'NewSuburbController',
+                size:'md',
+                resolve:{
+                    siteId:function(){
+                        return $scope.selectedId;
+                    },
+                    stateId:function(){
+                        return $scope.selectedState;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(){
+                OnlineBookingService.getStateSuburb($scope.selectedState).then(function(data){
+                    $scope.rsSuburb = data;
+                })
+
+                $scope.$watch('rsSuburb',function(rs){
+                    $scope.arrSuburb = rs;
+                    $scope.tableParams4.reload();
+                })
+            })
+        }
+
+
+    })
+
+    .controller('NewStateController',function($scope,$filter,$state,$modalInstance,OnlineBookingService,OnlineBookingAdminService,siteId, toastr){
+        $scope.stateInfo = {
+            state_id:null,
+            site_id:siteId,
+            state_name: null,
+            isenable: null
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.addState = function(stateForm){
+            $scope.showStateValidation = true;
+            if(stateForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else {
+                OnlineBookingAdminService.insertState($scope.stateInfo).then(function(data){
+                    if(data.status === 'success')
+                    {
+                        toastr.success("Insert State Successfully!","Success");
+                        $modalInstance.close();
+
+                    }
+                    else if(data.status === 'error')
+                        toastr.error("Insert State Failed!", "Error");
+                })
+            }
+        }
+    })
+
+    .controller('NewSuburbController',function($scope,$filter,$state,$modalInstance,OnlineBookingService,OnlineBookingAdminService, siteId, stateId, toastr){
+        $scope.suburbInfo = {
+            suburb_id:null,
+            state_id:stateId,
+            site_id:siteId,
+            suburb_name: null,
+            isenable: null
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.addSuburb = function(suburbForm){
+            $scope.showSuburbValidation = true;
+            if(suburbForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else {
+                OnlineBookingAdminService.insertSuburb($scope.suburbInfo).then(function(data){
+                    if(data.status === 'success')
+                    {
+                        toastr.success("Insert Suburb Successfully!","Success");
+                        $modalInstance.close();
+                    }
+                    else if(data.status === 'error')
+                        toastr.error("Insert Suburb Failed!", "Error");
                 })
             }
         }

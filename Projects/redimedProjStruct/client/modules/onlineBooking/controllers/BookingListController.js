@@ -23,7 +23,7 @@ angular.module('app.loggedIn.booking.list.controller',[])
                     page: 1,            // show first page
                     count: 10           // count per page
                 }, {
-                    total: data.length, // length of data
+                    total: $scope.data.length, // length of data
                     getData: function($defer, params) {
                         var filteredData = params.filter() ?
                             $filter('filter')($scope.data, params.filter()) :
@@ -89,10 +89,125 @@ angular.module('app.loggedIn.booking.list.controller',[])
             });
         }
 
-        $scope.submitInfo = function(){
-            $state.go('a',{a:'b'});
+        $scope.searchModal = function(){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/onlineBooking/views/searchBookingModal.html',
+                controller:'SearchBookingController',
+                size:'md',
+                resolve:{
+                    companyId: function(){
+                        return companyInfo[0].id;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(data){
+                $scope.data = data;
+
+                $scope.$watch('data',function(data){
+                    $scope.data = data;
+                    $scope.tableParams.reload();
+                })
+
+            })
         }
 
+        $scope.showAppointmentNote = function(b){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/onlineBooking/views/appointmentNote.html',
+                controller:'AppointmentNoteController',
+                size:'md',
+                resolve:{
+                    bookId: function(){
+                        return b.Booking_id;
+                    },
+                    canId: function(){
+                        return b.Candidate_id;
+                    },
+                    note: function(){
+                        return b.Appointment_notes;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(){
+                OnlineBookingService.getBookingList(companyInfo[0].id).then(function(data) {
+                    if (data.status === 'success') {
+                        $scope.data = data.rs;
+
+                        $scope.$watch('data',function(data){
+                            $scope.data = data;
+                            $scope.tableParams.reload();
+                        })
+                    }
+                })
+
+            })
+        }
+
+    })
+
+    .controller('AppointmentNoteController',function($scope,$modalInstance,OnlineBookingService,bookId,canId,note,toastr){
+
+        $scope.info = {
+            bookingId: bookId,
+            candidateId: canId,
+            note: note
+        }
+
+        $scope.okClick = function(){
+            OnlineBookingService.updateNote($scope.info).then(function(data){
+                if(data.status === 'success')
+                {
+                    $modalInstance.close();
+                    toastr.success("Edit Successfully!","Success");
+                }
+                else
+                {
+                    toastr.error("Edit Failed!", "Error");
+                }
+            })
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+    })
+
+    .controller('SearchBookingController',function($scope,$modalInstance,OnlineBookingService,companyId){
+        $scope.minDate = new Date();
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
+        $scope.info = {
+            companyId: companyId,
+            companyName: null,
+            candidateName: null,
+            fromDate: null,
+            toDate: null,
+            bookingPerson: null,
+            status: null,
+            siteName: null
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.search = function(){
+            OnlineBookingService.searchBooking($scope.info).then(function(data){
+                $modalInstance.close(data);
+            })
+        }
+
+        $scope.reset = function(){
+            OnlineBookingService.getBookingList(companyId).then(function(data){
+                $modalInstance.close(data.rs);
+            })
+        }
     })
 
     .controller('BookingDetailController',function($scope,$modalInstance,OnlineBookingService, bookingId, candidateId){
@@ -273,5 +388,7 @@ angular.module('app.loggedIn.booking.list.controller',[])
 
             }
         }
+
+
 
     })

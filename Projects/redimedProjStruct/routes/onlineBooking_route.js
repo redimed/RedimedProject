@@ -19,3 +19,6 @@ app.post('/api/booking/position/insert',BookingController.insertPosition);
 app.post('/api/booking/submit',BookingController.submitBooking);
 app.post('/api/booking/edit',BookingController.editBooking);
 app.post('/api/booking/confirm',BookingController.confirmBooking);
+app.post('/api/booking/search',BookingController.search);
+app.post('/api/booking/edit/note',BookingController.editAppointmentNote);
+app.post('/api/booking/upload',BookingController.uploadResultFile);
