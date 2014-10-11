@@ -1,6 +1,13 @@
 /**
  * Created by thanh on 10/10/2014.
  */
+
+/**
+ * begin module category 3
+ * @param sequelize
+ * @param DataTypes
+ * @returns {*}
+ */
 module.exports = function (sequelize, DataTypes) {
     var Category3 = sequelize.define("Category3", {
         "cat_id": {type: DataTypes.INTEGER(11), primaryKey: true},
@@ -110,3 +117,6 @@ module.exports = function (sequelize, DataTypes) {
     });
     return Category3;
 };
+/**
+ * end category 3
+ */

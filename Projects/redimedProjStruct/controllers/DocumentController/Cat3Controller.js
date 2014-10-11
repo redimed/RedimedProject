@@ -6,7 +6,6 @@ var db = require('../../models');
 module.exports = {
     insertCat3: function (req, res) {
         var info = req.body.info;
-        console.log("Info: " + info); //return server input by user, can delete when finish
         db.Category3.create({
             cat_id: 1,
             cal_id: null,
