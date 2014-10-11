@@ -1,17 +1,14 @@
 
 angular.module('app.loggedIn.document.gorgonFA.controllers',[])
-    .controller("gorgonFAController",function($scope,$rootScope,$http,$cookieStore) {
-        var initPickers = function () {
-            //init date pickers
-            $('.date-picker').datepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            }).on('changeDate',function(evn){
+    .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr) {
 
-            });
+        $scope.maxDate = new Date();
 
-        }
-        initPickers();
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
         $scope.submit = function(){
             var info = $scope.info;
         };

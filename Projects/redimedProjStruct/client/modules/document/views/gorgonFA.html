@@ -32,12 +32,7 @@
         <div class="col-md-6 col-sm-5">
             <div class="form-group">
                 <label class="control-label">Date Of Birth</label>
-                <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                    <input type="text" class="form-control" ng-model="info.dob" readonly>
-                            <span class="input-group-btn">
-                            <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                            </span>
-                </div>
+                <input type="text" max-date="maxDate" class="form-control" name="dob" ng-model="info" datepicker-popup="dd/MM/yyyy"  is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
             </div>
         </div>
     </div>
@@ -52,12 +47,8 @@
         <div class="col-md-6 col-sm-5">
             <div class="form-group">
                 <label class="control-label">Date Of Assessment</label>
-                <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                    <input type="text" class="form-control" ng-model="info.assDate" readonly>
-                            <span class="input-group-btn">
-                            <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                            </span>
-                </div>
+                <input type="text" class="form-control" name="assDate" ng-model="info" datepicker-popup="dd/MM/yyyy"  is-open="openAssDate" ng-click="openAssDate = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+
             </div>
         </div>
     </div>
@@ -99,7 +90,7 @@
             <div class="col-md-8 col-sm-7">
                 <div class="form-group">
                     <label class="control-label col-md-3" style="margin-top: 5px;">Signature</label>
-                    <a href="#" id="signBtn" class="btn green">Sign</a>
+                    <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
 
                 </div>
             </div>
@@ -115,12 +106,8 @@
             <div class="col-md-4 col-sm-5">
                 <div class="form-group">
                     <label class="control-label col-md-2" style="margin-top: 5px;">Date</label>
-                    <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                        <input type="text" ng-model="info.consentDate" class="form-control" readonly>
-                            <span class="input-group-btn">
-                            <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                            </span>
-                    </div>
+                    <input type="text" class="form-control" ng-model="info" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+
                 </div>
             </div>
 
@@ -1367,12 +1354,8 @@
         <div class="col-md-6 col-sm-6">
             <div class="form-group">
                 <label class="control-label">Date</label>
-                <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                    <input type="text" class="form-control" readonly>
-                            <span class="input-group-btn">
-                            <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                            </span>
-                </div>
+                <input type="text"  class="form-control" ng-model="info"  datepicker-popup="dd/MM/yyyy"  is-open="openTodayDate" ng-click="openTodayDate = true"  datepicker-options="dateOptions"  close-text="Close" />
+
             </div>
         </div>
     </div>
@@ -1417,7 +1400,7 @@
 </div>
 
 
-<script src="../../../assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
+<script src="../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
 
 <script>
     (function($){
