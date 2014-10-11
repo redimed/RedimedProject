@@ -1,1516 +1,1566 @@
-<div class="caption">
-    <div class="row">
-        <div class="col-md-8">
-            <i class="icon-book-open font-blue-hoki"></i>
-            <span class="caption-subject bold uppercase" style="font-size: 20px;">MEDICAL QUESTIONNAIRE FOR RESPIRATOR USERS</span>
-        </div>
-        <div class="col-md-4 ">
-            <a href="javascript:;" ng-click="submit()"  class="btn green pull-right">Submit</a>
-            <a href="javascript:;"  class="btn btn-primary blue pull-right">Print PDF</a>
-            <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
-        </div>
-    </div>
-</div>
-        </br>
-<div class="portlet light bordered">
-    <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-        Answers to questions in Section 1, and to question 9 in Section 2 of Part A, do not require medical examination.
-        </br></br>
-        To the Employee:
-        </br>
-        This questionnaire will be evaluated by a licensed health care professional in order to determine any health problems that may prevent you from, or restrict you, while wearing a respirator. The intent of these questions is to determine if the difficulty you experience, if any, is medically significant.
-        </br></br>
-        To maintain your confidentiality, you supervisor must not look at or review your answers, and your supervisor must tell you how to deliver or send this questionnaire to the health care professional who will review it.
-        </br>
-    </p>
-    <p  style="font-size: medium;font-weight: bold">
-        Part A. Section 1. The following information must be provided by every employee who has been selected to use any type of respirator (please print).
-    </p>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-                <label class="control-label">1. Today's date:</label>
-        </div>
-        <div class="col-md-5 col-sm-7">
-            <label class="control-label">18/09/2014 </label>
+﻿
+<form name="gorgonUQForm" ng-submit="submitGorgonUQ(gorgonUQForm)" method="post" novalidate>
+    <div class="caption">
+        <div class="row">
+            <div class="col-md-8">
+                <i class="icon-book-open font-blue-hoki"></i>
+                <span class="caption-subject bold uppercase" style="font-size: 20px;">MEDICAL QUESTIONNAIRE FOR RESPIRATOR USERS</span>
+            </div>
+            <div class="col-md-4 ">
+                <button type="submit" class="btn green pull-right">Submit</button>
+                <a href="javascript:;"  class="btn btn-primary blue pull-right">Print PDF</a>
+                <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label">2. Your Name:</label>
-        </div>
-        <div class="col-md-5 col-sm-7">
-            <label class="control-label">phuong sefl nguyen minh</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3  col-sm-5">
-            <label class="control-label">3. Your Age (to nearest year):</label>
-        </div>
-        <div class="col-md-5  col-sm-7">
-            <label class="control-label">32</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label">4. Sex (circle one):</label>
-        </div>
-        <div class="col-md-5  col-sm-7">
-            <label class="control-label">male</label>
-        </div>
-    </div>
+            </br>
+    <div class="portlet light bordered">
+        <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+            Answers to questions in Section 1, and to question 9 in Section 2 of Part A, do not require medical examination.
+            </br></br>
+            To the Employee:
+            </br>
+            This questionnaire will be evaluated by a licensed health care professional in order to determine any health problems that may prevent you from, or restrict you, while wearing a respirator. The intent of these questions is to determine if the difficulty you experience, if any, is medically significant.
+            </br></br>
+            To maintain your confidentiality, you supervisor must not look at or review your answers, and your supervisor must tell you how to deliver or send this questionnaire to the health care professional who will review it.
+            </br>
+        </p>
+        <p  style="font-size: medium;font-weight: bold">
+            Part A. Section 1. The following information must be provided by every employee who has been selected to use any type of respirator (please print).
+        </p>
 
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label">5. Your Height:</label>
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                    <label class="control-label">1. Today's date:</label>
+            </div>
+            <div class="col-md-5 col-sm-7">
+                <label class="control-label">{{info.TodayDate}} </label>
+            </div>
         </div>
-        <div class="col-md-5   col-sm-7">
-            <label style="font-weight: bold">*</label>
-            <input type="text" style="width: 250px">
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label">2. Your Name:</label>
+            </div>
+            <div class="col-md-5 col-sm-7">
+                <label class="control-label">{{info.name}}</label>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label">6. Your Weight:</label>
+        <div class="row">
+            <div class="col-md-3  col-sm-5">
+                <label class="control-label">3. Your Age (to nearest year):</label>
+            </div>
+            <div class="col-md-5  col-sm-7">
+                <label class="control-label" >{{info.age}}</label>
+            </div>
         </div>
-        <div class="col-md-5  col-sm-7">
-            <label style="font-weight: bold">*</label>
-            <input type="text" style="width: 250px">
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label">4. Sex (circle one):</label>
+            </div>
+            <div class="col-md-5  col-sm-7">
+                <label class="control-label">{{info.sex}}</label>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label">7. Your job title:</label>
-        </div>
-        <div class="col-md-5  col-sm-7">
-            <label style="font-weight: bold">*</label>
-            <input type="text" style="width: 250px">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label">8. A phone number where you can be reached by the health care professional who reviews this questionnaire (include the Area Code)</label>
-        </div>
-        <div class="col-md-5  col-sm-7">
-            <label style="font-weight: bold">*</label>
-            <input type="text" style="width: 250px">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label">9. The best time to phone you on this number:</label>
-        </div>
-        <div class="col-md-5 col-sm-7" >
-            <input type="text" style="width: 250px" >
-        </div>
-    </div>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.height.$invalid}">
+            <div class="row">
+                <div class="col-md-3 col-sm-5">
+                    <label class="control-label">5. Your Height:</label>
+                </div>
+                <div class="col-md-5   col-sm-7">
+                    <label style="font-weight: bold">*</label>
+                    <input type="text" ng-pattern="/^[0-9]+$/" name="height" required ng-model="info.Height" style="width: 250px">
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && gorgonUQForm.height.$invalid">
+                <div class="col-md-3 col-sm-5"></div>
+                <div class="col-md-5 col-sm-7 help-block"  for="height">
+                    <label>Your height is required</label>
+                    <div for="height" class="help-block" ng-show="showClickedValidation && gorgonUQForm.height.$error.pattern">
+                        <label>Your height must be number</label>
+                    </div>
+                </div>
 
-    <div class="row">
-        <label class="control-label col-md-7" style="margin-top: 10px;">10. Has your employer told you how to contact the health care professional who will review this questionnaire (circle one):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a' /> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a' /> No
-                </label>
             </div>
-    </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.weight.$invalid}">
+            <div class="row">
+                <div class="col-md-3 col-sm-5">
+                    <label class="control-label">6. Your Weight:</label>
+                </div>
+                <div class="col-md-5  col-sm-7">
+                    <label style="font-weight: bold">*</label>
+                    <input type="text" ng-pattern="/^[0-9]+$/" required name="weight" ng-model="info.Weight" style="width: 250px">
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && gorgonUQForm.weight.$invalid">
+                <div class="col-md-3 col-sm-5"></div>
+                <div class="col-md-5 col-sm-7 help-block"  for="weight">
+                    <label>Your weight is required</label>
+                    <div for="weight" class="help-block" ng-show="showClickedValidation && gorgonUQForm.weight.$error.pattern">
+                        <label>Your weight must be number</label>
+                    </div>
+                </div>
 
-    <label class="control-label">11. Check the type of respirator you will use (you can check more than one category):</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-9 text-info" style="margin-top: 10px;">a. N,R, or P disposable respirator (filter-mask, non-cartridge type only).
-            </label>
-            <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-9 text-info" style="margin-top: 10px;">b. Other type (for example, half or full-face piece type, powered-air purifying, supplied-air, self contained breathing apparatus).
-            </label>
-            <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.JobTitle.$invalid}">
+            <div class="row">
+                <div class="col-md-3 col-sm-5">
+                    <label class="control-label">7. Your job title:</label>
+                </div>
+                <div class="col-md-5  col-sm-7">
+                    <label style="font-weight: bold">*</label>
+                    <input type="text" name="JobTitle" required ng-model="info.JobTitle" style="width: 250px">
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && gorgonUQForm.JobTitle.$invalid">
+                <div class="col-md-3 col-sm-5"></div>
+                <div class="col-md-5 col-sm-7 help-block"  for="JobTitle">
+                    <label>Job title is required</label>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <label class="control-label col-md-7" style="margin-top: 10px;">12. Have you worn a respirator (circle one):</label>
-            <div class="btn-group " >
-                <label class="btn">
-                    <input type="radio" name='a' /> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label">If yes, what type(s):</label>
-        </div>
-        <div class="col-md-5 col-sm-7">
-            <input type="text" class="form-control">
-        </div>
-    </div>
-    </br>
-
-    <p  style="font-size: medium;font-weight: bold">
-        Part A. Section 2. Questions 1 through 9 below must be answered by every employee who has been selected to use any type of respirator (please circle “yes” or “no”).
-    </p>
-
-    <div class="row">
-        <label class="control-label col-md-7" style="margin-top: 10px;">1. Do you currently smoke tobacco, or have you smoked tobacco in the last month:</label>
-        <div class="btn-group col-md-3">
-            <label class="btn">
-                <input type="radio" name='a'/> Yes
-            </label>
-            <label class="btn">
-                <input type="radio" name='a'/> No
-            </label>
-        </div>
-    </div>
-
-    <label class="control-label">2. Have you ever has any of the following conditions?</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Seizures (fits):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.PhoneNumber.$invalid}">
+            <div class="row">
+                <div class="col-md-3 col-sm-5">
+                    <label class="control-label">8. A phone number where you can be reached by the health care professional who reviews this questionnaire (include the Area Code)</label>
+                </div>
+                <div class="col-md-5  col-sm-7">
+                    <label style="font-weight: bold">*</label>
+                    <input type="text" name="PhoneNumber" ng-pattern="/^[0-9]{9,11}$/" required ng-model="info.PhoneNumber" style="width: 250px">
+                    <div ng-show="showClickedValidation && gorgonUQForm.PhoneNumber.$invalid" for="PhoneNumber" class="help-block">
+                        <label>Phone number is required</label>
+                    </div>
+                    <div for="PhoneNumber" class="help-block" ng-show="showClickedValidation && gorgonUQForm.PhoneNumber.$error.pattern">
+                        <label>Phone is invalid. Must be number and between 9-11 digits.</label>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Diabetes (sugar disease):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label">9. The best time to phone you on this number:</label>
+            </div>
+            <div class="col-md-5 col-sm-7" >
+                <input type="text" name="BestTime" ng-model="info.BestTime" style="width: 250px" >
             </div>
         </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Allergic reactions that interfere with your breathing:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Claustrophobia (fear of closed in spaces):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e) Trouble smelling odours:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-
-    <label class="control-label">3. Have you ever had any of the following pulmonary or lung problems?</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Asbestosis:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Asthma:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Chronic bronchitis:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Emphysema:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e)Pneumonia:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">f) Tuberculosis:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">g) Silicosis:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">h) Pneumothorax (collapsed lung):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">i) Lung cancer:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">j) Broken ribs:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">k) Any chest injuries or surgeries:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-7">
-            <label class="control-label col-md-8  text-info" style="margin-top: 10px;">l) Any other lung problem that you’ve been told about:</label>
+        <div class="row">
+            <label class="control-label col-md-7" style="margin-top: 10px;">10. Has your employer told you how to contact the health care professional who will review this questionnaire (circle one):</label>
             <div class="btn-group" >
                 <label class="btn">
-                    <input type="radio" name='a'/> Yes
+                    <input type="radio" ng-model="info.isReviewQuest" value="1"  /> Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" name='a'/> No
+                    <input type="radio" ng-model="info.isReviewQuest" value="0"  /> No
                 </label>
             </div>
         </div>
-        <div class="col-md-4 col-sm-6">
-            <input type="text" class="form-control">
-        </div>
-    </div>
-    </br>
-
-    <label class="control-label">4. Do you currently have any of the following symptoms of pulmonary or lung illness:</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">a) Shortness of breath:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
+        <label class="control-label">11. Check the type of respirator you will use (you can check more than one category):</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-9 text-info" style="margin-top: 10px;">a. N,R, or P disposable respirator (filter-mask, non-cartridge type only).
                 </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
+                <div class="col-md-1 col-sm-1">
+                    <input class="form-control" ng-model="info.isNRP" type="checkbox"/>
+                </div>
             </div>
         </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">b) Shortness of breath when walking fast on level ground or walking up a slight hill or incline that may impair your ability to wear a respirator?:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-9 text-info" style="margin-top: 10px;">b. Other type (for example, half or full-face piece type, powered-air purifying, supplied-air, self contained breathing apparatus).
                 </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
+                <div class="col-md-1 col-sm-1">
+                    <input class="form-control" ng-model="info.isOtherType" type="checkbox"/>
+                </div>
             </div>
         </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">c) Shortness of breath when walking with other people at an ordinary pace on level ground:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">d) Have to stop for breath when walking at your own pace on level ground:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">e) Shortness of breath when washing or dressing yourself:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">f) Shortness of breath that interferes with your job:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">g) Coughing that produces phlegm (thick sputum):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">h) Coughing that wakes you early in the morning:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">i) Coughing that occurs mostly when you are lying down:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">j) Coughing up blood in the last month:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">k) Wheezing:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">l) Wheezing that interferes with your job:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">m) Chest pain when you breathe deeply:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">n) Any other symptoms that you think may be related to lung problems:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
 
 
-    <label class="control-label">5. Have you ever had any of the following cardiovascular or heart problems?</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Heart attack:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Stroke:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c)Angina:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Heart failure:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e) Swelling in your legs or feet (not caused by walking):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">f) Heart arrhythmia (heart beating irregularly):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">g) High blood pressure:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-7">
-            <label class="control-label col-md-8 text-info" style="margin-top: 10px;">h) Any other heart problem that you’ve been told about:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-            <input type="text" class="form-control">
-        </div>
-    </div>
-    </br>
 
-    <label class="control-label">6. Have you ever had any of the following cardiovascular or heart symptoms?</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">a) Frequent pain or tightness in your chest:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
+            <div class="row">
+                <label class="control-label col-md-7" style="margin-top: 10px;">12. Have you worn a respirator (circle one):</label>
+                <div class="btn-group " >
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isRespirator" value="1" /> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isRespirator" value="0"/> No
+                    </label>
+                </div>
             </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">b) Pain or tightness in your chest during physical activity:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">c) Pain or tightness in your chest that interferes with your job:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">d) In the past two years have you noticed your heart skipping or missing a beat:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">e) Heartburn or indigestion that is not related to eating:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">f) Any other symptoms that you think may be related to heart or circulation problems:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
 
-    <label class="control-label">7. Do you currently take medication for any of the following problems?</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Breathing or lung problems?</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
+            </br>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.RespiratorType.$invalid && info.isRespirator == 1}">
+            <div class="row">
+                <div class="col-md-2 col-sm-3">
+                    <label class="control-label">If yes, what type(s):</label>
+                </div>
+                <div class="col-md-5 col-sm-7">
+                    <input type="text" name="RespiratorType" ng-required="info.isRespirator == 1 ? true : false" ng-model="info.RespiratorType" class="form-control">
+                </div>
             </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Heart trouble:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
+            <div class="row" ng-show="showClickedValidation && gorgonUQForm.RespiratorType.$invalid && info.isRespirator == 1">
+                <div class="col-md-3 col-sm-5"></div>
+                <div class="col-md-5 col-sm-7 help-block"  for="RespiratorType">
+                    <label>Must be enter if yes</label>
+                </div>
             </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Blood pressure:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Seizures (fits):</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
 
-    <label class="control-label">8. If you’ve used a respirator, have you ever had any of the following problem? (if you’ve never used a respirator, check the following space and go to question 9):</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-3 col-sm-4 text-info" style="margin-top: 10px;font-weight: bold">Never used a respirator
-            </label>
-            <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
-            </div>
         </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Eye irritation:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Skin allergies or rashes:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Anxiety:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) General weakness or fatigue:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e) Any other problem that interferes with your use of a respirator:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-
-    <div class="row">
-        <label class="control-label col-md-7" style="margin-top: 10px;">9. Would you like to talk to the health care professional who will review this questionnaire about your answers to this questionnaire:</label>
-        <div class="btn-group">
-            <label class="btn">
-                <input type="radio" name='a'/> Yes
-            </label>
-            <label class="btn">
-                <input type="radio" name='a'/> No
-            </label>
-        </div>
-    </div>
-    </br>
-    <p  style="font-size: medium;font-weight: bold">
-        Questions 10 to 15 below must be answered by every employee who has been selected to use either a full-face piece respirator or a self-contained breathing apparatus (SCBA).
         </br>
-        For employees who have been selected to use other types or respirators, answering those questions is voluntary.
-    </p>
-    </br>
-    <div class="row">
-        <label class="control-label col-md-7" style="margin-top: 10px;">10. Have you every lost vision in either eye (temporarily or permanently):</label>
-        <div class="btn-group">
-            <label class="btn">
-                <input type="radio" name='a'/> Yes
-            </label>
-            <label class="btn">
-                <input type="radio" name='a'/> No
-            </label>
-        </div>
-    </div>
-    </br>
-    <label class="control-label">11. Do you currently have any of the following vision problems?</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Wear contact lenses:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Wear glasses:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Colour Blind:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Any other eye or vision problem:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
 
-    <div class="row">
-        <label class="control-label col-md-7" style="margin-top: 10px;">12. Have you ever had an injury to your ears, including a broken ear drum:</label>
-        <div class="btn-group">
-            <label class="btn">
-                <input type="radio" name='a'/> Yes
-            </label>
-            <label class="btn">
-                <input type="radio" name='a'/> No
-            </label>
-        </div>
-    </div>
-    </br>
-
-    <div class="row">
-        <label class="control-label col-md-7" style="margin-top: 10px;">13. Do you currently have any of the following hearing problems:</label>
-        <div class="btn-group">
-            <label class="btn">
-                <input type="radio" name='a'/> Yes
-            </label>
-            <label class="btn">
-                <input type="radio" name='a'/> No
-            </label>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Difficulty hearing:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Wear a hearing aid:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Any other hearing or ear problems:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-
-    <div class="row">
-        <label class="control-label col-md-5" style="margin-top: 10px;">14. Have you ever had a back injury:</label>
-        <div class="btn-group">
-            <label class="btn">
-                <input type="radio" name='a'/> Yes
-            </label>
-            <label class="btn">
-                <input type="radio" name='a'/> No
-            </label>
-        </div>
-    </div>
-    </br>
-
-    <label class="control-label">15. Do you currently have any of the following musculoskeletal problems?</label>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">a) Weakness in any of your arms, hands, legs, or feet:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">b) Back pain:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">c) Difficulty fully moving your arms and legs:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">d) Difficulty fully moving your head up or down:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">e) Pain or stiffness when you lean forward or backward at the waist:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">f) Pain or difficulty fully moving your head side to side:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">g) Difficulty bending at your knees that may impair your ability to wear a respirator:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">h) Difficulty squatting to the ground that may impair your ability to wear a respirator:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">i) Climbing a flight of stairs or a ladder carrying more than 25 lbs. (e.g. SCBA) that may impair your ability to wear a respirator:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">j) Any other muscle or skeletal problem that interferes with using a respirator:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-md-12">
-            <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">k) Wheezing:</label>
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> No
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-
-    <label class="control-label" style="font-weight: bold">
-        Request for Medical Clearance for Respirator Use Questionnaire
-    </label>
-
-    <div class="row">
-
-        <div class="col-md-3 col-sm-4">
-            <label class="control-label">Employee:</label>
-            <input type="text" ng-model="info.name" class="form-control" >
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <label class="control-label">Date of Birth:</label>
-            <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                <input type="text" class="form-control" ng-model="info.dob" readonly>
-                    <span class="input-group-btn">
-                    <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-                    </span>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <label class="control-label">Department:</label>
-            <input type="text" ng-model="info.name" class="form-control" >
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-3 col-sm-4">
-            <label class="control-label">Social Secturity:</label>
-            <input type="text" ng-model="info.name" class="form-control" >
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <label class="control-label">Supervisor:</label>
-            <input type="text" ng-model="info.name" class="form-control" >
-        </div>
-    </div>
-    </br>
-    <label class="control-label" style="font-weight: bold">Circle type or types of respirator(s) to be used:</label>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label text-info" style="margin-top: 10px;">Atmosphere-supplying respirator
-            </label>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <input class="form-control" type="checkbox" />
-        </div>
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label text-info" style="margin-top: 10px;">Continuous-flow respirator
-            </label>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <input class="form-control" type="checkbox" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label text-info" style="margin-top: 10px;">Open-circuit SCBA
-            </label>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <input class="form-control" type="checkbox" />
-        </div>
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label text-info" style="margin-top: 10px;">Closed-circuit SCBA
-            </label>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <input class="form-control" type="checkbox" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label text-info" style="margin-top: 10px;">Supplied-air respirator
-            </label>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <input class="form-control" type="checkbox" />
-        </div>
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label text-info" style="margin-top: 10px;">Combination air-line and SCBA
-            </label>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <input class="form-control" type="checkbox" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label text-info" style="margin-top: 10px;">Air-purifying (non-powered)
-            </label>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <input class="form-control" type="checkbox" />
-        </div>
-        <div class="col-md-3 col-sm-5">
-            <label class="control-label text-info" style="margin-top: 10px;">Air-purifying (powered) (PAPR)
-            </label>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <input class="form-control" type="checkbox" />
-        </div>
-    </div>
-    </br>
-
-    <label class="control-label" style="font-weight: bold">Level of Work Effort:</label>
-    <div class="row">
-        <div class="col-md-12" style="margin-left: 30px">
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" name='a'/> Light
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> Moderate
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> Heavy
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> Strenuous
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-
-    <label class="control-label" style="font-weight: bold">Extent of Usage:</label>
-    <div class="row">
-        <div class="col-md-12" style="margin-left: 30px">
-            <div class="btn-group col-sm-7 col-md-12">
-                <label class="btn">
-                    <input type="radio" name='a'/> 1) On a daily basis
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> 2) Occasionally - but more than once per week
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> 3) Rarely - or for emergency situations only
-                </label>
-            </div>
-        </div>
-    </div>
-    </br>
-    </br>
-
-    <div class="row">
-        <div class="col-md-5">
-            <label class="control-label text-info" style="font-weight: bold">Length of Time anticipated Effort in Hours:</label>
-        </div>
-        <div class="col-md-5" style="margin-left: 10px">
-            <input type="text" class="form-control">
-        </div>
-    </div>
-    </br>
-
-
-        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-            Special Work Considerations (i.e., high places, temperature, hazardous material, protective clothing, etc.)
+        <p  style="font-size: medium;font-weight: bold">
+            Part A. Section 2. Questions 1 through 9 below must be answered by every employee who has been selected to use any type of respirator (please circle “yes” or “no”).
         </p>
+
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
-                <textarea class="form-control"></textarea>
+            <label class="control-label col-md-7" style="margin-top: 10px;">1. Do you currently smoke tobacco, or have you smoked tobacco in the last month:</label>
+            <div class="btn-group col-md-3">
+                <label class="btn">
+                    <input type="radio" ng-model="info.isSmoke" value="1"/> Yes
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="info.isSmoke" value="0"/> No
+                </label>
             </div>
         </div>
 
+        <label class="control-label">2. Have you ever has any of the following conditions?</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Seizures (fits):</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSeizuresCondition" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSeizuresCondition" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Diabetes (sugar disease):</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDiabetes" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDiabetes" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Allergic reactions that interfere with your breathing:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAllergicReactions" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAllergicReactions" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Claustrophobia (fear of closed in spaces):</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isClaustrophobia" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isClaustrophobia" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e) Trouble smelling odours:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isTrouble" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isTrouble" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
 
-        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-            Safety Representative/Supervisor:
+        <label class="control-label">3. Have you ever had any of the following pulmonary or lung problems?</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Asbestosis:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAsbestosis" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAsbestosis" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Asthma:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAsthma" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAsthma" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Chronic bronchitis:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBronchitis" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBronchitis" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Emphysema:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isEmphysema" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isEmphysema" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e)Pneumonia:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPneumonia" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPneumonia" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">f) Tuberculosis:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isTuberculosis" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isTuberculosis" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">g) Silicosis:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSilicosis" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSilicosis" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">h) Pneumothorax (collapsed lung):</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPneumothorax" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPneumothorax" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">i) Lung cancer:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isLungCancer" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isLungCancer" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">j) Broken ribs:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBrokenRibs" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBrokenRibs" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">k) Any chest injuries or surgeries:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isInjuries" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isInjuries" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+            <div class="row">
+                <div class="col-md-7">
+                    <label class="control-label col-md-8  text-info" style="margin-top: 10px;">l) Any other lung problem that you’ve been told about:</label>
+                    <div class="btn-group" >
+                        <label class="btn">
+                            <input type="radio" ng-model="info.isOtherLung" value="1"/> Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.isOtherLung" value="0"/> No
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.OtherLungComment.$invalid && info.isOtherLung == 1}">
+                    <div class="col-md-4 col-sm-6">
+                        <input type="text" name="OtherLungComment" ng-required="info.isOtherLung == 1 ? true : false" ng-model="info.OtherLungComment"  class="form-control">
+                        <div for="OtherLungComment" ng-show="showClickedValidation && gorgonUQForm.OtherLungComment.$invalid && info.isOtherLung == 1">
+                            <label  class="help-block" >
+                                Must be enter if yes
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </br>
+
+        <label class="control-label">4. Do you currently have any of the following symptoms of pulmonary or lung illness:</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">a) Shortness of breath:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOB" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOB" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">b) Shortness of breath when walking fast on level ground or walking up a slight hill or incline that may impair your ability to wear a respirator?:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOBWalkingFast" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOBWalkingFast" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">c) Shortness of breath when walking with other people at an ordinary pace on level ground:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOBWalkingOther" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOBWalkingOther" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">d) Have to stop for breath when walking at your own pace on level ground:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isStopForBreath" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isStopForBreath" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">e) Shortness of breath when washing or dressing yourself:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOBWashing" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOBWashing" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">f) Shortness of breath that interferes with your job:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOBInterferes" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSOBInterferes" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">g) Coughing that produces phlegm (thick sputum):</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isCoughingPhlegm" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isCoughingPhlegm" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">h) Coughing that wakes you early in the morning:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isCoughingMorning" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isCoughingMorning" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">i) Coughing that occurs mostly when you are lying down:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isCoughingLyingDown" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isCoughingLyingDown" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">j) Coughing up blood in the last month:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isCoughingUpBlood" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isCoughingUpBlood" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">k) Wheezing:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isWheezing" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isWheezing" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">l) Wheezing that interferes with your job:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isWheezingInterferes" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isWheezingInterferes" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">m) Chest pain when you breathe deeply:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isChestPain" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isChestPain" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">n) Any other symptoms that you think may be related to lung problems:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherSymptomsPulmonary" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherSymptomsPulmonary" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+
+        <label class="control-label">5. Have you ever had any of the following cardiovascular or heart problems?</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Heart attack:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartAttack" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartAttack" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Stroke:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isStroke" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isStroke" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c)Angina:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAngina" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAngina" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Heart failure:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartFailure" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartFailure" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e) Swelling in your legs or feet (not caused by walking):</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSwelling" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSwelling" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">f) Heart arrhythmia (heart beating irregularly):</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartArrhythmia" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartArrhythmia" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">g) High blood pressure:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBloodPressureHeart" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBloodPressureHeart" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-7">
+                <label class="control-label col-md-8 text-info" style="margin-top: 10px;">h) Any other heart problem that you’ve been told about:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherHeart" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherHeart" value="0"/> No
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.OtherHeartComment.$invalid && info.isOtherHeart == 1}">
+                <div class="col-md-4 col-sm-6">
+                    <input type="text" name="OtherHeartComment" ng-required="info.isOtherHeart == 1 ? true : false" ng-model="info.OtherHeartComment" class="form-control">
+                    <div for="OtherHeartComment" ng-show="showClickedValidation && gorgonUQForm.OtherHeartComment.$invalid && info.isOtherHeart == 1">
+                        <label  class="help-block" >
+                            Must be enter if yes
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </br>
+
+        <label class="control-label">6. Have you ever had any of the following cardiovascular or heart symptoms?</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">a) Frequent pain or tightness in your chest:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isFrequentPain" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isFrequentPain" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">b) Pain or tightness in your chest during physical activity:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPOTPhysical" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPOTPhysical" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">c) Pain or tightness in your chest that interferes with your job:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPOTInterferes" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPOTInterferes" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">d) In the past two years have you noticed your heart skipping or missing a beat:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isMissingBeat" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isMissingBeat" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">e) Heartburn or indigestion that is not related to eating:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartburn" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartburn" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-8 text-info" style="margin-top: 10px;">f) Any other symptoms that you think may be related to heart or circulation problems:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherSymptomsHeart" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherSymptomsHeart" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+        <label class="control-label">7. Do you currently take medication for any of the following problems?</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Breathing or lung problems?</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBreathing" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBreathing" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Heart trouble:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartTrouble" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHeartTrouble" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Blood pressure:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBloodPressureMedication" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBloodPressureMedication" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Seizures (fits):</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSeizuresMedication" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSeizuresMedication" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+        <label class="control-label">8. If you’ve used a respirator, have you ever had any of the following problem? (if you’ve never used a respirator, check the following space and go to question 9):</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-3 col-sm-4 text-info" style="margin-top: 10px;font-weight: bold">Never used a respirator
+                </label>
+                <div class="col-md-1 col-sm-1">
+                    <input class="form-control" ng-model="info.isUseRespirator" ng-change="checkUseRespirator(info.isUseRespirator)" type="checkbox"  />
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Eye irritation:</label>
+                <div class="btn-group" >
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isEyeIrritation"  ng-disabled="info.isUseRespirator"  value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isEyeIrritation" ng-disabled="info.isUseRespirator" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Skin allergies or rashes:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSkinAllergies"  ng-disabled="info.isUseRespirator" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isSkinAllergies"  ng-disabled="info.isUseRespirator" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Anxiety:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAnxiety"  ng-disabled="info.isUseRespirator" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isAnxiety"  ng-disabled="info.isUseRespirator" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) General weakness or fatigue:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isGeneralWeakness"  ng-disabled="info.isUseRespirator" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isGeneralWeakness"  ng-disabled="info.isUseRespirator" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">e) Any other problem that interferes with your use of a respirator:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherProblem"  ng-disabled="info.isUseRespirator" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherProblem"  ng-disabled="info.isUseRespirator" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+        <div class="row">
+            <label class="control-label col-md-7" style="margin-top: 10px;">9. Would you like to talk to the health care professional who will review this questionnaire about your answers to this questionnaire:</label>
+            <div class="btn-group">
+                <label class="btn">
+                    <input type="radio" ng-model="info.isTalk" value="1"/> Yes
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="info.isTalk" value="0"/> No
+                </label>
+            </div>
+        </div>
+        </br>
+        <p  style="font-size: medium;font-weight: bold">
+            Questions 10 to 15 below must be answered by every employee who has been selected to use either a full-face piece respirator or a self-contained breathing apparatus (SCBA).
+            </br>
+            For employees who have been selected to use other types or respirators, answering those questions is voluntary.
         </p>
+        </br>
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
-                <textarea class="form-control"></textarea>
-            </div>
-        </div>
-    </br>
-
-    <div class="row">
-        <div class="col-md-5">
-            <label class="control-label text-info" style="font-weight: bold">HEALTH CARE PROFESSIONAL’S EVALUATION OF :</label>
-        </div>
-        <div class="col-md-5 col-sm-9">
-            <input type="text" class="form-control">
-        </div>
-        <div class="col-md-1 col-sm-3">
-            (EMPLOYEE)
-        </div>
-    </div>
-    </br>
-
-    <label class="control-label" style="font-weight: bold">CLASS (Circle):</label>
-    <div class="row">
-        <div class="col-md-12" style="margin-left: 30px">
-            <div class="btn-group col-sm-6 col-md-12">
+            <label class="control-label col-md-7" style="margin-top: 10px;">10. Have you every lost vision in either eye (temporarily or permanently):</label>
+            <div class="btn-group">
                 <label class="btn">
-                    <input type="radio" name='a'/> 1) No restriction on respirator usage
+                    <input type="radio" ng-model="info.isLostVision" value="1"/> Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" name='a'/> 2) Some specific use restrictions
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a'/> 3) No respirator use permitted
+                    <input type="radio" ng-model="info.isLostVision" value="0"/> No
                 </label>
             </div>
         </div>
-    </div>
-    </br>
-
-        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-            Restrictions:
-        </p>
+        </br>
+        <label class="control-label">11. Do you currently have any of the following vision problems?</label>
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
-                <textarea class="form-control"></textarea>
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Wear contact lenses:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isContactLenses" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isContactLenses" value="0"/> No
+                    </label>
+                </div>
             </div>
         </div>
-    </br>
-    </br>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Wear glasses:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isWearGlasses" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isWearGlasses" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Colour Blind:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isColourBlind" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isColourBlind" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">d) Any other eye or vision problem:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherEye" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherEye" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
 
-    <div class="row">
-        <div class="col-md-4 col-sm-6">
-            <label class="control-label text-info" style="font-weight: bold">Examining Health Care Professional:</label>
+        <div class="row">
+            <label class="control-label col-md-7" style="margin-top: 10px;">12. Have you ever had an injury to your ears, including a broken ear drum:</label>
+            <div class="btn-group">
+                <label class="btn">
+                    <input type="radio" ng-model="info.isInjuryEars" value="1"/> Yes
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="info.isInjuryEars" value="0"/> No
+                </label>
+            </div>
         </div>
-        <div class="col-md-5 col-sm-6">
-            <input type="text" style="width: 150px">
-            <label class="text-info">Date</label>
-            <label>18/09/2014  </label>
+        </br>
+
+        <div class="row">
+            <label class="control-label col-md-7" style="margin-top: 10px;">13. Do you currently have any of the following hearing problems:</label>
+            <div class="btn-group">
+                <label class="btn">
+                    <input type="radio" ng-model="info.isHearingProblems" value="1"/> Yes
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="info.isHearingProblems" value="0"/> No
+                </label>
+            </div>
         </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">a) Difficulty hearing:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDifficultyHearing" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDifficultyHearing" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">b) Wear a hearing aid:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHearingAid" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isHearingAid" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6 text-info" style="margin-top: 10px;">c) Any other hearing or ear problems:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherHearing" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherHearing" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+        <div class="row">
+            <label class="control-label col-md-5" style="margin-top: 10px;">14. Have you ever had a back injury:</label>
+            <div class="btn-group">
+                <label class="btn">
+                    <input type="radio" ng-model="info.isBackInjury" value="1"/> Yes
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="info.isBackInjury" value="0"/> No
+                </label>
+            </div>
+        </div>
+        </br>
+
+        <label class="control-label">15. Do you currently have any of the following musculoskeletal problems?</label>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">a) Weakness in any of your arms, hands, legs, or feet:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isWeaknessAny" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isWeaknessAny" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">b) Back pain:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBackPain" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isBackPain" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">c) Difficulty fully moving your arms and legs:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDFMArmsLegs" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDFMArmsLegs" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">d) Difficulty fully moving your head up or down:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDFMHead" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDFMHead" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">e) Pain or stiffness when you lean forward or backward at the waist:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPOSLeanForward" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPOSLeanForward" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">f) Pain or difficulty fully moving your head side to side:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPODHead" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isPODHead" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">g) Difficulty bending at your knees that may impair your ability to wear a respirator:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDifficultyBending" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDifficultyBending" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">h) Difficulty squatting to the ground that may impair your ability to wear a respirator:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDifficultySquatting" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isDifficultySquatting" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">i) Climbing a flight of stairs or a ladder carrying more than 25 lbs. (e.g. SCBA) that may impair your ability to wear a respirator:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isClimbing" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isClimbing" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-7 col-sm-8 text-info" style="margin-top: 10px;">j) Any other muscle or skeletal problem that interferes with using a respirator:</label>
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherMuscle" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherMuscle" value="0"/> No
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+        <label class="control-label" style="font-weight: bold">
+            Request for Medical Clearance for Respirator Use Questionnaire
+        </label>
+
+        <div class="row">
+
+            <div class="col-md-3 col-sm-4">
+                <label class="control-label">Employee:</label>
+                <input type="text"  ng-model="info.Employee" class="form-control" >
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <label class="control-label">Date of Birth:</label>
+                <input type="text"  class="form-control col-md-12" ng-model="info.DOB"  datepicker-popup="dd/MM/yyyy"  is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions"  close-text="Close" />
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <label class="control-label">Department:</label>
+                <input type="text"  ng-model="info.Department" class="form-control" >
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-4">
+                <label class="control-label">Social Secturity:</label>
+                <input type="text"  ng-model="info.SocialSecurity" class="form-control" >
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <label class="control-label">Supervisor:</label>
+                <input type="text"  ng-model="info.Supervisor" class="form-control" >
+            </div>
+        </div>
+        </br>
+        <label class="control-label" style="font-weight: bold">Circle type or types of respirator(s) to be used:</label>
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label text-info" style="margin-top: 10px;">Atmosphere-supplying respirator
+                </label>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <input class="form-control" ng-model="info.isAtmosphere" type="checkbox" />
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label text-info" style="margin-top: 10px;">Continuous-flow respirator
+                </label>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <input class="form-control" ng-model="info.isContinuous" type="checkbox" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label text-info" style="margin-top: 10px;">Open-circuit SCBA
+                </label>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <input class="form-control" ng-model="info.isOpen" type="checkbox" />
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label text-info" style="margin-top: 10px;">Closed-circuit SCBA
+                </label>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <input class="form-control" ng-model="info.isClose" type="checkbox" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label text-info" style="margin-top: 10px;">Supplied-air respirator
+                </label>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <input class="form-control" ng-model="info.isSupplied" type="checkbox" />
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label text-info" style="margin-top: 10px;">Combination air-line and SCBA
+                </label>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <input class="form-control" ng-model="info.isCombination" type="checkbox" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label text-info" style="margin-top: 10px;">Air-purifying (non-powered)
+                </label>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <input class="form-control" ng-model="info.isAir_NonPow" type="checkbox" />
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <label class="control-label text-info" style="margin-top: 10px;">Air-purifying (powered) (PAPR)
+                </label>
+            </div>
+            <div class="col-md-1 col-sm-1">
+                <input class="form-control" ng-model="info.isAir_Pow" type="checkbox" />
+            </div>
+        </div>
+        </br>
+
+        <label class="control-label" style="font-weight: bold">Level of Work Effort:</label>
+        <div class="row">
+            <div class="col-md-12" style="margin-left: 30px">
+                <div class="btn-group">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.LevelOfWE" value="0"/> Light
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.LevelOfWE" value="1"/> Moderate
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.LevelOfWE" value="2"/> Heavy
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.LevelOfWE" value="3"/> Strenuous
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+        <label class="control-label" style="font-weight: bold">Extent of Usage:</label>
+        <div class="row">
+            <div class="col-md-12" style="margin-left: 30px">
+                <div class="btn-group col-sm-7 col-md-12">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.ExtentUsage" value="0"/> 1) On a daily basis
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.ExtentUsage" value="1"/> 2) Occasionally - but more than once per week
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.ExtentUsage" value="2"/> 3) Rarely - or for emergency situations only
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+        </br>
+
+        <div class="row">
+            <div class="col-md-5">
+                <label class="control-label text-info" style="font-weight: bold">Length of Time anticipated Effort in Hours:</label>
+            </div>
+            <div class="col-md-5" style="margin-left: 10px">
+                <input type="text"  ng-model="info.LengthOfTime"  class="form-control">
+            </div>
+        </div>
+        </br>
+
+
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+                Special Work Considerations (i.e., high places, temperature, hazardous material, protective clothing, etc.)
+            </p>
+            <div class="row">
+                <div class="col-md-8" style="margin-left: 15px;">
+                    <textarea class="form-control" ng-model="info.WorkCons"></textarea>
+                </div>
+            </div>
+
+
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+                Safety Representative/Supervisor:
+            </p>
+            <div class="row">
+                <div class="col-md-8" style="margin-left: 15px;">
+                    <textarea class="form-control" ng-model="info.Safety"></textarea>
+                </div>
+            </div>
+        </br>
+
+        <div class="row">
+            <div class="col-md-5">
+                <label class="control-label text-info" style="font-weight: bold">HEALTH CARE PROFESSIONAL’S EVALUATION OF :</label>
+            </div>
+            <div class="col-md-5 col-sm-9">
+                <input type="text"  ng-model="info.HealthCare"  class="form-control">
+            </div>
+            <div class="col-md-1 col-sm-3">
+                (EMPLOYEE)
+            </div>
+        </div>
+        </br>
+
+        <label class="control-label" style="font-weight: bold">CLASS (Circle):</label>
+        <div class="row">
+            <div class="col-md-12" style="margin-left: 30px">
+                <div class="btn-group col-sm-6 col-md-12">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.Class" value="0"/> 1) No restriction on respirator usage
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.Class" value="1"/> 2) Some specific use restrictions
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.Class" value="2"/> 3) No respirator use permitted
+                    </label>
+                </div>
+            </div>
+        </div>
+        </br>
+
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Restrictions:
+            </p>
+            <div class="row">
+                <div class="col-md-8" style="margin-left: 15px;">
+                    <textarea class="form-control" ng-model="info.Restrictions"></textarea>
+                </div>
+            </div>
+        </br>
+        </br>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <label class="control-label text-info" style="font-weight: bold">Examining Health Care Professional:</label>
+            </div>
+            <div class="col-md-5 col-sm-6">
+                <input type="text"  ng-model="info.HealthCarePro" style="width: 150px">
+                <label class="text-info">Date</label>
+                <label>18/09/2014  </label>
+            </div>
+        </div>
+        </br>
     </div>
-    </br>
-</div>
+</form>
+

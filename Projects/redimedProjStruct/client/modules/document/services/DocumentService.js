@@ -37,6 +37,12 @@ angular.module('app.loggedIn.document.services',[])
         }
 
 
+        documentService.insertUQ = function(info){
+            var insertUQ = api.all("document/insertUQ");
+            return insertUQ.post({info:info});
+        }
+
+
     return documentService;
     })
 
