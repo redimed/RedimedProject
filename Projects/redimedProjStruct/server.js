@@ -51,6 +51,7 @@ var fs = require('fs');//Read js file for import into
 //root
 eval(fs.readFileSync('module-config.js')+'');
 
+
 app.post('/api/rlob/rl_booking_files/upload',multipartMiddleware,  function(req, resp) {
     var targetFolder='.\\redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+targetFolder);

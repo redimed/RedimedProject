@@ -117,6 +117,15 @@ angular.module('app.loggedIn.booking.services',[])
             return submit.post({info:info,header:head});
         }
 
+        bookingService.pendingCalendar = function(info){
+            var submit = api.all('booking/pending');
+            return submit.post({info:info});
+        }
+
+        bookingService.deletePending = function(info){
+            var del = api.all('booking/deletePending');
+            return del.post({info:info});
+        }
 
 
         bookingService.getUserByCompany = function(comId){

@@ -17,6 +17,7 @@ module.exports = function(sequelize,DataTypes){
 	  CALENDAR_ID : DataTypes.INTEGER(11) ,
 	  resultFile : DataTypes.BLOB('medium'),
 	  resultFileName : DataTypes.STRING(50) ,
+	  resultFilePath: DataTypes.STRING(100),
 	  isSendEmail : DataTypes.STRING(1) ,
 	  Created_by : DataTypes.INTEGER(11) ,
 	  Creation_date : DataTypes.DATE ,

@@ -1,0 +1,1526 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'E:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'E:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'java' ]
+2 info using npm@1.4.21
+3 info using node@v0.10.30
+4 verbose node symlink E:\Program Files\nodejs\\node.exe
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'java', null ]
+7 verbose cache add name=undefined spec="java" args=["java",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'java',
+8 verbose parsed url   path: 'java',
+8 verbose parsed url   href: 'java' }
+9 silly lockFile 23524be9-java java
+10 verbose lock java C:\Users\Zen\AppData\Roaming\npm-cache\23524be9-java.lock
+11 silly lockFile 23524be9-java java
+12 silly lockFile 23524be9-java java
+13 verbose addNamed [ 'java', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile 0f6a664b-java java@
+16 verbose lock java@ C:\Users\Zen\AppData\Roaming\npm-cache\0f6a664b-java.lock
+17 silly addNameRange { name: 'java', range: '*', hasData: false }
+18 verbose request where is /java
+19 verbose request registry https://registry.npmjs.org/
+20 verbose request id 485f5c9d01e2deba
+21 verbose url raw /java
+22 verbose url resolving [ 'https://registry.npmjs.org/', './java' ]
+23 verbose url resolved https://registry.npmjs.org/java
+24 verbose request where is https://registry.npmjs.org/java
+25 info trying registry request attempt 1 at 11:13:12
+26 verbose etag "9HC2H4A63N84RSRZE5NKIJY3R"
+27 http GET https://registry.npmjs.org/java
+28 http 304 https://registry.npmjs.org/java
+29 silly registry.get cb [ 304,
+29 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:10 GMT',
+29 silly registry.get     server: 'Apache',
+29 silly registry.get     via: '1.1 varnish',
+29 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:13:11 GMT',
+29 silly registry.get     'cache-control': 'max-age=60',
+29 silly registry.get     etag: '"9HC2H4A63N84RSRZE5NKIJY3R"',
+29 silly registry.get     'x-served-by': 'cache-hk92-HKG',
+29 silly registry.get     'x-cache': 'MISS',
+29 silly registry.get     'x-cache-hits': '0',
+29 silly registry.get     'x-timer': 'S1413087190.069426,VS0,VE975',
+29 silly registry.get     vary: 'Accept',
+29 silly registry.get     'content-length': '0',
+29 silly registry.get     'keep-alive': 'timeout=10, max=50',
+29 silly registry.get     connection: 'Keep-Alive' } ]
+30 verbose etag https://registry.npmjs.org/java from cache
+31 silly addNameRange number 2 { name: 'java', range: '*', hasData: true }
+32 silly addNameRange versions [ 'java',
+32 silly addNameRange   [ '0.0.1',
+32 silly addNameRange     '0.0.2',
+32 silly addNameRange     '0.0.3',
+32 silly addNameRange     '0.0.4',
+32 silly addNameRange     '0.0.5',
+32 silly addNameRange     '0.0.6',
+32 silly addNameRange     '0.1.0',
+32 silly addNameRange     '0.1.1',
+32 silly addNameRange     '0.1.2',
+32 silly addNameRange     '0.1.3',
+32 silly addNameRange     '0.2.0',
+32 silly addNameRange     '0.2.1',
+32 silly addNameRange     '0.2.2',
+32 silly addNameRange     '0.2.3',
+32 silly addNameRange     '0.2.4',
+32 silly addNameRange     '0.2.5',
+32 silly addNameRange     '0.2.6',
+32 silly addNameRange     '0.2.7',
+32 silly addNameRange     '0.2.8',
+32 silly addNameRange     '0.2.9',
+32 silly addNameRange     '0.3.0',
+32 silly addNameRange     '0.3.1',
+32 silly addNameRange     '0.3.2',
+32 silly addNameRange     '0.3.3',
+32 silly addNameRange     '0.3.4',
+32 silly addNameRange     '0.3.5',
+32 silly addNameRange     '0.3.6',
+32 silly addNameRange     '0.4.0',
+32 silly addNameRange     '0.4.1',
+32 silly addNameRange     '0.4.2' ] ]
+33 verbose addNamed [ 'java', '0.4.2' ]
+34 verbose addNamed [ '0.4.2', '0.4.2' ]
+35 silly lockFile 338ac095-java-0-4-2 java@0.4.2
+36 verbose lock java@0.4.2 C:\Users\Zen\AppData\Roaming\npm-cache\338ac095-java-0-4-2.lock
+37 silly lockFile 338ac095-java-0-4-2 java@0.4.2
+38 silly lockFile 338ac095-java-0-4-2 java@0.4.2
+39 silly lockFile 0f6a664b-java java@
+40 silly lockFile 0f6a664b-java java@
+41 silly resolved [ { name: 'java',
+41 silly resolved     description: 'Bridge API to connect with existing Java APIs.',
+41 silly resolved     author: { name: 'Joe Ferner', email: 'joe@fernsroth.com' },
+41 silly resolved     keywords: [ 'java', 'jvm', 'bridge' ],
+41 silly resolved     version: '0.4.2',
+41 silly resolved     engines: { node: '>=0.8.0' },
+41 silly resolved     maintainers: [ [Object] ],
+41 silly resolved     bugs: { url: 'https://github.com/joeferner/node-java/issues' },
+41 silly resolved     license: 'MIT',
+41 silly resolved     repository:
+41 silly resolved      { type: 'git',
+41 silly resolved        url: 'https://github.com/joeferner/node-java.git' },
+41 silly resolved     dependencies: { 'find-java-home': '0.1.1', glob: '~3.2.9', nan: '1.2.0' },
+41 silly resolved     devDependencies: { async: '~0.1.22', nodeunit: '0.9.0' },
+41 silly resolved     scripts:
+41 silly resolved      { test: 'nodeunit test',
+41 silly resolved        postinstall: 'node postInstall.js',
+41 silly resolved        install: 'node-gyp rebuild' },
+41 silly resolved     main: './index.js',
+41 silly resolved     gypfile: true,
+41 silly resolved     gitHead: '95f30746f2928dc7bf9b03a1594b4a463af25918',
+41 silly resolved     homepage: 'https://github.com/joeferner/node-java',
+41 silly resolved     _id: 'java@0.4.2',
+41 silly resolved     _shasum: '893e609268d2b7d8ddde3a910f44bfb68b2b4276',
+41 silly resolved     _from: 'java@',
+41 silly resolved     _npmVersion: '1.4.14',
+41 silly resolved     _npmUser: { name: 'joeferner', email: 'joe@fernsroth.com' },
+41 silly resolved     dist:
+41 silly resolved      { shasum: '893e609268d2b7d8ddde3a910f44bfb68b2b4276',
+41 silly resolved        tarball: 'http://registry.npmjs.org/java/-/java-0.4.2.tgz' },
+41 silly resolved     directories: {},
+41 silly resolved     _resolved: 'https://registry.npmjs.org/java/-/java-0.4.2.tgz',
+41 silly resolved     readme: 'ERROR: No README data found!' } ]
+42 info install java@0.4.2 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct
+43 info installOne java@0.4.2
+44 verbose node_modules\java unbuild
+45 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\java\0.4.2\package.tgz
+46 silly lockFile c9a43791-imedProjStruct-node-modules-java tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java
+47 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java C:\Users\Zen\AppData\Roaming\npm-cache\c9a43791-imedProjStruct-node-modules-java.lock
+48 silly lockFile f0f24487-npm-cache-java-0-4-2-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\java\0.4.2\package.tgz
+49 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\java\0.4.2\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\f0f24487-npm-cache-java-0-4-2-package-tgz.lock
+50 silly gunzTarPerm modes [ '777', '666' ]
+51 silly gunzTarPerm extractEntry package.json
+52 silly gunzTarPerm modified mode [ 'package.json', 436, 438 ]
+53 silly gunzTarPerm extractEntry .npmignore
+54 silly gunzTarPerm modified mode [ '.npmignore', 436, 438 ]
+55 silly gunzTarPerm extractEntry README.md
+56 silly gunzTarPerm modified mode [ 'README.md', 436, 438 ]
+57 silly gunzTarPerm extractEntry LICENSE
+58 silly gunzTarPerm modified mode [ 'LICENSE', 436, 438 ]
+59 silly gunzTarPerm extractEntry postInstall.js
+60 silly gunzTarPerm modified mode [ 'postInstall.js', 436, 438 ]
+61 silly gunzTarPerm extractEntry mnm.js
+62 silly gunzTarPerm modified mode [ 'mnm.js', 509, 511 ]
+63 silly gunzTarPerm extractEntry index.js
+64 silly gunzTarPerm modified mode [ 'index.js', 436, 438 ]
+65 silly gunzTarPerm extractEntry findJavaHome.js
+66 silly gunzTarPerm modified mode [ 'findJavaHome.js', 420, 438 ]
+67 silly gunzTarPerm extractEntry testHelpers.js
+68 silly gunzTarPerm modified mode [ 'testHelpers.js', 436, 438 ]
+69 silly gunzTarPerm extractEntry binding.gyp
+70 silly gunzTarPerm modified mode [ 'binding.gyp', 436, 438 ]
+71 silly gunzTarPerm extractEntry examples/lucene/example.js
+72 silly gunzTarPerm modified mode [ 'examples/lucene/example.js', 509, 511 ]
+73 silly gunzTarPerm extractEntry examples/lucene/lucene-core-3.5.0.jar
+74 silly gunzTarPerm modified mode [ 'examples/lucene/lucene-core-3.5.0.jar', 436, 438 ]
+75 silly gunzTarPerm extractEntry examples/mixJavaAndNode/runMyClass.js
+76 silly gunzTarPerm modified mode [ 'examples/mixJavaAndNode/runMyClass.js', 509, 511 ]
+77 silly gunzTarPerm extractEntry examples/mixJavaAndNode/src/com/nearinfinity/nodeJava/MyClass.class
+78 silly gunzTarPerm modified mode [ 'examples/mixJavaAndNode/src/com/nearinfinity/nodeJava/MyClass.class',
+78 silly gunzTarPerm   436,
+78 silly gunzTarPerm   438 ]
+79 silly gunzTarPerm extractEntry examples/mixJavaAndNode/src/com/nearinfinity/nodeJava/MyClass.java
+80 silly gunzTarPerm modified mode [ 'examples/mixJavaAndNode/src/com/nearinfinity/nodeJava/MyClass.java',
+80 silly gunzTarPerm   436,
+80 silly gunzTarPerm   438 ]
+81 silly gunzTarPerm extractEntry .travis.yml
+82 silly gunzTarPerm modified mode [ '.travis.yml', 436, 438 ]
+83 silly gunzTarPerm extractEntry compile-java-code.sh
+84 silly gunzTarPerm modified mode [ 'compile-java-code.sh', 509, 511 ]
+85 silly gunzTarPerm extractEntry node-java.cbp
+86 silly gunzTarPerm modified mode [ 'node-java.cbp', 436, 438 ]
+87 silly gunzTarPerm extractEntry test/utils-types-test.js
+88 silly gunzTarPerm modified mode [ 'test/utils-types-test.js', 436, 438 ]
+89 silly gunzTarPerm extractEntry test/simple-test.js
+90 silly gunzTarPerm modified mode [ 'test/simple-test.js', 436, 438 ]
+91 silly gunzTarPerm extractEntry test/javaObject-test.js
+92 silly gunzTarPerm modified mode [ 'test/javaObject-test.js', 436, 438 ]
+93 silly gunzTarPerm extractEntry test/java-staticField-test.js
+94 silly gunzTarPerm modified mode [ 'test/java-staticField-test.js', 436, 438 ]
+95 silly gunzTarPerm extractEntry test/java-newInstance-test.js
+96 silly gunzTarPerm modified mode [ 'test/java-newInstance-test.js', 436, 438 ]
+97 silly gunzTarPerm extractEntry test/java-callStaticMethod-test.js
+98 silly gunzTarPerm modified mode [ 'test/java-callStaticMethod-test.js', 436, 438 ]
+99 silly gunzTarPerm extractEntry test/java-ambiguousMethod-test.js
+100 silly gunzTarPerm modified mode [ 'test/java-ambiguousMethod-test.js', 436, 438 ]
+101 silly gunzTarPerm extractEntry test/instanceof-test.js
+102 silly gunzTarPerm modified mode [ 'test/instanceof-test.js', 420, 438 ]
+103 silly gunzTarPerm extractEntry test/importClass-test.js
+104 silly gunzTarPerm modified mode [ 'test/importClass-test.js', 436, 438 ]
+105 silly gunzTarPerm extractEntry test/dynamicProxy-test.js
+106 silly gunzTarPerm modified mode [ 'test/dynamicProxy-test.js', 436, 438 ]
+107 silly gunzTarPerm extractEntry test/awt-test.js
+108 silly gunzTarPerm modified mode [ 'test/awt-test.js', 436, 438 ]
+109 silly gunzTarPerm extractEntry test/Test$SubClass.class
+110 silly gunzTarPerm modified mode [ 'test/Test$SubClass.class', 436, 438 ]
+111 silly gunzTarPerm extractEntry test/TestExceptions.java
+112 silly gunzTarPerm modified mode [ 'test/TestExceptions.java', 436, 438 ]
+113 silly gunzTarPerm extractEntry test/commons-lang3-3.1.jar
+114 silly gunzTarPerm modified mode [ 'test/commons-lang3-3.1.jar', 436, 438 ]
+115 silly gunzTarPerm extractEntry test/TestExceptions.class
+116 silly gunzTarPerm modified mode [ 'test/TestExceptions.class', 420, 438 ]
+117 silly gunzTarPerm extractEntry test/Test.java
+118 silly gunzTarPerm modified mode [ 'test/Test.java', 436, 438 ]
+119 silly gunzTarPerm extractEntry test/Test.class
+120 silly gunzTarPerm modified mode [ 'test/Test.class', 436, 438 ]
+121 silly gunzTarPerm extractEntry test/Test$SuperClass.class
+122 silly gunzTarPerm modified mode [ 'test/Test$SuperClass.class', 436, 438 ]
+123 silly gunzTarPerm extractEntry test/RunInterface$Interface1Arg.class
+124 silly gunzTarPerm modified mode [ 'test/RunInterface$Interface1Arg.class', 420, 438 ]
+125 silly gunzTarPerm extractEntry test/Test$StaticEnum.class
+126 silly gunzTarPerm modified mode [ 'test/Test$StaticEnum.class', 436, 438 ]
+127 silly gunzTarPerm extractEntry test/RunInterface.java
+128 silly gunzTarPerm modified mode [ 'test/RunInterface.java', 436, 438 ]
+129 silly gunzTarPerm extractEntry test/RunInterface.class
+130 silly gunzTarPerm modified mode [ 'test/RunInterface.class', 420, 438 ]
+131 silly gunzTarPerm extractEntry test/nodejs.png
+132 silly gunzTarPerm modified mode [ 'test/nodejs.png', 436, 438 ]
+133 silly gunzTarPerm extractEntry test/RunInterface$InterfaceWithReturn.class
+134 silly gunzTarPerm modified mode [ 'test/RunInterface$InterfaceWithReturn.class', 420, 438 ]
+135 silly gunzTarPerm extractEntry test/RunInterface$Interface0Arg.class
+136 silly gunzTarPerm modified mode [ 'test/RunInterface$Interface0Arg.class', 420, 438 ]
+137 silly gunzTarPerm extractEntry commons-lang3-node-java.jar
+138 silly gunzTarPerm modified mode [ 'commons-lang3-node-java.jar', 436, 438 ]
+139 silly gunzTarPerm extractEntry jarjar.rule
+140 silly gunzTarPerm modified mode [ 'jarjar.rule', 436, 438 ]
+141 silly gunzTarPerm extractEntry projectFilesBackup/.idea/libraries/sass_stdlib.xml
+142 silly gunzTarPerm modified mode [ 'projectFilesBackup/.idea/libraries/sass_stdlib.xml',
+142 silly gunzTarPerm   436,
+142 silly gunzTarPerm   438 ]
+143 silly gunzTarPerm extractEntry projectFilesBackup1/.idea/libraries/sass_stdlib.xml
+144 silly gunzTarPerm modified mode [ 'projectFilesBackup1/.idea/libraries/sass_stdlib.xml',
+144 silly gunzTarPerm   436,
+144 silly gunzTarPerm   438 ]
+145 silly gunzTarPerm extractEntry src/methodCallBaton.cpp
+146 silly gunzTarPerm modified mode [ 'src/methodCallBaton.cpp', 436, 438 ]
+147 silly gunzTarPerm extractEntry src/java.cpp
+148 silly gunzTarPerm modified mode [ 'src/java.cpp', 436, 438 ]
+149 silly gunzTarPerm extractEntry src/javaObject.cpp
+150 silly gunzTarPerm modified mode [ 'src/javaObject.cpp', 436, 438 ]
+151 silly gunzTarPerm extractEntry src/javaObject.h
+152 silly gunzTarPerm modified mode [ 'src/javaObject.h', 436, 438 ]
+153 silly gunzTarPerm extractEntry src/javaScope.cpp
+154 silly gunzTarPerm modified mode [ 'src/javaScope.cpp', 436, 438 ]
+155 silly gunzTarPerm extractEntry src/javaScope.h
+156 silly gunzTarPerm modified mode [ 'src/javaScope.h', 436, 438 ]
+157 silly gunzTarPerm extractEntry src/java.h
+158 silly gunzTarPerm modified mode [ 'src/java.h', 436, 438 ]
+159 silly gunzTarPerm extractEntry src/methodCallBaton.h
+160 silly gunzTarPerm modified mode [ 'src/methodCallBaton.h', 436, 438 ]
+161 silly gunzTarPerm extractEntry src/nodeJavaBridge.cpp
+162 silly gunzTarPerm modified mode [ 'src/nodeJavaBridge.cpp', 436, 438 ]
+163 silly gunzTarPerm extractEntry src/node_NodeDynamicProxyClass.h
+164 silly gunzTarPerm modified mode [ 'src/node_NodeDynamicProxyClass.h', 436, 438 ]
+165 silly gunzTarPerm extractEntry src/utils.cpp
+166 silly gunzTarPerm modified mode [ 'src/utils.cpp', 436, 438 ]
+167 silly gunzTarPerm extractEntry src/utils.h
+168 silly gunzTarPerm modified mode [ 'src/utils.h', 436, 438 ]
+169 silly gunzTarPerm extractEntry src-java/node/CastingUtils.class
+170 silly gunzTarPerm modified mode [ 'src-java/node/CastingUtils.class', 436, 438 ]
+171 silly gunzTarPerm extractEntry src-java/node/CastingUtils.java
+172 silly gunzTarPerm modified mode [ 'src-java/node/CastingUtils.java', 436, 438 ]
+173 silly gunzTarPerm extractEntry src-java/node/NodeDynamicProxyClass.class
+174 silly gunzTarPerm modified mode [ 'src-java/node/NodeDynamicProxyClass.class', 436, 438 ]
+175 silly gunzTarPerm extractEntry src-java/node/NodeDynamicProxyClass.java
+176 silly gunzTarPerm modified mode [ 'src-java/node/NodeDynamicProxyClass.java', 436, 438 ]
+177 silly gunzTarPerm extractEntry lib/nodeJavaBridge.js
+178 silly gunzTarPerm modified mode [ 'lib/nodeJavaBridge.js', 436, 438 ]
+179 silly lockFile c9a43791-imedProjStruct-node-modules-java tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java
+180 silly lockFile c9a43791-imedProjStruct-node-modules-java tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java
+181 silly lockFile f0f24487-npm-cache-java-0-4-2-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\java\0.4.2\package.tgz
+182 silly lockFile f0f24487-npm-cache-java-0-4-2-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\java\0.4.2\package.tgz
+183 info preinstall java@0.4.2
+184 verbose readDependencies using package.json deps
+185 verbose readDependencies using package.json deps
+186 verbose cache add [ 'find-java-home@0.1.1', null ]
+187 verbose cache add name=undefined spec="find-java-home@0.1.1" args=["find-java-home@0.1.1",null]
+188 verbose parsed url { protocol: null,
+188 verbose parsed url   slashes: null,
+188 verbose parsed url   auth: null,
+188 verbose parsed url   host: null,
+188 verbose parsed url   port: null,
+188 verbose parsed url   hostname: null,
+188 verbose parsed url   hash: null,
+188 verbose parsed url   search: null,
+188 verbose parsed url   query: null,
+188 verbose parsed url   pathname: 'find-java-home@0.1.1',
+188 verbose parsed url   path: 'find-java-home@0.1.1',
+188 verbose parsed url   href: 'find-java-home@0.1.1' }
+189 verbose cache add [ 'glob@~3.2.9', null ]
+190 verbose cache add name=undefined spec="glob@~3.2.9" args=["glob@~3.2.9",null]
+191 verbose parsed url { protocol: null,
+191 verbose parsed url   slashes: null,
+191 verbose parsed url   auth: null,
+191 verbose parsed url   host: null,
+191 verbose parsed url   port: null,
+191 verbose parsed url   hostname: null,
+191 verbose parsed url   hash: null,
+191 verbose parsed url   search: null,
+191 verbose parsed url   query: null,
+191 verbose parsed url   pathname: 'glob@~3.2.9',
+191 verbose parsed url   path: 'glob@~3.2.9',
+191 verbose parsed url   href: 'glob@~3.2.9' }
+192 verbose cache add [ 'nan@1.2.0', null ]
+193 verbose cache add name=undefined spec="nan@1.2.0" args=["nan@1.2.0",null]
+194 verbose parsed url { protocol: null,
+194 verbose parsed url   slashes: null,
+194 verbose parsed url   auth: null,
+194 verbose parsed url   host: null,
+194 verbose parsed url   port: null,
+194 verbose parsed url   hostname: null,
+194 verbose parsed url   hash: null,
+194 verbose parsed url   search: null,
+194 verbose parsed url   query: null,
+194 verbose parsed url   pathname: 'nan@1.2.0',
+194 verbose parsed url   path: 'nan@1.2.0',
+194 verbose parsed url   href: 'nan@1.2.0' }
+195 verbose cache add name="find-java-home" spec="0.1.1" args=["find-java-home","0.1.1"]
+196 verbose parsed url { protocol: null,
+196 verbose parsed url   slashes: null,
+196 verbose parsed url   auth: null,
+196 verbose parsed url   host: null,
+196 verbose parsed url   port: null,
+196 verbose parsed url   hostname: null,
+196 verbose parsed url   hash: null,
+196 verbose parsed url   search: null,
+196 verbose parsed url   query: null,
+196 verbose parsed url   pathname: '0.1.1',
+196 verbose parsed url   path: '0.1.1',
+196 verbose parsed url   href: '0.1.1' }
+197 verbose addNamed [ 'find-java-home', '0.1.1' ]
+198 verbose addNamed [ '0.1.1', '0.1.1' ]
+199 silly lockFile c6846668-find-java-home-0-1-1 find-java-home@0.1.1
+200 verbose lock find-java-home@0.1.1 C:\Users\Zen\AppData\Roaming\npm-cache\c6846668-find-java-home-0-1-1.lock
+201 verbose cache add name="glob" spec="~3.2.9" args=["glob","~3.2.9"]
+202 verbose parsed url { protocol: null,
+202 verbose parsed url   slashes: null,
+202 verbose parsed url   auth: null,
+202 verbose parsed url   host: null,
+202 verbose parsed url   port: null,
+202 verbose parsed url   hostname: null,
+202 verbose parsed url   hash: null,
+202 verbose parsed url   search: null,
+202 verbose parsed url   query: null,
+202 verbose parsed url   pathname: '~3.2.9',
+202 verbose parsed url   path: '~3.2.9',
+202 verbose parsed url   href: '~3.2.9' }
+203 verbose addNamed [ 'glob', '~3.2.9' ]
+204 verbose addNamed [ null, '>=3.2.9-0 <3.3.0-0' ]
+205 silly lockFile 200db29c-glob-3-2-9 glob@~3.2.9
+206 verbose lock glob@~3.2.9 C:\Users\Zen\AppData\Roaming\npm-cache\200db29c-glob-3-2-9.lock
+207 verbose cache add name="nan" spec="1.2.0" args=["nan","1.2.0"]
+208 verbose parsed url { protocol: null,
+208 verbose parsed url   slashes: null,
+208 verbose parsed url   auth: null,
+208 verbose parsed url   host: null,
+208 verbose parsed url   port: null,
+208 verbose parsed url   hostname: null,
+208 verbose parsed url   hash: null,
+208 verbose parsed url   search: null,
+208 verbose parsed url   query: null,
+208 verbose parsed url   pathname: '1.2.0',
+208 verbose parsed url   path: '1.2.0',
+208 verbose parsed url   href: '1.2.0' }
+209 verbose addNamed [ 'nan', '1.2.0' ]
+210 verbose addNamed [ '1.2.0', '1.2.0' ]
+211 silly lockFile 859d0f28-nan-1-2-0 nan@1.2.0
+212 verbose lock nan@1.2.0 C:\Users\Zen\AppData\Roaming\npm-cache\859d0f28-nan-1-2-0.lock
+213 silly addNameRange { name: 'glob', range: '>=3.2.9-0 <3.3.0-0', hasData: false }
+214 verbose request where is /find-java-home
+215 verbose request registry https://registry.npmjs.org/
+216 verbose url raw /find-java-home
+217 verbose url resolving [ 'https://registry.npmjs.org/', './find-java-home' ]
+218 verbose url resolved https://registry.npmjs.org/find-java-home
+219 verbose request where is https://registry.npmjs.org/find-java-home
+220 info trying registry request attempt 1 at 11:13:15
+221 verbose etag "5HB3DSTKSO44ZB9HQ4X9QMGBE"
+222 http GET https://registry.npmjs.org/find-java-home
+223 verbose request where is /glob
+224 verbose request registry https://registry.npmjs.org/
+225 verbose url raw /glob
+226 verbose url resolving [ 'https://registry.npmjs.org/', './glob' ]
+227 verbose url resolved https://registry.npmjs.org/glob
+228 verbose request where is https://registry.npmjs.org/glob
+229 info trying registry request attempt 1 at 11:13:15
+230 verbose etag "DOXSH9A082G0G1OMWTBTOL127"
+231 http GET https://registry.npmjs.org/glob
+232 verbose request where is /nan
+233 verbose request registry https://registry.npmjs.org/
+234 verbose url raw /nan
+235 verbose url resolving [ 'https://registry.npmjs.org/', './nan' ]
+236 verbose url resolved https://registry.npmjs.org/nan
+237 verbose request where is https://registry.npmjs.org/nan
+238 info trying registry request attempt 1 at 11:13:15
+239 verbose etag "4QHBB3KM0BSFWQGU7N2BM6J49"
+240 http GET https://registry.npmjs.org/nan
+241 http 304 https://registry.npmjs.org/find-java-home
+242 silly registry.get cb [ 304,
+242 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:12 GMT',
+242 silly registry.get     server: 'Apache',
+242 silly registry.get     via: '1.1 varnish',
+242 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:13:12 GMT',
+242 silly registry.get     'cache-control': 'max-age=60',
+242 silly registry.get     etag: '"5HB3DSTKSO44ZB9HQ4X9QMGBE"',
+242 silly registry.get     age: '0',
+242 silly registry.get     'x-served-by': 'cache-lax1435-LAX',
+242 silly registry.get     'x-cache': 'MISS',
+242 silly registry.get     'x-cache-hits': '0',
+242 silly registry.get     'x-timer': 'S1413087192.935142,VS0,VE40',
+242 silly registry.get     vary: 'Accept',
+242 silly registry.get     'content-length': '0',
+242 silly registry.get     'keep-alive': 'timeout=10, max=50',
+242 silly registry.get     connection: 'Keep-Alive' } ]
+243 verbose etag https://registry.npmjs.org/find-java-home from cache
+244 http 304 https://registry.npmjs.org/glob
+245 silly registry.get cb [ 304,
+245 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:12 GMT',
+245 silly registry.get     server: 'Apache',
+245 silly registry.get     via: '1.1 varnish',
+245 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:13:12 GMT',
+245 silly registry.get     'cache-control': 'max-age=60',
+245 silly registry.get     etag: '"DOXSH9A082G0G1OMWTBTOL127"',
+245 silly registry.get     age: '24',
+245 silly registry.get     'x-served-by': 'cache-lax1427-LAX',
+245 silly registry.get     'x-cache': 'HIT',
+245 silly registry.get     'x-cache-hits': '1',
+245 silly registry.get     'x-timer': 'S1413087192.976491,VS0,VE0',
+245 silly registry.get     vary: 'Accept',
+245 silly registry.get     'content-length': '0',
+245 silly registry.get     'keep-alive': 'timeout=10, max=50',
+245 silly registry.get     connection: 'Keep-Alive' } ]
+246 verbose etag https://registry.npmjs.org/glob from cache
+247 silly addNameRange number 2 { name: 'glob', range: '>=3.2.9-0 <3.3.0-0', hasData: true }
+248 silly addNameRange versions [ 'glob',
+248 silly addNameRange   [ '1.1.0',
+248 silly addNameRange     '2.0.9',
+248 silly addNameRange     '2.0.8',
+248 silly addNameRange     '2.0.7',
+248 silly addNameRange     '2.1.0',
+248 silly addNameRange     '3.0.0',
+248 silly addNameRange     '3.0.1',
+248 silly addNameRange     '3.1.0',
+248 silly addNameRange     '3.1.1',
+248 silly addNameRange     '3.1.2',
+248 silly addNameRange     '3.1.3',
+248 silly addNameRange     '3.1.4',
+248 silly addNameRange     '3.1.5',
+248 silly addNameRange     '3.1.6',
+248 silly addNameRange     '3.1.7',
+248 silly addNameRange     '3.1.9',
+248 silly addNameRange     '3.1.10',
+248 silly addNameRange     '3.1.11',
+248 silly addNameRange     '3.1.12',
+248 silly addNameRange     '3.1.13',
+248 silly addNameRange     '3.1.14',
+248 silly addNameRange     '3.1.15',
+248 silly addNameRange     '3.1.16',
+248 silly addNameRange     '3.1.17',
+248 silly addNameRange     '3.1.18',
+248 silly addNameRange     '3.1.19',
+248 silly addNameRange     '3.1.20',
+248 silly addNameRange     '3.1.21',
+248 silly addNameRange     '3.2.0',
+248 silly addNameRange     '3.2.1',
+248 silly addNameRange     '3.2.3',
+248 silly addNameRange     '3.2.4',
+248 silly addNameRange     '3.2.5',
+248 silly addNameRange     '3.2.6',
+248 silly addNameRange     '3.2.7',
+248 silly addNameRange     '3.2.8',
+248 silly addNameRange     '3.2.9',
+248 silly addNameRange     '3.2.10',
+248 silly addNameRange     '3.2.11',
+248 silly addNameRange     '4.0.0',
+248 silly addNameRange     '4.0.1',
+248 silly addNameRange     '4.0.2',
+248 silly addNameRange     '4.0.3',
+248 silly addNameRange     '4.0.4',
+248 silly addNameRange     '4.0.5',
+248 silly addNameRange     '4.0.6' ] ]
+249 verbose addNamed [ 'glob', '3.2.11' ]
+250 verbose addNamed [ '3.2.11', '3.2.11' ]
+251 silly lockFile 3fffafa6-glob-3-2-11 glob@3.2.11
+252 verbose lock glob@3.2.11 C:\Users\Zen\AppData\Roaming\npm-cache\3fffafa6-glob-3-2-11.lock
+253 silly lockFile c6846668-find-java-home-0-1-1 find-java-home@0.1.1
+254 silly lockFile c6846668-find-java-home-0-1-1 find-java-home@0.1.1
+255 silly lockFile 3fffafa6-glob-3-2-11 glob@3.2.11
+256 silly lockFile 3fffafa6-glob-3-2-11 glob@3.2.11
+257 silly lockFile 200db29c-glob-3-2-9 glob@~3.2.9
+258 silly lockFile 200db29c-glob-3-2-9 glob@~3.2.9
+259 http 304 https://registry.npmjs.org/nan
+260 silly registry.get cb [ 304,
+260 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:12 GMT',
+260 silly registry.get     server: 'Apache',
+260 silly registry.get     via: '1.1 varnish',
+260 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:13:13 GMT',
+260 silly registry.get     'cache-control': 'max-age=60',
+260 silly registry.get     etag: '"4QHBB3KM0BSFWQGU7N2BM6J49"',
+260 silly registry.get     age: '0',
+260 silly registry.get     'x-served-by': 'cache-hk93-HKG',
+260 silly registry.get     'x-cache': 'MISS',
+260 silly registry.get     'x-cache-hits': '0',
+260 silly registry.get     'x-timer': 'S1413087192.440963,VS0,VE775',
+260 silly registry.get     vary: 'Accept',
+260 silly registry.get     'content-length': '0',
+260 silly registry.get     'keep-alive': 'timeout=10, max=50',
+260 silly registry.get     connection: 'Keep-Alive' } ]
+261 verbose etag https://registry.npmjs.org/nan from cache
+262 silly lockFile 859d0f28-nan-1-2-0 nan@1.2.0
+263 silly lockFile 859d0f28-nan-1-2-0 nan@1.2.0
+264 silly resolved [ { name: 'find-java-home',
+264 silly resolved     version: '0.1.1',
+264 silly resolved     description: 'Find JAVA_HOME on any system',
+264 silly resolved     main: 'index.js',
+264 silly resolved     scripts: { test: 'mocha -r should test.js' },
+264 silly resolved     repository:
+264 silly resolved      { type: 'git',
+264 silly resolved        url: 'https://github.com/jsdevel/node-find-java-home.git' },
+264 silly resolved     dependencies: { which: '~1.0.5' },
+264 silly resolved     keywords: [ 'JAVA_HOME', 'find', 'java', 'home' ],
+264 silly resolved     author: { name: 'Joseph Spencer' },
+264 silly resolved     license: 'Apache 2.0',
+264 silly resolved     bugs: { url: 'https://github.com/jsdevel/node-find-java-home/issues' },
+264 silly resolved     homepage: 'https://github.com/jsdevel/node-find-java-home',
+264 silly resolved     devDependencies: { mocha: '~1.18.2', should: '~3.3.0' },
+264 silly resolved     _id: 'find-java-home@0.1.1',
+264 silly resolved     dist:
+264 silly resolved      { shasum: '208546371ff78761608e18f7bb282718f8f58e39',
+264 silly resolved        tarball: 'http://registry.npmjs.org/find-java-home/-/find-java-home-0.1.1.tgz' },
+264 silly resolved     _from: 'find-java-home@0.1.1',
+264 silly resolved     _npmVersion: '1.3.6',
+264 silly resolved     _npmUser: { name: 'jsdevel', email: 'js.developer.undefined@gmail.com' },
+264 silly resolved     maintainers: [ [Object] ],
+264 silly resolved     directories: {},
+264 silly resolved     _shasum: '208546371ff78761608e18f7bb282718f8f58e39',
+264 silly resolved     _resolved: 'https://registry.npmjs.org/find-java-home/-/find-java-home-0.1.1.tgz',
+264 silly resolved     readme: 'ERROR: No README data found!' },
+264 silly resolved   { author:
+264 silly resolved      { name: 'Isaac Z. Schlueter',
+264 silly resolved        email: 'i@izs.me',
+264 silly resolved        url: 'http://blog.izs.me/' },
+264 silly resolved     name: 'glob',
+264 silly resolved     description: 'a little globber',
+264 silly resolved     version: '3.2.11',
+264 silly resolved     repository: { type: 'git', url: 'git://github.com/isaacs/node-glob.git' },
+264 silly resolved     main: 'glob.js',
+264 silly resolved     engines: { node: '*' },
+264 silly resolved     dependencies: { inherits: '2', minimatch: '0.3' },
+264 silly resolved     devDependencies: { tap: '~0.4.0', mkdirp: '0', rimraf: '1' },
+264 silly resolved     scripts:
+264 silly resolved      { test: 'tap test/*.js',
+264 silly resolved        'test-regen': 'TEST_REGEN=1 node test/00-setup.js' },
+264 silly resolved     license: 'BSD',
+264 silly resolved     readme: '# Glob\n\nMatch files using the patterns the shell uses, like stars and stuff.\n\nThis is a glob implementation in JavaScript.  It uses the `minimatch`\nlibrary to do its matching.\n\n## Attention: node-glob users!\n\nThe API has changed dramatically between 2.x and 3.x. This library is\nnow 100% JavaScript, and the integer flags have been replaced with an\noptions object.\n\nAlso, there\'s an event emitter class, proper tests, and all the other\nthings you\'ve come to expect from node modules.\n\nAnd best of all, no compilation!\n\n## Usage\n\n```javascript\nvar glob = require("glob")\n\n// options is optional\nglob("**/*.js", options, function (er, files) {\n  // files is an array of filenames.\n  // If the `nonull` option is set, and nothing\n  // was found, then files is ["**/*.js"]\n  // er is an error object or null.\n})\n```\n\n## Features\n\nPlease see the [minimatch\ndocumentation](https://github.com/isaacs/minimatch) for more details.\n\nSupports these glob features:\n\n* Brace Expansion\n* Extended glob matching\n* "Globstar" `**` matching\n\nSee:\n\n* `man sh`\n* `man bash`\n* `man 3 fnmatch`\n* `man 5 gitignore`\n* [minimatch documentation](https://github.com/isaacs/minimatch)\n\n## glob(pattern, [options], cb)\n\n* `pattern` {String} Pattern to be matched\n* `options` {Object}\n* `cb` {Function}\n  * `err` {Error | null}\n  * `matches` {Array<String>} filenames found matching the pattern\n\nPerform an asynchronous glob search.\n\n## glob.sync(pattern, [options])\n\n* `pattern` {String} Pattern to be matched\n* `options` {Object}\n* return: {Array<String>} filenames found matching the pattern\n\nPerform a synchronous glob search.\n\n## Class: glob.Glob\n\nCreate a Glob object by instanting the `glob.Glob` class.\n\n```javascript\nvar Glob = require("glob").Glob\nvar mg = new Glob(pattern, options, cb)\n```\n\nIt\'s an EventEmitter, and starts walking the filesystem to find matches\nimmediately.\n\n### new glob.Glob(pattern, [options], [cb])\n\n* `pattern` {String} pattern to search for\n* `options` {Object}\n* `cb` {Function} Called when an error occurs, or matches are found\n  * `err` {Error | null}\n  * `matches` {Array<String>} filenames found matching the pattern\n\nNote that if the `sync` flag is set in the options, then matches will\nbe immediately available on the `g.found` member.\n\n### Properties\n\n* `minimatch` The minimatch object that the glob uses.\n* `options` The options object passed in.\n* `error` The error encountered.  When an error is encountered, the\n  glob object is in an undefined state, and should be discarded.\n* `aborted` Boolean which is set to true when calling `abort()`.  There\n  is no way at this time to continue a glob search after aborting, but\n  you can re-use the statCache to avoid having to duplicate syscalls.\n* `statCache` Collection of all the stat results the glob search\n  performed.\n* `cache` Convenience object.  Each field has the following possible\n  values:\n  * `false` - Path does not exist\n  * `true` - Path exists\n  * `1` - Path exists, and is not a directory\n  * `2` - Path exists, and is a directory\n  * `[file, entries, ...]` - Path exists, is a directory, and the\n    array value is the results of `fs.readdir`\n\n### Events\n\n* `end` When the matching is finished, this is emitted with all the\n  matches found.  If the `nonull` option is set, and no match was found,\n  then the `matches` list contains the original pattern.  The matches\n  are sorted, unless the `nosort` flag is set.\n* `match` Every time a match is found, this is emitted with the matched.\n* `error` Emitted when an unexpected error is encountered, or whenever\n  any fs error occurs if `options.strict` is set.\n* `abort` When `abort()` is called, this event is raised.\n\n### Methods\n\n* `abort` Stop the search.\n\n### Options\n\nAll the options that can be passed to Minimatch can also be passed to\nGlob to change pattern matching behavior.  Also, some have been added,\nor have glob-specific ramifications.\n\nAll options are false by default, unless otherwise noted.\n\nAll options are added to the glob object, as well.\n\n* `cwd` The current working directory in which to search.  Defaults\n  to `process.cwd()`.\n* `root` The place where patterns starting with `/` will be mounted\n  onto.  Defaults to `path.resolve(options.cwd, "/")` (`/` on Unix\n  systems, and `C:\\` or some such on Windows.)\n* `dot` Include `.dot` files in normal matches and `globstar` matches.\n  Note that an explicit dot in a portion of the pattern will always\n  match dot files.\n* `nomount` By default, a pattern starting with a forward-slash will be\n  "mounted" onto the root setting, so that a valid filesystem path is\n  returned.  Set this flag to disable that behavior.\n* `mark` Add a `/` character to directory matches.  Note that this\n  requires additional stat calls.\n* `nosort` Don\'t sort the results.\n* `stat` Set to true to stat *all* results.  This reduces performance\n  somewhat, and is completely unnecessary, unless `readdir` is presumed\n  to be an untrustworthy indicator of file existence.  It will cause\n  ELOOP to be triggered one level sooner in the case of cyclical\n  symbolic links.\n* `silent` When an unusual error is encountered\n  when attempting to read a directory, a warning will be printed to\n  stderr.  Set the `silent` option to true to suppress these warnings.\n* `strict` When an unusual error is encountered\n  when attempting to read a directory, the process will just continue on\n  in search of other matches.  Set the `strict` option to raise an error\n  in these cases.\n* `cache` See `cache` property above.  Pass in a previously generated\n  cache object to save some fs calls.\n* `statCache` A cache of results of filesystem information, to prevent\n  unnecessary stat calls.  While it should not normally be necessary to\n  set this, you may pass the statCache from one glob() call to the\n  options object of another, if you know that the filesystem will not\n  change between calls.  (See "Race Conditions" below.)\n* `sync` Perform a synchronous glob search.\n* `nounique` In some cases, brace-expanded patterns can result in the\n  same file showing up multiple times in the result set.  By default,\n  this implementation prevents duplicates in the result set.\n  Set this flag to disable that behavior.\n* `nonull` Set to never return an empty set, instead returning a set\n  containing the pattern itself.  This is the default in glob(3).\n* `nocase` Perform a case-insensitive match.  Note that case-insensitive\n  filesystems will sometimes result in glob returning results that are\n  case-insensitively matched anyway, since readdir and stat will not\n  raise an error.\n* `debug` Set to enable debug logging in minimatch and glob.\n* `globDebug` Set to enable debug logging in glob, but not minimatch.\n\n## Comparisons to other fnmatch/glob implementations\n\nWhile strict compliance with the existing standards is a worthwhile\ngoal, some discrepancies exist between node-glob and other\nimplementations, and are intentional.\n\nIf the pattern starts with a `!` character, then it is negated.  Set the\n`nonegate` flag to suppress this behavior, and treat leading `!`\ncharacters normally.  This is perhaps relevant if you wish to start the\npattern with a negative extglob pattern like `!(a|B)`.  Multiple `!`\ncharacters at the start of a pattern will negate the pattern multiple\ntimes.\n\nIf a pattern starts with `#`, then it is treated as a comment, and\nwill not match anything.  Use `\\#` to match a literal `#` at the\nstart of a line, or set the `nocomment` flag to suppress this behavior.\n\nThe double-star character `**` is supported by default, unless the\n`noglobstar` flag is set.  This is supported in the manner of bsdglob\nand bash 4.1, where `**` only has special significance if it is the only\nthing in a path part.  That is, `a/**/b` will match `a/x/y/b`, but\n`a/**b` will not.\n\nIf an escaped pattern has no matches, and the `nonull` flag is set,\nthen glob returns the pattern as-provided, rather than\ninterpreting the character escapes.  For example,\n`glob.match([], "\\\\*a\\\\?")` will return `"\\\\*a\\\\?"` rather than\n`"*a?"`.  This is akin to setting the `nullglob` option in bash, except\nthat it does not resolve escaped pattern characters.\n\nIf brace expansion is not disabled, then it is performed before any\nother interpretation of the glob pattern.  Thus, a pattern like\n`+(a|{b),c)}`, which would not be valid in bash or zsh, is expanded\n**first** into the set of `+(a|b)` and `+(a|c)`, and those patterns are\nchecked for validity.  Since those two are valid, matching proceeds.\n\n## Windows\n\n**Please only use forward-slashes in glob expressions.**\n\nThough windows uses either `/` or `\\` as its path separator, only `/`\ncharacters are used by this glob implementation.  You must use\nforward-slashes **only** in glob expressions.  Back-slashes will always\nbe interpreted as escape characters, not path separators.\n\nResults from absolute patterns such as `/foo/*` are mounted onto the\nroot setting using `path.join`.  On windows, this will by default result\nin `/foo/*` matching `C:\\foo\\bar.txt`.\n\n## Race Conditions\n\nGlob searching, by its very nature, is susceptible to race conditions,\nsince it relies on directory walking and such.\n\nAs a result, it is possible that a file that exists when glob looks for\nit may have been deleted or modified by the time it returns the result.\n\nAs part of its internal implementation, this program caches all stat\nand readdir calls that it makes, in order to cut down on system\noverhead.  However, this also makes it even more susceptible to races,\nespecially if the cache or statCache objects are reused between glob\ncalls.\n\nUsers are thus advised not to use a glob result as a guarantee of\nfilesystem state in the face of rapid changes.  For the vast majority\nof operations, this is never a problem.\n',
+264 silly resolved     readmeFilename: 'README.md',
+264 silly resolved     bugs: { url: 'https://github.com/isaacs/node-glob/issues' },
+264 silly resolved     homepage: 'https://github.com/isaacs/node-glob',
+264 silly resolved     _id: 'glob@3.2.11',
+264 silly resolved     _shasum: '4a973f635b9190f715d10987d5c00fd2815ebe3d',
+264 silly resolved     _from: 'glob@~3.2.9',
+264 silly resolved     _resolved: 'https://registry.npmjs.org/glob/-/glob-3.2.11.tgz' },
+264 silly resolved   { name: 'nan',
+264 silly resolved     version: '1.2.0',
+264 silly resolved     description: 'Native Abstractions for Node.js: C++ header for Node 0.8->0.12 compatibility',
+264 silly resolved     main: 'include_dirs.js',
+264 silly resolved     repository: { type: 'git', url: 'git://github.com/rvagg/nan.git' },
+264 silly resolved     contributors: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+264 silly resolved     license: 'MIT',
+264 silly resolved     bugs: { url: 'https://github.com/rvagg/nan/issues' },
+264 silly resolved     homepage: 'https://github.com/rvagg/nan',
+264 silly resolved     _id: 'nan@1.2.0',
+264 silly resolved     dist:
+264 silly resolved      { shasum: '9c4d63ce9e4f8e95de2d574e18f7925554a8a8ef',
+264 silly resolved        tarball: 'http://registry.npmjs.org/nan/-/nan-1.2.0.tgz' },
+264 silly resolved     _from: 'nan@1.2.0',
+264 silly resolved     _npmVersion: '1.4.3',
+264 silly resolved     _npmUser: { name: 'rvagg', email: 'rod@vagg.org' },
+264 silly resolved     maintainers: [ [Object] ],
+264 silly resolved     directories: {},
+264 silly resolved     _shasum: '9c4d63ce9e4f8e95de2d574e18f7925554a8a8ef',
+264 silly resolved     _resolved: 'https://registry.npmjs.org/nan/-/nan-1.2.0.tgz',
+264 silly resolved     readme: 'ERROR: No README data found!' } ]
+265 info install find-java-home@0.1.1 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java
+266 info install glob@3.2.11 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java
+267 info install nan@1.2.0 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java
+268 info installOne find-java-home@0.1.1
+269 info installOne glob@3.2.11
+270 info installOne nan@1.2.0
+271 verbose node_modules\java\node_modules\find-java-home unbuild
+272 verbose node_modules\java\node_modules\glob unbuild
+273 verbose node_modules\java\node_modules\nan unbuild
+274 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\find-java-home\0.1.1\package.tgz
+275 silly lockFile 9eeacab6-java-node-modules-find-java-home tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home
+276 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home C:\Users\Zen\AppData\Roaming\npm-cache\9eeacab6-java-node-modules-find-java-home.lock
+277 silly lockFile 85dd3b4e-find-java-home-0-1-1-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\find-java-home\0.1.1\package.tgz
+278 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\find-java-home\0.1.1\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\85dd3b4e-find-java-home-0-1-1-package-tgz.lock
+279 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\glob\3.2.11\package.tgz
+280 silly lockFile b9bf72b5-e-modules-java-node-modules-glob tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob
+281 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob C:\Users\Zen\AppData\Roaming\npm-cache\b9bf72b5-e-modules-java-node-modules-glob.lock
+282 silly lockFile 8ef77900-pm-cache-glob-3-2-11-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\glob\3.2.11\package.tgz
+283 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\glob\3.2.11\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\8ef77900-pm-cache-glob-3-2-11-package-tgz.lock
+284 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\nan\1.2.0\package.tgz
+285 silly lockFile ae59ddc8-de-modules-java-node-modules-nan tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\nan
+286 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\nan C:\Users\Zen\AppData\Roaming\npm-cache\ae59ddc8-de-modules-java-node-modules-nan.lock
+287 silly lockFile d902e60d--npm-cache-nan-1-2-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\nan\1.2.0\package.tgz
+288 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\nan\1.2.0\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\d902e60d--npm-cache-nan-1-2-0-package-tgz.lock
+289 silly gunzTarPerm modes [ '777', '666' ]
+290 silly gunzTarPerm modes [ '777', '666' ]
+291 silly gunzTarPerm modes [ '777', '666' ]
+292 silly gunzTarPerm extractEntry package.json
+293 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+294 silly gunzTarPerm extractEntry package.json
+295 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+296 silly gunzTarPerm extractEntry package.json
+297 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+298 silly gunzTarPerm extractEntry .npmignore
+299 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+300 silly gunzTarPerm extractEntry README.md
+301 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+302 silly gunzTarPerm extractEntry .npmignore
+303 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+304 silly gunzTarPerm extractEntry README.md
+305 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+306 silly gunzTarPerm extractEntry README.md
+307 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+308 silly gunzTarPerm extractEntry LICENSE
+309 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+310 silly gunzTarPerm extractEntry include_dirs.js
+311 silly gunzTarPerm modified mode [ 'include_dirs.js', 420, 438 ]
+312 silly gunzTarPerm extractEntry .dntrc
+313 silly gunzTarPerm modified mode [ '.dntrc', 420, 438 ]
+314 silly gunzTarPerm extractEntry build/config.gypi
+315 silly gunzTarPerm modified mode [ 'build/config.gypi', 420, 438 ]
+316 silly gunzTarPerm extractEntry nan.h
+317 silly gunzTarPerm modified mode [ 'nan.h', 420, 438 ]
+318 silly gunzTarPerm extractEntry LICENSE
+319 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+320 silly gunzTarPerm extractEntry index.js
+321 silly gunzTarPerm modified mode [ 'index.js', 420, 438 ]
+322 silly gunzTarPerm extractEntry test.js
+323 silly gunzTarPerm modified mode [ 'test.js', 420, 438 ]
+324 silly gunzTarPerm extractEntry .travis.yml
+325 silly gunzTarPerm modified mode [ '.travis.yml', 420, 438 ]
+326 silly lockFile 9eeacab6-java-node-modules-find-java-home tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home
+327 silly lockFile 9eeacab6-java-node-modules-find-java-home tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home
+328 silly lockFile 85dd3b4e-find-java-home-0-1-1-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\find-java-home\0.1.1\package.tgz
+329 silly lockFile 85dd3b4e-find-java-home-0-1-1-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\find-java-home\0.1.1\package.tgz
+330 silly lockFile ae59ddc8-de-modules-java-node-modules-nan tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\nan
+331 silly lockFile ae59ddc8-de-modules-java-node-modules-nan tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\nan
+332 info preinstall find-java-home@0.1.1
+333 silly lockFile d902e60d--npm-cache-nan-1-2-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\nan\1.2.0\package.tgz
+334 silly lockFile d902e60d--npm-cache-nan-1-2-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\nan\1.2.0\package.tgz
+335 verbose readDependencies using package.json deps
+336 verbose readDependencies using package.json deps
+337 verbose cache add [ 'which@~1.0.5', null ]
+338 verbose cache add name=undefined spec="which@~1.0.5" args=["which@~1.0.5",null]
+339 verbose parsed url { protocol: null,
+339 verbose parsed url   slashes: null,
+339 verbose parsed url   auth: null,
+339 verbose parsed url   host: null,
+339 verbose parsed url   port: null,
+339 verbose parsed url   hostname: null,
+339 verbose parsed url   hash: null,
+339 verbose parsed url   search: null,
+339 verbose parsed url   query: null,
+339 verbose parsed url   pathname: 'which@~1.0.5',
+339 verbose parsed url   path: 'which@~1.0.5',
+339 verbose parsed url   href: 'which@~1.0.5' }
+340 verbose cache add name="which" spec="~1.0.5" args=["which","~1.0.5"]
+341 verbose parsed url { protocol: null,
+341 verbose parsed url   slashes: null,
+341 verbose parsed url   auth: null,
+341 verbose parsed url   host: null,
+341 verbose parsed url   port: null,
+341 verbose parsed url   hostname: null,
+341 verbose parsed url   hash: null,
+341 verbose parsed url   search: null,
+341 verbose parsed url   query: null,
+341 verbose parsed url   pathname: '~1.0.5',
+341 verbose parsed url   path: '~1.0.5',
+341 verbose parsed url   href: '~1.0.5' }
+342 verbose addNamed [ 'which', '~1.0.5' ]
+343 verbose addNamed [ null, '>=1.0.5-0 <1.1.0-0' ]
+344 silly lockFile d158d65e-which-1-0-5 which@~1.0.5
+345 verbose lock which@~1.0.5 C:\Users\Zen\AppData\Roaming\npm-cache\d158d65e-which-1-0-5.lock
+346 silly addNameRange { name: 'which', range: '>=1.0.5-0 <1.1.0-0', hasData: false }
+347 verbose request where is /which
+348 verbose request registry https://registry.npmjs.org/
+349 verbose url raw /which
+350 verbose url resolving [ 'https://registry.npmjs.org/', './which' ]
+351 verbose url resolved https://registry.npmjs.org/which
+352 verbose request where is https://registry.npmjs.org/which
+353 info trying registry request attempt 1 at 11:13:16
+354 verbose etag "AHUYULHADBJ8IK1PZB46SU6I"
+355 http GET https://registry.npmjs.org/which
+356 silly gunzTarPerm extractEntry LICENSE
+357 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+358 silly gunzTarPerm extractEntry glob.js
+359 silly gunzTarPerm modified mode [ 'glob.js', 420, 438 ]
+360 silly gunzTarPerm extractEntry .travis.yml
+361 silly gunzTarPerm modified mode [ '.travis.yml', 420, 438 ]
+362 silly gunzTarPerm extractEntry examples/g.js
+363 silly gunzTarPerm modified mode [ 'examples/g.js', 420, 438 ]
+364 silly gunzTarPerm extractEntry examples/usr-local.js
+365 silly gunzTarPerm modified mode [ 'examples/usr-local.js', 420, 438 ]
+366 info preinstall nan@1.2.0
+367 verbose readDependencies using package.json deps
+368 verbose readDependencies using package.json deps
+369 silly resolved []
+370 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\nan
+371 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\nan
+372 verbose linkStuff [ false,
+372 verbose linkStuff   false,
+372 verbose linkStuff   false,
+372 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules' ]
+373 info linkStuff nan@1.2.0
+374 verbose linkBins nan@1.2.0
+375 verbose linkMans nan@1.2.0
+376 verbose rebuildBundles nan@1.2.0
+377 info install nan@1.2.0
+378 info postinstall nan@1.2.0
+379 silly gunzTarPerm extractEntry test/00-setup.js
+380 silly gunzTarPerm modified mode [ 'test/00-setup.js', 420, 438 ]
+381 silly gunzTarPerm extractEntry test/cwd-test.js
+382 silly gunzTarPerm modified mode [ 'test/cwd-test.js', 420, 438 ]
+383 silly gunzTarPerm extractEntry test/globstar-match.js
+384 silly gunzTarPerm modified mode [ 'test/globstar-match.js', 420, 438 ]
+385 silly gunzTarPerm extractEntry test/mark.js
+386 silly gunzTarPerm modified mode [ 'test/mark.js', 420, 438 ]
+387 silly gunzTarPerm extractEntry test/stat.js
+388 silly gunzTarPerm modified mode [ 'test/stat.js', 420, 438 ]
+389 silly gunzTarPerm extractEntry test/bash-comparison.js
+390 silly gunzTarPerm modified mode [ 'test/bash-comparison.js', 420, 438 ]
+391 silly gunzTarPerm extractEntry test/pause-resume.js
+392 silly gunzTarPerm modified mode [ 'test/pause-resume.js', 420, 438 ]
+393 silly gunzTarPerm extractEntry test/readme-issue.js
+394 silly gunzTarPerm modified mode [ 'test/readme-issue.js', 420, 438 ]
+395 silly gunzTarPerm extractEntry test/root-nomount.js
+396 silly gunzTarPerm modified mode [ 'test/root-nomount.js', 420, 438 ]
+397 silly gunzTarPerm extractEntry test/root.js
+398 silly gunzTarPerm modified mode [ 'test/root.js', 420, 438 ]
+399 silly gunzTarPerm extractEntry test/new-glob-optional-options.js
+400 silly gunzTarPerm modified mode [ 'test/new-glob-optional-options.js', 420, 438 ]
+401 silly gunzTarPerm extractEntry test/zz-cleanup.js
+402 silly gunzTarPerm modified mode [ 'test/zz-cleanup.js', 420, 438 ]
+403 silly gunzTarPerm extractEntry test/nocase-nomagic.js
+404 silly gunzTarPerm modified mode [ 'test/nocase-nomagic.js', 420, 438 ]
+405 silly gunzTarPerm extractEntry test/bash-results.json
+406 silly gunzTarPerm modified mode [ 'test/bash-results.json', 420, 438 ]
+407 http 304 https://registry.npmjs.org/which
+408 silly registry.get cb [ 304,
+408 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:13 GMT',
+408 silly registry.get     server: 'Apache',
+408 silly registry.get     via: '1.1 varnish',
+408 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:12:29 GMT',
+408 silly registry.get     'cache-control': 'max-age=60',
+408 silly registry.get     etag: '"AHUYULHADBJ8IK1PZB46SU6I"',
+408 silly registry.get     age: '382',
+408 silly registry.get     'x-served-by': 'cache-hk91-HKG',
+408 silly registry.get     'x-cache': 'HIT',
+408 silly registry.get     'x-cache-hits': '2',
+408 silly registry.get     'x-timer': 'S1413087193.773792,VS0,VE0',
+408 silly registry.get     vary: 'Accept',
+408 silly registry.get     'content-length': '0',
+408 silly registry.get     'keep-alive': 'timeout=10, max=50',
+408 silly registry.get     connection: 'Keep-Alive' } ]
+409 verbose etag https://registry.npmjs.org/which from cache
+410 silly addNameRange number 2 { name: 'which', range: '>=1.0.5-0 <1.1.0-0', hasData: true }
+411 silly addNameRange versions [ 'which', [ '1.0.0', '1.0.1', '1.0.2', '1.0.3', '1.0.5' ] ]
+412 verbose addNamed [ 'which', '1.0.5' ]
+413 verbose addNamed [ '1.0.5', '1.0.5' ]
+414 silly lockFile 4aed4494-which-1-0-5 which@1.0.5
+415 verbose lock which@1.0.5 C:\Users\Zen\AppData\Roaming\npm-cache\4aed4494-which-1-0-5.lock
+416 silly lockFile 4aed4494-which-1-0-5 which@1.0.5
+417 silly lockFile 4aed4494-which-1-0-5 which@1.0.5
+418 silly lockFile d158d65e-which-1-0-5 which@~1.0.5
+419 silly lockFile d158d65e-which-1-0-5 which@~1.0.5
+420 silly resolved [ { author:
+420 silly resolved      { name: 'Isaac Z. Schlueter',
+420 silly resolved        email: 'i@izs.me',
+420 silly resolved        url: 'http://blog.izs.me' },
+420 silly resolved     name: 'which',
+420 silly resolved     description: 'Like which(1) unix command. Find the first instance of an executable in the PATH.',
+420 silly resolved     version: '1.0.5',
+420 silly resolved     repository: { type: 'git', url: 'git://github.com/isaacs/node-which.git' },
+420 silly resolved     main: 'which.js',
+420 silly resolved     bin: { which: './bin/which' },
+420 silly resolved     engines: { node: '*' },
+420 silly resolved     dependencies: {},
+420 silly resolved     devDependencies: {},
+420 silly resolved     _npmUser: { name: 'isaacs', email: 'i@izs.me' },
+420 silly resolved     _id: 'which@1.0.5',
+420 silly resolved     optionalDependencies: {},
+420 silly resolved     _engineSupported: true,
+420 silly resolved     _npmVersion: '1.1.2',
+420 silly resolved     _nodeVersion: 'v0.7.6-pre',
+420 silly resolved     _defaultsLoaded: true,
+420 silly resolved     dist:
+420 silly resolved      { shasum: '5630d6819dda692f1464462e7956cb42c0842739',
+420 silly resolved        tarball: 'http://registry.npmjs.org/which/-/which-1.0.5.tgz' },
+420 silly resolved     readme: 'The "which" util from npm\'s guts.\n\nFinds the first instance of a specified executable in the PATH\nenvironment variable.  Does not cache the results, so `hash -r` is not\nneeded when the PATH changes.\n',
+420 silly resolved     maintainers: [ [Object] ],
+420 silly resolved     directories: {},
+420 silly resolved     _shasum: '5630d6819dda692f1464462e7956cb42c0842739',
+420 silly resolved     _from: 'which@~1.0.5',
+420 silly resolved     _resolved: 'https://registry.npmjs.org/which/-/which-1.0.5.tgz',
+420 silly resolved     bugs: { url: 'https://github.com/isaacs/node-which/issues' },
+420 silly resolved     homepage: 'https://github.com/isaacs/node-which' } ]
+421 info install which@1.0.5 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home
+422 info installOne which@1.0.5
+423 verbose node_modules\java\node_modules\find-java-home\node_modules\which unbuild
+424 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\which\1.0.5\package.tgz
+425 silly lockFile 25ce05bd-ind-java-home-node-modules-which tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home\node_modules\which
+426 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home\node_modules\which C:\Users\Zen\AppData\Roaming\npm-cache\25ce05bd-ind-java-home-node-modules-which.lock
+427 silly lockFile 2c7b2509-pm-cache-which-1-0-5-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\which\1.0.5\package.tgz
+428 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\which\1.0.5\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\2c7b2509-pm-cache-which-1-0-5-package-tgz.lock
+429 silly gunzTarPerm modes [ '777', '666' ]
+430 silly lockFile b9bf72b5-e-modules-java-node-modules-glob tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob
+431 silly lockFile b9bf72b5-e-modules-java-node-modules-glob tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob
+432 silly lockFile 8ef77900-pm-cache-glob-3-2-11-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\glob\3.2.11\package.tgz
+433 silly lockFile 8ef77900-pm-cache-glob-3-2-11-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\glob\3.2.11\package.tgz
+434 info preinstall glob@3.2.11
+435 verbose readDependencies using package.json deps
+436 verbose readDependencies using package.json deps
+437 verbose cache add [ 'inherits@2', null ]
+438 verbose cache add name=undefined spec="inherits@2" args=["inherits@2",null]
+439 verbose parsed url { protocol: null,
+439 verbose parsed url   slashes: null,
+439 verbose parsed url   auth: null,
+439 verbose parsed url   host: null,
+439 verbose parsed url   port: null,
+439 verbose parsed url   hostname: null,
+439 verbose parsed url   hash: null,
+439 verbose parsed url   search: null,
+439 verbose parsed url   query: null,
+439 verbose parsed url   pathname: 'inherits@2',
+439 verbose parsed url   path: 'inherits@2',
+439 verbose parsed url   href: 'inherits@2' }
+440 verbose cache add [ 'minimatch@0.3', null ]
+441 verbose cache add name=undefined spec="minimatch@0.3" args=["minimatch@0.3",null]
+442 verbose parsed url { protocol: null,
+442 verbose parsed url   slashes: null,
+442 verbose parsed url   auth: null,
+442 verbose parsed url   host: null,
+442 verbose parsed url   port: null,
+442 verbose parsed url   hostname: null,
+442 verbose parsed url   hash: null,
+442 verbose parsed url   search: null,
+442 verbose parsed url   query: null,
+442 verbose parsed url   pathname: 'minimatch@0.3',
+442 verbose parsed url   path: 'minimatch@0.3',
+442 verbose parsed url   href: 'minimatch@0.3' }
+443 verbose cache add name="inherits" spec="2" args=["inherits","2"]
+444 verbose parsed url { protocol: null,
+444 verbose parsed url   slashes: null,
+444 verbose parsed url   auth: null,
+444 verbose parsed url   host: null,
+444 verbose parsed url   port: null,
+444 verbose parsed url   hostname: null,
+444 verbose parsed url   hash: null,
+444 verbose parsed url   search: null,
+444 verbose parsed url   query: null,
+444 verbose parsed url   pathname: '2',
+444 verbose parsed url   path: '2',
+444 verbose parsed url   href: '2' }
+445 verbose addNamed [ 'inherits', '2' ]
+446 verbose addNamed [ null, '>=2.0.0-0 <3.0.0-0' ]
+447 silly lockFile 1f7ff4de-inherits-2 inherits@2
+448 verbose lock inherits@2 C:\Users\Zen\AppData\Roaming\npm-cache\1f7ff4de-inherits-2.lock
+449 verbose cache add name="minimatch" spec="0.3" args=["minimatch","0.3"]
+450 verbose parsed url { protocol: null,
+450 verbose parsed url   slashes: null,
+450 verbose parsed url   auth: null,
+450 verbose parsed url   host: null,
+450 verbose parsed url   port: null,
+450 verbose parsed url   hostname: null,
+450 verbose parsed url   hash: null,
+450 verbose parsed url   search: null,
+450 verbose parsed url   query: null,
+450 verbose parsed url   pathname: '0.3',
+450 verbose parsed url   path: '0.3',
+450 verbose parsed url   href: '0.3' }
+451 verbose addNamed [ 'minimatch', '0.3' ]
+452 verbose addNamed [ null, '>=0.3.0-0 <0.4.0-0' ]
+453 silly lockFile d43e9cee-minimatch-0-3 minimatch@0.3
+454 verbose lock minimatch@0.3 C:\Users\Zen\AppData\Roaming\npm-cache\d43e9cee-minimatch-0-3.lock
+455 silly addNameRange { name: 'inherits', range: '>=2.0.0-0 <3.0.0-0', hasData: false }
+456 silly addNameRange { name: 'minimatch',
+456 silly addNameRange   range: '>=0.3.0-0 <0.4.0-0',
+456 silly addNameRange   hasData: false }
+457 verbose request where is /inherits
+458 verbose request registry https://registry.npmjs.org/
+459 verbose url raw /inherits
+460 verbose url resolving [ 'https://registry.npmjs.org/', './inherits' ]
+461 verbose url resolved https://registry.npmjs.org/inherits
+462 verbose request where is https://registry.npmjs.org/inherits
+463 info trying registry request attempt 1 at 11:13:16
+464 verbose etag "D8E7KZOA9QREM68WQ5C26NW1G"
+465 http GET https://registry.npmjs.org/inherits
+466 verbose request where is /minimatch
+467 verbose request registry https://registry.npmjs.org/
+468 verbose url raw /minimatch
+469 verbose url resolving [ 'https://registry.npmjs.org/', './minimatch' ]
+470 verbose url resolved https://registry.npmjs.org/minimatch
+471 verbose request where is https://registry.npmjs.org/minimatch
+472 info trying registry request attempt 1 at 11:13:16
+473 verbose etag "DJRLDPA98I9L6YA58JA95JQFQ"
+474 http GET https://registry.npmjs.org/minimatch
+475 http 304 https://registry.npmjs.org/inherits
+476 silly registry.get cb [ 304,
+476 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:14 GMT',
+476 silly registry.get     server: 'Apache',
+476 silly registry.get     via: '1.1 varnish',
+476 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:13:01 GMT',
+476 silly registry.get     'cache-control': 'max-age=60',
+476 silly registry.get     etag: '"D8E7KZOA9QREM68WQ5C26NW1G"',
+476 silly registry.get     age: '13',
+476 silly registry.get     'x-served-by': 'cache-hk93-HKG',
+476 silly registry.get     'x-cache': 'HIT',
+476 silly registry.get     'x-cache-hits': '2',
+476 silly registry.get     'x-timer': 'S1413087194.004792,VS0,VE0',
+476 silly registry.get     vary: 'Accept',
+476 silly registry.get     'content-length': '0',
+476 silly registry.get     'keep-alive': 'timeout=10, max=50',
+476 silly registry.get     connection: 'Keep-Alive' } ]
+477 verbose etag https://registry.npmjs.org/inherits from cache
+478 silly gunzTarPerm extractEntry bin/
+479 silly gunzTarPerm modified mode [ 'bin/', 493, 511 ]
+480 silly gunzTarPerm extractEntry bin/which
+481 silly gunzTarPerm modified mode [ 'bin/which', 493, 511 ]
+482 silly gunzTarPerm extractEntry LICENSE
+483 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+484 silly gunzTarPerm extractEntry package.json
+485 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+486 silly addNameRange number 2 { name: 'inherits', range: '>=2.0.0-0 <3.0.0-0', hasData: true }
+487 silly addNameRange versions [ 'inherits', [ '1.0.0', '2.0.0', '2.0.1' ] ]
+488 verbose addNamed [ 'inherits', '2.0.1' ]
+489 verbose addNamed [ '2.0.1', '2.0.1' ]
+490 silly lockFile 2b2e8f1b-inherits-2-0-1 inherits@2.0.1
+491 verbose lock inherits@2.0.1 C:\Users\Zen\AppData\Roaming\npm-cache\2b2e8f1b-inherits-2-0-1.lock
+492 silly gunzTarPerm extractEntry README.md
+493 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+494 silly gunzTarPerm extractEntry which.js
+495 silly gunzTarPerm modified mode [ 'which.js', 420, 438 ]
+496 silly lockFile 2b2e8f1b-inherits-2-0-1 inherits@2.0.1
+497 silly lockFile 2b2e8f1b-inherits-2-0-1 inherits@2.0.1
+498 silly lockFile 1f7ff4de-inherits-2 inherits@2
+499 silly lockFile 1f7ff4de-inherits-2 inherits@2
+500 silly lockFile 25ce05bd-ind-java-home-node-modules-which tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home\node_modules\which
+501 silly lockFile 25ce05bd-ind-java-home-node-modules-which tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home\node_modules\which
+502 silly lockFile 2c7b2509-pm-cache-which-1-0-5-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\which\1.0.5\package.tgz
+503 silly lockFile 2c7b2509-pm-cache-which-1-0-5-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\which\1.0.5\package.tgz
+504 info preinstall which@1.0.5
+505 verbose readDependencies using package.json deps
+506 verbose readDependencies using package.json deps
+507 silly resolved []
+508 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home\node_modules\which
+509 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home\node_modules\which
+510 verbose linkStuff [ false,
+510 verbose linkStuff   false,
+510 verbose linkStuff   false,
+510 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules\\find-java-home\\node_modules' ]
+511 info linkStuff which@1.0.5
+512 verbose linkBins which@1.0.5
+513 verbose link bins [ { which: './bin/which' },
+513 verbose link bins   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules\\find-java-home\\node_modules\\.bin',
+513 verbose link bins   false ]
+514 verbose linkMans which@1.0.5
+515 verbose rebuildBundles which@1.0.5
+516 info install which@1.0.5
+517 info postinstall which@1.0.5
+518 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home
+519 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\find-java-home
+520 verbose linkStuff [ false,
+520 verbose linkStuff   false,
+520 verbose linkStuff   false,
+520 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules' ]
+521 info linkStuff find-java-home@0.1.1
+522 verbose linkBins find-java-home@0.1.1
+523 verbose linkMans find-java-home@0.1.1
+524 verbose rebuildBundles find-java-home@0.1.1
+525 verbose rebuildBundles [ '.bin', 'which' ]
+526 info install find-java-home@0.1.1
+527 info postinstall find-java-home@0.1.1
+528 http 304 https://registry.npmjs.org/minimatch
+529 silly registry.get cb [ 304,
+529 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:14 GMT',
+529 silly registry.get     server: 'Apache',
+529 silly registry.get     via: '1.1 varnish',
+529 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:13:14 GMT',
+529 silly registry.get     'cache-control': 'max-age=60',
+529 silly registry.get     etag: '"DJRLDPA98I9L6YA58JA95JQFQ"',
+529 silly registry.get     'x-served-by': 'cache-lax1426-LAX',
+529 silly registry.get     'x-cache': 'HIT',
+529 silly registry.get     'x-cache-hits': '1',
+529 silly registry.get     'x-timer': 'S1413087194.519178,VS0,VE0',
+529 silly registry.get     vary: 'Accept',
+529 silly registry.get     'content-length': '0',
+529 silly registry.get     'keep-alive': 'timeout=10, max=50',
+529 silly registry.get     connection: 'Keep-Alive' } ]
+530 verbose etag https://registry.npmjs.org/minimatch from cache
+531 silly addNameRange number 2 { name: 'minimatch', range: '>=0.3.0-0 <0.4.0-0', hasData: true }
+532 silly addNameRange versions [ 'minimatch',
+532 silly addNameRange   [ '0.0.1',
+532 silly addNameRange     '0.0.2',
+532 silly addNameRange     '0.0.4',
+532 silly addNameRange     '0.0.5',
+532 silly addNameRange     '0.1.1',
+532 silly addNameRange     '0.1.2',
+532 silly addNameRange     '0.1.3',
+532 silly addNameRange     '0.1.4',
+532 silly addNameRange     '0.1.5',
+532 silly addNameRange     '0.2.0',
+532 silly addNameRange     '0.2.2',
+532 silly addNameRange     '0.2.3',
+532 silly addNameRange     '0.2.4',
+532 silly addNameRange     '0.2.5',
+532 silly addNameRange     '0.2.6',
+532 silly addNameRange     '0.2.7',
+532 silly addNameRange     '0.2.8',
+532 silly addNameRange     '0.2.9',
+532 silly addNameRange     '0.2.10',
+532 silly addNameRange     '0.2.11',
+532 silly addNameRange     '0.2.12',
+532 silly addNameRange     '0.2.13',
+532 silly addNameRange     '0.2.14',
+532 silly addNameRange     '0.3.0',
+532 silly addNameRange     '0.4.0',
+532 silly addNameRange     '1.0.0' ] ]
+533 verbose addNamed [ 'minimatch', '0.3.0' ]
+534 verbose addNamed [ '0.3.0', '0.3.0' ]
+535 silly lockFile fbcfe8c1-minimatch-0-3-0 minimatch@0.3.0
+536 verbose lock minimatch@0.3.0 C:\Users\Zen\AppData\Roaming\npm-cache\fbcfe8c1-minimatch-0-3-0.lock
+537 silly lockFile fbcfe8c1-minimatch-0-3-0 minimatch@0.3.0
+538 silly lockFile fbcfe8c1-minimatch-0-3-0 minimatch@0.3.0
+539 silly lockFile d43e9cee-minimatch-0-3 minimatch@0.3
+540 silly lockFile d43e9cee-minimatch-0-3 minimatch@0.3
+541 silly resolved [ { name: 'inherits',
+541 silly resolved     description: 'Browser-friendly inheritance fully compatible with standard node.js inherits()',
+541 silly resolved     version: '2.0.1',
+541 silly resolved     keywords:
+541 silly resolved      [ 'inheritance',
+541 silly resolved        'class',
+541 silly resolved        'klass',
+541 silly resolved        'oop',
+541 silly resolved        'object-oriented',
+541 silly resolved        'inherits',
+541 silly resolved        'browser',
+541 silly resolved        'browserify' ],
+541 silly resolved     main: './inherits.js',
+541 silly resolved     browser: './inherits_browser.js',
+541 silly resolved     repository: { type: 'git', url: 'git://github.com/isaacs/inherits' },
+541 silly resolved     license: 'ISC',
+541 silly resolved     scripts: { test: 'node test' },
+541 silly resolved     readme: 'Browser-friendly inheritance fully compatible with standard node.js\n[inherits](http://nodejs.org/api/util.html#util_util_inherits_constructor_superconstructor).\n\nThis package exports standard `inherits` from node.js `util` module in\nnode environment, but also provides alternative browser-friendly\nimplementation through [browser\nfield](https://gist.github.com/shtylman/4339901). Alternative\nimplementation is a literal copy of standard one located in standalone\nmodule to avoid requiring of `util`. It also has a shim for old\nbrowsers with no `Object.create` support.\n\nWhile keeping you sure you are using standard `inherits`\nimplementation in node.js environment, it allows bundlers such as\n[browserify](https://github.com/substack/node-browserify) to not\ninclude full `util` package to your client code if all you need is\njust `inherits` function. It worth, because browser shim for `util`\npackage is large and `inherits` is often the single function you need\nfrom it.\n\nIt\'s recommended to use this package instead of\n`require(\'util\').inherits` for any code that has chances to be used\nnot only in node.js but in browser too.\n\n## usage\n\n```js\nvar inherits = require(\'inherits\');\n// then use exactly as the standard one\n```\n\n## note on version ~1.0\n\nVersion ~1.0 had completely different motivation and is not compatible\nneither with 2.0 nor with standard node.js `inherits`.\n\nIf you are using version ~1.0 and planning to switch to ~2.0, be\ncareful:\n\n* new version uses `super_` instead of `super` for referencing\n  superclass\n* new version overwrites current prototype while old one preserves any\n  existing fields on it\n',
+541 silly resolved     readmeFilename: 'README.md',
+541 silly resolved     bugs: { url: 'https://github.com/isaacs/inherits/issues' },
+541 silly resolved     homepage: 'https://github.com/isaacs/inherits',
+541 silly resolved     _id: 'inherits@2.0.1',
+541 silly resolved     _shasum: 'b17d08d326b4423e568eff719f91b0b1cbdf69f1',
+541 silly resolved     _from: 'inherits@2',
+541 silly resolved     _resolved: 'https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz' },
+541 silly resolved   { author:
+541 silly resolved      { name: 'Isaac Z. Schlueter',
+541 silly resolved        email: 'i@izs.me',
+541 silly resolved        url: 'http://blog.izs.me' },
+541 silly resolved     name: 'minimatch',
+541 silly resolved     description: 'a glob matcher in javascript',
+541 silly resolved     version: '0.3.0',
+541 silly resolved     repository: { type: 'git', url: 'git://github.com/isaacs/minimatch.git' },
+541 silly resolved     main: 'minimatch.js',
+541 silly resolved     scripts: { test: 'tap test/*.js' },
+541 silly resolved     engines: { node: '*' },
+541 silly resolved     dependencies: { 'lru-cache': '2', sigmund: '~1.0.0' },
+541 silly resolved     devDependencies: { tap: '' },
+541 silly resolved     license:
+541 silly resolved      { type: 'MIT',
+541 silly resolved        url: 'http://github.com/isaacs/minimatch/raw/master/LICENSE' },
+541 silly resolved     readme: '# minimatch\n\nA minimal matching utility.\n\n[![Build Status](https://secure.travis-ci.org/isaacs/minimatch.png)](http://travis-ci.org/isaacs/minimatch)\n\n\nThis is the matching library used internally by npm.\n\nEventually, it will replace the C binding in node-glob.\n\nIt works by converting glob expressions into JavaScript `RegExp`\nobjects.\n\n## Usage\n\n```javascript\nvar minimatch = require("minimatch")\n\nminimatch("bar.foo", "*.foo") // true!\nminimatch("bar.foo", "*.bar") // false!\nminimatch("bar.foo", "*.+(bar|foo)", { debug: true }) // true, and noisy!\n```\n\n## Features\n\nSupports these glob features:\n\n* Brace Expansion\n* Extended glob matching\n* "Globstar" `**` matching\n\nSee:\n\n* `man sh`\n* `man bash`\n* `man 3 fnmatch`\n* `man 5 gitignore`\n\n## Minimatch Class\n\nCreate a minimatch object by instanting the `minimatch.Minimatch` class.\n\n```javascript\nvar Minimatch = require("minimatch").Minimatch\nvar mm = new Minimatch(pattern, options)\n```\n\n### Properties\n\n* `pattern` The original pattern the minimatch object represents.\n* `options` The options supplied to the constructor.\n* `set` A 2-dimensional array of regexp or string expressions.\n  Each row in the\n  array corresponds to a brace-expanded pattern.  Each item in the row\n  corresponds to a single path-part.  For example, the pattern\n  `{a,b/c}/d` would expand to a set of patterns like:\n\n        [ [ a, d ]\n        , [ b, c, d ] ]\n\n    If a portion of the pattern doesn\'t have any "magic" in it\n    (that is, it\'s something like `"foo"` rather than `fo*o?`), then it\n    will be left as a string rather than converted to a regular\n    expression.\n\n* `regexp` Created by the `makeRe` method.  A single regular expression\n  expressing the entire pattern.  This is useful in cases where you wish\n  to use the pattern somewhat like `fnmatch(3)` with `FNM_PATH` enabled.\n* `negate` True if the pattern is negated.\n* `comment` True if the pattern is a comment.\n* `empty` True if the pattern is `""`.\n\n### Methods\n\n* `makeRe` Generate the `regexp` member if necessary, and return it.\n  Will return `false` if the pattern is invalid.\n* `match(fname)` Return true if the filename matches the pattern, or\n  false otherwise.\n* `matchOne(fileArray, patternArray, partial)` Take a `/`-split\n  filename, and match it against a single row in the `regExpSet`.  This\n  method is mainly for internal use, but is exposed so that it can be\n  used by a glob-walker that needs to avoid excessive filesystem calls.\n\nAll other methods are internal, and will be called as necessary.\n\n## Functions\n\nThe top-level exported function has a `cache` property, which is an LRU\ncache set to store 100 items.  So, calling these methods repeatedly\nwith the same pattern and options will use the same Minimatch object,\nsaving the cost of parsing it multiple times.\n\n### minimatch(path, pattern, options)\n\nMain export.  Tests a path against the pattern using the options.\n\n```javascript\nvar isJS = minimatch(file, "*.js", { matchBase: true })\n```\n\n### minimatch.filter(pattern, options)\n\nReturns a function that tests its\nsupplied argument, suitable for use with `Array.filter`.  Example:\n\n```javascript\nvar javascripts = fileList.filter(minimatch.filter("*.js", {matchBase: true}))\n```\n\n### minimatch.match(list, pattern, options)\n\nMatch against the list of\nfiles, in the style of fnmatch or glob.  If nothing is matched, and\noptions.nonull is set, then return a list containing the pattern itself.\n\n```javascript\nvar javascripts = minimatch.match(fileList, "*.js", {matchBase: true}))\n```\n\n### minimatch.makeRe(pattern, options)\n\nMake a regular expression object from the pattern.\n\n## Options\n\nAll options are `false` by default.\n\n### debug\n\nDump a ton of stuff to stderr.\n\n### nobrace\n\nDo not expand `{a,b}` and `{1..3}` brace sets.\n\n### noglobstar\n\nDisable `**` matching against multiple folder names.\n\n### dot\n\nAllow patterns to match filenames starting with a period, even if\nthe pattern does not explicitly have a period in that spot.\n\nNote that by default, `a/**/b` will **not** match `a/.d/b`, unless `dot`\nis set.\n\n### noext\n\nDisable "extglob" style patterns like `+(a|b)`.\n\n### nocase\n\nPerform a case-insensitive match.\n\n### nonull\n\nWhen a match is not found by `minimatch.match`, return a list containing\nthe pattern itself if this option is set.  When not set, an empty list\nis returned if there are no matches.\n\n### matchBase\n\nIf set, then patterns without slashes will be matched\nagainst the basename of the path if it contains slashes.  For example,\n`a?b` would match the path `/xyz/123/acb`, but not `/xyz/acb/123`.\n\n### nocomment\n\nSuppress the behavior of treating `#` at the start of a pattern as a\ncomment.\n\n### nonegate\n\nSuppress the behavior of treating a leading `!` character as negation.\n\n### flipNegate\n\nReturns from negate expressions the same as if they were not negated.\n(Ie, true on a hit, false on a miss.)\n\n\n## Comparisons to other fnmatch/glob implementations\n\nWhile strict compliance with the existing standards is a worthwhile\ngoal, some discrepancies exist between minimatch and other\nimplementations, and are intentional.\n\nIf the pattern starts with a `!` character, then it is negated.  Set the\n`nonegate` flag to suppress this behavior, and treat leading `!`\ncharacters normally.  This is perhaps relevant if you wish to start the\npattern with a negative extglob pattern like `!(a|B)`.  Multiple `!`\ncharacters at the start of a pattern will negate the pattern multiple\ntimes.\n\nIf a pattern starts with `#`, then it is treated as a comment, and\nwill not match anything.  Use `\\#` to match a literal `#` at the\nstart of a line, or set the `nocomment` flag to suppress this behavior.\n\nThe double-star character `**` is supported by default, unless the\n`noglobstar` flag is set.  This is supported in the manner of bsdglob\nand bash 4.1, where `**` only has special significance if it is the only\nthing in a path part.  That is, `a/**/b` will match `a/x/y/b`, but\n`a/**b` will not.\n\nIf an escaped pattern has no matches, and the `nonull` flag is set,\nthen minimatch.match returns the pattern as-provided, rather than\ninterpreting the character escapes.  For example,\n`minimatch.match([], "\\\\*a\\\\?")` will return `"\\\\*a\\\\?"` rather than\n`"*a?"`.  This is akin to setting the `nullglob` option in bash, except\nthat it does not resolve escaped pattern characters.\n\nIf brace expansion is not disabled, then it is performed before any\nother interpretation of the glob pattern.  Thus, a pattern like\n`+(a|{b),c)}`, which would not be valid in bash or zsh, is expanded\n**first** into the set of `+(a|b)` and `+(a|c)`, and those patterns are\nchecked for validity.  Since those two are valid, matching proceeds.\n',
+541 silly resolved     readmeFilename: 'README.md',
+541 silly resolved     bugs: { url: 'https://github.com/isaacs/minimatch/issues' },
+541 silly resolved     homepage: 'https://github.com/isaacs/minimatch',
+541 silly resolved     _id: 'minimatch@0.3.0',
+541 silly resolved     _shasum: '275d8edaac4f1bb3326472089e7949c8394699dd',
+541 silly resolved     _from: 'minimatch@0.3',
+541 silly resolved     _resolved: 'https://registry.npmjs.org/minimatch/-/minimatch-0.3.0.tgz' } ]
+542 info install inherits@2.0.1 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob
+543 info install minimatch@0.3.0 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob
+544 info installOne inherits@2.0.1
+545 info installOne minimatch@0.3.0
+546 verbose node_modules\java\node_modules\glob\node_modules\inherits unbuild
+547 verbose node_modules\java\node_modules\glob\node_modules\minimatch unbuild
+548 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\inherits\2.0.1\package.tgz
+549 silly lockFile 8aa91dad-dules-glob-node-modules-inherits tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\inherits
+550 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\inherits C:\Users\Zen\AppData\Roaming\npm-cache\8aa91dad-dules-glob-node-modules-inherits.lock
+551 silly lockFile b230e68b-cache-inherits-2-0-1-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\inherits\2.0.1\package.tgz
+552 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\inherits\2.0.1\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\b230e68b-cache-inherits-2-0-1-package-tgz.lock
+553 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\minimatch\0.3.0\package.tgz
+554 silly lockFile 61eba8ac-ules-glob-node-modules-minimatch tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch
+555 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch C:\Users\Zen\AppData\Roaming\npm-cache\61eba8ac-ules-glob-node-modules-minimatch.lock
+556 silly lockFile 33819fa0-ache-minimatch-0-3-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\minimatch\0.3.0\package.tgz
+557 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\minimatch\0.3.0\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\33819fa0-ache-minimatch-0-3-0-package-tgz.lock
+558 silly gunzTarPerm modes [ '777', '666' ]
+559 silly gunzTarPerm modes [ '777', '666' ]
+560 silly gunzTarPerm extractEntry package.json
+561 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+562 silly gunzTarPerm extractEntry .npmignore
+563 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+564 silly gunzTarPerm extractEntry README.md
+565 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+566 silly gunzTarPerm extractEntry package.json
+567 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+568 silly gunzTarPerm extractEntry README.md
+569 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+570 silly gunzTarPerm extractEntry LICENSE
+571 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+572 silly gunzTarPerm extractEntry inherits.js
+573 silly gunzTarPerm modified mode [ 'inherits.js', 420, 438 ]
+574 silly gunzTarPerm extractEntry inherits_browser.js
+575 silly gunzTarPerm modified mode [ 'inherits_browser.js', 420, 438 ]
+576 silly gunzTarPerm extractEntry test.js
+577 silly gunzTarPerm modified mode [ 'test.js', 420, 438 ]
+578 silly gunzTarPerm extractEntry LICENSE
+579 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+580 silly gunzTarPerm extractEntry minimatch.js
+581 silly gunzTarPerm modified mode [ 'minimatch.js', 420, 438 ]
+582 silly gunzTarPerm extractEntry test/basic.js
+583 silly gunzTarPerm modified mode [ 'test/basic.js', 420, 438 ]
+584 silly gunzTarPerm extractEntry test/brace-expand.js
+585 silly gunzTarPerm modified mode [ 'test/brace-expand.js', 420, 438 ]
+586 silly gunzTarPerm extractEntry test/caching.js
+587 silly gunzTarPerm modified mode [ 'test/caching.js', 420, 438 ]
+588 silly gunzTarPerm extractEntry test/defaults.js
+589 silly gunzTarPerm modified mode [ 'test/defaults.js', 420, 438 ]
+590 silly gunzTarPerm extractEntry test/extglob-ending-with-state-char.js
+591 silly gunzTarPerm modified mode [ 'test/extglob-ending-with-state-char.js', 420, 438 ]
+592 silly lockFile 8aa91dad-dules-glob-node-modules-inherits tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\inherits
+593 silly lockFile 8aa91dad-dules-glob-node-modules-inherits tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\inherits
+594 silly lockFile b230e68b-cache-inherits-2-0-1-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\inherits\2.0.1\package.tgz
+595 silly lockFile b230e68b-cache-inherits-2-0-1-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\inherits\2.0.1\package.tgz
+596 info preinstall inherits@2.0.1
+597 verbose readDependencies using package.json deps
+598 verbose readDependencies using package.json deps
+599 silly resolved []
+600 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\inherits
+601 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\inherits
+602 verbose linkStuff [ false,
+602 verbose linkStuff   false,
+602 verbose linkStuff   false,
+602 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules\\glob\\node_modules' ]
+603 info linkStuff inherits@2.0.1
+604 verbose linkBins inherits@2.0.1
+605 verbose linkMans inherits@2.0.1
+606 verbose rebuildBundles inherits@2.0.1
+607 info install inherits@2.0.1
+608 info postinstall inherits@2.0.1
+609 silly lockFile 61eba8ac-ules-glob-node-modules-minimatch tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch
+610 silly lockFile 61eba8ac-ules-glob-node-modules-minimatch tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch
+611 silly lockFile 33819fa0-ache-minimatch-0-3-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\minimatch\0.3.0\package.tgz
+612 silly lockFile 33819fa0-ache-minimatch-0-3-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\minimatch\0.3.0\package.tgz
+613 info preinstall minimatch@0.3.0
+614 verbose readDependencies using package.json deps
+615 verbose readDependencies using package.json deps
+616 verbose cache add [ 'lru-cache@2', null ]
+617 verbose cache add name=undefined spec="lru-cache@2" args=["lru-cache@2",null]
+618 verbose parsed url { protocol: null,
+618 verbose parsed url   slashes: null,
+618 verbose parsed url   auth: null,
+618 verbose parsed url   host: null,
+618 verbose parsed url   port: null,
+618 verbose parsed url   hostname: null,
+618 verbose parsed url   hash: null,
+618 verbose parsed url   search: null,
+618 verbose parsed url   query: null,
+618 verbose parsed url   pathname: 'lru-cache@2',
+618 verbose parsed url   path: 'lru-cache@2',
+618 verbose parsed url   href: 'lru-cache@2' }
+619 verbose cache add [ 'sigmund@~1.0.0', null ]
+620 verbose cache add name=undefined spec="sigmund@~1.0.0" args=["sigmund@~1.0.0",null]
+621 verbose parsed url { protocol: null,
+621 verbose parsed url   slashes: null,
+621 verbose parsed url   auth: null,
+621 verbose parsed url   host: null,
+621 verbose parsed url   port: null,
+621 verbose parsed url   hostname: null,
+621 verbose parsed url   hash: null,
+621 verbose parsed url   search: null,
+621 verbose parsed url   query: null,
+621 verbose parsed url   pathname: 'sigmund@~1.0.0',
+621 verbose parsed url   path: 'sigmund@~1.0.0',
+621 verbose parsed url   href: 'sigmund@~1.0.0' }
+622 verbose cache add name="lru-cache" spec="2" args=["lru-cache","2"]
+623 verbose parsed url { protocol: null,
+623 verbose parsed url   slashes: null,
+623 verbose parsed url   auth: null,
+623 verbose parsed url   host: null,
+623 verbose parsed url   port: null,
+623 verbose parsed url   hostname: null,
+623 verbose parsed url   hash: null,
+623 verbose parsed url   search: null,
+623 verbose parsed url   query: null,
+623 verbose parsed url   pathname: '2',
+623 verbose parsed url   path: '2',
+623 verbose parsed url   href: '2' }
+624 verbose addNamed [ 'lru-cache', '2' ]
+625 verbose addNamed [ null, '>=2.0.0-0 <3.0.0-0' ]
+626 silly lockFile b4f9d1ff-lru-cache-2 lru-cache@2
+627 verbose lock lru-cache@2 C:\Users\Zen\AppData\Roaming\npm-cache\b4f9d1ff-lru-cache-2.lock
+628 verbose cache add name="sigmund" spec="~1.0.0" args=["sigmund","~1.0.0"]
+629 verbose parsed url { protocol: null,
+629 verbose parsed url   slashes: null,
+629 verbose parsed url   auth: null,
+629 verbose parsed url   host: null,
+629 verbose parsed url   port: null,
+629 verbose parsed url   hostname: null,
+629 verbose parsed url   hash: null,
+629 verbose parsed url   search: null,
+629 verbose parsed url   query: null,
+629 verbose parsed url   pathname: '~1.0.0',
+629 verbose parsed url   path: '~1.0.0',
+629 verbose parsed url   href: '~1.0.0' }
+630 verbose addNamed [ 'sigmund', '~1.0.0' ]
+631 verbose addNamed [ null, '>=1.0.0-0 <1.1.0-0' ]
+632 silly lockFile 584a4a05-sigmund-1-0-0 sigmund@~1.0.0
+633 verbose lock sigmund@~1.0.0 C:\Users\Zen\AppData\Roaming\npm-cache\584a4a05-sigmund-1-0-0.lock
+634 silly addNameRange { name: 'lru-cache',
+634 silly addNameRange   range: '>=2.0.0-0 <3.0.0-0',
+634 silly addNameRange   hasData: false }
+635 silly addNameRange { name: 'sigmund', range: '>=1.0.0-0 <1.1.0-0', hasData: false }
+636 verbose request where is /lru-cache
+637 verbose request registry https://registry.npmjs.org/
+638 verbose url raw /lru-cache
+639 verbose url resolving [ 'https://registry.npmjs.org/', './lru-cache' ]
+640 verbose url resolved https://registry.npmjs.org/lru-cache
+641 verbose request where is https://registry.npmjs.org/lru-cache
+642 info trying registry request attempt 1 at 11:13:17
+643 verbose etag "38MMCDO4SVJ75WC7D1LXMDWKS"
+644 http GET https://registry.npmjs.org/lru-cache
+645 verbose request where is /sigmund
+646 verbose request registry https://registry.npmjs.org/
+647 verbose url raw /sigmund
+648 verbose url resolving [ 'https://registry.npmjs.org/', './sigmund' ]
+649 verbose url resolved https://registry.npmjs.org/sigmund
+650 verbose request where is https://registry.npmjs.org/sigmund
+651 info trying registry request attempt 1 at 11:13:17
+652 verbose etag "B3EEO8J1FLHOF1JE91VSLO7DE"
+653 http GET https://registry.npmjs.org/sigmund
+654 http 304 https://registry.npmjs.org/sigmund
+655 silly registry.get cb [ 304,
+655 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:14 GMT',
+655 silly registry.get     server: 'Apache',
+655 silly registry.get     via: '1.1 varnish',
+655 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:12:50 GMT',
+655 silly registry.get     'cache-control': 'max-age=60',
+655 silly registry.get     etag: '"B3EEO8J1FLHOF1JE91VSLO7DE"',
+655 silly registry.get     'x-served-by': 'cache-hk92-HKG',
+655 silly registry.get     'x-cache': 'HIT',
+655 silly registry.get     'x-cache-hits': '2',
+655 silly registry.get     'x-timer': 'S1413087194.948844,VS0,VE0',
+655 silly registry.get     vary: 'Accept',
+655 silly registry.get     'content-length': '0',
+655 silly registry.get     'keep-alive': 'timeout=10, max=50',
+655 silly registry.get     connection: 'Keep-Alive' } ]
+656 verbose etag https://registry.npmjs.org/sigmund from cache
+657 http 304 https://registry.npmjs.org/lru-cache
+658 silly registry.get cb [ 304,
+658 silly registry.get   { date: 'Sun, 12 Oct 2014 04:13:14 GMT',
+658 silly registry.get     server: 'Apache',
+658 silly registry.get     via: '1.1 varnish',
+658 silly registry.get     'last-modified': 'Sun, 12 Oct 2014 04:12:20 GMT',
+658 silly registry.get     'cache-control': 'max-age=60',
+658 silly registry.get     etag: '"38MMCDO4SVJ75WC7D1LXMDWKS"',
+658 silly registry.get     age: '55',
+658 silly registry.get     'x-served-by': 'cache-hk91-HKG',
+658 silly registry.get     'x-cache': 'HIT',
+658 silly registry.get     'x-cache-hits': '3',
+658 silly registry.get     'x-timer': 'S1413087194.952113,VS0,VE0',
+658 silly registry.get     vary: 'Accept',
+658 silly registry.get     'content-length': '0',
+658 silly registry.get     'keep-alive': 'timeout=10, max=50',
+658 silly registry.get     connection: 'Keep-Alive' } ]
+659 verbose etag https://registry.npmjs.org/lru-cache from cache
+660 silly addNameRange number 2 { name: 'sigmund', range: '>=1.0.0-0 <1.1.0-0', hasData: true }
+661 silly addNameRange versions [ 'sigmund', [ '1.0.0' ] ]
+662 verbose addNamed [ 'sigmund', '1.0.0' ]
+663 verbose addNamed [ '1.0.0', '1.0.0' ]
+664 silly lockFile 7b2d1244-sigmund-1-0-0 sigmund@1.0.0
+665 verbose lock sigmund@1.0.0 C:\Users\Zen\AppData\Roaming\npm-cache\7b2d1244-sigmund-1-0-0.lock
+666 silly addNameRange number 2 { name: 'lru-cache', range: '>=2.0.0-0 <3.0.0-0', hasData: true }
+667 silly addNameRange versions [ 'lru-cache',
+667 silly addNameRange   [ '1.0.1',
+667 silly addNameRange     '1.0.2',
+667 silly addNameRange     '1.0.3',
+667 silly addNameRange     '1.0.4',
+667 silly addNameRange     '1.0.5',
+667 silly addNameRange     '1.0.6',
+667 silly addNameRange     '1.1.0',
+667 silly addNameRange     '1.1.1',
+667 silly addNameRange     '2.0.0',
+667 silly addNameRange     '2.0.1',
+667 silly addNameRange     '2.0.2',
+667 silly addNameRange     '2.0.3',
+667 silly addNameRange     '2.0.4',
+667 silly addNameRange     '2.1.0',
+667 silly addNameRange     '2.2.0',
+667 silly addNameRange     '2.2.1',
+667 silly addNameRange     '2.2.2',
+667 silly addNameRange     '2.2.4',
+667 silly addNameRange     '2.3.0',
+667 silly addNameRange     '2.3.1',
+667 silly addNameRange     '2.5.0' ] ]
+668 verbose addNamed [ 'lru-cache', '2.5.0' ]
+669 verbose addNamed [ '2.5.0', '2.5.0' ]
+670 silly lockFile 30aa630e-lru-cache-2-5-0 lru-cache@2.5.0
+671 verbose lock lru-cache@2.5.0 C:\Users\Zen\AppData\Roaming\npm-cache\30aa630e-lru-cache-2-5-0.lock
+672 silly lockFile 7b2d1244-sigmund-1-0-0 sigmund@1.0.0
+673 silly lockFile 7b2d1244-sigmund-1-0-0 sigmund@1.0.0
+674 silly lockFile 584a4a05-sigmund-1-0-0 sigmund@~1.0.0
+675 silly lockFile 584a4a05-sigmund-1-0-0 sigmund@~1.0.0
+676 silly lockFile 30aa630e-lru-cache-2-5-0 lru-cache@2.5.0
+677 silly lockFile 30aa630e-lru-cache-2-5-0 lru-cache@2.5.0
+678 silly lockFile b4f9d1ff-lru-cache-2 lru-cache@2
+679 silly lockFile b4f9d1ff-lru-cache-2 lru-cache@2
+680 silly resolved [ { name: 'sigmund',
+680 silly resolved     version: '1.0.0',
+680 silly resolved     description: 'Quick and dirty signatures for Objects.',
+680 silly resolved     main: 'sigmund.js',
+680 silly resolved     directories: { test: 'test' },
+680 silly resolved     dependencies: {},
+680 silly resolved     devDependencies: { tap: '~0.3.0' },
+680 silly resolved     scripts: { test: 'tap test/*.js', bench: 'node bench.js' },
+680 silly resolved     repository: { type: 'git', url: 'git://github.com/isaacs/sigmund' },
+680 silly resolved     keywords: [ 'object', 'signature', 'key', 'data', 'psychoanalysis' ],
+680 silly resolved     author:
+680 silly resolved      { name: 'Isaac Z. Schlueter',
+680 silly resolved        email: 'i@izs.me',
+680 silly resolved        url: 'http://blog.izs.me/' },
+680 silly resolved     license: 'BSD',
+680 silly resolved     readme: '# sigmund\n\nQuick and dirty signatures for Objects.\n\nThis is like a much faster `deepEquals` comparison, which returns a\nstring key suitable for caches and the like.\n\n## Usage\n\n```javascript\nfunction doSomething (someObj) {\n  var key = sigmund(someObj, maxDepth) // max depth defaults to 10\n  var cached = cache.get(key)\n  if (cached) return cached)\n\n  var result = expensiveCalculation(someObj)\n  cache.set(key, result)\n  return result\n}\n```\n\nThe resulting key will be as unique and reproducible as calling\n`JSON.stringify` or `util.inspect` on the object, but is much faster.\nIn order to achieve this speed, some differences are glossed over.\nFor example, the object `{0:\'foo\'}` will be treated identically to the\narray `[\'foo\']`.\n\nAlso, just as there is no way to summon the soul from the scribblings\nof a cocain-addled psychoanalyst, there is no way to revive the object\nfrom the signature string that sigmund gives you.  In fact, it\'s\nbarely even readable.\n\nAs with `sys.inspect` and `JSON.stringify`, larger objects will\nproduce larger signature strings.\n\nBecause sigmund is a bit less strict than the more thorough\nalternatives, the strings will be shorter, and also there is a\nslightly higher chance for collisions.  For example, these objects\nhave the same signature:\n\n    var obj1 = {a:\'b\',c:/def/,g:[\'h\',\'i\',{j:\'\',k:\'l\'}]}\n    var obj2 = {a:\'b\',c:\'/def/\',g:[\'h\',\'i\',\'{jkl\']}\n\nLike a good Freudian, sigmund is most effective when you already have\nsome understanding of what you\'re looking for.  It can help you help\nyourself, but you must be willing to do some work as well.\n\nCycles are handled, and cyclical objects are silently omitted (though\nthe key is included in the signature output.)\n\nThe second argument is the maximum depth, which defaults to 10,\nbecause that is the maximum object traversal depth covered by most\ninsurance carriers.\n',
+680 silly resolved     readmeFilename: 'README.md',
+680 silly resolved     bugs: { url: 'https://github.com/isaacs/sigmund/issues' },
+680 silly resolved     homepage: 'https://github.com/isaacs/sigmund',
+680 silly resolved     _id: 'sigmund@1.0.0',
+680 silly resolved     _shasum: '66a2b3a749ae8b5fb89efd4fcc01dc94fbe02296',
+680 silly resolved     _from: 'sigmund@~1.0.0',
+680 silly resolved     _resolved: 'https://registry.npmjs.org/sigmund/-/sigmund-1.0.0.tgz' },
+680 silly resolved   { name: 'lru-cache',
+680 silly resolved     description: 'A cache object that deletes the least-recently-used items.',
+680 silly resolved     version: '2.5.0',
+680 silly resolved     author: { name: 'Isaac Z. Schlueter', email: 'i@izs.me' },
+680 silly resolved     scripts: { test: 'tap test --gc' },
+680 silly resolved     main: 'lib/lru-cache.js',
+680 silly resolved     repository:
+680 silly resolved      { type: 'git',
+680 silly resolved        url: 'git://github.com/isaacs/node-lru-cache.git' },
+680 silly resolved     devDependencies: { tap: '', weak: '' },
+680 silly resolved     license:
+680 silly resolved      { type: 'MIT',
+680 silly resolved        url: 'http://github.com/isaacs/node-lru-cache/raw/master/LICENSE' },
+680 silly resolved     readme: '# lru cache\n\nA cache object that deletes the least-recently-used items.\n\n## Usage:\n\n```javascript\nvar LRU = require("lru-cache")\n  , options = { max: 500\n              , length: function (n) { return n * 2 }\n              , dispose: function (key, n) { n.close() }\n              , maxAge: 1000 * 60 * 60 }\n  , cache = LRU(options)\n  , otherCache = LRU(50) // sets just the max size\n\ncache.set("key", "value")\ncache.get("key") // "value"\n\ncache.reset()    // empty the cache\n```\n\nIf you put more stuff in it, then items will fall out.\n\nIf you try to put an oversized thing in it, then it\'ll fall out right\naway.\n\n## Options\n\n* `max` The maximum size of the cache, checked by applying the length\n  function to all values in the cache.  Not setting this is kind of\n  silly, since that\'s the whole purpose of this lib, but it defaults\n  to `Infinity`.\n* `maxAge` Maximum age in ms.  Items are not pro-actively pruned out\n  as they age, but if you try to get an item that is too old, it\'ll\n  drop it and return undefined instead of giving it to you.\n* `length` Function that is used to calculate the length of stored\n  items.  If you\'re storing strings or buffers, then you probably want\n  to do something like `function(n){return n.length}`.  The default is\n  `function(n){return 1}`, which is fine if you want to store `n`\n  like-sized things.\n* `dispose` Function that is called on items when they are dropped\n  from the cache.  This can be handy if you want to close file\n  descriptors or do other cleanup tasks when items are no longer\n  accessible.  Called with `key, value`.  It\'s called *before*\n  actually removing the item from the internal cache, so if you want\n  to immediately put it back in, you\'ll have to do that in a\n  `nextTick` or `setTimeout` callback or it won\'t do anything.\n* `stale` By default, if you set a `maxAge`, it\'ll only actually pull\n  stale items out of the cache when you `get(key)`.  (That is, it\'s\n  not pre-emptively doing a `setTimeout` or anything.)  If you set\n  `stale:true`, it\'ll return the stale value before deleting it.  If\n  you don\'t set this, then it\'ll return `undefined` when you try to\n  get a stale entry, as if it had already been deleted.\n\n## API\n\n* `set(key, value)`\n* `get(key) => value`\n\n    Both of these will update the "recently used"-ness of the key.\n    They do what you think.\n\n* `peek(key)`\n\n    Returns the key value (or `undefined` if not found) without\n    updating the "recently used"-ness of the key.\n\n    (If you find yourself using this a lot, you *might* be using the\n    wrong sort of data structure, but there are some use cases where\n    it\'s handy.)\n\n* `del(key)`\n\n    Deletes a key out of the cache.\n\n* `reset()`\n\n    Clear the cache entirely, throwing away all values.\n\n* `has(key)`\n\n    Check if a key is in the cache, without updating the recent-ness\n    or deleting it for being stale.\n\n* `forEach(function(value,key,cache), [thisp])`\n\n    Just like `Array.prototype.forEach`.  Iterates over all the keys\n    in the cache, in order of recent-ness.  (Ie, more recently used\n    items are iterated over first.)\n\n* `keys()`\n\n    Return an array of the keys in the cache.\n\n* `values()`\n\n    Return an array of the values in the cache.\n',
+680 silly resolved     readmeFilename: 'README.md',
+680 silly resolved     bugs: { url: 'https://github.com/isaacs/node-lru-cache/issues' },
+680 silly resolved     homepage: 'https://github.com/isaacs/node-lru-cache',
+680 silly resolved     _id: 'lru-cache@2.5.0',
+680 silly resolved     _shasum: 'd82388ae9c960becbea0c73bb9eb79b6c6ce9aeb',
+680 silly resolved     _from: 'lru-cache@2',
+680 silly resolved     _resolved: 'https://registry.npmjs.org/lru-cache/-/lru-cache-2.5.0.tgz' } ]
+681 info install sigmund@1.0.0 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch
+682 info install lru-cache@2.5.0 into C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch
+683 info installOne sigmund@1.0.0
+684 info installOne lru-cache@2.5.0
+685 verbose node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\sigmund unbuild
+686 verbose node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\lru-cache unbuild
+687 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\sigmund\1.0.0\package.tgz
+688 silly lockFile 45f8ddb5-s-minimatch-node-modules-sigmund tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\sigmund
+689 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\sigmund C:\Users\Zen\AppData\Roaming\npm-cache\45f8ddb5-s-minimatch-node-modules-sigmund.lock
+690 silly lockFile 55d79c51--cache-sigmund-1-0-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\sigmund\1.0.0\package.tgz
+691 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\sigmund\1.0.0\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\55d79c51--cache-sigmund-1-0-0-package-tgz.lock
+692 verbose tar unpack C:\Users\Zen\AppData\Roaming\npm-cache\lru-cache\2.5.0\package.tgz
+693 silly lockFile 976ce523-minimatch-node-modules-lru-cache tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\lru-cache
+694 verbose lock tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\lru-cache C:\Users\Zen\AppData\Roaming\npm-cache\976ce523-minimatch-node-modules-lru-cache.lock
+695 silly lockFile 45cace13-ache-lru-cache-2-5-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\lru-cache\2.5.0\package.tgz
+696 verbose lock tar://C:\Users\Zen\AppData\Roaming\npm-cache\lru-cache\2.5.0\package.tgz C:\Users\Zen\AppData\Roaming\npm-cache\45cace13-ache-lru-cache-2-5-0-package-tgz.lock
+697 silly gunzTarPerm modes [ '777', '666' ]
+698 silly gunzTarPerm modes [ '777', '666' ]
+699 silly gunzTarPerm extractEntry package.json
+700 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+701 silly gunzTarPerm extractEntry .npmignore
+702 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+703 silly gunzTarPerm extractEntry README.md
+704 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+705 silly gunzTarPerm extractEntry LICENSE
+706 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+707 silly gunzTarPerm extractEntry CONTRIBUTORS
+708 silly gunzTarPerm modified mode [ 'CONTRIBUTORS', 420, 438 ]
+709 silly gunzTarPerm extractEntry lib/lru-cache.js
+710 silly gunzTarPerm modified mode [ 'lib/lru-cache.js', 420, 438 ]
+711 silly gunzTarPerm extractEntry test/basic.js
+712 silly gunzTarPerm modified mode [ 'test/basic.js', 420, 438 ]
+713 silly gunzTarPerm extractEntry test/foreach.js
+714 silly gunzTarPerm modified mode [ 'test/foreach.js', 420, 438 ]
+715 silly gunzTarPerm extractEntry test/memory-leak.js
+716 silly gunzTarPerm modified mode [ 'test/memory-leak.js', 420, 438 ]
+717 silly gunzTarPerm extractEntry package.json
+718 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+719 silly gunzTarPerm extractEntry README.md
+720 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+721 silly gunzTarPerm extractEntry LICENSE
+722 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+723 silly gunzTarPerm extractEntry bench.js
+724 silly gunzTarPerm modified mode [ 'bench.js', 420, 438 ]
+725 silly gunzTarPerm extractEntry sigmund.js
+726 silly gunzTarPerm modified mode [ 'sigmund.js', 420, 438 ]
+727 silly gunzTarPerm extractEntry test/basic.js
+728 silly gunzTarPerm modified mode [ 'test/basic.js', 420, 438 ]
+729 silly lockFile 976ce523-minimatch-node-modules-lru-cache tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\lru-cache
+730 silly lockFile 976ce523-minimatch-node-modules-lru-cache tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\lru-cache
+731 silly lockFile 45cace13-ache-lru-cache-2-5-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\lru-cache\2.5.0\package.tgz
+732 silly lockFile 45cace13-ache-lru-cache-2-5-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\lru-cache\2.5.0\package.tgz
+733 info preinstall lru-cache@2.5.0
+734 verbose readDependencies using package.json deps
+735 verbose readDependencies using package.json deps
+736 silly resolved []
+737 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\lru-cache
+738 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\lru-cache
+739 verbose linkStuff [ false,
+739 verbose linkStuff   false,
+739 verbose linkStuff   false,
+739 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules\\glob\\node_modules\\minimatch\\node_modules' ]
+740 info linkStuff lru-cache@2.5.0
+741 verbose linkBins lru-cache@2.5.0
+742 verbose linkMans lru-cache@2.5.0
+743 verbose rebuildBundles lru-cache@2.5.0
+744 silly lockFile 45f8ddb5-s-minimatch-node-modules-sigmund tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\sigmund
+745 silly lockFile 45f8ddb5-s-minimatch-node-modules-sigmund tar://C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\sigmund
+746 info install lru-cache@2.5.0
+747 silly lockFile 55d79c51--cache-sigmund-1-0-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\sigmund\1.0.0\package.tgz
+748 silly lockFile 55d79c51--cache-sigmund-1-0-0-package-tgz tar://C:\Users\Zen\AppData\Roaming\npm-cache\sigmund\1.0.0\package.tgz
+749 info postinstall lru-cache@2.5.0
+750 info preinstall sigmund@1.0.0
+751 verbose readDependencies using package.json deps
+752 verbose readDependencies using package.json deps
+753 silly resolved []
+754 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\sigmund
+755 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch\node_modules\sigmund
+756 verbose linkStuff [ false,
+756 verbose linkStuff   false,
+756 verbose linkStuff   false,
+756 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules\\glob\\node_modules\\minimatch\\node_modules' ]
+757 info linkStuff sigmund@1.0.0
+758 verbose linkBins sigmund@1.0.0
+759 verbose linkMans sigmund@1.0.0
+760 verbose rebuildBundles sigmund@1.0.0
+761 info install sigmund@1.0.0
+762 info postinstall sigmund@1.0.0
+763 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch
+764 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob\node_modules\minimatch
+765 verbose linkStuff [ false,
+765 verbose linkStuff   false,
+765 verbose linkStuff   false,
+765 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules\\glob\\node_modules' ]
+766 info linkStuff minimatch@0.3.0
+767 verbose linkBins minimatch@0.3.0
+768 verbose linkMans minimatch@0.3.0
+769 verbose rebuildBundles minimatch@0.3.0
+770 verbose rebuildBundles [ 'lru-cache', 'sigmund' ]
+771 info install minimatch@0.3.0
+772 info postinstall minimatch@0.3.0
+773 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob
+774 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java\node_modules\glob
+775 verbose linkStuff [ false,
+775 verbose linkStuff   false,
+775 verbose linkStuff   false,
+775 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules\\java\\node_modules' ]
+776 info linkStuff glob@3.2.11
+777 verbose linkBins glob@3.2.11
+778 verbose linkMans glob@3.2.11
+779 verbose rebuildBundles glob@3.2.11
+780 verbose rebuildBundles [ 'inherits', 'minimatch' ]
+781 info install glob@3.2.11
+782 info postinstall glob@3.2.11
+783 verbose about to build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java
+784 info build C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules\java
+785 verbose linkStuff [ false,
+785 verbose linkStuff   false,
+785 verbose linkStuff   false,
+785 verbose linkStuff   'C:\\Users\\Zen\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\node_modules' ]
+786 info linkStuff java@0.4.2
+787 verbose linkBins java@0.4.2
+788 verbose linkMans java@0.4.2
+789 verbose rebuildBundles java@0.4.2
+790 verbose rebuildBundles [ 'find-java-home', 'glob', 'nan' ]
+791 info install java@0.4.2
+792 verbose unsafe-perm in lifecycle true
+793 info java@0.4.2 Failed to exec install script
+794 verbose node_modules\java unbuild
+795 info preuninstall java@0.4.2
+796 info uninstall java@0.4.2
+797 verbose true,C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules,C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct\node_modules unbuild java@0.4.2
+798 info postuninstall java@0.4.2
+799 error java@0.4.2 install: `node-gyp rebuild`
+799 error Exit status 1
+800 error Failed at the java@0.4.2 install script.
+800 error This is most likely a problem with the java package,
+800 error not with npm itself.
+800 error Tell the author that this fails on your system:
+800 error     node-gyp rebuild
+800 error You can get their info via:
+800 error     npm owner ls java
+800 error There is likely additional logging output above.
+801 error System Windows_NT 6.2.9200
+802 error command "E:\\Program Files\\nodejs\\\\node.exe" "E:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "java"
+803 error cwd C:\Users\Zen\Desktop\RedimedProject\Projects\redimedProjStruct
+804 error node -v v0.10.30
+805 error npm -v 1.4.21
+806 error code ELIFECYCLE
+807 verbose exit [ 1, true ]

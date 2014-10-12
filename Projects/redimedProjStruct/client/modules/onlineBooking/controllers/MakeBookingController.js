@@ -83,14 +83,17 @@ angular.module('app.loggedIn.booking.make.controller',[])
             {
                 $scope.packageList = data.rs;
 
-                $scope.packageList.push({id:-1,package_name:"Custom Package"});
+                $scope.packageList.push({PackId:-1,package_name:"Custom Package"});
             }
 
         })
 
 
         var arrCustomAss = [];
+        var period = null;
         $scope.packageChange = function(PackId){
+           
+
             var arrAss = [];
 
             if(PackId !== null)
@@ -123,7 +126,8 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     });
                 }
                 else
-                {
+                {   
+
                     arrCustomAss = [];
                     OnlineBookingService.getPackageAssById(PackId).then(function(data){
                         if(data.status === 'success')
@@ -138,6 +142,12 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
                         }
                     })
+
+                    for(var i=0; i<$scope.packageList.length; i++){
+                        if(PackId === $scope.packageList[i].PackId)
+                             period = $scope.packageList[i].period;
+                    }
+                    
 
                     $scope.newCandidate();
                 }
@@ -184,6 +194,13 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     },
                     editInfo: function(){
                         return null;
+                    },
+                    period: function(){
+                        return period;
+                    },
+                    status: function(){
+                        return companyInfo[0].default_status == null || companyInfo[0].default_status == '' ? 'Pending' : companyInfo[0].default_status;
+
                     }
                 }
             });
@@ -210,6 +227,13 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     },
                     editInfo: function(){
                         return b;
+                    },
+                    period: function(){
+                        return period;
+                    },
+                    status: function(){
+                        return companyInfo[0].default_status == null || companyInfo[0].default_status == '' ? 'Pending' : companyInfo[0].default_status;
+
                     }
 
                 }
@@ -229,12 +253,23 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
         $scope.deleteCandidate = function(b)
         {
-            var index = $scope.data.indexOf(b);
-            if(index > -1)
-            {
-                $scope.data.splice(index,1);
-            }
-            $scope.tableParams.reload();
+            OnlineBookingService.deletePending(b).then(function(data){
+                if(data.status == 'success')
+                {
+                     var index = $scope.data.indexOf(b);
+                    if(index > -1)
+                    {
+                        $scope.data.splice(index,1);
+                    }
+                    $scope.tableParams.reload();
+                }
+                else
+                {
+                    toastr.error("Delete Failed!", "Error");
+                }
+            })
+
+           
 
         };
 
@@ -306,7 +341,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
         }
 })
 
-.controller('NewCandidateController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, companyId, editInfo, toastr){
+.controller('NewCandidateController',function($scope,$filter,$state,$modalInstance,OnlineBookingService, companyId, editInfo, period, status, toastr){
 
         $scope.info = {
 
@@ -512,7 +547,13 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     stateId:'',
                     suburbId:'',
                     stateName:'',
-                    suburbName:''
+                    suburbName:'',
+                    calId2: null,
+                    calId3: null,
+                    calId4: null,
+                    calId5: null,
+                    status: status,
+                    candidateId: null
 
                 };
                 $scope.candidateInfo.candidateName = $scope.info.candidateName;
@@ -580,9 +621,39 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     }
                 }
 
+                for(var i = 0; i<$scope.calList.length; i++)
+                {
+                    if($scope.candidateInfo.calId == $scope.calList[i].cal_id)
+                    {
+                        if(period == 2)
+                        {
+                            $scope.candidateInfo.calId2 = $scope.calList[i+1].cal_id;
+                        }
+                        else if(period == 3)
+                        {
+                            $scope.candidateInfo.calId2 = $scope.calList[i+1].cal_id;
+                            $scope.candidateInfo.calId3 = $scope.calList[i+2].cal_id;
+                        }
+                        
+                    }
+                }
 
 
-                $modalInstance.close($scope.candidateInfo);
+                OnlineBookingService.pendingCalendar($scope.candidateInfo).then(function(data){
+                    if(data.status == 'success')
+                    {
+                        $scope.candidateInfo.candidateId = data.newCanId;
+
+                        $modalInstance.close($scope.candidateInfo);
+                    }
+                     else
+                          toastr.error("Submit Error!", "Error");
+                })  
+                
+
+                
+
+               
             }
 
         }

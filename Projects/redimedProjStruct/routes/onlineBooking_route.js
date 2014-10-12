@@ -2,6 +2,8 @@
  * Created by meditech on 06/10/2014.
  */
 var BookingController = require('./controllers/BookingController');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 app.post('/api/booking/packageList', BookingController.packageList);
 app.post('/api/booking/list/companyId',BookingController.bookingListByCompany);
@@ -17,8 +19,10 @@ app.post('/api/booking/position/list',BookingController.positionList);
 app.post('/api/booking/position/delete',BookingController.deletePosition);
 app.post('/api/booking/position/insert',BookingController.insertPosition);
 app.post('/api/booking/submit',BookingController.submitBooking);
+app.post('/api/booking/pending',BookingController.pendingBooking);
+app.post('/api/booking/deletePending',BookingController.deletePendingBooking);
 app.post('/api/booking/edit',BookingController.editBooking);
 app.post('/api/booking/confirm',BookingController.confirmBooking);
 app.post('/api/booking/search',BookingController.search);
 app.post('/api/booking/edit/note',BookingController.editAppointmentNote);
-app.post('/api/booking/upload',BookingController.uploadResultFile);
+app.post('/api/booking/upload',multipartMiddleware, BookingController.uploadResultFile);

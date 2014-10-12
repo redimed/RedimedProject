@@ -109,11 +109,13 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
                 }
             });
 
+
+            uploader.formData.push({booking_id:$scope.info.Booking_id,Candidate_id:$scope.info.Candidate_id,fileName:uploader.queue[0].file.name});
+
             uploader.onCompleteAll = function() {
                 console.info('onCompleteAll');
             };
 
-            $scope.info.resultFileName = uploader.queue[0].file.name;
 
             OnlineBookingAdminService.editBookingInfo($scope.info).then(function(data){
                 if(data.status === 'success')

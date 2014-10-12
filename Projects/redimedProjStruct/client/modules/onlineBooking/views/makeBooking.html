@@ -111,7 +111,7 @@
                         <label class="control-label">Package</label>
                     </div>
                     <div class="col-md-4">
-                        <select ng-model="c.PackId" name="package" required ng-change="packageChange(c.PackId)" class="form-control" ng-options="p.id as p.package_name for p in packageList" >
+                        <select ng-model="c.PackId" name="package" required ng-change="packageChange(c.PackId)" class="form-control" ng-options="p.PackId as p.package_name + ' ' + p.period for p in packageList" >
                             <option value="">---Select Package---</option>
                         </select>
                     </div>

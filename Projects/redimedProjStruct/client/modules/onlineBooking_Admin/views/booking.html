@@ -249,7 +249,7 @@
                 <div class="col-md-4">
                     <label class="control-label bold">Result File</label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8" ng-class="{hide: isSelected === false}">
                     <input type="file" ng-click="uploader.clearQueue()" nv-file-select="" uploader="uploader" />
                     <br/>
                 </div>
@@ -257,7 +257,7 @@
         </div>
         <div class="row">
             <div class="col-md-6"></div>
-            <div class="col-md-6">
+            <div class="col-md-6" ng-class="{hide: isSelected === false}">
                 <div class="col-md-12">
                     <h3>Upload File</h3>
                     <table class="table">
