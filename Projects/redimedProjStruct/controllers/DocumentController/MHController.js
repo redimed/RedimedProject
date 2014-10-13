@@ -35,11 +35,11 @@ module.exports = {
     //Begin--loadMH--Medical History//
     loadMH: function (req, res) {
         var data = [];
-        db.sequelize.query('SELECT H.`MH_DF_ID`, H.`DESCRIPTION` FROM `cln_mh_df_headers` H;', null, {raw: true})
+        db.sequelize.query('SELECT H.`MH_DF_ID`, H.`DESCRIPTION` FROM `cln_mh_df_headers` H WHERE H.`PATIENT_ID` = -1;', null, {raw: true})
             .success(function (dataH) {
-                db.sequelize.query('SELECT G.`GROUP_ID`, G.`MH_DF_ID`, G.`GROUP_NAME` FROM `cln_mh_df_groups` G;', null, {raw: true}).success(function (dataG) {
-                    db.sequelize.query('SELECT L.`MH_LINE_ID`, L.`GROUP_ID`, L.`QUESTION`, L.`ORD`, L.`ISDETAILS_ANSWER_IFYES` FROM `cln_mh_df_lines` L;', null, {raw: true}).success(function (dataL) {
-                        db.sequelize.query('SELECT S.`MH_LINE_SUB_ID`, S.`MH_LINE_ID`, S.`QUESTION`, S.`ORD` FROM `cln_mh_df_line_subquestions` S;', null, {raw: true}).success(function (dataS) {
+                db.sequelize.query('SELECT G.`GROUP_ID`, G.`MH_DF_ID`, G.`GROUP_NAME` FROM `cln_mh_df_groups` G WHERE G.`PATIENT_ID` = -1;', null, {raw: true}).success(function (dataG) {
+                    db.sequelize.query('SELECT L.`MH_LINE_ID`, L.`GROUP_ID`, L.`QUESTION`, L.`ORD`, L.`ISDETAILS_ANSWER_IFYES` FROM `cln_mh_df_lines` L WHERE L.`PATIENT_ID` = -1;', null, {raw: true}).success(function (dataL) {
+                        db.sequelize.query('SELECT S.`MH_LINE_SUB_ID`, S.`MH_LINE_ID`, S.`QUESTION`, S.`ORD` FROM `cln_mh_df_line_subquestions` S WHERE S.`PATIENT_ID` = -1;', null, {raw: true}).success(function (dataS) {
                             data = [
                                 {"Header": dataH, "Group": dataG, "Line": dataL, "Subquestion": dataS}
                             ];
