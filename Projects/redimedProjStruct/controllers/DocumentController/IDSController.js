@@ -19,9 +19,9 @@ module.exports = {
 
     loadIDS: function(req,res){
         var data = [];
-        db.sequelize.query("SELECT h.`IDAS_ID` FROM `cln_idas_headers` h WHERE h.`ISENABLE` = 1 ;",null,{raw:true}).success(function(dataH){
-            db.sequelize.query("SELECT g.`IDAS_GROUP_ID`,g.`IDAS_ID`,g.`GROUP_NAME`,g.`USER_TYPE` FROM `cln_idas_groups` g WHERE g.`ISENABLE` = 1 ORDER BY g.`ORD`;",null,{raw:true}).success(function(dataG){
-                db.sequelize.query("SELECT l.`IDAS_LINE_ID`, l.`IDAS_GROUP_ID`, l.`QUESTION`,l.`YES_NO` FROM `cln_idas_lines` l WHERE l.`ISENABLE` = 1 ORDER BY l.`ORD`;",null,{raw:true}).success(function(dataL){
+        db.sequelize.query("SELECT h.`IDAS_ID` FROM `cln_idas_headers` h WHERE h.`ISENABLE` = 1 AND h.PATIENT_ID = 2 AND h.CAL_ID=12211 ;",null,{raw:true}).success(function(dataH){
+            db.sequelize.query("SELECT g.`IDAS_GROUP_ID`,g.`IDAS_ID`,g.`GROUP_NAME`,g.`USER_TYPE` FROM `cln_idas_groups` g WHERE g.`ISENABLE` = 1 AND g.PATIENT_ID = 2 AND g.CAL_ID=12211 ORDER BY g.`ORD`;",null,{raw:true}).success(function(dataG){
+                db.sequelize.query("SELECT l.`IDAS_LINE_ID`, l.`IDAS_GROUP_ID`, l.`QUESTION`,l.`YES_NO` FROM `cln_idas_lines` l WHERE l.`ISENABLE` = 1 AND l.PATIENT_ID = 2 AND l.CAL_ID=12211 ORDER BY l.`ORD`;",null,{raw:true}).success(function(dataL){
                     data = [{"Header": dataH, "Group" : dataG,"Line": dataL}];
                     res.json(data);
                 });
