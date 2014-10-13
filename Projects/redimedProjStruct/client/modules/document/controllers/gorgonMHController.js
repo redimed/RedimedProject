@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.gorgonMH.controllers',[])
-    .controller("gorgonMHController",function($scope,$rootScope,$http,$cookieStore) {
+    .controller("gorgonMHController",function($scope,$rootScope,$http,$cookieStore,$window) {
         var initPickers = function () {
             //init date pickers
             $('.date-picker').datepicker({
@@ -15,4 +15,8 @@ angular.module('app.loggedIn.document.gorgonMH.controllers',[])
         $scope.submit = function(){
             var info = $scope.info;
         };
+
+        $scope.print = function(){
+            $window.location.href = '/api/document/gorgonMH/print/5';
+        }
     });

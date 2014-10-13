@@ -1,7 +1,7 @@
 
 angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 
-    .controller("gorgonUQController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr) {
+    .controller("gorgonUQController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -178,5 +178,9 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
             }
 
         };
+
+        $scope.print = function(){
+            $window.location.href = '/api/document/gorgonUQ/print/7';
+        }
 
     });
