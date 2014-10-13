@@ -4,7 +4,7 @@
 
 
 angular.module('app.loggedIn.booking.make.controller',[])
-.controller('MakeBookingController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore){
+.controller('MakeBookingController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore,$timeout){
         var companyInfo;
         var userInfo;
 
@@ -316,6 +316,30 @@ angular.module('app.loggedIn.booking.make.controller',[])
             }
 
         }
+
+        $scope.$on('$idleTimeout', function() {
+
+            if($scope.data.length > 0)
+            {
+                for(var i =0; i<$scope.data[i].length; i++)
+                {
+                    OnlineBookingService.deletePending($scope.data[i]).then(function(data){
+                        if(data.status == 'success')
+                        {
+                        }
+                        else
+                        {
+                        }
+                    })
+                }
+            }
+
+
+            $state.go('loggedIn.makeBooking',null,{reload:true});
+        })
+
+
+
 
 })
 
