@@ -23,19 +23,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
 
 
         DocumentService.newFA().then(function(response){
-            if(response['status'] === 'success') {
-               //loadFA();
-                alert('Insert success!');
-            }
-            else
-            {
-                //alert("Insert Failed!");
-            }
-        });
 
-       //loadFA();
-
-        function loadFA(){
             DocumentService.loadFA().then(function(response){
                 if(response['status'] === 'fail') {
                     alert("load fail!");
@@ -75,7 +63,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     });
                 }
             });
-        }
+        });
+
 
     
 
