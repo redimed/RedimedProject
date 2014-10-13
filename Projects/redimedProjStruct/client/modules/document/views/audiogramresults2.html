@@ -1,7 +1,7 @@
 <style>
     #modalSign .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 </style>
 
@@ -418,7 +418,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12" style="float: right;">
-            <img src="" alt="" style="height: 400px;;width: 60%;margin-left: 20%;"/>
+            <img src="http://127.0.0.1:4300/img/XepHinh.png" alt="" style="height: 400px;;width: 60%;margin-left: 20%;"/>
         </div>
     </div>
 </div>
@@ -538,7 +538,7 @@
         $(document).ready(function () {
 
             $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig').on('click', function () {
                 $sigdiv.jSignature('reset')

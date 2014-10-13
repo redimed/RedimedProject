@@ -1,7 +1,7 @@
 <style>
     #modalSign .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 </style>
 
@@ -373,7 +373,7 @@
         $(document).ready(function () {
 
             $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig').on('click', function () {
                 $sigdiv.jSignature('reset')

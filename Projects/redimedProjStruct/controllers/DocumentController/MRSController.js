@@ -29,9 +29,9 @@ module.exports = {
 //End---newMRS--Medical Results Summary//
     //Begin--loadMRS--Medical Results Summary//
     loadMRS: function (req, res) {
-        db.sequelize.query("SELECT H.`MRS_DF_ID`, H.`DESCRIPTION` FROM `cln_mrs_headers` H;", null, {raw: true}).success(function (dataH) {
-            db.sequelize.query("SELECT G.`MRS_DF_ID`, G.`MRS_GROUP_ID`, G.`GROUP_NAME` FROM `cln_mrs_groups` G;", null, {raw: true}).success(function (dataG) {
-                db.sequelize.query("SELECT L.`MRS_GROUP_ID`, L.`MRS_LINE_ID`, L.`QUEST_LABEL`, L.`ORD`, L.`COMP_TYPE`, L.`COMMENT_LABEL` FROM `cln_mrs_lines` L;", null, {raw: true}).success(function (dataL) {
+        db.sequelize.query("SELECT H.`MRS_DF_ID`, H.`DESCRIPTION` FROM `cln_mrs_headers` H WHERE PATIENT_ID = 1;", null, {raw: true}).success(function (dataH) {
+            db.sequelize.query("SELECT G.`MRS_DF_ID`, G.`MRS_GROUP_ID`, G.`GROUP_NAME` FROM `cln_mrs_groups` G WHERE PATIENT_ID = 1;", null, {raw: true}).success(function (dataG) {
+                db.sequelize.query("SELECT L.`MRS_GROUP_ID`, L.`MRS_LINE_ID`, L.`QUEST_LABEL`, L.`ORD`, L.`COMP_TYPE`, L.`COMMENT_LABEL` FROM `cln_mrs_lines` L WHERE PATIENT_ID = 1;", null, {raw: true}).success(function (dataL) {
                     db.sequelize.query("SELECT * FROM `cln_patients`;", null, {raw: true}).success(function (dataP) {
                         data = [
                             {"Header": dataH, "Patient": dataP, "Group": dataG, "Line": dataL}

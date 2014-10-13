@@ -30,9 +30,9 @@ module.exports = {
 //Begin--LoadAUD1--Audiogram 1//
     loadAUD1: function (req, res) {
         var data = [];
-        db.sequelize.query("SELECT SA_ID, SA_NAME FROM CLN_SA_DF_HEADERS", null, {raw: true}).success(function (dataH) {
-            db.sequelize.query("SELECT SA_ID, SECTION_ID, SECTION_NAME FROM CLN_SA_DF_SECTIONS WHERE SECTION_ID = 4", null, {raw: true}).success(function (dataS) {
-                db.sequelize.query("SELECT LINE_ID, SECTION_ID, NAME, VALUE_RIGHT, VALUE_LEFT FROM CLN_SA_DF_LINES", null, {raw: true}).success(function (dataL) {
+        db.sequelize.query("SELECT SA_ID, SA_NAME FROM CLN_SA_DF_HEADERS WHERE PATIENT_ID = 1", null, {raw: true}).success(function (dataH) {
+            db.sequelize.query("SELECT SA_ID, SECTION_ID, SECTION_NAME FROM CLN_SA_DF_SECTIONS WHERE SECTION_ID = 4 AND PATIENT_ID = 1", null, {raw: true}).success(function (dataS) {
+                db.sequelize.query("SELECT LINE_ID, SECTION_ID, NAME, VALUE_RIGHT, VALUE_LEFT FROM CLN_SA_DF_LINES WHERE PATIENT_ID = 1", null, {raw: true}).success(function (dataL) {
                     data = [
                         {"Header": dataH, "Section": dataS, "Line": dataL}
                     ];

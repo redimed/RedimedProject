@@ -1,32 +1,32 @@
 <style>
     #modalSign .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 
     #modalSign1 .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 
     #modalSign2 .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 
     #modalSign3 .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 
     #modalSign4 .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 
     #modalSign5 .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 </style>
 <div class="caption">
@@ -192,9 +192,9 @@
         </div>
         <div class="col-md-4 col-sm-4">
             <label class="control-label">Date:</label>
-            <input type="text" class="form-control col-md-12" name="dob" required
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                   is-open="openDOB" ng-click="openDOB = true"
+            <input type="text" class="form-control col-md-12" name="dob1" required
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob1"
+                   is-open="openDOB1" ng-click="openDOB1 = true"
                    datepicker-options="dateOptions3" ng-required="true"
                    close-text="Close"/>
         </div>
@@ -281,9 +281,9 @@
             <label class="control-label">Date:</label>
         </div>
         <div class="col-md-3 col-sm-4">
-            <input type="text" class="form-control col-md-12" name="dob" required
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                   is-open="openDOB" ng-click="openDOB = true"
+            <input type="text" class="form-control col-md-12" name="dob2" required
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob2"
+                   is-open="openDOB2" ng-click="openDOB2 = true"
                    datepicker-options="dateOptions3" ng-required="true"
                    close-text="Close"/>
         </div>
@@ -372,9 +372,9 @@
             <label class="control-label">Date:</label>
         </div>
         <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="dob" required
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                   is-open="openDOB" ng-click="openDOB = true"
+            <input type="text" class="form-control col-md-12" name="dob3" required
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob3"
+                   is-open="openDOB3" ng-click="openDOB3 = true"
                    datepicker-options="dateOptions3" ng-required="true"
                    close-text="Close"/>
         </div>
@@ -544,9 +544,9 @@
             <label class="control-label">Date:</label>
         </div>
         <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="dob" required
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                   is-open="openDOB" ng-click="openDOB = true"
+            <input type="text" class="form-control col-md-12" name="dob4" required
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob4"
+                   is-open="openDOB4" ng-click="openDOB4 = true"
                    datepicker-options="dateOptions3" ng-required="true"
                    close-text="Close"/>
         </div>
@@ -687,7 +687,7 @@
         $(document).ready(function () {
 
             $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig').on('click', function () {
                 $sigdiv.jSignature('reset')
@@ -713,7 +713,7 @@
         $(document).ready(function () {
 
             $('#signDisplay1').hide();
-            var $sigdiv = $("#signature1").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature1").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig1').on('click', function () {
                 $sigdiv.jSignature('reset')
@@ -739,7 +739,7 @@
         $(document).ready(function () {
 
             $('#signDisplay2').hide();
-            var $sigdiv = $("#signature2").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature2").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig2').on('click', function () {
                 $sigdiv.jSignature('reset')
@@ -765,7 +765,7 @@
         $(document).ready(function () {
 
             $('#signDisplay3').hide();
-            var $sigdiv = $("#signature3").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature3").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig3').on('click', function () {
                 $sigdiv.jSignature('reset')
@@ -791,7 +791,7 @@
         $(document).ready(function () {
 
             $('#signDisplay4').hide();
-            var $sigdiv = $("#signature4").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature4").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig4').on('click', function () {
                 $sigdiv.jSignature('reset')
@@ -817,7 +817,7 @@
         $(document).ready(function () {
 
             $('#signDisplay5').hide();
-            var $sigdiv = $("#signature5").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature5").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig5').on('click', function () {
                 $sigdiv.jSignature('reset')

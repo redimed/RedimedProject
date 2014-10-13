@@ -1,7 +1,7 @@
 <style>
     #modalSign .modal-dialog {
-        width: 90%;
-        height: 80%;
+        width: 800px;
+        height: 800px;
     }
 </style>
 
@@ -205,7 +205,7 @@
         <div class="col-md-3 col-sm-3">
             <input type="text" class="form-control col-md-12" name="dob" required
                    datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                   is-open="openDOB" ng-click="openDOB = true"
+                   is-open="openDOB1" ng-click="openDOB1 = true"
                    datepicker-options="dateOptions3" ng-required="true"
                    close-text="Close"/>
         </div>
@@ -343,7 +343,7 @@
         <div class="col-md-3 col-sm-3">
             <input type="text" class="form-control col-md-12" name="dob" required
                    datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                   is-open="openDOB" ng-click="openDOB = true"
+                   is-open="openDOB2" ng-click="openDOB2 = true"
                    datepicker-options="dateOptions3" ng-required="true"
                    close-text="Close"/>
         </div>
@@ -417,7 +417,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12" style="float: right;">
-            <img src="" alt="" style="height: 400px;;width: 60%;margin-left: 20%;"/>
+            <img src="http://127.0.0.1:4300/img/Capture.png" alt="" style="height: 400px;;width: 60%;margin-left: 20%;"/>
         </div>
     </div>
 </div>
@@ -537,7 +537,7 @@
         $(document).ready(function () {
 
             $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 800, height: 500});
+            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 700, height: 500});
 
             $('#resetSig').on('click', function () {
                 $sigdiv.jSignature('reset')

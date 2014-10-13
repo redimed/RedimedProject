@@ -3,7 +3,7 @@
  */
 angular.module('app.loggedIn.document.MH.controllers', [])
     .controller("MHController", function ($scope, DocumentService, $http, $cookieStore) {
-        
+
         $scope.submit = function () {
             var info = $scope.info;
         };
