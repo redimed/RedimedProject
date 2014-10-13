@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_summary_question_type1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b4c9904-5604-4f9f-bb4b-f5cd91fb3f13">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CAL_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LINE_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT 	line.`LINE_ID`,line.`QUESTION` LINE_QUESTION,
+	detail.`QUESTION` DETAIL_QUESTION,detail.`VAL1_NAME`,detail.`VAL1_ISCHECKBOX`,
+	detail.`VAL1_CHECKBOX`,detail.`IsCommentText`,detail.`COMMENTS`
+FROM 	`cln_fa_df_lines` line INNER JOIN `cln_fa_df_line_details` detail ON line.`LINE_ID`=detail.`LINE_ID` AND line.`CAL_ID`=detail.`CAL_ID` AND line.`PATIENT_ID`=detail.`PATIENT_ID`
+WHERE	line.`ISENABLE`=1
+	AND
+	detail.`ISENABLE`=1
+	AND
+	line.`LineType`=1
+	AND
+	detail.`VAL1_ISCHECKBOX`=3
+	AND
+	line.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
+	AND
+	line.`CAL_ID`=$P{CAL_ID_PARAM}
+	AND
+	line.`LINE_ID`=$P{LINE_ID_PARAM}]]>
+	</queryString>
+	<field name="LINE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LINE_QUESTION" class="java.lang.String"/>
+	<field name="DETAIL_QUESTION" class="java.lang.String"/>
+	<field name="VAL1_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_ISCHECKBOX" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_CHECKBOX" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IsCommentText" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMMENTS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="LINE_GROUP">
+		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="10" width="531" height="20" uuid="1b07eabd-ceeb-4ab1-a5ae-85da5010da08"/>
+					<textElement verticalAlignment="Top">
+						<font isBold="true" isUnderline="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{LINE_QUESTION}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="61" splitType="Stretch">
+			<frame>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="15" width="531" height="46" uuid="cc59b4a3-1719-46f3-8c1c-93ddda013046"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</frame>
+			<staticText>
+				<reportElement x="391" y="0" width="70" height="15" uuid="1c5262bb-8aff-4e4a-bbd0-5962bff28e1d"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="0" width="70" height="15" uuid="d3aef50e-d170-42f0-af4e-05afe6fff394"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="66" y="15" width="465" height="46" uuid="44e6aaa5-e812-4981-9c78-411599b2a52f"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMMENTS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="15" width="66" height="15" uuid="bd11ea07-b33f-4f69-95c6-2bbebf6ea869"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Comments:]]></text>
+			</staticText>
+			<ellipse>
+				<reportElement mode="Transparent" x="391" y="0" width="70" height="15" uuid="30da771c-ba6b-446c-b3f3-dc2c29d644a1">
+					<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "YES" )]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="461" y="0" width="70" height="15" uuid="b85f6337-eada-4bd0-9fa0-089fe2743402">
+					<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "NO" )]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<textField>
+				<reportElement x="0" y="0" width="391" height="15" uuid="9c01ce70-b776-4fa7-a5a6-90b87bd0658b"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DETAIL_QUESTION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

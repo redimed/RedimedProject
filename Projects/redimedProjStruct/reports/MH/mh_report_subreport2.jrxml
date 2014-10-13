@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mh_report_subreport2" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d2889f89-215b-463d-9bae-f4fd74437837">
+	<property name="ireport.zoom" value="1.0263162364614133"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="mh_line_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cln_mh_df_line_subquestions.PATIENT_ID AS cln_mh_df_line_subquestions_PATIENT_ID,
+     cln_mh_df_line_subquestions.CAL_ID AS cln_mh_df_line_subquestions_CAL_ID,
+     cln_mh_df_line_subquestions.MH_LINE_SUB_ID AS cln_mh_df_line_subquestions_MH_LINE_SUB_ID,
+     cln_mh_df_line_subquestions.MH_LINE_ID AS cln_mh_df_line_subquestions_MH_LINE_ID,
+     cln_mh_df_line_subquestions.ORD AS cln_mh_df_line_subquestions_ORD,
+     cln_mh_df_line_subquestions.QUESTION AS cln_mh_df_line_subquestions_QUESTION,
+     cln_mh_df_line_subquestions.YES_NO AS cln_mh_df_line_subquestions_YES_NO,
+     cln_mh_df_line_subquestions.Comments AS cln_mh_df_line_subquestions_Comments
+FROM
+     cln_mh_df_line_subquestions cln_mh_df_line_subquestions
+WHERE
+     cln_mh_df_line_subquestions.MH_LINE_ID= $P{mh_line_id}
+	AND cln_mh_df_line_subquestions.PATIENT_ID = $P{patient_id}
+	AND  cln_mh_df_line_subquestions.CAL_ID = $P{cal_id}]]>
+	</queryString>
+	<field name="cln_mh_df_line_subquestions_PATIENT_ID" class="java.lang.Integer"/>
+	<field name="cln_mh_df_line_subquestions_CAL_ID" class="java.lang.Integer"/>
+	<field name="cln_mh_df_line_subquestions_MH_LINE_SUB_ID" class="java.lang.Integer"/>
+	<field name="cln_mh_df_line_subquestions_MH_LINE_ID" class="java.lang.Integer"/>
+	<field name="cln_mh_df_line_subquestions_ORD" class="java.lang.Integer"/>
+	<field name="cln_mh_df_line_subquestions_QUESTION" class="java.lang.String"/>
+	<field name="cln_mh_df_line_subquestions_YES_NO" class="java.lang.Integer"/>
+	<field name="cln_mh_df_line_subquestions_Comments" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="527" height="44" isRemoveLineWhenBlank="true" uuid="73f6c3ad-4fd8-47fb-8bbf-b0c5f53d2856"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="260" y="0" width="1" height="44" isRemoveLineWhenBlank="true" uuid="c506122d-a75a-496f-a774-54ce41ab0d20"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="334" y="0" width="1" height="44" isRemoveLineWhenBlank="true" uuid="a107ec5f-a84b-4a78-a480-16d86caa5e85"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="0" width="257" height="44" isRemoveLineWhenBlank="true" uuid="9a42bdf5-ed3c-4b40-bbdd-03e8cd6c7c7e"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_mh_df_line_subquestions_QUESTION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="261" y="0" width="73" height="44" isRemoveLineWhenBlank="true" uuid="498c6ca3-32ba-4aa8-bb04-4129d2327460"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_mh_df_line_subquestions_YES_NO}.intValue()==1?"Yes":"No"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="335" y="0" width="192" height="44" isRemoveLineWhenBlank="true" uuid="15248c00-fffb-49a9-9ded-fce4a9d54503"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_mh_df_line_subquestions_Comments}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

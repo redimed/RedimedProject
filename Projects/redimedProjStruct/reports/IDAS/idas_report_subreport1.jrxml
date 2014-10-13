@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="idas_report_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="69ade57f-7c09-48d8-99a7-57e9bed0311a">
+	<property name="ireport.zoom" value="1.6105100000000032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="group_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     cln_idas_lines.IDAS_LINE_ID AS cln_idas_lines_IDAS_LINE_ID,
+     cln_idas_lines.IDAS_GROUP_ID AS cln_idas_lines_IDAS_GROUP_ID,
+     cln_idas_lines.IDAS_ID AS cln_idas_lines_IDAS_ID,
+     cln_idas_lines.PATIENT_ID AS cln_idas_lines_PATIENT_ID,
+     cln_idas_lines.CAL_ID AS cln_idas_lines_CAL_ID,
+     cln_idas_lines.ORD AS cln_idas_lines_ORD,
+     cln_idas_lines.QUESTION AS cln_idas_lines_QUESTION,
+     cln_idas_lines.YES_NO AS cln_idas_lines_YES_NO
+FROM
+     cln_idas_lines cln_idas_lines
+
+WHERE
+	 cln_idas_lines.IDAS_GROUP_ID =$P{group_id}
+	AND  cln_idas_lines.PATIENT_ID =$P{patient_id}
+	AND  cln_idas_lines.CAL_ID = $P{cal_id}]]>
+	</queryString>
+	<field name="cln_idas_lines_IDAS_LINE_ID" class="java.lang.Integer"/>
+	<field name="cln_idas_lines_IDAS_GROUP_ID" class="java.lang.Integer"/>
+	<field name="cln_idas_lines_IDAS_ID" class="java.lang.Integer"/>
+	<field name="cln_idas_lines_PATIENT_ID" class="java.lang.Integer"/>
+	<field name="cln_idas_lines_CAL_ID" class="java.lang.Integer"/>
+	<field name="cln_idas_lines_ORD" class="java.lang.Integer"/>
+	<field name="cln_idas_lines_QUESTION" class="java.lang.String"/>
+	<field name="cln_idas_lines_YES_NO" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="411" height="25" uuid="afbd531c-526a-4993-9c21-cde2c0413f1d"/>
+			</rectangle>
+			<line>
+				<reportElement x="255" y="0" width="1" height="25" uuid="33866db1-2317-4456-8c5d-d790db4e35c5"/>
+			</line>
+			<line>
+				<reportElement x="329" y="0" width="1" height="25" uuid="6e5ccc2d-d5eb-43db-8abb-e5559dc9ef6a"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="3" width="255" height="20" uuid="a7fe5a07-5a87-4cc4-b3c3-d6664ef6d848"/>
+				<box leftPadding="4" rightPadding="4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_idas_lines_QUESTION}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="285" y="4" width="18" height="18" uuid="8deb457d-ec8c-464f-987b-645668fefb7b"/>
+				<imageExpression><![CDATA[$F{cln_idas_lines_YES_NO} != null && $F{cln_idas_lines_YES_NO}.intValue() == 0 ? $P{real_path}+"checked.jpg" : $P{real_path}+"nocheck.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="362" y="4" width="18" height="18" uuid="1f0aa25b-da59-4d8a-9e05-8f60e28b3679"/>
+				<imageExpression><![CDATA[$F{cln_idas_lines_YES_NO} != null && $F{cln_idas_lines_YES_NO}.intValue() == 1? $P{real_path}+"checked.jpg" : $P{real_path}+"nocheck.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

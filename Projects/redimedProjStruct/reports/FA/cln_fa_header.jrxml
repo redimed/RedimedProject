@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_header" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d37529f3-011d-4085-8535-427c83c8b554">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{real_path}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select DISTINCT 	header.*,patient.`First_name`,patient.`Sur_name`,patient.`Middle_name`,	patient.`DOB`
+from 	`cln_fa_df_headers` header left join `cln_patients` patient on header.`PATIENT_ID`=patient.`Patient_id`
+where 	header.`ISENABLE`=1
+	and
+	header.`PATIENT_ID`=$P{patient_id}
+	and
+	header.`CAL_ID`=$P{cal_id}
+	and
+	header.`FA_ID`=$P{key}]]>
+	</queryString>
+	<field name="PATIENT_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CAL_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FA_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ENTITY_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FA_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FA_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISENABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Risk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Comments" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Recommend" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Flexibility" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Core_Stability" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Wirst_Elbow_func" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Shoulder_func" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Lower_Limb_func" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Balance" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSESSED_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSESSED_SIGN" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSESSED_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSESSED_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="First_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sur_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Middle_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOB" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="108" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="389" height="95" uuid="0ac1c127-98c5-4583-900b-6aee41aa42d0"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="12" y="72" width="103" height="23" uuid="4cf02224-1d75-4ca8-93e8-60dc2a225815"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CANDIDATE NAME:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="115" y="72" width="274" height="23" uuid="ed306cb7-953d-425c-8660-2976c9629cb8"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[($F{First_name}!=null?$F{First_name}+" ":"")
++
+($F{Middle_name}!=null?$F{Middle_name}+" ":"")
++
+($F{Sur_name}!=null?$F{Sur_name}:"")]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="115" y="17" width="244" height="55" uuid="22a0951d-0e5d-4e72-b035-bdc00affeb83"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="17" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FUNCTIONAL ASSESSMENT]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="389" y="0" width="166" height="95" uuid="45ccdae6-e29f-4b37-8e02-124e6d1caebb"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<image hAlign="Center" vAlign="Middle">
+					<reportElement x="0" y="5" width="166" height="49" uuid="3a9032aa-54b5-4fe6-bb3f-f9e5580e1a27"/>
+					<imageExpression><![CDATA[$P{real_path}+"rediLogo.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="16" y="72" width="39" height="20" uuid="ee6e7787-37a4-435e-8766-8cc0b728810d"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[D.O.B:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="55" y="72" width="100" height="20" uuid="894f6ff8-9dc2-4f98-a390-c35761c935d2"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="70" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="35" uuid="47cb0bd7-3a16-49f3-a5dd-8e99223ee80b"/>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FA_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_header_type_test.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="37" width="555" height="33" uuid="3e982f62-8f8b-40fb-ad39-f31ab2ef063e"/>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FA_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_header_type_summary.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="387884de-7e8c-42c9-92b0-a33d7e985c3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[©REDiMED Pty Ltd.]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="536" y="0" width="19" height="20" uuid="ea8b4ce3-0d94-4b84-be4a-853924544088"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="516" y="0" width="20" height="20" uuid="21811f6f-7dfe-4f67-b6a3-594e1839cbab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[of]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="0" width="61" height="20" uuid="27e13438-6e1b-44f9-b50e-ebd0c035fd7b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

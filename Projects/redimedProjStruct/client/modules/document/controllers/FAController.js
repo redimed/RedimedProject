@@ -24,7 +24,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
 
         DocumentService.newFA().then(function(response){
             if(response['status'] === 'success') {
-               loadFA();
+               //loadFA();
+                alert('Insert success!');
             }
             else
             {
@@ -32,7 +33,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
         });
 
-       loadFA();
+       //loadFA();
 
         function loadFA(){
             DocumentService.loadFA().then(function(response){

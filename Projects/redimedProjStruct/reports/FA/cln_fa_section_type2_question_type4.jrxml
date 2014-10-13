@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_type2_question_type4" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8246d576-b96c-4250-ba46-459fba2ad31a">
+	<property name="ireport.zoom" value="1.3310000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CAL_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LINE_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["F:\\work_f2\\branches\\TeleHealth_Tan\\Tan_Nguyen\\Pre-Employment Reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT line.`LINE_ID`,line.`ISSCORE1`,line.`SCORE_TYPE1`,line.`SCORE1`,
+	line.`QUESTION`,line.`COMMENTS`,line.`IsCommentsText`
+FROM 	`cln_fa_df_lines` line
+where 	line.`ISENABLE`=1
+	and
+	(line.`SCORE_TYPE1`=7 or line.`SCORE_TYPE1`=9)
+	and
+	line.`CAL_ID`=$P{CAL_ID_PARAM}
+	and
+	line.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
+	and
+	line.`LINE_ID`=$P{LINE_ID_PARAM}]]>
+	</queryString>
+	<field name="LINE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISSCORE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE_TYPE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMMENTS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IsCommentsText" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="LINE_GROUP">
+		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="45">
+				<staticText>
+					<reportElement x="49" y="30" width="81" height="15" uuid="070aea8e-5617-4539-9dfe-3f6810674baf"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[WEIGHT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="30" width="49" height="15" uuid="0283137a-570e-4b5d-b904-c540fca2b1c1"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[REP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="130" y="30" width="100" height="15" uuid="ff022afe-9a7b-4715-bb3c-7bfe907edc09"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PAIN/LOCATION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="230" y="30" width="68" height="15" uuid="387e9cdc-c4f6-48fb-b6fe-494f1e3cf63a"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[RATING]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="298" y="30" width="257" height="15" uuid="b30f64c5-d593-483d-b83f-1b45fb5fbb39"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[COMMENTS FOLLOWING FEEDBACK]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="10" width="555" height="20" uuid="26f59770-6935-42d0-9e41-36454131001b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="95" splitType="Stretch">
+			<frame>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="230" height="95" isPrintWhenDetailOverflows="true" uuid="8cb384dc-979e-44f4-b704-91524b924363"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</frame>
+			<subreport>
+				<reportElement x="0" y="0" width="230" height="95" uuid="596d5503-94b1-4c65-8c9e-ddec28d724d0"/>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LINE_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{LINE_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_section_type2_question_type4_line_detail.jasper"]]></subreportExpression>
+			</subreport>
+			<frame>
+				<reportElement stretchType="RelativeToBandHeight" x="230" y="0" width="68" height="95" isPrintWhenDetailOverflows="true" uuid="4b1e58fa-bb7d-4047-8348-ae802084e0d8"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<ellipse>
+					<reportElement mode="Transparent" x="4" y="70" width="54" height="18" uuid="01fb728f-7bbc-4503-bfe4-5a3ac66d231d">
+						<printWhenExpression><![CDATA[$F{SCORE1}!=null && $F{SCORE1}==2]]></printWhenExpression>
+					</reportElement>
+				</ellipse>
+				<ellipse>
+					<reportElement mode="Transparent" x="5" y="7" width="54" height="18" uuid="fa66067d-9d99-4f86-89a3-a4a49f1d87cb">
+						<printWhenExpression><![CDATA[$F{SCORE1}!=null && $F{SCORE1}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+				</ellipse>
+				<ellipse>
+					<reportElement mode="Transparent" x="4" y="38" width="54" height="18" uuid="9d6d5bf7-52d4-4931-a8d8-5db349a87c41">
+						<printWhenExpression><![CDATA[$F{SCORE1}!=null && $F{SCORE1}==1]]></printWhenExpression>
+					</reportElement>
+				</ellipse>
+			</frame>
+			<staticText>
+				<reportElement x="239" y="6" width="46" height="20" uuid="205344f1-b652-4966-801f-3423055a3286"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNABLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="37" width="46" height="20" uuid="390f3466-cdc2-42ad-aab4-fde701134add"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARTIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="69" width="46" height="20" uuid="9c8007ae-15c1-4d9b-9f61-1845b477bd4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ABLE]]></text>
+			</staticText>
+			<frame>
+				<reportElement stretchType="RelativeToBandHeight" x="298" y="0" width="257" height="95" isPrintWhenDetailOverflows="true" uuid="57b98d9a-ff2b-4067-af97-f40f8c52f258"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</frame>
+			<subreport>
+				<reportElement x="311" y="0" width="244" height="95" uuid="4aea3fc9-07b5-4a2a-85fd-781401a1986d"/>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LINE_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{LINE_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_comments.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

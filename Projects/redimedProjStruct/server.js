@@ -51,6 +51,42 @@ var fs = require('fs');//Read js file for import into
 //root
 eval(fs.readFileSync('module-config.js')+'');
 
+app.post('/api/booking/upload',multipartMiddleware, function(req,resp){
+    console.log(__dirname);
+    var targetFolder='.\\download\\online_booking\\'+'BookingID-'+req.body.Booking_id+"\\"+'CandidateID-'+req.body.Candidate_id;
+    console.log('----------------------------------------'+targetFolder);
+    mkdirp(targetFolder, function(err) {
+
+        var tmp_path = req.files.file.path;
+        console.log('temp_path:'+tmp_path);
+        // set where the file should actually exists - in this case it is in the "images" directory
+        var target_path =targetFolder+"\\" + req.files.file.name;
+        console.log('target_path:'+target_path);
+        // move the file from the temporary location to the intended location
+        fs.rename(tmp_path, target_path, function(err) {
+            if (err) throw err;
+            // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+            fs.unlink(tmp_path, function() {
+                if (err) throw err;
+                console.log('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes')
+                //res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
+            });
+        });
+
+        db.BookingCandidate.update({
+            resultFileName: req.files.file.name,
+            resultFilePath: target_path
+
+        },{Booking_id: req.body.Booking_id, Candidate_id: req.body.Candidate_id})
+            .success(function(){
+                resp.json({status:"success"});
+            })
+            .error(function(err){
+                resp.json({status:"fail"});
+            });
+    });
+});
+
 
 app.post('/api/rlob/rl_booking_files/upload',multipartMiddleware,  function(req, resp) {
     var targetFolder='.\\redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;

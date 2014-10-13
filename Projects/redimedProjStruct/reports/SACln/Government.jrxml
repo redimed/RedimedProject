@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Audiogram_report_WA" language="groovy" pageWidth="598" pageHeight="1075" columnWidth="558" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8d269830-c96a-4f26-930c-c81dd460147e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="302"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="6b9aaebc-ff1f-4b8b-98fa-fbecf03d3eff"/>
+	<parameter name="sa_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="result_image" class="java.lang.Object" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+     cln_sa_df_headers.`patient_id` AS cln_sa_df_headers_patient_id,
+     cln_sa_df_headers.`CAL_ID` AS cln_sa_df_headers_CAL_ID,
+     cln_sa_df_headers.`SA_ID` AS cln_sa_df_headers_SA_ID,
+     cln_sa_df_headers.`SA_NAME` AS cln_sa_df_headers_SA_NAME,
+     cln_sa_df_headers.`test_date` AS cln_sa_df_headers_test_date,
+     cln_sa_df_headers.`tester` AS cln_sa_df_headers_tester,
+     cln_patients.`Patient_id` AS cln_patients_Patient_id,
+   	concat(ifnull(cln_patients.`First_name` ,' ') ,
+	ifnull(cln_patients.`Sur_name` 	 ,' ') ,
+	ifnull(cln_patients.`Middle_name` ,' ')) AS cln_patient_name,
+ 	e.`ENTITY_NAME` as entity_name,
+	r.site_addr , cln_sa_df_headers.recipient_name , d.Name
+from
+     `cln_sa_df_headers` cln_sa_df_headers INNER JOIN `cln_patients` cln_patients ON cln_sa_df_headers.`patient_id` = cln_patients.`Patient_id`  left join `entity_patient` e on `cln_patients`.`Patient_id` = e.`Patient_id`
+left join redimedsites r on r.id = cln_sa_df_headers.cal_id inner join doctors d on d.doctor_id = cln_sa_df_headers.doctor_id
+WHERE
+     cln_sa_df_headers.patient_id = $P{patient_id} AND cln_sa_df_headers.SA_ID = $P{sa_id} AND
+     cln_sa_df_headers.CAL_ID = $P{cal_id}]]>
+	</queryString>
+	<field name="cln_sa_df_headers_patient_id" class="java.lang.Integer"/>
+	<field name="cln_sa_df_headers_CAL_ID" class="java.lang.Integer"/>
+	<field name="cln_sa_df_headers_SA_ID" class="java.lang.Integer"/>
+	<field name="cln_sa_df_headers_SA_NAME" class="java.lang.String"/>
+	<field name="cln_sa_df_headers_test_date" class="java.sql.Timestamp"/>
+	<field name="cln_sa_df_headers_tester" class="java.lang.String"/>
+	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
+	<field name="cln_patient_name" class="java.lang.String"/>
+	<field name="entity_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="site_addr" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recipient_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="380" y="29" width="123" height="33" forecolor="#999999" uuid="a9d5925d-4943-4907-aa42-5a56c537fbe1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AUDIOGRAM RESULTS 	Form 411]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="15" width="160" height="65" uuid="1b1768fa-55b1-4bdb-aeef-ee8b9a02acbc"/>
+				<imageExpression><![CDATA[$P{real_path}+"wa-logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="171" y="14" width="111" height="66" uuid="1b60f9f1-60f1-4441-bef9-62a808ccc698"/>
+				<text><![CDATA[2 Bedbrook Shenton Place Park WA 6008 Ph 08 9388 5555 Advisory 1300 794 744 www.workcover.wa.gov.au]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="308" y="14" width="1" height="66" uuid="7c4311a0-d3af-463b-951f-9d25c85e5d27"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="87" width="555" height="1" uuid="9af4789a-2cee-4fe1-8e65-a5c41caa3bfe"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="926">
+			<image>
+				<reportElement x="4" y="11" width="552" height="607" uuid="fbcd48f9-9b6c-4c9b-bf1d-bbd5e57717e5"/>
+				<imageExpression><![CDATA[$P{real_path} + "a1.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="42" y="46" width="330" height="23" uuid="ee36c107-9e90-4389-a954-1bd248928eca"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_patient_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="137" width="487" height="23" uuid="0c8dde95-f027-48cb-bcf8-78ec9e76b9b6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{recipient_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="176" width="375" height="24" uuid="4534d952-75b9-4a2a-867c-c11afb21f709"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{site_addr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="216" width="375" height="22" uuid="7d5c0ef7-4350-4826-90d4-4e4f0f5d2798"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="435" y="176" width="94" height="24" uuid="a2e7005a-f38f-45a4-9588-20c126757d07"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_test_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="34" y="423" width="94" height="24" uuid="5a069e6e-72a6-4139-b776-ff68d01a8995"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_test_date}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="869" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement mode="Opaque" x="3" y="32" width="553" height="155" backcolor="#EAE3B9" uuid="067747de-3c92-405e-b089-4fc94cca4772"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="72" y="12" width="431" height="20" uuid="d0f5d4c6-5573-49c2-9fed-ed0ecf0edaa0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Must be given to the worker within one month of the date of the test being completed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="40" width="100" height="20" uuid="d94175c4-787e-4789-ba19-32fc19a2da0a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Section A - Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="60" width="100" height="20" uuid="92fabd00-1243-4fd7-a12e-66305c762417"/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="27" y="76" width="390" height="20" uuid="89f8d7bf-255c-414b-87aa-074b458e37b2"/>
+				<textFieldExpression><![CDATA[$F{cln_patient_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="27" y="117" width="390" height="20" uuid="0124e062-0008-455d-ae38-60fb498ccf13"/>
+				<textFieldExpression><![CDATA[$F{entity_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="27" y="97" width="100" height="20" uuid="12fb30f6-3681-43e9-9d82-6d2542e0c0e1"/>
+				<text><![CDATA[Employer name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="139" width="100" height="20" uuid="a60f4d3c-c75d-40a1-b427-bccd2ff0e9b3"/>
+				<text><![CDATA[Tester name]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="27" y="157" width="390" height="20" uuid="b0e3ca4e-2f2a-4306-8434-91cec7bab2b1"/>
+				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_tester}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="59" width="100" height="20" uuid="6869ee2c-2259-41dd-970e-f5eb318b31fd"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yy" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="435" y="79" width="100" height="20" uuid="f53e225f-7689-4f50-8f4f-4899f6c34906"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_test_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="99" width="100" height="20" uuid="beb28078-f00e-4b86-b772-a7df9cf19f14"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(dd/mm/yyyy)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="196" width="291" height="20" uuid="04790377-ff37-4120-9417-070605ea14b7"/>
+				<text><![CDATA[Here are the results of your hearing test and what they mean.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="216" width="129" height="20" uuid="d36deec5-e710-4101-9b68-850ff2860f01"/>
+				<text><![CDATA[What is an audiogram?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="216" width="369" height="34" uuid="ad0f686c-da6b-41f6-800a-4ca2f29477ef"/>
+				<text><![CDATA[An audiogram shows the softest level at which a person can hear a range of different pure tones.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="250" width="130" height="20" uuid="024cec40-4f95-498f-b988-89386f29428c"/>
+				<text><![CDATA[Here is your audiogram]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="667" width="501" height="32" uuid="110ab492-41d4-46e4-a9c7-6baa5e47f465"/>
+				<text><![CDATA[The softest sounds that you responded to are market O for the right ear an X for the left ear. These are your hearing threshold level.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="700" width="291" height="20" uuid="1fa817fb-a603-45c8-b831-59bb2abe4df8"/>
+				<text><![CDATA[As a benchmark, normal hearing falls between 0 and 20 dB.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="720" width="114" height="20" uuid="7694d3e6-52c5-41e7-b28c-28355e94a509"/>
+				<text><![CDATA[Degree of hearing loss :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="208" y="720" width="144" height="20" uuid="f8a19ea6-3ae8-40c2-abe2-ef9885739510"/>
+				<text><![CDATA[Mild loss :	     25-45 dB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="208" y="740" width="144" height="20" uuid="9013ddc0-e17b-4f48-9889-22d6cc4c2225"/>
+				<text><![CDATA[Moderate loss : 	     50-65 dB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="760" width="143" height="20" uuid="fa7bfd40-aaf7-46f6-a186-97d2c4cbc0a8"/>
+				<text><![CDATA[Severe loss :	     70-90 dB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="208" y="780" width="144" height="20" uuid="4d0bc8aa-df67-43c6-9461-7c6be5845790"/>
+				<text><![CDATA[Profound loss : 	           90 dB+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="800" width="502" height="39" uuid="8a3650db-e2da-429d-816c-a506d8c5489d"/>
+				<text><![CDATA[All the major sounds of speech are contained within the audiogram range. The approximate volume and pitch of various speech sounds are shown on the audiogram above.This may give you an indication of the sounds you hear less clearly.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="839" width="502" height="28" uuid="8820cdbd-c3d3-4670-8fac-9ba24045b8bf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[You have three months from the date of receiving these results to notify WorkCover WA that you wish to disagree with the results.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="274" width="558" height="384" uuid="4bfb84f8-a640-4574-b84e-93ecc7d5c6ba"/>
+				<imageExpression><![CDATA[$P{result_image}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" forecolor="#999999" uuid="1438bdf9-644a-4f0f-adb5-e606c5964021"/>
+				<text><![CDATA[Form 411 05/11]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="0" width="76" height="20" forecolor="#999999" uuid="06e402b4-5783-4872-80d6-15f0a2dc9e14"/>
+				<text><![CDATA[Workcover WA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="513" y="0" width="45" height="20" forecolor="#999999" uuid="01078075-b4ac-42d8-bfaa-ba1a085e5504"/>
+				<text><![CDATA[Page 1/1]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -6,11 +6,11 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 
-var path = require('path');
-process.env.TMPDIR =path.join(__dirname, 'temp');
-var mkdirp = require('mkdirp');
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
+//var path = require('path');
+//process.env.TMPDIR =path.join(__dirname, 'temp');
+//var mkdirp = require('mkdirp');
+//var multipart = require('connect-multiparty');
+//var multipartMiddleware = multipart();
 
 
 module.exports = {
@@ -177,8 +177,6 @@ module.exports = {
     },
     editBooking : function(req,res){
         var info = req.body.info;
-
-        console.log(info);
 
         var calId;
         if(info.calendar_id === null || typeof info.calendar_id === 'undefined' || info.calendar_id === '')
@@ -605,43 +603,7 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error'});
             })
-    },
-    uploadResultFile: function(req,resp){
-        var targetFolder='.\\download\\online_booking\\'+'BookingID-'+req.body.Booking_id+"\\"+'CandidateID-'+req.body.Candidate_id;
-            console.log('----------------------------------------'+targetFolder);
-        mkdirp(targetFolder, function(err) {
-           
-            var tmp_path = req.files.file.path;
-            console.log('temp_path:'+tmp_path);
-            // set where the file should actually exists - in this case it is in the "images" directory
-            var target_path =targetFolder+"\\" + req.files.file.name;
-            console.log('target_path:'+target_path);
-            // move the file from the temporary location to the intended location
-            fs.rename(tmp_path, target_path, function(err) {
-                if (err) throw err;
-                // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-                fs.unlink(tmp_path, function() {
-                    if (err) throw err;
-                    console.log('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes')
-                    //res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
-                });
-            });
-
-             db.BookingCandidate.update({
-                resultFileName: req.files.file.name,
-                resultFilePath: target_path
-
-            },{Booking_id: req.body.Booking_id, Candidate_id: req.body.Candidate_id})
-                .success(function(){
-                    resp.json({status:"success"});
-                })
-                .error(function(err){
-                    resp.json({status:"fail"});
-                });
-            });
     }
-    
-
     
 };
 

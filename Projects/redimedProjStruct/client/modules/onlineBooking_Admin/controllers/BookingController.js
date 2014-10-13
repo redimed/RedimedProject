@@ -15,6 +15,16 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
             startingDay: 1
         };
 
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/api/booking/upload'
+        });
+
+        uploader.onAfterAddingFile = function(fileItem) {
+            fileItem.formData[0]={Booking_id:$scope.info.Booking_id,Candidate_id:$scope.info.Candidate_id,fileName:uploader.queue[0].file.name};
+            console.info('onAfterAddingFile', fileItem);
+
+        };
+
         OnlineBookingAdminService.getList().then(function(data){
             if(data.status === 'success')
             {
@@ -62,6 +72,7 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
             $scope.selectedCanId = b.Candidate_id;
             $scope.selectedBookId = b.Booking_id;
             $scope.isSelected = true;
+            uploader.clearQueue();
             OnlineBookingService.getBookingDetail(b.Booking_id, b.Candidate_id).then(function(data){
                 var arrAss = [];
                 $scope.info = data.rs[0];
@@ -94,13 +105,11 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
             })
         }
 
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/api/booking/upload'
-        });
+
+
+
 
         $scope.saveInfo = function(){
-
-            uploader.uploadAll();
 
             uploader.filters.push({
                 name: 'customFilter',
@@ -110,7 +119,9 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
             });
 
 
-            uploader.formData.push({booking_id:$scope.info.Booking_id,Candidate_id:$scope.info.Candidate_id,fileName:uploader.queue[0].file.name});
+            uploader.uploadAll();
+
+            console.log(uploader);
 
             uploader.onCompleteAll = function() {
                 console.info('onCompleteAll');

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_type2_question_type3" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="86b2345e-e67a-4c34-8bbb-fe5fceb51e7b">
+	<property name="ireport.zoom" value="1.3310000000000015"/>
+	<property name="ireport.x" value="2"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CAL_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LINE_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT  DISTINCT 	line.`LINE_ID`,line.`QUESTION`,line.`ISSCORE1`,line.`SCORE1`,line.`ISRATING1`,line.`RATE1`,line.`RATING_VALUE1`,
+	detail.`QUESTION` DETAIL_QUESTION ,detail.`VAL1_ISVALUE`, detail.`VAL1_NAME`, detail.`VAL1_VALUE`,detail.`VAL1_CHECKBOX`,detail.`COMMENTS` DETAIL_COMMENT,
+	detail.`VAL2_ISCHECKBOX`,detail.`VAL2_CHECKBOX`,detail.`VAL2_NAME`
+FROM 	`cln_fa_df_lines` line INNER JOIN `cln_fa_df_line_details` detail ON line.`LINE_ID`=detail.`LINE_ID` AND line.`PATIENT_ID`=detail.`PATIENT_ID` AND line.`CAL_ID`=detail.`CAL_ID`
+WHERE 	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
+	AND
+	detail.`VAL1_ISCHECKBOX`=2
+	AND
+	line.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
+	AND
+	line.`CAL_ID`=$P{CAL_ID_PARAM}
+	AND
+	line.`LINE_ID`=$P{LINE_ID_PARAM}]]>
+	</queryString>
+	<field name="LINE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISSCORE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISRATING1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATE1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATING_VALUE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DETAIL_QUESTION" class="java.lang.String"/>
+	<field name="VAL1_ISVALUE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_VALUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_CHECKBOX" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DETAIL_COMMENT" class="java.lang.String"/>
+	<field name="VAL2_ISCHECKBOX" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_CHECKBOX" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="LINE_GROUP">
+		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="45">
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="10" width="477" height="20" uuid="c7200374-1bb4-408a-a190-09deb8ce48d7"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="30" width="134" height="15" uuid="74f8bfce-cc36-4e47-b83e-51a2348016a2"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement>
+						<font isBold="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<text><![CDATA[Test]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="134" y="30" width="213" height="15" uuid="cad8991a-a716-43d8-81c4-8b5074e2688d"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement>
+						<font isBold="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<text><![CDATA[Result]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="347" y="30" width="130" height="15" uuid="2d8b0cc7-f05f-4d76-8b75-6a2c9941247f"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement>
+						<font isBold="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<text><![CDATA[Comment]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="38" splitType="Stretch">
+			<frame>
+				<reportElement x="134" y="0" width="213" height="38" uuid="eedc6952-5c91-4fd7-ac04-4f5d1938c7d9"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="167" y="3" width="35" height="15" uuid="76e243d1-56f4-40b2-be3f-2f3135ac8a0f"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[(circle)]]></text>
+				</staticText>
+				<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+					<reportElement x="10" y="23" width="13" height="13" isRemoveLineWhenBlank="true" uuid="f4008364-b6b4-4bff-b8eb-b0ce9dd77226">
+						<printWhenExpression><![CDATA[$F{VAL2_ISCHECKBOX}!=null && $F{VAL2_ISCHECKBOX}==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VAL2_CHECKBOX}!=null && $F{VAL2_CHECKBOX}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+				</image>
+				<textField isBlankWhenNull="true">
+					<reportElement x="25" y="21" width="177" height="15" isRemoveLineWhenBlank="true" uuid="e9d6b767-1e4f-469e-b9d1-7a47c279e8d4">
+						<printWhenExpression><![CDATA[$F{VAL2_ISCHECKBOX}!=null && $F{VAL2_ISCHECKBOX}==1]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{VAL2_NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="10" y="3" width="47" height="15" uuid="62ff2b21-b3cf-43b9-b959-2bdacf4d68c9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNABLE]]></text>
+				</staticText>
+				<ellipse>
+					<reportElement mode="Transparent" x="8" y="2" width="55" height="18" uuid="c33ec2b7-6e6e-4cab-bfa4-b3106ea12a27">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "UNABLE" )]]></printWhenExpression>
+					</reportElement>
+				</ellipse>
+				<ellipse>
+					<reportElement mode="Transparent" x="65" y="2" width="55" height="18" uuid="551e5e89-f34c-4f5d-8b93-097e7520aa4d">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "PARTIAL" )]]></printWhenExpression>
+					</reportElement>
+				</ellipse>
+				<ellipse>
+					<reportElement mode="Transparent" x="121" y="3" width="41" height="15" uuid="2df97b6d-e818-49ea-8824-6f70fd87f189">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "ABLE" )]]></printWhenExpression>
+					</reportElement>
+				</ellipse>
+			</frame>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="134" height="38" uuid="56da8eab-82e7-4cf8-ac8e-a30c9182ca61"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DETAIL_QUESTION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="259" y="3" width="31" height="15" uuid="327f7faf-7b37-41e3-907c-d0a5c05d9788"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ABLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="3" width="46" height="15" uuid="7b4c3c96-6760-4ea4-8bec-cb6c726fdd85"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARTIAL]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="347" y="0" width="130" height="38" uuid="04873069-f8e1-4fb8-a45e-4b9e5b8d4ba9"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DETAIL_COMMENT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
