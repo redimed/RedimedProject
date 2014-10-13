@@ -26,19 +26,35 @@
       <file leaf-file-name="audiogramresults1.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.655172" vertical-offset="8100" max-vertical-offset="11280">
+            <state vertical-scroll-proportion="0.0" vertical-offset="8100" max-vertical-offset="11280">
               <caret line="419" column="59" selection-start-line="419" selection-start-column="59" selection-end-line="419" selection-end-column="59" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="audiogramresults2.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="audiogramresults2.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.10989011" vertical-offset="8340" max-vertical-offset="11300">
-              <caret line="420" column="59" selection-start-line="420" selection-start-column="59" selection-end-line="420" selection-end-column="59" />
+            <state vertical-scroll-proportion="-280.68967" vertical-offset="480" max-vertical-offset="11300">
+              <caret line="431" column="10" selection-start-line="431" selection-start-column="10" selection-end-line="431" selection-end-column="10" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="category3.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/category3.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.34065935" vertical-offset="32094" max-vertical-offset="33840">
+              <caret line="1614" column="14" selection-start-line="1614" selection-start-column="14" selection-end-line="1614" selection-end-column="14" />
+              <folding>
+                <element signature="n#style#0;n#p#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#6;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -46,7 +62,7 @@
       <file leaf-file-name="appointmentNote.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/appointmentNote.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="420">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -56,7 +72,7 @@
       <file leaf-file-name="bookingDetailModal.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/bookingDetailModal.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="51.724136" vertical-offset="1500" max-vertical-offset="2700">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1500" max-vertical-offset="2700">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -66,7 +82,7 @@
       <file leaf-file-name="changeBookingTime.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/changeBookingTime.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="28.068966" vertical-offset="814" max-vertical-offset="1360">
+            <state vertical-scroll-proportion="0.0" vertical-offset="814" max-vertical-offset="1360">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -76,7 +92,7 @@
       <file leaf-file-name="changePassModal.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/changePassModal.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.4137931" vertical-offset="41" max-vertical-offset="600">
+            <state vertical-scroll-proportion="0.0" vertical-offset="41" max-vertical-offset="600">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -86,7 +102,7 @@
       <file leaf-file-name="confirmCancel.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/confirmCancel.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="300">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -96,17 +112,7 @@
       <file leaf-file-name="customPackage.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/customPackage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="460">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="addPosition.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/addPosition.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="420">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="460">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -116,7 +122,7 @@
       <file leaf-file-name="booking.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/booking.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="8.275862" vertical-offset="240" max-vertical-offset="1860">
+            <state vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="1860">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -160,9 +166,9 @@
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MRSController.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/form18.html" />
-        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/category3.html" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults1.html" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults2.html" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/category3.html" />
       </list>
     </option>
   </component>
@@ -477,6 +483,14 @@
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -487,12 +501,14 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
+    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" />
+      <option name="executablePath" />
       <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -500,16 +516,6 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
-      <option name="cucumberJsArguments" />
-      <option name="executablePath" />
-      <option name="filePath" />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -546,7 +552,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1377" height="744" extended-state="0" />
+    <frame x="-8" y="0" width="1377" height="744" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -561,11 +567,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -697,7 +703,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1971" max-vertical-offset="2700">
           <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="117" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -712,7 +717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="124" max-vertical-offset="1260">
           <caret line="34" column="62" selection-start-line="34" selection-start-column="62" selection-end-line="34" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -741,7 +745,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2100" max-vertical-offset="4620">
           <caret line="10" column="48" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -749,7 +752,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="652" max-vertical-offset="1240">
           <caret line="38" column="39" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -757,7 +759,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="37.724136" vertical-offset="1094" max-vertical-offset="1640">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -765,7 +766,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.6551723" vertical-offset="434" max-vertical-offset="1640">
           <caret line="27" column="14" selection-start-line="25" selection-start-column="8" selection-end-line="27" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -773,7 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4320">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -781,7 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2020">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -789,7 +787,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4620">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -797,7 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11900">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -805,7 +801,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.13422818" vertical-offset="240" max-vertical-offset="7980">
           <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -813,7 +808,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1180">
           <caret line="33" column="180" selection-start-line="33" selection-start-column="180" selection-end-line="33" selection-end-column="180" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -821,55 +815,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="116.48276" vertical-offset="3998" max-vertical-offset="16960">
           <caret line="31" column="10" selection-start-line="31" selection-start-column="10" selection-end-line="31" selection-end-column="10" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#2;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#2;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#6;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#3;n#div#0;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#4;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#5;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#6;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#7;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#7;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#3;n#div#0;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#4;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#5;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#5;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#6;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#7;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#7;n#div#8;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h3#0;n#div#0;n#div#0;n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h3#1;n#div#0;n#div#0;n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h3#2;n#div#0;n#div#0;n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#10;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#10;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#10;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#10;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#10;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#11;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#11;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#11;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#14;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#14;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -877,34 +822,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6896552" vertical-offset="180" max-vertical-offset="8000">
           <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#2;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -912,7 +829,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
           <caret line="7" column="23" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -920,200 +836,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="11.683544" vertical-offset="1583" max-vertical-offset="4560">
           <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#8;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#8;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#8;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#0;n#div#9;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#9;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#15;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#15;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/category3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.586206" vertical-offset="24060" max-vertical-offset="33680">
-          <caret line="1243" column="80" selection-start-line="1243" selection-start-column="80" selection-end-line="1243" selection-end-column="80" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#2;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#3;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#4;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#5;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#div#5;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#4;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#4;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#8;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#8;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#14;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#14;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#15;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#16;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#16;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#17;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#17;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#18;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#19;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#20;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#1;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#2;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#3;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#4;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#7;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#3;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#6;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#7;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#8;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#3;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#4;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#5;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#6;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#7;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#8;n#div#0;n#div#10;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#3;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#4;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#5;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#6;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#7;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#8;n#div#0;n#div#11;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#12;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#13;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#14;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#15;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#16;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#17;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#18;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#19;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#20;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#21;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#22;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#23;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#24;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#25;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#26;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#27;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#28;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#29;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#30;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#31;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#32;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#33;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#34;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#35;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#36;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#36;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#37;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#37;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#38;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#38;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#39;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#39;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#40;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#40;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#41;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#41;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#42;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#42;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#43;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#43;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#44;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#44;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#45;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#46;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#46;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#46;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#46;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#div#3;n#div#46;n#form#0;n#div#1;n#div#0;n#div#0;n#div#8;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#1;n#div#1;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#3;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#4;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#1;n#div#1;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#2;n#div#1;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#1;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#1;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#3;n#div#1;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#4;n#div#1;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#1;n#div#1;n#div#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#2;n#div#1;n#div#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#0;n#div#1;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#1;n#div#1;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#2;n#div#1;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#0;n#div#1;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#1;n#div#1;n#div#0;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#2;n#div#1;n#div#0;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#0;n#div#1;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#6;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1121,7 +843,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="588">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1129,7 +850,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="33.793102" vertical-offset="1680" max-vertical-offset="2460">
           <caret line="35" column="61" selection-start-line="35" selection-start-column="61" selection-end-line="35" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1137,7 +857,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="19.793104" vertical-offset="574" max-vertical-offset="1120">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1145,7 +864,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="588">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1153,7 +871,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="588">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1175,7 +892,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/booking.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="8.275862" vertical-offset="240" max-vertical-offset="1860">
+        <state vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="1860">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -1183,7 +900,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/bookingDetailModal.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="51.724136" vertical-offset="1500" max-vertical-offset="2700">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1500" max-vertical-offset="2700">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -1191,7 +908,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/changeBookingTime.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="28.068966" vertical-offset="814" max-vertical-offset="1360">
+        <state vertical-scroll-proportion="0.0" vertical-offset="814" max-vertical-offset="1360">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -1199,7 +916,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/changePassModal.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4137931" vertical-offset="41" max-vertical-offset="600">
+        <state vertical-scroll-proportion="0.0" vertical-offset="41" max-vertical-offset="600">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -1223,7 +940,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.655172" vertical-offset="8100" max-vertical-offset="11280">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8100" max-vertical-offset="11280">
           <caret line="419" column="59" selection-start-line="419" selection-start-column="59" selection-end-line="419" selection-end-column="59" />
           <folding />
         </state>
@@ -1231,9 +948,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10989011" vertical-offset="8340" max-vertical-offset="11300">
-          <caret line="420" column="59" selection-start-line="420" selection-start-column="59" selection-end-line="420" selection-end-column="59" />
+        <state vertical-scroll-proportion="-280.68967" vertical-offset="480" max-vertical-offset="11300">
+          <caret line="431" column="10" selection-start-line="431" selection-start-column="10" selection-end-line="431" selection-end-column="10" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/category3.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34065935" vertical-offset="32094" max-vertical-offset="33840">
+          <caret line="1614" column="14" selection-start-line="1614" selection-start-column="14" selection-end-line="1614" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#4;n#form#0;n#div#1;n#div#0;n#div#0;n#div#9;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#6;n#form#0;n#div#1;n#div#0;n#div#0;n#div#10;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
