@@ -12,4 +12,8 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         $scope.submit = function(){
             var info = $scope.info;
         };
+
+        $scope.print = function(){
+
+        }
     });
