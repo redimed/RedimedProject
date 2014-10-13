@@ -115,7 +115,7 @@ angular.module('app.loggedIn.document.services', [])
             var insertCat3 = api.all("document/insertCat3");
             return insertCat3.post({info: info});
         }
-        return documentService;
+
 
         documentService.insertUQ = function(info){
             var insertUQ = api.all("document/insertUQ");

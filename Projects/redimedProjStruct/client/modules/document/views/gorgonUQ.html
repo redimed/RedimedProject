@@ -1351,7 +1351,7 @@
             </div>
             <div class="col-md-3 col-sm-4">
                 <label class="control-label">Date of Birth:</label>
-                <input type="text"  class="form-control col-md-12" ng-model="info.DOB"  datepicker-popup="dd/MM/yyyy"  is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions"  close-text="Close" />
+                <input type="text" max-date="maxDate"  class="form-control col-md-12" ng-model="info.DOB"  datepicker-popup="dd/MM/yyyy"  is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions"  close-text="Close" />
             </div>
             <div class="col-md-3 col-sm-4">
                 <label class="control-label">Department:</label>
@@ -1477,17 +1477,30 @@
         </br>
         </br>
 
-        <div class="row">
-            <div class="col-md-5">
-                <label class="control-label text-info" style="font-weight: bold">Length of Time anticipated Effort in Hours:</label>
+
+
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.LengthOfTime.$invalid}">
+            <div class="row">
+                <div class="col-md-5">
+                    <label class="control-label text-info" style="font-weight: bold">Length of Time anticipated Effort in Hours:</label>
+                </div>
+                <div class="col-md-5" style="margin-left: 10px">
+                    <input type="text"  ng-model="info.LengthOfTime"  class="form-control">
+                </div>
             </div>
-            <div class="col-md-5" style="margin-left: 10px">
-                <input type="text"  ng-model="info.LengthOfTime"  class="form-control">
+
+            <div class="row" ng-show="showClickedValidation && gorgonUQForm.LengthOfTime.$invalid">
+                <div class="col-md-3 col-sm-5"></div>
+                <div class="col-md-5 col-sm-7 help-block"  for="LengthOfTime">
+                    <label>Your height is required</label>
+                    <div for="LengthOfTime" class="help-block" ng-show="showClickedValidation && gorgonUQForm.LengthOfTime.$error.pattern">
+                        <label>Length of time must be number</label>
+                    </div>
+                </div>
+
             </div>
         </div>
         </br>
-
-
             <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
                 Special Work Considerations (i.e., high places, temperature, hazardous material, protective clothing, etc.)
             </p>

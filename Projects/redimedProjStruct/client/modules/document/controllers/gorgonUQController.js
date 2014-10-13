@@ -152,6 +152,8 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 
         };
 
+        $scope.maxDate = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
+
 
         $scope.submitGorgonUQ = function(gorgonUQForm){
             $scope.showClickedValidation = true;
