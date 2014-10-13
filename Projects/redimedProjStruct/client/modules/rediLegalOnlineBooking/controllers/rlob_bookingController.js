@@ -160,9 +160,9 @@ angular.module('app.loggedIn.rlob.booking.controller',[])
 
     }
 
-    $scope.appointments=appointmentCalendarService.allSync();
-    //Xoa toan bo thong tin cu
-    angular.copy({},$scope.appointments);
+//    $scope.appointments=appointmentCalendarService.allSync();
+//    //Xoa toan bo thong tin cu
+//    angular.copy({},$scope.appointments);
 //    $scope.updateAppoinmentsList=function()
 //    {
 //        var specialityId=$scope.selectedInfo.clnSpecialitySelected!=null && $scope.selectedInfo.clnSpecialitySelected.Specialties_id!=undefined?$scope.selectedInfo.clnSpecialitySelected.Specialties_id:-1;
@@ -191,7 +191,9 @@ angular.module('app.loggedIn.rlob.booking.controller',[])
 //        });
 //
 //    }
-
+        $scope.appointments=appointmentCalendarService.allSync();
+        //Xoa toan bo thong tin cu
+        angular.copy({},$scope.appointments);
         $scope.updateAppoinmentsList=function()
         {
         var specialityId=$scope.selectedInfo.clnSpecialitySelected!=null && $scope.selectedInfo.clnSpecialitySelected.Specialties_id!=undefined?$scope.selectedInfo.clnSpecialitySelected.Specialties_id:-1;
@@ -205,6 +207,11 @@ angular.module('app.loggedIn.rlob.booking.controller',[])
                 params:{Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime}
             })
                 .success(function(data) {
+                    for(var i=0;i<data.length;i++)
+                    {
+                        $scope.appointments.push(data[i]);
+                    }
+
                     var temp={LOCATION_ITEMS:[]};
 
                     for(var i=0;i<data.length;i++)
@@ -258,6 +265,7 @@ angular.module('app.loggedIn.rlob.booking.controller',[])
                         arr.push(location_item);
                     }
                     $scope.appointmentsFilter=arr;
+
 
                 })
                 .error(function (data) {

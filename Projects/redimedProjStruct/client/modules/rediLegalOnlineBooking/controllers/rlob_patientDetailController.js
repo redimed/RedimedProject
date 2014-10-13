@@ -105,9 +105,8 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         //==============================================================================================
         var cal_id=$stateParams.id;
 
+
         selectedInfo.selectedAppointment=appointmentCalendarService.getAppointmentById(cal_id);
-
-
         var from_date = moment(new Date(selectedInfo.selectedAppointment.FROM_TIME));
         $scope.booking_detail={};
         $scope.booking_detail.date=from_date.format("DD/MM/YYYY");
@@ -245,7 +244,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 return;
             }
 
-            $scope.isSaving=true;
+//            $scope.isSaving=true;
             //Set mailto
             var recepient = "tannv.dts@gmail.com";
             var options = {

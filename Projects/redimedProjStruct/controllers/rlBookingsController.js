@@ -114,7 +114,6 @@ module.exports =
     {
         var bookingId=req.body.bookingId;
         var userId=(req.body.userId)?req.body.userId:null;
-        console.log("????????????????????:"+userId);
         req.getConnection(function(err,connection)
         {
 

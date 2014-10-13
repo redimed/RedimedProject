@@ -180,11 +180,16 @@
                     </span>
                 </a>
                 <a>
-                    {{node.DISPLAY}}
-                    <br ng-show="node.DISPLAY2"/>
-                    {{node.DISPLAY2}}
-                    <br ng-show="node.DISPLAY3"/>
-                    {{node.DISPLAY3}}
+                    <span>
+                        {{node.DISPLAY}}
+                        <br ng-show="node.DISPLAY1"/>
+                        {{node.DISPLAY1}}
+                        <br ng-show="node.DISPLAY2"/>
+                        {{node.DISPLAY2}}
+                        <br ng-show="node.DISPLAY3"/>
+                        {{node.DISPLAY3}}
+                    </span>
+
                 </a>
                 <!--<span>-->
                         <!---->
@@ -221,8 +226,8 @@
 
                         <li>
                             <a class="pointer" role="menuitem" tabindex="2"
-                               ng-click="showDialogChangeAppointmentCalendar(node.BOOKING_ID,node.CAL_ID,node.APPOINTMENT_DATETIME)">
-                                Change appointment calendar {{node.CAL_ID}}
+                               ng-click="showDialogChangeAppointmentCalendar(node.BOOKING_ID,node.CAL_ID,node.APPOINTMENT_DATETIME,node.ASS_ID)">
+                                Change appointment calendar
                             </a>
                         </li>
 
@@ -297,8 +302,10 @@
 
                 <!--<span class="label label-warning">Warning</span>-->
                 <!--<span ng-if="node.BOOKING_ID" class="pull-right lob_status lob_booking_status ">{{node.STATUS}}</span>-->
-                <span ng-if="node.BOOKING_ID" class=" pull-right lob_status lob_booking_status">{{node.STATUS}}</span>
-                <span ng-if="node.FILE_ID" class="pull-right  lob_status">{{node.isClientDownLoad==1?'Result':''}}</span>
+
+                <span ng-if="node.BOOKING_ID" class="pull-right lob_status lob_booking_status">{{node.STATUS}}</span>
+                <span ng-if="node.FILE_ID" class="pull-right  lob_status">{{node.isClientDownLoad==1?'Result':''}}
+                </span>
 
             </div>
             <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">

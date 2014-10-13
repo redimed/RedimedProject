@@ -283,7 +283,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 60000);
+            }, 4000);
         };
 
 
@@ -362,6 +362,7 @@ angular.module("app.loggedIn.controller",[
             .success(function(data) {
                 if(data.status=='success')
                 {
+
                     $scope.totalItems=data.data.count_total_notification;
                     $scope.itemsPerPage=2;
                     $scope.maxSize=10;
@@ -389,6 +390,7 @@ angular.module("app.loggedIn.controller",[
          */
         function getItemsOfPaging(data)
         {
+
             var deferred=$q.defer();
             $http({
                 method:"GET",
@@ -400,6 +402,7 @@ angular.module("app.loggedIn.controller",[
                 {
                     $scope.listNotifications=data.data;
                     deferred.resolve();
+
                 }
             })
             .error(function (data) {
@@ -509,4 +512,9 @@ angular.module("app.loggedIn.controller",[
     }
 
     $scope.getAppointmentCalendarUpcoming();
+
+    $scope.closeNotificationListPopup=function()
+    {
+        $("#list-notification-popup").modal('hide');
+    }
 })

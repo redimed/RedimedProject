@@ -354,6 +354,7 @@
                         <tr>
                             <th>Time</th>
                             <th>Message</th>
+                            <th></th>
                             <!--<th>Read</th>-->
                         </tr>
 
@@ -363,6 +364,15 @@
                              ng-class="{'alert alert-success':item.STATUS==0}">
                             <td>{{item.time_created |date:'dd-MM-yyyy HH:mm:ss'}}</td>
                             <td>{{item.msg}}</td>
+                            <td>
+                                <a
+                                    class="btn btn-sm yellow filter-submit margin-bottom"
+                                    style="margin-left: 10px;margin-bottom: 10px;"
+                                    ng-click="closeNotificationListPopup()"
+                                    ui-sref="{{item.link}}">
+                                    View details
+                                </a>
+                            </td>
                             <!--<td>-->
                                 <!--<input type="checkbox"   ng-model="item.STATUS" ng-true-value="1" ng-false-value="0" ng-checked="item.STATUS">-->
                             <!--</td>-->

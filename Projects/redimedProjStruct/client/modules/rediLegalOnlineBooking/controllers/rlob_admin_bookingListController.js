@@ -169,7 +169,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                         Company_name:item.Company_name,
                         WRK_SURNAME:item.WRK_SURNAME,
                         STATUS:item.STATUS,
-                        DISPLAY:item.APPOINTMENT_TIME+" - Site: "+item.Site_name,
+                        DISPLAY:item.APPOINTMENT_TIME,
+                        DISPLAY1:"- Site: "+item.Site_name,
                         DISPLAY2:  "- Patient: "+item.WRK_SURNAME,
                         DISPLAY3:  "- Company: "+item.Company_name,
                         style_class:'lob_admin_booking_node'
@@ -876,10 +877,11 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             calId:null,
             appointmentDateTime:null,
             newAppoimentDateTime:null,
-            bookingIdChangeSuccess:null
+            bookingIdChangeSuccess:null,
+            assId:null
         };
 
-        $scope.showDialogChangeAppointmentCalendar=function(bookingId,calId,appointmentDateTime)
+        $scope.showDialogChangeAppointmentCalendar=function(bookingId,calId,appointmentDateTime,assId)
         {
             $("#lob-change-appointment-calendar-dialog").modal({
                 show:true,
@@ -888,6 +890,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             $scope.currentUpdatingItem.bookingId=bookingId;
             $scope.currentUpdatingItem.calId=calId;
             $scope.currentUpdatingItem.appointmentDateTime=appointmentDateTime;
+            $scope.currentUpdatingItem.assId=assId;
             $scope.updateAppoinmentsList();
         }
 
@@ -930,6 +933,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                             {
                                 $scope.lobAdminSearch.doctorKey=null;
                             }
+                            //$scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
+                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.rlobNotificationType.changeCalendar,$scope.notificationType.bell,'');
                         }
                     })
                     .error(function (data) {
@@ -965,6 +970,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         }
 
         $scope.newPosition="new-position";
+
+
 });
 
 
