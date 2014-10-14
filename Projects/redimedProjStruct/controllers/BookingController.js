@@ -212,22 +212,22 @@ module.exports = {
 
 
 
-        var transport = nodemailer.createTransport(smtpPool({
+        var transport = nodemailer.createTransport(smtpTransport({
             host: "mail.redimed.com.au", // hostname
-            secure: true,
-            ignoreTLS: false,
+            secure: false,
             port: 25, // port for secure SMTP
-            debug: true,
             auth: {
                 user: "programmer2",
                 pass: "Hello8080"
-            }
+            },
+            tls: {rejectUnauthorized: false},
+            debug:true
         }));
 
         var mailOptions = {
             from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
             to: info.Email, // receiver
-            subject: "✔ REDiMED Booking Confirm", // Subject line
+            subject: "Confirmation for appointment of "+ info.company_name+" # "+info.Candidates_name, // Subject line
             html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
                 "<br>Your medical assessment has been booked at the following:</b><br>"+
                 "Date / Time: <b>" + appointmentTime +"</b> <br>" +
@@ -306,8 +306,9 @@ module.exports = {
                                 contact_email: head.contact_email
                             })
                                 .success(function(data){
-                                    for(var i=0; i<info.length; i++){
 
+                                    for(var i=0; i<info.length; i++){
+                                        var companyId = data['dataValues'].company_id;
                                         db.BookingCandidate.create({
                                             Booking_id: data['dataValues'].Booking_id,
                                             Candidate_id: info[i].candidateId,
@@ -338,53 +339,68 @@ module.exports = {
 
                                                 var siteId = data['dataValues'].SITE_ID;
 
-                                                db.sequelize.query('SELECT Site_name FROM redimedsites WHERE id=?',null,{raw:true},[siteId])
-                                                    .success(function(rs){
-                                                        var siteName = rs[0].Site_name;
-                                                        var candidateEmail = data['dataValues'].Email;
-                                                        var appointmentDate = data['dataValues'].Appointment_time;
+                                                db.sequelize.query('SELECT company_name FROM companies WHERE id = ?',null,{raw:true},[companyId])
+                                                    .success(function(com){
 
-                                                        var transport = nodemailer.createTransport(smtpPool({
-                                                            host: "mail.redimed.com.au", // hostname
-                                                            secure: true,
-                                                            ignoreTLS: false,
-                                                            port: 25, // port for secure SMTP
-                                                            debug: true,
-                                                            auth: {
-                                                                user: "programmer2",
-                                                                pass: "Hello8080"
-                                                            }
-                                                        }));
 
-                                                        var mailOptions = {
-                                                            from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
-                                                            to: candidateEmail, // receiver
-                                                            subject: "✔ REDiMED Booking Confirm", // Subject line
-                                                            html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
-                                                                "<br>Your medical assessment has been booked at the following:</b><br>"+
-                                                                "Date / Time: <b>" + appointmentDate +"</b> <br>" +
-                                                                "Location: <b>REDiMED " + siteName + "</b><br>" +
-                                                                "<br>" +
-                                                                "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
-                                                                "<br>" +
-                                                                "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
-                                                                "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
-                                                                "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
-                                                                "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
-                                                                "- For any queries, please call 92300990.<br>"
+                                                        var cName = com[0].company_name;
 
-                                                        }
+                                                        //region Description
+                                                        db.sequelize.query('SELECT Site_name FROM redimedsites WHERE id=?',null,{raw:true},[siteId])
+                                                            .success(function(rs){
+                                                                var siteName = rs[0].Site_name;
+                                                                var candidateEmail = data['dataValues'].Email;
+                                                                var appointmentDate = data['dataValues'].Appointment_time;
+                                                                var candidateName = data['dataValues'].Candidates_name;
+                                                                var companyName = cName;
 
-                                                        transport.sendMail(mailOptions, function(error, response){  //callback
-                                                            if(error){
-                                                                console.log(error);
-                                                                res.json({status:"fail"});
-                                                            }else{
-                                                                console.log("Message sent: " + response.message);
-                                                                res.json({status:"success"});
-                                                            }
-                                                            transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
-                                                        });
+                                                                var transport = nodemailer.createTransport(smtpTransport({
+                                                                    host: "mail.redimed.com.au", // hostname
+                                                                    secure: false,
+                                                                    port: 25, // port for secure SMTP
+                                                                    auth: {
+                                                                        user: "programmer2",
+                                                                        pass: "Hello8080"
+                                                                    },
+                                                                    tls: {rejectUnauthorized: false},
+                                                                    debug:true
+                                                                }));
+
+                                                                var mailOptions = {
+                                                                    from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
+                                                                    to: candidateEmail, // receiver
+                                                                    subject: "Confirmation for appointment of "+companyName+" # "+candidateName, // Subject line
+                                                                    html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
+                                                                        "<br>Your medical assessment has been booked at the following:</b><br>"+
+                                                                        "Date / Time: <b>" + appointmentDate +"</b> <br>" +
+                                                                        "Location: <b>REDiMED " + siteName + "</b><br>" +
+                                                                        "<br>" +
+                                                                        "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
+                                                                        "<br>" +
+                                                                        "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
+                                                                        "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
+                                                                        "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
+                                                                        "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
+                                                                        "- For any queries, please call 92300990.<br>"
+
+                                                                }
+
+                                                                transport.sendMail(mailOptions, function(error, response){  //callback
+                                                                    if(error){
+                                                                        console.log(error);
+                                                                        res.json({status:"fail"});
+                                                                    }else{
+                                                                        console.log("Message sent: " + response.message);
+                                                                        res.json({status:"success"});
+                                                                    }
+                                                                    transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                                                                });
+                                                            })
+                                                        //endregion
+                                                    })
+                                                    .error(function(err){
+                                                        res.json({status:'error'})
+                                                        console.log(err);
                                                     })
                                             })
                                             .error(function(err){
@@ -425,7 +441,7 @@ module.exports = {
                 })
                     .success(function(data){
                         for(var i=0; i<info.length; i++){
-
+                            var companyId = data['dataValues'].company_id;
                             db.BookingCandidate.create({
                                 Booking_id: data['dataValues'].Booking_id,
                                 Candidate_id: info[i].candidateId,
@@ -456,53 +472,68 @@ module.exports = {
 
                                     var siteId = data['dataValues'].SITE_ID;
 
-                                    db.sequelize.query('SELECT Site_name FROM redimedsites WHERE id=?',null,{raw:true},[siteId])
-                                        .success(function(rs){
-                                            var siteName = rs[0].Site_name;
-                                            var candidateEmail = data['dataValues'].Email;
-                                            var appointmentDate = data['dataValues'].Appointment_time;
+                                    db.sequelize.query('SELECT company_name FROM companies WHERE id = ?',null,{raw:true},[companyId])
+                                        .success(function(com){
 
-                                            var transport = nodemailer.createTransport(smtpPool({
-                                                host: "mail.redimed.com.au", // hostname
-                                                secure: true,
-                                                ignoreTLS: false,
-                                                port: 25, // port for secure SMTP
-                                                debug: true,
-                                                auth: {
-                                                    user: "programmer2",
-                                                    pass: "Hello8080"
+
+                                            var cName = com[0].company_name;
+
+                                            //region Description
+                                            db.sequelize.query('SELECT Site_name FROM redimedsites WHERE id=?',null,{raw:true},[siteId])
+                                            .success(function(rs){
+                                                var siteName = rs[0].Site_name;
+                                                var candidateEmail = data['dataValues'].Email;
+                                                var appointmentDate = data['dataValues'].Appointment_time;
+                                                var candidateName = data['dataValues'].Candidates_name;
+                                                var companyName = cName;
+
+                                                var transport = nodemailer.createTransport(smtpTransport({
+                                                    host: "mail.redimed.com.au", // hostname
+                                                    secure: false,
+                                                    port: 25, // port for secure SMTP
+                                                    auth: {
+                                                        user: "programmer2",
+                                                        pass: "Hello8080"
+                                                    },
+                                                    tls: {rejectUnauthorized: false},
+                                                    debug:true
+                                                }));
+
+                                                var mailOptions = {
+                                                    from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
+                                                    to: candidateEmail, // receiver
+                                                    subject: "Confirmation for appointment of "+companyName+" # "+candidateName, // Subject line
+                                                    html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
+                                                        "<br>Your medical assessment has been booked at the following:</b><br>"+
+                                                        "Date / Time: <b>" + appointmentDate +"</b> <br>" +
+                                                        "Location: <b>REDiMED " + siteName + "</b><br>" +
+                                                        "<br>" +
+                                                        "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
+                                                        "<br>" +
+                                                        "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
+                                                        "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
+                                                        "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
+                                                        "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
+                                                        "- For any queries, please call 92300990.<br>"
+
                                                 }
-                                            }));
 
-                                            var mailOptions = {
-                                                from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
-                                                to: candidateEmail, // receiver
-                                                subject: "✔ REDiMED Booking Confirm", // Subject line
-                                                html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
-                                                    "<br>Your medical assessment has been booked at the following:</b><br>"+
-                                                    "Date / Time: <b>" + appointmentDate +"</b> <br>" +
-                                                    "Location: <b>REDiMED " + siteName + "</b><br>" +
-                                                    "<br>" +
-                                                    "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
-                                                    "<br>" +
-                                                    "- Please bring current photo ID (driver's license/passport/proof of age card). Failure to provide this will mean we will not be able to complete the medical and you will have to reschedule. <br>" +
-                                                    "- Please be 15 minutes early to your appointment, to complete any paperwork required.<br>" +
-                                                    "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
-                                                    "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
-                                                    "- For any queries, please call 92300990.<br>"
-
-                                            }
-
-                                            transport.sendMail(mailOptions, function(error, response){  //callback
-                                                if(error){
-                                                    console.log(error);
-                                                    res.json({status:"fail"});
-                                                }else{
-                                                    console.log("Message sent: " + response.message);
-                                                    res.json({status:"success"});
-                                                }
-                                                transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
-                                            });
+                                                transport.sendMail(mailOptions, function(error, response){  //callback
+                                                    if(error){
+                                                        console.log(error);
+                                                        res.json({status:"fail"});
+                                                    }else{
+                                                        console.log("Message sent: " + response.message);
+                                                        res.json({status:"success"});
+                                                    }
+                                                    transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                                                });
+                                            })
+                                            //endregion
+                                        })
+                                        .error(function(err){
+                                            res.json({status:'error'})
+                                            console.log(err);
                                         })
                                 })
                                 .error(function(err){

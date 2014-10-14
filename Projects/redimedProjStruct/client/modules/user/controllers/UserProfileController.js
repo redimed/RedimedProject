@@ -16,16 +16,31 @@ angular.module('app.loggedIn.user.profile.controller',[])
             companyInfo = $cookieStore.get('companyInfo');
         }
 
-        $scope.detail = {
-            id: userInfo.id,
-            img: null,
-            company_id: companyInfo[0].id,
-            Booking_Person: userInfo.Booking_Person,
-            Contact_number: userInfo.Contact_number,
-            Contact_email: userInfo.Contact_email,
-            result_email: userInfo.result_email,
-            invoiceemail: userInfo.invoiceemail
-        }
+		 if(userInfo.user_type == 'Company')
+          {
+			$scope.detail = {
+				id: userInfo.id,
+				img: null,
+				company_id: companyInfo[0].id,
+				Booking_Person: userInfo.Booking_Person,
+				Contact_number: userInfo.Contact_number,
+				Contact_email: userInfo.Contact_email,
+				result_email: userInfo.result_email,
+				invoiceemail: userInfo.invoiceemail
+			}
+		}
+		else
+		{
+			$scope.detail = {
+				id: userInfo.id,
+				img: null,
+				
+				Booking_Person: userInfo.Booking_Person,
+				Contact_number: userInfo.Contact_number,
+				Contact_email: userInfo.Contact_email
+				
+			}
+		}
 
         UserService.getUserInfo(userInfo.id).then(function(data){
            $scope.detail.img = data.img;
