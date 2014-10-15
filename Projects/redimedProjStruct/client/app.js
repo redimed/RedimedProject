@@ -26,9 +26,9 @@ angular.module("app", [
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider) {
     //IDLE TIME
-    $idleProvider.idleDuration(5);
-    $idleProvider.warningDuration(5);
-    $keepaliveProvider.interval(10);
+    $idleProvider.idleDuration(15*60);
+    $idleProvider.warningDuration(30);
+    $keepaliveProvider.interval(15*60);
 
     // RESTANGULAR DEFAULT
     RestangularProvider.setBaseUrl("");

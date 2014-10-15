@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.gorgonFA.controllers',[])
-    .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr) {
+    .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window) {
 
         $scope.maxDate = new Date();
 
@@ -14,6 +14,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         };
 
         $scope.print = function(){
-
+            $window.location.href = '/api/document/gorgonFA/print/7';
         }
     });
