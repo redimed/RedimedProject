@@ -249,10 +249,10 @@
                 <div class="col-md-4">
                     <label class="control-label bold">Result File</label>
                 </div>
-                <div class="col-md-2" ng-if="isSelected === true && info.resultFileName != null">
-                    <label class="bold">{{isSelected === true && info.resultFileName}}</label>
+                <div class="col-md-4" ng-if="isSelected === true && info.resultFileName != null">
+                    <label class="bold">{{info.resultFileName}}</label>
                 </div>
-                <div class="col-md-2" ng-if="info.resultFileName != null">
+                <div class="col-md-4" ng-if="info.resultFileName != null">
                     <a href="/api/booking/download/{{info.Booking_id}}/{{info.Candidate_id}}" class="btn btn-success">Download</a>
                 </div>
 
