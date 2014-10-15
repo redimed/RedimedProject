@@ -134,8 +134,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="row form-group">
+            <div ng-hide="doctorInfo.doctor_id" class="col-md-3">
+                <div  class="row form-group">
                     <div class="col-md-3">
                         <label for="doctorKey">Doctor:</label>
                     </div>
@@ -182,12 +182,12 @@
                 <a>
                     <span>
                         {{node.DISPLAY}}
-                        <br ng-show="node.DISPLAY1"/>
-                        {{node.DISPLAY1}}
-                        <br ng-show="node.DISPLAY2"/>
-                        {{node.DISPLAY2}}
-                        <br ng-show="node.DISPLAY3"/>
-                        {{node.DISPLAY3}}
+                        <!--<br ng-show="node.DISPLAY1"/>-->
+                        <!--{{node.DISPLAY1}}-->
+                        <!--<br ng-show="node.DISPLAY2"/>-->
+                        <!--{{node.DISPLAY2}}-->
+                        <!--<br ng-show="node.DISPLAY3"/>-->
+                        <!--{{node.DISPLAY3}}-->
                     </span>
 
                 </a>
@@ -476,7 +476,7 @@
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="fa fa-cogs"></i>
-                                    Worker's detail
+                                    Patient 's Information
                                 </div>
 
                             </div>
@@ -513,7 +513,7 @@
 
                                 <div class="row form-group">
                                     <div class="col-md-4">
-                                        <label for="WRK_DOB">Birthday: </label>
+                                        <label for="WRK_DOB">Date of birth: </label>
                                     </div>
                                     <div class="col-md-8">
 
@@ -523,7 +523,7 @@
                                         <!--<button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa glyphicon glyphicon-calendar "></i></button>-->
                                         <!--</span>-->
                                         <!--</div>-->
-                                        <p id="WRK_DOB" ng-bind="selectedBooking.WRK_DOB"></p>
+                                        <p id="WRK_DOB" ng-bind="selectedBooking.WRK_DOB|date:'dd/MM/yyyy'"></p>
                                     </div>
                                 </div>
 

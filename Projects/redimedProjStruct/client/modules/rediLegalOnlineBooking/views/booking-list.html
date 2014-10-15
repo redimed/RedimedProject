@@ -131,7 +131,7 @@
                     <td>{{l.CLAIM_NO}}</td>
                     <td>{{l.WRK_SURNAME}}</td>
                     <td>{{l.Rl_TYPE_NAME}}</td>
-                    <td>{{l.APPOINTMENT_DATE}}</td>
+                    <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -210,7 +210,8 @@
                                         Date:
                                     </div>
                                     <div class="col-md-7 value">
-                                        {{getShortDateString(selectedBooking.APPOINTMENT_DATE)}}
+                                        {{selectedBooking.APPOINTMENT_DATE|date:'dd/MM/yyyy'}}
+                                        <!--{{getShortDateString(selectedBooking.APPOINTMENT_DATE)}}-->
                                     </div>
                                 </div>
                                 <div class="row static-info">
@@ -218,7 +219,8 @@
                                         Time:
                                     </div>
                                     <div class="col-md-7 value">
-                                        {{getTimeString(selectedBooking.APPOINTMENT_DATE)}}
+                                        {{selectedBooking.APPOINTMENT_DATE|date:'HH:mm'}}
+                                        <!--{{getTimeString(selectedBooking.APPOINTMENT_DATE)}}-->
                                     </div>
                                 </div>
                                 <div class="row static-info">
@@ -226,7 +228,8 @@
                                         Type of appointment:
                                     </div>
                                     <div class="col-md-7 value">
-                                        {{getRlTypeName(selectedBooking.RL_TYPE_ID)}}
+                                        {{selectedBooking.Rl_TYPE_NAME}}
+                                        <!--{{getRlTypeName(selectedBooking.RL_TYPE_ID)}}-->
                                     </div>
                                 </div>
 
@@ -235,7 +238,8 @@
                                         Doctor:
                                     </div>
                                     <div class="col-md-7 value">
-                                        {{getDoctorName(selectedBooking.DOCTOR_ID)}}
+                                        {{selectedBooking.NAME}}
+                                        <!--{{getDoctorName(selectedBooking.DOCTOR_ID)}}-->
                                     </div>
                                 </div>
                                 <div class="row static-info">
@@ -243,7 +247,8 @@
                                         Address:
                                     </div>
                                     <div class="col-md-7 value">
-                                        {{getLocationAddress(selectedBooking.SITE_ID)}}
+                                        {{selectedBooking.Site_addr}}
+                                        <!--{{getLocationAddress(selectedBooking.SITE_ID)}}-->
                                     </div>
                                 </div>
 
@@ -270,7 +275,7 @@
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="fa fa-cogs"></i>
-                                    Worker's detail
+                                    Patient 's Information
                                 </div>
 
                             </div>
@@ -307,7 +312,7 @@
 
                                 <div class="row form-group">
                                     <div class="col-md-4">
-                                        <label for="WRK_DOB">Birthday: </label>
+                                        <label for="WRK_DOB">Date of birth: </label>
                                     </div>
                                     <div class="col-md-8">
 
@@ -317,7 +322,7 @@
                                         <!--<button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa glyphicon glyphicon-calendar "></i></button>-->
                                         <!--</span>-->
                                         <!--</div>-->
-                                        <p id="WRK_DOB" ng-bind="selectedBooking.WRK_DOB"></p>
+                                        <p id="WRK_DOB" ng-bind="selectedBooking.WRK_DOB|date:'dd/MM/yyyy'"></p>
                                     </div>
                                 </div>
 

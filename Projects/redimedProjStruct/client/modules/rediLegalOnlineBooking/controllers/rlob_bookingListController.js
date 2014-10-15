@@ -88,7 +88,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             }
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
             function codeAddress() {
-                var address = $scope.getLocationAddress2($scope.selectedBooking.SITE_ID);
+                var address=$scope.selectedBooking.Site_addr;
                 geocoder.geocode({'address': address}, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         map.setCenter(results[0].geometry.location);

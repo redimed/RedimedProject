@@ -1,5 +1,5 @@
 /**
- * Created by meditech on 9/26/2014.
+ * Created by tannv.dts@gmail.com on 9/26/2014.
  */
 
 var db = require('../models');
@@ -40,6 +40,34 @@ module.exports =
                     else
                     {
                         res.json({status:'success',data:rows})
+                    }
+
+                });
+        });
+    },
+
+    getDoctorInfoByUserId:function(req,res)
+    {
+        var userId=req.query.userId;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>"+userId);
+        req.getConnection(function(err,connection)
+        {
+
+            var query = connection.query(
+                ' SELECT doctor.doctor_id FROM `doctors` doctor WHERE doctor.`User_id`=? '
+                ,userId,function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'})
+                    }
+                    else
+                    {
+                        if(rows.length>0)
+                            res.json({status:'success',data:rows[0]});
+                        else
+                            res.json({status:'fail'});
                     }
 
                 });

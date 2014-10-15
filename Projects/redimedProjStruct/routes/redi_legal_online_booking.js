@@ -26,6 +26,8 @@ app.get('/api/rlob/cln_specialties/filter-by-type',clnSpecialitiesController.fil
 //doctors
 app.get('/api/rlob/doctors/list',doctorsController.list);
 app.get('/api/rlob/doctors/get-doctors-by-speciality',doctorsController.getDoctorOfSpeciality);
+app.get('/api/rlob/doctors/get-doctors-info-by-userid',doctorsController.getDoctorInfoByUserId);
+
 
 //cln_appointment-calendar
 app.get('/api/rlob/appointment-calendar/list',clnAppointmentCalendarController.list);

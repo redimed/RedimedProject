@@ -53,6 +53,29 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
 
         $scope.loginInfo=$cookieStore.get('userInfo');
+        $scope.doctorInfo=null;
+        $scope.getDoctorInfoByUserId=function()
+        {
+            var deferred=$q.defer();
+            $http({
+                method:"GET",
+                url:"/api/rlob/doctors/get-doctors-info-by-userid",
+                params:{userId:$scope.loginInfo.id}
+            })
+            .success(function(data) {
+                if(data.status=='success')
+                {
+                    $scope.doctorInfo=data.data;
+                }
+            })
+            .error(function (data) {
+                console.log("error");
+            })
+            .finally(function() {
+                deferred.resolve();
+            });
+            return deferred.promise;
+        }
 
         //Lay toan bo thong tin rlType
         $scope.rltypes=rlTypesService.allSync();
@@ -169,7 +192,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                         Company_name:item.Company_name,
                         WRK_SURNAME:item.WRK_SURNAME,
                         STATUS:item.STATUS,
-                        DISPLAY:item.APPOINTMENT_TIME,
+                        DISPLAY:"["+item.APPOINTMENT_TIME+" -site:"+item.Site_name+"] - [patient: "+item.WRK_SURNAME+" - "+item.Company_name+"]",
                         DISPLAY1:"- Site: "+item.Site_name,
                         DISPLAY2:  "- Patient: "+item.WRK_SURNAME,
                         DISPLAY3:  "- Company: "+item.Company_name,
@@ -214,6 +237,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 }
                 $scope.mydata.push(node);
             }
+
             if($scope.newAppointmentPositionFlag)
             {
                 $scope.goToNewAppoinmentPosition();
@@ -236,6 +260,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             var toDate=moment($scope.lobAdminSearch.toDateKey,'DD/MM/YYYY');
             var doctorKey=$scope.lobAdminSearch.doctorKey!=null && $scope.lobAdminSearch.doctorKey!=undefined?$scope.lobAdminSearch.doctorKey:'';
             var workerKey=$scope.lobAdminSearch.workerKey!=null && $scope.lobAdminSearch.workerKey!=undefined?$scope.lobAdminSearch.workerKey:'';
+
             $http({
                 method:"GET",
                 url:"/api/rlob/rl_bookings/admin/filter-booking",
@@ -243,7 +268,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     fromDateKey:fromDate.format("YYYY-MM-DD"),
                     toDateKey:toDate.format("YYYY-MM-DD"),
                     doctorKey:doctorKey,
-                    workerKey:workerKey
+                    workerKey:workerKey,
+                    doctorId:$scope.doctorInfo?$scope.doctorInfo.doctor_id:null
                 }
             })
                 .success(function(data) {
@@ -257,7 +283,16 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 });
         };
 
-        $scope.filterBooking();
+        if($scope.loginInfo.user_type=='Doctor')
+        {
+            $scope.getDoctorInfoByUserId()
+            .then($scope.filterBooking);
+        }
+        else
+        {
+            $scope.filterBooking();
+        }
+
 
         //--------------------------------------------------
 

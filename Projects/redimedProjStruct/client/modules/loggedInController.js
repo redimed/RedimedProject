@@ -114,12 +114,12 @@ angular.module("app.loggedIn.controller",[
                     for(var i=0;i<data.data.length;i++)
                     {
 
-                        if(data.data[i].type=='bell')
+                        if(data.data[i].TYPE=='bell')
                         {
                             $scope.numbersBellUnread++;
                             $scope.bellUnreadList.push(data.data[i]);
                         }
-                        else if(data.data[i].type=='letter')
+                        else if(data.data[i].TYPE=='letter')
                         {
                             $scope.numbersLetterUnread++;
                             $scope.letterUnreadList.push(data.data[i]);
@@ -264,12 +264,12 @@ angular.module("app.loggedIn.controller",[
                             for(var i=0;i<data.data.length;i++)
                             {
                                 $scope.showNotificationPopup(".lob_notification_popup",data.data[i].msg);
-                                if(data.data[i].type=='bell')
+                                if(data.data[i].TYPE=='bell')
                                 {
                                     $scope.bellUnreadList.unshift(data.data[i]);
                                     $scope.numbersBellUnread++;
                                 }
-                                else if(data.data[i].type=='letter')
+                                else if(data.data[i].TYPE=='letter')
                                 {
                                     $scope.letterUnreadList.unshift(data.data[i]);
                                     $scope.numbersLetterUnread++;

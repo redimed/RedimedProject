@@ -183,6 +183,8 @@ module.exports =
         var toDateKey=req.query.toDateKey;
         var doctorKey=req.query.doctorKey;
         var workerKey=req.query.workerKey;
+        var doctorId=req.query.doctorId?req.query.doctorId:null;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+doctorId);
         var sql=
             " SELECT 	booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+
             " 	booking.`RL_TYPE_ID`,`rltype`.`Rl_TYPE_NAME`,booking.`SPECIALITY_ID`,spec.`Specialties_name`,                                                "+
@@ -205,9 +207,10 @@ module.exports =
             "	`doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                                       "+
             "	AND                                                                                                                                          "+
             "	`booking`.`WRK_SURNAME` LIKE CONCAT('%',?,'%')                                                                                               "+
+            (doctorId?" AND booking.DOCTOR_ID=? ":' ')+
             " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC                                                                 "
         req.getConnection(function(err,connection) {
-            var key_result=connection.query(sql,[fromDateKey,toDateKey,doctorKey,workerKey],function(err,rows){
+            var key_result=connection.query(sql,doctorId?[fromDateKey,toDateKey,doctorKey,workerKey,doctorId]:[fromDateKey,toDateKey,doctorKey,workerKey],function(err,rows){
                 if(err)
                 {
                     res.json({status:"fail"});
