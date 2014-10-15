@@ -10,7 +10,7 @@ var config = require('config');
 var db = require('./models');
 //Create application management
 var app = express();
-app.set('port', process.env.PORT || 4300);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
