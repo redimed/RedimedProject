@@ -232,19 +232,31 @@
                 <i class="icon-user"></i> My Profile </a>
         </li>
         <li>
-            <a href="page_calendar.html">
-                <i class="icon-calendar"></i> My Calendar </a>
+            <a ng-click="showMyCalendar();">
+                <i class="icon-calendar"></i>
+                My Calendar
+                <span class="badge badge-danger">
+				    {{numberAppointmentCalendarUpcoming}}
+                </span>
+            </a>
+
         </li>
         <li>
-            <a href="inbox.html">
-                <i class="icon-envelope-open"></i> My Inbox <span class="badge badge-danger">
-								3 </span>
+            <a ng-click="getListNotification('letter');">
+                <i class="icon-envelope-open"></i>
+                My Inbox
+                <span class="badge badge-danger">
+				    {{numbersLetterUnread}}
+                </span>
             </a>
         </li>
         <li>
-            <a href="page_todo.html">
-                <i class="icon-rocket"></i> My Tasks <span class="badge badge-success">
-								7 </span>
+            <a ng-click="getListNotification('bell');">
+                <i class="icon-bell"></i>
+                    My notifications
+                <span class="badge badge-success">
+                    {{numbersBellUnread}}
+                </span>
             </a>
         </li>
         <li class="divider">
@@ -392,6 +404,90 @@
                             items-per-page="itemsPerPage"
                             ng-change="pagingHandler()">
                 </pagination>
+
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div  id="list-my-calendar" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">List Calendar</h4>
+            </div>
+
+
+            <!--<li ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">-->
+                <!--<a ui-sref="{{appointmentUpcoming.link}}">-->
+                        <!--<span class="task">-->
+                            <!--<span class="desc">-->
+                                <!--{{appointmentUpcoming.MESSAGE}}-->
+                            <!--</span>-->
+                            <!--<span class="percent">-->
+                                <!--{{appointmentUpcoming.DATE_UPCOMING|date:'dd/MM/yyyy HH:mm'}}-->
+                            <!--</span>-->
+                        <!--</span>-->
+
+                <!--</a>-->
+            <!--</li>-->
+            <div class="modal-body">
+                <div class="notification-list" style="height: 350px;">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Time</th>
+                            <th>Patient</th>
+                            <th></th>
+                            <th></th>
+                            <!--<th>Read</th>-->
+                        </tr>
+
+                        <tbody>
+                        <tr  ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming"
+                                >
+                            <td>{{appointmentUpcoming.DATE_UPCOMING |date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                            <td>{{appointmentUpcoming.MESSAGE}}</td>
+                            <td>
+                                {{appointmentUpcoming.DETAIL}}
+
+                            </td>
+                            <td>
+                                <a
+                                        class="btn btn-sm yellow filter-submit margin-bottom"
+                                        style="margin-left: 10px;margin-bottom: 10px;"
+                                        ng-click="closeMyCalendarPopup()"
+                                        ui-sref="{{appointmentUpcoming.link}}">
+                                    View details
+                                </a>
+                            </td>
+                            <!--<td>-->
+                            <!--<input type="checkbox"   ng-model="item.STATUS" ng-true-value="1" ng-false-value="0" ng-checked="item.STATUS">-->
+                            <!--</td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <!--<pagination total-items="totalItems"-->
+                            <!--ng-model="currentPage"-->
+                            <!--max-size="maxSize"-->
+                            <!--class="pagination-sm"-->
+                            <!--boundary-links="true"-->
+                            <!--rotate="false"-->
+                            <!--num-pages="numPages"-->
+                            <!--items-per-page="itemsPerPage"-->
+                            <!--ng-change="pagingHandler()">-->
+                <!--</pagination>-->
 
             </div>
             <div class="modal-footer">

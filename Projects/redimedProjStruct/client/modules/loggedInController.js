@@ -287,7 +287,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 6000);
+            }, 2000);
         };
 
 
@@ -520,5 +520,15 @@ angular.module("app.loggedIn.controller",[
     $scope.closeNotificationListPopup=function()
     {
         $("#list-notification-popup").modal('hide');
+    }
+
+    $scope.showMyCalendar=function()
+    {
+        $scope.showListNotification("#list-my-calendar");
+        $scope.setSlimCroll('.notification-list');
+    }
+    $scope.closeMyCalendarPopup=function()
+    {
+        $("#list-my-calendar").modal('hide');
     }
 })
