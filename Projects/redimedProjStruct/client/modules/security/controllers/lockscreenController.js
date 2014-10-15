@@ -4,8 +4,12 @@
 angular.module("app.lockscreen.controller",[
 ])
 
-.controller("lockscreenController", function($scope, $state, $cookieStore, SecurityService, UserService,toastr,$window){
+.controller("lockscreenController", function($scope, $state, $cookieStore, SecurityService, UserService,toastr,$window, $cookieStore){
         var userInfo;
+
+        $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
+            event.preventDefault();
+        });
 
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
@@ -30,7 +34,6 @@ angular.module("app.lockscreen.controller",[
         $scope.notUser = function(){
             $cookieStore.remove("userInfo");
             $cookieStore.remove("companyInfo");
-            //$state.go("security.login",null,{reload:true});
             $window.location.href="/";
         }
 
@@ -40,10 +43,9 @@ angular.module("app.lockscreen.controller",[
                 toastr.error("Please Check Your Password!", "Error");
             }else
             {
-                console.log($scope.modelUser);
+
                 SecurityService.login($scope.modelUser).then(function(response){
-                    //$state.go('loggedIn.home');
-                    $window.location.href="/";
+                    $window.location.reload(true);
                 }), function(error){
                     toastr.error("Wrong Username Or Password!", "Error");
                 };

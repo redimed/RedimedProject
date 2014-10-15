@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.cat2.controllers',[])
-    .controller("Cat2Controller",function($scope,$rootScope,$http,$cookieStore) {
+    .controller("Cat2Controller",function($scope, $state,$rootScope,$http,$cookieStore) {
     var initPickers = function () {
         //init date pickers
         $('.date-picker').datepicker({
@@ -15,4 +15,6 @@ angular.module('app.loggedIn.document.cat2.controllers',[])
     $scope.submit = function(){
         var info = $scope.info;
     };
+
+
 });

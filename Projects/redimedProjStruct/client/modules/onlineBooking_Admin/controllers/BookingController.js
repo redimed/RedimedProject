@@ -7,6 +7,8 @@ angular.module('app.loggedIn.booking.admin.booking.controller',[])
         $scope.isSelected = false
         $scope.selectedCanId = null;
         $scope.selectedBookId = null;
+        $scope.isChangeFile = false;
+
 
         $scope.info = {};
 

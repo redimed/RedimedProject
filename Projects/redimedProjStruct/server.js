@@ -87,6 +87,24 @@ app.post('/api/booking/upload',multipartMiddleware, function(req,resp){
     });
 });
 
+app.get('/api/booking/download/:bookingId/:candidateId', function(req, res, next){
+    var bookingId = req.params.bookingId;
+    var candidateId = req.params.candidateId;
+
+    db.BookingCandidate.find({where:{Booking_id: bookingId, Candidate_id: candidateId}},{raw:true})
+        .success(function(data){
+            console.log("success");
+            var path=data.resultFilePath;
+            res.download(path);
+        })
+        .error(function(err){
+            console.log(err);
+        })
+
+});
+
+
+
 
 app.post('/api/rlob/rl_booking_files/upload',multipartMiddleware,  function(req, resp) {
     var targetFolder='.\\redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;

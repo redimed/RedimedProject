@@ -1,39 +1,31 @@
 var LoginPage = require('./login_po.js')
 describe('Login Test', function() {
 
-    //LOGIN VIA PAGE OBJECT
-//    it('should login successfully',function(){
-//        var loginPage = new LoginPage();
-//
-//        browser.get('/#/login');
-//
-//        loginPage.username.sendKeys('drhanh');
-//        loginPage.password.sendKeys('1234');
-//        element(by.css('[type="submit"]')).click();
-//    });
-    //END LOGIN VIA PAGE OBJECT
+    var loginPage = new LoginPage();
+    var ptor;
 
-
-    //LOGIN VIA PARAMS
-    var params = browser.params;
+    browser.get('/#/login');
 
     beforeEach(function(){
-        browser.get('/#/login');
+        ptor = protractor.getInstance();
     });
 
-    it('should login successfully', function() {
-        var username = element(by.model('modelUser.username'));
-        var password = element(by.model('modelUser.password'));
-
-        username.sendKeys('drhanh');
-        password.sendKeys('1234');
+    //Check Login
+    it('Should Login successfully',function(){
+        loginPage.username.sendKeys('drhanh');
+        loginPage.password.sendKeys('1234');
 
         element(by.css('[type="submit"]')).click().then(function(){
-            expect(browser.getLocationAbsUrl()).toNotMatch("/login");
+            expect(browser.getCurrentUrl()).not.toEqual('/#/login');
         });
     });
 
-    //END LOGIN VIA PARAMS
 
+    //Check User Info
+    it('Should Have User Info',function(){
+        ptor.manage().getCookie("userInfo").then(function(data){
+            expect(data.value).not.toBe(null);
+        })
+    })
 
 });

@@ -33,6 +33,7 @@ angular.module("app", [
     // RESTANGULAR DEFAULT
     RestangularProvider.setBaseUrl("");
 
+
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
@@ -57,16 +58,16 @@ angular.module("app", [
         }
     })
 
-        .state('lockscreen',{
-            url:'/lockscreen',
-            views:{
-                "root":{
-                    templateUrl: "common/views/lockscreen.html",
-                    controller:'lockscreenController'
-                }
+    .state('lockscreen',{
+        url:'/lockscreen',
+        views:{
+            "root":{
+                templateUrl: "common/views/lockscreen.html",
+                controller:'lockscreenController'
             }
+        }
 
-        })
+    })
     /* END */
 })
 

@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.cat3.controllers', [])
-    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore) {
+    .controller("Cat3Controller", function ($scope,$state ,DocumentService, $rootScope, $http, $cookieStore) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -16,4 +16,6 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     alert('Install fail!');
             });
         };
+
+
     });

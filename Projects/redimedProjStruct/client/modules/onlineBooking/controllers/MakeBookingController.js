@@ -41,6 +41,10 @@ angular.module('app.loggedIn.booking.make.controller',[])
         };
 
 
+        OnlineBookingService.deleteAllPending().then(function(data){
+        })
+
+
 
         $scope.c = companyInfo[0];
         mPO = companyInfo[0].PO_number;
@@ -316,30 +320,6 @@ angular.module('app.loggedIn.booking.make.controller',[])
             }
 
         }
-
-        $scope.$on('$idleTimeout', function() {
-
-            if($scope.data.length > 0)
-            {
-                for(var i =0; i<$scope.data[i].length; i++)
-                {
-                    OnlineBookingService.deletePending($scope.data[i]).then(function(data){
-                        if(data.status == 'success')
-                        {
-                        }
-                        else
-                        {
-                        }
-                    })
-                }
-            }
-
-
-            $state.go('loggedIn.makeBooking',null,{reload:true});
-        })
-
-
-
 
 })
 

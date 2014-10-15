@@ -555,15 +555,14 @@ module.exports = {
     search: function(req,res){
         var info = req.body.info;
 
-        var date = new Date();
 
         var companyId = info.companyId == null ? '%' : info.companyId;
         var companyName = info.companyName == null ? '%' : '%'+info.companyName+'%';
         var candidateName = info.candidateName == null ? '%' : '%'+info.candidateName+'%';
         var bookingPerson = info.bookingPerson == null ? '%' : '%'+info.bookingPerson+'%';
         var status = info.status == null ? '%' : info.status;
-        var fromDate = info.fromDate == null ? '1-1-1' : info.fromDate;
-        var toDate = info.toDate == null ? date : info.toDate;
+        var fromDate = info.fromDate == null ? '0001-1-1' : info.fromDate;
+        var toDate = info.toDate == null ? '9999-9-9' : info.toDate;
         var siteName = info.siteName == null ? '%' : '%'+info.siteName+'%';
 
         db.sequelize.query("SELECT * FROM booking_cadidates_v " +
@@ -621,6 +620,16 @@ module.exports = {
             res.json({status:'error'});
             console.log(err);
         })
+    },
+    deleteAllPendingBooking: function(req,res){
+        db.sequelize.query('DELETE FROM booking_candidates WHERE Booking_id = -1 AND Creation_date <= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 MINUTE)',null,{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json(err);
+                console.log(err);
+            })
     },
     editAppointmentNote: function(req,res){
         var info = req.body.info;
