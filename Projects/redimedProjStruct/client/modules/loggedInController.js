@@ -283,7 +283,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 4000);
+            }, 6000);
         };
 
 
@@ -364,7 +364,7 @@ angular.module("app.loggedIn.controller",[
                 {
 
                     $scope.totalItems=data.data.count_total_notification;
-                    $scope.itemsPerPage=2;
+                    $scope.itemsPerPage=10;
                     $scope.maxSize=10;
                     $scope.currentPage=1;
                     //$scope.getItemsOfPaging($scope.currentPage,$scope.itemsPerPage);

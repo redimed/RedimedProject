@@ -5,6 +5,22 @@
 angular.module('app.loggedIn.rlob.patientDetail.controller',[])
     .controller("rlob_patientDetailController", function($scope,$stateParams,$http,$cookieStore,appointmentCalendarService,doctorsService,locationService,bookingService,FileUploader,Mailto,$location,$window) {
         $scope.loginInfo=$cookieStore.get('userInfo');
+//        /api/company/info
+
+        $http({
+            method:"POST",
+            url:"/api/company/info",
+            data:{comId:$scope.loginInfo.company_id}
+        })
+        .success(function(data) {
+            $scope.companyInfo=data;
+        })
+        .error(function (data) {
+        })
+        .finally(function() {
+
+        });
+
         /**
          * bootstrap date picker
          * tannv.dts@gmail.com
@@ -230,9 +246,40 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $(styleClass).modal({show:true,backdrop:'static'});
         };
 
+        /***
+         *Gui email neu booking thanh cong
+         *bookingId: id cua booking moi
+         * tannv.dts@gmail.com
+         */
+        $scope.sendConfirmEmail=function()
+        {
+            $http({
+                method:"POST",
+                url:"/api/rlob/rl_bookings/admin/send-comfirm-email",
+                data:{bookingId:$scope.newBooking.BOOKING_ID}
+            })
+                .success(function(data) {
+                    if(data.status=='success')
+                    {
+                        //alert("thanh cong roi");
+                        console.log("Send email confirm success!");
+                    }
+                    else
+                    {
+                        //alert("that bai roi");
+                        console.log("Send email confirm fail!");
+                    }
+
+                })
+                .error(function (data) {
+
+                })
+                .finally(function() {
+
+                });
+        }
 
         $scope.isSaving=false;
-
         $scope.save=function()
         {
 
@@ -246,19 +293,54 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 
 //            $scope.isSaving=true;
             //Set mailto
-            var recepient = "tannv.dts@gmail.com";
+
+            $scope.mailBodyData={
+                requestBy:$scope.loginInfo.user_name?$scope.loginInfo.user_name:'',
+                company: $scope.companyInfo.Company_name?$scope.companyInfo.Company_name:'',
+                time:from_date.format("HH:mm"),
+                date:from_date.format("DD/MM/YYYY"),
+                typeOfAppointment:'REDiLEGAL',
+                doctor:selectedInfo.doctorSelected.NAME?selectedInfo.doctorSelected.NAME:'',
+                address:selectedInfo.locationSelected.Site_addr?selectedInfo.locationSelected.Site_addr:'',
+                isContactPatient:$scope.newBooking.ISCONTACTPATIENT?$scope.newBooking.ISCONTACTPATIENT:'',
+                notes:$scope.newBooking.NOTES?$scope.newBooking.NOTES:'',
+                claimNumber:$scope.newBooking.CLAIM_NO?$scope.newBooking.CLAIM_NO:'',
+                wrkName:$scope.newBooking.WRK_SURNAME?$scope.newBooking.WRK_SURNAME:'',
+                wrkDOB:moment($scope.WRK_DOB_TEMP).format("DD/MM/YYYY"),
+                wrkContactNo:$scope.newBooking.WRK_CONTACT_NO?$scope.newBooking.WRK_CONTACT_NO:'',
+                injuryDesc:$scope.newBooking.DESC_INJURY?$scope.newBooking.DESC_INJURY:''
+            }
+
+            $scope.emailContent=
+                "The below appointment has been requested by "+$scope.mailBodyData.requestBy+" from "+$scope.mailBodyData.company+".\n\n"+
+                "Appointment Details:\n\n"+
+                "+ Date: "+$scope.mailBodyData.date+"\n"+
+                "+ Time: "+$scope.mailBodyData.time+"\n"+
+                "+ Type of appointment: "+$scope.mailBodyData.typeOfAppointment+"\n"+
+                "+ Doctor: "+$scope.mailBodyData.doctor+"\n"+
+                "+ Address: "+$scope.mailBodyData.address+"\n"+
+                "+ Redilegal to contact the patient and arrange a time: "+(($scope.mailBodyData.isContactPatient=='1')?'yes':'no')+"\n"+
+                "+ Notes: "+$scope.mailBodyData.notes+" \n\n"+
+                "Patient information:\n\n"+
+                "+ Claim number: "+$scope.mailBodyData.claimNumber+"\n"+
+                "+ Name: "+$scope.mailBodyData.wrkName+"\n"+
+                "+ Date of Birth: "+$scope.mailBodyData.wrkDOB+"\n"+
+                "+ Contact number: "+$scope.mailBodyData.wrkContactNo+" \n"+
+                "+ Injury description: "+$scope.mailBodyData.injuryDesc+"\n";
+
+            var recepient = "redilegal@redimed.com.au";
             var options = {
-                cc: "tannv.dts@gmail.com",
-                bcc: "nguyenvantan27binhduong@gmail.com",
-                subject: "Online booking",
-                body: "Hi Master,\nThis is an email pre-populated from angular-mailto."
+//                cc: "tannv.dts@gmail.com",
+//                bcc: "nguyenvantan27binhduong@gmail.com",
+                subject: "Summary of Booking",
+                body: $scope.emailContent
             };
 
             $scope.mailtoLink = Mailto.url(recepient, options);
             //---------------------------------------------------------------------------
             $scope.newBooking.BOOKING_DATE=moment().format("YYYY-MM-DD HH:mm");
             $scope.newBooking.APPOINTMENT_DATE=from_date.format("YYYY-MM-DD HH:mm");
-            $scope.newBooking.COMPANY_ID=1;
+            $scope.newBooking.COMPANY_ID=$scope.loginInfo.company_id;
             $scope.newBooking.RL_TYPE_ID=selectedInfo.rltypeSelected.RL_TYPE_ID;
             $scope.newBooking.SPECIALITY_ID=selectedInfo.clnSpecialitySelected.Specialties_id;
             $scope.newBooking.DOCTOR_ID=selectedInfo.doctorSelected.doctor_id;
@@ -318,6 +400,8 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                      * tannv.dts@gmail.com
                      */
                     $scope.getAppointmentCalendarUpcoming();
+                    //Gui email confirm  cho khach hang
+                    $scope.sendConfirmEmail();
                 }
                 else
                 {

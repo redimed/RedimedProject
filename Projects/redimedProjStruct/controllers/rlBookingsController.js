@@ -3,6 +3,11 @@
  */
 
 var db = require('../models');
+var nodemailer = require("nodemailer");
+var smtpTransport = require('nodemailer-smtp-transport');
+var smtpPool = require('nodemailer-smtp-pool');
+var rlobEmailController=require('./rlobEmailController');
+var moment=require('moment');
 module.exports =
 {
     add:function(req,res){
@@ -16,7 +21,6 @@ module.exports =
                 }
                 else
                 {
-                    console.log("success");
                     res.json({status:"success"});
                 }
 
@@ -290,6 +294,121 @@ module.exports =
                 });
         });
     }
+
+    ,
+    testDownload:function(req,res)
+    {
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAA:"+__dirname);
+        //res.download(path);
+    },
+
+    sendEmail:function(req,res)
+    {
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'tannv.solution@gmail.com',
+                pass: 'redimed123'
+            }
+        });
+
+        var mailOptions = {
+            from: 'Tan Nguyen ? <tannv.solution@gmail.com>', // sender address
+            to: 'tannv.solution@gmail.com', // list of receivers
+            subject: 'Hello ?', // Subject line
+            text: 'Hello world ?', // plaintext body
+            html: '<b>Hello world ?</b>' // html body
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+            }else{
+                console.log('Message sent: ' + info.response);
+            }
+        });
+
+
+    },
+
+    sendConfirmEmail:function(req,res)
+    {
+//        rlobEmailController.sendEmail("asdfasdf jasodfja sfiasjd foids>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        var bookingId=req.body.bookingId;
+        var sql=
+            " SELECT 	u.`user_name`,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
+            " 	booking.`WRK_SURNAME`,booking.`CLAIM_NO`,                                                     "+
+            " 	booking.`APPOINTMENT_DATE`,rlType.`Rl_TYPE_NAME`,doctor.`NAME`,redi.`Site_addr`               "+
+            " FROM 	`rl_bookings` booking                                                                     "+
+            " 	INNER JOIN `users` u ON booking.`ASS_ID`=u.`id`                                               "+
+            " 	INNER JOIN `rl_types` rlType ON booking.`RL_TYPE_ID`=rlType.`RL_TYPE_ID`                      "+
+            " 	INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                         "+
+            " 	INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=redi.`id`                                 "+
+            " WHERE 	booking.`BOOKING_ID`=?                                                                ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql ,[bookingId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length<=0)
+                    {
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        var row=rows[0];
+                        var emailInfo={
+                            subject:'',
+                            senders:'',
+                            recipients:'',
+                            htmlBody:'',
+                            textBody:''
+                        };
+                        emailInfo.subject='Confirmation of Redilegal booking – '+row.WRK_SURNAME;
+                        emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
+                        emailInfo.recipients=row.Contact_email;
+                        emailInfo.htmlBody=
+                            "	<p>Hi <span style='font-weight: bold'>"+row.user_name+"</span>,</p>                                 "+
+                            "    <p>                                                                                                 "+
+                            "        Thank you for your booking request with Redilegal.                                              "+
+                            "        The appointment has been confirmed for                                                          "+
+                            "        <span style='font-weight: bold'>"+row.WRK_SURNAME+" "+row.CLAIM_NO+"</span>                   "+
+                            "    </p>                                                                                                "+
+                            "    <p>                                                                                                 "+
+                            "        <table>                                                                                         "+
+                            "            <tr><td>Date:</td><td>"+moment(row.APPOINTMENT_DATE).format("DD/MM/YYYY")+"</td></tr>      "+
+                            "            <tr><td>Time:</td><td>"+moment(row.APPOINTMENT_DATE).format("HH:mm")+"</td></tr>      "+
+                            "            <tr><td>Type of appointment:</td><td>"+'REDiLEGAL-'+row.Rl_TYPE_NAME+"</td></tr>            "+
+                            "            <tr><td>Doctor:</td><td>"+row.NAME+"</td></tr>                                             "+
+                            "            <tr><td>Address:</td><td>"+row.Site_addr+"</td></tr>                                       "+
+                            "        </table>                                                                                        "+
+                            "    </p>                                                                                                "+
+                            "    <p>                                                                                                 "+
+                            "        Please ensure the paperwork is sent through to redilegal@redimed.com.au or                      "+
+                            "        uploaded to the online booking system at least one week prior to the appointment date.          "+
+                            "    </p>                                                                                                "+
+                            "    <p>                                                                                                 "+
+                            "        Should you have any questions please do not hesitate to contact Redilegal                       "+
+                            "        on (08) 9230 0900 or redilegal@redimed.com.au                                                   "+
+                            "    </p>                                                                                                "+
+                            "    <p>                                                                                                 "+
+                            "        Thank you                                                                                       "+
+                            "    </p>                                                                                                ";
+                        rlobEmailController.sendEmail(req,res,emailInfo);
+                    }
+
+
+                }
+            });
+
+        });
+    }
+
 
 
     

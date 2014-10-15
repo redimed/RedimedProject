@@ -972,6 +972,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.newPosition="new-position";
 
 
+
+
 });
 
 

@@ -202,7 +202,7 @@
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_DOB.$invalid  && hadForcused}">
                                         <div class="col-md-3">
-                                            <label class="control-label" for="WRK_DOB">Birthday:
+                                            <label class="control-label" for="WRK_DOB">Date of birth:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
@@ -285,10 +285,14 @@
 
                                     <div class="row form-group">
                                         <div class="col-md-3">
-                                            <label for="ISNEW">Is the patient new to REDiMED:</label>
+                                            <!--for="ISNEW"-->
+                                            <label>Is the patient new to REDiMED:</label>
                                         </div>
                                         <div class="col-md-9">
-                                            <input  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW" id="ISNEW">
+                                            <!--<input  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW" id="ISNEW">-->
+
+                                            <input style="float: left" type="radio" ng-model="newBooking.ISNEW" value="1">YES<br/>
+                                            <input style="float: left" type="radio" ng-model="newBooking.ISNEW" value="0">NO<br/>
                                         </div>
                                     </div>
 
@@ -490,6 +494,5 @@
 <!--<script type="text/javascript">-->
     <!--$("#myModal").modal('show');-->
 <!--</script>-->
-
 
 

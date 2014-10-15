@@ -2,10 +2,11 @@
  * Created by meditech on 8/29/2014.
  */
 angular.module('app.loggedIn.rlob.booking.controller',[])
-.controller("rlob_bookingController", function($window,$scope,$http,locationService,rlTypesService,clnSpecialitiesService,doctorsService,appointmentCalendarService,bookingService,$cookieStore) {
+.controller("rlob_bookingController", function($window,$scope,$http,$stateParams,locationService,rlTypesService,clnSpecialitiesService,doctorsService,appointmentCalendarService,bookingService,$cookieStore) {
 //    UIDatepaginator.init();
 //    Metronic.init();
-
+    //if($stateParams.bookingType)
+        //alert($stateParams.bookingType);
 
     var initPickers = function () {
 
