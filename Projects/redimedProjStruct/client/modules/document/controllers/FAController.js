@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.FA.controllers',[])
-    .controller("FAController",function($scope,DocumentService,$http,$cookieStore) {
+    .controller("FAController",function($scope, $state,DocumentService,$http,$cookieStore) {
         //Date picker
         var initPickers = function () {
             //init date pickers

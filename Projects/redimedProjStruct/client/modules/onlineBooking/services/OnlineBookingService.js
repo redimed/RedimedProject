@@ -93,7 +93,7 @@ angular.module('app.loggedIn.booking.services',[])
         }
 
         bookingService.deletePackage = function(id,comId){
-            var delPackage = api.all('booking/deletePackage');
+            var delPackage = api.all('booking/delete/package');
             return delPackage.post({id:id,comId:comId});
         }
 
@@ -122,8 +122,13 @@ angular.module('app.loggedIn.booking.services',[])
             return submit.post({info:info});
         }
 
+        bookingService.deleteAllPending = function(){
+            var del = api.all('booking/delete/allPending')
+            return del.post();
+        }
+
         bookingService.deletePending = function(info){
-            var del = api.all('booking/deletePending');
+            var del = api.all('booking/delete/pending');
             return del.post({info:info});
         }
 

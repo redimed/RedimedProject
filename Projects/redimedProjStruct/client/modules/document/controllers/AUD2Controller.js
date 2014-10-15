@@ -2,7 +2,9 @@
  * Created by HUYNHAN on 10/1/2014.
  */
 angular.module('app.loggedIn.document.AUD2.controllers', [])
-    .controller("AUD2Controller", function ($scope, DocumentService, $http, $cookieStore) {
+    .controller("AUD2Controller", function ($scope,$state,DocumentService, $http, $cookieStore) {
+
+
         //Date picker
         var initPickers = function () {
             //init date pickers

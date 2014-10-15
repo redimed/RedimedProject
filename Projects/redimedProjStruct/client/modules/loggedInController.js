@@ -70,6 +70,10 @@ angular.module("app.loggedIn.controller",[
     //tannv.dts@gmail.com
     //2-10-2014
 
+
+        $scope.$on('$idleTimeout', function() {
+            $state.go('lockscreen');
+        })
         /**
          * Tao scroll cho notification dropdown
          * tannv.dts@gmail.com

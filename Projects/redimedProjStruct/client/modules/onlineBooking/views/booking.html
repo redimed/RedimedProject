@@ -31,7 +31,7 @@
     </div>
     <div class="portlet-body form">
         <div class="table-scrollable" id="content">
-            <table ng-table="tableParams" show-filter="true" class="table table-hover table-bordered table-responsive">
+            <table ng-table="tableParams" show-filter="true" class="table table-bordered table-responsive">
                 <tr ng-repeat="b in $data" style="white-space: nowrap" ng-click="bookingSelected(b)" ng-class="{selected : b.Candidate_id === selectedCanId && b.Booking_id === selectedBookId}">
                     <td data-title="'ID'" >
                         <label>{{b.Booking_id}}</label>
@@ -62,8 +62,8 @@
                         <label>{{b.RediMed_note}}</label>
                     </td>
                     <td class="col-md-12" data-title="'Actions'">
-                        <div class="btn-group pull-right">
-                            <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown">
+                        <div class="btn-group pull-right dropup" dropdown is-open="status.isopen">
+                            <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
                                 Menu <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
