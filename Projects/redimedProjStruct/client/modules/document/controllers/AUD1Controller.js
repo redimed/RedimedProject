@@ -3,37 +3,29 @@
  */
 angular.module('app.loggedIn.document.AUD1.controllers', [])
     .controller("AUD1Controller", function ($scope, $state, DocumentService, $http, $cookieStore) {
-        //Date picker
 
-
-        var initPickers = function () {
-            //init date pickers
-            $('.date-picker').datepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            }).on('changeDate', function (evn) {
-
-            });
-
-        }
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
-        initPickers();
+
         $scope.submit = function () {
             var info = $scope.info;
         };
 
+
         $scope.listAUD1 = [];
-        DocumentService.newAUD1().then(function (response) {
-            if (response['status'] === 'success') {
-                console.log('Insert Successfully!');
-            }
-            else {
-                alert("Insert failed!");
-            }
-        });
+
+//        DocumentService.newAUD1().then(function (response) {
+//            if (response['status'] === 'success') {
+//                console.log('Insert Successfully!');
+//            }
+//            else {
+//                alert("Insert failed!");
+//            }
+//        });
+
+
 
         DocumentService.loadAUD1().then(function (response) {
             if (response['status'] === 'fail') {

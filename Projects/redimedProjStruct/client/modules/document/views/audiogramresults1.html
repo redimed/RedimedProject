@@ -407,20 +407,17 @@
     <br/>
 </div>
 <div class="row">
-    <div class="col-md-12 col-sm-12" style="text-align: center;">
-        <div class="col-md-12 col-sm-12">
-            <label class="control-label" style="text-align: center;">Audiogram <br/>
-                Frequency in Hertz(Hz)</label>
-        </div>
-    </div>
-</div>
-<div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12" style="float: right;">
-            <img src="http://127.0.0.1:4300/img/Capture.png" alt="" style="height: 400px;;width: 60%;margin-left: 20%;"/>
+            <button ng-click="addData()">Draw</button>
+            <!--<img src="/img/XepHinh.png" alt="" class="img-responsive" style="height: 600px;width: 60%;margin-left: 20%;"/>-->
+
+            <canvas id="canvas" height="600px" width="600px" style="margin-left: 20%"></canvas>
+
         </div>
     </div>
 </div>
+<br/>
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -556,4 +553,86 @@
 
         })
     })(jQuery)
+</script>
+
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+            var counter = 0;
+            function AUD1Controller($scope) {
+                alert('aaa');
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
+
+                $scope.data = [
+
+                ];
+
+                $scope.addData = function() {
+
+                    var id = 0;
+                    if($scope.data.length > 0) {
+                        id = $scope.data[$scope.data.length-1].id + 1;
+                    }
+                    var p = {id: id, x: 100, y: 100, amount: 6 };
+                    $scope.data.push(p);
+                    $scope.x = '';
+                    $scope.y = '';
+                    $scope.amount = '';
+                    draw($scope.data);
+                };
+
+                $scope.removePoint = function(point) {
+                    console.log(point);
+                    for(var i=0; i<$scope.data.length; i++) {
+                        if($scope.data[i].id === point.id) {
+                            console.log("removing item at position: "+i);
+                            $scope.data.splice(i, 1);
+                        }
+                    }
+
+                    context.clearRect(0,0,600,400);
+                    draw($scope.data);
+                    console.log($scope.data);
+                }
+
+                function draw(data) {
+                    for(var i=0; i<data.length; i++) {
+                        drawDot(data[i]);
+                        if(i > 0) {
+                            drawLine(data[i], data[i-1]);
+                        }
+                    }
+                }
+
+                function drawDot(data) {
+                    context.beginPath();
+                    context.arc(data.x, data.y, data.amount, 0, 2*Math.PI, false);
+                    context.fillStyle = "#ccddff";
+                    context.fill();
+                    context.lineWidth = 1;
+                    context.strokeStyle = "#666666";
+                    context.stroke();
+                }
+
+                function drawLine(data1, data2) {
+                    context.beginPath();
+                    context.moveTo(data1.x, data1.y);
+                    context.lineTo(data2.x, data2.y);
+                    context.strokeStyle = "black";
+                    context.stroke();
+                }
+
+                // setup
+                canvas.width = 600;
+                canvas.height = 400;
+                context.globalAlpha = 1.0;
+                context.beginPath();
+                draw($scope.data);
+            }
+
+
+        })
+    })(jQuery)
+
 </script>
