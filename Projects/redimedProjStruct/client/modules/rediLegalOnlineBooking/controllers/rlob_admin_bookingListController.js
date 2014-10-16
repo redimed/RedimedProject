@@ -3,9 +3,14 @@
  */
 
 angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
-        .controller("rlob_admin_bookingListController", function($scope, $http,$window,$q,rlTypesService,doctorsService,locationService,FileUploader,$cookieStore,$interval) {
+        .controller("rlob_admin_bookingListController", function($scope, $http,$window,$q,$stateParams,rlTypesService,doctorsService,locationService,FileUploader,$cookieStore,$interval) {
         //Internal Variable
         //tannv.dts@gmail.com
+        $scope.bookingType='REDiLEGAL';
+        if($stateParams.bookingType && $stateParams.bookingType=='Vaccination') {
+            $scope.bookingType = $stateParams.bookingType;
+        }
+        //alert($scope.bookingType);
         $scope.newAppointmentPositionFlag=false;
 
         //-----------------------------------------------------------
@@ -269,7 +274,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     toDateKey:toDate.format("YYYY-MM-DD"),
                     doctorKey:doctorKey,
                     workerKey:workerKey,
-                    doctorId:$scope.doctorInfo?$scope.doctorInfo.doctor_id:null
+                    doctorId:$scope.doctorInfo?$scope.doctorInfo.doctor_id:null,
+                    bookingType:$scope.bookingType
                 }
             })
                 .success(function(data) {

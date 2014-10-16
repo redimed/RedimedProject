@@ -6,9 +6,11 @@ module.exports =
 {
     list:function(req,res)
     {
+        var sourceType=req.query.sourceType?req.query.sourceType:null;
+        var sql='SELECT * FROM rl_types '+(sourceType?' WHERE SOURCE_TYPE=?':'');
         req.getConnection(function(err,connection)
         {
-            var query = connection.query('SELECT * FROM rl_types',function(err,rows)
+            var query = connection.query(sql,sourceType?[sourceType]:[],function(err,rows)
             {
                 if(err)
                 {

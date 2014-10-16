@@ -3,7 +3,12 @@
  */
 
 angular.module('app.loggedIn.rlob.list.controller',[])
-.controller("rlob_bookingListController", function ($scope, $http, $state, locationService, $cookieStore, FileUploader) {
+.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, locationService, $cookieStore, FileUploader) {
+            $scope.bookingType='REDiLEGAL';
+            if($stateParams.bookingType && $stateParams.bookingType=='Vaccination') {
+                $scope.bookingType = $stateParams.bookingType;
+            }
+
             //CONFIG
             var getDate = function (date) {
                 var res = date.split("/");
@@ -182,6 +187,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                     CLAIM_NO: "",
                     ASS_SURNAME: "",
                     RL_TYPE_ID: "",
+                    BOOKING_TYPE:$scope.bookingType,
                     DATE: {
                         BOOKING_DATE: {
                             from: null,

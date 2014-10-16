@@ -4,6 +4,12 @@
 
 angular.module('app.loggedIn.rlob.patientDetail.controller',[])
     .controller("rlob_patientDetailController", function($scope,$stateParams,$http,$cookieStore,appointmentCalendarService,doctorsService,locationService,bookingService,FileUploader,Mailto,$location,$window) {
+        //Get Boooking Type
+        $scope.bookingType='REDiLEGAL';
+        if($stateParams.bookingType && $stateParams.bookingType=='Vaccination') {
+            $scope.bookingType = $stateParams.bookingType;
+        }
+//        alert($scope.bookingType);
         $scope.loginInfo=$cookieStore.get('userInfo');
 //        /api/company/info
 
@@ -348,6 +354,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.newBooking.CAL_ID=cal_id;
             $scope.newBooking.refered_date_string=from_date.format("ddd DD/MM/YYYY HH-mm")+" "+selectedInfo.locationSelected.Site_name;
             $scope.newBooking.STATUS="Confirmed";
+            $scope.newBooking.BOOKING_TYPE=$scope.bookingType;
             if($scope.WRK_DOB_TEMP==undefined)
             {
                 alert("Worker's birthay fail!");

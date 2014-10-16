@@ -11,7 +11,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="icon-basket font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">Online Booking</span>
+            <span class="caption-subject font-green-sharp bold uppercase">{{bookingType}} Online Booking</span>
 
         </div>
 
@@ -28,13 +28,13 @@
                     </select>
                 </p>
             </div>
-            <div class="col-md-3  col-sm-3">
+            <div ng-show="bookingType=='REDiLEGAL'"  class="col-md-3  col-sm-3">
                 <p>Type</p>
                 <p>
                     <select class="form-control "  ng-model="selectedInfo.rltypeSelected" ng-options="rltype.Rl_TYPE_NAME for rltype in rltypes" ng-change="typeChange();"></select>
                 </p>
             </div>
-            <div class="col-md-3  col-sm-3">
+            <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
                 <p>
                     Specialty
                 </p>
@@ -44,7 +44,7 @@
                     </select>
                 </p>
             </div>
-            <div class="col-md-3  col-sm-3">
+            <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
                 <p>Doctor</p>
                 <p>
                     <select class="form-control "  ng-model="selectedInfo.doctorSelected" ng-options="doctor.NAME for doctor in doctorsOfSpeciality" ng-change="updateAppoinmentsList();">
@@ -169,11 +169,18 @@
                                         <!--{{ appointment.APPOINTMENT_TIME }}-->
                                     <!--</a>-->
 
-                                    <a
+                                    <a      ng-show="bookingType=='REDiLEGAL'"
                                             ng-repeat="appointment in doctor.APPOINTMENT_ITEMS"
                                             class="btn btn-sm yellow filter-submit margin-bottom"
                                             style="margin-left: 10px;margin-bottom: 10px; width: 70px"
                                             ui-sref="loggedIn.rlob_patient_detail({siteid:appointment.SITE_ID,doctorid:appointment.DOCTOR_ID,id:appointment.CAL_ID})">
+                                        {{ appointment.APPOINTMENT_TIME }}
+                                    </a>
+                                    <a      ng-show="bookingType=='Vaccination'"
+                                            ng-repeat="appointment in doctor.APPOINTMENT_ITEMS"
+                                            class="btn btn-sm yellow filter-submit margin-bottom"
+                                            style="margin-left: 10px;margin-bottom: 10px; width: 70px"
+                                            ui-sref="loggedIn.vaccinob_patient_detail({bookingType:'Vaccination',siteid:appointment.SITE_ID,doctorid:appointment.DOCTOR_ID,id:appointment.CAL_ID})">
                                         {{ appointment.APPOINTMENT_TIME }}
                                     </a>
                                 </div>

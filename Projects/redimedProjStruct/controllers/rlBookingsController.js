@@ -184,6 +184,7 @@ module.exports =
         var doctorKey=req.query.doctorKey;
         var workerKey=req.query.workerKey;
         var doctorId=req.query.doctorId?req.query.doctorId:null;
+        var bookingType=req.query.bookingType;
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+doctorId);
         var sql=
             " SELECT 	booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+
@@ -202,7 +203,7 @@ module.exports =
             " 	INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                              "+
             " 	LEFT JOIN `rl_booking_files` bookingfile ON booking.`BOOKING_ID`=`bookingfile`.`BOOKING_ID`                                                  "+
             " 	INNER JOIN `cln_appointment_calendar` calendar ON booking.`CAL_ID`=`calendar`.`CAL_ID`                                                       "+
-            " WHERE 	DATE(calendar.`FROM_TIME`) >=? AND DATE(calendar.`FROM_TIME`)<=?                                                                     "+
+            " WHERE  booking.BOOKING_TYPE=? AND	DATE(calendar.`FROM_TIME`) >=? AND DATE(calendar.`FROM_TIME`)<=?                                                                     "+
             "	AND                                                                                                                                          "+
             "	`doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                                       "+
             "	AND                                                                                                                                          "+
@@ -210,7 +211,7 @@ module.exports =
             (doctorId?" AND booking.DOCTOR_ID=? ":' ')+
             " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC                                                                 "
         req.getConnection(function(err,connection) {
-            var key_result=connection.query(sql,doctorId?[fromDateKey,toDateKey,doctorKey,workerKey,doctorId]:[fromDateKey,toDateKey,doctorKey,workerKey],function(err,rows){
+            var key_result=connection.query(sql,doctorId?[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,doctorId]:[bookingType,fromDateKey,toDateKey,doctorKey,workerKey],function(err,rows){
                 if(err)
                 {
                     res.json({status:"fail"});
