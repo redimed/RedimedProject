@@ -822,7 +822,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.doctor_id?$scope.selectedFilter.doctorSelected.doctor_id:'%';
             var locationId=$scope.selectedFilter.locationSelected  && $scope.selectedFilter.locationSelected.id?$scope.selectedFilter.locationSelected.id:'%';
             var fromTime=$scope.selectedFilter.var1.format("YYYY/MM/DD");
-
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+fromTime);
             $http({
                 method:"GET",
                 url:"/api/rlob/appointment-calendar/get-appointment-calendar" ,
@@ -937,14 +937,17 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.changeAppointmentCalendar=function(newCalId,newAppointmentDateTime,doctorId,siteId)
         {
-
             $http({
                 method:"POST",
                 url:"/api/rlob/rl_bookings/admin/change-appointment-calendar",
                 data:{bookingId:$scope.currentUpdatingItem.bookingId,
                     newCalId:newCalId,
                     doctorId:doctorId,
-                    siteId:siteId}
+                    siteId:siteId,
+                    appointmentDate:moment(newAppointmentDateTime).format("YYYY/MM/DD HH:mm"),
+                    rlTypeId:$scope.selectedFilter.rltypeSelected.RL_TYPE_ID,
+                    specialityId:$scope.selectedFilter.clnSpecialitySelected.Specialties_id
+                }
             })
             .success(function(data) {
                 if(data.status=='success')

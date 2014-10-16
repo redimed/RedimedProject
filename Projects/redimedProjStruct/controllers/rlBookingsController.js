@@ -282,10 +282,13 @@ module.exports =
         var newCalId=req.body.newCalId;
         var doctorId=req.body.doctorId;
         var siteId=req.body.siteId;
-        var sql=" UPDATE `rl_bookings` booking SET booking.`CAL_ID`=?, booking.DOCTOR_ID=?, booking.SITE_ID=? WHERE booking.`BOOKING_ID`=? ";
+        var appointmentDate=req.body.appointmentDate;
+        var rlTypeId=req.body.rlTypeId;
+        var specialityId=req.body.specialityId;
+        var sql=" UPDATE `rl_bookings` booking SET booking.`CAL_ID`=?, booking.DOCTOR_ID=?, booking.SITE_ID=?,booking.APPOINTMENT_DATE=?,booking.RL_TYPE_ID=?,booking.SPECIALITY_ID=? WHERE booking.`BOOKING_ID`=? ";
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql ,[newCalId,doctorId,siteId,bookingId],function(err,rows)
+            var query = connection.query(sql ,[newCalId,doctorId,siteId,appointmentDate,rlTypeId,specialityId,bookingId],function(err,rows)
                 {
                     if(err)
                     {

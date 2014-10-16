@@ -164,7 +164,7 @@
 
                 <div class="row form-group">
                     <div class="col-md-4">
-                        <label for="WRK_DOB">Birthday: </label>
+                        <label for="WRK_DOB">Day of birth: </label>
                     </div>
                     <div class="col-md-8">
 
@@ -174,7 +174,7 @@
                         <!--<button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa glyphicon glyphicon-calendar "></i></button>-->
                         <!--</span>-->
                         <!--</div>-->
-                        <p id="WRK_DOB" ng-bind="selectedBooking.WRK_DOB"></p>
+                        <p id="WRK_DOB" ng-bind="selectedBooking.WRK_DOB|date:'dd/MM/yyyy'"></p>
                     </div>
                 </div>
 

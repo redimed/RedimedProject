@@ -114,6 +114,7 @@ angular.module("app.loggedIn.controller",[
                     for(var i=0;i<data.data.length;i++)
                     {
 
+
                         if(data.data[i].TYPE=='bell')
                         {
                             $scope.numbersBellUnread++;
@@ -127,6 +128,8 @@ angular.module("app.loggedIn.controller",[
                     }
                     $scope.setSlimCroll('.bell-dropdown');
                     $scope.setSlimCroll('.letter-dropdown')
+
+
                 }
             })
             .error(function (data) {
