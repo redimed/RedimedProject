@@ -25,7 +25,7 @@ angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
     var id = $stateParams.id;
 
         var uploader = $scope.uploader = new FileUploader({
-            url: '/api/PmProperties/upLoadFile'
+            url: '/api/PmProperties/uploadFile'
         });
 
 

@@ -82,75 +82,75 @@ var multipartMiddleware = multipart();
 
 
 
-    app.post('/api/PmProperties/upLoadFile',multipartMiddleware,  function(req, resp) {
+app.post('/api/PmProperties/uploadFile',multipartMiddleware,  function(req, resp) {
+    var targetFolder='.\\redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+targetFolder);
+    mkdirp(targetFolder, function(err) {
+        // path was created unless there was error
+        // console.log(req.body);
+        // console.log(req.files);
+        // don't forget to delete all req.files when done
 
-        var targetFolder='.\\redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+targetFolder);
-        mkdirp(targetFolder, function(err) {
-            // path was created unless there was error
-            // console.log(req.body);
-            // console.log(req.files);
-            // don't forget to delete all req.files when done
-
-            // get the temporary location of the file
-            var tmp_path = req.files.file.path;
-            console.log('temp_path:'+tmp_path);
-            // set where the file should actually exists - in this case it is in the "images" directory
-            var target_path =targetFolder+"\\" + req.files.file.name;
-            console.log('target_path:'+target_path);
-            // move the file from the temporary location to the intended location
-            fs.rename(tmp_path, target_path, function(err) {
+        // get the temporary location of the file
+        var tmp_path = req.files.file.path;
+        console.log('temp_path:'+tmp_path);
+        // set where the file should actually exists - in this case it is in the "images" directory
+        var target_path =targetFolder+"\\" + req.files.file.name;
+        console.log('target_path:'+target_path);
+        // move the file from the temporary location to the intended location
+        fs.rename(tmp_path, target_path, function(err) {
+            if (err) throw err;
+            // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+            fs.unlink(tmp_path, function() {
                 if (err) throw err;
-                // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-                fs.unlink(tmp_path, function() {
-                    if (err) throw err;
-                    console.log('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes')
-                    //res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
-                });
+                console.log('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes')
+                //res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
             });
+        });
 
-            console.log("GGGGGGGGGGGGGGGGGGGGG>>>>:"+req.body.isClientDownLoad);
-            req.getConnection(function(err,connection) {
-                var key_result=connection.query("SELECT get_pk_value('RlBookingFiles')",function(err,rows){
-                    if(err)
-                    {
+        console.log("GGGGGGGGGGGGGGGGGGGGG>>>>:"+req.body.isClientDownLoad);
+        req.getConnection(function(err,connection) {
+            var key_result=connection.query("SELECT get_pk_value('RlBookingFiles')",function(err,rows){
+                if(err)
+                {
 
+                }
+                else
+                {
+                    var file_id=rows[0]["get_pk_value('RlBookingFiles')"]
+                    var fileInfo={
+                        FILE_ID:file_id,
+                        BOOKING_ID:req.body.booking_id,
+                        isClientDownLoad:req.body.isClientDownLoad,
+                        FILE_NAME:req.files.file.name,
+                        FILE_PATH:target_path
                     }
-                    else
-                    {
-                        var file_id=rows[0]["get_pk_value('RlBookingFiles')"]
-                        var fileInfo={
-                            FILE_ID:file_id,
-                            BOOKING_ID:req.body.booking_id,
-                            isClientDownLoad:req.body.isClientDownLoad,
-                            FILE_NAME:req.files.file.name,
-                            FILE_PATH:target_path
-                        }
 
-                        req.getConnection(function(err,connection){
-                            var query=connection.query('insert into rl_booking_files set ?',fileInfo,function(err,rows){
-                                if (err)
-                                {
-                                    console.log("Error inserting : %s ",err );
-                                    resp.json({status:"fail"});
-                                }
-                                else
-                                {
-                                    console.log("success");
-                                    resp.json({status:"success",fileInfo:fileInfo});
-                                }
+                    req.getConnection(function(err,connection){
+                        var query=connection.query('insert into rl_booking_files set ?',fileInfo,function(err,rows){
+                            if (err)
+                            {
+                                console.log("Error inserting : %s ",err );
+                                resp.json({status:"fail"});
+                            }
+                            else
+                            {
+                                console.log("success");
+                                resp.json({status:"success",fileInfo:fileInfo});
+                            }
 
-                            })
-                        });
-                    }
-                });
+                        })
+                    });
+                }
             });
-
-
         });
 
 
     });
+
+
+});
+
 app.all('/*',function(req,res,next){
     res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control-Allow-Headers","X-Requested-With");
