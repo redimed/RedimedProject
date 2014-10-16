@@ -20,9 +20,22 @@ angular.module('app.loggedIn.SysForms2.NewEdit.controller',[])
 
     $scope.MASTER_SEQLOVs = []
 
-    SysForms2Service.getSysForms2MASTER_SEQLOV().then(function(response){
-           $scope.MASTER_SEQLOVs = response;
-    })
+    $scope.$watch('info',function(info){
+        SysForms2Service.getSysForms2MASTER_SEQLOV( $scope.info.FORM_PROPERTIES, $scope.info.NEW_EDIT_FORM_TYPE).then(function(response){
+               $scope.MASTER_SEQLOVs = response;
+        });
+    });
+    $scope.FormPropertiesValueChange = function(value){
+        SysForms2Service.getSysForms2MASTER_SEQLOV( $scope.info.FORM_PROPERTIES, $scope.info.NEW_EDIT_FORM_TYPE).then(function(response){
+               $scope.MASTER_SEQLOVs = response;
+        });
+    };
+    $scope.NewEditFormTypeValueChange = function(value){
+        SysForms2Service.getSysForms2MASTER_SEQLOV( $scope.info.FORM_PROPERTIES, $scope.info.NEW_EDIT_FORM_TYPE).then(function(response){
+               $scope.MASTER_SEQLOVs = response;
+        });
+    };
+
 
     $scope.data=[];
        
@@ -78,4 +91,5 @@ angular.module('app.loggedIn.SysForms2.NewEdit.controller',[])
 
        
     }
+
 })

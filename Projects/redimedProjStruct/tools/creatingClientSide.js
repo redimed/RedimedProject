@@ -69,6 +69,8 @@ function main(tableName,becomeModel) {
     var lovStatementServerD = "\n";
     var lovStatementService = "\n";
     var lovStatementRoute = "\n";
+    var valueChangeFunctions = "";
+    var isUploadFile = false;
 
     db.sequelize
         // sync để tự động tạo các bảng trong database
@@ -103,12 +105,17 @@ function main(tableName,becomeModel) {
             // for controller at server
             insertUpdateStatement += "          " + isComma + data[i].COLUMN_NAME + " : f."+ data[i].COLUMN_NAME + "\n";
             insertUpdateStatement2 +=  isComma + "'"+ data[i].COLUMN_NAME + "'";
+            valueChangeFunctions +=
+            "    $scope."+_s.classify(data[i].COLUMN_NAME)+"ValueChange = function(value) {\n" +
+            "        console.log('value = ' + value);\n" +
+            "    };\n";
+
             //for LOV of controller at cleint
             if(data[i].LOV_SQL.toUpperCase().indexOf('SELECT') > -1 && data[i].LOV_SQL.toUpperCase().indexOf('FROM') > -1 && data[i].LOV_SQL.toUpperCase().indexOf('WHERE') > -1 ){
-                lovStatement += getLOVForClientController(becomeModel,becomeModel,data[i].COLUMN_NAME);
+                lovStatement += getLOVForClientController(becomeModel,becomeModel,data[i].COLUMN_NAME,data[i].LOV_SQL);
                 lovStatementServer += getLOVForServerController(becomeModel,data[i].COLUMN_NAME,data[i].LOV_SQL);
                 lovStatementRoute += getLOVForRoute(becomeModel,becomeModel,data[i].COLUMN_NAME);
-                lovStatementService += getLOVForService(becomeModel,becomeModel,data[i].COLUMN_NAME);
+                lovStatementService += getLOVForService(becomeModel,becomeModel,data[i].COLUMN_NAME,data[i].LOV_SQL);
             }
 
             if(data[i].ISDISPLAY_ON_LIST === 1){
@@ -130,6 +137,9 @@ function main(tableName,becomeModel) {
 
             if(data[i].ISDISPLAY_ON_FORM === 1) {
                 bodyNewEditScript += getDisplayOnForm(data[i].DISPLAY_NAME,data[i].INPUT_TYPE,data[i].COLUMN_NAME,data[i].LOV_SQL);
+                if(data[i].INPUT_TYPE.indexOf('') > -1 ){
+                    isUploadFile = true;
+                }
             }
 
             newEditInfoVar += "             " + isComma + data[i].COLUMN_NAME + " : ''\n";
@@ -174,10 +184,10 @@ function main(tableName,becomeModel) {
 
                     if(data[i].LOV_SQL.toUpperCase().indexOf('SELECT') > -1 && data[i].LOV_SQL.toUpperCase().indexOf('FROM') > -1 && data[i].LOV_SQL.toUpperCase().indexOf('WHERE') > -1 ){
 
-                        lovStatementD += getLOVForClientController(becomeModel,becomeModelD,data[i].COLUMN_NAME);
+                        lovStatementD += getLOVForClientController(becomeModel,becomeModelD,data[i].COLUMN_NAME,data[i].LOV_SQL);
                         lovStatementServerD += getLOVForServerController(becomeModelD,data[i].COLUMN_NAME,data[i].LOV_SQL);
                         lovStatementRoute += getLOVForRoute(becomeModel,becomeModelD,data[i].COLUMN_NAME);
-                        lovStatementService += getLOVForService(becomeModel,becomeModelD,data[i].COLUMN_NAME);
+                        lovStatementService += getLOVForService(becomeModel,becomeModelD,data[i].COLUMN_NAME,data[i].LOV_SQL);
                     }
 
                     if(data[i].ISDISPLAY_ON_LIST === 1){
@@ -212,9 +222,9 @@ function main(tableName,becomeModel) {
                 //create services file at services diectory of module
                 createServiceFile(true,becomeModel,lovStatementService);
                 /// create new edit view with detail list
-                newEditView(true,becomeModel,bodyNewEditScript,becomeModel,"table",primaryKeyColumnNameD,bodyTableScriptD);
+                newEditView(true,becomeModel,bodyNewEditScript,becomeModel,"table",primaryKeyColumnNameD,bodyTableScriptD,isUploadFile);
                 // create controller file on controller directory
-                createNewEditController(true,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatement);
+                createNewEditController(true,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatement,valueChangeFunctions,isUploadFile);
 
 
                 createNewEditDetailController(false,becomeModel,newEditInfoVarD,newEditGetDataControllerD,primaryKeyColumnNameD,lovStatementD);
@@ -230,9 +240,9 @@ function main(tableName,becomeModel) {
             //create services file at services diectory of module
             createServiceFile(false,becomeModel,lovStatementService);
             /// create new edit view
-            newEditView(false,becomeModel,bodyNewEditScript,becomeModel,"table",primaryKeyColumnNameD,bodyTableScriptD);
+            newEditView(false,becomeModel,bodyNewEditScript,becomeModel,"table",primaryKeyColumnNameD,bodyTableScriptD,isUploadFile);
             // create controller file on controller directory
-            createNewEditController(false,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatementD);
+            createNewEditController(false,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatementD,valueChangeFunctions,isUploadFile);
         }
 
         listView(becomeModel,listType,primaryKeyColumnName,bodyTableScript,listHeader,listBody);
@@ -336,26 +346,72 @@ var mkdirSync = function (path) {
     }
 }
 
-function getLOVForClientController(becomeModel,tableName,columnName){
+function getLOVForClientController(becomeModel,tableName,columnName,lovSql){
+
+    var paraNames = getParaList(lovSql);
+    var paraQuery = "";
+    var paraHeader = "";
+    var comma = "";
+    var valueChangeFunctions = "";
+
+    for(i = 0; i<paraNames.length; i++){
+        if(i>0){
+            comma = ",";
+        }
+        paraQuery += comma + " p" + paraNames[i] + " : p" + paraNames[i] + "";
+        paraHeader += comma + " $scope.info." + paraNames[i].toUpperCase();
+
+    }
+
     var str ="";
 
     str =
         "    $scope." + columnName + "LOVs = []\n\n"+
-        "    "+becomeModel+"Service.get" + tableName + columnName + "LOV().then(function(response){\n" +
-        "           $scope." + columnName + "LOVs = response;\n" +
-        "    })";
+        "    $scope.$watch('info',function(info){\n"+
+        "        "+becomeModel+"Service.get" + tableName + columnName + "LOV(" + paraHeader + ").then(function(response){\n" +
+        "               $scope." + columnName + "LOVs = response;\n" +
+        "        });\n" +
+        "    });\n";
 
+    //// add value change function from other field to refresh the LOV
+
+    for(i = 0; i<paraNames.length; i++){
+
+        str +=
+            "    $scope."+ _s.classify(paraNames[i]) +"ValueChange = function(value){\n"+
+            "        "+becomeModel+"Service.get" + tableName + columnName + "LOV(" + paraHeader + ").then(function(response){\n" +
+            "               $scope." + columnName + "LOVs = response;\n" +
+            "        });\n" +
+            "    };\n";
+
+    }
 
     return str;
 }
 
 function getLOVForServerController(becomeModel,columnName,lovSql){
+
+    var paraNames = getParaList(lovSql);
+
     var str = "";
-    str =
-        "    get"+columnName+"LOV: function(req,res){\n" +
-        "        var id = req.body.id;\n" +
-        "        var rs = [];\n" +
-        "        db.sequelize.query('"+lovSql+"',null,{raw:true})\n" +
+
+    var paraQuery = "";
+
+    var comma = "";
+
+    str +=
+        "    get"+columnName+"LOV: function(req,res){\n";
+
+    for(i = 0; i<paraNames.length; i++){
+        if(i>0){
+            comma = ",";
+        }
+        str += "        var p" + paraNames[i] + " = req.body.p" + paraNames[i] + ";\n";
+        paraQuery += comma + " " + paraNames[i] + " : p" + paraNames[i] + "";
+    }
+
+    str +=
+        "        db.sequelize.query('"+lovSql+"',null,{raw:true},{" + paraQuery + "})\n" +
         "            .success(function(data){\n" +
         "                res.json(data);\n" +
         "            })\n" +
@@ -363,22 +419,37 @@ function getLOVForServerController(becomeModel,columnName,lovSql){
         "                res.json({status:'fail'});\n" +
         "            })\n" +
         "    },\n\n";
+
     return str;
 }
 
 function getLOVForRoute(becomeModel,tableName,columnName){
     var str = "";
-    str =  "app.get('/api/"+becomeModel+"/get"+tableName+columnName+"LOV',"+tableName+"Controller.get"+columnName+"LOV);\n"
+    str =  "app.post('/api/"+becomeModel+"/get"+tableName+columnName+"LOV',"+tableName+"Controller.get"+columnName+"LOV);\n"
     return str;
 }
 
-function getLOVForService(becomeModel,tableName,columnName){
+function getLOVForService(becomeModel,tableName,columnName,lovSql){
+
+    var paraNames = getParaList(lovSql);
+    var paraQuery = "";
+    var paraHeader = "";
+    var comma = "";
+
+    for(i = 0; i<paraNames.length; i++){
+        if(i>0){
+            comma = ",";
+        }
+        paraQuery += comma + " p" + paraNames[i] + " : p" + paraNames[i] + "";
+        paraHeader += comma + " p" + paraNames[i];
+    }
+
     var str = "";
 
     str =
-        "        "+becomeModel+"Service.get"+tableName+columnName+"LOV = function(){\n" +
-        "            var list = api.one('"+becomeModel+"/get"+tableName+columnName+"LOV');\n" +
-        "            return list.get();\n" +
+        "        "+becomeModel+"Service.get" + tableName + columnName+"LOV = function(" + paraHeader + "){\n" +
+        "            var list = api.all('" + becomeModel + "/get" + tableName + columnName + "LOV');\n" +
+        "            return list.post({" + paraQuery + "});\n" +
         "        }\n" +
         "\n";
 
@@ -395,7 +466,7 @@ function getDisplayOnForm(displayName,inputType,columnName,lov){
             "                <label class=\"pull-right\">" + displayName + "</label>\n" +
             "            </div>\n" +
             "            <div class=\"col-md-6\">\n" +
-            "                <select ng-model=\"info." + columnName + "\" ng-options='" + columnName + "LOV.name for " + columnName + "LOV in " + columnName + "LOVs'></select>" +
+            "                <select ng-model=\"info." + columnName + "\" ng-change=\""+_s.classify(columnName)+"ValueChange(info." + columnName + ")\" ng-options='"  + columnName + "LOV.id as " + columnName + "LOV.name for " + columnName + "LOV in " + columnName + "LOVs'></select>" +
             //"                <input "+inputType+" class=\"form-control\" ng-model=\"info." + columnName + "\" ng-true-value='1' ng-false-value='0' ng-checked='info." + columnName + "' />\n" +
             "            </div>\n" +
             "        </div>\n";
@@ -408,8 +479,27 @@ function getDisplayOnForm(displayName,inputType,columnName,lov){
             "                <label class=\"pull-right\">" + displayName + "</label>\n" +
             "            </div>\n" +
             "            <div class=\"col-md-6\">\n" +
-            "                <input "+inputType+" class=\"form-control\" ng-model=\"info." + columnName + "\" ng-true-value='1' ng-false-value='0' ng-checked='info." + columnName + "' />\n" +
+            "                <input "+inputType+" class=\"form-control\" ng-model=\"info." + columnName + "\" ng-change=\"" + _s.classify(columnName)+"ValueChange(info." + columnName + ")\" ng-true-value='1' ng-false-value='0' ng-checked='info." + columnName + "' />\n" +
             "            </div>\n" +
+            "        </div>\n";
+
+    }
+    else if(inputType.indexOf('uploadfile') > -1){
+        str =
+            "        <div class=\"row\">\n" +
+            "            <div class=\"col-md-2\" style=\"margin-top:5px;\" >\n" +
+            "                <label class=\"pull-right\">" + displayName + "</label>\n" +
+            "            </div>\n" +
+            "            <div class=\"col-md-6\">\n" +
+            "                <input  type = 'text'  class=\"form-control\" ng-model=\"info." + columnName + "\" ng-change=\"" + _s.classify(columnName)+"ValueChange(info." + columnName + ")\" ng-true-value='1' ng-false-value='0' ng-checked='info." + columnName + "' />\n" +
+            "            </div>\n" +
+            "            <div class=\"col-md-1\">\n" +
+            "                <div class=\"btn-group pull-right\">\n" +
+            "                    <a href=\"javascript:;\" ng-click=\"upLoadFile()\" class=\"btn green\" id=\"uploadBtn\">\n" +
+            "                        Upload <i class=\"fa\"></i>\n" +
+            "                    </a>\n" +
+            "                </div>\n" +
+            "            </div>\n"+
             "        </div>\n";
 
     }
@@ -420,7 +510,7 @@ function getDisplayOnForm(displayName,inputType,columnName,lov){
             "                <label class=\"pull-right\">" + displayName + "</label>\n" +
             "            </div>\n" +
             "            <div class=\"col-md-6\">\n" +
-            "                <input "+inputType+" class=\"form-control\" ng-model=\"info." + columnName + "\" />\n" +
+            "                <input "+inputType+" class=\"form-control\" ng-model=\"info." + columnName + "\" ng-change=\"" + _s.classify(columnName)+"ValueChange(info." + columnName + ")\" />\n" +
             "            </div>\n" +
             "        </div>\n";
 
@@ -625,7 +715,7 @@ function createListController(becomeModel,primaryKeyColumnName){
 
 }
 
-function newEditView(isDetail,becomeModel,bodyNewEditScript,becomeModel,listType,primaryKeyColumnName,bodyTableScript){
+function newEditView(isDetail,becomeModel,bodyNewEditScript,becomeModel,listType,primaryKeyColumnName,bodyTableScript,isUploadScript){
     var wstreamNewEditView = fs.createWriteStream('../client/modules/'+becomeModel+'/views/NewEdit'+becomeModel+'.html'); // create the model file
     wstreamNewEditView.write(
             "<div class=\"portlet light bordered\">\n" +
@@ -683,9 +773,16 @@ function newEditView(isDetail,becomeModel,bodyNewEditScript,becomeModel,listType
     }
     wstreamNewEditView.write(
             "    </div>\n" +
-            "</div>\n" +
             "</div>\n"
     );
+
+    if(isUploadScript){
+        wstreamNewEditView.write(
+            getUploadDialog()
+            //// this is a code for popup upload file into the system.
+        );
+    }
+
     wstreamNewEditView.end();
 }
 
@@ -754,7 +851,7 @@ function newEditDetailView(isDetail,becomeModel,bodyNewEditScript,becomeModel,li
     wstreamNewEditView.end();
 }
 
-function createNewEditController(isDetail,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatement){
+function createNewEditController(isDetail,becomeModel,newEditInfoVar,newEditGetDataController,primaryKeyColumnNameD,lovStatement,valueChangeFunctions,isUploadFile){
     /// Create new edit controller
     var wstreamNewEditController = fs.createWriteStream('../client/modules/'+becomeModel+'/controllers/NewEdit'+becomeModel+'Controller.js'); // create the model file
 
@@ -802,6 +899,78 @@ function createNewEditController(isDetail,becomeModel,newEditInfoVar,newEditGetD
                 "    }\n\n"
         );
     }
+
+    if(isUploadFile){
+        wstreamNewEditController.write(
+                "    $scope.upLoadFile = function(){\n" +
+                "        $(\"#lob-upload-file-dialog\").modal({show:true,backdrop:'static'});\n" +
+                "    }\n\n" +
+                "        //HANDLE UPLOAD FILES\n" +
+                "        //Upload File\n" +
+                "        var uploader = $scope.uploader = new FileUploader({\n" +
+                "            url: '/api/rlob/rl_booking_files/upload'\n" +
+                "        });\n" +
+                "        // FILTERS\n" +
+                "        uploader.filters.push({\n" +
+                "            name: 'customFilter',\n" +
+                "            fn: function(item /*{File|FileLikeObject}*/, options) {\n" +
+                "                return this.queue.length < 10;\n" +
+                "            }\n" +
+                "        });\n" +
+                "        // CALLBACKS\n" +
+                "        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {\n" +
+                "            console.info('onWhenAddingFileFailed', item, filter, options);\n" +
+                "        };\n" +
+                "        uploader.onAfterAddingFile = function(fileItem) {\n" +
+                "            console.info('onAfterAddingFile', fileItem);\n" +
+                "        };\n" +
+                "        uploader.onAfterAddingAll = function(addedFileItems) {\n" +
+                "            console.info('onAfterAddingAll', addedFileItems);\n" +
+                "        };\n" +
+                "        uploader.onBeforeUploadItem = function(item) {\n" +
+                "            console.info('onBeforeUploadItem', item);\n" +
+                "        };\n" +
+                "        uploader.onProgressItem = function(fileItem, progress) {\n" +
+                "            console.info('onProgressItem', fileItem, progress);\n" +
+                "        };\n" +
+                "        uploader.onProgressAll = function(progress) {\n" +
+                "            console.info('onProgressAll', progress);\n" +
+                "        };\n" +
+                "        uploader.onSuccessItem = function(fileItem, response, status, headers) {\n" +
+                "            var fileInfo=response.fileInfo;\n" +
+                "            var refId=angular.copy(fileInfo.BOOKING_ID);\n" +
+                "\n" +
+                "            fileInfo.DISPLAY=fileInfo.FILE_NAME;\n" +
+                "            fileInfo.style_class='lob_admin_booking_file_node';\n" +
+                "            fileInfo.PARENT_ID=angular.copy(fileInfo.BOOKING_ID)\n" +
+                "            fileInfo.BOOKING_ID=null;\n" +
+                "            fileInfo.ASS_ID=$scope.currentNode.ASS_ID;\n" +
+                "            $scope.currentNode.nodes.push(fileInfo);\n" +
+                "            console.info('onSuccessItem', fileItem, response, status, headers);\n" +
+                "            //Put notification\n" +
+                "            if(fileInfo.isClientDownLoad==1)\n" +
+                "            {\n" +
+                "                $scope.rlob_add_notification(fileInfo.ASS_ID,refId,$scope.sourceName,$scope.rlobNotificationType.result,$scope.notificationType.letter,'');\n" +
+                "            }\n" +
+                "\n" +
+                "\n" +
+                "        };\n" +
+                "        uploader.onErrorItem = function(fileItem, response, status, headers) {\n" +
+                "            console.info('onErrorItem', fileItem, response, status, headers);\n" +
+                "        };\n" +
+                "        uploader.onCancelItem = function(fileItem, response, status, headers) {\n" +
+                "            console.info('onCancelItem', fileItem, response, status, headers);\n" +
+                "        };\n" +
+                "        uploader.onCompleteItem = function(fileItem, response, status, headers) {\n" +
+                "            console.info('onCompleteItem', fileItem, response, status, headers);\n" +
+                "        };\n" +
+                "        uploader.onCompleteAll = function() {\n" +
+                "            console.info('onCompleteAll');\n" +
+                "        };\n" +
+                "        console.info('uploader', uploader);\n" +
+                "        //HANDLE UPLOAD FILES\n\n"
+        );
+    }
     wstreamNewEditController.write(
             "    $scope.backToList = function(){\n" +
             "        $state.go('loggedIn."+becomeModel+"');\n" +
@@ -827,7 +996,8 @@ function createNewEditController(isDetail,becomeModel,newEditInfoVar,newEditGetD
             "        }\n" +
             "\n" +
             "       \n" +
-            "    }\n" +
+            "    }\n\n" +
+                ////valueChangeFunctions +
             "})"
     );
     wstreamNewEditController.end();
@@ -1104,4 +1274,108 @@ function createServerControllerFile(wstreamController,becomeModel,primaryKeyColu
 
     wstreamController.write("}");
     wstreamController.end();
+}
+
+function getParaList(str){
+    var _s = require('underscore.string');
+    var array = _s.words(str);
+    var para = [];
+    var index = 0;
+
+    for(i = 0; i < array.length ; i++){
+        if(array[i].indexOf(':')>-1){
+            //console.log(array[i] + '  ' + array[i].indexOf(':'));
+            para[index] = array[i].substr(array[i].indexOf(':') + 1);
+            index++;
+        }
+    }
+
+    console.log(para);
+
+    return para;
+}
+
+
+function getUploadDialog(){
+    var str = "<div  id=\"lob-upload-file-dialog\" class=\"modal fade\">\n" +
+        "    <div class=\"modal-dialog modal-lg\">\n" +
+        "        <div class=\"modal-content\">\n" +
+        "            <div class=\"modal-header\">\n" +
+        "                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n" +
+        "                <h4 class=\"modal-title\">Upload files</h4>\n" +
+        "            </div>\n" +
+        "\n" +
+        "            <div class=\"modal-body\">\n" +
+        "                <div class=\"row\">\n" +
+        "                    <div class=\"col-md-12 col-sm-12\" style=\"margin-bottom: 40px\">\n" +
+        "                        <input style=\"background-color: burlywood\" type=\"file\" nv-file-select=\"\" uploader=\"uploader\" multiple  /><br/>\n" +
+        "                        <table class=\"table\">\n" +
+        "                            <thead>\n" +
+        "                            <tr>\n" +
+        "                                <th width=\"40%\">Name</th>\n" +
+        "                                <th ng-show=\"uploader.isHTML5\">Size</th>\n" +
+        "                                <th ng-show=\"uploader.isHTML5\">Progress</th>\n" +
+        "                                <th>Status</th>\n" +
+        "                                <th>Is File Result</th>\n" +
+        "                                <th>Actions</th>\n" +
+        "                            </tr>\n" +
+        "                            </thead>\n" +
+        "                            <tbody>\n" +
+        "                            <tr ng-repeat=\"item in uploader.queue\">\n" +
+        "                                <td><strong>{{ item.file.name }}</strong></td>\n" +
+        "                                <td ng-show=\"uploader.isHTML5\" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>\n" +
+        "                                <td ng-show=\"uploader.isHTML5\">\n" +
+        "                                    <div class=\"progress\" style=\"margin-bottom: 0;\">\n" +
+        "                                        <div class=\"progress-bar\" role=\"progressbar\" ng-style=\"{ 'width': item.progress + '%' }\"></div>\n" +
+        "                                    </div>\n" +
+        "                                </td>\n" +
+        "                                <td class=\"text-center\">\n" +
+        "                                    <span ng-show=\"item.isSuccess\"><i class=\"glyphicon glyphicon-ok\"></i></span>\n" +
+        "                                    <span ng-show=\"item.isCancel\"><i class=\"glyphicon glyphicon-ban-circle\"></i></span>\n" +
+        "                                    <span ng-show=\"item.isError\"><i class=\"glyphicon glyphicon-remove\"></i></span>\n" +
+        "                                </td>\n" +
+        "                                <td class=\"text-center\">\n" +
+        "                                    <!--<input ng-model=\"item.isClientDownLoad\" type=\"checkbox\">-->\n" +
+        "                                    <input type=\"checkbox\" ng-model=\"item.formData[0].isClientDownLoad\" ng-true-value=\"1\" ng-false-value=\"0\" ng-init=\"item.formData[0].isClientDownLoad=0\">\n" +
+        "                                </td>\n" +
+        "                                <td nowrap>\n" +
+        "                                    <button type=\"button\" class=\"btn btn-success btn-xs\" ng-click=\"item.upload()\" ng-disabled=\"item.isReady || item.isUploading || item.isSuccess\">\n" +
+        "                                        <span class=\"glyphicon glyphicon-upload\"></span> Upload\n" +
+        "                                    </button>\n" +
+        "                                    <!--<button type=\"button\" class=\"btn btn-warning btn-xs\" ng-click=\"item.cancel()\" ng-disabled=\"!item.isUploading\">-->\n" +
+        "                                    <!--<span class=\"glyphicon glyphicon-ban-circle\"></span> Cancel-->\n" +
+        "                                    <!--</button>-->\n" +
+        "                                    <button type=\"button\" class=\"btn btn-danger btn-xs\" ng-click=\"item.remove()\">\n" +
+        "                                        <span class=\"glyphicon glyphicon-trash\"></span> Remove\n" +
+        "                                    </button>\n" +
+        "                                </td>\n" +
+        "                            </tr>\n" +
+        "                            </tbody>\n" +
+        "                        </table>\n" +
+        "\n" +
+        "                        <div>\n" +
+        "                            <button type=\"button\" class=\"btn btn-success btn-s\" ng-click=\"uploader.uploadAll()\" ng-disabled=\"!uploader.getNotUploadedItems().length\">\n" +
+        "                                <span class=\"glyphicon glyphicon-upload\"></span> Upload all\n" +
+        "                            </button>\n" +
+        "                            <!--<button type=\"button\" class=\"btn btn-warning btn-s\" ng-click=\"uploader.cancelAll()\" ng-disabled=\"!uploader.isUploading\">-->\n" +
+        "                            <!--<span class=\"glyphicon glyphicon-ban-circle\"></span> Cancel all-->\n" +
+        "                            <!--</button>-->\n" +
+        "                            <button type=\"button\" class=\"btn btn-danger btn-s\" ng-click=\"uploader.clearQueue()\" ng-disabled=\"!uploader.queue.length\">\n" +
+        "                                <span class=\"glyphicon glyphicon-trash\"></span> Clear all\n" +
+        "                            </button>\n" +
+        "                        </div>\n" +
+        "\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "            </div>\n" +
+        "            <div class=\"modal-footer\">\n" +
+        "                <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n" +
+        "\n" +
+        "                <!--<a class=\"btn btn-primary\" href=\"{{mailtoLink}}\">Send Email</a>-->\n" +
+        "            </div>\n" +
+        "        </div>\n" +
+        "    </div>\n" +
+        "</div>";
+
+    return str;
 }

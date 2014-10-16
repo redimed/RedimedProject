@@ -24,4 +24,6 @@
                    url:'/EditPmProperties/:id',
                    templateUrl: 'modules/PmProperties/views/NewEditPmProperties.html',
                    controller: 'NewEditPmPropertiesController'
-               })       });
+               })
+
+       });

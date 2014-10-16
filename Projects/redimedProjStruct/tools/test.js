@@ -1,17 +1,15 @@
-var async = require('async')
-async.series([
-    //Load user to get userId first
-    function(callback) {
+var str = ' where phuong=:phuong and quyen=:quyen';
+var _s = require('underscore.string');
+var array = _s.words(str);
+var para = [];
+var index = 0;
 
-            console.log(1);
-            callback();
-
-    },
-    //Load posts (won't be called before task 1's "task callback" has been called)
-    function(callback) {
-        console.log(2);
-        callback();
+for(i = 0; i < array.length ; i++){
+    if(array[i].indexOf(':')>-1){
+        console.log(array[i] + '  ' + array[i].indexOf(':'));
+        para[index] = array[i].substr(array[i].indexOf(':') + 1);
+        index++;
     }
-], function(err) { //This function gets called after the two tasks have called their "task callbacks"
+}
 
-});
+console.log(para);

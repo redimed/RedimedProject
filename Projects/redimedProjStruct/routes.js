@@ -102,11 +102,5 @@ app.post('/api/function/insert',FunctionController.insert);
 app.get('/api/redimedsite/list',RedimedSiteController.list);
 
 
-//////Pm_properties
-
-app.get('/api/PmProperties/list',PmPropertiesController.list);
-app.post('/api/PmProperties/findById',PmPropertiesController.findById)
-app.post('/api/PmProperties/edit',PmPropertiesController.edit);
-app.post('/api/PmProperties/insert',PmPropertiesController.insert);
-
+//////////////
 

@@ -25,6 +25,8 @@
     "underscore.string": "latest",
     "colors":"latest",
     "synchronize":"latest",
+    "mkdirp":"latest",
+    "connect-multiparty":"latest",
     "static-favicon": "~1.0.0"
   }
 }

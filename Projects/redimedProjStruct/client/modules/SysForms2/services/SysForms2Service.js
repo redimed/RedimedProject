@@ -27,9 +27,9 @@ angular.module('app.loggedIn.SysForms2.services',[])
         }
 
 
-        SysForms2Service.getSysForms2MASTER_SEQLOV = function(){
-            var list = api.one('SysForms2/getSysForms2MASTER_SEQLOV');
-            return list.get();
+        SysForms2Service.getSysForms2MASTER_SEQLOV = function( pForm_properties, pNew_edit_form_type){
+            var list = api.all('SysForms2/getSysForms2MASTER_SEQLOV');
+            return list.post({ pForm_properties : pForm_properties, pNew_edit_form_type : pNew_edit_form_type});
         }
 
         SysForms2Service.getListD = function(){

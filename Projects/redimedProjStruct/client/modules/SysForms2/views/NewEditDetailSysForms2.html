@@ -38,7 +38,7 @@
                 <label class="pull-right">Form</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.FORM_ID" />
+                <input  type ='text' class="form-control" ng-model="info.FORM_ID" ng-change="FormIdValueChange(info.FORM_ID)" />
             </div>
         </div>
         <div class="row">
@@ -46,7 +46,7 @@
                 <label class="pull-right">Form detail</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.FORM_DETAIL_ID" />
+                <input  type ='text' class="form-control" ng-model="info.FORM_DETAIL_ID" ng-change="FormDetailIdValueChange(info.FORM_DETAIL_ID)" />
             </div>
         </div>
         <div class="row">
@@ -54,7 +54,7 @@
                 <label class="pull-right">Is nullable</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox'  class="form-control" ng-model="info.IS_NULLABLE" ng-true-value='1' ng-false-value='0' ng-checked='info.IS_NULLABLE' />
+                <input  type = 'checkbox'  class="form-control" ng-model="info.IS_NULLABLE" ng-change="IsNullableValueChange(info.IS_NULLABLE)" ng-true-value='1' ng-false-value='0' ng-checked='info.IS_NULLABLE' />
             </div>
         </div>
         <div class="row">
@@ -62,7 +62,7 @@
                 <label class="pull-right">Ordinal position</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.ORDINAL_POSITION" />
+                <input  type ='text' class="form-control" ng-model="info.ORDINAL_POSITION" ng-change="OrdinalPositionValueChange(info.ORDINAL_POSITION)" />
             </div>
         </div>
         <div class="row">
@@ -70,7 +70,7 @@
                 <label class="pull-right">Table name</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.TABLE_NAME" />
+                <input  type ='text' class="form-control" ng-model="info.TABLE_NAME" ng-change="TableNameValueChange(info.TABLE_NAME)" />
             </div>
         </div>
         <div class="row">
@@ -78,7 +78,7 @@
                 <label class="pull-right">Column name</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.COLUMN_NAME" />
+                <input  type ='text' class="form-control" ng-model="info.COLUMN_NAME" ng-change="ColumnNameValueChange(info.COLUMN_NAME)" />
             </div>
         </div>
         <div class="row">
@@ -86,7 +86,7 @@
                 <label class="pull-right">Data type</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.DATA_TYPE" />
+                <input  type ='text' class="form-control" ng-model="info.DATA_TYPE" ng-change="DataTypeValueChange(info.DATA_TYPE)" />
             </div>
         </div>
         <div class="row">
@@ -94,7 +94,7 @@
                 <label class="pull-right">Character maximum length</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.CHARACTER_MAXIMUM_LENGTH" />
+                <input  type ='text' class="form-control" ng-model="info.CHARACTER_MAXIMUM_LENGTH" ng-change="CharacterMaximumLengthValueChange(info.CHARACTER_MAXIMUM_LENGTH)" />
             </div>
         </div>
         <div class="row">
@@ -102,7 +102,7 @@
                 <label class="pull-right">Column key</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.COLUMN_KEY" />
+                <input  type ='text' class="form-control" ng-model="info.COLUMN_KEY" ng-change="ColumnKeyValueChange(info.COLUMN_KEY)" />
             </div>
         </div>
         <div class="row">
@@ -110,7 +110,7 @@
                 <label class="pull-right">Display name</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.DISPLAY_NAME" />
+                <input  type ='text' class="form-control" ng-model="info.DISPLAY_NAME" ng-change="DisplayNameValueChange(info.DISPLAY_NAME)" />
             </div>
         </div>
         <div class="row">
@@ -118,7 +118,7 @@
                 <label class="pull-right">Isdisplay on list</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox'  class="form-control" ng-model="info.ISDISPLAY_ON_LIST" ng-true-value='1' ng-false-value='0' ng-checked='info.ISDISPLAY_ON_LIST' />
+                <input  type = 'checkbox'  class="form-control" ng-model="info.ISDISPLAY_ON_LIST" ng-change="IsdisplayOnListValueChange(info.ISDISPLAY_ON_LIST)" ng-true-value='1' ng-false-value='0' ng-checked='info.ISDISPLAY_ON_LIST' />
             </div>
         </div>
         <div class="row">
@@ -126,7 +126,7 @@
                 <label class="pull-right">Isdisplay on form</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox'  class="form-control" ng-model="info.ISDISPLAY_ON_FORM" ng-true-value='1' ng-false-value='0' ng-checked='info.ISDISPLAY_ON_FORM' />
+                <input  type = 'checkbox'  class="form-control" ng-model="info.ISDISPLAY_ON_FORM" ng-change="IsdisplayOnFormValueChange(info.ISDISPLAY_ON_FORM)" ng-true-value='1' ng-false-value='0' ng-checked='info.ISDISPLAY_ON_FORM' />
             </div>
         </div>
         <div class="row">
@@ -134,7 +134,7 @@
                 <label class="pull-right">Isnew</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox'  class="form-control" ng-model="info.ISNEW" ng-true-value='1' ng-false-value='0' ng-checked='info.ISNEW' />
+                <input  type = 'checkbox'  class="form-control" ng-model="info.ISNEW" ng-change="IsnewValueChange(info.ISNEW)" ng-true-value='1' ng-false-value='0' ng-checked='info.ISNEW' />
             </div>
         </div>
         <div class="row">
@@ -142,7 +142,7 @@
                 <label class="pull-right">Isupdate</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox'  class="form-control" ng-model="info.ISUPDATE" ng-true-value='1' ng-false-value='0' ng-checked='info.ISUPDATE' />
+                <input  type = 'checkbox'  class="form-control" ng-model="info.ISUPDATE" ng-change="IsupdateValueChange(info.ISUPDATE)" ng-true-value='1' ng-false-value='0' ng-checked='info.ISUPDATE' />
             </div>
         </div>
         <div class="row">
@@ -150,7 +150,7 @@
                 <label class="pull-right">Isrequire</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox'  class="form-control" ng-model="info.ISREQUIRE" ng-true-value='1' ng-false-value='0' ng-checked='info.ISREQUIRE' />
+                <input  type = 'checkbox'  class="form-control" ng-model="info.ISREQUIRE" ng-change="IsrequireValueChange(info.ISREQUIRE)" ng-true-value='1' ng-false-value='0' ng-checked='info.ISREQUIRE' />
             </div>
         </div>
         <div class="row">
@@ -158,7 +158,7 @@
                 <label class="pull-right">Islist link</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox'  class="form-control" ng-model="info.ISLIST_LINK" ng-true-value='1' ng-false-value='0' ng-checked='info.ISLIST_LINK' />
+                <input  type = 'checkbox'  class="form-control" ng-model="info.ISLIST_LINK" ng-change="IslistLinkValueChange(info.ISLIST_LINK)" ng-true-value='1' ng-false-value='0' ng-checked='info.ISLIST_LINK' />
             </div>
         </div>
         <div class="row">
@@ -166,7 +166,7 @@
                 <label class="pull-right">Input type</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.INPUT_TYPE" />
+                <input  type ='text' class="form-control" ng-model="info.INPUT_TYPE" ng-change="InputTypeValueChange(info.INPUT_TYPE)" />
             </div>
         </div>
         <div class="row">
@@ -174,7 +174,7 @@
                 <label class="pull-right">Lov sql</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.LOV_SQL" />
+                <input  type ='text' class="form-control" ng-model="info.LOV_SQL" ng-change="LovSqlValueChange(info.LOV_SQL)" />
             </div>
         </div>
         <div class="row">
@@ -182,7 +182,7 @@
                 <label class="pull-right">Attribute properties</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.ATTRIBUTE_PROPERTIES" />
+                <input  type ='text' class="form-control" ng-model="info.ATTRIBUTE_PROPERTIES" ng-change="AttributePropertiesValueChange(info.ATTRIBUTE_PROPERTIES)" />
             </div>
         </div>
     </div>

@@ -33,4 +33,5 @@ angular.module('app.loggedIn.PmProperties.controller',[])
 
     $scope.editForm = function(f){
         $state.go('loggedIn.EditPmProperties',{id: f.property_id});
-    }})
+    }
+})

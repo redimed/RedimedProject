@@ -26,5 +26,6 @@ angular.module('app.loggedIn.PmProperties.services',[])
             return list.post({id:id});
         }
 
+
         return PmPropertiesService;
     })

@@ -17,4 +17,4 @@ app.post('/api/SysForms2/findByMasterIdD',SysFormDetails2Controller.findByMaster
 app.post('/api/SysForms2/editD',SysFormDetails2Controller.edit);
 app.post('/api/SysForms2/insertD',SysFormDetails2Controller.insert);
 
-app.get('/api/SysForms2/getSysForms2MASTER_SEQLOV',SysForms2Controller.getMASTER_SEQLOV);
+app.post('/api/SysForms2/getSysForms2MASTER_SEQLOV',SysForms2Controller.getMASTER_SEQLOV);

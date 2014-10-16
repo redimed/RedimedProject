@@ -38,7 +38,7 @@
                 <label class="pull-right">Form</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.FORM_ID" />
+                <input  type ='text' class="form-control" ng-model="info.FORM_ID" ng-change="FormIdValueChange(info.FORM_ID)" />
             </div>
         </div>
         <div class="row">
@@ -46,7 +46,7 @@
                 <label class="pull-right">Master table name</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.MASTER_TABLE_NAME" />
+                <input  type ='text' class="form-control" ng-model="info.MASTER_TABLE_NAME" ng-change="MasterTableNameValueChange(info.MASTER_TABLE_NAME)" />
             </div>
         </div>
         <div class="row">
@@ -54,14 +54,14 @@
                 <label class="pull-right">Master seq</label>
             </div>
             <div class="col-md-6">
-                <select ng-model="info.MASTER_SEQ" ng-options='MASTER_SEQLOV.name for MASTER_SEQLOV in MASTER_SEQLOVs'></select>            </div>
+                <select ng-model="info.MASTER_SEQ" ng-change="MasterSeqValueChange(info.MASTER_SEQ)" ng-options='MASTER_SEQLOV.id as MASTER_SEQLOV.name for MASTER_SEQLOV in MASTER_SEQLOVs'></select>            </div>
         </div>
         <div class="row">
             <div class="col-md-2" style="margin-top:5px;" >
                 <label class="pull-right">Detail table name</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.DETAIL_TABLE_NAME" />
+                <input  type ='text' class="form-control" ng-model="info.DETAIL_TABLE_NAME" ng-change="DetailTableNameValueChange(info.DETAIL_TABLE_NAME)" />
             </div>
         </div>
         <div class="row">
@@ -69,7 +69,7 @@
                 <label class="pull-right">Detail seq</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.DETAIL_SEQ" />
+                <input  type ='text' class="form-control" ng-model="info.DETAIL_SEQ" ng-change="DetailSeqValueChange(info.DETAIL_SEQ)" />
             </div>
         </div>
         <div class="row">
@@ -77,7 +77,7 @@
                 <label class="pull-right">Form type</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.FORM_TYPE" />
+                <input  type ='text' class="form-control" ng-model="info.FORM_TYPE" ng-change="FormTypeValueChange(info.FORM_TYPE)" />
             </div>
         </div>
         <div class="row">
@@ -85,7 +85,7 @@
                 <label class="pull-right">Form description</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.FORM_DESCRIPTION" />
+                <input  type ='text' class="form-control" ng-model="info.FORM_DESCRIPTION" ng-change="FormDescriptionValueChange(info.FORM_DESCRIPTION)" />
             </div>
         </div>
         <div class="row">
@@ -93,7 +93,7 @@
                 <label class="pull-right">List form type</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.LIST_FORM_TYPE" />
+                <input  type ='text' class="form-control" ng-model="info.LIST_FORM_TYPE" ng-change="ListFormTypeValueChange(info.LIST_FORM_TYPE)" />
             </div>
         </div>
         <div class="row">
@@ -101,7 +101,7 @@
                 <label class="pull-right">New edit form type</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.NEW_EDIT_FORM_TYPE" />
+                <input  type ='text' class="form-control" ng-model="info.NEW_EDIT_FORM_TYPE" ng-change="NewEditFormTypeValueChange(info.NEW_EDIT_FORM_TYPE)" />
             </div>
         </div>
         <div class="row">
@@ -109,7 +109,7 @@
                 <label class="pull-right">Form properties</label>
             </div>
             <div class="col-md-6">
-                <input  type ='text' class="form-control" ng-model="info.FORM_PROPERTIES" />
+                <input  type ='text' class="form-control" ng-model="info.FORM_PROPERTIES" ng-change="FormPropertiesValueChange(info.FORM_PROPERTIES)" />
             </div>
         </div>
             <br>
@@ -196,4 +196,6 @@
             <br/>
     </div>
 </div>
+
+
 </div>

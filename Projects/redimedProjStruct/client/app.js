@@ -10,7 +10,7 @@ angular.module("app", [
     "ngTable",                  // ANGULAR TABLE
     "app.loggedIn",             // MODULES LOGGED IN
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
-
+    "angularFileUpload",        // ANGULAR FILE UPLOAD\
 
     "crm.directive.common"      // CUSTOM DIRECTIVES
 ])

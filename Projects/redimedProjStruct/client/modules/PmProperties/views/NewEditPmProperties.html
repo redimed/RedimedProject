@@ -38,7 +38,7 @@
                 <label class="pull-right">Suburb</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Suburb" />
+                <input  type = 'text'  class="form-control" ng-model="info.Suburb" ng-change="SuburbValueChange(info.Suburb)" />
             </div>
         </div>
         <div class="row">
@@ -46,7 +46,7 @@
                 <label class="pull-right">Zipcode</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Zipcode" />
+                <input  type = 'text'  class="form-control" ng-model="info.Zipcode" ng-change="ZipcodeValueChange(info.Zipcode)" />
             </div>
         </div>
         <div class="row">
@@ -54,7 +54,7 @@
                 <label class="pull-right">State</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.State" />
+                <input  type = 'text'  class="form-control" ng-model="info.State" ng-change="StateValueChange(info.State)" />
             </div>
         </div>
         <div class="row">
@@ -62,7 +62,7 @@
                 <label class="pull-right">Country</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Country" />
+                <input  type = 'text'  class="form-control" ng-model="info.Country" ng-change="CountryValueChange(info.Country)" />
             </div>
         </div>
         <div class="row">
@@ -70,7 +70,7 @@
                 <label class="pull-right">Price</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Price" />
+                <input  type = 'text'  class="form-control" ng-model="info.Price" ng-change="PriceValueChange(info.Price)" />
             </div>
         </div>
         <div class="row">
@@ -78,7 +78,7 @@
                 <label class="pull-right">Purchase date</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'date'  class="form-control" ng-model="info.purchase_date" />
+                <input  type = 'date'  class="form-control" ng-model="info.purchase_date" ng-change="PurchaseDateValueChange(info.purchase_date)" />
             </div>
         </div>
         <div class="row">
@@ -86,7 +86,7 @@
                 <label class="pull-right">Note</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.note" />
+                <input  type = 'text'  class="form-control" ng-model="info.note" ng-change="NoteValueChange(info.note)" />
             </div>
         </div>
         <div class="row">
@@ -94,7 +94,7 @@
                 <label class="pull-right">Cancellation reason</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Cancellation_reason" />
+                <input  type = 'text'  class="form-control" ng-model="info.Cancellation_reason" ng-change="CancellationReasonValueChange(info.Cancellation_reason)" />
             </div>
         </div>
         <div class="row">
@@ -102,7 +102,7 @@
                 <label class="pull-right">Is cancellation</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox' ng-true-value='1' ng-false-value='0'  class="form-control" ng-model="info.isCancellation" />
+                <input  type = 'checkbox' ng-true-value='1' ng-false-value='0'  class="form-control" ng-model="info.isCancellation" ng-change="IscancellationValueChange(info.isCancellation)" ng-true-value='1' ng-false-value='0' ng-checked='info.isCancellation' />
             </div>
         </div>
         <div class="row">
@@ -110,7 +110,7 @@
                 <label class="pull-right">Is insurance</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'checkbox' ng-true-value='1' ng-false-value='0'  class="form-control" ng-model="info.isInsurance" />
+                <input  type = 'checkbox' ng-true-value='1' ng-false-value='0'  class="form-control" ng-model="info.isInsurance" ng-change="IsinsuranceValueChange(info.isInsurance)" ng-true-value='1' ng-false-value='0' ng-checked='info.isInsurance' />
             </div>
         </div>
         <div class="row">
@@ -118,39 +118,14 @@
                 <label class="pull-right">Avatar pic path</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Avatar_Pic_path" />
+                <input  type = 'text'  class="form-control" ng-model="info.Avatar_Pic_path" ng-change="AvatarPicPathValueChange(info.Avatar_Pic_path)" ng-true-value='1' ng-false-value='0' ng-checked='info.Avatar_Pic_path' />
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Created by</label>
-            </div>
-            <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Created_by" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Creation date</label>
-            </div>
-            <div class="col-md-6">
-                <input  type = 'date'  class="form-control" ng-model="info.Creation_date" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Last update date</label>
-            </div>
-            <div class="col-md-6">
-                <input  type = 'date'  class="form-control" ng-model="info.Last_update_date" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2" style="margin-top:5px;" >
-                <label class="pull-right">Last updated by</label>
-            </div>
-            <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Last_updated_by" />
+            <div class="col-md-1">
+                <div class="btn-group pull-right">
+                    <a href="javascript:;" ng-click="upLoadFile()" class="btn green" id="uploadBtn">
+                        Upload <i class="fa"></i>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -158,7 +133,7 @@
                 <label class="pull-right">Property</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.property_id" />
+                <input  type = 'text'  class="form-control" ng-model="info.property_id" ng-change="PropertyIdValueChange(info.property_id)" />
             </div>
         </div>
         <div class="row">
@@ -166,9 +141,87 @@
                 <label class="pull-right">Address</label>
             </div>
             <div class="col-md-6">
-                <input  type = 'text'  class="form-control" ng-model="info.Address" />
+                <input  type = 'text'  class="form-control" ng-model="info.Address" ng-change="AddressValueChange(info.Address)" />
             </div>
         </div>
     </div>
 </div>
+<div  id="lob-upload-file-dialog" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Upload files</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+                        <input style="background-color: burlywood" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th width="40%">Name</th>
+                                <th ng-show="uploader.isHTML5">Size</th>
+                                <th ng-show="uploader.isHTML5">Progress</th>
+                                <th>Status</th>
+                                <th>Is File Result</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td><strong>{{ item.file.name }}</strong></td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td ng-show="uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td class="text-center">
+                                    <!--<input ng-model="item.isClientDownLoad" type="checkbox">-->
+                                    <input type="checkbox" ng-model="item.formData[0].isClientDownLoad" ng-true-value="1" ng-false-value="0" ng-init="item.formData[0].isClientDownLoad=0">
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                    </button>
+                                    <!--<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">-->
+                                    <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
+                                    <!--</button>-->
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div>
+                            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                <span class="glyphicon glyphicon-upload"></span> Upload all
+                            </button>
+                            <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
+                            <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel all-->
+                            <!--</button>-->
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                <span class="glyphicon glyphicon-trash"></span> Clear all
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
+            </div>
+        </div>
+    </div>
 </div>

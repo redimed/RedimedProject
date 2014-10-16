@@ -1,5 +1,5 @@
 /**
-        * Created by meditech on 2014:10:09 15:49:45.
+        * Created by meditech on 2014:10:12 21:23:37.
 */
 var db = require('../models');
 module.exports = {
@@ -28,9 +28,9 @@ module.exports = {
 
 
     getMASTER_SEQLOV: function(req,res){
-        var id = req.body.id;
-        var rs = [];
-        db.sequelize.query('SELECT USER_NAME as name FROM USERS WHERE 1=1',null,{raw:true})
+        var pForm_properties = req.body.pForm_properties;
+        var pNew_edit_form_type = req.body.pNew_edit_form_type;
+        db.sequelize.query('SELECT ID as id , USER_NAME as name FROM USERS WHERE 1=1 and user_name = :Form_properties and user_name = :New_edit_form_type',null,{raw:true},{ Form_properties : pForm_properties, New_edit_form_type : pNew_edit_form_type})
             .success(function(data){
                 res.json(data);
             })
