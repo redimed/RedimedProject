@@ -4,10 +4,10 @@
 var db = require('../models');
 //connect-multiparty FOR UPLOAD
 var path = require('path');
-process.env.TMPDIR =path.join(__dirname, 'temp');
-var mkdirp = require('mkdirp');
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
+//process.env.TMPDIR =path.join(__dirname, 'temp');
+//var mkdirp = require('mkdirp');
+//var multipart = require('connect-multiparty');
+//var multipartMiddleware = multipart();
 
 module.exports = {
     list: function(req,res){

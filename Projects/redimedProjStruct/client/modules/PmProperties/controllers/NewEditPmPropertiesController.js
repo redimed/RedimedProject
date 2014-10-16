@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
 .controller('NewEditPmPropertiesController',function($scope,$state,$stateParams,$filter,ngTableParams,PmPropertiesService,FileUploader){
 
@@ -23,16 +25,28 @@ angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
     };
 
     var id = $stateParams.id;
-
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/api/PmProperties/uploadFile'
-        });
-
+    if(typeof id != 'undefined') {
+        PmPropertiesService.getDataById(id).then(function(data){
+            $scope.info = data[0];
+            $scope.info.isCancellation = data[0].isCancellation == 1 ? '1':'0';
+            $scope.info.isInsurance = data[0].isInsurance == 1 ? '1':'0';
+        })
+    }
 
     $scope.upLoadFile = function(){
 
         $("#lob-upload-file-dialog").modal({show:true,backdrop:'static'});
-    }
+    };
+
+    var uploader = $scope.uploader = new FileUploader({
+        url: '/api/PmProperties/uploadFile'
+    });
+
+    uploader.onAfterAddingFile = function(fileItem) {
+        fileItem.formData.push({property_id:$scope.info.property_id});
+        console.info('onAfterAddingFile', fileItem);
+
+    };
 
 
         //HANDLE UPLOAD FILES
@@ -104,13 +118,7 @@ angular.module('app.loggedIn.PmProperties.NewEdit.controller',[])
         $state.go('loggedIn.PmProperties');
     }
 
-    if(typeof id != 'undefined') {
-       PmPropertiesService.getDataById(id).then(function(data){
-           $scope.info = data[0];
-           $scope.info.isCancellation = data[0].isCancellation == 1 ? '1':'0';
-           $scope.info.isInsurance = data[0].isInsurance == 1 ? '1':'0';
-       })
-    }
+
 
     $scope.save = function(){
 

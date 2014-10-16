@@ -15,8 +15,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.json({limit: '100mb'}));
+app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 app.use(cookieParser());
 // example get from config
 app.use(session({ secret: config.get('session.secret') }));
@@ -34,6 +34,14 @@ var mysql = require('mysql');
 var connection = require('express-myconnection');
 app.use(connection(mysql, config.get('mysql'), 'pool'));
 
+
+//connect-multiparty FOR UPLOAD
+
+process.env.TMPDIR =path.join(__dirname, 'temp');
+var mkdirp = require('mkdirp');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+
 //Set request Handler
 //-------------------------------------------
 
@@ -45,35 +53,6 @@ var fs = require('fs');//Read js file for import into
 eval(fs.readFileSync('module-config.js')+'');
 
 
-
-
-
-/// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-/// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-process.env.TMPDIR =path.join(__dirname, 'temp');
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
-
-
 //////sys forms 2
 //app.get('/api/PmProperties/list',PmPropertiesController.list);
 //app.post('/api/PmProperties/findById',PmPropertiesController.findById);
@@ -83,6 +62,7 @@ var multipartMiddleware = multipart();
 
 
 app.post('/api/PmProperties/uploadFile',multipartMiddleware,  function(req, resp) {
+
     var targetFolder='.\\redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+targetFolder);
     mkdirp(targetFolder, function(err) {
@@ -150,6 +130,31 @@ app.post('/api/PmProperties/uploadFile',multipartMiddleware,  function(req, resp
 
 
 });
+
+
+
+
+/// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+/// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
 
 app.all('/*',function(req,res,next){
     res.header("Access-Control-Allow-Origin","*");
