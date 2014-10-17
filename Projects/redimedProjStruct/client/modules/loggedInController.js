@@ -47,7 +47,7 @@ angular.module("app.loggedIn.controller",[
     $scope.logout = function(){
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
-        $state.go("security.login");
+        $state.go("security.login",null,{reload:true});
     }
 
     // Toggle Menu

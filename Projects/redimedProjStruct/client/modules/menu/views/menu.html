@@ -26,27 +26,24 @@
     </div>
     <div class="portlet-body">
 
-        <div>
-            <table ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered ng-table-responsive">
+        <div class="table-scrollable" id="content">
+            <table ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered table-responsive">
                 <tr ng-repeat="m in $data | orderBy:'MenuID'" ng-click="showChild(m)" ng-class="{selected : m.MenuID == selectedId}">
-                    <td data-title="'ID'" sortable="'MenuID'">
-                        <label>{{m.MenuID}}</label>
-                    </td>
                     <td data-title="'Description'" sortable="'MenuDescription'" filter="{ 'MenuDescription': 'text' }">
                         <label >{{m.MenuDescription}}</label>
                     </td>
                     <td data-title="'Definition'" sortable="'MenuDefinition'">
                         <label >{{m.MenuDefinition}}</label>
                     </td>
-                    <td data-title="'Type'" sortable="'MenuType'" filter="{ 'MenuType': 'text' }">
+                    <td width="100px" data-title="'Type'" sortable="'MenuType'" filter="{ 'MenuType': 'text' }">
                         <label >{{m.MenuType}}</label>
                     </td>
-                    <td data-title="'Enable'" >
+                    <td width="100px" data-title="'Enable'" >
                         <label ng-if="m.MenuEnable===1" ><input  class="form-control" type="checkbox" disabled   checked /></label>
                         <label ng-if="m.MenuEnable!==1" ><input  class="form-control" type="checkbox" disabled  /></label>
                     </td>
-                    <td data-title="'Actions'">
-                        <a href="javascript:;" class="btn btn-primary"
+                    <td width="200px" data-title="'Actions'">
+                        <a style="width: 100px" href="javascript:;" class="btn btn-primary"
                            ng-click="editMenu(m)">
                             Edit </a>
                     </td>
@@ -83,24 +80,24 @@
         </div>
     </div>
     <div class="portlet-body">
-        <div>
-            <table ng-table="tableParams2"  show-filter="true" class="table table-striped table-hover table-bordered ng-table-responsive">
+        <div class="table-scrollable" >
+            <table ng-table="tableParams2"  show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
                 <tr ng-repeat="m in $data | orderBy:'MenuID'">
                     <td data-title="'Description'" sortable="'MenuDescription'" filter="{ 'MenuDescription': 'text' }">
                         <label>{{m.MenuDescription}}</label>
                     </td>
-                    <td data-title="'Type'" sortable="'MenuType'" filter="{ 'MenuType': 'text' }">
-                        <label >{{m.MenuType}}</label>
-                    </td>
                     <td data-title="'Function'">
                         <label >{{m.FunctionName}}</label>
                     </td>
-                    <td data-title="'Enable'" >
+                    <td width="100px" data-title="'Type'" sortable="'MenuType'" filter="{ 'MenuType': 'text' }">
+                        <label >{{m.MenuType}}</label>
+                    </td>
+                    <td width="100px" data-title="'Enable'" >
                         <label ng-if="m.MenuEnable===1" ><input  class="form-control" type="checkbox" disabled   checked /></label>
                         <label ng-if="m.MenuEnable!==1" ><input  class="form-control" type="checkbox" disabled  /></label>
                     </td>
-                    <td data-title="'Actions'">
-                        <a href="javascript:;" class="btn btn-primary"
+                    <td width="200px" data-title="'Actions'">
+                        <a style="width:100px;" href="javascript:;" class="btn btn-primary"
                            ng-click="editSubMenu(m)">
                             Edit </a>
                     </td>

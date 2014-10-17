@@ -21,9 +21,9 @@
 
     <div class="portlet-body">
 
-        <div>
-            <table ng-table="tableParams"  show-filter="true" class="table table-striped table-hover table-bordered ng-table-responsive">
-                <tr ng-repeat="f in $data track by $index | orderBy:'function_id'">
+        <div class="table-scrollable" id="content">
+            <table ng-table="tableParams"  show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
+                <tr ng-repeat="f in $data track by $index | orderBy:'decription'">
                     <td data-title="'Description'" sortable="'decription'" filter="{ 'decription': 'text' }">
                         <label>{{f.decription}}</label>
                     </td>
@@ -33,10 +33,13 @@
                     <td data-title="'Type'" >
                         <label>{{f.type}}</label>
                     </td>
-                    <td data-title="'Actions'">
-                        <a href="javascript:;" class="btn btn-primary"
+                    <td width="300px" data-title="'Actions'">
+                        <a style="width: 100px" href="javascript:;" class="btn btn-primary"
                            ng-click="editFunction(f)">
                             Edit </a>
+                        <a style="width: 100px" href="javascript:;" class="btn btn-danger"
+                           ng-click="deleteFunction(f)">
+                            Delete </a>
                     </td>
                 </tr>
 

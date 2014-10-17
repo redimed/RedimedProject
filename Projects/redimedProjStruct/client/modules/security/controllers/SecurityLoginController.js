@@ -22,8 +22,19 @@ angular.module("app.security.login.controller",[
 
                     if(response.userInfo['function_id'] != null){
                         UserService.getFunction(response.userInfo['function_id']).then(function(data){
-                                $state.go(data.definition);
-
+                            var rs = data.definition.split('(');
+                            if(rs[0] != null)
+                            {
+                                if(rs[1] != null)
+                                {
+                                    var r = rs[1].split(')');
+                                    $state.go(rs[0],r[0]);
+                                }
+                                else
+                                {
+                                    $state.go(rs[0]);
+                                }
+                            }
                         })
                     }
                     else
