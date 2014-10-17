@@ -28,11 +28,14 @@ angular.module("app.security.login.controller",[
                                 if(rs[1] != null)
                                 {
                                     var r = rs[1].split(')');
-                                    $state.go(rs[0],r[0]);
+                                    var params = eval("("+r[0]+")");
+
+
+                                    $state.go(rs[0],params,{reload:true});
                                 }
                                 else
                                 {
-                                    $state.go(rs[0]);
+                                    $state.go(rs[0],{reload:true});
                                 }
                             }
                         })
