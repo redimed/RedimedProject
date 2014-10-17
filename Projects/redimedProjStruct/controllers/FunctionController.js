@@ -51,5 +51,16 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error'});
             })
+    },
+    deleteFunction: function(req,res){
+        var id = req.body.id;
+        db.Function.destroy({function_id:id})
+            .success(function(data){
+                res.json({status:'success'})
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
     }
 };

@@ -7,6 +7,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         $scope.selectedRow = null;
         $scope.arr = [];
 
+
         $scope.info = {
             id: null,
             user_id: null,
@@ -86,7 +87,11 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
 
 
             OnlineBookingAdminService.getMenuList().then(function(data){
-                $scope.menuList = data;
+                $scope.menuList = [];
+                for(var i =0 ; i<data.length; i++){
+                    if(data[i].isEnable == 1)
+                        $scope.menuList.push(data[i]);
+                }
             })
 
             OnlineBookingAdminService.getUserMenuDetails(b.id).then(function(data){
@@ -141,6 +146,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
 })
 
 .controller('AddNewUserMenuController',function($scope,$state,$modal,$modalInstance,$filter,ngTableParams,OnlineBookingAdminService,userId,toastr){
+
         $scope.info = {
             user_id: userId,
             menu_id: null,
@@ -152,7 +158,11 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         };
 
         OnlineBookingAdminService.getMenuList().then(function(data){
-            $scope.menuList = data;
+            $scope.menuList = [];
+            for(var i =0 ; i<data.length; i++){
+                if(data[i].isEnable == 1)
+                    $scope.menuList.push(data[i]);
+            }
         })
 
         $scope.addNew = function(menuForm){

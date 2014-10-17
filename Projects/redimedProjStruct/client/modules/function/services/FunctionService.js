@@ -21,6 +21,11 @@ angular.module('app.loggedIn.function.services',[])
             return insertApi.post({f:f});
         }
 
+        functionService.delFunction = function(id){
+            var del = api.all("function/delete");
+            return del.post({id:id});
+        }
+
         functionService.getFunctionInfo = function(id){
             var info = api.all('function/id');
             return info.post({id:id});

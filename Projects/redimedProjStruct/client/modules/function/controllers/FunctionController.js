@@ -4,12 +4,13 @@
 angular.module('app.loggedIn.function.controller',[])
 .controller("FunctionController",function($scope,$state,$modal,$filter,ngTableParams,FunctionService,$http,toastr){
     $scope.data=[];
+    $scope.rs = [];
 
     FunctionService.getList().then(function(response){
         $scope.data=response;
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
-            count: 50           // count per page
+            count: 10           // count per page
         }, {
             total: response.length, // length of data
             getData: function($defer, params) {
@@ -38,13 +39,58 @@ angular.module('app.loggedIn.function.controller',[])
                 }
             }
         })
+
+       modalInstance.result.then(function(){
+           $scope.rs = [];
+           FunctionService.getList().then(function(response) {
+               $scope.rs = response;
+           })
+
+           $scope.$watch('rs',function(rs){
+               $scope.data = rs;
+           })
+
+       })
    }
+
+    $scope.deleteFunction = function(f){
+        FunctionService.delFunction(f.function_id).then(function(data){
+            if(data.status === 'success') {
+                $scope.rs = [];
+                toastr.success("Delete Function Successfully!","Success");
+                FunctionService.getList().then(function(response) {
+                    $scope.rs = response;
+                })
+
+                $scope.$watch('rs',function(rs){
+                    $scope.data = rs;
+                    $scope.tableParams.reload();
+                })
+            }
+            else
+            {
+                toastr.error("Delete Function Failed!","Error");
+            }
+        })
+    }
 
     $scope.addNewFunction = function(){
         var modalInstance = $modal.open({
             templateUrl: 'modules/function/views/functionDetails.html',
             controller: 'NewFunctionController',
             size: 'md'
+        })
+
+        modalInstance.result.then(function(){
+            $scope.rs = [];
+            FunctionService.getList().then(function(response) {
+                $scope.rs = response;
+            })
+
+            $scope.$watch('rs',function(rs){
+                $scope.data = rs;
+            })
+
         })
     }
 })
@@ -64,8 +110,7 @@ angular.module('app.loggedIn.function.controller',[])
             FunctionService.insertFunction($scope.info).then(function(response){
                 if(response['status'] === 'success') {
                     toastr.success("Insert New Function Successfully!","Success");
-                    $modalInstance.dismiss('cancel');
-                    $state.go('loggedIn.function', null, {"reload":true});
+                    $modalInstance.close();
                 }
                 else
                 {
@@ -96,8 +141,7 @@ angular.module('app.loggedIn.function.controller',[])
             FunctionService.saveFunction($scope.info).then(function(response){
                 if(response['status'] === 'success') {
                     toastr.success("Edit Function Successfully!","Success");
-                    $modalInstance.dismiss('cancel');
-                    $state.go('loggedIn.function', null, {"reload":true});
+                    $modalInstance.close();
                 }
                 else
                 {
