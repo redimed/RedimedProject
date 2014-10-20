@@ -379,7 +379,30 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             return doctorsService.getDoctorById(id).Address;
         }
 
-
+        //Google map
+        var geocoder;
+        var map;
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 16,
+            center: latlng
+        }
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        function codeAddress() {
+            var address=$scope.selectedBooking.Site_addr;
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
 
         $scope.showBookingDetailDialog=function(bookingId)
         {
@@ -393,7 +416,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 {
                     $scope.selectedBooking=data.data;
                     $("#view-detail-booking-dialog").modal({show:true,backdrop:'static'});
-                    //codeAddress();
+                    codeAddress();
                 }
                 else
                 {

@@ -1,0 +1,258 @@
+<div class="row">
+    <div class="col-md-6 con-sm-6">
+        <div class="portlet yellow-crusta box">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>
+                    Detail of the person requesting the assessment
+                </div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Surname
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.ASS_SURNAME}}
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Other name:
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.ASS_OTHERNAMES}}
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Contact number:
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.ASS_CONTACT_NO}}
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Email address:
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.ASS_EMAIL}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portlet yellow-crusta box">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>
+                    Summary of Booking
+                </div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Date:
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.APPOINTMENT_DATE|date:'dd/MM/yyyy'}}
+                        <!--{{getShortDateString(selectedBooking.APPOINTMENT_DATE)}}-->
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Time:
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.APPOINTMENT_DATE|date:'HH:mm'}}
+                        <!--{{getTimeString(selectedBooking.APPOINTMENT_DATE)}}-->
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Type of appointment:
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.Rl_TYPE_NAME}}
+                        <!--{{getRlTypeName(selectedBooking.RL_TYPE_ID)}}-->
+                    </div>
+                </div>
+
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Doctor:
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.NAME}}
+                        <!--{{getDoctorName(selectedBooking.DOCTOR_ID)}}-->
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Address:
+                    </div>
+                    <div class="col-md-7 value">
+                        {{selectedBooking.Site_addr}}
+                        <!--{{getLocationAddress(selectedBooking.SITE_ID)}}-->
+                    </div>
+                </div>
+
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="tools">
+                            <label style="font-weight: bolder; color: #585858">Show on map</label>
+                            <a class="collapse">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row  portlet-body">
+                        <div id="map-canvas" class="col-md-12" style="height: 200px;"></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 con-sm-6">
+        <div class="portlet yellow-crusta box">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>
+                    Patient 's Information
+                </div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label for="CLAIM_NO">Claim number:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <!--<input class="form-control" type="text" ng-model="newBooking.CLAIM_NO" id="CLAIM_NO"/>-->
+                        <p id="CLAIM_NO" ng-bind="selectedBooking.CLAIM_NO"></p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label for="WRK_SURNAME">Surname:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <!--<input class="form-control" type="text" ng-model="newBooking.WRK_SURNAME" id="WRK_SURNAME"/>-->
+                        <p id="WRK_SURNAME" ng-bind="selectedBooking.WRK_SURNAME"></p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label for="WRK_OTHERNAMES">Other name:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <!--<input class="form-control" type="text"  ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES"/>-->
+                        <p id="WRK_OTHERNAMES" ng-bind="selectedBooking.WRK_OTHERNAMES"></p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label for="WRK_DOB">Date of birth: </label>
+                    </div>
+                    <div class="col-md-8">
+
+                        <!--<div class="input-group date date-picker " style="width: 150px;" data-date-format="dd/mm/yyyy">-->
+                        <!--<input ng-model="newBooking.WRK_DOB" id="WRK_DOB" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">-->
+                        <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa glyphicon glyphicon-calendar "></i></button>-->
+                        <!--</span>-->
+                        <!--</div>-->
+                        <p id="WRK_DOB" ng-bind="selectedBooking.WRK_DOB|date:'dd/MM/yyyy'"></p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label for="WRK_EMAIL">Email address:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <!--<input class="form-control" type="email" ng-model="newBooking.WRK_EMAIL" id="WRK_EMAIL"/>-->
+                        <p id="WRK_EMAIL" ng-bind="selectedBooking.WRK_EMAIL"></p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label for="WRK_CONTACT_NO">Contact number:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <!--<input class="form-control" type="text" ng-model="newBooking.WRK_CONTACT_NO" id="WRK_CONTACT_NO"/>-->
+                        <p id="WRK_CONTACT_NO" ng-bind="selectedBooking.WRK_CONTACT_NO"></p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label for="ISNEW">Is the patient new to REDiMED:</label>
+                        <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
+                               ng-checked="selectedBooking.ISNEW==1"
+                               ng-model="selectedBooking.ISNEW" id="ISNEW">
+
+                    </div>
+                </div>
+
+                <div class="row form-group">
+
+                    <div class="col-md-4">
+                        <label for="ISNEW">Description of injury</label>
+                    </div>
+                    <div class="col-md-8">
+                        <!--<textarea placeholder="Description of injury" class="form-control" rows="2" ng-model="newBooking.DESC_INJURY"/>-->
+                        <p ng-bind="selectedBooking.DESC_INJURY"></p>
+                    </div>
+
+                </div>
+
+
+                <label style="font-weight: bolder; color: #585858; font-size: x-large">
+                    Appointment
+                </label>
+
+                <p>
+                    REDiLEGAL to contact the patient and arrage a time
+                    <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
+                           ng-checked="selectedBooking.ISCONTACTPATIENT==1"
+                           ng-model="selectedBooking.ISCONTACTPATIENT">
+                </p>
+
+                <p>
+                    REDiLEGAL to contact the case manager to arrange a time for the worker
+                    <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
+                           ng-checked="selectedBooking.ISCONTACTMANAGER==1"
+                           ng-model="selectedBooking.ISCONTACTMANAGER">
+                </p>
+
+                <p>
+                    Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment
+                    <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
+                           ng-checked="selectedBooking.isUrgent==1"
+                           ng-model="selectedBooking.isUrgent">
+                </p>
+
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label>Notes:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <!--<textarea placeholder="Description of injury" class="form-control" rows="2" ng-model="newBooking.DESC_INJURY"/>-->
+                        <p ng-bind="selectedBooking.NOTES"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
