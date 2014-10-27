@@ -247,14 +247,20 @@ module.exports =
             
     /**
      * Khank
+     * modified: Neu la Admin thi se tra ve tat ca cac file cua booking do
+     * modified by: tannv.dts@gmail.com
      */
     get_files_booking: function (req, res) {
         var bookingId = req.query.bookingId;
+        var isAdminGetFiles=req.query.isAdminGetFiles && req.query.isAdminGetFiles=='true'?true:false;
+        var sql=
+            " SELECT files.*, bookings.`ASS_ID`                                                                             "+
+            " FROM `rl_booking_files` files INNER JOIN `rl_bookings` bookings ON files.`BOOKING_ID`=bookings.`BOOKING_ID`   "+
+            " WHERE files.`BOOKING_ID`=?                                                                                    "+
+            (isAdminGetFiles==false?' AND isClientDownLoad=1 ':'')
         req.getConnection(function (err, connection)
         {
-            var query = connection.query(
-                    'SELECT * FROM `rl_booking_files` booking_files WHERE booking_files.`BOOKING_ID`=? AND isClientDownLoad=1'
-                    , bookingId, function (err, rows)
+            var query = connection.query(sql, bookingId, function (err, rows)
                     {
                         if (err)
                         {
@@ -376,7 +382,7 @@ module.exports =
                             htmlBody:'',
                             textBody:''
                         };
-                        emailInfo.subject='Confirmation of Redilegal booking – '+row.WRK_SURNAME;
+                        emailInfo.subject='Confirmation of Redilegal booking ï¿½ '+row.WRK_SURNAME;
                         emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
                         emailInfo.recipients=row.Contact_email;
                         emailInfo.htmlBody=

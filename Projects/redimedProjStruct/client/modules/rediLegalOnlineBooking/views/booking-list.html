@@ -86,9 +86,13 @@
         <table class="table table-responsive table-hover">
             <thead>
                 <tr>
-                    <th>
+                    <th ng-if="bookingType=='REDiLEGAL'">
                         Claim No.
                         <rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                    </th>
+                    <th ng-if="bookingType=='Vaccination'">
+                        Employee number
+                        <rlob-order-by field-name="EMPLOYEE_NUMBER" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
                     </th>
                     <th>
                         Surname
@@ -105,8 +109,11 @@
                 </tr>
                 <tr>
                     <!-- SEARCH -->
-                    <td>
+                    <td ng-if="bookingType=='REDiLEGAL'">
                         <input class="form-control input-sm" type="text" ng-model="search.data.CLAIM_NO" ng-change="loadList()">
+                    </td>
+                    <td ng-if="bookingType=='Vaccination'">
+                        <input class="form-control input-sm" type="text" ng-model="search.data.EMPLOYEE_NUMBER" ng-change="loadList()">
                     </td>
                     <td>
                         <input class="form-control input-sm" type="text" ng-model="search.data.WRK_SURNAME" ng-change="loadList()">
@@ -128,7 +135,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="l in list.results" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
-                    <td>{{l.CLAIM_NO}}</td>
+                    <td ng-if="bookingType=='REDiLEGAL'">{{l.CLAIM_NO}}</td>
+                    <td ng-if="bookingType=='Vaccination'">{{l.EMPLOYEE_NUMBER}}</td>
                     <td>{{l.WRK_SURNAME}}</td>
                     <td>{{l.Rl_TYPE_NAME}}</td>
                     <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
@@ -150,9 +158,39 @@
             </div>
 
             <div class="modal-body">
-                <rlob-booking-detail selected-booking="selectedBooking"></rlob-booking-detail>
-                <rlob-documents selected-booking="selectedBooking"></rlob-documents>
+                <rlob-booking-detail selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail>
+                <!--<rlob-documents selected-booking="selectedBooking" is-can-upload="isCanUpload"></rlob-documents>-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="portlet yellow-crusta box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>
+                                    <span class="file-control pointer underline" ng-click="uploadPanel = false">Download</span>
+                                    <span class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    <div class="row form-group" ng-hide="uploadPanel" id="file-download-panel">
+                                        <rlob-file-download
+                                                selected-booking="selectedBooking"
+                                                booking-type="bookingType">
+                                        </rlob-file-download>
+                                    </div>
+                                    <div class="row form-group" ng-show="uploadPanel" id="file-upload-panel">
+                                        <rlob-upload selected-booking="selectedBooking">
+
+                                        </rlob-upload>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->

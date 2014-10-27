@@ -4,11 +4,35 @@
 
 angular.module('app.loggedIn.rlob.list.controller',[])
 .controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, locationService, $cookieStore, FileUploader) {
+        //Co cho nguoi su dung upload File hay khong, su dung bien isCanUpload
+        $scope.isCanUpload=true;
         $scope.loginInfo = $cookieStore.get('userInfo');
-        $scope.bookingType='REDiLEGAL';
-            if($stateParams.bookingType && $stateParams.bookingType=='Vaccination') {
-                $scope.bookingType = $stateParams.bookingType;
-            }
+
+        //Check Booking Type
+        //alert(JSON.stringify($state.current) );
+        if($state.current.name.indexOf(rlobConstant.bookingType.REDiLEGAL.alias)>-1)
+            $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
+        else if($state.current.name.indexOf(rlobConstant.bookingType.Vaccination.alias)>-1)
+            $scope.bookingType=rlobConstant.bookingType.Vaccination.name;
+        if(!$scope.bookingType)
+            $state.go("loggedIn.home");
+        //-----------------------------------------------------------
+
+        $scope.rl_types=[];
+        $http({
+            method:"GET",
+            url:"/api/rlob/rl_types/list",
+            params:{sourceType:$scope.bookingType}
+        })
+            .success(function(data) {
+                $scope.rl_types=data;
+            })
+            .error(function (data) {
+                console.log("error");
+            })
+            .finally(function() {
+
+            });
 
             //CONFIG
             var getDate = function (date) {

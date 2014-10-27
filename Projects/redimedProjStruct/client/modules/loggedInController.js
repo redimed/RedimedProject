@@ -501,9 +501,14 @@ angular.module("app.loggedIn.controller",[
                     for(var i=0;i<data.data.length;i++)
                     {
                         $scope.listAppointmentCalendarUpcoming.push(data.data[i]);
-                        if($scope.listAppointmentCalendarUpcoming[i].SOURCE_TYPE='REDiLEGAL')
+                        if($scope.listAppointmentCalendarUpcoming[i].SOURCE_TYPE=='REDiLEGAL')
                         {
                             $scope.listAppointmentCalendarUpcoming[i].link="loggedIn.rlob_booking_detail({bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
+                        }
+                        else if($scope.listAppointmentCalendarUpcoming[i].SOURCE_TYPE=='Vaccination')
+                        {
+                            //$scope.listAppointmentCalendarUpcoming[i].link="loggedIn.rlob_booking_detail({bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
+                            $scope.listAppointmentCalendarUpcoming[i].link="loggedIn.vaccinob_booking_detail({bookingType:'Vaccination',bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
                         }
                     }
                 }
@@ -534,4 +539,69 @@ angular.module("app.loggedIn.controller",[
     {
         $("#list-my-calendar").modal('hide');
     }
+
+        /**
+         * Function add notification for global
+         * tannv.dts@gmail.com
+         */
+        $scope.add_notification=function(assId,refId,sourceName,rlobType,type,content)
+        {
+            var deferred=$q.defer();
+            var promise=deferred.promise;
+            promise.then(function(data){
+                var msg="["+sourceName+"]-" + "["+rlobType+(content!=undefined &&content!=null && content!=""?(":"+content):'')+"]-"
+                    + "["+data.WRK_SURNAME + ":"+moment(data.BOOKING_DATE).format("DD/MM/YYYY hh:mm") +"]-"
+                    + "[at: "+moment().format("DD/MM/YYYY HH:mm:ss")+"]";
+                if(sourceName=='REDiLEGAL')
+                    var link="loggedIn.rlob_booking_detail({bookingId:"+refId+"})";
+                else
+                    var link="loggedIn.vaccinob_booking_detail({bookingType:'"+sourceName+"',bookingId:"+refId+"})";
+                $http({
+                    method:"POST",
+                    url:"/api/rlob/sys_user_notifications/add-notification",
+                    data:{assId:assId,refId:refId,sourceName:sourceName,type:type,msg:msg,link:link}
+                })
+                    .success(function(data) {
+                        if(data.status=='success')
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    })
+                    .error(function (data) {
+
+                    })
+                    .finally(function() {
+
+                    });
+            },function(reason){
+
+            });
+
+            $http({
+                method:"POST",
+                url:"/api/rlob/rl_bookings/get-booking-by-id",
+                data:{bookingId:refId}
+            })
+                .success(function(data) {
+                    if(data.status=='success')
+                    {
+                        deferred.resolve(data.data);
+                    }
+                    else
+                    {
+                        alert("data not exist!");
+                    }
+                })
+                .error(function (data) {
+                    console.log("error");
+                })
+                .finally(function() {
+                });
+        }
+
+
 })

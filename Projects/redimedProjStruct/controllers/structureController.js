@@ -9,7 +9,7 @@ module.exports =
         var userId=req.body.userId;
         var sql=
             " SELECT 	booking.`BOOKING_ID` AS ID,                                                     "+
-            " 	'REDiLEGAL' AS SOURCE_TYPE,                                                             "+
+            " 	booking.BOOKING_TYPE AS SOURCE_TYPE,                                                             "+
             " 	booking.`APPOINTMENT_DATE` AS DATE_UPCOMING,                                            "+
             " 	`booking`.`WRK_SURNAME` AS MESSAGE,                                                     "+
             " 	CONCAT('at ',redi.`Site_name`,' - ',redi.`Site_addr`,'; by ',doctor.NAME)AS DETAIL      "+

@@ -1,5 +1,6 @@
+
 <div class="row">
-    <div class="col-md-6 con-sm-6">
+    <div class="col-md-6 col-sm-6 ">
         <div class="portlet yellow-crusta box">
             <div class="portlet-title">
                 <div class="caption">
@@ -53,6 +54,15 @@
 
             </div>
             <div class="portlet-body">
+
+                <div class="row static-info">
+                    <div class="col-md-5 name">
+                        Booking Status:
+                    </div>
+                    <div class="col-md-7 value" style="text-decoration: underline">
+                        {{selectedBooking.STATUS}}
+                    </div>
+                </div>
                 <div class="row static-info">
                     <div class="col-md-5 name">
                         Date:
@@ -118,7 +128,7 @@
         </div>
     </div>
 
-    <div class="col-md-6 con-sm-6">
+    <div class="col-md-6 col-sm-6 ">
         <div class="portlet yellow-crusta box">
             <div class="portlet-title">
                 <div class="caption">
@@ -128,41 +138,59 @@
 
             </div>
             <div class="portlet-body">
-                <div class="row form-group">
-                    <div class="col-md-4">
+                <div ng-if="bookingType=='REDiLEGAL'" class="row form-group">
+                    <div class="col-md-5">
                         <label for="CLAIM_NO">Claim number:</label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <!--<input class="form-control" type="text" ng-model="newBooking.CLAIM_NO" id="CLAIM_NO"/>-->
                         <p id="CLAIM_NO" ng-bind="selectedBooking.CLAIM_NO"></p>
                     </div>
                 </div>
 
+                <div  ng-if="bookingType=='Vaccination'" class="row form-group">
+                    <div class="col-md-5">
+                        <label for="EMPLOYEE_NUMBER">Employee number: </label>
+                    </div>
+                    <div class="col-md-7">
+                        <p id="EMPLOYEE_NUMBER" ng-bind="selectedBooking.EMPLOYEE_NUMBER"></p>
+                    </div>
+                </div>
+
+                <div  ng-if="bookingType=='Vaccination'" class="row form-group">
+                    <div class="col-md-5">
+                        <label class="control-label" for="DEPARTMENT_NAME">Department Name:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <p id="DEPARTMENT_NAME" ng-bind="selectedBooking.DEPARTMENT_NAME"></p>
+                    </div>
+                </div>
+
                 <div class="row form-group">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label for="WRK_SURNAME">Surname:</label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <!--<input class="form-control" type="text" ng-model="newBooking.WRK_SURNAME" id="WRK_SURNAME"/>-->
                         <p id="WRK_SURNAME" ng-bind="selectedBooking.WRK_SURNAME"></p>
                     </div>
                 </div>
 
                 <div class="row form-group">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label for="WRK_OTHERNAMES">Other name:</label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <!--<input class="form-control" type="text"  ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES"/>-->
                         <p id="WRK_OTHERNAMES" ng-bind="selectedBooking.WRK_OTHERNAMES"></p>
                     </div>
                 </div>
 
                 <div class="row form-group">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label for="WRK_DOB">Date of birth: </label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
 
                         <!--<div class="input-group date date-picker " style="width: 150px;" data-date-format="dd/mm/yyyy">-->
                         <!--<input ng-model="newBooking.WRK_DOB" id="WRK_DOB" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">-->
@@ -175,20 +203,20 @@
                 </div>
 
                 <div class="row form-group">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label for="WRK_EMAIL">Email address:</label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <!--<input class="form-control" type="email" ng-model="newBooking.WRK_EMAIL" id="WRK_EMAIL"/>-->
                         <p id="WRK_EMAIL" ng-bind="selectedBooking.WRK_EMAIL"></p>
                     </div>
                 </div>
 
                 <div class="row form-group">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label for="WRK_CONTACT_NO">Contact number:</label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <!--<input class="form-control" type="text" ng-model="newBooking.WRK_CONTACT_NO" id="WRK_CONTACT_NO"/>-->
                         <p id="WRK_CONTACT_NO" ng-bind="selectedBooking.WRK_CONTACT_NO"></p>
                     </div>
@@ -204,16 +232,26 @@
                     </div>
                 </div>
 
-                <div class="row form-group">
+                <div ng-if="bookingType=='REDiLEGAL'" class="row form-group">
 
-                    <div class="col-md-4">
-                        <label for="ISNEW">Description of injury</label>
+                    <div class="col-md-5">
+                        <label for="DESC_INJURY">Description of injury:</label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <!--<textarea placeholder="Description of injury" class="form-control" rows="2" ng-model="newBooking.DESC_INJURY"/>-->
-                        <p ng-bind="selectedBooking.DESC_INJURY"></p>
+                        <p id="DESC_INJURY" ng-bind="selectedBooking.DESC_INJURY"></p>
                     </div>
 
+                </div>
+
+                <div ng-if="bookingType=='Vaccination'" class="row form-group">
+                    <div class="col-md-5">
+                        <label for="DESC_VACCIN">Description of Vaccination:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <!--<textarea placeholder="Description of injury" class="form-control" rows="2" ng-model="newBooking.DESC_INJURY"/>-->
+                        <p id="DESC_VACCIN" ng-bind="selectedBooking.DESC_VACCIN"></p>
+                    </div>
                 </div>
 
 
@@ -243,10 +281,10 @@
                 </p>
 
                 <div class="row form-group">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label>Notes:</label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <!--<textarea placeholder="Description of injury" class="form-control" rows="2" ng-model="newBooking.DESC_INJURY"/>-->
                         <p ng-bind="selectedBooking.NOTES"></p>
                     </div>

@@ -1,0 +1,41 @@
+<div class="row form-group" id="file-download-panel">
+    <div ng-repeat="f in files" class="col-lg-12 col-md-12 col-sm-12">
+
+        <!--<a href="/api/download/lob/document/{{f.FILE_ID}}"><i class="fa fa-paperclip"></i> {{f.FILE_NAME}}{{f.isClientDownLoad?' Can download':' Cannot download'}}</a>-->
+
+        <div class="btn-group dropdown">
+            <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
+
+                </span>
+                {{f.FILE_NAME}}{{f.isClientDownLoad==1?' (Result)':''}}
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a class="pointer" role="menuitem" tabindex="1" href="/api/download/lob/document/{{f.FILE_ID}}">
+                        Download
+                    </a>
+                </li>
+
+                <li ng-hide="f.isClientDownLoad==1 || !isAdminGetFiles">
+                    <a class="pointer" role="menuitem" tabindex="2" ng-click="rlob_change_booking_file_role(f.ASS_ID,f.BOOKING_ID,f.FILE_ID,'1')">
+                        Set: Is file result
+                    </a>
+                </li>
+
+                <li ng-hide="f.isClientDownLoad==0 || !isAdminGetFiles">
+                    <a class="pointer" role="menuitem" tabindex="3" ng-click="rlob_change_booking_file_role(f.ASS_ID,f.BOOKING_ID,f.FILE_ID,'0')">
+                        Set: Is not file result
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</div>
+
+<!--MESSAGE DIALOG LAYOUT-->
+<rlob-dialog dialog-class="rlob-file-msg-dialog" status="msgStatus" header="msgHeader" msg="msgContent"></rlob-dialog>
+

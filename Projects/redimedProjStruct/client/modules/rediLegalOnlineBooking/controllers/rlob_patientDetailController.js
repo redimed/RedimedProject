@@ -3,15 +3,26 @@
  */
 
 angular.module('app.loggedIn.rlob.patientDetail.controller',[])
-    .controller("rlob_patientDetailController", function($scope,$stateParams,$http,$cookieStore,appointmentCalendarService,doctorsService,locationService,bookingService,FileUploader,Mailto,$location,$window) {
-        //Get Boooking Type
-        $scope.bookingType='REDiLEGAL';
-        if($stateParams.bookingType && $stateParams.bookingType=='Vaccination') {
-            $scope.bookingType = $stateParams.bookingType;
-        }
-//        alert($scope.bookingType);
+    .controller("rlob_patientDetailController", function($scope,$state,$stateParams,$http,$cookieStore,appointmentCalendarService,bookingService,FileUploader,Mailto,$location,$window) {
+
+        /***
+         * An ngan can thay doi url khi change state
+         * tannv.dts@gmail.com
+         */
+//        $scope.$on('$stateChangeStart', function(event, newUrl, oldUrl) {
+//            event.preventDefault();
+//        });
+
+        //Check Booking Type
+        //alert(JSON.stringify($state.current) );
+        if($state.current.name.indexOf(rlobConstant.bookingType.REDiLEGAL.alias)>-1)
+            $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
+        else if($state.current.name.indexOf(rlobConstant.bookingType.Vaccination.alias)>-1)
+            $scope.bookingType=rlobConstant.bookingType.Vaccination.name;
+        if(!$scope.bookingType)
+            $state.go("loggedIn.home");
+        //-----------------------------------------------------------
         $scope.loginInfo=$cookieStore.get('userInfo');
-//        /api/company/info
 
         $http({
             method:"POST",
@@ -96,7 +107,21 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         var selectedInfo=bookingService.getSelectedInfo();
 
         var locationId=$stateParams.siteid;
-        selectedInfo.locationSelected=locationService.getLocationById(locationId);
+        $http({
+            method:"POST",
+            url:"/api/redimedsite/info",
+            data:{id:locationId}
+        })
+        .success(function(data) {
+            selectedInfo.locationSelected=data;
+        })
+        .error(function (data) {
+            alert("insert fail");
+        })
+        .finally(function() {
+
+        });
+
         //Google map
         var geocoder;
         var map;
@@ -123,7 +148,21 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         }
         //==============================================================================================
         var doctorid=$stateParams.doctorid;
-        selectedInfo.doctorSelected=doctorsService.getDoctorById(doctorid);
+        $http({
+            method:"GET",
+            url:"/api/rlob/doctors/get-doctors-by-id"
+        })
+        .success(function(data) {
+            if(data.status=='success')
+                selectedInfo.doctorSelected=data.data;
+        })
+        .error(function (data) {
+            alert("insert fail");
+        })
+        .finally(function() {
+
+        });
+
         //==============================================================================================
         var cal_id=$stateParams.id;
 

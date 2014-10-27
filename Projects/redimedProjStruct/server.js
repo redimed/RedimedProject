@@ -192,7 +192,6 @@ app.get('/api/download/lob/document/:fileId(*)', function(req, res, next){
                 var path=rows[0].FILE_PATH;
                 res.download(path);
             }
-
         })
     });
 });
