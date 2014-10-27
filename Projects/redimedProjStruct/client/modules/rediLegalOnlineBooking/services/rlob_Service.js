@@ -83,27 +83,12 @@ angular.module('app.loggedIn.rlob.services',[])
 })
 
 .service('appointmentCalendarService',function(){
-    var items=[] ;
-    var selectedItem={};
-    this.allSync=function(){return items};
-    this.getAppointmentById=function(id)
-    {
-        var item={};
-        for(var i=0;i<items.length;i++)
-        {
-            if(items[i].CAL_ID==id)
-            {
-                item=items[i];
-                break;
-            }
-        }
-        return item;
+    var selectedAppointmentCalendar={};
+    this.setSelectedAppointmentCalendar=function(appointment){
+        selectedAppointmentCalendar=appointment;
     }
-    this.setSelectedItem=function(appointment){
-        selectedItem=appointment;
-    }
-    this.getSelectedItem=function(){
-        return selectedItem;
+    this.getSelectedAppointmentCalendar=function(){
+        return selectedAppointmentCalendar;
     }
 })
 

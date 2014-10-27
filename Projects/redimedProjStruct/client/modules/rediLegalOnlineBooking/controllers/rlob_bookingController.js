@@ -18,10 +18,15 @@ angular.module('app.loggedIn.rlob.booking.controller',[])
         $scope.selectedInfo=bookingService.getSelectedInfo();
         //Xoa toan bo thong tin cu:clearSelectedInfo
         angular.copy({},$scope.selectedInfo);
+        $scope.$watch('selectedAppointmentCalendar',function(oldValue,newValue){
+            if($scope.selectedAppointmentCalendar)
+            {
+                $scope.selectedInfo=angular.copy($scope.selectedAppointmentCalendar);
+                alert(JSON.stringify($scope.selectedAppointmentCalendar));
+            }
 
-        $scope.appointments=appointmentCalendarService.allSync();
-        //Xoa toan bo thong tin cu
-        angular.copy({},$scope.appointments);
+        });
+
 
 
     })

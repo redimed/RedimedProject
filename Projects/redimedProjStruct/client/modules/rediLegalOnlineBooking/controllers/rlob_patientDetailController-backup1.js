@@ -3,26 +3,15 @@
  */
 
 angular.module('app.loggedIn.rlob.patientDetail.controller',[])
-    .controller("rlob_patientDetailController", function($scope,$state,$stateParams,$http,$cookieStore,bookingService,FileUploader,Mailto,$location,$window) {
-
-        /***
-         * An ngan can thay doi url khi change state
-         * tannv.dts@gmail.com
-         */
-//        $scope.$on('$stateChangeStart', function(event, newUrl, oldUrl) {
-//            event.preventDefault();
-//        });
-
-        //Check Booking Type
-        //alert(JSON.stringify($state.current) );
-        if($state.current.name.indexOf(rlobConstant.bookingType.REDiLEGAL.alias)>-1)
-            $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
-        else if($state.current.name.indexOf(rlobConstant.bookingType.Vaccination.alias)>-1)
-            $scope.bookingType=rlobConstant.bookingType.Vaccination.name;
-        if(!$scope.bookingType)
-            $state.go("loggedIn.home");
-        //-----------------------------------------------------------
+    .controller("rlob_patientDetailController", function($scope,$stateParams,$http,$cookieStore,appointmentCalendarService,doctorsService,locationService,bookingService,FileUploader,Mailto,$location,$window) {
+        //Get Boooking Type
+        $scope.bookingType='REDiLEGAL';
+        if($stateParams.bookingType && $stateParams.bookingType=='Vaccination') {
+            $scope.bookingType = $stateParams.bookingType;
+        }
+//        alert($scope.bookingType);
         $scope.loginInfo=$cookieStore.get('userInfo');
+//        /api/company/info
 
         $http({
             method:"POST",
@@ -107,21 +96,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         var selectedInfo=bookingService.getSelectedInfo();
 
         var locationId=$stateParams.siteid;
-        $http({
-            method:"POST",
-            url:"/api/redimedsite/info",
-            data:{id:locationId}
-        })
-        .success(function(data) {
-            selectedInfo.locationSelected=data;
-        })
-        .error(function (data) {
-            alert("insert fail");
-        })
-        .finally(function() {
-
-        });
-
+        selectedInfo.locationSelected=locationService.getLocationById(locationId);
         //Google map
         var geocoder;
         var map;
@@ -148,39 +123,12 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         }
         //==============================================================================================
         var doctorid=$stateParams.doctorid;
-        $http({
-            method:"GET",
-            url:"/api/rlob/doctors/get-doctors-by-id"
-        })
-        .success(function(data) {
-            if(data.status=='success')
-                selectedInfo.doctorSelected=data.data;
-        })
-        .error(function (data) {
-            alert("insert fail");
-        })
-        .finally(function() {
-
-        });
-
+        selectedInfo.doctorSelected=doctorsService.getDoctorById(doctorid);
         //==============================================================================================
         var cal_id=$stateParams.id;
-        $http({
-            method:"GET",
-            url:"/api/rlob/appointment-calendar/get-by-id",
-            params:{calId:cal_id}
-        })
-        .success(function(data) {
-            if(data.status=='success')
-                selectedInfo.selectedAppointment=data.data;
-        })
-        .error(function (data) {
-            alert("insert fail");
-        })
-        .finally(function() {
 
-        });
 
+        selectedInfo.selectedAppointment=appointmentCalendarService.getAppointmentById(cal_id);
         var from_date = moment(new Date(selectedInfo.selectedAppointment.FROM_TIME));
         $scope.booking_detail={};
         $scope.booking_detail.date=from_date.format("DD/MM/YYYY");

@@ -34,6 +34,7 @@ app.get('/api/rlob/doctors/get-doctors-by-id',doctorsController.getDoctorById);
 app.get('/api/rlob/appointment-calendar/list',clnAppointmentCalendarController.list);
 app.get('/api/rlob/appointment-calendar/get-appointment-calendar',clnAppointmentCalendarController.getAppointmentCalendar);
 app.get('/api/rlob/appointment-calendar/check-same-doctor',clnAppointmentCalendarController.checkSameDoctor);
+app.get('/api/rlob/appointment-calendar/get-by-id',clnAppointmentCalendarController.getAppointmentCalendarById);
 
 //rl_bookings
 app.post('/api/rlob/rl_bookings/add',rlBookingsController.add);

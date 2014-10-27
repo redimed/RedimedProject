@@ -73,5 +73,29 @@ module.exports =
                     }
                 });
         });
+    },
+
+    getAppointmentCalendarById:function(req,res)
+    {
+        var calId=req.query.calId;
+        var sql='SELECT cal.* FROM `cln_appointment_calendar` cal WHERE cal.`CAL_ID`=?';
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,calId,function(err,rows)
+            {
+                if(err)
+                {
+                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                        res.json({status:'success',data:rows[0]});
+                    else
+                        res.json({status:'fail'});
+                }
+            });
+        });
     }
 };
