@@ -12,38 +12,43 @@ module.exports = {
             {
                 if(data != null)
                 {
-                    db.Company.findAll({where: {id: data.company_id}},{raw:true})
-                        .success(function(company){
-                            bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
-                                if (compareResult == true) {
-                                    delete data["img"];
-                                    return done(null, {status: 'success',
-                                        msg: "Login Successfully!",
-                                        userInfo: data,
-                                        companyInfo: company
-                                    });
-                                }
-                                else {
+                    if(data.user_type == 'Company')
+                    {
+                        db.Company.findAll({where: {id: data.company_id}},{raw:true})
+                            .success(function(company){
+                                bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
+                                    if (compareResult == true) {
+                                        delete data["img"];
+                                        return done(null, {status: 'success',
+                                            msg: "Login Successfully!",
+                                            userInfo: data,
+                                            companyInfo: company
+                                        });
+                                    }
+                                    else {
 
-                                    return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
-                                }
-                            });
+                                        return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
+                                    }
+                                });
 
-                        })
-                        .error(function(err){
-                            bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
-                                if (compareResult == true) {
-                                    return done(null, {status: 'success',
-                                        msg: "Login Successfully!",
-                                        userInfo: data
-                                    });
-                                }
-                                else {
+                            })
+                    }
+                    else
+                    {
+                        bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
+                            if (compareResult == true) {
+                                return done(null, {status: 'success',
+                                    msg: "Login Successfully!",
+                                    userInfo: data
+                                });
+                            }
+                            else {
 
-                                    return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
-                                }
-                            });
+                                return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
+                            }
                         });
+                    }
+
                 }
                 else
                 {

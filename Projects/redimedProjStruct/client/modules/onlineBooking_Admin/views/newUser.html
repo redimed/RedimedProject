@@ -94,7 +94,7 @@
                 </div>
             </div>
             <br/>
-            <div class="form-group" ng-class="{'has-error':showClickedValidation && userForm.company.$invalid}">
+            <div ng-if="info.userType == 'Company'" class="form-group" ng-class="{'has-error':showClickedValidation && userForm.company.$invalid}">
                 <div class="row">
                     <div class="col-md-4">
                         <label class="control-label pull-right">Company <span class="required">
