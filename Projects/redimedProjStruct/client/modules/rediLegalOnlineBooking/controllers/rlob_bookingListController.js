@@ -8,16 +8,6 @@ angular.module('app.loggedIn.rlob.list.controller',[])
         $scope.isCanUpload=true;
         $scope.loginInfo = $cookieStore.get('userInfo');
 
-        //Check Booking Type
-        //alert(JSON.stringify($state.current) );
-        if($state.current.name.indexOf(rlobConstant.bookingType.REDiLEGAL.alias)>-1)
-            $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
-        else if($state.current.name.indexOf(rlobConstant.bookingType.Vaccination.alias)>-1)
-            $scope.bookingType=rlobConstant.bookingType.Vaccination.name;
-        if(!$scope.bookingType)
-            $state.go("loggedIn.home");
-        //-----------------------------------------------------------
-
         $scope.rl_types=[];
         $http({
             method:"GET",

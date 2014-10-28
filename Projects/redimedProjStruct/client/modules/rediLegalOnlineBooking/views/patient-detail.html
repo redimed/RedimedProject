@@ -1,6 +1,17 @@
 
 
+
 <div class="portlet light">
+
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-basket font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">{{bookingType}} Online Booking (Detail)</span>
+
+        </div>
+
+    </div>
+
     <div class="portlet-body">
         <div class="tabbable">
 
@@ -394,7 +405,8 @@
                                 </fieldset>
 
                                 <button ng-hide="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom"  ng-click="save()">Save</button>
-                                <a ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ui-sref="loggedIn.rlob_booking">Go to booking page</a>
+                                <a ng-if="bookingType=='REDiLEGAL'" ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ui-sref="loggedIn.rlob.rlob_booking">Go to booking page</a>
+                                <a ng-if="bookingType=='Vaccination'" ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ui-sref="loggedIn.vaccinob.vaccinob_booking">Go to booking page</a>
                                 <a ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ng-click="showDialogSendDocument();">Send documents</a>
 
 

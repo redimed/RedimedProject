@@ -13,15 +13,6 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 //            event.preventDefault();
 //        });
 
-        //Check Booking Type
-        //alert(JSON.stringify($state.current) );
-        if($state.current.name.indexOf(rlobConstant.bookingType.REDiLEGAL.alias)>-1)
-            $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
-        else if($state.current.name.indexOf(rlobConstant.bookingType.Vaccination.alias)>-1)
-            $scope.bookingType=rlobConstant.bookingType.Vaccination.name;
-        if(!$scope.bookingType)
-            $state.go("loggedIn.home");
-        //-----------------------------------------------------------
         $scope.loginInfo=$cookieStore.get('userInfo');
 
         $http({
@@ -135,7 +126,6 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             .success(function(data) {
                 if(data.status=='success')
                 {
-                    alert(JSON.stringify(data));
                     selectedInfo.doctorSelected=data.data;
                     $scope.booking_detail.doctor_name=selectedInfo.doctorSelected.NAME;
                 }

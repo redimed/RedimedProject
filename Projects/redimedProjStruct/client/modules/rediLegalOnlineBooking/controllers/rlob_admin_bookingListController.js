@@ -11,15 +11,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.isAdminGetFiles=true;
         $scope.accordionStatus={status1:true};
 
-        //Check Booking Type
-        //alert(JSON.stringify($state.current) );
-        if($state.current.name.indexOf(rlobConstant.bookingType.REDiLEGAL.alias)>-1)
-            $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
-        else if($state.current.name.indexOf(rlobConstant.bookingType.Vaccination.alias)>-1)
-            $scope.bookingType=rlobConstant.bookingType.Vaccination.name;
-        if(!$scope.bookingType)
-            $state.go("loggedIn.home");
         //-----------------------------------------------------------
+
         $scope.newAppointmentPositionFlag=false;
 
         //-----------------------------------------------------------

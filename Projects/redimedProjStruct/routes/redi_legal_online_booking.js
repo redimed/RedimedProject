@@ -74,8 +74,9 @@ app.get('/api/rlob/sys_user_notifications/get-items-of-paging',sysUserNotificati
 //structure
 app.post('/api/structure/list-appointments-upcoming',structureController.list_appointments_calendar_upcoming);
 
-
-//var multipart = require('connect-multiparty');
-//var multipartMiddleware = multipart();
-//var rlobUploadController=require('./controllers/rlobUploadController');
-//app.post('/api/rlob/rl_booking_files/upload',multipartMiddleware, rlobUploadController.rlobUploadFile);
+//Documents
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+var rlobDocumentsController=require('./controllers/rlobDocumentsController');
+app.post('/api/rlob/rl_booking_files/upload',multipartMiddleware, rlobDocumentsController.rlobUploadFile);
+app.get('/api/download/lob/document/:fileId(*)', rlobDocumentsController.rlobDowloadFile);

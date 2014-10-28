@@ -1,29 +1,45 @@
-<rlob-booking-detail selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail>
+<div class="portlet light">
 
-<div class="row">
-    <div class="col-sm-12">
-        <div class="portlet yellow-crusta box">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-cogs"></i>
-                    <span class="file-control pointer underline" ng-click="uploadPanel = false">Download</span>
-                    <!--<span class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>-->
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="tab-content">
-                    <div class="row form-group" ng-hide="uploadPanel" id="file-download-panel">
-                        <rlob-file-download
-                                selected-booking="selectedBooking"
-                                booking-type="bookingType">
-                        </rlob-file-download>
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-basket font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">{{bookingType}} Online Booking (Detail)</span>
+
+        </div>
+
+    </div>
+
+    <rlob-booking-detail selected-booking="selectedBooking" booking-type="bookingType">
+
+    </rlob-booking-detail>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet yellow-crusta box">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i>
+                        <span class="file-control pointer underline" ng-click="uploadPanel = false">Download</span>
+                        <!--<span class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>-->
                     </div>
-                    <!--<div class="row form-group" ng-show="uploadPanel" id="file-upload-panel">-->
+                </div>
+                <div class="portlet-body">
+                    <div class="tab-content">
+                        <div class="row form-group" ng-hide="uploadPanel" id="file-download-panel">
+                            <rlob-file-download
+                                    selected-booking="selectedBooking"
+                                    booking-type="bookingType">
+                            </rlob-file-download>
+                        </div>
+                        <!--<div class="row form-group" ng-show="uploadPanel" id="file-upload-panel">-->
                         <!--<rlob-upload selected-booking="selectedBooking">-->
                         <!--</rlob-upload>-->
-                    <!--</div>-->
+                        <!--</div>-->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
+

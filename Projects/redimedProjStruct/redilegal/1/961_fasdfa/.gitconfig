@@ -1,6 +1,0 @@
-[user]
-	name = Tan Nguyen
-	email = tannv.dts@gmail.com
-[core]
-	autocrlf = true
-	excludesfile = C:\\Users\\meditech\\Documents\\gitignore_global.txt

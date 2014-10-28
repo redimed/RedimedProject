@@ -503,12 +503,12 @@ angular.module("app.loggedIn.controller",[
                         $scope.listAppointmentCalendarUpcoming.push(data.data[i]);
                         if($scope.listAppointmentCalendarUpcoming[i].SOURCE_TYPE=='REDiLEGAL')
                         {
-                            $scope.listAppointmentCalendarUpcoming[i].link="loggedIn.rlob_booking_detail({bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
+                            $scope.listAppointmentCalendarUpcoming[i].link="loggedIn.rlob.rlob_booking_detail({bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
                         }
                         else if($scope.listAppointmentCalendarUpcoming[i].SOURCE_TYPE=='Vaccination')
                         {
                             //$scope.listAppointmentCalendarUpcoming[i].link="loggedIn.rlob_booking_detail({bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
-                            $scope.listAppointmentCalendarUpcoming[i].link="loggedIn.vaccinob_booking_detail({bookingType:'Vaccination',bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
+                            $scope.listAppointmentCalendarUpcoming[i].link="loggedIn.vaccinob.vaccinob_booking_detail({bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
                         }
                     }
                 }
@@ -553,9 +553,9 @@ angular.module("app.loggedIn.controller",[
                     + "["+data.WRK_SURNAME + ":"+moment(data.BOOKING_DATE).format("DD/MM/YYYY hh:mm") +"]-"
                     + "[at: "+moment().format("DD/MM/YYYY HH:mm:ss")+"]";
                 if(sourceName=='REDiLEGAL')
-                    var link="loggedIn.rlob_booking_detail({bookingId:"+refId+"})";
-                else
-                    var link="loggedIn.vaccinob_booking_detail({bookingType:'"+sourceName+"',bookingId:"+refId+"})";
+                    var link="loggedIn.rlob.rlob_booking_detail({bookingId:"+refId+"})";
+                else if(sourceName=='Vaccination')
+                    var link="loggedIn.vaccinob.vaccinob_booking_detail({bookingId:"+refId+"})";
                 $http({
                     method:"POST",
                     url:"/api/rlob/sys_user_notifications/add-notification",
@@ -602,6 +602,12 @@ angular.module("app.loggedIn.controller",[
                 .finally(function() {
                 });
         }
+
+        /***
+         * Contact detail
+         * tannv.dts@gmail.com
+         */
+        $scope.contactDetails=[];
 
 
 })
