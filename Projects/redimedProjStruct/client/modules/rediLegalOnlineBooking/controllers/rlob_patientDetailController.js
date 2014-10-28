@@ -3,8 +3,8 @@
  */
 
 angular.module('app.loggedIn.rlob.patientDetail.controller',[])
-    .controller("rlob_patientDetailController", function($scope,$state,$stateParams,$http,$cookieStore,bookingService,FileUploader,Mailto,$location,$window) {
-
+    .controller("rlob_patientDetailController", function($scope,$state,$http,$cookieStore,bookingService,appointmentCalendarService,FileUploader,Mailto,$location,$window) {
+        $scope.selectedAppointmentCalendar=appointmentCalendarService.getSelectedAppointmentCalendar();
         /***
          * An ngan can thay doi url khi change state
          * tannv.dts@gmail.com
@@ -105,8 +105,9 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         $scope.isSaving=false;
 
         var selectedInfo=bookingService.getSelectedInfo();
-
-        var locationId=$stateParams.siteid;
+        $scope.booking_detail={};
+        //==============================================================================================
+        var locationId=$scope.selectedAppointmentCalendar.SITE_ID;
         $http({
             method:"POST",
             url:"/api/redimedsite/info",
@@ -114,6 +115,8 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         })
         .success(function(data) {
             selectedInfo.locationSelected=data;
+            $scope.booking_detail.address=selectedInfo.locationSelected.Site_addr;
+            codeAddress();
         })
         .error(function (data) {
             alert("insert fail");
@@ -121,6 +124,91 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         .finally(function() {
 
         });
+
+        //==============================================================================================
+        var doctorid=$scope.selectedAppointmentCalendar.DOCTOR_ID;
+        $http({
+            method:"GET",
+            url:"/api/rlob/doctors/get-doctors-by-id",
+            params:{doctorId:doctorid}
+        })
+            .success(function(data) {
+                if(data.status=='success')
+                {
+                    alert(JSON.stringify(data));
+                    selectedInfo.doctorSelected=data.data;
+                    $scope.booking_detail.doctor_name=selectedInfo.doctorSelected.NAME;
+                }
+
+            })
+            .error(function (data) {
+                alert("insert fail");
+            })
+            .finally(function() {
+
+            });
+
+        //==============================================================================================
+        var cal_id=$scope.selectedAppointmentCalendar.CAL_ID;
+        $http({
+            method:"GET",
+            url:"/api/rlob/appointment-calendar/get-by-id",
+            params:{calId:cal_id}
+        })
+            .success(function(data) {
+                if(data.status=='success')
+                {
+                    selectedInfo.selectedAppointment=data.data;
+                    $scope.from_time = moment(new Date(selectedInfo.selectedAppointment.FROM_TIME));
+                    $scope.booking_detail.date=$scope.from_time.format("DD/MM/YYYY");
+                    $scope.booking_detail.time=$scope.from_time.format("HH:mm");
+                }
+            })
+            .error(function (data) {
+                alert("insert fail");
+            })
+            .finally(function() {
+
+            });
+        //==============================================================================================
+        var rlTypeId=$scope.selectedAppointmentCalendar.RL_TYPE_ID;
+        $http({
+            method:"GET",
+            url:"/api/rlob/rl_types/get-rltype-by-id",
+            params:{rlTypeId:rlTypeId}
+        })
+            .success(function(data) {
+                if(data.status=='success')
+                {
+                    selectedInfo.rltypeSelected=data.data;
+                    $scope.booking_detail.type=selectedInfo.rltypeSelected.Rl_TYPE_NAME;
+                }
+
+            })
+            .error(function (data) {
+                alert("insert fail");
+            })
+            .finally(function() {
+
+            });
+        //==============================================================================================
+        var specialityId=$scope.selectedAppointmentCalendar.Specialties_id;
+        $http({
+            method:"GET",
+            url:"/api/rlob/cln_specialties/get-speciality-by-id",
+            params:{specialityId:specialityId}
+        })
+            .success(function(data) {
+                if(data.status=='success')
+                    selectedInfo.clnSpecialitySelected=data.data;
+            })
+            .error(function (data) {
+                alert("insert fail");
+            })
+            .finally(function() {
+
+            });
+        //==============================================================================================
 
         //Google map
         var geocoder;
@@ -146,50 +234,13 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 }
             });
         }
-        //==============================================================================================
-        var doctorid=$stateParams.doctorid;
-        $http({
-            method:"GET",
-            url:"/api/rlob/doctors/get-doctors-by-id"
-        })
-        .success(function(data) {
-            if(data.status=='success')
-                selectedInfo.doctorSelected=data.data;
-        })
-        .error(function (data) {
-            alert("insert fail");
-        })
-        .finally(function() {
 
-        });
 
-        //==============================================================================================
-        var cal_id=$stateParams.id;
-        $http({
-            method:"GET",
-            url:"/api/rlob/appointment-calendar/get-by-id",
-            params:{calId:cal_id}
-        })
-        .success(function(data) {
-            if(data.status=='success')
-                selectedInfo.selectedAppointment=data.data;
-        })
-        .error(function (data) {
-            alert("insert fail");
-        })
-        .finally(function() {
 
-        });
 
-        var from_date = moment(new Date(selectedInfo.selectedAppointment.FROM_TIME));
-        $scope.booking_detail={};
-        $scope.booking_detail.date=from_date.format("DD/MM/YYYY");
-        $scope.booking_detail.time=from_date.format("HH:mm");
 
-        $scope.booking_detail.doctor_name=selectedInfo.doctorSelected.NAME;
-        $scope.booking_detail.address=selectedInfo.locationSelected.Site_addr;
-        $scope.booking_detail.type=selectedInfo.rltypeSelected.Rl_TYPE_NAME;
-        codeAddress();
+
+
         $scope.newBooking.BOOKING_ID=20000;
         $http({
             method:"GET",
@@ -355,8 +406,8 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.mailBodyData={
                 requestBy:$scope.loginInfo.user_name?$scope.loginInfo.user_name:'',
                 company: $scope.companyInfo.Company_name?$scope.companyInfo.Company_name:'',
-                time:from_date.format("HH:mm"),
-                date:from_date.format("DD/MM/YYYY"),
+                time:$scope.from_time.format("HH:mm"),
+                date:$scope.from_time.format("DD/MM/YYYY"),
                 typeOfAppointment:'REDiLEGAL',
                 doctor:selectedInfo.doctorSelected.NAME?selectedInfo.doctorSelected.NAME:'',
                 address:selectedInfo.locationSelected.Site_addr?selectedInfo.locationSelected.Site_addr:'',
@@ -397,14 +448,14 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.mailtoLink = Mailto.url(recepient, options);
             //---------------------------------------------------------------------------
             $scope.newBooking.BOOKING_DATE=moment().format("YYYY-MM-DD HH:mm");
-            $scope.newBooking.APPOINTMENT_DATE=from_date.format("YYYY-MM-DD HH:mm");
+            $scope.newBooking.APPOINTMENT_DATE=$scope.from_time.format("YYYY-MM-DD HH:mm");
             $scope.newBooking.COMPANY_ID=$scope.loginInfo.company_id;
             $scope.newBooking.RL_TYPE_ID=selectedInfo.rltypeSelected.RL_TYPE_ID;
             $scope.newBooking.SPECIALITY_ID=selectedInfo.clnSpecialitySelected.Specialties_id;
             $scope.newBooking.DOCTOR_ID=selectedInfo.doctorSelected.doctor_id;
             $scope.newBooking.SITE_ID=selectedInfo.locationSelected.id;
             $scope.newBooking.CAL_ID=cal_id;
-            $scope.newBooking.refered_date_string=from_date.format("ddd DD/MM/YYYY HH-mm")+" "+selectedInfo.locationSelected.Site_name;
+            $scope.newBooking.refered_date_string=$scope.from_time.format("ddd DD/MM/YYYY HH-mm")+" "+selectedInfo.locationSelected.Site_name;
             $scope.newBooking.STATUS="Confirmed";
             $scope.newBooking.BOOKING_TYPE=$scope.bookingType;
             if($scope.WRK_DOB_TEMP==undefined)

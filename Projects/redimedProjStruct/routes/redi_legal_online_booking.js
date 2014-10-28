@@ -18,10 +18,12 @@ app.get('/api/rlob/redimedsites/list',RedimedSiteController.list);
 
 //rlType
 app.get('/api/rlob/rl_types/list',rlTypesController.list);
+app.get('/api/rlob/rl_types/get-rltype-by-id',rlTypesController.getRlTypeById);
 
 //cln_specialties
 app.get('/api/rlob/cln_specialties/list',clnSpecialitiesController.list);
 app.get('/api/rlob/cln_specialties/filter-by-type',clnSpecialitiesController.filterByType);
+app.get('/api/rlob/cln_specialties/get-speciality-by-id',clnSpecialitiesController.getSpecialityById);
 
 //doctors
 app.get('/api/rlob/doctors/list',doctorsController.list);

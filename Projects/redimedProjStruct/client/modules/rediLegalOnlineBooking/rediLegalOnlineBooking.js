@@ -17,7 +17,7 @@ angular.module('app.loggedIn.rlob',
                 controller: 'rlob_bookingController'
             })
             .state('loggedIn.rlob_patient_detail',{
-                url:'/rlob/booking/patient-detail/:siteid/:doctorid/:id',
+                url:'/rlob/booking/patient-detail',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/patient-detail.html',
                 controller: 'rlob_patientDetailController'
             })

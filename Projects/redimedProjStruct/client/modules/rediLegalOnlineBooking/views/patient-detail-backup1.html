@@ -142,12 +142,12 @@
 
 
                                     <div  ng-if="bookingType=='REDiLEGAL'" class="row form-group" ng-class="{ 'has-error': bookingForm.CLAIM_NO.$invalid  && hadForcused}">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="control-label" for="CLAIM_NO">Claim number:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input  class="form-control" type="text"
                                                     required
                                                     ng-maxlength="20"
@@ -162,12 +162,12 @@
                                     </div>
 
                                     <div  ng-if="bookingType=='Vaccination'" class="row form-group" ng-class="{ 'has-error': bookingForm.EMPLOYEE_NUMBER.$invalid  && hadForcused}">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="control-label" for="EMPLOYEE_NUMBER">Employee number:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input  class="form-control" type="text"
                                                     required
                                                     ng-maxlength="20"
@@ -182,12 +182,12 @@
                                     </div>
 
                                     <div  ng-if="bookingType=='Vaccination'" class="row form-group" ng-class="{ 'has-error': bookingForm.DEPARTMENT_NAME.$invalid  && hadForcused}">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="control-label" for="DEPARTMENT_NAME">Department Name:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input  class="form-control" type="text"
                                                     required
                                                     ng-maxlength="50"
@@ -203,12 +203,12 @@
 
 
                                     <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_SURNAME.$invalid  && hadForcused}">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="control-label" for="WRK_SURNAME">Surname:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input class="form-control" type="text"
                                                    required
                                                    ng-maxlength="50"
@@ -224,12 +224,12 @@
                                     </div>
 
                                     <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_OTHERNAMES.$invalid  && hadForcused}">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="control-label" for="WRK_OTHERNAMES">
                                                 Other name:
                                             </label>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input class="form-control" type="text"
                                                    ng-maxlength="50"
                                                    ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES" name="WRK_OTHERNAMES"/>
@@ -240,13 +240,13 @@
                                     </div>
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_DOB.$invalid  && hadForcused}">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="control-label" for="WRK_DOB">Date of birth:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
 
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <!--<div class="input-group date date-picker " style="width: 150px;" data-date-format="dd/mm/yyyy">-->
                                                 <!--<input ng-model="newBooking.WRK_DOB" id="WRK_DOB" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">-->
                                                 <!--<span class="input-group-btn">-->
@@ -278,12 +278,12 @@
                                     </div>
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_EMAIL.$invalid  && hadForcused}">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="control-label" for="WRK_EMAIL">Email address:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input class="form-control" type="email" name="WRK_EMAIL"
                                                    required
                                                    ng-maxlength="50"
@@ -302,12 +302,12 @@
                                     </div>
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_CONTACT_NO.$invalid  && hadForcused}">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="control-label" for="WRK_CONTACT_NO">Contact number:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input class="form-control" type="text" name="WRK_CONTACT_NO"
                                                    required
                                                    ng-maxlength="20"
@@ -323,11 +323,11 @@
                                     </div>
 
                                     <div class="row form-group">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <!--for="ISNEW"-->
                                             <label>Is the patient new to REDiMED:</label>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <!--<input  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW" id="ISNEW">-->
 
                                             <input style="float: left" type="radio" ng-model="newBooking.ISNEW" value="1">YES<br/>

@@ -187,7 +187,7 @@
 
                 <ul class="dropdown-menu" role="menu">
                     <li>
-                        <a class="pointer" role="menuitem" tabindex="2"
+                        <a class="pointer" role="menuitem" tabindex="1"
                            ng-click="show_lob_upload_file_dialog(selectedBooking.BOOKING_ID,currentNodeBooking)">
                             Upload Files
                         </a>
@@ -196,6 +196,14 @@
 
                     <li>
                         <a class="pointer" role="menuitem" tabindex="2"
+                           ng-click="showDialogSendBookingMessage(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID)">
+                            <!--Item 0- {{node.BOOKING_ID}}-->
+                            Send Message
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="pointer" role="menuitem" tabindex="3"
                            ng-click="showDialogChangeAppointmentCalendar(selectedBooking.BOOKING_ID,selectedBooking.CAL_ID,selectedBooking.APPOINTMENT_DATE,selectedBooking.ASS_ID)">
                             Change Appointment Calendar
                         </a>
@@ -205,7 +213,7 @@
                     <p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>
                     Set Status:
                     <li ng-hide="selectedBooking.STATUS=='Confirmed'" >
-                        <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="1"
+                        <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"
                            ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking)">
                             <span>Confirmed</span>
 
@@ -213,7 +221,7 @@
                     </li>
 
                     <li ng-hide="selectedBooking.STATUS=='Arrived'">
-                        <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="2"
+                        <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
                             ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking)">
                             <span>Arrived</span>
 
@@ -221,7 +229,7 @@
                     </li>
 
                     <li ng-hide="selectedBooking.STATUS=='Not Arrived'">
-                        <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="3"
+                        <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
                            ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking)">
                             <span>Not Arrived</span>
 
@@ -229,13 +237,13 @@
                     </li>
 
                     <li ng-hide="selectedBooking.STATUS=='Completed'">
-                        <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="4"
+                        <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
                             ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking)">
                             <span>Completed</span>
                         </a>
                     </li>
                     <li ng-hide="selectedBooking.STATUS=='Cancel'">
-                        <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="5"
+                        <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
                             ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking)">
                             <span>Cancel</span>
                         </a>

@@ -3,7 +3,7 @@
  */
 
 angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
-        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,rlTypesService,doctorsService,locationService,FileUploader,$cookieStore,$interval) {
+        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval) {
         //Internal Variable
         //Bien haveNodeFile quy dinh cac file co xuat hien trong tree hay khong
         $scope.haveNodeFile=false;
@@ -326,11 +326,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         {
             var d=moment(new Date(datetime));
             return d.format("DD/MM/YYYY");
-        }
-
-        $scope.getDoctorAddress=function(id)
-        {
-            return doctorsService.getDoctorById(id).Address;
         }
 
 

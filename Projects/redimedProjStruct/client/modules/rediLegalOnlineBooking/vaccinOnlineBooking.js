@@ -13,7 +13,7 @@ angular.module('app.loggedIn.vaccinob',
                 controller: 'rlob_bookingController'
             })
             .state('loggedIn.vaccinob_patient_detail',{
-                url:'/vaccinob/booking/patient-detail/:siteid/:doctorid/:id',
+                url:'/vaccinob/booking/patient-detail',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/patient-detail.html',
                 controller: 'rlob_patientDetailController'
             })

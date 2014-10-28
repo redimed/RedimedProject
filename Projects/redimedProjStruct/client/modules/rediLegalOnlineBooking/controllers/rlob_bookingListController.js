@@ -3,7 +3,7 @@
  */
 
 angular.module('app.loggedIn.rlob.list.controller',[])
-.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, locationService, $cookieStore, FileUploader) {
+.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader) {
         //Co cho nguoi su dung upload File hay khong, su dung bien isCanUpload
         $scope.isCanUpload=true;
         $scope.loginInfo = $cookieStore.get('userInfo');

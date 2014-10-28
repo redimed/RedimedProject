@@ -76,8 +76,8 @@ module.exports =
 
     getDoctorById:function(req,res)
     {
-        var doctorId=req.params.doctorId;
-        var sql='SELECT doctor.* FROM `doctors` doctor WHERE doctor.`doctor_id`=?';
+        var doctorId=req.query.doctorId;
+        var sql='SELECT doctor.`doctor_id`,doctor.`NAME` FROM `doctors` doctor WHERE doctor.`doctor_id`=?';
         req.getConnection(function(err,connection)
         {
 
