@@ -5,6 +5,8 @@ var db = require('../models');
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
+var nodeExcel = require('excel-export');
+
 
 //var path = require('path');
 //process.env.TMPDIR =path.join(__dirname, 'temp');
@@ -642,6 +644,38 @@ module.exports = {
             })
             .error(function(err){
                 res.json({status:'error'});
+            })
+    },
+    exportToExcel: function(req,res){
+        var conf ={};
+        // uncomment it FOR style EXAMPLE
+        // conf.stylesXmlFile = "styles.xml";
+        conf.cols = [{
+            caption:'Company Name',
+            captionStyleIndex: 1,
+            TYPE:'string',
+            width:20
+        },{
+            caption:'PO Number',
+            TYPE:'string',
+            width:20
+        }];
+        var arr = [];
+        db.sequelize.query("SELECT * FROM booking_cadidates_v",null,{raw:true})
+            .success(function(data){
+                for(var i=0; i<data.length; i++)
+                {
+                    arr.push([data[i].company_name,data[i].PO_Number]);
+                }
+                conf.rows = arr;
+
+                var result = nodeExcel.execute(conf);
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+                res.end(result, 'binary');
+            })
+            .error(function(err){
+                console.log(err);
             })
     }
     

@@ -29,6 +29,8 @@ angular.module('app.loggedIn.booking.make.controller',[])
         var mPO;
         var mResult;
         var mInvoice;
+        var mIsProject;
+
 
         $scope.c = {
             SubCompanyId:'',
@@ -37,12 +39,12 @@ angular.module('app.loggedIn.booking.make.controller',[])
             invoice_email:'',
             Project:'',
             Comment:'',
-            PackId:''
+            PackId:'',
+            isProject: companyInfo[0].isProject == null ? 0 : companyInfo[0].isProject
         };
 
 
-        OnlineBookingService.deleteAllPending().then(function(data){
-        })
+        OnlineBookingService.deleteAllPending();
 
 
 
@@ -50,6 +52,8 @@ angular.module('app.loggedIn.booking.make.controller',[])
         mPO = companyInfo[0].PO_number;
         mResult = companyInfo[0].result_email;
         mInvoice = companyInfo[0].invoice_email;
+        mIsProject = companyInfo[0].isProject;
+
 
         if($scope.data != null)
         {
@@ -171,6 +175,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     $scope.c.PO_number = data.PO_number;
                     $scope.c.result_email = data.result_email;
                     $scope.c.invoice_email = data.invoice_email;
+                    $scope.c.isProject = data.isProject == null ? 0 : data.isProject;
                 })
             }
 
@@ -181,6 +186,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 $scope.c.PO_number = mPO;
                 $scope.c.result_email = mResult;
                 $scope.c.invoice_email = mInvoice;
+                $scope.c.isProject = mIsProject;
 
             }
 

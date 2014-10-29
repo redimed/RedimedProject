@@ -16,7 +16,7 @@ module.exports = {
             })
     },
     packageAss: function(req,res){
-        db.sequelize.query('SELECT * FROM packages_assessments')
+        db.sequelize.query('SELECT p.*, IFNULL(a.`price`,0) as price FROM packages_assessments p LEFT JOIN assessments a ON a.`id` = p.`ass_id`')
             .success(function(data){
                 res.json({status:'success',rs:data});
             })

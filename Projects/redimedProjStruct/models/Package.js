@@ -12,7 +12,8 @@ module.exports = function(sequelize,DataTypes){
         Last_update_date : DataTypes.DATE ,
         item_id : DataTypes.INTEGER(11) ,
         item_code : DataTypes.STRING(20) ,
-        item_name : DataTypes.STRING(1000)
+        item_name : DataTypes.STRING(1000) ,
+        fee: DataTypes.FLOAT
     },{
         tableName: 'packages', // đặt tên bảng
         createdAt: 'Creation_date',

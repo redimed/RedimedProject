@@ -51,6 +51,22 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return add.post({info:info});
         }
 
+        adminBooking.updateAssessment = function(info){
+            var add = api.all('assessment/edit');
+            return add.post({info:info});
+        }
+
+        adminBooking.getAssessmentInfo = function(id)
+        {
+            var a = api.all('assessment/info');
+            return a.post({id:id});
+        }
+
+        adminBooking.updatePrice = function(){
+            var a = api.all('assessment/updatePrice');
+            return a.post();
+        }
+
         adminBooking.getCompanyList = function(){
             var list = api.one('company/list');
             return list.get();

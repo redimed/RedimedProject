@@ -8,6 +8,8 @@ var passport = require('passport');
 var session = require('express-session');
 var config = require('config');
 var db = require('./models');
+
+
 //Create application management
 var app = express();
 app.set('port', process.env.PORT || 3000);
@@ -256,6 +258,9 @@ db.sequelize
         }
     }
 );
+
+
+
 
 
 

@@ -32,6 +32,8 @@ angular.module('app.loggedIn.booking.services',[])
             return insert.post({id:id,packId:packId});
         }
 
+
+
         bookingService.insertPos = function(name,comId){
             var insert = api.all('booking/position/insert');
             return insert.post({name:name,comId:comId});
@@ -45,6 +47,11 @@ angular.module('app.loggedIn.booking.services',[])
         bookingService.getPackageAss = function(){
             var ass = api.one('package/assessment');
             return ass.get();
+        }
+
+        bookingService.getAssPrice = function(id){
+            var ass = api.all('assessment/price');
+            return ass.post({id:id});
         }
 
         bookingService.updatePackAss = function(oldId,newId,packId){
@@ -184,6 +191,10 @@ angular.module('app.loggedIn.booking.services',[])
             return note.post({info:info});
         }
 
+        bookingService.exportExcel = function(){
+            var ex = api.one('booking/export');
+            return ex.get();
+        }
 
 
         return bookingService;

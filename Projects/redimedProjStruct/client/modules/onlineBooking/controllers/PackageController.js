@@ -5,7 +5,7 @@ angular.module('app.loggedIn.booking.package.controller',[])
 .controller('PackageController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingService,$http,toastr,$cookieStore){
         var companyInfo;
         $scope.isSelected = false;
-        $scope.selectedPack = '';
+        $scope.selectedPack = null;
         var ass = [];
         $scope.assList = [];
         $scope.data=[];
@@ -113,50 +113,37 @@ angular.module('app.loggedIn.booking.package.controller',[])
         {
             $scope.data1 = [];
             $scope.isSelected = true;
-            $scope.selectedPack = p.id;
+            $scope.selectedPack = p.PackId;
             for(var i=0; i<ass.length;i++)
             {
-                if(p.id === ass[i].pack_id)
+                if(p.PackId === ass[i].pack_id)
                     $scope.data1.push(ass[i]);
             }
             $scope.tableParams2.reload();
 
         }
-        var preAss;
 
-        $scope.editAss = function(a){
-            a.$edit = true;
-            $scope.preAss = a.ass_name;
-        }
 
-        $scope.cancelAss = function(a){
-            a.$edit = false;
-            a.ass_name = $scope.preAss;
-        }
-
-        $scope.saveAss = function(a){
-
-            OnlineBookingService.updatePackAss(a.ass_id, a.id, a.pack_id).then(function(data){
-                if(data.status === 'success')
-                {
-                    toastr.success("Edit Successfully!","Success");
-                    a.$edit = false;
-                    $state.go('loggedIn.package',null,{reload:true});
-                }
-                else
-                {
-                    toastr.error("Edit Failed!","Error");
-                }
-            })
-        }
 
         $scope.removeAss = function(a){
+            $scope.data1 = [];
             OnlineBookingService.removePackAss(a.ass_id, a.pack_id).then(function(data){
                 if(data.status === 'success')
                 {
                     toastr.success("Delete Successfully!","Success");
 
-                    $state.go('loggedIn.package',null,{reload:true});
+                    OnlineBookingService.getPackageAss().then(function(data) {
+                        ass = data.rs;
+
+                        for(var i=0; i<ass.length;i++)
+                        {
+                            if(p.PackId === ass[i].pack_id)
+                                $scope.data1.push(ass[i]);
+                        }
+
+                    })
+                    $scope.tableParams2.reload();
+
                 }
                 else
                 {
@@ -202,8 +189,27 @@ angular.module('app.loggedIn.booking.package.controller',[])
     $scope.a = {
         id:''
     };
+
+    $scope.b = {
+        price: null
+    };
+
     $scope.cancel = function(){
         $modalInstance.dismiss('cancel');
+    }
+
+    $scope.getPrice = function(id){
+        if(id != null)
+        {
+            OnlineBookingService.getAssPrice(id).then(function(data){
+                console.log(data[0].price);
+                $scope.b.price = data[0].price;
+            })
+        }
+        else{
+            $scope.b.price = '';
+        }
+
     }
 
     $scope.submit = function(){
@@ -224,3 +230,4 @@ angular.module('app.loggedIn.booking.package.controller',[])
     }
 
 })
+

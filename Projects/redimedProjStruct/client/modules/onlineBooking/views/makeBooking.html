@@ -87,12 +87,29 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row" ng-if="c.isProject == 0">
                 <div class="col-md-4">
                     <label class="control-label">Project Identification</label>
                 </div>
                 <div class="col-md-7">
                     <input type="text" ng-model="c.Project" class="form-control" />
+                </div>
+            </div>
+
+            <div ng-if="c.isProject == 1" class="form-group" ng-class="{'has-error':showClickedValidation && bookingForm.projectIden.$invalid}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Project Identification</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" name="projectIden" required ng-model="c.Project" class="form-control" />
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && bookingForm.projectIden.$invalid">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-7">
+                        <span for="projectIden" class="help-block">Project Identification is required.</span>
+                    </div>
                 </div>
             </div>
 

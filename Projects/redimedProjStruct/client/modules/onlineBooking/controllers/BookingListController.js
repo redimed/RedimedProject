@@ -45,6 +45,8 @@ angular.module('app.loggedIn.booking.list.controller',[])
             $scope.selectedBookId = b.Booking_id;
         }
 
+
+
         $scope.openDetail = function(b){
 
             var modalInstance = $modal.open({
@@ -143,7 +145,7 @@ angular.module('app.loggedIn.booking.list.controller',[])
                 })
 
             })
-        }
+        };
 
     })
 
