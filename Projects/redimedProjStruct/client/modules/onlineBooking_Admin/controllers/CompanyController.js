@@ -8,7 +8,7 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
         var subArr = [];
         $scope.data1 = [];
         $scope.isSelected = false;
-        $scope.selectedComp = '';
+        $scope.selectedComp = null;
 
         $scope.selectedId = null;
 
@@ -104,22 +104,23 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
             comId = $stateParams.id;
 
     $scope.info = {
-        companyName:'',
-        industry:'',
-        addr:'',
-        postCode:'',
-        state:'',
-        country:'',
-        description:'',
-        poNum:'',
-        isInvoice:'',
-        invoiceEmail:'',
-        isResult:'',
-        resultEmail:'',
-        reportEmail:'',
-        status:'',
-        isProject:'',
-        isPO:'',
+        companyName:null,
+        industry:null,
+        addr:null,
+        postCode:null,
+        state:null,
+        country:null,
+        description:null,
+        poNum:null,
+        isInvoice:null,
+        invoiceEmail:null,
+        isResult:null,
+        resultEmail:null,
+        reportEmail:null,
+        status:null,
+        isProject:null,
+        isPO:null,
+        isExtra:null,
         fatherId: comId
     };
 
@@ -147,22 +148,23 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
 
     $scope.info = {
         id: $stateParams.id,
-        companyName:'',
-        industry:'',
-        addr:'',
-        postCode:'',
-        state:'',
-        country:'',
-        description:'',
-        poNum:'',
-        isInvoice:'',
-        invoiceEmail:'',
-        isResult:'',
-        resultEmail:'',
-        reportEmail:'',
-        status:'',
-        isProject:'',
-        isPO:''
+        companyName:null,
+        industry:null,
+        addr:null,
+        postCode:null,
+        state:null,
+        country:null,
+        description:null,
+        poNum:null,
+        isInvoice:null,
+        invoiceEmail:null,
+        isResult:null,
+        resultEmail:null,
+        reportEmail:null,
+        status:null,
+        isProject:null,
+        isPO:null,
+        isExtra:null
     };
 
 
@@ -178,14 +180,15 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
             country:data.country,
             description:data.Description,
             poNum:data.PO_number,
-            isInvoice:data.isInvoiceEmailToUser == null || data.isInvoiceEmailToUser == '0' ? '0' : '1',
+            isInvoice:data.isInvoiceEmailToUser != 1 ? '0' : '1',
             invoiceEmail:data.invoice_email,
-            isResult:data.isAddContactEmailToResult == null || data.isAddContactEmailToResult == '0' ? '0' : '1',
+            isResult:data.isAddContactEmailToResult != 1  ? '0' : '1',
             resultEmail:data.result_email,
             reportEmail:data.report_to_email,
             status:data.default_status,
-            isProject:data.isProject == null || data.isProject == '0' ? '0' : '1',
-            isPO:data.isPO == null || data.isPO == '0' ? '0' : '1'
+            isProject:data.isProject != 1  ? '0' : '1',
+            isPO:data.isPO != 1  ? '0' : '1',
+            isExtra:data.isExtra != 1  ? '0' : '1'
         };
     })
 
