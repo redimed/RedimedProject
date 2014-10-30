@@ -28,11 +28,9 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 else if (response[0].status === 'findNull') {
                     //add new mrs
                     $scope.isNew = true;
-                    alert("NEW");
                 }
                 else if (response[0].status === 'findFound') {
                     $scope.isNew = false;
-                    alert("EDIT");
                 }
                 /**
                  * load data to input

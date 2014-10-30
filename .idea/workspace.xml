@@ -23,128 +23,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MHController.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MHController.js">
+      <file leaf-file-name="sites.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/views/sites.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1428" max-vertical-offset="2397">
-              <caret line="110" column="30" selection-start-line="110" selection-start-column="24" selection-end-line="110" selection-end-column="30" />
-              <folding />
+            <state vertical-scroll-proportion="-9.538462" vertical-offset="3645" max-vertical-offset="5797">
+              <caret line="229" column="45" selection-start-line="229" selection-start-column="45" selection-end-line="229" selection-end-column="45" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#tr#0;n#table#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DocumentService.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/services/DocumentService.js">
+      <file leaf-file-name="AssessmentController.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/controllers/AssessmentController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="2737">
-              <caret line="65" column="55" selection-start-line="65" selection-start-column="46" selection-end-line="65" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="function_route.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/function_route.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1377" max-vertical-offset="2924">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="document_route.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js">
+      <file leaf-file-name="BookingController.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/controllers/BookingController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="311" max-vertical-offset="1530">
-              <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="4284">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MRSController.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MRSController.js">
+      <file leaf-file-name="CompanyController.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/controllers/CompanyController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.82198954" vertical-offset="277" max-vertical-offset="2278">
-              <caret line="44" column="63" selection-start-line="44" selection-start-column="63" selection-end-line="44" selection-end-column="63" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="3621">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MRSController.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MRSController.js">
+      <file leaf-file-name="SiteController.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/controllers/SiteController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2606" max-vertical-offset="3859">
-              <caret line="170" column="55" selection-start-line="170" selection-start-column="55" selection-end-line="170" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="linesMRSCLN.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/linesMRSCLN.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
-              <caret line="18" column="42" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="groupsMRSCLN.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/groupsMRSCLN.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
-              <caret line="16" column="42" selection-start-line="5" selection-start-column="7" selection-end-line="16" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="medicalresultsummary.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="35.846153" vertical-offset="5097" max-vertical-offset="9180">
-              <caret line="245" column="94" selection-start-line="245" selection-start-column="94" selection-end-line="245" selection-end-column="94" />
-              <folding>
-                <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MHController.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3231" max-vertical-offset="5372">
-              <caret line="88" column="44" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="44" />
+            <state vertical-scroll-proportion="1.1675042" vertical-offset="1020" max-vertical-offset="8058">
+              <caret line="101" column="54" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -211,13 +144,15 @@
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MRSController.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MRSController.js" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/views/sites.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="width" value="1372" />
-    <option name="height" value="728" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -484,7 +419,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="document" />
+              <option name="myItemId" value="onlineBooking_Admin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -514,7 +449,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="document" />
+              <option name="myItemId" value="onlineBooking_Admin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -548,11 +483,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="document" />
+              <option name="myItemId" value="onlineBooking_Admin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -582,11 +517,41 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="document" />
+              <option name="myItemId" value="onlineBooking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedimedProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedimedProject" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="Projects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redimedProjStruct" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="onlineBooking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -694,14 +659,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1372" height="728" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580644" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -757,127 +722,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/node_modules/sequelize/lib/sequelize.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15097691" vertical-offset="0" max-vertical-offset="8160">
-          <caret line="5" column="46" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MAController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60390764" vertical-offset="0" max-vertical-offset="867">
-          <caret line="20" column="66" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/node_modules/sequelize/lib/data-types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16319445" vertical-offset="3901" max-vertical-offset="4930">
-          <caret line="235" column="52" selection-start-line="235" selection-start-column="52" selection-end-line="235" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/rlBookingsController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4831261" vertical-offset="102" max-vertical-offset="7259">
-          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/UQcontroller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2686">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/FunctionController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.088541664" vertical-offset="0" max-vertical-offset="1207">
-          <caret line="3" column="30" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/Company.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
-          <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/AUD1Controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="952">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/gorgonFA.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2465">
-          <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/gorgonMH.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4216">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/BookingCandidate.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/UserMenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="576">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/User.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/RedimedSite.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="576">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/Package.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="576">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/Menu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="576">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/Function.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2847571" vertical-offset="0" max-vertical-offset="597">
@@ -1115,45 +959,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3231" max-vertical-offset="5372">
-          <caret line="88" column="44" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="35.846153" vertical-offset="5097" max-vertical-offset="9180">
           <caret line="245" column="94" selection-start-line="245" selection-start-column="94" selection-end-line="245" selection-end-column="94" />
           <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#ng-form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#ng-form#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#8;n#div#0;n#div#0;n#form#0;n#div#0;n#div#1;n#div#1;n#form#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1162,6 +998,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="573">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5372">
+          <caret line="88" column="44" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="44" />
           <folding />
         </state>
       </provider>
@@ -1176,8 +1020,146 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MRSController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.82198954" vertical-offset="277" max-vertical-offset="2278">
-          <caret line="44" column="63" selection-start-line="44" selection-start-column="63" selection-end-line="44" selection-end-column="63" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="2244">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/searchBookingModal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1394">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/position.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.9615383" vertical-offset="181" max-vertical-offset="731">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/views/user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.6454544" vertical-offset="3105" max-vertical-offset="3655">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/rediLegalOnlineBooking/views/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="576">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/bookingDetailModal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.8987566" vertical-offset="1069" max-vertical-offset="2295">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/booking.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1581">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/appointmentNote.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/addPosition.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/addPackageAss.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/settings.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.04028021" vertical-offset="589" max-vertical-offset="1394">
+          <caret line="36" column="78" selection-start-line="36" selection-start-column="64" selection-end-line="36" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking/views/addPackage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/views/sites.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.538462" vertical-offset="3645" max-vertical-offset="5797">
+          <caret line="229" column="45" selection-start-line="229" selection-start-column="45" selection-end-line="229" selection-end-column="45" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#tr#0;n#table#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/controllers/AssessmentController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2924">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/controllers/BookingController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4284">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/controllers/CompanyController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3621">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/onlineBooking_Admin/controllers/SiteController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1675042" vertical-offset="1020" max-vertical-offset="8058">
+          <caret line="101" column="54" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
           <folding />
         </state>
       </provider>
