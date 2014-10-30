@@ -13,7 +13,6 @@ angular.module("app", [
     "ngIdle",                   // Ng-Idle
     "app.loggedIn",             // MODULES LOGGED IN
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
-
     "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
 
     "app.directive.common",      // CUSTOM DIRECTIVES
@@ -74,7 +73,6 @@ angular.module("app", [
 //When update any route
 .run(function($cookieStore, $state, $rootScope, $idle, $log, $keepalive){
     $idle.watch();
-    $log.debug('app started.');
     // Use when update any state
     $rootScope.$on("$stateChangeSuccess", function(e, toState, fromState, fromParams){
         if(!$cookieStore.get("userInfo")){

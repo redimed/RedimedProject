@@ -5,12 +5,12 @@ angular.module("app.loggedIn.controller",[
     var userInfo = $cookieStore.get('userInfo');
     $scope.loggedInMenus = [];
     $scope.user = userInfo.Booking_Person;
+    $scope.selectedMenu = null;
 
     UserService.getUserInfo(userInfo.id).then(function(data){
        $scope.img = data.img;
     })
 
-    
 
 
     // Load before logged in    
