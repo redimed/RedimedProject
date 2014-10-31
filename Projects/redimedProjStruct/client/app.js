@@ -78,7 +78,7 @@ angular.module("app", [
     // Use when update any state
     $rootScope.$on("$stateChangeSuccess", function(e, toState, fromState, fromParams){
         if(!$cookieStore.get("userInfo")){
-            if(toState.name !== "security.forgot" && toState.name !== "security.login"){
+            if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register"){
                 e.preventDefault();
                 $state.go("security.login");
             }

@@ -43,11 +43,11 @@ angular.module("app.security",[
     // END FORGOT
 
     //REGISTER
-    .state("security.signup", {
-    	url: "/signup",
+    .state("security.register", {
+    	url: "/register",
     	views: {
     		"main-content": {
-    			templateUrl: "modules/security/views/signup.html",
+    			templateUrl: "modules/security/views/register.html",
                 controller: "SecurityRegisterController"
     		}
     	}

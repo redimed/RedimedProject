@@ -2,6 +2,10 @@
  * Created by meditech on 29/09/2014.
  */
 var bcrypt = require('bcrypt-nodejs');
+var randomstr = require('randomstring');
+var nodemailer = require("nodemailer");
+var smtpTransport = require('nodemailer-smtp-transport');
+var smtpPool = require('nodemailer-smtp-pool');
 var db = require('../models');
 
 module.exports = {
@@ -16,12 +20,11 @@ module.exports = {
                 res.json({status:'error'});
             })
     },
+
     userByCompany: function(req,res){
         var comId = req.body.comId;
-
         db.User.findAll({where:{company_id:comId}},{raw:true})
             .success(function(data){
-
                 res.json(data);
             })
             .error(function(err){
@@ -29,39 +32,21 @@ module.exports = {
             })
     },
     insertUser: function(req,res){
-        var info = req.body.info;
+        var info = req.body.user;
 
         var hashPass = bcrypt.hashSync(info.password);
 
         console.log(info);
 
         db.User.create({
-            Booking_Person: info.bookPerson,
-            Contact_email: info.email,
-            user_name: info.username,
+            Booking_Person: info.Booking_Person,
+            Contact_email: info.Contact_email,
+            user_name: info.user_name,
             password: hashPass,
-            Contact_number: info.phone,
-            isEnable: info.isEnable,
-            isDownloadResult: info.isDownload,
-            isMakeBooking: info.isMakeBooking,
-            isPackage: info.isPackage,
-            isPosition: info.isPosition,
-            isSetting: info.isSetting,
-            isAll: info.isShowAll,
-            isBooking: info.isShowBooking,
-            isAllCompanyData: info.isViewAllData,
-            company_id: info.companyId,
-            user_type: info.userType,
-            PO_number: info.poNum,
-            invoiceemail: info.invoiceEmail,
-            result_email: info.resultEmail,
-            Report_To_email:info.reportEmail,
-            function_id: info.function_id,
-            employee_id: info.empId,
-            isCalendar: info.isCalendar,
-            isProject: info.isProject,
-            isAdmin: info.isAdmin,
-            isReceiveEmailAfterHour:info.isReceiveEmail
+            Contact_number: info.Contact_number,
+            isEnable: 1,
+            company_id: info.company_id,
+            user_type: "Company"
         },{raw:true})
             .success(function(data){
                 res.json({status:'success'});
@@ -241,5 +226,84 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error'});
             })
+    },
+    forgotPassword:function(req,res){
+       var femail = req.query.email;
+       var newpass = randomstr.generate(10);
+       var byscrip = bcrypt.hashSync(newpass);
+        var transport = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user:'tannv.solution@gmail.com',//test
+                pass:'redimed123'//test
+            }
+        });
+
+        var mailOptions = {
+            from: 'Tan Nguyen ? <tannv.solution@gmail.com>', // sender address.  Must be the same as authenticated user if using Gmail.
+            to: femail, // receiver
+            subject:'Redimed New Password', // Subject line
+            html:
+            "	<p>Hi,</p>                                 "+
+            "    <p>                                                                                                 "+
+            "        New Password:"+ newpass+
+            "    </p>                                                                                                "+
+
+            "    <p>                                                                                                 "+
+            "        Should you have any questions please do not hesitate to contact Redilegal                       "+
+            "        on (08) 9230 0900 or redilegal@redimed.com.au                                                   "+
+            "    </p>                                                                                                "+
+            "    <p>                                                                                                 "+
+            "        Thank you                                                                                       "+
+            "    </p>   "
+
+        }
+
+        db.User.update({
+           password:byscrip
+        },{Contact_email:femail}).success(function(data){
+
+            transport.sendMail(mailOptions, function(error, response){  //callback
+                if(error){
+                    console.log(error);
+                    res.json({status:"fail"});
+                }else{
+                    console.log("Message sent: " + response.message);
+                    res.json({status:"success"});
+                }
+                transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+            });
+
+
+        }).error(function(err){
+            res.json({status:'Error'});
+        })
+
+    },
+    checkEmail: function(req,res){
+        var email = req.query.email;
+
+        db.sequelize.query('SELECT us.Contact_email FROM users AS us WHERE Contact_email = ?',null,{raw:true},[email])
+            .success(function(data){
+                console.log(data);
+                res.json(data);
+
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    checkUser:function(req,res){
+        var username = req.query.user_name;
+        db.sequelize.query('SELECT us.user_name FROM users AS us WHERE user_name = ?',null,{raw:true},[username])
+            .success(function(data){
+                console.log(data);
+                res.json(data);
+
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
     }
+
 }

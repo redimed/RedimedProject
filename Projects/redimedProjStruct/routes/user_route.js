@@ -15,3 +15,6 @@ app.post('/api/users/menu/details',UserController.userMenuDetails);
 app.post('/api/users/menu/edit',UserController.editMenuInfo);
 app.post('/api/users/menu/insert',UserController.insertNewUserMenu);
 app.post('/api/users/editProfile',UserController.editProfile);
+app.get('/api/users/checkEmail',UserController.checkEmail);
+app.get('/api/users/checkUser',UserController.checkUser);
+app.get('/api/users/forgotPassword',UserController.forgotPassword);

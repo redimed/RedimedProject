@@ -13,6 +13,24 @@ angular.module("app.security.services", [])
         var companyList = securityApi.one('company/list');
         return companyList.get();
     }
+     securityService.regNewUser = function(user){
+            var userList = securityApi.all('users/insert');
+            return userList.post({user:user});
+     }
+        securityService.checkEmail = function(email){
+            var emailCheck = securityApi.one('users/checkEmail');
+            return emailCheck.get({email:email})
+        }
+        securityService.checkUserName = function(username){
+            var usernameCheck = securityApi.one('users/checkUser');
+            return usernameCheck.get({user_name:username});
+        }
+        securityService.forgotPass = function(email){
+            var forgotMail = securityApi.one('users/forgotPassword');
+            return forgotMail.get({email:email});
+        }
+
+
 
     return securityService;
 })

@@ -52,4 +52,5 @@ angular.module("app.lockscreen.controller",[
             }
         }
 
+
 })
