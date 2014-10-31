@@ -647,6 +647,8 @@ module.exports = {
             })
     },
     exportToExcel: function(req,res){
+        var cId = req.params.cId;
+
         var conf ={};
         // uncomment it FOR style EXAMPLE
         // conf.stylesXmlFile = "styles.xml";
@@ -654,24 +656,108 @@ module.exports = {
             caption:'Company Name',
             captionStyleIndex: 1,
             TYPE:'string',
-            width:20
+            width:40
         },{
             caption:'PO Number',
             TYPE:'string',
+            width:15
+        },{
+            caption:'Booking Person',
+            TYPE:'string',
             width:20
-        }];
+        },{
+            caption:'Contact Number',
+            TYPE:'string',
+            width:15
+        },{
+            caption:'Result To Email',
+            TYPE:'string',
+            width:30
+        },{
+            caption:'Invoice To Email',
+            TYPE:'string',
+            width:30
+        },{
+            caption:'Comment',
+            TYPE:'string',
+            width:30
+        },{
+            caption:'Candidate Name',
+            TYPE:'string',
+            width:30
+        },{
+            caption:'DOB',
+            TYPE:'string',
+            width:15
+        },{
+            caption:'Phone',
+            TYPE:'string',
+            width:15
+        },{
+            caption:'Email',
+            TYPE:'string',
+            width:15
+        },{
+            caption:'Position',
+            TYPE:'string',
+            width:15
+        },{
+            caption:'Location',
+            TYPE:'string',
+            width:15
+        },{
+            caption:'Appointment Time',
+            TYPE:'string',
+            width:20
+        },{
+            caption:'Note',
+            TYPE:'string',
+            width:30
+        },{
+            caption:'Status',
+            TYPE:'string',
+            width:15
+        },{
+            caption:'Package Name',
+            TYPE:'string',
+            width:20
+        },{
+            caption:'Fee',
+            TYPE:'number',
+            width:10
+        }
+        ];
         var arr = [];
-        db.sequelize.query("SELECT * FROM booking_cadidates_v",null,{raw:true})
+        db.sequelize.query("SELECT * FROM booking_cadidates_v WHERE company_id = ?",null,{raw:true},[cId])
             .success(function(data){
                 for(var i=0; i<data.length; i++)
                 {
-                    arr.push([data[i].company_name,data[i].PO_Number]);
+                    arr.push([
+                        data[i].company_name == null ? 'N/A' : data[i].company_name,
+                        data[i].PO_Number == null ? 'N/A' : data[i].PO_Number,
+                        data[i].Booking_Person == null ? 'N/A' : data[i].Booking_Person,
+                        data[i].contact_number == null ? 'N/A' : data[i].contact_number,
+                        data[i].Result_Email == null ? 'N/A' : data[i].Result_Email,
+                        data[i].Invoice_Email == null ? 'N/A' : data[i].Invoice_Email,
+                        data[i].Comments == null ? 'N/A' : data[i].Comments,
+                        data[i].Candidates_name == null ? 'N/A' : data[i].Candidates_name,
+                        data[i].DoB == null ? 'N/A' : data[i].DoB,
+                        data[i].Phone == null ? 'N/A' : data[i].Phone,
+                        data[i].Email == null ? 'N/A' : data[i].Email,
+                        data[i].Position == null ? 'N/A' : data[i].Position,
+                        data[i].site_name == null ? 'N/A' : data[i].site_name,
+                        data[i].Appointment_time == null ? 'N/A' : data[i].Appointment_time,
+                        data[i].Appointment_notes == null ? 'N/A' : data[i].Appointment_notes,
+                        data[i].Appointment_status == null ? 'N/A' : data[i].Appointment_status,
+                        data[i].package_name == null ? 'N/A' : data[i].package_name,
+                        data[i].fee == null ? 'N/A' : data[i].fee + ' $'
+                    ]);
                 }
                 conf.rows = arr;
 
                 var result = nodeExcel.execute(conf);
                 res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-                res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+                res.setHeader("Content-Disposition", "attachment; filename=" + "BookingReport.xlsx");
                 res.end(result, 'binary');
             })
             .error(function(err){

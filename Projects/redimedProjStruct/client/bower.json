@@ -33,7 +33,8 @@
     "angular-snap": "~1.6.0",
     "jasny-bootstrap": "~3.1.3",
     "ng-idle": "~0.3.5",
-     "bootstrapvalidator": "~0.5.2",
-     "angular-ui-date": "latest"
+    "bootstrapvalidator": "~0.5.2",
+    "angular-ui-date": "latest",
+    "bootstrap-iconpicker": "~1.5.0"
   }
 }

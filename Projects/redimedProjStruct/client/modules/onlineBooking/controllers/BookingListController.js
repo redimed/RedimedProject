@@ -10,9 +10,14 @@ angular.module('app.loggedIn.booking.list.controller',[])
             formatYear: 'yy',
             startingDay: 1
         };
+        $scope.cId = null;
+        $scope.isExtra = 0;
+
         if($cookieStore.get('companyInfo') !== 'undefined')
         {
             companyInfo = $cookieStore.get('companyInfo');
+            $scope.cId = companyInfo[0].id;
+            $scope.isExtra = companyInfo[0].isExtra == 1 ? 1 : 0;
         }
 
         OnlineBookingService.getBookingList(companyInfo[0].id).then(function(data){
@@ -44,7 +49,6 @@ angular.module('app.loggedIn.booking.list.controller',[])
             $scope.selectedCanId = b.Candidate_id;
             $scope.selectedBookId = b.Booking_id;
         }
-
 
 
         $scope.openDetail = function(b){

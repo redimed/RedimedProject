@@ -26,4 +26,4 @@ app.post('/api/booking/edit',BookingController.editBooking);
 app.post('/api/booking/confirm',BookingController.confirmBooking);
 app.post('/api/booking/search',BookingController.search);
 app.post('/api/booking/edit/note',BookingController.editAppointmentNote);
-app.get('/api/booking/export',BookingController.exportToExcel);
+app.get('/api/booking/export/:cId',BookingController.exportToExcel);

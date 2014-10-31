@@ -45,14 +45,15 @@ module.exports = {
             Description: info.description,
             country: info.country,
             PO_number: info.poNum,
-            isInvoiceEmailToUser: info.isInvoice == '' || info.isInvoice == null ? 0 : 1,
+            isInvoiceEmailToUser:  info.isInvoice == '1' ? 1 : 0,
             invoice_email: info.invoiceEmail,
-            isAddContactEmailToResult: info.isResult == '' || info.isResult == null ? 0 : 1,
+            isAddContactEmailToResult:  info.isResult == '1' ? 1 : 0,
             result_email: info.resultEmail,
             report_to_email: info.reportEmail,
             default_status: status,
-            isProject: info.isProject == '' || info.isProject == null ? 0 : 1 ,
-            isPO: info.isPO == '' || info.isPO == null ? 0 : 1,
+            isProject:  info.isProject == '1' ? 1 : 0 ,
+            isPO:  info.isPO == '1' ? 1 : 0,
+            isExtra:  info.isExtra == '1' ? 1 : 0,
             father_id: fatherId
         },{raw:true})
             .success(function(data){
@@ -76,14 +77,15 @@ module.exports = {
             Description: info.description,
             country: info.country,
             PO_number: info.poNum,
-            isInvoiceEmailToUser: info.isInvoice == '' || info.isInvoice == null ? 0 : 1,
+            isInvoiceEmailToUser:  info.isInvoice == '1' ? 1 : 0,
             invoice_email: info.invoiceEmail,
-            isAddContactEmailToResult: info.isResult == '' || info.isResult == null ? 0 : 1,
+            isAddContactEmailToResult:  info.isResult == '1' ? 1 : 0,
             result_email: info.resultEmail,
             report_to_email: info.reportEmail,
             default_status: info.status,
-            isProject: info.isProject == '' || info.isProject == null ? 0 : 1 ,
-            isPO: info.isPO == '' || info.isPO == null ? 0 : 1
+            isProject:  info.isProject == '1' ? 1 : 0 ,
+            isExtra:  info.isExtra == '1' ? 1 : 0,
+            isPO:  info.isPO == '1' ? 1 : 0
         },{id:comId})
             .success(function(data){
                 res.json({status:'success'});

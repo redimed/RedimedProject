@@ -304,15 +304,13 @@
     </li>
 
     <li ng-repeat="menu in loggedInMenus">
-        <a ui-sref="{{menu.parent.definition}}">
+        <a ui-sref="{{menu.parent.definition}}" >
             <i class="icon-star"></i>
             <span class="title">{{menu.parent.name}}</span>
-
         </a>
         <ul ng-if="menu.parent.childs.length > 0" class="sub-menu">
             <li ng-repeat="submenu in menu.parent.childs">
                 <a ui-sref="{{submenu.definition}}">
-                    <i class="icon-compass"></i>
                     {{submenu.name}}
                 </a>
             </li>
@@ -338,7 +336,7 @@
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
     <div class="page-footer-inner">
-        2014 &copy; Metronic by keenthemes.
+        2014 &copy; REDiMED.
     </div>
     <div class="scroll-to-top">
         <i class="icon-arrow-up"></i>
