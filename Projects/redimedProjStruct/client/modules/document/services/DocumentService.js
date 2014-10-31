@@ -75,6 +75,25 @@ angular.module('app.loggedIn.document.services', [])
          */
 
         /**
+         * begin form 18
+         */
+        documentService.loadForm18 = function (infoLoad) {
+            var loadForm = api.all('document/loadForm18');
+            return loadForm.post({info: infoLoad});
+        }
+        documentService.insertForm18 = function (infoAdd) {
+            var insertForm18 = api.all('document/insertForm18');
+            return insertForm18.post({info: infoAdd});
+        }
+        documentService.edit = function (infoEdit) {
+            var editForm18 = api.all('document/editForm18');
+            return editForm18.post({info: infoEdit});
+        }
+        /**
+         * end form 18
+         */
+
+        /**
          * begin audiogram 1
          */
         documentService.newAUD1 = function () {

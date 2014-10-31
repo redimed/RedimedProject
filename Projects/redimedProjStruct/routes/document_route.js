@@ -12,6 +12,7 @@ var AUD2Controller = require('./controllers/DocumentController/AUD2Controller');
 var Cat3Controller = require('./controllers/DocumentController/Cat3Controller');
 var UQController = require('./controllers/DocumentController/UQController');
 var gorgonMHController = require('./controllers/DocumentController/gorgonMHController');
+var form18Controller = require('./controllers/DocumentController/form18Controller');
 var GorgonFAController = require('./controllers/DocumentController/GorgonFAController');
 var GorgonMAController = require('./controllers/DocumentController/GorgonMAController');
 var GorgonMHController = require('./controllers/DocumentController/GorgonMHController');
@@ -31,6 +32,16 @@ app.post('/api/document/findCat3', Cat3Controller.findCat3);
 app.post('/api/document/editCat3', Cat3Controller.editCat3);
 /**
  * end category 3
+ */
+
+/**
+ * begin form18
+ */
+app.post('/api/document/loadForm18', form18Controller.loadForm18);
+app.post('/api/document/insertForm18', form18Controller.insertForm18);
+app.post('/api/document/insertForm18', form18Controller.editForm18);
+/**
+ * end form 18
  */
 
 /**

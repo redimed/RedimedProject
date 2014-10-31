@@ -1,3 +1,16 @@
+<style>
+    #modalSign .modal-dialog {
+        width: 800px;
+        height: 800px;
+    }
+</style>
+<style>
+    #modalSign1 .modal-dialog {
+        width: 800px;
+        height: 800px;
+    }
+</style>
+<form name="form18" method="post" novalidate>
 <div class="caption">
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -8,8 +21,7 @@
     </div>
 </div>
 <br/>
-<div class="row">
-<div class="col-md-12 col-sm-12">
+
 <div class="portlet box grey-cascade">
 <div class="portlet-title">
     <div class="caption">
@@ -23,201 +35,304 @@
     </div>
 </div>
 <div class="portlet-body form">
-    <form class="form-horizontal form-bordered">
+<div class="panel panel-default">
+    <div class="panel-body">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="col-md-7 col-sm-7">
-                    <label class="control-label bold">To: (Full legal name of worker)</label>
-                    <input type="text" class="form-control"/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-7 col-sm-7">
-                    <label class="control-label bold">Address of worker</label>
-                    <textarea class="form-control has-success"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <p style="margin-left: 10px; margin-top: 20px;">Notice is hereby given that I have
-                    arranged
-                    for you
-                    to
-                    undergo an audiometric test to be conducted by:</p>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-7 col-sm-7">
-                    <label class="control-label bold">Name of person approved under regulation
-                        19B</label>
-                    <input type="text" class="form-control"/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-7 col-sm-7">
-                    <label class="control-label bold">Name of clinic</label>
-                    <input type="text" class="form-control"/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-7 col-sm-7">
-                    <label class="control-label bold">Address of clinic</label>
-                    <textarea class="form-control"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-3 col-sm-4">
-                    <label class="control-label bold">Time of test</label>
-                    <input type="text" class="form-control"/>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <label class="control-label bold">Date of test</label>
-                    <input type="text" class="form-control col-md-12" name="dob" required
-                           datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                           is-open="openDOB" ng-click="openDOB = true"
-                           datepicker-options="dateOptions" ng-required="true"
-                           close-text="Close"/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-7 col-sm-7">
-                    <label class="control-label bold">Name of employer</label>
-                    <input type="text" class="form-control"/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-3" style="margin-left: 10px;">
-                <label class="control-label bold">Location/worksite</label>
-                <textarea class="form-control"></textarea>
-            </div>
-            <div class="col-md-1 col-sm-1">
-                <label class="control-label bold" style="margin-left: 25%;margin-top: 100%;">WC</label>
-            </div>
-            <div class="col-md-5 col-sm-7">
-                <label class="control-label bold" style="text-align: left;">Employer WorkCover No(obtainable
-                    from
-                    your insurer)</label>
-                <textarea class="form-control bold"></textarea>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-4 col-sm-5">
-                    <textarea class="form-control" style="margin-top: 25px;height: 120px;"></textarea>
-                    <label class="control-label bold">Signature of person arranging test</label>
-                </div>
-                <div class="col-md-3 col-sm-3" style="margin-top: 80px;">
-                    <label class="control-label bold">Date</label>
-                    <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy"
-                           data-ng-model="info.fromDate" is-open="openFrom1" ng-click="openFrom1 = true"
-                           datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <label class="control-label bold">Name of person arranging test</label>
-                        <input type="text" class="form-control"/></br>
-                        <label class="control-label bold">Position</label>
-                        <input type="text" class="form-control"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-2 col-sm-2">
-                    <p style="font-weight: bold;">Non attendance:</p>
-                </div>
-                <div class="col-md-10 col-sm-10">
-                    <p>A worker shall not, without reasonable excuse, fail to submit themselves for an
-                        audiometric test
-                        of
-                        which
-                        the worker has notice (regulation 19D(3)).</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-2 col-sm-2">
-                    <p style="font-weight: bold;">Period of Quiet:</p>
-                </div>
-                <div class="col-md-10 col-sm-10">
-                    <p>An employer shall ensure that the worker is not knowingly exposed in the
-                        workplace,
-                        and
-                        the
-                        worker
-                        shall not knowingly permit himself to be exposed , to noise levels above 80dB(A)
-                        during
-                        16 hours
-                        immediately preceding the audiometric test (regulation 19D(2)).</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-12 col-sm-12">
-                    <p>To be completed at the start of the appointment</p>
-                </div>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-7 col-sm-7">
-                    <label class="control-label bold">I (Full legal name of worker)</label>
-                    <input type="text" class="form-control"/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-7 col-sm-7">
-                    <label class="control-label bold">Confirm that i have observed the period od
-                        quiet.</label>
-                    <textarea class="form-control"></textarea>
-                    <label class="control-label bold">Worker's signature</label>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <label class="control-label bold">Date</label>
-                    <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy"
-                           data-ng-model="info.fromDate2" is-open="openFrom2"
-                           ng-click="openFrom2 = true" datepicker-options="dateOptions"
-                           ng-required="true" close-text="Close"/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7 col-sm-7" style="margin-left: 10px">
-                <textarea class="form-control" style="margin-top: 25px;"></textarea>
-                <label class="control-label bold">Tester's signature</label>
-            </div>
-            <div class="col-md-3 col-sm-4">
-                <label class="control-label bold">Date</label>
-                <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy"
-                       data-ng-model="info.fromDate" is-open="openFrom3"
-                       ng-click="openFrom3 = true"
-                       datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+                <label class="control-label">To: (Full legal name of worker):</label>
             </div>
         </div>
         <br/>
-    </form>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Address of worker:</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <p style="margin-left: 10px;">Notice is hereby given that I have
+            arranged
+            for you
+            to
+            undergo an audiometric test to be conducted by:</p>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Name of person approved under regulation 19B:</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Name of clinic:</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Address of clinic:</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 col-sm-2">
+                <label class="control-label" style="margin-top: 35px;">Time test</label>
+            </div>
+            <div class="col-md-10 col-sm-10">
+                <timepicker ng-model="info.TIME_TEST" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label" style="margin-top: 7px;">Date test</label>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <input type="text" class="form-control col-md-12" name="dob" required
+                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.TIME_TEST"
+                       is-open="openDOB" ng-click="openDOB = true"
+                       datepicker-options="dateOptions" ng-required="true"
+                       close-text="Close"/>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Name of employer:</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Location/worksite:</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Employer WorkCover No(obtainable
+                    from
+                    your insurer):</label>
+            </div>
+            <div class="col-md-7 col-sm-7">
+                <input type="text" class="form-control" ng-model="info.WORK_COVER_NO"/>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                <a href="javascript:;" id="signBtn" class="btn green">Signature of person arranging test</a>
+                <script type="text/javascript">
+                    $('#signBtn').click(function () {
+                        $('#modalSign').modal({
+                            show: true
+                        });
+                    });
+
+                </script>
+                <img src="" id="signDisplay" ng-model="info.PERSON_ARRANGING_SIGNATURE"
+                     style="width:250px;height:30px;"/>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <label class="control-label">Date:</label>
+            </div>
+            <div class="col-md-5 col-sm-5">
+                <div class="row">
+                    <label class="control-label">Name of person arranging test:</label>
+                    <input type="text" class="form-control" ng-model="info.PERSON_ARRANGING_NAME"/>
+                </div>
+                <div class="row">
+                    <label class="control-label">Position:</label>
+                    <input type="text" class="form-control" ng-model="info.PERSON_ARRANGING_POSITION"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-2 col-sm-2" style="width: 140px;">
+            <p class="bold">Non attendance:</p>
+        </div>
+        <div class="col-md-10 col-sm-10">
+            <p>A worker shall not, without reasonable excuse, fail to submit themselves for an
+                audiometric test
+                of
+                which
+                the worker has notice (regulation 19D(3)).</p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-2 col-sm-2" style="width: 140;">
+            <p class="bold">Period of Quiet:</p>
+        </div>
+        <div class="col-md-10 col-sm-10">
+            <p>An employer shall ensure that the worker is not knowingly exposed in the
+                workplace,
+                and
+                the
+                worker
+                shall not knowingly permit himself to be exposed , to noise levels above 80dB(A)
+                during
+                16 hours
+                immediately preceding the audiometric test (regulation 19D(2)).</p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="com-md-12 col-sm-12">
+            <p>To be completed at the start of the appointment</p>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">I (Full legal name of worker): </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <p>Confirm that I have observed the period of quiet. </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                <a href="javascript:;" id="signBtn1" class="btn green">Worker's signature</a>
+                <script type="text/javascript">
+                    $('#signBtn1').click(function () {
+                        $('#modalSign1').modal({
+                            show: true
+                        });
+                    });
+
+                </script>
+                <img src="" id="signDisplay1" ng-model="info.WORKER_SIGNATURE"
+                     style="width:250px;height:30px;"/>
+            </div>
+            <div class="col-md-1" style="width: 50px;">
+                <label class="control-label">Date:</label>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <input type="text" class="form-control col-md-12" name="dob" required
+                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.TIME_TEST"
+                       is-open="openDOB1" ng-click="openDOB1 = true"
+                       datepicker-options="dateOptions" ng-required="true"
+                       close-text="Close"/>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <label class="control-label">Worker's signature:</label>
+                <img src="" id="signDisplay2" ng-model="info.consentSign"
+                     style="width:250px;height:30px;"/>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <label class="control-label">Date:</label>
+                <input type="text" class="form-control col-md-12" name="dob" required
+                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.TIME_TEST"
+                       is-open="openDOB2" ng-click="openDOB2 = true"
+                       datepicker-options="dateOptions" ng-required="true"
+                       close-text="Close"/>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 </div>
+</form>
+<!--=============================== Signature Form ============================================-->
+<div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
 </div>
+<div id="modalSign1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Signature</h4>
+            </div>
+            <div class="modal-body">
+                <div id="signature1"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
+                <a href="javascript:;" id="resetSig1" class="btn blue">Reset</a>
+                <a href="javascript:;" id="okSig1" class="btn green">OK</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+            $('#signDisplay').hide();
+            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 700, height: 500});
+
+            $('#resetSig').on('click', function () {
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig').on('click', function () {
+                var data = $sigdiv.jSignature('getData')
+                if (data != null) {
+                    $('#signDisplay').attr("src", data);
+                    $('#signDisplay').show();
+                }
+
+                $('#modalSign').modal('hide');
+
+            });
+
+        })
+    })(jQuery)
+</script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+            $('#signDisplay1').hide();
+            var $sigdiv = $("#signature1").jSignature({lineWidth: 2, width: 700, height: 500});
+
+            $('#resetSig1').on('click', function () {
+                $sigdiv.jSignature('reset')
+            });
+
+            $('#okSig1').on('click', function () {
+                var data = $sigdiv.jSignature('getData')
+                if (data != null) {
+                    $('#signDisplay1').attr("src", data);
+                    $('#signDisplay1').show();
+                }
+
+                $('#modalSign1').modal('hide');
+
+            });
+
+        })
+    })(jQuery)
+</script>
