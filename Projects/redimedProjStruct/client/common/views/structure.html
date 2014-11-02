@@ -311,6 +311,7 @@
         <ul ng-if="menu.parent.childs.length > 0" class="sub-menu">
             <li ng-repeat="submenu in menu.parent.childs">
                 <a ui-sref="{{submenu.definition}}">
+                    <i class="fa fa-angle-right"></i>
                     {{submenu.name}}
                 </a>
             </li>

@@ -1,34 +1,30 @@
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
 <html ng-app="app">
 <head>
 	<meta charset="utf-8">
 
-	<title>REDiMED Corp</title>
+	<title>REDiMED</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<meta content="" name="description"/>
 	<meta content="" name="author"/>
-    <!-- JQUERY -->
-    <script type="text/javascript" src="vendor/bootstrap-iconpicker/jquery/jquery-1.10.2.min.js"></script>
-    <!-- END JQUERY -->
 
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <script type="text/javascript" src="vendor/bootstrap-iconpicker/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="vendor/angular/angular.js"></script>
+
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <link href="/theme/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-    <link href="/theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/theme/assets/global/plugins/fontawesome-iconpicker.min.css" rel="stylesheet" type="text/css" />
-<!--tannv.dts add-->
-<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
-<script src="theme/assets/global/plugins/moment.min.js" type="text/javascript"></script>
-<!----------------------->
-
+    <link href="theme/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <link href="theme/assets/global/plugins/fontawesome-iconpicker.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
+    <script src="theme/assets/global/plugins/moment.min.js" type="text/javascript"></script>
 	<!-- END GLOBAL MANDATORY STYLES -->
 
 	<!-- LOGIN PAGE LEVEL STYLES -->
@@ -36,43 +32,28 @@
 	<!-- END PAGE LEVEL SCRIPTS -->
 
 	<!-- BEGIN THEME STYLES -->
-	<link href="/theme/assets/global/css/components.css" rel="stylesheet" type="text/css"/>
-	<link href="/theme/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-	<link href="/theme/assets/admin/layout2/css/layout.css" rel="stylesheet" type="text/css"/>
-	<link href="/theme/assets/admin/layout2/css/themes/default.css" rel="stylesheet" type="text/css"/>
-	<link href="/theme/assets/admin/layout2/css/custom.css" rel="stylesheet" type="text/css"/>
-
+	<link href="theme/assets/global/css/components.css" rel="stylesheet" type="text/css"/>
+	<link href="theme/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+	<link href="theme/assets/admin/layout2/css/layout.css" rel="stylesheet" type="text/css"/>
+	<link href="theme/assets/admin/layout2/css/themes/default.css" rel="stylesheet" type="text/css"/>
+	<link href="theme/assets/admin/layout2/css/custom.css" rel="stylesheet" type="text/css"/>
 	<!-- END THEME STYLES -->
 
-	<!-- FAVICON -->
-	<link rel="shortcut icon" href="favicon.ico"/>
-	<!-- END FAVICON -->
+    <!-- BOOTSTRAP JS -->
+    <script src="theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+    <!-- END BOOTSTRAP JS -->
 
+    <!--tannv.dts add-->
+    <script src="theme/assets/global/plugins/angular/angular-resource.min.js"></script>
+    <script src="theme/assets/global/plugins/angular/angular-route.min.js"></script>
+    <script src="theme/assets/global/plugins/angular/angular-cookies.min.js"></script>
+    <script src="theme/assets/global/plugins/angular/angular-filter.min.js"></script>
 
-
-<!-- BOOTSTRAP JS -->
-<script src="/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
-<!-- END BOOTSTRAP JS -->
-
-
-<!-- BOOTSTRAP VALIDATOR-->
-<link href="vendor/bootstrapvalidator/dist/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css"/>
-<script src="vendor/bootstrapvalidator/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
-<!--END BOOTSTRAP VALIDATOR -->
-	<!-- ANGULAR -->
-	<script src="vendor/angular/angular.js"></script>
-<!--tannv.dts add-->
-<script src="/theme/assets/global/plugins/angular/angular-resource.min.js"></script>
-<script src="/theme/assets/global/plugins/angular/angular-route.min.js"></script>
-<script src="/theme/assets/global/plugins/angular/angular-cookies.min.js"></script>
-<script src="/theme/assets/global/plugins/angular/angular-filter.min.js"></script>
-
-<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-shim.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-sham.min.js"></script>
-<script src="/theme/assets/global/plugins/angular/angular-file-upload.min.js"></script>
-<script src="/theme/assets/global/plugins/angular/angular-mailto.js"></script>
-<!---------------------->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-shim.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-sham.min.js"></script>
+    <script src="theme/assets/global/plugins/angular/angular-file-upload.min.js"></script>
+    <script src="theme/assets/global/plugins/angular/angular-mailto.js"></script>
+    <!---------------------->
 	<!-- END ANGULAR -->
 
 	<!-- UNIFORM PLUGINS -->
@@ -117,25 +98,13 @@
 	<!-- END ANGULAR TOASTR -->
 
     <!-- ANGULAR NG-TABLE -->
-    <script src="/theme/assets/global/plugins/ngTable/ng-table.min.js"></script>
-    <link rel="stylesheet" href="/theme/assets/global/plugins/ngTable/ng-table.min.css">
+    <script src="theme/assets/global/plugins/ngTable/ng-table.min.js"></script>
+    <link rel="stylesheet" href="theme/assets/global/plugins/ngTable/ng-table.min.css">
     <!-- END ANGULAR NG-TABLE -->
 
     <!-- ANGULAR FILE UPLOAD -->
     <script src="vendor/angular-file-upload/angular-file-upload.min.js"></script>
     <!--END ANGULAR FILE UPLOAD -->
-
-	<!-- APPLICATION SYSTEM STRUCTURE -->
-	<script type="text/javascript" src="app.js"></script>
-	<script type="text/javascript" src="modules/loggedIn.js"></script>
-	<script type="text/javascript" src="modules/loggedInController.js"></script>
-    <script type="text/javascript" src="modules/security/controllers/lockscreenController.js"></script>
-	<!-- END -->
-
-	<!-- ANGULAR DIRECTIVES -->
-	<script type="text/javascript" src="common/directives/common.js"></script>
-	<!-- END ANGULAR DIRECTIVES -->
-
 
     <!--JASNY BOOTSTRAP -->
     <script type="text/javascript" src="vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
@@ -146,7 +115,63 @@
     <script type="text/javascript" src="vendor/ng-idle/angular-idle.min.js"></script>
     <!--END NG-IDLE -->
 
-	<!-- MODULE SECURITY -->
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" type="text/css" href="theme/custom.css">
+    <!-- END CUSTOM CSS -->
+
+    <script src="theme/assets/global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+
+    <!--------- BUI VUONG -------->
+    <!-- ANGULAR DATE -->
+    <link rel="stylesheet" type="text/css" href="vendor/jquery-ui/themes/smoothness/jquery-ui.min.css">
+    <script type="text/javascript" src="vendor/angular-ui-date/src/date.js"></script>
+    <!-- END ANGULAR DATE -->
+
+    <script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+
+    <!-- END DATE PAGINATOR PLUGIN -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script type="text/javascript" src="theme/assets/global/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript" src="theme/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="theme/assets/global/plugins/datatables/media/js/jquery.dataTables.columnFilter.js"></script>
+    <script type="text/javascript" src="theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <!-- BEGIN PAGE booking -->
+    <!--<script src="theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>-->
+    <script src="theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="theme/assets/global/plugins/bootstrap-datepaginator/bootstrap-datepaginator.min.js" type="text/javascript"></script>
+    <script src="theme/assets/admin/pages/scripts/ui-datepaginator.js"></script>
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
+    <script type="text/javascript" src="theme/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="theme/assets/global/plugins/datatables/media/js/jquery.dataTables.columnFilter.js"></script>
+    <script type="text/javascript" src="theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-notify/css/bootstrap-notify.css"/>
+    <script type="text/javascript" src="theme/assets/global/plugins/bootstrap-notify/js/bootstrap-notify.js"></script>
+
+
+
+
+
+    <!-- ===============================================START MODULE====================================================== -->
+    <!-- ANGULAR DIRECTIVES -->
+    <script type="text/javascript" src="common/directives/common.js"></script>
+    <!-- END ANGULAR DIRECTIVES -->
+
+    <!-- APPLICATION SYSTEM STRUCTURE -->
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="modules/loggedIn.js"></script>
+    <script type="text/javascript" src="modules/loggedInController.js"></script>
+    <script type="text/javascript" src="modules/security/controllers/lockscreenController.js"></script>
+    <!-- END -->
+
+	<!-- START MODULE SECURITY -->
 	<script type="text/javascript" src="modules/security/Security.js"></script>
 	<script type="text/javascript" src="modules/security/services/SecurityServices.js"></script>
 	<script type="text/javascript" src="modules/security/controllers/SecurityController.js"></script>
@@ -155,33 +180,36 @@
     <script type="text/javascript" src="modules/security/controllers/SecurityRegisterController.js"></script>
 	<!-- END MODULE SECURITY -->
 
-	<!-- MODULE HOME -->
+	<!-- START MODULE HOME -->
 	<script type="text/javascript" src="modules/home/Home.js"></script>
 	<script type="text/javascript" src="modules/home/controllers/HomeController.js"></script>
 	<!-- END MODULE HOME -->
 
-	<!-- MODULE USER -->
+	<!-- START MODULE USER -->
 	<script type="text/javascript" src="modules/user/User.js"></script>
 	<script type="text/javascript" src="modules/user/services/UserServices.js"></script>
     <script type="text/javascript" src="modules/user/controllers/UserProfileController.js"></script>
 	<!-- END MODULE USER -->
 
-    <!-- MODULE FUNCTION -->
+    <!-- START MODULE FUNCTION -->
     <script type="text/javascript" src="modules/function/Function.js"></script>
     <script type="text/javascript" src="modules/function/services/FunctionService.js"></script>
     <script type="text/javascript" src="modules/function/controllers/FunctionController.js"></script>
+    <!-- END MODULE FUNCTION -->
 
-    <!-- MODULE MENU -->
+    <!-- START MODULE MENU -->
     <script type="text/javascript" src="modules/menu/Menu.js"></script>
     <script type="text/javascript" src="modules/menu/services/MenuService.js"></script>
     <script type="text/javascript" src="modules/menu/controllers/MenuController.js"></script>
+    <!-- END MODULE MENU -->
 
-    <!-- MODULE TELEHEALTH -->
+    <!-- START MODULE TELEHEALTH -->
     <script type="text/javascript" src="modules/telehealth/Telehealth.js"></script>
     <script type="text/javascript" src="modules/telehealth/controllers/TelehealthFormController.js"></script>
     <script type="text/javascript" src="modules/telehealth/services/TelehealthService.js"></script>
+    <!-- END MODULE TELEHEALTH -->
 
-    <!--MODULE ONLINE-BOOKING -->
+    <!--START MODULE ONLINE-BOOKING -->
     <script type="text/javascript" src="modules/onlineBooking/OnlineBooking.js"></script>
     <script type="text/javascript" src="modules/onlineBooking/controllers/MakeBookingController.js"></script>
     <script type="text/javascript" src="modules/onlineBooking/controllers/BookingListController.js"></script>
@@ -189,8 +217,9 @@
     <script type="text/javascript" src="modules/onlineBooking/controllers/PositionController.js"></script>
     <script type="text/javascript" src="modules/onlineBooking/controllers/SettingController.js"></script>
     <script type="text/javascript" src="modules/onlineBooking/services/OnlineBookingService.js"></script>
+    <!--END MODULE ONLINE-BOOKING -->
 
-    <!--Online Booking Admin -->
+    <!--STAR MODULE ONLINE-BOOKING ADMIN -->
     <script type="text/javascript" src="modules/onlineBooking_Admin/OnlineBookingAdmin.js"></script>
     <script type="text/javascript" src="modules/onlineBooking_Admin/controllers/BookingController.js"></script>
     <script type="text/javascript" src="modules/onlineBooking_Admin/controllers/AssessmentController.js"></script>
@@ -198,6 +227,7 @@
     <script type="text/javascript" src="modules/onlineBooking_Admin/controllers/UserController.js"></script>
     <script type="text/javascript" src="modules/onlineBooking_Admin/controllers/SiteController.js"></script>
     <script type="text/javascript" src="modules/onlineBooking_Admin/services/OnlineBookingAdminService.js"></script>
+    <!--END MODULE ONLINE-BOOKING ADMIN -->
 
     <!-- START MODULE DOCUMENT -->
     <script type="text/javascript" src="modules/document/document.js"></script>
@@ -218,90 +248,36 @@
     <script type="text/javascript" src="modules/document/controllers/gorgonUQController.js"></script>
     <!-- END MODULE DOCUMENT -->
 
-<!-- CUSTOM CSS -->
-<link rel="stylesheet" type="text/css" href="theme/custom.css">
-<!-- END CUSTOM CSS -->
+    <!--START MODULE REDI-LEGAL ONLINE BOOKING-->
+    <script src="modules/rediLegalOnlineBooking/directives/rlob_directive.js"></script>
+    <script src="modules/rediLegalOnlineBooking/services/rlob_Service.js"></script>
+    <script src="modules/rediLegalOnlineBooking/rediLegalOnlineBooking.js"></script>
+    <script src="modules/rediLegalOnlineBooking/controllers/rlob_bookingController.js"></script>
+    <script src="modules/rediLegalOnlineBooking/controllers/rlob_patientDetailController.js"></script>
+    <link href="theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.min.css" rel="stylesheet" type="text/css"/>
+    <link href="theme/assets/global/plugins/angular/angular-ui-tree/my-custom.css" rel="stylesheet" type="text/css"/>
+    <script src="theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.js"></script>
+    <script src="theme/assets/global/plugins/angular/ng-context-menu.js"></script>
+    <script src="modules/rediLegalOnlineBooking/controllers/rlob_admin_bookingListController.js"></script>
+    <script src="modules/rediLegalOnlineBooking/controllers/rlob_bookingDetailController.js"></script>
+    <script src="modules/rediLegalOnlineBooking/vaccinOnlineBooking.js"></script>
+    <script src="modules/rediLegalOnlineBooking/js/my-date-paginator.js"></script>
+    <link rel="stylesheet" href="modules/rediLegalOnlineBooking/css/rob.css">
+    <script src="modules/rediLegalOnlineBooking/js/table-editable-lob-edited.js"></script>
+    <script src="modules/rediLegalOnlineBooking/controllers/rlob_bookingListController.js"></script>
+    <!--END MODULE REDI-LEGAL ONLINE BOOKING -->
 
-<script src="/theme/assets/global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-
-<!--tannv.dts: removed:-->
-<!--<script src="/theme/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>-->
-
-<!--------- BUI VUONG -------->
-<!-- ANGULAR DATE -->
-<link rel="stylesheet" type="text/css" href="/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css">
-<script type="text/javascript" src="/vendor/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/vendor/angular-ui-date/src/date.js"></script>
-<!-- END ANGULAR DATE -->
-
-<script src="/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="/theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-    <script src="/theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <script src="/theme/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-    <script src="/theme/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-    <script src="/theme/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-    <script src="/theme/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-    <!-- END CORE PLUGINS -->
-
-
-    <!-- END DATE PAGINATOR PLUGIN -->
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <script type="text/javascript" src="/theme/assets/global/plugins/select2/select2.min.js"></script>
-    <script type="text/javascript" src="/theme/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="/theme/assets/global/plugins/datatables/media/js/jquery.dataTables.columnFilter.js"></script>
-    <script type="text/javascript" src="/theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
-    <!-- BEGIN PAGE booking -->
-    <!--<script src="/theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>-->
-	<script src="/theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
-    <script src="/theme/assets/global/plugins/bootstrap-datepaginator/bootstrap-datepaginator.min.js" type="text/javascript"></script>
-
-    <script src="/theme/assets/global/scripts/metronic.js" type="text/javascript"></script>
-    <script src="/theme/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
-    <script src="/theme/assets/admin/layout2/scripts/demo.js" type="text/javascript"></script>
-    <script src="/theme/assets/admin/pages/scripts/ui-datepaginator.js"></script>
-    <script src="/theme/assets/admin/pages/scripts/index.js" type="text/javascript"></script>
-<!--Redi Legal Online Booking-->
-
-<script src="/modules/rediLegalOnlineBooking/directives/rlob_directive.js"></script>
-<script src="/modules/rediLegalOnlineBooking/services/rlob_Service.js"></script>
-<script src="/modules/rediLegalOnlineBooking/rediLegalOnlineBooking.js"></script>
-
-<script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingController.js"></script>
-
-
-
-<script src="/modules/rediLegalOnlineBooking/controllers/rlob_patientDetailController.js"></script>
-
-<link href="/theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.min.css" rel="stylesheet" type="text/css"/>
-<link href="/theme/assets/global/plugins/angular/angular-ui-tree/my-custom.css" rel="stylesheet" type="text/css"/>
-<script src="/theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.js"></script>
-<script src="/theme/assets/global/plugins/angular/ng-context-menu.js"></script>
-<script src="/modules/rediLegalOnlineBooking/controllers/rlob_admin_bookingListController.js"></script>
-<script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingDetailController.js"></script>
-
-<script src="/modules/rediLegalOnlineBooking/vaccinOnlineBooking.js"></script>
+    <!-- ========================================================== END MODULE ================================================= -->
 
 
 
 
-<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
-<script type="text/javascript" src="/theme/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/theme/assets/global/plugins/datatables/media/js/jquery.dataTables.columnFilter.js"></script>
-<script type="text/javascript" src="/theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
-<script src="/modules/rediLegalOnlineBooking/js/table-editable-lob-edited.js"></script>
-<script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingListController.js"></script>
+    
 
-<link rel="stylesheet" type="text/css" href="/theme/assets/global/plugins/bootstrap-notify/css/bootstrap-notify.css"/>
-<script type="text/javascript" src="/theme/assets/global/plugins/bootstrap-notify/js/bootstrap-notify.js"></script>
-
-<script src="/modules/rediLegalOnlineBooking/js/my-date-paginator.js"></script>
-<link rel="stylesheet" href="/modules/rediLegalOnlineBooking/css/rob.css">
-    <!--
-    <script src="theme/sub/rediLegalOnlineBooking/js/table-editable-lob-edited.js"></script>
-    <script src="theme/sub/rediLegalOnlineBooking/js/my-date-paginator.js" type="text/javascript"></script>
-    -->
-    <!-- END PAGE LEVEL SCRIPTS -->
+    <script src="theme/assets/global/scripts/metronic.js" type="text/javascript"></script>
+    <script src="theme/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+    <script src="theme/assets/admin/layout2/scripts/demo.js" type="text/javascript"></script>
+    <script src="theme/assets/admin/pages/scripts/index.js" type="text/javascript"></script>
     <script>
         jQuery(document).ready(function() {
             Metronic.init(); // init metronic core componets
@@ -311,11 +287,10 @@
         });
     </script>
 </head>
+
 <body class="page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-footer-fixed1">
 	<!-- ROOT -->
 	<div ui-view="root"></div>
 	<!-- END ROOT VIEW -->
-
-
 </body>
 </html>
