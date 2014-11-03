@@ -1,0 +1,78 @@
+<div class="modal-body">
+    <!-- BODY -->
+    <div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-search"></i> Search Patient
+        </div>
+    </div>
+    <div class="portlet-body">
+        <!-- PAGINATION -->
+        <div class="pull-left">
+            <pagination boundary-links="true" total-items="list.count" ng-model="search.currentPage" 
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
+                        items-per-page="search.limit" max-size="search.maxSize" ng-change="setPage()"></pagination>
+        </div>
+        <div class="pull-right" style=" padding-top: 15px;">
+            <b>Totals of Patients </b> {{list.count}} <b> Display </b>
+            <select ng-model="search.limit" ng-options="row.code as row.code for row in pagingIndex" ng-change="loadList()">
+            </select>
+        </div>
+        <!-- END PAGINATION -->
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+
+                    <th>First Name</th>
+                    <th>Sur Name</th>
+                    <th>Sex</th>
+                    <th>DOB</th>
+                    <th>Mobile</th>
+                </tr>
+                <tr>
+                    <!-- SEARCH -->
+
+                    <td>
+                        <input class="form-control input-sm" type="text" placeholder="First name" ng-model="search.data.First_name" ng-change="loadList()">
+                    </td>
+
+                    <td>
+                        <input class="form-control input-sm" type="text" placeholder="Sur name" ng-model="search.data.Sur_name" ng-change="loadList()">
+                    </td>
+                    <td>
+                        <select ng-model="search.data.sex" class="form-control input-sm"
+                                ng-options="row.code as row.code for row in sexIndex"
+                                ng-change="loadList()">
+                            <option value="">--All--</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="number" placeholder="Year of DOB" ng-model="search.data.DOB" maxlength="4" ng-change="loadList()">
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="text" placeholder="Mobile Phone"  ng-model="search.data.Mobile" ng-change="loadList()">
+                    </td>
+                    <!-- END SEARCH -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="l in list.results" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
+
+                    <td>{{l.First_name}}</td>
+                    <td>{{l.Sur_name}}</td>
+                    <td>{{l.Sex}}</td>
+                    <td>{{l.DOB}}</td>
+                    <td>{{l.Mobile}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+    <!-- END BODY -->
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

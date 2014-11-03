@@ -1,0 +1,277 @@
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-plus-circle"></i>{{formMode}} Patient
+        </div>
+    </div>
+    <div class="portlet-body">
+        <form name="patientForm" novalidate  ng-submit="submit()">
+            <tabset justified="false">
+                <tab heading="General Detail">
+                    <div class="form-body margin-bottom-25">
+                        <div class="form-group margin-bottom-25">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6"  ng-class="{'has-error': isSubmit && patientForm.Title.$invalid}">
+                                    <label class="control-label"><i class="fa fa-angle-double-down"></i> Title*</label> 
+                                    <select required ng-model="patient.Title" name="Title" class="form-control"
+                                            ng-options="row.title as row.title for row in titleIndex">
+                                        <option value="">--Select Title--</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-6" ng-class="{'has-error':isSubmit && patientForm.First_name.$invalid}">
+                                    <label class="control-label"><i class="fa fa-info-circle"></i> First name*</label>
+                                    <input required ng-model="patient.First_name" name="First_name" maxlength="50" ng-maxlength="50" class="form-control" placeholder="First name">
+                                    <div class="error" ng-show="patientForm.First_name.$invalid"></div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-info-circle"></i> Middle name</label>
+                                    <input ng-model="patient.Middle_name" maxlength="20" ng-maxlength="20"  class="form-control" placeholder="Middle name">
+                                </div>
+                                <div class="col-lg-3 col-md-6" ng-class="{'has-error': isSubmit && patientForm.Sur_name.$invalid}">
+                                    <label class="control-label"><i class="fa fa-info-circle"></i> Last name*</label>
+                                    <input required ng-model="patient.Sur_name" name="Sur_name"  maxlength="50" ng-maxlength="50"  class="form-control" placeholder="Last name">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-info-circle"></i> Known as</label>
+                                    <input  ng-model="patient.Known_as" maxlength="50" ng-maxlength="50" type="text" class="form-control" placeholder="Last name">
+                                </div>
+                                <div class="col-lg-3 col-md-6" ng-class="{'has-error': isSubmit && patientForm.Sex.$invalid}">
+                                    <label class="control-label"><i class="fa fa-angle-double-down"></i> Sex*</label> 
+                                    <select required ng-model="patient.Sex" name="Sex" class="form-control"
+                                            ng-options="row.code as row.code for row in sexIndex">
+                                        <option value="">--Select Sex--</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-6" ng-class="{'has-error': isSubmit && patientForm.DOB.$invalid}">
+                                    <label required class="control-label"><i class="fa fa-calendar"></i> Birthday*</label>
+                                    <input required ng-model="patient.DOB" type="date" name="DOB" class="form-control" placeholder="Birth day">
+                                </div>               
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-envelope"></i> Email</label>
+                                    <input ng-model="patient.Email" type="email" class="form-control" placeholder="Email">
+                                </div>     </div>
+                        </div>
+                        <!-- END ROW -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-mobile-phone"></i> Mobile</label> 
+                                    <input  ng-model="patient.Mobile" maxlength="15" ng-maxlength="15"  type="text" class="form-control" placeholder="Mobile">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-bell"></i> Home phone</label>
+                                    <input  ng-model="patient.Home_phone"  maxlength="15" ng-maxlength="15"  type="text" class="form-control" placeholder="Home phone">
+                                </div>               
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-phone-square"></i> Work phone</label>
+                                    <input  ng-model="patient.Work_phone"  maxlength="15" ng-maxlength="15"  type="text" class="form-control" placeholder="Work phone">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-plus-square"></i> No SMS</label>
+                                    <select ng-model="patient.No_SMS" class="form-control"
+                                            ng-options="row.code as row.title for row in smsIndex">
+                                    </select>
+                                </div>
+                            </div>    
+                        </div>
+                        <!-- END ROW -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 margin-bottom-10">
+                                    <label class="control-label"><i class="fa fa-home"></i> Address</label> 
+                                    <input  ng-model="patient.Address1"  maxlength="50" ng-maxlength="50"  type="text" class="form-control" placeholder="Address 1">
+                                </div>
+
+                                <div class="col-lg-12 col-md-12">
+                                    <input  ng-model="patient.Address2"  maxlength="50" ng-maxlength="50" type="text" class="form-control" placeholder="Address 2">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6" ng-class="{'has-error': isSubmit && patientForm.Country.$invalid}">
+                                    <label required class="control-label"><i class="fa fa-globe"></i> Country*</label> 
+                                    <select required name="Country" ng-model="patient.Country" class="form-control"
+                                            ng-options="row.name as row.name for row in countryIndex">
+                                        <option value="">--Select Country--</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"> State</label>
+                                    <input  ng-model="patient.State"  maxlength="50" ng-maxlength="50" type="text" class="form-control" placeholder="State">
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"> Suburb</label>
+                                    <input  ng-model="patient.Suburb" type="text" class="form-control" placeholder="Suburb">
+                                </div>
+                                <div required class="col-lg-3 col-md-6" ng-class="{'has-error': isSubmit && patientForm.Post_code.$invalid}">
+                                    <label class="control-label"> Postcode*</label>
+                                    <input required name="Post_code" ng-model="patient.Post_code"  maxlength="10" ng-maxlength="10" type="text" class="form-control" placeholder="Postcode">
+                                </div>       
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <hr style="boder-bottom: 1px solid #eee;">
+                            </div>
+                        </div> 
+                        <!-- END ROW -->
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-angle-double-down"></i> Account Type</label> 
+                                    <select ng-model="patient.Account_type" class="form-control"
+                                            ng-options="row.Account_id as row.Account_name for row in accTypeIndex">
+                                        <option value="">--Select Type--</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"> Account holder</label>
+                                    <input  maxlength="100" ng-maxlength="100" ng-model="patient.Account_holder" type="text" class="form-control" placeholder="Account holder">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"> Account Seft</label>
+                                    <input  ng-model="patient.Account_Seft" type="number" size="11" ng-maxlength="11" class="form-control" placeholder="Account Seft">
+                                </div>       
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"> Mediacare No</label>
+                                    <input  ng-model="patient.Medicare_no" type="number" size="11" ng-maxlength="11" class="form-control" placeholder="Medicare Number">
+                                </div>   
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"> Ref</label>
+                                    <input  ng-model="patient.Ref" type="number" size="11" ng-maxlength="11" class="form-control" placeholder="Ref">
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-angle-double-down"></i>  Health Fund</label> 
+                                    <select ng-model="patient.Private_fund_id" class="form-control"
+                                            ng-options="row.PF_id as row.Fund_name for row in fundIndex">
+                                        <option value="">--Select Fund--</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label">MemberShip No</label> 
+                                    <input  ng-model="patient.MemberShip_no" type="number" size="11" ng-maxlength="11" class="form-control" placeholder="MemberShip No">
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"> UPI</label> 
+                                    <input  ng-model="patient.UPI" type="number"  size="11" ng-maxlength="11" class="form-control" placeholder="UPI">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"> HCC Pension No</label>
+                                    <input  ng-model="patient.HCC_Pension_No" type="number" size="11" ng-maxlength="11" class="form-control" placeholder="HCC Pension No">
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-calendar"></i>  Expire Pension</label> 
+                                    <input  ng-model="patient.Exp_pension" type="date" class="form-control" placeholder="Expire Pension">
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label">DVA No</label> 
+                                    <input  ng-model="patient.DVA_No" type="number" class="form-control" placeholder="DVA No">
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-calendar"></i>  Expire Medicare</label> 
+                                    <input  ng-model="patient.Exp_medicare" type="date" class="form-control" placeholder="Expire medicare">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-money"></i> Balance</label>
+                                    <input   ng-model="patient.Balance" type="number" size="11" ng-maxlength="11" class="form-control" placeholder="Balance">
+                                </div>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label">Pays Gap</label> 
+                                    <select ng-model="patient.Pays_Gap_Only" class="form-control"
+                                            ng-options="row.code as row.title for row in payGapIndex">
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="col-lg-12 col-md-6" style="margin-top: 10px;">
+                            <button type="submit" class="btn green"> Submit</button>
+                            <button type="button"  ng-click="reset()" class="btn default">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </tab>
+                <tab heading="Secondary Detail">
+                    <div class="form-body margin-bottom-25">
+                        <div class="form-group margin-bottom-25">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-info-circle"></i> Alias First name</label>
+                                    <input  ng-model="patient.Alias_First_name" maxlength="50" ng-maxlength="50"  type="text" class="form-control" placeholder="Alias First name">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-info-circle"></i> Alias Sur name</label>
+                                    <input  ng-model="patient.Alias_Sur_name"  maxlength="50" ng-maxlength="50" type="text" class="form-control" placeholder="Alias Last name">
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="control-label"><i class="fa fa-info-circle"></i> Phone Ext</label>
+                                    <input  ng-model="patient.Phone_ext"  maxlength="15" ng-maxlength="15" type="text" class="form-control" placeholder="Alias Last name">
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+                        <div class="form-actions">
+                            <div class="col-lg-12 col-md-6" style="margin-top: 10px;">
+                                <button type="submit" class="btn green"> Submit</button>
+                                <button type="button" ng-click="reset()" class="btn default">Cancel</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </tab>
+            </tabset>
+        </form>
+    </div>
+</div>
+
+
+

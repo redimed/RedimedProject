@@ -9,7 +9,11 @@ angular.module("app.loggedIn",[
     "app.loggedIn.booking.admin",
     "app.loggedIn.document", // Document telehealth
     "app.loggedIn.rlob", //Redi Legal Online Booking
-    "app.loggedIn.vaccinob"//Vaccination Online Booking
+    "app.loggedIn.vaccinob",//Vaccination Online Booking
+    "app.loggedIn.company", // COMPANY MODULE
+    "app.loggedIn.doctor",   // DOCTOR MODULE
+    "app.loggedIn.receptionist", // RECEPTIONIST MODULE
+    "app.loggedIn.patient"       // MODULE PATIENT
 ])
 
 .config(function($stateProvider) {

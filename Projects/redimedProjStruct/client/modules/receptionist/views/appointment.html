@@ -1,0 +1,86 @@
+<!-- CONTEXT MENU -->
+<ul class="dropdown-menu" style="position: absolute; z-index: 200;" id="context-menu">
+	<li>Menu 1</li>
+	<li>Menu 2</li>
+</ul>
+<!-- END CONTEXT MENU -->
+<h3 class="page-title">Appointment</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="loggedIn.doctor.home">Home</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a>Appointment</a>
+		</li>
+	</ul>
+</div>
+<div class="row">
+	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<!-- SELECT DATE -->
+		<input ui-date="{dateFormat: 'dd/mm/yy'}" ng-model="modelObjectMap.datepicker" ng-change="refreshAppointment()" 
+			class="form-control">
+		<!-- END SELECT DATE -->
+	</div>
+	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<!-- CHOOSE REDIMEDSITE -->
+		<select 
+			class="form-control" 
+			ng-model="modelObjectMap.site" 
+			data-placeholder="Choose a site"
+			ng-change="refreshAppointment()"
+			ng-options="site.id as site.Site_name for site in options.redimedsites">
+		</select>
+		<!-- END CHOOSE REDIMEDSITE -->
+	</div>
+	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<!-- CHOOSE DEPT -->
+		<select 
+			class="form-control" 
+			ng-model="modelObjectMap.dept" 
+			data-placeholder="Choose a clinic department"
+			ng-change="refreshAppointment()"
+			ng-options="dept.CLINICAL_DEPT_ID as dept.CLINICAL_DEPT_NAME for dept in options.dept">
+		</select>
+		<!-- END CHOOSE DEPT -->
+	</div>
+</div>
+<div class="break-row"></div>
+<div class="row">
+	<!-- APPOINTMENT -->
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div style="width: 100%; overflow:auto; min-height: 200px;">
+					<table class="table table-bordered" style="width: 300%;">
+						<thead>
+							<tr>
+								<th>Time</th>
+								<th ng-repeat="doctor in options.doctors">
+									<a ng-click="goToAppointmentDoctor(doctor)">
+										{{doctor.NAME}}
+									</a>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="data in overviewAppointment track by $index" ng-init="overviewIndex=$index" 
+								id="overview{{overviewIndex}}">
+								<td><b>{{data.from_time_map}}</b></td>
+								<td ng-repeat="status in data.statuses track by $index" ng-init="doctorIndex=$index"
+									id="status{{overviewIndex}}{{doctorIndex}}"
+									ng-click="chooseBooking($event, {docId: doctorIndex, overId: overviewIndex, type: 'one'})"
+									>
+									<i><a ng-click="bookingPatient(data, overviewIndex, doctorIndex)">{{status}}</a></i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END APPOINTMENT -->
+</div>

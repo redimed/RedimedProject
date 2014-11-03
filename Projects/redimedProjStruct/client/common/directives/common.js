@@ -1,23 +1,166 @@
 angular.module("app.directive.common", [])
 
-.directive("minHeight", function(){
-	return{
-		restrict: "A",
-		link: function(scope, element, attrs){
-			//Get window height
-			var windowHeight = angular.element(window).height();
-			//Parse to height window
-			element.css("min-height", windowHeight+"px");
+.filter('offset', function () {
+    return function (input, start) {
+        if (input.length > 0) {
+            start = (start - 1) * 20;
+            return input.slice(start, start + 20);
+        }
+    }
+})
 
-			//Window Resize
-			angular.element(window).resize(function(){
-				//Get window height
-				var windowHeight = angular.element(window).height();
-				//Parse to height window
-				element.css("min-height", windowHeight+"px");
-			});
-		}
-	}
+.filter("undefined", function () {
+    return function (input) {
+        if (input && input !== "" && input !== null) {
+            return input;
+        } else
+            return "No";
+    }
+})
+
+.directive("fabric", function(){
+    return {
+        restrict: "EA",
+        templateUrl: "common/views/directives/fabric.html",
+        link: function(scope, element, attrs){
+            var canvas = new fabric.Canvas("c");
+
+            /*fabric.Image.fromURL('http://localhost:81/billing/client/theme/body.png', function(img) {
+                canvas.add(img);
+            });*/
+
+            var text = new fabric.Text("hello world", {
+                fontSize: 30,
+                originX: 'center',
+                originY: 'center'
+            });
+
+            /*var circle = new fabric.Circle({
+                radius: 100,
+                fill: '#eef',
+                scaleY: 0.5,
+                originX: 'center',
+                originY: 'center'
+            });*/
+
+            var group = new fabric.Group([text], {
+                left: 150,
+                top: 100,
+                angle: -10
+            })
+
+            canvas.add(text);
+        }
+    }
+})
+
+.directive("audiogram", function($timeout){
+    return {
+        restrict: "EA",
+        scope: {
+            data: '='
+        },
+        templateUrl: "common/views/directives/audioDiagram.html",
+        link: function(scope, element, attrs){
+            
+            scope.id = attrs.audiogram;
+
+            scope.$watch("data", function(newData){
+                var data = newData;
+
+                var WIDTH = 800;
+                var HEIGHT = 430;
+                var MARGIN = 40;
+
+                var xOffset = 30;
+                var yOffset = 100;
+
+                var groupAxisXData = [-10, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
+
+                var WIDTH = data.length*yOffset+yOffset;
+
+                var paper = Raphael(scope.id, 1000, 600);
+
+                var path = paper.path([
+                    'M', MARGIN, MARGIN,
+                    'L', WIDTH+MARGIN, MARGIN,
+                    'L', WIDTH+MARGIN, HEIGHT,
+                    'L', MARGIN, HEIGHT,
+                    'L', MARGIN, MARGIN
+                ]);
+
+                // DISPLAY COLUMN Y
+                var offset = MARGIN;
+                for(var i = 0; i < groupAxisXData.length; ++i){
+                    paper.text(MARGIN/2, offset, groupAxisXData[i]);
+                    offset += xOffset;
+                    if(i < groupAxisXData.length - 2){
+                        paper.path([
+                            'M', MARGIN, offset,
+                            'L', WIDTH+MARGIN, offset
+                        ]);
+                    }
+                }
+                // END DISPLAY COLUMN Y
+
+                // DISPLAY COLUMN X
+                var offset = yOffset+MARGIN;
+                for(var i = 0; i < data.length; ++i){
+                    paper.text(offset, MARGIN/2, data[i]+"Hz");
+
+                    paper.path([
+                        'M', offset, MARGIN,
+                        'L', offset, HEIGHT
+                    ]);
+
+                    if(i === data.length - 1)
+                        offset += yOffset*2;
+                    else{
+                        offset += yOffset;
+                    }
+                }
+                // END DISPLAY COLUMN X
+            }) // END WATCH
+            
+        } // END LINK
+    } // END RETURN
+})
+
+.directive("minHeight", function () {
+    return{
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            /*element.css("height","0px");
+             element.css("height", angular.element(document).height()+"px");
+             
+             angular.element(window).resize(function(){
+             element.css("height","0px");
+             element.css("height", angular.element(document).height()+"px");
+             });*/
+        }
+    }
+})
+
+.directive("radio", function () {
+    return {
+        restrict: "A",
+        require: "?ngModel",
+        scope: {
+            model: "=ngModel",
+            value: "=ngValue"
+        },
+        link: function (scope, element, attrs) {
+            element.uniform();
+
+            scope.$watch("model", function (model) {
+                if (model) {
+                    if (model === scope.value)
+                        element.prop('checked', true);
+                    angular.element.uniform.update(element);
+                }
+            })
+        }
+    }
 })
 
 .directive("checkbox", function(){
@@ -67,17 +210,29 @@ angular.module("app.directive.common", [])
 })*/
 
 // INPUT DATE
-.directive("customDate", function(){
-	return {
-		restrict: "A",
-		link: function(scope, element, attrs){
-			var defaultDate = "dd/mm/yy";
+.directive("customDate", function () {
+    return {
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            var defaultDate = "dd/mm/yy";
 
-			element.datepicker({
-				"dateFormat": defaultDate
-			});
-		}
-	}
+            if (attrs.type === "birthday") {
+                element.datepicker({
+                    "dateFormat": defaultDate,
+                    "changeMonth": true,
+                    "changeYear": true,
+                    "defaultDate": new Date(1990, 08, 06),
+                    "yearRange": "1930:2100"
+                });
+            } else {
+                element.datepicker({
+                    "dateFormat": defaultDate,
+                    "changeMonth": true,
+                    "changeYear": true
+                });
+            }
+        }
+    }
 })
 
 .directive("checkList", [function () {
@@ -236,7 +391,7 @@ angular.module("app.directive.common", [])
 		require: "ngModel",
 		link: function(scope, element, attrs, ctrl){
 			ctrl.$parsers.unshift(function(number){
-				if(typeof number !== 'undefined' && number !== ""){
+			 if (typeof number !== 'undefined' && number !== "" && number !== null) {
 	    			if(number >= 0 && number%1 === 0){
 	    				ctrl.$setValidity("integer", true);
 	    			}else{
@@ -281,7 +436,24 @@ angular.module("app.directive.common", [])
 		}
 	};
 })
-
+// MATCH INPUT LIKE PASSWORD, ... ETC
+.directive('match', function () {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        scope: {
+            match: '='
+        },
+        link: function (scope, elem, attrs, ctrl) {
+            scope.$watch(function () {
+                var modelValue = ctrl.$modelValue || ctrl.$$invalidModelValue;
+                return (ctrl.$pristine && angular.isUndefined(modelValue)) || scope.match === modelValue;
+            }, function (currentValue) {
+                ctrl.$setValidity('match', currentValue);
+            });
+        }
+    };
+})
 
 .directive('appFilereader', function(
     $q
@@ -349,6 +521,37 @@ angular.module("app.directive.common", [])
 			}
 		}
 	}])
+	
+	.directive("customTimepicker", function(){
+    return {
+        require: "ngModel",
+        restrict: "EA",
+        scope: {
+            ngModel: "="
+        },
+        link: function(scope, elem, attrs, ctrl){
+            elem.timepicker({
+                showPeriodLabels: false,
+                onSelect: function(time, inst){
+                    scope.ngModel = time;
+                    scope.$apply();
+                }
+            });
+        }
+    }
+})
+
+.directive('ngRightClick', function($parse) {
+    return function(scope, element, attrs) {
+        var fn = $parse(attrs.ngRightClick);
+        element.bind('contextmenu', function(event) {
+            scope.$apply(function() {
+                event.preventDefault();
+                fn(scope, {$event:event});
+            });
+        });
+    };
+})
 
 
 .filter('utc', function(){

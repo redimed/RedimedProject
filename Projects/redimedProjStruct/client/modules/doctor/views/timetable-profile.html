@@ -1,0 +1,382 @@
+<h3 class="page-title">Appointment</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+            <a ui-sref="loggedIn.doctor.timetable">Timetable</a>
+            <i class="fa fa-angle-right"></i>
+            <a>{{doctor.NAME}}</a>
+        </li>
+        <li>
+            <a></a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet grey-cascade box">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-info-circle"></i> Doctor Detail
+                </div>
+                <div class="pull-right">
+                    <button  ng-click="saveDoctor()" class="btn blue"><i class="fa fa-save"></i> Save </button>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <!-- HEADER -->
+                <form name="doctorForm" novalidate  ng-submit="submit()">
+                    <div class="col-md-12">
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- TITLE -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-title" class="control-label col-xs-4"><b>Title</b></label>
+                                    <div class="col-xs-8"> 
+                                        <select required ng-model="doctor.Title" name="Title" class="form-control"
+                                                ng-options="row.code as row.name for row in options.titles">
+                                            <option value="">--Select Title--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END TITLE  -->
+                            <!-- FIRST_NAME -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-first_name" class="control-label col-xs-4"><b>First Name</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="text" name="First_name" ng-maxlength="30" ng-model="doctor.First_name" class="form-control"  id="fc-first_name"/>      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END FIRST_NAME  -->
+
+                        </div>
+                        <!-- END ROW -->
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- SUR_NAME -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-sur_name" class="control-label col-xs-4"><b>Sur Name</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="text" name="Sur_name" ng-maxlength="50" ng-model="doctor.Sur_name" class="form-control"  id="fc-sur_name"/>      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END SUR_NAME  -->
+                            <!-- MIDDLE_NAME -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-middle_name" class="control-label col-xs-4"><b>Middle Name</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="text" name="Middle_name" ng-maxlength="30" ng-model="doctor.Middle_name" class="form-control"  id="fc-middle_name"/>      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MIDDLE_NAME  -->
+                        </div>
+                        <!-- END ROW -->
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- CLINICAL_DEPT_ID -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-clinical_dept_id" class="control-label col-xs-4"><b>Department</b></label>
+                                    <div class="col-xs-8">
+                                        <select required ng-model="doctor.CLINICAL_DEPT_ID" name="CLINICAL_DEPT_ID" class="form-control"
+                                                ng-options="row.CLINICAL_DEPT_ID as row.CLINICAL_DEPT_NAME for row in options.clinicals">
+                                            <option value="">--Select Department--</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END CLINICAL_DEPT_ID  -->
+                            <!-- PROVIDER_TYPE -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-provider_type" class="control-label col-xs-4"><b>Provider Type</b></label>
+                                    <div class="col-xs-8">
+                                        <select required ng-model="doctor.Provider_type" name="Provider_type" class="form-control"
+                                                ng-options="row.Provider_types_id as row.Provider_types_name for row in options.providers">
+                                            <option value="">--Select Type--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PROVIDER_TYPE  -->
+                        </div>
+                        <!-- END ROW -->
+
+
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- NAME -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-name" class="control-label col-xs-4"><b>Name</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="text" name="NAME" ng-maxlength="100" ng-model="doctor.NAME" class="form-control"  id="fc-name"/>      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END NAME  -->
+
+                            <!-- PHONE -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-phone" class="control-label col-xs-4"><b>Phone</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="text" name="Phone" ng-maxlength="15" ng-model="doctor.Phone" class="form-control"  id="fc-phone"/>      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PHONE  -->
+                        </div>
+                        <!-- END ROW -->
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- EMAIL -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-email" class="control-label col-xs-4"><b>Email</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="text" name="Email" ng-maxlength="100" ng-model="doctor.Email" class="form-control"  id="fc-email"/>      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END EMAIL  -->
+                            <!-- ISRECEIVEEMAILAFTERHOUR -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-isreceiveemailafterhour" class="control-label col-xs-4"><b>Receive Email After Hour</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="checkbox"  name="isReceiveEmailAfterHour"  ng-true-value="1" ng-false-value="0" ng-checked="doctor.isReceiveEmailAfterHour == 1" ng-model="doctor.isReceiveEmailAfterHour" class="form-control"  id="fc-isreceiveemailafterhour" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END ISRECEIVEEMAILAFTERHOUR  -->
+                        </div>
+                        <!-- END ROW -->
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- PROVIDER_NO -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-provider_no" class="control-label col-xs-4"><b>Provider No</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="text" name="Provider_no" ng-maxlength="100" ng-model="doctor.Provider_no" class="form-control"  id="fc-provider_no"/>      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PROVIDER_NO  -->
+                            <!-- PAYEE_PROVIDER_NO -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-payee_provider_no" class="control-label col-xs-4"><b>Payee Provider No</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" name="Payee_provider_no" ng-model="doctor.Payee_provider_no" class="form-control"  id="fc-payee_provider_no"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PAYEE_PROVIDER_NO  -->
+
+                        </div>
+                        <!-- END ROW -->
+
+
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- MEDICAL_REGISTRATION_NO -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-medical_registration_no" class="control-label col-xs-4"><b>Medical Registration No</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" name="Medical_Registration_no" ng-model="doctor.Medical_Registration_no" class="form-control"  id="fc-medical_registration_no"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MEDICAL_REGISTRATION_NO  -->
+                            <!-- ABN_NO -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-abn_no" class="control-label col-xs-4"><b>Abn No</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" name="ABN_no" ng-model="doctor.ABN_no" class="form-control"  id="fc-abn_no"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END ABN_NO  -->
+                        </div>
+                        <!-- END ROW -->
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+
+                            <!-- OSHC_ID -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-oshc_id" class="control-label col-xs-4"><b>Oshc Id</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" name="OSHC_ID" ng-model="doctor.OSHC_ID" class="form-control"  id="fc-oshc_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END OSHC_ID  -->
+                            <!-- DEFAULT_BANK_ACCOUNT_ID -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-default_bank_account_id" class="control-label col-xs-4"><b>Default Bank Account Id</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" name="Default_bank_account_id" ng-model="doctor.Default_bank_account_id" class="form-control"  id="fc-default_bank_account_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END DEFAULT_BANK_ACCOUNT_ID  -->
+                        </div>
+                        <!-- END ROW -->
+
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- PRESCRIBER_NO -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-prescriber_no" class="control-label col-xs-4"><b>Prescriber No</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" name="Prescriber_no" ng-model="doctor.Prescriber_no" class="form-control"  id="fc-prescriber_no"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PRESCRIBER_NO  -->
+                        </div>
+                        <!-- END ROW -->
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+
+                        </div>
+                        <!-- END ROW -->
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- ADDRESS -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-address" class="control-label col-xs-4"><b>Address</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="text" name="Address" ng-maxlength="100" ng-model="doctor.Address" class="form-control"  id="fc-address"/>      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END ADDRESS  -->
+
+                            <!-- APPT_INTERVAL -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-appt_interval" class="control-label col-xs-4"><b>Appt Interval</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" step="15" min="15" name="Appt_interval" ng-model="doctor.Appt_interval" class="form-control"  id="fc-appt_interval"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END APPT_INTERVAL  -->
+
+
+                        </div>
+                        <!-- END ROW -->
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- QUALIFICATION_ID -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-qualification_id" class="control-label col-xs-4"><b>Qualification Id</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" name="Qualification_id" ng-model="doctor.Qualification_id" class="form-control"  id="fc-qualification_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END QUALIFICATION_ID  -->
+
+                            <!-- SPECIALTY_ID -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-specialty_id" class="control-label col-xs-4"><b>Specialty Id</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="number" name="Specialty_id" ng-model="doctor.Specialty_id" class="form-control"  id="fc-specialty_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END SPECIALTY_ID  -->
+                        </div>
+                        <!-- END ROW -->
+
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- USER_ID -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-user_id" class="control-label col-xs-4"><b>Username</b></label>
+                                    <div class="col-xs-8">
+                                        <p class="form-control-static ng-binding">
+                                            {{user.user_name}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END USER_ID  -->
+
+                            <!-- ISNEWCALENDARSLOT -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-isnewcalendarslot" class="control-label col-xs-4"><b>New Calendar Slot</b></label>
+                                    <div class="col-xs-8">
+                                        <input type="checkbox" name="isNewCalendarSlot"  ng-true-value="1" ng-false-value="0" ng-checked="doctor.isNewCalendarSlot == 1"  ng-model="doctor.isNewCalendarSlot" class="form-control"  id="fc-isnewcalendarslot" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END ISNEWCALENDARSLOT  -->
+                        </div>
+                        <!-- END ROW -->
+
+
+                        <!-- ROW GROUP -->
+                        <div class="row margin-bottom-25">
+                            <!-- SIGNATURE -->
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="form-group">
+                                    <label for="fc-signature" class="control-label col-xs-4"><b>Signature</b></label>
+                                    <div class="col-xs-8">
+                                    	<img ng-src="{{doctor.Signature}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END SIGNATURE  -->
+                        </div>
+                        <!-- END ROW -->
+
+                    </div>
+                </form>
+                <!-- END HEADER -->
+
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
+</div>

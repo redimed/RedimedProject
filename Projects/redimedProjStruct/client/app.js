@@ -5,16 +5,22 @@ angular.module("app", [
     "restangular",              // RESTANGULAR
     "ui.bootstrap",             // ANGULAR BOOTSTRAP
     "ngCookies",                // ANGULAR COOKIES
+    "ngTouch", // ANGULAR TOUCH
     "pascalprecht.translate",   // ANGULAR TRANSLATE
     "ui.select",                // ANGULAR UI SELECT
+"pascalprecht.translate", // ANGULAR TRANSLATE
+    "localytics.directives", // ANGULAR CHOSEN
     "toastr",                   // ANGULAR TOASTR
     "angular-loading-bar",      // ANGULAR LOADING BAR
     "ngTable",                  // ANGULAR TABLE
     "ngIdle",                   // Ng-Idle
     "app.loggedIn",             // MODULES LOGGED IN
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
+     "app.config", // ANGULAR CONFIG
     "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
-
+"ui.slider", // ANGULAR SLIDER
+ "pragmatic-angular", // ANGULAR PRAGMATIC
+    "cfp.hotkeys",      // ANGULAR HOTKEYS
     "app.directive.common",      // CUSTOM DIRECTIVES
     'angular.filter',            //angular filter for group table--tannv.dts@gmail.com
     

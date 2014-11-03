@@ -1,0 +1,16 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Select One Illness Detail</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="list-group">
+                    <a class="list-group-item" ng-repeat="item in items" ng-click="chooseIllness(item)">
+                        {{item.text}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

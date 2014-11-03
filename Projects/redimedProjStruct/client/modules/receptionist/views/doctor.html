@@ -1,0 +1,61 @@
+<h3 class="page-title">{{doctor.NAME}}</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="loggedIn.doctor.home">Home</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<i class="fa fa-calendar"></i>
+			<a ui-sref="loggedIn.receptionist.appointment">Appointment</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a>{{doctor.NAME}}</a>
+		</li>
+	</ul>
+</div>
+<div class="row">
+	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<!-- SELECT DATE -->
+		<input ui-date="{dateFormat: 'dd/mm/yy'}" ng-model="modelObjectMap.datepicker" ng-change="refreshAppointment()" 
+			class="form-control">
+		<!-- END SELECT DATE -->
+	</div>
+</div>
+<div class="break-row"></div>
+<div class="row">
+	<!-- APPOINTMENT -->
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div style="width: 100%; overflow:auto; min-height: 200px;">
+					<table class="table table-bordered" style="width: 300%;">
+						<thead>
+							<tr>
+								<th>Time</th>
+								<th>Patient</th>
+								<th>Acc Type</th>
+								<th>App Type</th>
+								<th>Notes</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="data in appointmentList">
+								<td><b>{{data.from_time_map}}</b></td>
+								<td>{{data.First_name}} {{data.Sur_name}}</td>
+								<td>{{data.ACC_TYPE}}</td>
+								<td>{{data.APP_TYPE}}</td>
+								<td>{{data.NOTES}}</td>
+								<td><a ng-click="bookingPatient(data)">{{data.STATUS}}</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END APPOINTMENT -->
+</div>

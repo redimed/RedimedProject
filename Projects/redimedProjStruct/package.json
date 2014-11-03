@@ -16,6 +16,7 @@
     "express": "~4.2.0",
     "express-myconnection": "^1.0.4",
     "express-session": "^1.8.2",
+    "inflect": "^0.3.0",
     "jade": "~1.3.0",
     "jasmine-reporters": "^1.0.1",
     "lodash": "^2.4.1",
@@ -33,7 +34,9 @@
     "passport-local": "^1.0.0",
     "randomstring": "^1.0.3",
     "sequelize": "^1.7.10",
+    "squel": "^3.9.1",
     "static-favicon": "~1.0.0",
-    "underscore": "^1.7.0"
+    "underscore": "^1.7.0",
+    "util": "^0.10.3"
   }
 }

@@ -29,6 +29,11 @@ var clientDir = path.join(__dirname, 'client');
 
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(clientDir));
+/**
+ * K Library
+ */
+var k_sql = require('./helper/k_sql.js');
+var k_route = require('./helper/k_route.js');
 
 //Create sql connection
 
@@ -46,6 +51,12 @@ var multipartMiddleware = multipart();
 //Set request Handler
 //-------------------------------------------
 
+app.use(function (req, res, next) {
+    console.log("\n\n ******************* NEW REQUEST **************** ");
+    //console.log(squel);
+    res.locals.k_sql = k_sql(req, res);
+    next();
+});
 
 //SET URL AND ROUTER
 

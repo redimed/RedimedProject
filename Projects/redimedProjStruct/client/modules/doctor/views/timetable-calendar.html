@@ -1,0 +1,100 @@
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<button class="btn btn-success" ng-click="generate()">Generate</button>
+	</div>
+</div>
+<div class="break-row"></div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<h3>Timetable &nbsp<button class="btn btn-sm" ng-click="addNew('timetable')">Add New</button></h3>
+		<table class="table">
+			<!-- BODY -->
+			<tbody>
+				<tr ng-repeat="data in timetable">
+					<td>
+						<span ng-if="!data.is_add">
+							<button ng-click="showWeekTimetable(data)" class="btn btn-primary btn-sm">
+								Show Week
+							</button>
+							<button class="btn btn-danger btn-sm" ng-click="removeTimetable('timetable', data)">
+								Remove
+							</button>
+						</span>
+						<span ng-if="data.is_add">
+							<button class="btn btn-success btn-sm" ng-click="save('timetable', data)">Save</button>
+							<button class="btn btn-warning btn-sm" ng-click="cancelSave('timetable', $index)">Cancel</button>
+						</span>
+					</td>
+					<td>
+						<select ng-model="data.day_of_Week" name="dayOfWeek"
+							ng-options="d.code as d.name for d in options.day_of_week_option"
+							ng-change="changeTimetable('timetable', data)">
+						</select>
+					</td>
+					<td>
+						<input ng-model="data.from_time_map" name="from_time" 
+							custom-timepicker style="width: 50px;" readonly ng-change="changeTimetable('timetable', data)">
+						&nbsp-&nbsp
+						<input ng-model="data.to_time_map" name="to_time" 
+							custom-timepicker style="width: 50px;" readonly ng-change="changeTimetable('timetable', data)">
+					<td>
+						<input ng-model="data.description" name="description" placeholder="Description" 
+							ng-blur="changeTimetable('timetable', data)">
+					</td>
+					<td>
+						<input type="checkbox" name="isenable" ng-model="data.isenable" 
+							ng-checked="data.isenable" ng-change="changeTimetable('timetable', data)">
+					</td>
+				</tr>
+			</tbody>
+			<!-- END BODY -->
+		</table>
+	</div>
+</div>
+<div class="break-row"></div>
+<!-- WEEK -->
+<div class="row" ng-if="selectedTimetable.doctor_id">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<h3>Week &nbsp<button class="btn btn-sm" ng-click="addNew('week')">Add New</button></h3>
+		<table class="table">
+			<!-- BODY -->
+			<tbody>
+				<tr ng-repeat="week in timetable_week">
+					<td>
+						<span ng-if="!week.is_add">
+							<button class="btn btn-danger btn-sm" ng-click="removeTimetable('week', week)">
+								Remove
+							</button>
+						</span>
+						<span ng-if="week.is_add">
+							<button class="btn btn-success btn-sm" ng-click="save('week', week)">Save</button>
+							<button class="btn btn-warning btn-sm" ng-click="cancelSave('week', $index)">Cancel</button>
+						</span>
+					</td>
+					<td>
+						<select ng-model="week.week_ord_of_month" name="week_ord_of_month"
+							ng-options="w.code as w.name for w in options.number_of_week_option"
+							ng-change="changeTimetable('week', week)">
+						</select>
+					</td>
+					<td>
+						<select ng-model="week.site_id" 
+								ng-options="site.id as site.Site_name for site in options.sites_option"
+								ng-change="changeTimetable('week', week)">
+						</select>
+					</td>
+					<td>
+						<input ng-model="week.description" name="week_description" placeholder="Description"
+							ng-blur="changeTimetable('week', week)">
+					</td>
+					<td>
+						<input type="checkbox" name="week_isenable" ng-model="week.isenable" 
+							ng-checked="week.isenable" ng-change="changeTimetable('week', week)">
+					</td>
+				</tr>
+			</tbody>
+			<!-- END BODY -->
+		</table>
+	</div>
+</div>
+<!-- END WEEK -->
