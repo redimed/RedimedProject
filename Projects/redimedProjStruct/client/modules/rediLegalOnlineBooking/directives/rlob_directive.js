@@ -232,6 +232,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 uploader.onAfterAddingFile = function (fileItem) {
                     console.info('onAfterAddingFile', fileItem);
                 };
+
                 uploader.onAfterAddingAll = function (addedFileItems) {
                     console.info('onAfterAddingAll', addedFileItems);
                 };
@@ -284,6 +285,27 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                 });
 
+                $scope.$watch("selectedBooking.WRK_SURNAME", function(newValue, oldValue){
+                    if($scope.selectedBooking)
+                    {
+                        uploader.clearQueue();
+                        uploader.formData[0]={};
+                        uploader.formData[0].booking_id=$scope.selectedBooking.BOOKING_ID;
+                        uploader.formData[0].company_id=$scope.loginInfo.company_id;
+                        uploader.formData[0].worker_name=$scope.selectedBooking.WRK_SURNAME;
+                        if(!$scope.isAdminUpload)
+                            uploader.formData[0].isClientDownLoad=0;
+
+//                        uploader.formData.push({booking_id: $scope.selectedBooking.BOOKING_ID,
+//                                company_id: $scope.loginInfo.company_id,
+//                                worker_name: $scope.selectedBooking.WRK_SURNAME,
+//                                isClientDownLoad: 0}
+//                        );
+                    }
+
+                });
+
+
             }
         };
     })
@@ -314,7 +336,7 @@ angular.module("app.loggedIn.rlob.directive", [])
             controller: function ($scope,$http)
             {
 
-                $scope.rlobNotificationType=rlobConstant.rlobNotificationType;
+                $scope.letterType=rlobConstant.letterType;
                 $scope.notificationType=rlobConstant.notificationType;
                 $scope.rlob_add_notification=$scope.addNotificationFunction;
                 function getFilesUpload() {
@@ -362,7 +384,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                             {
                                 $scope.showMsgDialog(".rlob-file-msg-dialog",'Authority downloads','success','Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file');
                                 if(role==1)
-                                    $scope.rlob_add_notification(assId,refId,$scope.bookingType,$scope.rlobNotificationType.result,$scope.notificationType.letter,'');
+                                    $scope.rlob_add_notification(assId,refId,$scope.bookingType,$scope.letterType.result,$scope.notificationType.letter,'');
                                 getFilesUpload();
                             }
                             else

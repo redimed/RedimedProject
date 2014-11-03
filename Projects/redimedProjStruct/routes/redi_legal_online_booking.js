@@ -73,6 +73,7 @@ app.get('/api/rlob/sys_user_notifications/get-items-of-paging',sysUserNotificati
 
 //structure
 app.post('/api/structure/list-appointments-upcoming',structureController.list_appointments_calendar_upcoming);
+app.get('/api/download/structure/attach-file/:sourceName/:refId', structureController.downloadLetterAttachFile);
 
 //Documents
 var multipart = require('connect-multiparty');

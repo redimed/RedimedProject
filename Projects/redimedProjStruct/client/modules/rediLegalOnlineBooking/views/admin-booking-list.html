@@ -261,7 +261,8 @@
             <script type="text/ng-template" id="nodes_renderer.html">
                 <!--{{node.BOOKING_ID!=null && node.BOOKING_ID==currentUpdatingItem.bookingId?'new-position':''}}-->
                 <div  ng-class="[node.style_class,node.BOOKING_ID!=null && node.BOOKING_ID==currentUpdatingItem.bookingIdChangeSuccess?newPosition:'']"
-                      ui-tree-handle class="tree-node tree-node-content " >
+                      ui-tree-handle class="tree-node tree-node-content "
+                      ng-click="getBookingDetailWhenCursor(node.BOOKING_ID)">
                     <a class="btn btn-xs"
                        ng-class="{'btn-primary':node.APPOINTMENT_DATETIME,'btn-success':node.DOCTOR_ID,'btn-warning':node.BOOKING_ID}"
                        ng-if="node.nodes && node.nodes.length > 0"

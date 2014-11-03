@@ -22,24 +22,44 @@ module.exports =
     change_role_download:function(req,res){
         var fileId=req.body.fileId;
         var role=req.body.role;
-        req.getConnection(function(err,connection)
-        {
-            var query = connection.query(
-                'UPDATE `rl_booking_files` bfile SET bfile.`isClientDownLoad`=? WHERE bfile.`FILE_ID`=?'
-                ,[role,fileId],function(err,rows)
+        var sql='UPDATE `rl_booking_files` bfile SET bfile.`isClientDownLoad`=? WHERE bfile.`FILE_ID`=?';
+        var sql2='SELECT files.`BOOKING_ID` FROM `rl_booking_files` files WHERE files.`FILE_ID`=?';
+        var sql3=
+            " UPDATE `rl_booking_files` files                      "+
+            " SET files.`isClientDownLoad`=0                       "+
+            " WHERE files.`BOOKING_ID`=? AND files.`FILE_ID`<>?    ";
+
+        db.sequelize.query(sql,null,{raw:true},[role,fileId])
+            .then(function(data){
+                return 'success';
+            },function(err){
+                return 'fail';
+            })
+            .then(function(data){
+                if(data=='success')
                 {
-                    if(err)
+                    if(role==1)
                     {
-                        console.log("Error Selecting : %s ",err );
-                        res.json({status:'fail'});
-                    }
-                    else
-                    {
-                        res.json({status:'success'});
+                        db.sequelize.query(sql2,null,{raw:true},[fileId])
+                            .then(function(data){
+                                if(data.length>0)
+                                {
+                                    db.sequelize.query(sql3,null,{raw:true},[data[0].BOOKING_ID,fileId])
+                                        .then(function(){
+
+                                        })
+                                }
+                            });
                     }
 
-                });
-        });
+                    res.json({status:'success'});
+                }
+                else
+                {
+                    res.json({status:'fail'});
+                }
+            })
+
     },
     
     // BUI VUONG

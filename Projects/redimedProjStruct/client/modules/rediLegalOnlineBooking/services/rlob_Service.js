@@ -34,3 +34,21 @@ angular.module('app.loggedIn.rlob.services',[])
     }
 })
 
+.factory('rlobService',function(Restangular){
+        var rlobService = {};
+        var api = Restangular.all('api');
+
+        rlobService.getBookingById=function(bookingId)
+        {
+            var booking = api.all('rlob/rl_bookings/get-booking-by-id');
+            return booking.post({bookingId:bookingId});
+        }
+
+        rlobService.changeBookingStatus=function(bookingId,status)
+        {
+            var result=api.all('rlob/rl_bookings/lob-change-status');
+            return result.post({bookingId:bookingId,status:status});
+        }
+        return rlobService;
+});
+

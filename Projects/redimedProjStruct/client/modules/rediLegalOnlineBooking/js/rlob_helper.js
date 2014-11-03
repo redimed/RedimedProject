@@ -11,11 +11,15 @@ var rlobHelper={
 }
 
 var rlobConstant={
-    rlobNotificationType:{
+    bellType:{
         'changeStatus':"Change Booking Status",
         'result': 'Result',
         'message': 'Message',
         'changeCalendar':'Change Appointment Calendar'},
+
+    letterType:{
+        'result':'Result'
+    },
 
     notificationType:{
         bell:   'bell',
@@ -26,5 +30,16 @@ var rlobConstant={
 
         REDiLEGAL:{alias:'rlob',name:'REDiLEGAL'},
         Vaccination:{alias:'vaccinob',name:'Vaccination'}
+    }
+}
+
+var exlog={
+    alert:function(data)
+    {
+        alert(JSON.stringify(data));
+    },
+    log:function(data)
+    {
+        console.log(data);
     }
 }

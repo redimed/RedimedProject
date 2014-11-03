@@ -254,57 +254,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         $scope.newBooking.ASS_OTHERNAMES=$scope.loginInfo.Booking_Person;
         $scope.newBooking.ASS_CONTACT_NO=$scope.loginInfo.Contact_number;
         $scope.newBooking.ASS_EMAIL=$scope.loginInfo.Contact_email;
-        //Upload File
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/api/rlob/rl_booking_files/upload'
-        });
-        // FILTERS
 
-        uploader.filters.push({
-            name: 'customFilter',
-            fn: function(item /*{File|FileLikeObject}*/, options) {
-                return this.queue.length < 10;
-            }
-        });
-
-
-        // CALLBACKS
-
-        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-            console.info('onWhenAddingFileFailed', item, filter, options);
-        };
-        uploader.onAfterAddingFile = function(fileItem) {
-            console.info('onAfterAddingFile', fileItem);
-        };
-        uploader.onAfterAddingAll = function(addedFileItems) {
-            console.info('onAfterAddingAll', addedFileItems);
-        };
-        uploader.onBeforeUploadItem = function(item) {
-            console.info('onBeforeUploadItem', item);
-        };
-        uploader.onProgressItem = function(fileItem, progress) {
-            console.info('onProgressItem', fileItem, progress);
-        };
-        uploader.onProgressAll = function(progress) {
-            console.info('onProgressAll', progress);
-        };
-        uploader.onSuccessItem = function(fileItem, response, status, headers) {
-            console.info('onSuccessItem', fileItem, response, status, headers);
-        };
-        uploader.onErrorItem = function(fileItem, response, status, headers) {
-            console.info('onErrorItem', fileItem, response, status, headers);
-        };
-        uploader.onCancelItem = function(fileItem, response, status, headers) {
-            console.info('onCancelItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteItem = function(fileItem, response, status, headers) {
-            console.info('onCompleteItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteAll = function() {
-            console.info('onCompleteAll');
-        };
-
-        console.info('uploader', uploader);
 
 
         /***
@@ -493,7 +443,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                     $scope.bookingSuccess=true;
                     $scope.scrollTo($('.bookingSuccess'),-200);
                     bookingService.setBookingInfo($scope.newBooking);
-                    uploader.formData.push({booking_id:$scope.newBooking.BOOKING_ID,company_id:$scope.loginInfo.company_id,worker_name:$scope.newBooking.WRK_SURNAME,isClientDownLoad:0});
+                    //uploader.formData.push({booking_id:$scope.newBooking.BOOKING_ID,company_id:$scope.loginInfo.company_id,worker_name:$scope.newBooking.WRK_SURNAME,isClientDownLoad:0});
                     $scope.showDialogAddSuccess();
                     /***
                      * Update appointment calendar upcoming cua structure

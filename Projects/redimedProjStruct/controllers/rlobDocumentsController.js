@@ -79,7 +79,9 @@ module.exports =
 
     },
 
+
     rlobDowloadFile:function(req, res, next){
+
         console.log("VVVVVVVVVVVVVVVVVVVVV:"+req.params.fileId);
         req.getConnection(function(err,connection){
             var lob_file_id=req.params.fileId;

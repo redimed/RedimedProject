@@ -3,7 +3,7 @@
  */
 
 angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
-        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval) {
+        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService) {
         //Internal Variable
         //Bien haveNodeFile quy dinh cac file co xuat hien trong tree hay khong
         $scope.haveNodeFile=false;
@@ -39,14 +39,14 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 //            letter: 'letter'
 //        }
         $scope.notificationType=rlobConstant.notificationType;
-//        $scope.rlobNotificationType={
+//        $scope.bellType={
 //            'changeStatus':"Change Booking Status",
 //            'result': 'Result',
 //            'message': 'Message',
 //            'changeCalendar':'Change Appointment Calendar'
 //        }
 
-        $scope.rlobNotificationType=rlobConstant.rlobNotificationType;
+        $scope.bellType=rlobConstant.bellType;
 
         //--------------------------------------------------
         var initPickers = function () {
@@ -375,7 +375,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             //Put notification
             if(fileInfo.isClientDownLoad==1)
             {
-                $scope.rlob_add_notification(fileInfo.ASS_ID,refId,$scope.sourceName,$scope.rlobNotificationType.result,$scope.notificationType.letter,'');
+                $scope.rlob_add_notification(fileInfo.ASS_ID,refId,$scope.sourceName,$scope.bellType.result,$scope.notificationType.letter,'');
             }
         };
         console.info('uploader', uploader);
@@ -484,7 +484,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.sendBookingMessage=function()
         {
-            $scope.add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,$scope.sourceName,$scope.rlobNotificationType.message,$scope.notificationType.bell,$scope.bookingMessage.message);
+            $scope.rlob_add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,$scope.sourceName,$scope.bellType.message,$scope.notificationType.bell,$scope.bookingMessage.message);
             $("#lob-send-booking-message").modal('hide');
         }
 
@@ -495,32 +495,41 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          */
         $scope.lob_change_status=function(assId,bookingId,status,scope)
         {
-            $http({
-                method:"POST",
-                url:"/api/rlob/rl_bookings/lob-change-status",
-                data:{bookingId:bookingId,status:status}
-            })
-            .success(function(data) {
-                if(data.status=='success')
-                {
-                    scope.$modelValue.STATUS=status;
-                    $scope.selectedBooking.STATUS=status;
-                    var refId=bookingId;
-                    $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.rlobNotificationType.changeStatus,$scope.notificationType.bell,status);
-                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
-                }
-                else
-                {
-                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
-                }
-            })
-            .error(function (data) {
-                $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
-            })
-            .finally(function() {
 
-            });
-        }
+            rlobService.getBookingById(bookingId)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.selectedBooking=data.data;
+                        return {status:'success'};
+                    }
+                    else
+                    {
+                        return {status:'fail'};
+                    }
+                })
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        rlobService.changeBookingStatus(bookingId,status)
+                            .then(function(data){
+                                if(data.status=='success')
+                                {
+                                    scope.$modelValue.STATUS=status;
+                                    $scope.selectedBooking.STATUS=status;
+                                    var refId=bookingId;
+                                    $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.changeStatus,$scope.notificationType.bell,status);
+                                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
+                                }
+                                else
+                                {
+                                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
+                                }
+                            });
+                    }
+                })
+
+        };
 
 
         /**
@@ -543,7 +552,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     $scope.showMsgDialog(".lob-msg-dialog",'Authority downloads','success','Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file');
                     var refId=scope.$modelValue.PARENT_ID;
                     if(role==1)
-                        $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.rlobNotificationType.result,$scope.notificationType.letter,'');
+                        $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.result,$scope.notificationType.letter,'');
                 }
                 else
                 {
@@ -668,7 +677,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                                 $scope.lobAdminSearch.doctorKey=null;
                             }
                             //$scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
-                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.rlobNotificationType.changeCalendar,$scope.notificationType.bell,'');
+                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.bellType.changeCalendar,$scope.notificationType.bell,'');
                         }
                     })
                     .error(function (data) {
@@ -735,6 +744,21 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             })
             .finally(function() {
             });
+        }
+
+        $scope.getBookingDetailWhenCursor=function(bookingId)
+        {
+            if(bookingId)
+            {
+                rlobService.getBookingById(bookingId).then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.showDetailPanel=true;
+                        $scope.selectedBooking=data.data;
+                    }
+                });
+            }
+
         }
 
 

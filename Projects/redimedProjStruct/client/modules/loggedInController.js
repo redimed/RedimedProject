@@ -74,6 +74,15 @@ angular.module("app.loggedIn.controller",[
         $scope.$on('$idleTimeout', function() {
             $state.go('lockscreen');
         })
+
+        /****
+         *
+         */
+        $scope.sourceLinkDetail={
+            REDiLEGAL:'loggedIn.rlob.rlob_booking_detail',
+            Vaccination:'loggedIn.vaccinob.vaccinob_booking_detail'
+        }
+
         /**
          * Tao scroll cho notification dropdown
          * tannv.dts@gmail.com
@@ -113,8 +122,6 @@ angular.module("app.loggedIn.controller",[
                     $scope.maxIndex=data.data[0].id;
                     for(var i=0;i<data.data.length;i++)
                     {
-
-
                         if(data.data[i].TYPE=='bell')
                         {
                             $scope.numbersBellUnread++;
@@ -407,6 +414,7 @@ angular.module("app.loggedIn.controller",[
             .success(function(data) {
                 if(data.status=='success')
                 {
+
                     $scope.listNotifications=data.data;
                     deferred.resolve();
 
@@ -501,6 +509,10 @@ angular.module("app.loggedIn.controller",[
                     for(var i=0;i<data.data.length;i++)
                     {
                         $scope.listAppointmentCalendarUpcoming.push(data.data[i]);
+                        $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION=
+                            $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION
+                            +' - '+moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("HH:mm")
+                            +' '  +moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("DD/MM/YYYY")
                         if($scope.listAppointmentCalendarUpcoming[i].SOURCE_TYPE=='REDiLEGAL')
                         {
                             $scope.listAppointmentCalendarUpcoming[i].link="loggedIn.rlob.rlob_booking_detail({bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
@@ -542,16 +554,42 @@ angular.module("app.loggedIn.controller",[
 
         /**
          * Function add notification for global
+         * sourceName: Redilegal or Vaccination...
+         * bellType: message,change status, change appointment calendar...
+         * notification type: bell or letter
+         * content: content of message (if bellType=message)
          * tannv.dts@gmail.com
          */
-        $scope.add_notification=function(assId,refId,sourceName,rlobType,type,content)
+        $scope.add_notification=function(assId,refId,sourceName,bellType,notificationType,content)
         {
             var deferred=$q.defer();
             var promise=deferred.promise;
             promise.then(function(data){
-                var msg="["+sourceName+"]-" + "["+rlobType+(content!=undefined &&content!=null && content!=""?(":"+content):'')+"]-"
-                    + "["+data.WRK_SURNAME + ":"+moment(data.BOOKING_DATE).format("DD/MM/YYYY hh:mm") +"]-"
-                    + "[at: "+moment().format("DD/MM/YYYY HH:mm:ss")+"]";
+                var msg="";
+                if(notificationType==rlobConstant.notificationType.letter)
+                {
+                    msg="["+sourceName+"] - "
+                        +data.Rl_TYPE_NAME+" - "
+                        +data.WRK_SURNAME+" - "
+                        +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")
+                        +(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"")
+                        +" - "
+                        +moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY");
+                }
+                else if(notificationType==rlobConstant.notificationType.bell)
+                {
+                    msg="["+sourceName+"] - "
+                        +data.WRK_SURNAME+ " - "
+                        +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")+
+                        +(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"")
+                        +" - "
+                        +bellType+(content!=undefined &&content!=null && content!=""?(":"+content):'')
+                        +" - "
+                        +moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY");
+                }
+//                var msg="["+sourceName+"]-" + "["+bellType+(content!=undefined &&content!=null && content!=""?(":"+content):'')+"]-"
+//                    + "["+data.WRK_SURNAME + ":"+moment(data.BOOKING_DATE).format("DD/MM/YYYY HH:mm") +"]-"
+//                    + "[at: "+moment().format("DD/MM/YYYY HH:mm:ss")+"]";
                 if(sourceName=='REDiLEGAL')
                     var link="loggedIn.rlob.rlob_booking_detail({bookingId:"+refId+"})";
                 else if(sourceName=='Vaccination')
@@ -559,7 +597,7 @@ angular.module("app.loggedIn.controller",[
                 $http({
                     method:"POST",
                     url:"/api/rlob/sys_user_notifications/add-notification",
-                    data:{assId:assId,refId:refId,sourceName:sourceName,type:type,msg:msg,link:link}
+                    data:{assId:assId,refId:refId,sourceName:sourceName,type:notificationType,msg:msg,link:link}
                 })
                     .success(function(data) {
                         if(data.status=='success')
@@ -608,6 +646,11 @@ angular.module("app.loggedIn.controller",[
          * tannv.dts@gmail.com
          */
         $scope.contactDetails=[];
+
+        $scope.myExpand=function(index)
+        {
+            $('.collapse'+index).collapse('toggle')
+        }
 
 
 })
