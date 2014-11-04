@@ -3,6 +3,8 @@
  */
 
 var db = require('../models');
+var common_functions = require("../functions");
+
 module.exports =
 {
     getById: function(req, res){
@@ -22,31 +24,7 @@ module.exports =
             );
         });
     },
-    checkSameDoctor:function(req,res)
-    {
-        var calId1=req.query.calId1;
-        var calId2=req.query.calId2;
-        var sql=" SELECT DISTINCT calendar.`DOCTOR_ID`                            "+
-            " FROM  `cln_appointment_calendar` calendar                       "+
-            " WHERE `calendar`.`CAL_ID`=? || `calendar`.`CAL_ID`=?            ";
-        req.getConnection(function(err,connection)
-        {
-            var query = connection.query(sql,[calId1,calId2],function(err,rows)
-            {
-                if(err)
-                {
-                    console.log("Error Selecting : %s ",err );
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    res.json({status:'success',data:rows.length});
-                }
-            });
-        });
-    },
     booking: function(req, res){
-
         var cal_id = (req.body.CAL_ID)?req.body.CAL_ID:0;
         var service_id = (req.body.SERVICE_ID)?req.body.SERVICE_ID:0;
         var patient_id = (req.body.Patient_id)?req.body.Patient_id:0;
@@ -54,10 +32,9 @@ module.exports =
         var app_type = (req.body.APP_TYPE)?req.body.APP_TYPE:"NotYet";
         var status = (req.body.STATUS)?req.body.STATUS:"";
         var bill_to = (req.body.bill_to)?req.body.bill_to:1;
-        var arr_time = (req.body.ARR_TIME)?req.body.ARR_TIME:null;
-        var att_time = (req.body.ATTEND_TIME)?req.body.ATTEND_TIME:null;
+        var arr_time = (req.body.ARR_TIME)?common_functions.convertFromHoursToDateTime(req.body.ARR_TIME):"";
+        var att_time = (req.body.ATTEND_TIME)?common_functions.convertFromHoursToDateTime(req.body.ATTEND_TIME):"";
         var notes = (req.body.NOTES)?req.body.NOTES:"";
-
 
         req.getConnection(function(err, connection){
             var query = connection.query(
