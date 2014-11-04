@@ -85,7 +85,7 @@ angular.module('app.loggedIn.document.services', [])
             var insertForm18 = api.all('document/insertForm18');
             return insertForm18.post({info: infoAdd});
         }
-        documentService.edit = function (infoEdit) {
+        documentService.editForm18 = function (infoEdit) {
             var editForm18 = api.all('document/editForm18');
             return editForm18.post({info: infoEdit});
         }
@@ -96,17 +96,39 @@ angular.module('app.loggedIn.document.services', [])
         /**
          * begin audiogram 1
          */
-        documentService.newAUD1 = function () {
-            var newAUD1 = api.one("document/newAUD1");
-            return newAUD1.get();
+        documentService.loadSA1 = function (infoLoad) {
+            var loadSA1 = api.all('document/loadSA1');
+            return loadSA1.post({info: infoLoad});
         }
-
-        documentService.loadAUD1 = function () {
-            var loadAUD1 = api.one("document/loadAUD1");
-            return loadAUD1.get();
+        documentService.insertSA1 = function (infoAdd) {
+            var insertSA1 = api.all('document/insertSA1');
+            return insertSA1.post({info: infoAdd});
+        }
+        documentService.editSA1 = function (infoEdit) {
+            var editSA1 = api.all('document/editSA1');
+            return editSA1.post({info: infoEdit});
         }
         /**
          * end audiogram 1
+         */
+
+        /**
+         * begin audiogram 2
+         */
+        documentService.loadSA2 = function (infoLoad) {
+            var loadSA2 = api.all('document/loadSA2');
+            return loadSA2.post({info: infoLoad});
+        }
+        documentService.insertSA2 = function (infoAdd) {
+            var insertSA2 = api.all('document/insertSA2');
+            return insertSA2.post({info: infoAdd});
+        }
+        documentService.editSA2 = function (infoEdit) {
+            var editSA2 = api.all('document/editSA2');
+            return editSA2.post({info: infoEdit});
+        }
+        /**
+         * end audiogram 2
          */
 
         /**

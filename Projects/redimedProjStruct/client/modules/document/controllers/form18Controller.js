@@ -7,7 +7,6 @@ angular.module('app.loggedIn.document.form18.controllers', [])
             formatYear: 'yy',
             startingDay: 1
         };
-        $scope.info = [];
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist");
@@ -23,40 +22,42 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                     $state.go("loggedIn.home", null, {"reload": true});
                 }
                 else if ('findNull' === response['status']) {
-                    $scope.isNew = false;
+                    $scope.isNew = true;
                 }
                 else if ('success' === response[0].status) {
-                    $scope.isNew = true;
-                    var data = response[0].data;
+                    $scope.isNew = false;
+                    var data = response[0].dataF18;
+                    $scope.info = [];
                     $scope.info = {
-                        GORGON_ID: data.GORGON_ID,
-                        PATIENT_ID: data.PATIENT_ID,
-                        CAL_ID: data.CAL_ID,
-                        DocId: data.DocId,
-                        TIME_TEST: data.TIME_TEST,
-                        WORK_COVER_NO: data.WORK_COVER_NO,
-                        PERSON_ARRANGING_SIGNATURE: data.PERSON_ARRANGING_SIGNATURE,
-                        PERSON_ARRANGING_NAME: data.PERSON_ARRANGING_NAME,
-                        PERSON_ARRANGING_POSITION: data.PERSON_ARRANGING_POSITION,
-                        DOCTOR_ID: data.DOCTOR_ID,
-                        WORKER_SIGNATURE: data.WORKER_SIGNATURE
-                    }
+                        GORGON_ID: data[0].GORGON_ID,
+                        PATIENT_ID: data[0].PATIENT_ID,
+                        CAL_ID: data[0].CAL_ID,
+                        DocId: data[0].DocId,
+                        TIME_TEST: data[0].TIME_TEST,
+                        WORK_COVER_NO: data[0].WORK_COVER_NO,
+                        PERSON_ARRANGING_SIGNATURE: data[0].PERSON_ARRANGING_SIGNATURE,
+                        PERSON_ARRANGING_NAME: data[0].PERSON_ARRANGING_NAME,
+                        PERSON_ARRANGING_POSITION: data[0].PERSON_ARRANGING_POSITION,
+                        DOCTOR_ID: data[0].DOCTOR_ID,
+                        WORKER_SIGNATURE: data[0].WORKER_SIGNATURE
+                    };
                 }
                 else {
                     $state.go('loggedIn.home', null, {"reload": true});
                 }
-            });
+            })
         }
 
         $scope.submit = function () {
             var info = $scope.info;
-            if ($scope.isNew == true) {
+            if ($scope.isNew === true) {
                 /**
                  * add new
                  */
                 DocumentService.insertForm18(info).then(function (response) {
                     if (response['status'] === 'success') {
                         toastr.success("Add success!", 'Success');
+                        $state.go("loggedIn.Form18", null, {"reload": true});
                     }
                     else if (response['status'] === 'fail') {
                         toastr.error("Add fail!", "fail");
@@ -67,13 +68,14 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                     }
                 })
             }
-            else if ($scope.isNew == false) {
+            else if ($scope.isNew === false) {
                 /**
                  * edit
                  */
                 DocumentService.editForm18(info).then(function (response) {
                     if (response['status'] === 'success') {
                         toastr.success("Edit success!", 'Success');
+                        $state.go("loggedIn.Form18", null, {"reload": true});
                     }
                     else if (response['status'] === 'fail') {
                         toastr.error("Edit fail!", "fail");

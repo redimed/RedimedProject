@@ -5,16 +5,16 @@ var db = require('../../models');
 module.exports = {
     loadForm18: function (req, res) {
         var info = req.body.info;
-        db.Form18.findAll({}, {raw: true})
+        db.Form18.findAll({where: {PATIENT_ID: 999, CAL_ID: 999}}, {raw: true})
             .success(function (dataF18) {
-                if (dataF18.length == 0) {
+                if (dataF18.length === 0) {
                     res.json({status: 'findNull'});
                 }
                 else {
-                    var data = [
-                        {"data": dataF18, "status": 'success'}
+                    var response = [
+                        {"dataF18": dataF18, "status": 'success'}
                     ];
-                    res.json(data);
+                    res.json(response);
                 }
             })
             .error(function (err) {
@@ -29,8 +29,8 @@ module.exports = {
                 var GORGON_ID = max_id + 1;
                 db.Form18.create({
                     GORGON_ID: GORGON_ID,
-                    PATIENT_ID: info.PATIENT_ID,
-                    CAL_ID: info.CAL_ID,
+                    PATIENT_ID: 999,
+                    CAL_ID: 999,
                     DocId: info.DocId,
                     TIME_TEST: info.TIME_TEST,
                     WORK_COVER_NO: info.WORK_COVER_NO,
@@ -55,9 +55,9 @@ module.exports = {
     },
     editForm18: function (req, res) {
         var info = req.body.info;
+        console.log("info");
+        console.log(info);
         db.Form18.update({
-            PATIENT_ID: info.PATIENT_ID,
-            CAL_ID: info.CAL_ID,
             DocId: info.DocId,
             TIME_TEST: info.TIME_TEST,
             WORK_COVER_NO: info.WORK_COVER_NO,
@@ -66,11 +66,13 @@ module.exports = {
             PERSON_ARRANGING_POSITION: info.PERSON_ARRANGING_POSITION,
             DOCTOR_ID: info.DOCTOR_ID,
             WORKER_SIGNATURE: info.WORKER_SIGNATURE
-        }, {GORGON_ID: info.GORGON_ID})
+        }, {PATIENT_ID: 999,
+            CAL_ID: 999, GORGON_ID: 1})
             .success(function () {
                 res.json({status: 'success'});
             })
             .error(function (err) {
+                console.log("ERROR:" + err);
                 res.json({status: 'fail'});
             })
     }

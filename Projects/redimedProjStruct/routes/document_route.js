@@ -7,8 +7,8 @@ var MAController = require('./controllers/DocumentController/MAController');
 var IDSController = require('./controllers/DocumentController/IDSController');
 var MHController = require('./controllers/DocumentController/MHController');
 var MRSController = require('./controllers/DocumentController/MRSController');
-var AUD1Controller = require('./controllers/DocumentController/AUD1Controller');
-var AUD2Controller = require('./controllers/DocumentController/AUD2Controller');
+var SA1Controller = require('./controllers/DocumentController/SA1Controller');
+var SA2Controller = require('./controllers/DocumentController/SA2Controller');
 var Cat3Controller = require('./controllers/DocumentController/Cat3Controller');
 var UQController = require('./controllers/DocumentController/UQController');
 var gorgonMHController = require('./controllers/DocumentController/gorgonMHController');
@@ -39,7 +39,7 @@ app.post('/api/document/editCat3', Cat3Controller.editCat3);
  */
 app.post('/api/document/loadForm18', form18Controller.loadForm18);
 app.post('/api/document/insertForm18', form18Controller.insertForm18);
-app.post('/api/document/insertForm18', form18Controller.editForm18);
+app.post('/api/document/editForm18', form18Controller.editForm18);
 /**
  * end form 18
  */
@@ -62,10 +62,15 @@ app.post('/api/document/loadMRS', MRSController.loadMRS);
 app.post('/api/document/insertMRS', MRSController.insertMRS);
 app.post('/api/document/editMRS', MRSController.editMRS);
 /**
+ * end medical results summary
+ */
+
+/**
  * begin audiogram 1
  */
-app.get('/api/document/newAUD1', AUD1Controller.newAUD1);
-app.get('/api/document/loadAUD1', AUD1Controller.loadAUD1);
+app.post('/api/document/loadSA1', SA1Controller.loadSA1);
+app.post('/api/document/insertSA1', SA1Controller.insertSA1);
+app.post('/api/document/editSA1', SA1Controller.editSA1);
 /**
  * end audiogram 1
  */
@@ -73,8 +78,9 @@ app.get('/api/document/loadAUD1', AUD1Controller.loadAUD1);
 /**
  * begin audiogram 2
  */
-app.get('/api/document/newAUD2', AUD2Controller.newAUD2);
-app.get('/api/document/loadAUD2', AUD2Controller.loadAUD2);
+app.post('/api/document/loadSA2', SA2Controller.loadSA2);
+app.post('/api/document/insertSA2', SA2Controller.insertSA2);
+app.post('/api/document/editSA2', SA2Controller.editSA2);
 /**
  * end audiogram 2
  */
