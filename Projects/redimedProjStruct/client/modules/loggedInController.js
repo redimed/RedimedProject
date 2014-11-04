@@ -290,7 +290,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 2000);
+            }, 10000);
         };
 
 
