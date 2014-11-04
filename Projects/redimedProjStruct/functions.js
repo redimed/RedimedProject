@@ -3,7 +3,17 @@ module.exports = {
 		date = new Date();
 
 		var dates = date.getDate();
+
+		if(dates < 10){
+			dates = "0"+dates;
+		}
+
 		var month = date.getMonth()+1;
+
+		if(month < 10){
+			month = "0"+month;
+		}
+
 		var year = date.getFullYear();
 
 		var split = hours.split(":");
@@ -11,6 +21,10 @@ module.exports = {
 		var hours = split[0];
 		var minutes = split[1];
 		var seconds = date.getSeconds();
+
+		if(seconds < 10){
+			seconds = "0"+seconds;
+		}
 
 		var result = year+"-"+month+"-"+dates+" "+hours+":"+minutes+":"+seconds;
 		return result;
@@ -52,6 +66,12 @@ module.exports = {
 	toTime: function(current_time){
 		var hour = Math.floor(current_time/60);
 		var minute = current_time%60;
+
+		if(hour < 10)
+			hour = "0"+hour;
+
+		if(minute < 10)
+			minute = "0"+minute;
 
 		return hour+":"+minute;
 	},

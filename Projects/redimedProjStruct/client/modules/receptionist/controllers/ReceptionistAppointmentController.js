@@ -123,24 +123,109 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	// CONTEXT MENU
 	$scope.list_of_booking = [];
 
+	// RIGHT POPUP MENU
+	var closePopupMenu = function(){
+		angular.element("#popupMenu").css("display", "none");
+	}
+
+	var clearSelectedBooking = function(){
+		var newArray = [];
+
+		for(var i = 0; i < $scope.list_of_booking.length; i++){
+			if(!$scope.list_of_booking[i].isenable)
+				newArray.push($scope.list_of_booking[i]);
+		}
+
+		$scope.list_of_booking = angular.copy(newArray);
+	}
+
+	var clearColorBooking = function(){
+		for(var i = 0; i < $scope.list_of_booking.length; i++){
+			if($scope.list_of_booking[i].isenable)
+				angular.element($scope.list_of_booking[i].id).css("background", "none");
+		}
+	}
+
+	var isSelectedBooking = function(options){
+		var flag = -1;
+
+		for(var i = 0; i < $scope.list_of_booking.length; i++){
+			if("#status"+options.overId+options.docId === $scope.list_of_booking[i].id){
+				flag = i;
+				break;
+			}
+		}
+
+		return flag;
+	}
+	// END RIGHT POPUP MENU
+
 	$scope.chooseBooking = function($event, options){
-		//CLEAR COLOR
-		for(var i = 0; i < $scope.list_of_booking.length; i++){
-			angular.element($scope.list_of_booking[i]).css("background", "none");
-		}
-		//END CLEAR COLOR
+		if(options.status !== ''){
+			var isSelected = isSelectedBooking(options);
+			var mutiple = false;
 
-		// RESET AND PUSH LIST BOOKING
-		if(!$event.altKey)
-			$scope.list_of_booking = [];
-		$scope.list_of_booking.push("#status"+options.overId+options.docId);
-		// END
+			closePopupMenu();
+			clearColorBooking();
 
-		// BACKGROUND COLOR
-		for(var i = 0; i < $scope.list_of_booking.length; i++){
-			angular.element($scope.list_of_booking[i]).css("background", "yellow");
+			// RESET AND PUSH LIST BOOKING
+			if(!$event.altKey){
+				clearSelectedBooking();
+			}else{
+				mutiple = true;
+			}
+
+			if(-1 === isSelected){
+				$scope.list_of_booking.push({"id":"#status"+options.overId+options.docId, "isenable":true});
+				// BACKGROUND COLOR
+				for(var i = 0; i < $scope.list_of_booking.length; i++){
+					if($scope.list_of_booking[i].isenable)
+						angular.element($scope.list_of_booking[i].id).css("background", "yellow");
+				}
+				//END BACKGROUND COLOR
+			}else{
+				$scope.list_of_booking.splice(isSelected, 1);
+			}
+
+			console.log($scope.list_of_booking);
+			// END
 		}
-		//END BACKGROUND COLOR
 	}
 	//END CONTEXT MENU
+
+	$scope.rightClickAction = function($event){
+		if($scope.list_of_booking.length > 0){
+			angular.element("#popupMenu").css({
+				'display': 'block',
+				'top': $event.clientY-68,
+				'left': $event.clientX-20
+			});
+		}
+	}
+
+	angular.element("body").bind("click", function($event){
+		if(angular.element($event.target).closest("#main-table").length === 0){
+			if(angular.element($event.target).closest("#popupMenu").length === 0){
+				angular.element("#popupMenu").css("display", "none");
+				//CLEAR COLOR
+				clearColorBooking();
+				//END CLEAR COLOR
+				clearSelectedBooking();
+				$event.preventDefault();
+			}
+		}
+	})
+
+	// ACTION RIGHT MENU
+	$scope.showUnavailable = function(){
+		if($scope.list_of_booking.length > 0){
+			for(var i = 0; i < $scope.list_of_booking.length; i++){
+				angular.element($scope.list_of_booking[i].id).css("background", "rgb(61,74,83)");
+				$scope.list_of_booking[i].isenable = false;
+			}
+
+			angular.element("#popupMenu").css("display", "none");
+		}
+	}
+	// END ACTION RIGHT MENU
 })

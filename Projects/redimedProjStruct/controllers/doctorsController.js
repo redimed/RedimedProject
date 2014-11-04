@@ -308,8 +308,6 @@ module.exports =
         if(req.body.data){
             var data = req.body.data;
 
-            console.log(data);
-
             var doctor_id = data.doctor_id;
             var day_of_Week = data.day_of_Week;
             var description = (data.description)?data.description:'';

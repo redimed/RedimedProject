@@ -55,9 +55,11 @@ module.exports =
         var app_type = (req.body.APP_TYPE)?req.body.APP_TYPE:"NotYet";
         var status = (req.body.STATUS)?req.body.STATUS:"";
         var bill_to = (req.body.bill_to)?req.body.bill_to:1;
-        var arr_time = (req.body.ARR_TIME)?common_functions.convertFromHoursToDateTime(req.body.ARR_TIME):"";
-        var att_time = (req.body.ATTEND_TIME)?common_functions.convertFromHoursToDateTime(req.body.ATTEND_TIME):"";
+        var arr_time = (req.body.ARR_TIME)?common_functions.convertFromHoursToDateTime(req.body.ARR_TIME):common_functions.convertFromHoursToDateTime("00:00");
+        var att_time = (req.body.ATTEND_TIME)?common_functions.convertFromHoursToDateTime(req.body.ATTEND_TIME):common_functions.convertFromHoursToDateTime("00:00");
         var notes = (req.body.NOTES)?req.body.NOTES:"";
+
+        console.log(arr_time);
 
         req.getConnection(function(err, connection){
             var query = connection.query(
