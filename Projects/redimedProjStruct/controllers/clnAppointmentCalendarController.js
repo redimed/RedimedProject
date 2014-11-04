@@ -24,6 +24,29 @@ module.exports =
             );
         });
     },
+    checkSameDoctor:function(req,res)
+    {
+        var calId1=req.query.calId1;
+        var calId2=req.query.calId2;
+        var sql=" SELECT DISTINCT calendar.`DOCTOR_ID`                            "+
+            " FROM  `cln_appointment_calendar` calendar                       "+
+            " WHERE `calendar`.`CAL_ID`=? || `calendar`.`CAL_ID`=?            ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[calId1,calId2],function(err,rows)
+            {
+                if(err)
+                {
+                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:rows.length});
+                }
+            });
+        });
+    },
     booking: function(req, res){
         var cal_id = (req.body.CAL_ID)?req.body.CAL_ID:0;
         var service_id = (req.body.SERVICE_ID)?req.body.SERVICE_ID:0;

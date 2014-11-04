@@ -4,7 +4,7 @@ var fs = require('fs'),
     lodash = require('lodash'),
     config = require('config'),
     sequelize = new Sequelize('sakila', 'root', 'root', {
-        host: 'localhost',
+        host: '192.168.10.53',
         port: 3306
     }),
     db = {};
