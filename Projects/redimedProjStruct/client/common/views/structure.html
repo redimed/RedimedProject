@@ -394,13 +394,21 @@
                             <td>{{item.time_created |date:'dd-MM-yyyy HH:mm:ss'}}</td>
                             <td>{{item.msg}}</td>
                             <td>
-                                <a
+                                <a  ng-show="item.TYPE=='bell'"
                                     class="btn btn-sm yellow filter-submit margin-bottom"
                                     style="margin-left: 10px;margin-bottom: 10px;"
                                     ng-click="closeNotificationListPopup()"
                                     ui-sref="{{item.link}}">
                                     View details
                                 </a>
+
+                                <a      ng-show="item.TYPE=='letter'"
+                                        class="btn btn-sm yellow filter-submit margin-bottom"
+                                        style="margin-left: 10px;margin-bottom: 10px;"
+                                        href="/api/download/structure/attach-file/{{item.source_name}}/{{item.ref_id}}">
+                                    Download document
+                                </a>
+
                             </td>
                             <!--<td>-->
                                 <!--<input type="checkbox"   ng-model="item.STATUS" ng-true-value="1" ng-false-value="0" ng-checked="item.STATUS">-->

@@ -97,7 +97,9 @@ module.exports =
                     var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
                     var path=prefix+rows[0].FILE_PATH;
                     console.log(">>>>>>>>>>>>>downloadFile:"+path);
-                    res.download(path);
+                    res.download(path,function(err){
+                        res.json({status:'fail',message:'no file exist!'});
+                    });
                 }
             })
         });

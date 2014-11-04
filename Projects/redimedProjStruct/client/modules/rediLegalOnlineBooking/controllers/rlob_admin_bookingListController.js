@@ -650,7 +650,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             .success(function(data) {
                 if(data.status=='success')
                 {
-                    alert(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>rlTypeId:"+rlTypeId+";specialityId:"+specialityId);
                     $("#lob-change-appointment-calendar-dialog").modal('hide');
                     $scope.showMsgDialog(".lob-msg-dialog",'Change appointment calendar','success','Change appointment calendar success!');
                     if(newAppointmentDateTime>=$scope.currentUpdatingItem.appointmentDateTime)

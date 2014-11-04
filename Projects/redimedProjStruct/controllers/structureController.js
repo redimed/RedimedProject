@@ -9,7 +9,7 @@ module.exports =
         var userId=req.body.userId;
         var sql=
             " SELECT 	booking.`BOOKING_ID` AS ID,                                             "+
-            " 	booking.BOOKING_TYPE AS SOURCE_TYPE,                                            "+
+            " 	booking.BOOKING_TYPE AS SOURCE_NAME,                                            "+
             " 	booking.`APPOINTMENT_DATE` AS DATE_UPCOMING,                                    "+
             " 	CONCAT(booking.`WRK_SURNAME`,' - ',`rltype`.`Rl_TYPE_NAME`) AS NOTIFICATION,    "+
             " 	`booking`.`WRK_SURNAME` AS PERSON_INFO,                                         "+
@@ -57,13 +57,23 @@ module.exports =
 
         db.sequelize.query(sql,null,{raw:true},[refId])
             .success(function(data){
-                var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-                var path=prefix+data[0].FILE_PATH;
-                console.log(">>>>>>>>>>>>>downloadFile:"+path);
-                res.download(path);
+                if(data.length>0)
+                {
+                    var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+                    var path=prefix+data[0].FILE_PATH;
+                    console.log(">>>>>>>>>>>>>downloadFile:"+path);
+                    res.download(path,function(err){
+                        res.json({status:'fail',message:'no file exist!'});
+                    });
+                }
+                else
+                {
+                    res.json({status:'fail',message:'no file exist!'});
+                }
+
             })
             .error(function(err){
-                res.json({status:'error'});
+                res.json({status:'fail',message:'no file exist!'});
             })
     }
 }
