@@ -136,7 +136,7 @@ module.exports =
                     var FROM_TIME = timetable_data[j].from_time_map;
                     var TO_TIME = timetable_data[j].to_time_map;
 
-                    var offset = day_list_reverse[timetable_data[j].day_of_Week]-current_day;
+                    var offset = day_list_reverse[timetable_data[j].day_of_Week]-current_day;                    
 
                     var FROM_MINUTES = common_function.toMinutes(FROM_TIME, 0);
                     var TO_MINUTES = common_function.toMinutes(TO_TIME, 0);

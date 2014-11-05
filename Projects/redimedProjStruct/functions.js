@@ -34,27 +34,31 @@ module.exports = {
 		return Math.ceil((date.getDate() + firstDay)/7);
 	},
 	getDateOffset: function(current_date, time, offset){
-		if(offset >= 0){
-			var date = new Date();
-			var millisecondOffset = offset * 24 * 60 * 60 * 1000;
-			date.setTime(current_date.getTime()+millisecondOffset);
-			
-			var dates = date.getDate();
-			var month = date.getMonth()+1;
-			var year = date.getFullYear();
+		var date = new Date();
 
-			if(dates < 0){
-				dates = "0"+dates;
-			}
-
-			if(month < 0){
-				month = "0"+month;
-			}
-
-			var result = year+"-"+month+"-"+dates+" "+time+":00";
-
-			return result;
+		if(offset < 0){
+			offset = 0;
 		}
+
+		var millisecondOffset = offset * 24 * 60 * 60 * 1000;
+
+		date.setTime(current_date.getTime()+Math.abs(millisecondOffset));
+		
+		var dates = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+
+		if(dates < 10){
+			dates = "0"+dates;
+		}
+
+		if(month < 10){
+			month = "0"+month;
+		}
+
+		var result = year+"-"+month+"-"+dates+" "+time+":00";
+
+		return result;
 	},
 	toMinutes: function(current_time, minutes){
 		var split = current_time.split(":");

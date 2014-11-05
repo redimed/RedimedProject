@@ -59,8 +59,6 @@ module.exports =
         var att_time = (req.body.ATTEND_TIME)?common_functions.convertFromHoursToDateTime(req.body.ATTEND_TIME):common_functions.convertFromHoursToDateTime("00:00");
         var notes = (req.body.NOTES)?req.body.NOTES:"";
 
-        console.log(arr_time);
-
         req.getConnection(function(err, connection){
             var query = connection.query(
                 "UPDATE cln_appointment_calendar"+
