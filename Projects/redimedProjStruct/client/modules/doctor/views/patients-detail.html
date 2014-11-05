@@ -1,0 +1,60 @@
+<h3 class="page-title">Patient Detail</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.patients">Patients</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>{{(patient.Title != null ? patient.Title + ' ' : '') + patient.Sur_name}}</a>
+        </li>
+    </ul>
+</div>
+
+
+
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i> General Information
+        </div>
+    </div>
+    <div class="portlet-body">
+
+    </div>
+</div>
+
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i> Appointments
+        </div>
+    </div>
+    <div class="portlet-body">
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>From time</th>
+                    <th>To time</th>
+                    <th>Site</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in list_appt" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item)"  style="cursor: pointer;">
+                    <td>{{$index + 1}}</td>
+                    <td>{{item.FROM_TIME}}</td>
+                    <td>{{item.TO_TIME}}</td>
+                    <td>{{item.Site_name}}</td>
+                    <td>{{item.NOTES}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<h3 class="page-title">Patient Detail</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.patients">Patients</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.patients.detail">{{(patient.Title != null ? patient.Title + ' ' : '') + patient.Sur_name}}</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Appointment</a>
+        </li>
+    </ul>
+</div>
+
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i> Appointment Information
+        </div>
+    </div>
+    <div class="portlet-body">
+
+    </div>
+</div>
+
+<div class="portlet box red">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> ITEM SHEET
+        </div>
+        <div class="pull-right">
+            <button  ng-click="saveItemsheet()" class="btn blue"><i class="fa fa-save"></i> Save </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable">
+
+            <table class="table table-bordered items-table">
+                <tbody>
+                    <tr ng-repeat-start="cat in item_list" class="item-label">
+                        <td colspan="3" style="text-transform: uppercase;" class="text-center bold"> {{cat.cattitle}} </td>
+                    </tr>
+                    <tr ng-repeat-end ng-repeat="item in cat.list" ng-click="chooseItem(item)">
+                        <td>
+                            <!--                                        <div class="roundedTwo">
+                                                                        <input  id="cb-{{item.code}}" type="checkbox" value="None" name="check" ng-true-value="1" ng-false-value="0" ng-model="item.checked" ng-checked="item.checked" />
+                                                                        <label for="cb-{{item.code}}"></label>
+                                                                    </div>-->
+                            <input  id="cb-{{item.code}}" class="form-control" type="checkbox" value="None" name="check" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                        </td>
+                        <td>{{item.code}} - {{item.checked}}</td>
+                        <td style="width: 85%">{{item.desc}}</td>
+                        <!--<td>{{item.extra}}</td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -67,13 +67,54 @@ angular.module("app.loggedIn.doctor", [
         }
     })
 
-    // TIMETABLE DETAIL CASUAL
-    .state("loggedIn.doctor.timetable.detail.casual", {
-        url: "/casual",
-        views: {
-            "main-content-timetable": {
-                templateUrl: "modules/doctor/views/timetable-casual.html"
-            }
-        }
-    })
+            // TIMETABLE DETAIL CASUAL
+            .state("loggedIn.doctor.timetable.detail.casual", {
+                url: "/casual",
+                views: {
+                    "main-content-timetable": {
+                        templateUrl: "modules/doctor/views/timetable-casual.html"
+                    }
+                }
+            })
+
+            // ITEM SHEET
+            .state("loggedIn.doctor.itemsheet", {
+                url: "/doctor/itemsheet",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/doctor/views/itemsheet.html"
+                        , controller: "DoctorItemSheetController"
+                    }
+                }
+            })
+
+            // LIST PATIENTS
+            .state("loggedIn.doctor.patients", {
+                url: "/doctor/patients",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/doctor/views/patients.html",
+                        controller: "DoctorPatientsController"
+                    }
+                }
+            })
+
+            .state("loggedIn.doctor.patients.detail", {
+                url: "/detail",
+                views: {
+                    "main-content@loggedIn.doctor": {
+                        templateUrl: "modules/doctor/views/patients-detail.html",
+                        controller: "DoctorPatientsDetailController"
+                    }
+                }
+            })
+            .state("loggedIn.doctor.patients.detail.appt", {
+                url: "/appt",
+                views: {
+                    "main-content@loggedIn.doctor": {
+                        templateUrl: "modules/doctor/views/patients-detail-appt.html",
+                        controller: "DoctorPatientsDetailApptController"
+                    }
+                }
+            })
 })

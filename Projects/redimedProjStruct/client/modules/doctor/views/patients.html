@@ -1,0 +1,75 @@
+<h3 class="page-title">Patient List</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Patients</a>
+        </li>
+    </ul>
+</div>
+
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>List of Patients
+        </div>
+    </div>
+    <div class="portlet-body">
+        <!-- PAGINATION -->
+        <div style="float: left;">
+            <pagination boundary-links="true" total-items="list.count" ng-model="searchObjectMap.currentPage" 
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
+                        items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
+        </div>
+        <div style="float: right; padding-top: 15px;">
+            <button class="btn btn-sm" ng-click="reset()">Reset</button>
+            <b>Total Patients:</b> {{list.count}}
+            <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows" 
+                    ng-change="loadList()">
+            </select>
+        </div>
+        <!-- END PAGINATION -->
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Sur Name</th>
+                    <th>Postcode</th>
+                </tr>
+                <tr>
+                    <!-- SEARCH -->
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.First_name" 
+                               ng-change="loadList()">
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Middle_name" 
+                               ng-change="loadList()">
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Sur_name" 
+                               ng-change="loadList()">
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Post_code" 
+                               ng-change="loadList()">
+                    </td>
+                    <!-- END SEARCH -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="l in list.results" ng-click="goToTimetableDetail(l)"  style="cursor: pointer;">
+                    <td>{{l.First_name}}</td>
+                    <td>{{l.Middle_name| undefined}}</td>
+                    <td>{{l.Sur_name| undefined}}</td>
+                    <td>{{l.Post_code| undefined}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

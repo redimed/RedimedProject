@@ -14,7 +14,6 @@ angular.module("app.security.login.controller",[
         }else{
             SecurityService.login($scope.modelUser).then(function(response){
                 UserService.detail().then(function(response){
-					console.log(response);
                     if(typeof response.userInfo !== 'undefined'){
                         $cookieStore.put("userInfo", response.userInfo);
 						
