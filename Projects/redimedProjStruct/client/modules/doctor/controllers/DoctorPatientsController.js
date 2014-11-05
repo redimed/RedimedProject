@@ -2,9 +2,10 @@ angular.module("app.loggedIn.doctor.patients.controller", [
     "app.loggedIn.doctor.patients.detail.controller"
 ])
         .controller("DoctorPatientsController", function ($scope, $state, $cookieStore, DoctorService) {
+			var userInfo = $cookieStore.get("userInfo");
             // LOAD DOCTOR DETAIL
             var loadDoctorDetail = function () {
-                DoctorService.getByUserId($cookieStore.get("userInfo").userInfo.id).then(function (data) {
+                DoctorService.getByUserId(userInfo.id).then(function (data) {
                     $scope.searchObjectMap.doctor_id = data.doctor_id;
                 })
             }
@@ -18,7 +19,7 @@ angular.module("app.loggedIn.doctor.patients.controller", [
 
             //LOAD SEARCH
             $scope.loadList = function () {
-                DoctorService.getByUserId($cookieStore.get("userInfo").userInfo.id).then(function (data) {
+                DoctorService.getByUserId(userInfo.id).then(function (data) {
                     $scope.searchObjectMap.doctor_id = data.doctor_id;
                     DoctorService.listPatients($scope.searchObjectMap).then(function (response) {
                         $scope.list = response;

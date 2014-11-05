@@ -6,7 +6,12 @@ angular.module("app.loggedIn.doctor.services", [])
             /**
              * KHANK API
              */
-
+			 
+			doctorService.insertItemAppt = function (appt_id, items) {
+                var instanceApi = doctorApi.all("v1/appointment/insert_items");
+                return instanceApi.post({'cal_id':appt_id, items: items});
+            }
+			 
             doctorService.getItemByDept = function (dept_id) {
                 var instanceApi = doctorApi.one("v1/items/list_by_dept");
                 return instanceApi.get({'dept_id': dept_id});
