@@ -424,7 +424,7 @@
 <!--end input save group-->
 
 <div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
-<div ng-form name="line{{hIndex}}">
+<ng-form name="lineForm">
 <!--begin input save line-->
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MH_LINE_ID"/>
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].GROUP_ID"/>
@@ -480,7 +480,7 @@
                         ng-show="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Comment:</label>
             </div>
             <div class="col-md-5 col-sm-5">
-                <div ng-class="{'has-error': line{{hIndex}}.Comments.$error.required || line{{hIndex}}.Comments.$error.maxlength}">
+                <div ng-class="{'has-error': lineForm.Comments.$error.required || lineForm.Comments.$error.maxlength}">
                     <input type="text" class="form-control" name="Comments"
                            ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Comments"
                            ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].YES_NO &&
@@ -489,10 +489,10 @@
                     info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_NO
                     )" ng-maxlength="200"/>
 
-                    <div ng-show="line{{hIndex}}.Comments.$error.required">
+                    <div ng-show="lineForm.Comments.$error.required">
                         <label class="help-block">Required!</label>
                     </div>
-                    <div ng-show="line{{hIndex}}.Comments.$error.maxlength">
+                    <div ng-show="lineForm.Comments.$error.maxlength">
                         <label class="help-block">Comment too long!</label>
                     </div>
                 </div>
@@ -541,7 +541,7 @@
 
 <!--begin input save subquestion-->
 <div ng-repeat="(sIndex,subquestion) in line.subquestion">
-    <div ng-form name="subquestion{{sIndex}}">
+    <ng-form name="subForm">
         <input type="hidden"
                ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_SUB_ID"/>
         <input type="hidden"
@@ -605,8 +605,8 @@
                             ng-show="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO">*</span>Comment:</label>
                 </div>
                 <div class="col-md-5 col-sm-5">
-                    <div ng-class="{'has-error': subquestion{{sIndex}}.Comments.$error.required ||
-                    subquestion{{sIndex}}.Comments.$error.maxlength}">
+                    <div ng-class="{'has-error': subForm.Comments.$error.required ||
+                    subForm.Comments.$error.maxlength}">
                         <input type="text" class="form-control" name="Comments"
                                ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Comments"
                                ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
@@ -615,24 +615,26 @@
                                info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO)"
                                ng-maxlength="200"/>
 
-                        <div ng-show="subquestion{{sIndex}}.Comments.$error.required">
+                        <div ng-show="subForm.Comments.$error.required">
                             <label class="control-label">Required!</label>
                         </div>
-                        <div ng-show="subquestion{{sIndex}}.Comments.$error.maxlength">
+                        <div ng-show="subForm.Comments.$error.maxlength">
                             <label class="control-label">Comment too long!</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </ng-form>
     </div>
-</div>
+<!--</div>-->
 <!--end subquestion-->
 <div ng-if="line.line_id != group.line[group.line.length - 1].line_id">
     <hr/>
 </div>
+</ng-form>
 </div>
-</div>
+<!--</div>-->
 </div>
 </div>
 

@@ -5,11 +5,11 @@
     }
 </style>
 
-<form name="SA1" method="post" novalidate>
+<form name="SA2" method="post" novalidate>
 <div class="caption">
     <div class="row">
         <div class="col-md-12 ">
-            <a href="javascript:;" ng-click="submit()" class="btn green pull-right">Submit</a>
+            <a href="javascript:;" ng-click="submit(SA2)" class="btn green pull-right">Submit</a>
             <a href="javascript:;" class="btn btn-primary blue pull-right">Print PDF</a>
             <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
         </div>
@@ -403,14 +403,14 @@
             <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Last_updated_by"/>
             <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Last_update_date"/>
             <!--end input save lines-->
-            <ng-form name="lineform">
+            <ng-form name="lineForm">
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-3 col-sm-3" style="text-align: center;">
                             <label class="control-label">{{line.NAME}}</label>
                         </div>
                         <div class="col-md-3 col-sm-3">
-                            <div ng-class="{'has-error': lineform.left.$error.pattern}">
+                            <div ng-class="{'has-error': lineForm.left.$error.pattern}">
                                 <input type="text" class="form-control" name="left"
                                        ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].VALUE_LEFT"
                                        ng-pattern="/^(0|\-?[1-9][0-9]*)$/"
@@ -418,7 +418,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-3">
-                            <div ng-class="{'has-error': lineform.right.$error.pattern}">
+                            <div ng-class="{'has-error': lineForm.right.$error.pattern}">
                                 <input type="text" class="form-control" name="right"
                                        ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].VALUE_RIGHT"
                                        ng-pattern="/^(0|\-?[1-9][0-9]*)$/"
@@ -433,15 +433,15 @@
 
                 </div>
                 <div class="col-md-3">
-                    <div ng-class="{'has-error': lineform.left.$error.pattern}">
-                        <div ng-show="lineform.left.$error.pattern">
+                    <div ng-class="{'has-error': lineForm.left.$error.pattern}">
+                        <div ng-show="lineForm.left.$error.pattern">
                             <label class="control-label">Required is number!</label>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div ng-class="{'has-error': lineform.right.$error.pattern}">
-                        <div ng-show="lineform.right.$error.pattern">
+                    <div ng-class="{'has-error': lineForm.right.$error.pattern}">
+                        <div ng-show="lineForm.right.$error.pattern">
                             <label class="control-label">Required is number!</label>
                         </div>
                     </div>
