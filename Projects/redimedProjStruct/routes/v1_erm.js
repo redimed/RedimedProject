@@ -8,7 +8,7 @@ var v1_UsersController = require('./controllers/v1_UsersController');
 
 k_route.setRoute(app, v1_DoctorController, '/api/erm/v1/doctors/');
 k_route.setRoute(app, v1_AppointmentController, '/api/erm/v1/appointment/');
-k_route.setRoute(app, v1_InvItemsController, '/api/erm/v1/inv_items/');
+k_route.setRoute(app, v1_InvItemsController, '/api/erm/v1/items/');
 k_route.setRoute(app, v1_UsersController, '/api/erm/v1/users/');
 k_route.setRoute(app, v1_PatientController, '/api/erm/v1/patients/');
 

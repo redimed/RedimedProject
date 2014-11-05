@@ -1,8 +1,7 @@
 angular.module("app.security.login.controller",[
 ])
-
-.controller("SecurityLoginController", function($scope, $state, $cookieStore, UserService, SecurityService, toastr){
-    $scope.showClickedValidation = false;
+        .controller("SecurityLoginController", function ($scope, $state, $cookieStore, SecurityService, toastr, UserService, ConfigService, DoctorService) {
+            $scope.showClickedValidation = false;
 
 
 
@@ -15,10 +14,30 @@ angular.module("app.security.login.controller",[
         }else{
             SecurityService.login($scope.modelUser).then(function(response){
                 UserService.detail().then(function(response){
-                    if(typeof response.userInfo !== 'undefined')
+					console.log(response);
+                    if(typeof response.userInfo !== 'undefined'){
                         $cookieStore.put("userInfo", response.userInfo);
-                    if(typeof response.companyInfo !== 'undefined')
-                        $cookieStore.put("companyInfo", response.companyInfo);
+						
+						if(typeof response.companyInfo !== 'undefined')
+							$cookieStore.put("companyInfo", response.companyInfo);
+						
+						/**
+						 * khank
+						 * ADD COOKIE INFO 4 DOCTOR
+						 */
+						 if (response.userInfo.user_type == 'Doctor') {
+							DoctorService.getByUserId(response.userInfo.id).then(function (data) {
+						
+								$cookieStore.put('doctorInfo', {
+									doctor_id: data.doctor_id, 
+									NAME: data.NAME, 
+									Provider_no: data.Provider_no,
+									CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
+								});
+							});
+						}
+					}
+                    
 
                     if(response.userInfo['function_id'] != null){
                         UserService.getFunction(response.userInfo['function_id']).then(function(data){

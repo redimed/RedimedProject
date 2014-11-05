@@ -1,49 +1,70 @@
-var k_time = require('../helper/k_time');
 var squel = require("squel");
 squel.useFlavour('mysql');
+var k_time = require('../helper/k_time');
 
 var model_sql = {
-    sql_detail: function(user_id){
+    sql_list_patient: function (doctor_id, current) {
+        var cur_date = k_time.getStrCurrentDate();
+        var querybuilder = squel.select().from('cln_appointment_calendar')
+                .join('cln_patients', null, 'cln_patients.patient_id = cln_appointment_calendar.patient_id');
+
+        querybuilder.field('CAL_ID')
+                .field('SITE_ID')
+                .field('FROM_TIME')
+                .field('TO_TIME')
+                .field('cln_patients.patient_id', 'p_id')
+                .field('CONCAT(cln_patients.`Title`,\'. \', cln_patients.First_name)', 'patient_name');
+        querybuilder.where('doctor_id = ?', doctor_id);
+        if (current)
+            querybuilder.where('FROM_TIME LIKE ?', cur_date + '%');
+        return querybuilder.toString();
+    },
+    sql_by_user_id: function (user_id) {
         var querybuilder = squel.select()
                     .from('doctors')
                     .where("user_id = ?", user_id)
 
         return querybuilder.toString();
+    },
+    sql_by_id: function (doctor_id) {
+        var querybuilder = squel.select()
+                .from('doctors')
+                .where("doctor_id = ?", doctor_id)
+        return querybuilder.toString();
     }
-}
-
+};
 module.exports = {
     getListPatients: function (req, res) {
-        var doctor_id = req.params.doctor_id;
-        if (!doctor_id){
-            res.json({status: 'error required doctor_id'});
-            return;
-        }
-        var cur_date = k_time.getStrCurrentDate();
+        var doctor_id = req.query.doctor_id;
+        var current_day = req.query.current_day;
+
         var k_sql = res.locals.k_sql;
+        var sql = model_sql.sql_list_patient(doctor_id, current_day);
 
-        var err_handle = function (err) {
+        k_sql.exec(sql, function (data) {
+            res.json(data);
+        }, function (err) {
             res.json(err);
-        }
-
-        k_sql.table('cln_appointment_calendar').get_by('doctor_id', doctor_id)
-                .left_join('cln_patients', 'cln_patients.patient_id = cln_appointment_calendar.patient_id')
-                .fields('CAL_ID, SITE_ID, FROM_TIME, TO_TIME, cln_patients.patient_id AS p_id, (CONCAT(cln_patients.`Title`,\'. \', cln_patients.First_name)) AS patient_name')
-                .like('FROM_TIME', cur_date, 'after')
-                .exec(function (data) {
-                    res.json(data);
-                }, err_handle);
+        });
     },
     
     postByUserId: function(req, res){
         var user_id = req.body.user_id;
 
         var k_sql = res.locals.k_sql;
-        k_sql.exec(model_sql.sql_detail(user_id), function (data) {
+        k_sql.exec(model_sql.sql_by_user_id(user_id), function (data) {
             res.json(data[0]);
         }, function (err) {
             res.json(err);
         });
-    }
-    
+    },
+    getById: function (req, res) {
+        var doctor_id = req.query.doctor_id;
+        var k_sql = res.locals.k_sql;
+        k_sql.exec(model_sql.sql_by_id(doctor_id), function (data) {
+            res.json(data[0]);
+        }, function (err) {
+            res.json(err);
+        });
+    },
 }
