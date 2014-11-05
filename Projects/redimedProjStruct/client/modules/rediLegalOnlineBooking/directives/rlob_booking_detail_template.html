@@ -292,247 +292,247 @@
 
     </div>
 </div>
+<div style="display: none">
+    <div class="printable">
+        <table cellpadding="10">
+            <tr>
+                <td valign="top" width="50%">
+                    <div class="rlob-print-group">
+                        <p class="rlob-print-group-header">Detail of the person requesting the assessment</p>
+                        <table>
+                            <tr>
+                                <td >
+                                    <span class="rlob-print-label">Surname:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.ASS_SURNAME}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Other name:</span>
 
-<div class="printable">
-    <table border="1" cellpadding="10">
-        <tr>
-            <td valign="top" width="50%">
-                <div class="rlob-print-group">
-                    <p style="text-align: center!important;" class="rlob-print-group-header">Detail of the person requesting the assessment</p>
-                    <table>
-                        <tr>
-                            <td >
-                                <span class="rlob-print-label">Surname:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.ASS_SURNAME}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Other name:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.ASS_OTHERNAMES}}</span>
 
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.ASS_OTHERNAMES}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Contact number:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.ASS_CONTACT_NO}}</span>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Contact number:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.ASS_CONTACT_NO}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Email address:</span>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Email address:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.ASS_EMAIL}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.ASS_EMAIL}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                </td>
+                <td valign="top" width="50%">
+                    <div class="rlob-print-group">
+                        <p class="rlob-print-group-header">Summary of Booking</p>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Booking Status:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.STATUS}}</span>
 
-            </td>
-            <td valign="top" width="50%">
-                <div class="rlob-print-group">
-                    <p class="rlob-print-group-header">Summary of Booking</p>
-                    <table>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Booking Status:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.STATUS}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Date:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.APPOINTMENT_DATE|date:'dd/MM/yyyy'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Time:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.APPOINTMENT_DATE|date:'HH:mm'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Type of appointment:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.Rl_TYPE_NAME}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Doctor:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.NAME}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Address:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.Site_addr}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Date:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.APPOINTMENT_DATE|date:'dd/MM/yyyy'}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Time:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.APPOINTMENT_DATE|date:'HH:mm'}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Type of appointment:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.Rl_TYPE_NAME}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Doctor:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.NAME}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Address:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.Site_addr}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" width="50%">
+                    <div class="rlob-print-group">
+                        <p class="rlob-print-group-header">Patient 's Information</p>
+                        <table>
+                            <tr ng-if="bookingType=='REDiLEGAL'">
+                                <td>
+                                    <span class="rlob-print-label">Claim number:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.CLAIM_NO}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-if="bookingType=='Vaccination'">
+                                <td>
+                                    <span class="rlob-print-label">Employee number:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.EMPLOYEE_NUMBER}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-if="bookingType=='Vaccination'">
+                                <td>
+                                    <span class="rlob-print-label">Department Name:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.DEPARTMENT_NAME}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Surname:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.WRK_SURNAME}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Other name:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.WRK_OTHERNAMES}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Date of birth:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.WRK_DOB|date:'dd/MM/yyyy'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Email address:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.WRK_EMAIL}}</span>
+                                </td>
+                            </tr>
 
-            </td>
-        </tr>
-        <tr>
-            <td valign="top" width="50%">
-                <div class="rlob-print-group">
-                    <p class="rlob-print-group-header">Patient 's Information</p>
-                    <table>
-                        <tr ng-if="bookingType=='REDiLEGAL'">
-                            <td>
-                                <span class="rlob-print-label">Claim number:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.CLAIM_NO}}</span>
-                            </td>
-                        </tr>
-                        <tr ng-if="bookingType=='Vaccination'">
-                            <td>
-                                <span class="rlob-print-label">Employee number:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.EMPLOYEE_NUMBER}}</span>
-                            </td>
-                        </tr>
-                        <tr ng-if="bookingType=='Vaccination'">
-                            <td>
-                                <span class="rlob-print-label">Department Name:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.DEPARTMENT_NAME}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Surname:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.WRK_SURNAME}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Other name:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.WRK_OTHERNAMES}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Date of birth:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.WRK_DOB|date:'dd/MM/yyyy'}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Email address:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.WRK_EMAIL}}</span>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Contact number:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.WRK_CONTACT_NO}}</span>
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Contact number:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.WRK_CONTACT_NO}}</span>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan='2'>
+                                    <span class="rlob-print-label">Is the patient new to REDiMED :</span>
+                                    <span class="rlob-print-value">{{selectedBooking.ISNEW==1?'YES':'NO'}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-if="bookingType=='REDiLEGAL'">
+                                <td>
+                                    <span class="rlob-print-label">Description of injury:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.DESC_INJURY}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-if="bookingType=='Vaccination'">
+                                <td>
+                                    <span class="rlob-print-label">Description of Vaccination:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.DESC_VACCIN}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-                        <tr>
-                            <td colspan='2'>
-                                <span class="rlob-print-label">Is the patient new to REDiMED :</span>
-                                <span class="rlob-print-value">{{selectedBooking.ISNEW==1?'YES':'NO'}}</span>
-                            </td>
-                        </tr>
-                        <tr ng-if="bookingType=='REDiLEGAL'">
-                            <td>
-                                <span class="rlob-print-label">Description of injury:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.DESC_INJURY}}</span>
-                            </td>
-                        </tr>
-                        <tr ng-if="bookingType=='Vaccination'">
-                            <td>
-                                <span class="rlob-print-label">Description of Vaccination:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.DESC_VACCIN}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-            </td>
-            <td valign="top" width="50%">
-                <div class="rlob-print-group">
-                    <p class="rlob-print-group-header">Appointment</p>
-                    <table>
-                        <tr>
-                            <td colspan='2'>
-                                <span class="rlob-print-label">REDiLEGAL to contact the patient and arrage a time:</span>
-                                <span class="rlob-print-value">{{selectedBooking.ISCONTACTPATIENT==1?'YES':'NO'}}</span>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan='2'>
-                                <span class="rlob-print-label">REDiLEGAL to contact the case manager to arrange a time for the worker:</span>
-                                <span class="rlob-print-value">{{selectedBooking.ISCONTACTMANAGER==1?'YES':'NO'}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan='2'>
-                                <span class="rlob-print-label">Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment:</span>
-                                <span class="rlob-print-value">{{selectedBooking.isUrgent==1?'YES':'NO'}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rlob-print-label">Notes:</span>
-                            </td>
-                            <td>
-                                <span class="rlob-print-value">{{selectedBooking.NOTES}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                </td>
+                <td valign="top" width="50%">
+                    <div class="rlob-print-group">
+                        <p class="rlob-print-group-header">Appointment</p>
+                        <table>
+                            <tr>
+                                <td colspan='2'>
+                                    <span class="rlob-print-label">REDiLEGAL to contact the patient and arrage a time:</span>
+                                    <span class="rlob-print-value">{{selectedBooking.ISCONTACTPATIENT==1?'YES':'NO'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan='2'>
+                                    <span class="rlob-print-label">REDiLEGAL to contact the case manager to arrange a time for the worker:</span>
+                                    <span class="rlob-print-value">{{selectedBooking.ISCONTACTMANAGER==1?'YES':'NO'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan='2'>
+                                    <span class="rlob-print-label">Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment:</span>
+                                    <span class="rlob-print-value">{{selectedBooking.isUrgent==1?'YES':'NO'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="rlob-print-label">Notes:</span>
+                                </td>
+                                <td>
+                                    <span class="rlob-print-value">{{selectedBooking.NOTES}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
 
-            </td>
-        </tr>
-    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 
         <script>
@@ -541,50 +541,5 @@
                 $(printable[0]).printArea();
             }
         </script>
-        <style>
-            /*.rlob-print-label{*/
-                /*font-size: 12pt;*/
-                /*font-style: italic;*/
-            /*}*/
-            /*.rlob-print-value{*/
-                /*font-size: 11pt;*/
-                /*font-weight: bold;*/
-            /*}*/
-            /*.rlob-print-group-header{*/
-                /*font-weight: bold;*/
-                /*font-size: 12pt;*/
-                /*text-align: center;*/
-            /*}*/
-            /*.rlob-print-group{*/
-                /*margin:10px;*/
-            /*}*/
 
-            @media print {
-                /*.printable .notPrint {*/
-                    /*display: none !important;*/
-                /*}*/
-                /*.normalLabel*/
-                /*{*/
-                    /*font-size: 11.0px!important;*/
-                    /*font-weight:normal!important;*/
-                    /*font-family: Tahoma, Verdana, Helvetica, sans-serif!important;*/
-                /*}*/
-                .rlob-print-label{
-                    font-size: 12pt;
-                    font-style: italic;
-                }
-                .rlob-print-value{
-                    font-size: 11pt;
-                    font-weight: bold;
-                }
-                .rlob-print-group-header{
-                    font-weight: bold;
-                    font-size: 12pt;
-                    text-align: center;
-                }
-                .rlob-print-group{
-                    margin:10px;
-                }
-            }
-        </style>
         <button onclick="printContent()">Test Print</button>
