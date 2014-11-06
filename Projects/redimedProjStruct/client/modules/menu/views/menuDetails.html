@@ -1,45 +1,59 @@
 <div class="modal-header">
+    <h3>Menu Details</h3>
 </div>
 <div class="modal-body">
-    <div>
+    <div class="row">
         <div class="form-group">
-            <label class="control-label">Description</label>
-            <div>
+            <div class="col-md-3">
+                <label class="control-label">Description</label>
+            </div>
+            <div class="col-md-9">
                 <input type="text" class="form-control" placeholder="Enter Description" ng-model="info.MenuDescription" />
             </div>
         </div>
     </div>
-    <div>
+    <br/>
+    <div class="row">
         <div class="form-group">
-            <label class="control-label">Definition</label>
-            <div >
+            <div class="col-md-3">
+                <label class="control-label">Definition</label>
+            </div>
+            <div class="col-md-9">
                 <input type="text" class="form-control" placeholder="Enter Definition" ng-model="info.MenuDefinition" />
             </div>
         </div>
     </div>
-    <div>
+    <br/>
+    <div class="row">
         <div class="form-group">
-            <label class="control-label">Type</label>
-            <div >
+            <div class="col-md-3">
+                <label class="control-label">Type</label>
+            </div>
+            <div class="col-md-9">
                 <input type="text" class="form-control" placeholder="Enter Type" ng-model="info.MenuType" />
             </div>
         </div>
     </div>
-    <div ng-if="isSub == true">
+    <br ng-if="isSub == true"/>
+    <div ng-if="isSub == true" class="row">
         <div class="form-group">
-            <label class="control-label">Function</label>
-            <div>
+            <div class="col-md-3">
+                <label class="control-label">Function</label>
+            </div>
+            <div class="col-md-9">
                 <select ng-model="info.FunctionID" ng-options="func.function_id as func.decription for func in functionList" class="form-control" >
                     <option value="">--Select Function--</option>
                 </select>
             </div>
         </div>
     </div>
-
-    <div>
+    <br/>
+    <div class="row">
         <div class="form-group">
-            <label class="control-label">Enable</label>
-            <div>
+            <div class="col-md-3">
+                <label class="control-label">Enable</label>
+            </div>
+            <div class="col-md-9">
                 <input type="checkbox" class="form-control" ng-model="info.MenuEnable" ng-true-value="1" ng-false-value="0" />
             </div>
         </div>

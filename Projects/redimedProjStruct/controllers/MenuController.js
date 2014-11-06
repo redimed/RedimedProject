@@ -86,5 +86,12 @@ module.exports = {
             .error(function(err){
                 res.json({status:"fail"});
             })
+    },
+    remove: function(req,res){
+        var id = req.body.id;
+        var isRoot = req.body.isRoot;
+
+
+        
     }
 };

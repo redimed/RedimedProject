@@ -112,6 +112,18 @@ angular.module('app.loggedIn.menu.controller',[])
                     }
                 }
             })
+        };
+
+        $scope.deleteRootMenu = function(m){
+            MenuService.deleteRootMenu(m.MenuID).then(function(data){
+                if(data['status'] === 'success') {
+                    toastr.success("Delete Menu Successfully!","Success");
+                }
+                else
+                {
+                    toastr.error("Delete Menu Failed!","Error");
+                }
+            })
         }
 
         $scope.addNewSubMenu = function(){

@@ -31,5 +31,13 @@ angular.module('app.loggedIn.menu.services',[])
             return info.post({id:id});
         }
 
+        menuService.deleteRootMenu = function(id){
+            var a = api.all('menu/delete');
+            return a.post({id:id,isRoot:true});
+        }
+        menuService.deleteMenu = function(id){
+            var a = api.all('menu/delete');
+            return a.post({id:id,isRoot:false});
+        }
         return menuService;
     });
