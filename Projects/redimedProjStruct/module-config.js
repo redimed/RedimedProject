@@ -21,3 +21,4 @@ eval(fs.readFileSync('./routes/user_route.js')+'');
 
 eval(fs.readFileSync('./routes/redi_legal_online_booking.js')+'');
 
+eval(fs.readFileSync('./routes/mai_route.js')+'');

@@ -6,6 +6,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService) {
         //Internal Variable
         //Bien haveNodeFile quy dinh cac file co xuat hien trong tree hay khong
+
         $scope.haveNodeFile=false;
         $scope.isAdminUpload=true;
         $scope.isAdminGetFiles=true;
