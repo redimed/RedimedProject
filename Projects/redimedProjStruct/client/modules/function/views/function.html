@@ -1,24 +1,32 @@
-<div class="portlet light bordered">
+<h3 class="page-title">Function</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:;">System</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Function</a>
+        </li>
+    </ul>
+</div>
+
+<div class="portlet grey-cascade box">
     <div class="portlet-title">
-
-        <!--<p><strong>Page:</strong> {{tableParams.page()}}-->
-        <!--<p><strong>Count per page:</strong> {{tableParams.count()}}-->
-        <div class="caption">
-            <i class="icon-anchor font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">Functions</span>
-
+        <div class="caption ">
+            <i class="icon-list"></i>
+            <span class="caption-subject uppercase">Function List</span>
         </div>
-
-        <div>
-            <div class="btn-group pull-right">
-                <a href="javascript:;" ng-click="addNewFunction()" class="btn green" id="addBtn">
-                    Add New Function <i class="fa fa-plus"></i>
-                </a>
-            </div>
+        <div class="actions">
+            <a href="javascript:;" ng-click="addNewFunction()" class="btn green-jungle btn-sm">
+                <i class="fa fa-plus"></i> Add New</a>
         </div>
-
     </div>
-
     <div class="portlet-body">
 
         <div class="table-scrollable" id="content">
@@ -33,13 +41,11 @@
                     <td data-title="'Type'" >
                         <label>{{f.type}}</label>
                     </td>
-                    <td width="300px" data-title="'Actions'">
-                        <a style="width: 100px" href="javascript:;" class="btn btn-primary"
-                           ng-click="editFunction(f)">
-                            Edit </a>
-                        <a style="width: 100px" href="javascript:;" class="btn btn-danger"
-                           ng-click="deleteFunction(f)">
-                            Delete </a>
+                    <td align="center" data-title="'Actions'">
+                        <a style="width: 75px" href="javascript:;" ng-click="editFunction(f)" class="btn btn-circle blue-steel btn-sm">
+                            <i class="fa fa-pencil"></i> Edit </a>
+                        <a style="width: 75px" href="javascript:;" ng-click="deleteFunction(f)" class="btn btn-circle red-flamingo btn-sm">
+                            <i class="fa fa-times"></i> Delete </a>
                     </td>
                 </tr>
 

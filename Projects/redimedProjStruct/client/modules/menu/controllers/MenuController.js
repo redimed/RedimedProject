@@ -2,7 +2,7 @@
  * Created by meditech on 23/09/2014.
  */
 angular.module('app.loggedIn.menu.controller',[])
-    .controller("MenuController",function($scope,$modal,$state,$filter,ngTableParams,MenuService,$http) {
+    .controller("MenuController",function($scope,$modal,$state,$filter,ngTableParams,MenuService,$http,toastr) {
         var menuList = [];
         var parentId;
         $scope.functionList = [];
@@ -10,6 +10,25 @@ angular.module('app.loggedIn.menu.controller',[])
         $scope.data1=[];
         $scope.isSelected = false;
         $scope.selectedId = null;
+
+        $scope.tableParams2 = new ngTableParams({
+            page: 1,            // show first page
+            count: 25           // count per page
+        }, {
+            total: $scope.data1.length, // length of data
+            getData: function($defer, params) {
+                // use build-in angular filter
+                var orderedData = params.sorting() ?
+                    $filter('orderBy')($scope.data1, params.orderBy()) :
+                    $scope.data1;
+                orderedData = params.filter() ?
+                    $filter('filter')(orderedData, params.filter()) :
+                    orderedData;
+
+                params.total(orderedData.length);
+                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            }
+        });
 
         MenuService.menuList().then(function(data){
             MenuService.functionList().then(function(data){
@@ -43,41 +62,26 @@ angular.module('app.loggedIn.menu.controller',[])
                 }
             });
 
-            $scope.tableParams2 = new ngTableParams({
-                page: 1,            // show first page
-                count: 25           // count per page
-            }, {
-                total: $scope.data1.length, // length of data
-                getData: function($defer, params) {
-                    // use build-in angular filter
-                    var orderedData = params.sorting() ?
-                        $filter('orderBy')($scope.data1, params.orderBy()) :
-                        $scope.data1;
-                    orderedData = params.filter() ?
-                        $filter('filter')(orderedData, params.filter()) :
-                        orderedData;
-
-                    params.total(orderedData.length);
-                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }
-            });
-
-        })
+        });
 
 
         $scope.showChild = function(m) {
             $scope.childTitle = m.MenuDescription;
             $scope.selectedId = m.MenuID;
             $scope.isSelected = true;
-            parentId = m.MenuID;
+
             $scope.data1 = [];
-            var id = m.MenuID;
+
             for(var i =0;i<menuList.length;i++)
             {
-                if(menuList[i].ParentID === id)
+                if(menuList[i].ParentID === m.MenuID)
                     $scope.data1.push(menuList[i]);
             }
-            $scope.tableParams2.reload();
+
+            $scope.$watch('data1',function(data){
+                $scope.tableParams2.reload();
+            })
+
 
         };
 
@@ -94,10 +98,26 @@ angular.module('app.loggedIn.menu.controller',[])
                         return null;
                     }
                 }
+            });
+            $scope.data = [];
+            modalInstance.result.then(function(){
+                MenuService.menuList().then(function(data){
+                    menuList = data;
+                    for(var i = 0;i<menuList.length;i++)
+                    {
+                        if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
+                            $scope.data.push(menuList[i]);
+                    }
+
+                    $scope.$watch('data',function(data){
+                        $scope.tableParams.reload();
+                    })
+                })
             })
         }
 
         $scope.editMenu = function(m){
+            $scope.showChild(m);
 
             var modalInstance = $modal.open({
                 templateUrl:'modules/menu/views/menuDetails.html',
@@ -111,6 +131,22 @@ angular.module('app.loggedIn.menu.controller',[])
                         return false;
                     }
                 }
+            });
+
+            $scope.data = [];
+            modalInstance.result.then(function(){
+                MenuService.menuList().then(function(data){
+                    menuList = data;
+                    for(var i = 0;i<menuList.length;i++)
+                    {
+                        if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
+                            $scope.data.push(menuList[i]);
+                    }
+
+                    $scope.$watch('data',function(data){
+                        $scope.tableParams.reload();
+                    })
+                })
             })
         };
 
@@ -118,13 +154,54 @@ angular.module('app.loggedIn.menu.controller',[])
             MenuService.deleteRootMenu(m.MenuID).then(function(data){
                 if(data['status'] === 'success') {
                     toastr.success("Delete Menu Successfully!","Success");
+                    $scope.data = [];
+                    MenuService.menuList().then(function(data){
+                        menuList = data;
+                        for(var i = 0;i<menuList.length;i++)
+                        {
+                            if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
+                                $scope.data.push(menuList[i]);
+                        }
+
+                        $scope.$watch('data',function(data){
+                            $scope.tableParams.reload();
+                        })
+                    })
+
+                    $scope.selectedId = null;
                 }
                 else
                 {
                     toastr.error("Delete Menu Failed!","Error");
                 }
             })
-        }
+        };
+
+        $scope.deleteSubMenu = function(m){
+            MenuService.deleteMenu(m.MenuID).then(function(data){
+                if(data['status'] === 'success') {
+                    toastr.success("Delete Menu Successfully!","Success");
+                    $scope.data1 = [];
+                    MenuService.menuList().then(function(data) {
+                        menuList = data;
+                        for (var i = 0; i < menuList.length; i++) {
+                            if (menuList[i].ParentID === $scope.selectedId)
+                                $scope.data1.push(menuList[i]);
+                        }
+
+                        $scope.$watch('data1',function(data){
+                            $scope.tableParams2.reload();
+                        })
+                    })
+
+
+                }
+                else
+                {
+                    toastr.error("Delete Menu Failed!","Error");
+                }
+            })
+        };
 
         $scope.addNewSubMenu = function(){
             var modalInstance = $modal.open({
@@ -139,7 +216,24 @@ angular.module('app.loggedIn.menu.controller',[])
                         return $scope.selectedId;
                     }
                 }
+            });
+
+            modalInstance.result.then(function(){
+                $scope.data1 = [];
+
+                MenuService.menuList().then(function(data) {
+                    menuList = data;
+                    for (var i = 0; i < menuList.length; i++) {
+                        if (menuList[i].ParentID === $scope.selectedId)
+                            $scope.data1.push(menuList[i]);
+                    }
+
+                    $scope.$watch('data1',function(data){
+                        $scope.tableParams2.reload();
+                    })
+                })
             })
+
         }
 
         $scope.editSubMenu = function(m){
@@ -155,6 +249,22 @@ angular.module('app.loggedIn.menu.controller',[])
                         return true;
                     }
                 }
+            });
+
+            modalInstance.result.then(function(){
+                $scope.data1 = [];
+
+                MenuService.menuList().then(function(data) {
+                    menuList = data;
+                    for (var i = 0; i < menuList.length; i++) {
+                        if (menuList[i].ParentID === $scope.selectedId)
+                            $scope.data1.push(menuList[i]);
+                    }
+
+                    $scope.$watch('data1',function(data){
+                        $scope.tableParams2.reload();
+                    })
+                })
             })
         }
 
@@ -190,8 +300,7 @@ angular.module('app.loggedIn.menu.controller',[])
             MenuService.insertMenu($scope.info).then(function(data){
                 if(data['status'] === 'success') {
                     toastr.success("Insert New Menu Successfully!","Success");
-                    $modalInstance.dismiss('cancel');
-                    $state.go('loggedIn.menu', null, {"reload":true});
+                    $modalInstance.close();
                 }
                 else
                 {
@@ -240,8 +349,7 @@ angular.module('app.loggedIn.menu.controller',[])
             MenuService.editMenu($scope.info).then(function(data){
                 if(data['status'] === 'success') {
                     toastr.success("Edit Menu Successfully!","Success");
-                    $modalInstance.dismiss('cancel');
-                    $state.go('loggedIn.menu', null, {"reload":true});
+                    $modalInstance.close();
                 }
                 else
                 {

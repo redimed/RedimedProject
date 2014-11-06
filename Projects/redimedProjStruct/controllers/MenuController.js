@@ -91,6 +91,27 @@ module.exports = {
         var id = req.body.id;
         var isRoot = req.body.isRoot;
 
+        if(isRoot == true){
+            db.sequelize.query("DELETE FROM redi_menus WHERE menu_id = ? OR parent_id = ?",null,{raw:true},[id,id])
+                .success(function(data){
+                    res.json({status:'success'});
+                })
+                .error(function(err){
+                    res.json({status:'error'});
+                    console.log(err);
+                })
+        }
+        else
+        {
+            db.sequelize.query("DELETE FROM redi_menus WHERE menu_id = ?",null,{raw:true},[id])
+                .success(function(data){
+                    res.json({status:'success'});
+                })
+                .error(function(err){
+                    res.json({status:'error'});
+                    console.log(err);
+                })
+        }
 
         
     }
