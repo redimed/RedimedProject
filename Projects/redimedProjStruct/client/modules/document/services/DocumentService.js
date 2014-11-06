@@ -147,6 +147,24 @@ angular.module('app.loggedIn.document.services', [])
          * end audiogram 2
          */
 
+        /**
+         * begin category 2
+         */
+        documentService.insertCat2 = function (infoAdd) {
+            var insertCat2 = api.all("document/insertCat2");
+            return insertCat2.post({info: infoAdd});
+        }
+        documentService.loadCat2 = function (infoFind) {
+            var loadCat2 = api.all("document/loadCat2");
+            return loadCat2.post({info: infoFind});
+        }
+        documentService.editCat2 = function (infoUp) {
+            var editCat2 = api.all("document/editCat2");
+            return editCat2.post({info: infoUp});
+        }
+        /**
+         * end category 2
+         */
 
         /**
          * begin category 3

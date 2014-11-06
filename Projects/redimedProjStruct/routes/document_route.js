@@ -10,6 +10,7 @@ var MRSController = require('./controllers/DocumentController/MRSController');
 var SA1Controller = require('./controllers/DocumentController/SA1Controller');
 var SA2Controller = require('./controllers/DocumentController/SA2Controller');
 var Cat3Controller = require('./controllers/DocumentController/Cat3Controller');
+var Cat2Controller = require('./controllers/DocumentController/Cat2Controller');
 var UQController = require('./controllers/DocumentController/UQController');
 var gorgonMHController = require('./controllers/DocumentController/gorgonMHController');
 var form18Controller = require('./controllers/DocumentController/form18Controller');
@@ -24,6 +25,17 @@ app.get('/api/document/loadMA', MAController.loadMA);
 app.get('/api/document/newIDS', IDSController.newIDS);
 app.get('/api/document/loadIDS', IDSController.loadIDS);
 app.post('/api/document/insertUQ', UQController.insertUQ);
+
+/**
+ * begin category 2
+ */
+app.post('/api/document/loadCat2', Cat2Controller.loadCat2);
+app.post('/api/document/insertCat2', Cat2Controller.insertCat2);
+app.post('/api/document/editCat2', Cat2Controller.editCat2);
+/**
+ * end category 2
+ */
+
 /**
  * begin category 3
  */
