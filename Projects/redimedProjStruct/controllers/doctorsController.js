@@ -5,9 +5,83 @@
 var db = require('../models');
 var util = require('util');
 var common_function = require("../functions.js");
+var squel = require("squel");
+squel.useFlavour('mysql');
 
 module.exports =
 {
+    getMaxId: function(req, res){
+        var sql = "SELECT MAX(doctor_id) AS doctor_id FROM doctors LIMIT 1";
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data[0]});
+            });
+        });
+    },
+    insert: function(req, res){
+        var created_by = req.body.Created_by;
+
+        delete req.body.Created_by;
+
+        var sqlbuilder = squel.insert()
+                .into("doctors")
+                .set('Creation_date', 'NOW()', {dontQuote: true})
+                .set('Created_by', created_by);
+        ;
+
+        var data = req.body;
+
+        for (var key in data) {
+            if (data[key] || data[key] === 0 || data[key] === '0')
+                sqlbuilder.set(key, data[key]);
+        }
+
+        var sql = sqlbuilder.toString();
+        
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
+    update: function(req, res){
+        var doctor_id = req.body.doctor_id;
+        delete req.body.doctor_id;
+        delete req.body.Last_update_date;
+
+        var sqlbuilder = squel.update()
+                .table("doctors")
+                .set('Last_update_date', 'NOW()', {dontQuote: true})
+                .where('doctor_id = ?', doctor_id);
+
+        var data = req.body;
+
+        for (var key in data) {
+            if (data[key] || data[key] === 0 || data[key] === '0')
+                sqlbuilder.set(key, data[key]);
+        }
+
+        var sql = sqlbuilder.toString();
+        
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
     generateTimetable: function(req, res){
         var timetable_data = req.body.data.timetable;
         var timetable_interval = req.body.data.interval;
