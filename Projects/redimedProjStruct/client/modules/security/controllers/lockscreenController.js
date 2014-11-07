@@ -45,7 +45,16 @@ angular.module("app.lockscreen.controller",[
             {
 
                 SecurityService.login($scope.modelUser).then(function(response){
-                    $window.location.reload(true);
+                    console.log(response);
+                    if(response != null && response.status == 'success')
+                    {
+                        $window.location.reload(true);
+                    }
+                    else
+                    {
+                        toastr.error("Wrong Username Or Password!", "Error");
+                    }
+
                 }), function(error){
                     toastr.error("Wrong Username Or Password!", "Error");
                 };

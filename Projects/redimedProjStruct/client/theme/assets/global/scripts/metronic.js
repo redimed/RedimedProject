@@ -1,6 +1,6 @@
 /**
-Core script to handle the entire theme and core functions
-**/
+ Core script to handle the entire theme and core functions
+ **/
 var Metronic = function() {
 
     // IE mode
@@ -13,7 +13,9 @@ var Metronic = function() {
 
     var assetsPath = '../../assets/';
 
-    var globalImgPath = assetsPath + 'global/img/';
+    var globalImgPath = 'global/img/';
+
+    var globalPluginsPath = 'global/plugins/';
 
     // theme layout color set
 
@@ -86,9 +88,44 @@ var Metronic = function() {
 
     // Handles portlet tools & actions
     var handlePortletTools = function() {
+        // handle portlet remove
         $('body').on('click', '.portlet > .portlet-title > .tools > a.remove', function(e) {
             e.preventDefault();
-            $(this).closest(".portlet").remove();
+            var portlet = $(this).closest(".portlet");
+
+            if ($('body').hasClass('page-portlet-fullscreen')) {
+                $('body').removeClass('page-portlet-fullscreen');
+            }
+
+            portlet.find('.portlet-title .fullscreen').tooltip('destroy');
+            portlet.find('.portlet-title > .tools > .reload').tooltip('destroy');
+            portlet.find('.portlet-title > .tools > .remove').tooltip('destroy');
+            portlet.find('.portlet-title > .tools > .config').tooltip('destroy');
+            portlet.find('.portlet-title > .tools > .collapse, .portlet > .portlet-title > .tools > .expand').tooltip('destroy');
+
+            portlet.remove();
+        });
+
+        // handle portlet fullscreen
+        $('body').on('click', '.portlet > .portlet-title .fullscreen', function(e) {
+            e.preventDefault();
+            var portlet = $(this).closest(".portlet");
+            if (portlet.hasClass('portlet-fullscreen')) {
+                $(this).removeClass('on');
+                portlet.removeClass('portlet-fullscreen');
+                $('body').removeClass('page-portlet-fullscreen');
+                portlet.children('.portlet-body').css('height', 'auto');
+            } else {
+                var height = Metronic.getViewPort().height -
+                    portlet.children('.portlet-title').outerHeight() -
+                    parseInt(portlet.children('.portlet-body').css('padding-top')) -
+                    parseInt(portlet.children('.portlet-body').css('padding-bottom'));
+
+                $(this).addClass('on');
+                portlet.addClass('portlet-fullscreen');
+                $('body').addClass('page-portlet-fullscreen');
+                portlet.children('.portlet-body').css('height', height);
+            }
         });
 
         $('body').on('click', '.portlet > .portlet-title > .tools > a.reload', function(e) {
@@ -99,7 +136,8 @@ var Metronic = function() {
             if (url) {
                 Metronic.blockUI({
                     target: el,
-                    iconOnly: true
+                    animate: true,
+                    overlayColor: 'none'
                 });
                 $.ajax({
                     type: "GET",
@@ -130,7 +168,8 @@ var Metronic = function() {
                 // for demo purpose
                 Metronic.blockUI({
                     target: el,
-                    iconOnly: true
+                    animate: true,
+                    overlayColor: 'none'
                 });
                 window.setTimeout(function() {
                     Metronic.unblockUI(el);
@@ -159,7 +198,7 @@ var Metronic = function() {
         if (!$().uniform) {
             return;
         }
-        var test = $("input[type=checkbox]:not(.toggle, .make-switch), input[type=radio]:not(.toggle, .star, .make-switch)");
+        var test = $("input[type=checkbox]:not(.toggle, .make-switch, .icheck), input[type=radio]:not(.toggle, .star, .make-switch, .icheck)");
         if (test.size() > 0) {
             test.each(function() {
                 if ($(this).parents(".checker").size() === 0) {
@@ -170,6 +209,32 @@ var Metronic = function() {
         }
     };
 
+    // Handles custom checkboxes & radios using jQuery iCheck plugin
+    var handleiCheck = function() {
+        if (!$().iCheck) {
+            return;
+        }
+
+        $('.icheck').each(function() {
+            var checkboxClass = $(this).attr('data-checkbox') ? $(this).attr('data-checkbox') : 'icheckbox_minimal-grey';
+            var radioClass = $(this).attr('data-radio') ? $(this).attr('data-radio') : 'iradio_minimal-grey';
+
+            if (checkboxClass.indexOf('_line') > -1 || radioClass.indexOf('_line') > -1) {
+                $(this).iCheck({
+                    checkboxClass: checkboxClass,
+                    radioClass: radioClass,
+                    insert: '<div class="icheck_line-icon"></div>' + $(this).attr("data-label")
+                });
+            } else {
+                $(this).iCheck({
+                    checkboxClass: checkboxClass,
+                    radioClass: radioClass
+                });
+            }
+        });
+    };
+
+    // Handles Bootstrap switches
     var handleBootstrapSwitch = function() {
         if (!$().bootstrapSwitch) {
             return;
@@ -208,27 +273,57 @@ var Metronic = function() {
             }
         });
 
+        // fix page scrollbars issue
         $('body').on('show.bs.modal', '.modal', function() {
             if ($(this).hasClass("modal-scroll")) {
                 $('body').addClass("modal-open-noscroll");
             }
         });
 
+        // fix page scrollbars issue
         $('body').on('hide.bs.modal', '.modal', function() {
             $('body').removeClass("modal-open-noscroll");
+        });
+
+        // remove ajax content and remove cache on modal closed 
+        $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
+            $(this).removeData('bs.modal');
         });
     };
 
     // Handles Bootstrap Tooltips.
     var handleTooltips = function() {
+        // global tooltips
         $('.tooltips').tooltip();
+
+        // portlet tooltips
+        $('.portlet > .portlet-title .fullscreen').tooltip({
+            container: 'body',
+            title: 'Fullscreen'
+        });
+        $('.portlet > .portlet-title > .tools > .reload').tooltip({
+            container: 'body',
+            title: 'Reload'
+        });
+        $('.portlet > .portlet-title > .tools > .remove').tooltip({
+            container: 'body',
+            title: 'Remove'
+        });
+        $('.portlet > .portlet-title > .tools > .config').tooltip({
+            container: 'body',
+            title: 'Settings'
+        });
+        $('.portlet > .portlet-title > .tools > .collapse, .portlet > .portlet-title > .tools > .expand').tooltip({
+            container: 'body',
+            title: 'Collapse/Expand'
+        });
     };
 
     // Handles Bootstrap Dropdowns
     var handleDropdowns = function() {
         /*
-          Hold dropdown on click  
-        */
+         Hold dropdown on click
+         */
         $('body').on('click', '.dropdown-menu.hold-on-click', function(e) {
             e.stopPropagation();
         });
@@ -237,13 +332,27 @@ var Metronic = function() {
     var handleAlerts = function() {
         $('body').on('click', '[data-close="alert"]', function(e) {
             $(this).parent('.alert').hide();
+            $(this).closest('.note').hide();
+            e.preventDefault();
+        });
+
+        $('body').on('click', '[data-close="note"]', function(e) {
+            $(this).closest('.note').hide();
+            e.preventDefault();
+        });
+
+        $('body').on('click', '[data-remove="note"]', function(e) {
+            $(this).closest('.note').remove();
             e.preventDefault();
         });
     };
 
     // Handle Hower Dropdowns
     var handleDropdownHover = function() {
-        $('[data-hover="dropdown"]').dropdownHover();
+        $('[data-hover="dropdown"]').not('.hover-initialized').each(function() {
+            $(this).dropdownHover();
+            $(this).addClass('hover-initialized');
+        });
     };
 
     // Handles Bootstrap Popovers
@@ -340,6 +449,7 @@ var Metronic = function() {
 
             //UI Component handlers            
             handleUniform(); // hanfle custom radio & checkboxes
+            handleiCheck(); // handles custom icheck radio and checkboxes
             handleBootstrapSwitch(); // handle bootstrap switch plugin
             handleScrollers(); // handles slim scrolling contents 
             handleFancybox(); // handle fancy box
@@ -359,15 +469,22 @@ var Metronic = function() {
 
         //main function to initiate core javascript after ajax complete
         initAjax: function() {
+            handleUniform(); // handles custom radio & checkboxes     
+            handleiCheck(); // handles custom icheck radio and checkboxes
+            handleBootstrapSwitch(); // handle bootstrap switch plugin
+            handleDropdownHover(); // handles dropdown hover       
             handleScrollers(); // handles slim scrolling contents 
             handleSelect2(); // handle custom Select2 dropdowns
+            handleFancybox(); // handle fancy box
             handleDropdowns(); // handle dropdowns
             handleTooltips(); // handle bootstrap tooltips
             handlePopovers(); // handles bootstrap popovers
             handleAccordions(); //handles accordions 
-            handleUniform(); // hanfle custom radio & checkboxes     
-            handleBootstrapSwitch(); // handle bootstrap switch plugin
-            handleDropdownHover(); // handles dropdown hover       
+        },
+
+        //init main components 
+        initComponents: function() {
+            this.initAjax();
         },
 
         //public function to remember last opened popover that needs to be closed on click
@@ -482,7 +599,9 @@ var Metronic = function() {
         blockUI: function(options) {
             options = $.extend(true, {}, options);
             var html = '';
-            if (options.iconOnly) {
+            if (options.animate) {
+                html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '">' + '<div class="block-spinner-bar"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>' + '</div>';
+            } else if (options.iconOnly) {
                 html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '"><img src="' + this.getGlobalImgPath() + 'loading-spinner-grey.gif" align=""></div>';
             } else if (options.textOnly) {
                 html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '"><span>&nbsp;&nbsp;' + (options.message ? options.message : 'LOADING...') + '</span></div>';
@@ -506,7 +625,7 @@ var Metronic = function() {
                         backgroundColor: 'none'
                     },
                     overlayCSS: {
-                        backgroundColor: options.overlayColor ? options.overlayColor : '#000',
+                        backgroundColor: options.overlayColor ? options.overlayColor : '#555',
                         opacity: options.boxed ? 0.05 : 0.1,
                         cursor: 'wait'
                     }
@@ -521,7 +640,7 @@ var Metronic = function() {
                         backgroundColor: 'none'
                     },
                     overlayCSS: {
-                        backgroundColor: options.overlayColor ? options.overlayColor : '#000',
+                        backgroundColor: options.overlayColor ? options.overlayColor : '#555',
                         opacity: options.boxed ? 0.05 : 0.1,
                         cursor: 'wait'
                     }
@@ -543,20 +662,25 @@ var Metronic = function() {
             }
         },
 
-        startPageLoading: function(message) {
-            $('.page-loading').remove();
-            $('body').append('<div class="page-loading"><img src="' + this.getGlobalImgPath() + 'loading-spinner-grey.gif"/>&nbsp;&nbsp;<span>' + (message ? message : 'Loading...') + '</span></div>');
+        startPageLoading: function(options) {
+            if (options && options.animate) {
+                $('.page-spinner-bar').remove();
+                $('body').append('<div class="page-spinner-bar"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
+            } else {
+                $('.page-loading').remove();
+                $('body').append('<div class="page-loading"><img src="' + this.getGlobalImgPath() + 'loading-spinner-grey.gif"/>&nbsp;&nbsp;<span>' + (options && options.message ? options.message : 'Loading...') + '</span></div>');
+            }
         },
 
         stopPageLoading: function() {
-            $('.page-loading').remove();
+            $('.page-loading, .page-spinner-bar').remove();
         },
 
         alert: function(options) {
 
             options = $.extend(true, {
                 container: "", // alerts parent container(by default placed after the page breadcrumbs)
-                place: "append", // append or prepent in container 
+                place: "append", // "append" or "prepend" in container 
                 type: 'success', // alert's type
                 message: "", // alert's message
                 close: true, // make alert closable
@@ -578,7 +702,11 @@ var Metronic = function() {
                 if ($('body').hasClass("page-container-bg-solid")) {
                     $('.page-title').after(html);
                 } else {
-                    $('.page-bar').after(html);
+                    if ($('.page-bar').size() > 0) {
+                        $('.page-bar').after(html);
+                    } else {
+                        $('.page-breadcrumb').after(html);
+                    }
                 }
             } else {
                 if (options.place == "append") {
@@ -692,6 +820,11 @@ var Metronic = function() {
             return isRTL;
         },
 
+        // check IE8 mode
+        isAngularJsApp: function() {
+            return (typeof angular == 'undefined') ? false : true;
+        },
+
         getAssetsPath: function() {
             return assetsPath;
         },
@@ -701,11 +834,19 @@ var Metronic = function() {
         },
 
         setGlobalImgPath: function(path) {
-            globalImgPath = assetsPath + path;
+            globalImgPath = path;
         },
 
         getGlobalImgPath: function() {
-            return globalImgPath;
+            return assetsPath + globalImgPath;
+        },
+
+        setGlobalPluginsPath: function(path) {
+            globalPluginsPath = path;
+        },
+
+        getGlobalPluginsPath: function() {
+            return assetsPath + globalPluginsPath;
         },
 
         // get layout color code by color name
@@ -716,7 +857,6 @@ var Metronic = function() {
                 return '';
             }
         }
-
     };
 
 }();
