@@ -1,26 +1,26 @@
 angular.module("app.loggedIn.doctor.services", [])
-
-.factory("DoctorService", function (Restangular) {
-    var doctorService = {};
-    var doctorApi = Restangular.all("api/erm");
-    /**
-     * KHANK API
-     */
-
-    doctorService.getItemByDept = function (dept_id) {
-        var instanceApi = doctorApi.one("v1/items/list_by_dept");
-        return instanceApi.get({'dept_id': dept_id});
-    }
-    
-    doctorService.getItemByAppt = function (appt_id) {
-        var instanceApi = doctorApi.one("v1/items/list_by_appt");
-        return instanceApi.get({'appt_id': appt_id});
-    }
-    
-//            doctorService.getById = function (doctor_id) {
-//                var instanceApi = doctorApi.one("v1/doctors/by_id");
-//                return instanceApi.get({'doctor_id': doctor_id});
-//            }
+        .factory("DoctorService", function (Restangular) {
+            var doctorService = {};
+            var doctorApi = Restangular.all("api/erm");
+            /**
+             * KHANK API
+             */
+			 
+			doctorService.insertItemAppt = function (appt_id, items) {
+                var instanceApi = doctorApi.all("v1/appointment/insert_items");
+                return instanceApi.post({'cal_id':appt_id, items: items});
+            }
+			 
+            doctorService.getItemByDept = function (dept_id) {
+                var instanceApi = doctorApi.one("v1/items/list_by_dept");
+                return instanceApi.get({'dept_id': dept_id});
+            }
+            
+            doctorService.getItemByAppt = function (appt_id) {
+                var instanceApi = doctorApi.one("v1/items/list_by_appt");
+                return instanceApi.get({'appt_id': appt_id});
+            }
+            
 
     /**
      * END KHANK API
