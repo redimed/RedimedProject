@@ -116,5 +116,10 @@ angular.module("app.loggedIn.doctor.services", [])
 		return generateApi.post({'data':data});
 	}
 
+	doctorService.getCasualCalendar = function(data){
+		var casualApi = doctorApi.all("doctors/getCasualCalendar");
+		return casualApi.post(data);
+	}
+
 	return doctorService;
 })

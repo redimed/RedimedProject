@@ -1091,6 +1091,16 @@ angular.module('app.config', [])
     {code:4, name: 'Week 4'},
 ])
 
+.constant("REAL_DAY_OF_WEEK", [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+])
+
 .factory('ConfigService', function (USER_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, COUNTRY_LIST, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, SYS_TITLE, Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
@@ -1156,7 +1166,8 @@ angular.module('app.config', [])
     }
 
     configService.getCommonDate = function(dateTime){
-        dateTime = new Date(dateTime);
+        if(typeof dateTime === 'string')
+            dateTime = new Date(dateTime);
 
         var year = dateTime.getFullYear();
         var month = dateTime.getMonth()+1;
@@ -1171,7 +1182,20 @@ angular.module('app.config', [])
         }
 
         return year+"-"+month+"-"+date;
-    };
+    }
+
+    configService.getDayFromTime = function(time){
+        var date = new Date(time);
+
+        return date.getDay();
+    }
+
+    configService.getWeekFromDate = function(date){
+        if(typeof date === 'string')
+            date = new Date(date);
+        var firstDay = new Date(date.getFullYear(), date.getMonth()+1, 1).getDay();
+        return Math.ceil((date.getDate() + firstDay)/7);
+    }
 
     configService.getCommonDateDatabase = function(dateTime){
         if(dateTime === '' || typeof dateTime === 'undefined')
@@ -1206,17 +1230,19 @@ angular.module('app.config', [])
     };
 
     configService.convertToDate = function(dateTime){
-        if(dateTime !== null){
+        if(typeof dateTime === 'string')
             dateTime = new Date(dateTime);
 
-            var year = dateTime.getFullYear();
-            var month = dateTime.getMonth()+1;
-            var date = dateTime.getDate();
+        var year = dateTime.getFullYear();
+        var month = dateTime.getMonth()+1;
 
-            return date+"/"+month+"/"+year;
-        }else{
-            return "";
-        }
+        if(month < 10) month = "0"+month;
+
+        var date = dateTime.getDate();
+
+        if(date < 10) date = "0"+date;
+
+        return date+"/"+month+"/"+year;
     }
 
     configService.acc_type_option = function(){

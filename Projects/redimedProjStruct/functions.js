@@ -36,13 +36,36 @@ module.exports = {
 	getDateOffset: function(current_date, time, offset){
 		var date = new Date();
 
-		if(offset < 0){
-			offset = 0;
-		}
+		var current_day = date.getDay()-1;
+
+		offset = current_day+offset;
 
 		var millisecondOffset = offset * 24 * 60 * 60 * 1000;
 
-		date.setTime(current_date.getTime()+Math.abs(millisecondOffset));
+		date.setTime(current_date.getTime()+millisecondOffset);
+		
+		var dates = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+
+		if(dates < 10){
+			dates = "0"+dates;
+		}
+
+		if(month < 10){
+			month = "0"+month;
+		}
+
+		var result = year+"-"+month+"-"+dates+" "+time+":00";
+
+		return result;
+	},
+	getFirstDateOffset: function(current_date, time, offset){
+		var date = new Date();
+
+		var millisecondOffset = offset * 24 * 60 * 60 * 1000;
+
+		date.setTime(current_date.getTime()+millisecondOffset);
 		
 		var dates = date.getDate();
 		var month = date.getMonth()+1;
@@ -80,9 +103,17 @@ module.exports = {
 		return hour+":"+minute;
 	},
 	toDateDatabase: function(date){
-		var dates = date.getDate();
-		var month = date.getMonth()+1;
-		var year = date.getFullYear();
+		if(typeof date === 'string'){
+			var split = date.split("/");
+
+			var dates = split[0];
+			var month = split[1];
+			var year = split[2];
+		}else{
+			var dates = date.getDate();
+			var month = date.getMonth()+1;
+			var year = date.getFullYear();
+		}
 
 		return year+"-"+month+"-"+dates;
 	}

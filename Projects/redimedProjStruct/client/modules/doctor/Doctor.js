@@ -82,7 +82,8 @@ angular.module("app.loggedIn.doctor", [
                 url: "/casual",
                 views: {
                     "main-content-timetable": {
-                        templateUrl: "modules/doctor/views/timetable-casual.html"
+                        templateUrl: "modules/doctor/views/timetable-casual.html",
+                        controller: "DoctorTimetableDetailCasualController"
                     }
                 }
             })

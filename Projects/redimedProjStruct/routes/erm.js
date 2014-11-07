@@ -27,6 +27,7 @@ app.post('/api/erm/doctors/changeTimetable', DoctorController.changeTimetable);
 app.post('/api/erm/doctors/insertTimetable', DoctorController.insertTimetable);
 app.post('/api/erm/doctors/removeTimetable', DoctorController.removeTimetable);
 app.post('/api/erm/doctors/generateTimetable', DoctorController.generateTimetable);
+app.post('/api/erm/doctors/getCasualCalendar', DoctorController.getCasualCalendar);
 app.get('/api/erm/doctors/getMaxId', DoctorController.getMaxId);
 app.post('/api/erm/doctors/update', DoctorController.update);
 app.post('/api/erm/doctors/insert', DoctorController.insert);
@@ -54,6 +55,8 @@ app.post('/api/patient/update', ClientController.update);
 app.get('/api/patient/get_by_id', ClientController.getById);
 app.post('/api/patient/get_by_option', ClientController.getByOptions);
 app.get('/api/patient/tesst', ClientController.test);
+
+
 /* END KHANH RESPONSIBILITY */
 
 /**

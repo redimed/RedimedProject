@@ -50,7 +50,7 @@ angular.module("app.loggedIn.doctor.controller", [
         First_name: '',
         Middle_name: '',
         Sur_name: '',
-        CLINICAL_DEPT_ID: 0,
+        CLINICAL_DEPT_ID: null,
         Provider_no: 0,
         Provider_type: '',
         Appt_interval: 0,

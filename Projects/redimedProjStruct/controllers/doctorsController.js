@@ -10,6 +10,24 @@ squel.useFlavour('mysql');
 
 module.exports =
 {
+    getCasualCalendar: function(req, res){
+        var from_time = common_function.toDateDatabase(req.body.from_time);
+        var to_time = common_function.toDateDatabase(req.body.to_time);
+        var doctor_id = req.body.doctor_id;
+
+        var sql = "SELECT * FROM cln_appointment_calendar WHERE DOCTOR_ID = "+doctor_id
+                +" AND DATE(FROM_TIME) BETWEEN '"+from_time+"' AND '"+to_time+"'";
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
     getMaxId: function(req, res){
         var sql = "SELECT MAX(doctor_id) AS doctor_id FROM doctors LIMIT 1";
 
@@ -156,8 +174,8 @@ module.exports =
                             var add_from_time = common_function.toTime(from);
                             var add_to_time = common_function.toTime(parseInt(from+timetable_interval));
 
-                            var FROM_DATE = common_function.getDateOffset(current_date, add_from_time, offset);
-                            var TO_DATE = common_function.getDateOffset(current_date, add_to_time, offset);
+                            var FROM_DATE = common_function.getFirstDateOffset(current_date, add_from_time, offset);
+                            var TO_DATE = common_function.getFirstDateOffset(current_date, add_to_time, offset);
 
                             // SITE
                             var site_id = 0;

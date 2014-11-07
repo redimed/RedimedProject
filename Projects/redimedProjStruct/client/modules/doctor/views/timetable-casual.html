@@ -1,1 +1,57 @@
-CASUAL
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		Casual Calendar
+	</div>
+	<div class="panel-body">
+		<div class="break-row"></div>
+		<!-- FROM TIME -->
+		<div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                From Time
+                <span class="required"> * </span>
+            </label>
+            <div class="col-md-4 col-sm-3 col-xs-6">
+                <input placeholder="From Time" ng-model="modelObjectMap.from_time" 
+                	name="from_time" class="form-control" custom-date>
+            </div>
+        </div>
+        <!-- END FROM TIME -->
+        <!-- END TIME -->
+		<div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                To Time
+                <span class="required"> * </span>
+            </label>
+            <div class="col-md-4 col-sm-3 col-xs-6">
+                <input placeholder="To Time" ng-model="modelObjectMap.to_time" 
+                	name="to_time" class="form-control" custom-date>
+            </div>
+        </div>
+        <!-- END END TIME -->
+
+        <div class="break-row"></div>
+
+        <table class="table table-bordered">
+        	<thead>
+        		<tr>
+	        		<th>Week</th>
+	        		<th>Day</th>
+	        		<th>From Time</th>
+	        		<th>To Time</th>
+	        		<th>Site</th>
+	        		<th>Description</th>
+	        	</tr>
+        	</thead>
+        	<tbody>
+        		<tr ng-repeat="list in casual_list">
+        			<td>{{list.week}} - {{list.convert_date}}</td>
+        			<td>{{list.day_of_week}}</td>
+        			<td>{{list.from_time_map}}</td>
+        			<td>{{list.to_time_map}}</td>
+        			<td>{{list.SITE_ID}}</td>
+        			<td>{{list.STATUS}}</td>
+        		</tr>
+        	</tbody>
+        </table>
+	</div>
+</div>
