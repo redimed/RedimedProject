@@ -30,18 +30,12 @@ angular.module('app.loggedIn.menu.controller',[])
             }
         });
 
-        MenuService.menuList().then(function(data){
+        MenuService.menuRootList().then(function(data){
             MenuService.functionList().then(function(data){
                 $scope.functionList = data;
             })
 
-            menuList = data;
-            for(var i = 0;i<menuList.length;i++)
-            {
-                if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
-                    $scope.data.push(menuList[i]);
-
-            }
+            $scope.data = data;
 
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
@@ -66,22 +60,19 @@ angular.module('app.loggedIn.menu.controller',[])
 
 
         $scope.showChild = function(m) {
-            $scope.childTitle = m.MenuDescription;
-            $scope.selectedId = m.MenuID;
+            $scope.childTitle = m.description;
+            $scope.selectedId = m.menu_id;
             $scope.isSelected = true;
 
             $scope.data1 = [];
 
-            for(var i =0;i<menuList.length;i++)
-            {
-                if(menuList[i].ParentID === m.MenuID)
-                    $scope.data1.push(menuList[i]);
-            }
+            MenuService.menuList(m.menu_id).then(function(data){
+                $scope.data1 = data;
 
-            $scope.$watch('data1',function(data){
-                $scope.tableParams2.reload();
+                $scope.$watch('data1',function(data){
+                    $scope.tableParams2.reload();
+                })
             })
-
 
         };
 
@@ -101,13 +92,8 @@ angular.module('app.loggedIn.menu.controller',[])
             });
             $scope.data = [];
             modalInstance.result.then(function(){
-                MenuService.menuList().then(function(data){
-                    menuList = data;
-                    for(var i = 0;i<menuList.length;i++)
-                    {
-                        if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
-                            $scope.data.push(menuList[i]);
-                    }
+                MenuService.menuRootList().then(function(data){
+                    $scope.data = data;
 
                     $scope.$watch('data',function(data){
                         $scope.tableParams.reload();
@@ -125,7 +111,7 @@ angular.module('app.loggedIn.menu.controller',[])
                 size:'md',
                 resolve:{
                     menuId: function(){
-                        return m.MenuID;
+                        return m.menu_id;
                     },
                     isSub: function(){
                         return false;
@@ -135,13 +121,8 @@ angular.module('app.loggedIn.menu.controller',[])
 
             $scope.data = [];
             modalInstance.result.then(function(){
-                MenuService.menuList().then(function(data){
-                    menuList = data;
-                    for(var i = 0;i<menuList.length;i++)
-                    {
-                        if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
-                            $scope.data.push(menuList[i]);
-                    }
+                MenuService.menuRootList().then(function(data){
+                    $scope.data = data;
 
                     $scope.$watch('data',function(data){
                         $scope.tableParams.reload();
@@ -151,17 +132,12 @@ angular.module('app.loggedIn.menu.controller',[])
         };
 
         $scope.deleteRootMenu = function(m){
-            MenuService.deleteRootMenu(m.MenuID).then(function(data){
+            MenuService.deleteRootMenu(m.menu_id).then(function(data){
                 if(data['status'] === 'success') {
                     toastr.success("Delete Menu Successfully!","Success");
                     $scope.data = [];
-                    MenuService.menuList().then(function(data){
-                        menuList = data;
-                        for(var i = 0;i<menuList.length;i++)
-                        {
-                            if(menuList[i].ParentID === null || menuList[i].ParentID === -1)
-                                $scope.data.push(menuList[i]);
-                        }
+                    MenuService.menuRootList().then(function(data){
+                        $scope.data = data;
 
                         $scope.$watch('data',function(data){
                             $scope.tableParams.reload();
@@ -178,16 +154,12 @@ angular.module('app.loggedIn.menu.controller',[])
         };
 
         $scope.deleteSubMenu = function(m){
-            MenuService.deleteMenu(m.MenuID).then(function(data){
+            MenuService.deleteMenu(m.menu_id).then(function(data){
                 if(data['status'] === 'success') {
                     toastr.success("Delete Menu Successfully!","Success");
                     $scope.data1 = [];
-                    MenuService.menuList().then(function(data) {
-                        menuList = data;
-                        for (var i = 0; i < menuList.length; i++) {
-                            if (menuList[i].ParentID === $scope.selectedId)
-                                $scope.data1.push(menuList[i]);
-                        }
+                    MenuService.menuList($scope.selectedId).then(function(data){
+                        $scope.data1 = data;
 
                         $scope.$watch('data1',function(data){
                             $scope.tableParams2.reload();
@@ -221,12 +193,8 @@ angular.module('app.loggedIn.menu.controller',[])
             modalInstance.result.then(function(){
                 $scope.data1 = [];
 
-                MenuService.menuList().then(function(data) {
-                    menuList = data;
-                    for (var i = 0; i < menuList.length; i++) {
-                        if (menuList[i].ParentID === $scope.selectedId)
-                            $scope.data1.push(menuList[i]);
-                    }
+                MenuService.menuList($scope.selectedId).then(function(data){
+                    $scope.data1 = data;
 
                     $scope.$watch('data1',function(data){
                         $scope.tableParams2.reload();
@@ -243,7 +211,7 @@ angular.module('app.loggedIn.menu.controller',[])
                 size:'md',
                 resolve:{
                     menuId: function(){
-                        return m.MenuID;
+                        return m.menu_id;
                     },
                     isSub: function(){
                         return true;
@@ -254,12 +222,8 @@ angular.module('app.loggedIn.menu.controller',[])
             modalInstance.result.then(function(){
                 $scope.data1 = [];
 
-                MenuService.menuList().then(function(data) {
-                    menuList = data;
-                    for (var i = 0; i < menuList.length; i++) {
-                        if (menuList[i].ParentID === $scope.selectedId)
-                            $scope.data1.push(menuList[i]);
-                    }
+                MenuService.menuList($scope.selectedId).then(function(data){
+                    $scope.data1 = data;
 
                     $scope.$watch('data1',function(data){
                         $scope.tableParams2.reload();

@@ -20,7 +20,9 @@ module.exports = {
     },
     list: function(req,res)
     {
-        db.sequelize.query("SELECT m.menu_id as MenuID, m.`parent_id` as ParentID ,m.Description as MenuDescription,m.`isEnable` as MenuEnable,m.`type` as MenuType, m.definition as MenuDefinition ,f.`function_id` as FunctionID, f.`decription` as FunctionName FROM redi_menus m LEFT JOIN redi_functions f ON m.function_id = f.function_id ORDER BY m.menu_id")
+        var menuId = req.body.id;
+
+        db.sequelize.query("SELECT m.*, f.`function_id`, f.`decription` FROM `redi_menus` m LEFT JOIN `redi_functions` f ON m.`function_id` = f.`function_id` WHERE m.`parent_id` = ?",null,{raw:true},[menuId])
             .success(function(data){
                 res.json(data);
             })

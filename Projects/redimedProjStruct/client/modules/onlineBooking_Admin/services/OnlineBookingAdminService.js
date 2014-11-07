@@ -158,7 +158,7 @@ angular.module('app.loggedIn.booking.admin.services',[])
         }
 
         adminBooking.getMenuList = function(){
-            var list = api.one('menu/listRoot');
+            var list = api.one('menu/list/root');
             return list.get();
         }
 

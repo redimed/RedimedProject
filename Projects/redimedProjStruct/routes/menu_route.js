@@ -3,10 +3,10 @@
  */
 var MenuController = require('./controllers/MenuController');
 
-app.get('/api/menu/list',MenuController.list);
+app.post('/api/menu/list/id',MenuController.list);
+app.get('/api/menu/list/root',MenuController.listRoot);
 app.post('/api/menu/edit',MenuController.edit);
 app.post('/api/menu/insert',MenuController.insert);
 app.post('/api/users/home',MenuController.loadSideMenu);
 app.post('/api/menu/id',MenuController.findById);
-app.get('/api/menu/listRoot',MenuController.listRoot);
 app.post('/api/menu/delete',MenuController.remove);

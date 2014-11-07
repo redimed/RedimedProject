@@ -25,7 +25,7 @@
 <div class="portlet grey-cascade box">
     <div class="portlet-title">
         <div class="caption ">
-            <i class="icon-list"></i>
+            <i class="icon icon-users"></i>
             <span class="caption-subject uppercase">User List</span>
         </div>
         <div class="actions">
@@ -33,12 +33,13 @@
                 <i class="fa fa-plus"></i> Add New</a>
         </div>
     </div>
-    <div class="portlet-body form">
+    <div class="portlet-body">
+
         <div class="table-scrollable">
             <table ng-table="tableParams" show-filter="true"  class="table table-bordered table-responsive">
                 <tr style="white-space: nowrap" ng-repeat="b in $data" ng-click="showMenu(b)" ng-class="{selected : b.id == selectedId}">
                     <td data-title="'Username'" filter="{ 'user_name': 'text' }" >
-                        <a href="javascript:;" ng-click="editUser(b)">{{b.user_name}}</a>
+                        <label>{{b.user_name}}</label>
                     </td>
                     <td data-title="'Booking Person'" filter="{ 'Booking_Person': 'text' }">
                         <label>{{b.Booking_Person}}</label>
@@ -46,76 +47,18 @@
                     <td data-title="'User Type'"  >
                         <label>{{b.user_type}}</label>
                     </td>
-                    <td data-title="'Function'">
-                        <label>{{b.FunctionName}}</label>
-                    </td>
                     <td data-title="'Company'" >
                         <label>{{b.Company_name}}</label>
-                    </td>
-                    <td data-title="'Contact No.'" >
-                        <label>{{b.Contact_number}}</label>
-                    </td>
-                    <td data-title="'Invoice Email'"  >
-                        <label>{{b.invoiceemail}}</label>
-                    </td>
-                    <td data-title="'PO Number'" >
-                        <label>{{b.PO_number}}</label>
-                    </td>
-                    <td data-title="'Result Email'"  >
-                        <label>{{b.result_email}}</label>
                     </td>
                     <td data-title="'Contact Email'" >
                         <label>{{b.Contact_email}}</label>
                     </td>
-                    <td data-title="'Report To Email'"  >
-                        <label>{{b.Report_To_email}}</label>
-                    </td>
-                    <td data-title="'Calendar'" >
-                        <input ng-if="b.isCalendar == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isCalendar == 0 || b.isCalendar == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'Project Identification'"  >
-                        <input ng-if="b.isProject == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isProject == 0 || b.isProject == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'Show All'"  >
-                        <input ng-if="b.isAll == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isAll == 0 || b.isAll == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'Enable'"  >
-                        <input ng-if="b.isEnable == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isEnable == 0 || b.isEnable == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'View Booking'"  >
-                        <input ng-if="b.isBooking == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isBooking == 0 || b.isBooking == null" type="checkbox"  disabled/>
-                    </td>
-                    <td data-title="'Make Booking'"  >
-                        <input ng-if="b.isMakeBooking == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isMakeBooking == 0 || b.isMakeBooking == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'Package'"  >
-                        <input ng-if="b.isPackage == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isPackage == 0 || b.isPackage == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'Position'"  >
-                        <input ng-if="b.isPosition == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isPosition == 0 || b.isPosition == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'Setting'"  >
-                        <input ng-if="b.isSetting == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isSetting == 0 || b.isSetting == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'Download Result'"  >
-                        <input ng-if="b.isDownloadResult == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isDownloadResult == 0 || b.isDownloadResult == null" type="checkbox" disabled />
-                    </td>
-                    <td data-title="'View All Data'"  >
-                        <input ng-if="b.isAllCompanyData == 1" type="checkbox" checked disabled />
-                        <input ng-if="b.isAllCompanyData == 0 || b.isAllCompanyData == null" type="checkbox" disabled />
-                    </td>
                     <td data-title="'Employee'"  >
                         <label>{{b.Employee_Code != null || b.EmployeeFName != null || b.EmployeeLName != null ? b.Employee_Code + ' : '+b.EmployeeFName+' '+b.EmployeeLName : ''}}</label>
+                    </td>
+                    <td align="center" data-title="'Actions'">
+                        <a style="width: 75px" href="javascript:;" ng-click="editUser(b)" class="btn btn-circle blue-steel btn-sm">
+                            <i class="fa fa-pencil"></i> Edit </a>
                     </td>
                 </tr>
 

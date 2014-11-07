@@ -6,9 +6,14 @@ angular.module('app.loggedIn.menu.services',[])
         var menuService = {};
         var api = Restangular.all('api');
 
-        menuService.menuList = function(){
-            var menuList = api.one('menu/list');
+        menuService.menuRootList = function(){
+            var menuList = api.one('menu/list/root');
             return menuList.get();
+        }
+
+        menuService.menuList = function(id){
+            var list = api.all('menu/list/id');
+            return list.post({id:id});
         }
 
         menuService.functionList = function(){

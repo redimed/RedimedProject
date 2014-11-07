@@ -38,19 +38,19 @@
 
         <div class="table-scrollable" id="content">
             <table ng-table="tableParams"  show-filter="true" class="table table-bordered table-responsive">
-                <tr ng-repeat="m in $data | orderBy:'MenuID'" ng-class="{selected : m.MenuID == selectedId}">
-                    <td width="200px" data-title="'Description'" sortable="'MenuDescription'" ng-click="showChild(m)"  filter="{ 'MenuDescription': 'text' }">
-                        <label >{{m.MenuDescription}}</label>
+                <tr ng-repeat="m in $data | orderBy:'menu_id'" ng-class="{selected : m.menu_id == selectedId}">
+                    <td width="200px" data-title="'Description'" sortable="'description'" ng-click="showChild(m)"  filter="{ 'description': 'text' }">
+                        <label >{{m.description}}</label>
                     </td>
-                    <td width="400px" data-title="'Definition'" sortable="'MenuDefinition'" ng-click="showChild(m)"  filter="{ 'MenuDefinition': 'text' }">
-                        <label >{{m.MenuDefinition}}</label>
+                    <td width="400px" data-title="'Definition'" sortable="'definition'" ng-click="showChild(m)"  filter="{ 'definition': 'text' }">
+                        <label >{{m.definition}}</label>
                     </td>
-                    <td width="100px" data-title="'Type'" sortable="'MenuType'" ng-click="showChild(m)"  filter="{ 'MenuType': 'text' }">
-                        <label >{{m.MenuType}}</label>
+                    <td width="100px" data-title="'Type'" sortable="'type'" ng-click="showChild(m)"  filter="{ 'type': 'text' }">
+                        <label >{{m.type}}</label>
                     </td>
                     <td align="center" width="100px" data-title="'Enable'" ng-click="showChild(m)"  >
-                        <label ng-if="m.MenuEnable===1" ><input  type="checkbox" disabled   checked /></label>
-                        <label ng-if="m.MenuEnable!==1" ><input  type="checkbox" disabled  /></label>
+                        <label ng-if="m.isEnable===1" ><input  type="checkbox" disabled   checked /></label>
+                        <label ng-if="m.isEnable!==1" ><input  type="checkbox" disabled  /></label>
                     </td>
                     <td align="center" data-title="'Actions'">
                         <a style="width: 75px" href="javascript:;" ng-click="editMenu(m)" class="btn btn-circle blue-steel btn-sm">
@@ -85,19 +85,19 @@
     <div class="portlet-body">
         <div class="table-scrollable" >
             <table ng-table="tableParams2"  show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
-                <tr ng-repeat="m in $data | orderBy:'MenuID'">
-                    <td width="200px" data-title="'Description'" sortable="'MenuDescription'" filter="{ 'MenuDescription': 'text' }">
-                        <label>{{m.MenuDescription}}</label>
+                <tr ng-repeat="m in $data | orderBy:'menu_id'">
+                    <td width="200px" data-title="'Description'" sortable="'description'" filter="{ 'description': 'text' }">
+                        <label>{{m.description}}</label>
                     </td>
-                    <td width="400px" data-title="'Function'" sortable="'FunctionName'" filter="{ 'FunctionName': 'text' }">
-                        <label >{{m.FunctionName}}</label>
+                    <td width="400px" data-title="'Function'" sortable="'decription'" filter="{ 'decription': 'text' }">
+                        <label >{{m.decription}}</label>
                     </td>
-                    <td width="100px" data-title="'Type'" sortable="'MenuType'" filter="{ 'MenuType': 'text' }">
-                        <label >{{m.MenuType}}</label>
+                    <td width="100px" data-title="'Type'" sortable="'type'" filter="{ 'type': 'text' }">
+                        <label >{{m.type}}</label>
                     </td>
                     <td align="center" width="100px" data-title="'Enable'" >
-                        <label ng-if="m.MenuEnable===1" ><input  type="checkbox" disabled   checked /></label>
-                        <label ng-if="m.MenuEnable!==1" ><input  type="checkbox" disabled  /></label>
+                        <label ng-if="m.isEnable===1" ><input  type="checkbox" disabled   checked /></label>
+                        <label ng-if="m.isEnable!==1" ><input  type="checkbox" disabled  /></label>
                     </td>
                     <td align="center" data-title="'Actions'">
                         <a style="width: 75px" href="javascript:;" ng-click="editSubMenu(m)" class="btn btn-circle blue-steel btn-sm">
