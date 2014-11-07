@@ -36,4 +36,6 @@ angular.module("app.loggedIn.doctor.timetable.controller",[
     	$state.go("loggedIn.doctor.timetable.detail.calendar", {doctorId: list.doctor_id});
     }
     //END GO TO DETAIL
+
+    
 })

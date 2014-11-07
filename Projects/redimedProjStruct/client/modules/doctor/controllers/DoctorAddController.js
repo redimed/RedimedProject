@@ -1,7 +1,9 @@
-angular.module("app.loggedIn.doctor.timetable.detail.profile.controller",[])
+angular.module("app.loggedIn.doctor.add.controller",[])
 
-.controller("DoctorTimetableDetailProfileController", function($scope, $stateParams, toastr, ConfigService, DoctorService){
+.controller("DoctorAddController", function($scope, $state, $cookieStore, $stateParams, toastr, ConfigService, DoctorService){
 	// LOAD OPTION
+	$scope.newId = 0;
+
 	var loadOption = function(){
 		ConfigService.clinical_option().then(function(list){
 			$scope.options.clinicals = list;
@@ -28,17 +30,12 @@ angular.module("app.loggedIn.doctor.timetable.detail.profile.controller",[])
 	var init = function () {
 		$scope.modelObjectMap = angular.copy($scope.modelDoctorObject);
 
-        DoctorService.getById($stateParams.doctorId).then(function(detail){
-        	angular.extend($scope.modelObjectMap, detail);
+		$scope.modelObjectMap.Created_by = $cookieStore.get("userInfo").id;
 
-        	if($scope.modelObjectMap.isReceiveEmailAfterHour)
-        		$scope.modelObjectMap.isReceiveEmailAfterHour = $scope.modelObjectMap.isReceiveEmailAfterHour.toString();
-        	if($scope.modelObjectMap.isAppointmentBook)
-        		$scope.modelObjectMap.isAppointmentBook = $scope.modelObjectMap.isAppointmentBook.toString();
-        	if($scope.modelObjectMap.isNewCalendarSlot)
-        		$scope.modelObjectMap.isNewCalendarSlot = $scope.modelObjectMap.isNewCalendarSlot.toString();
-        	if($scope.modelObjectMap.Isenable)
-        		$scope.modelObjectMap.Isenable = $scope.modelObjectMap.Isenable.toString();
+		DoctorService.getMaxId().then(function(data){
+			$scope.newId = data.data.doctor_id+1;
+
+			$scope.modelObjectMap.doctor_id = $scope.newId;
 		})
     }
     init();
@@ -63,19 +60,20 @@ angular.module("app.loggedIn.doctor.timetable.detail.profile.controller",[])
 				if(!$scope.mainForm.$invalid){
 					$scope.isSubmit = false;
 					$scope.step = 2;
-					$scope.label_step = 'Update';
+					$scope.label_step = 'Insert';
 				}
 				break;
 			case 2:
 				if(!$scope.mainForm.$invalid){
 					$scope.isSubmit = false;
 					
-					DoctorService.update($scope.modelObjectMap).then(function(response){
+					DoctorService.insert($scope.modelObjectMap).then(function(response){
 						if(response.status === 'success'){
-							toastr.success("Updated Successfully", "Success");
+							toastr.success("Insert Successfully", "Success");
 							$scope.step = 1;
 							$scope.label_step = "Next";
 							init();
+							$state.go("loggedIn.doctor.timetable.detail.profile", {'doctorId': $scope.newId});
 						}
 					})
 				}

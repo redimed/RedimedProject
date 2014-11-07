@@ -22,6 +22,16 @@ angular.module("app.loggedIn.doctor", [
             }
         }
     })
+    //ADD
+    .state("loggedIn.doctor.add", {
+        url: "/doctor/add",
+        views: {
+            "main-content": {
+                templateUrl: "modules/doctor/views/add.html",
+                controller: "DoctorAddController"
+            }
+        }
+    })
     // TIMETABLE
     .state("loggedIn.doctor.timetable", {
         url: "/doctor/timetable",

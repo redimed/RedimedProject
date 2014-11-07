@@ -1140,6 +1140,16 @@ angular.module('app.config', [])
         return providerApi.get();
     }
 
+    configService.qualification_option = function(){
+        var qualificationApi = configApi.one("patient/qualification");
+        return qualificationApi.get();
+    }
+
+    configService.account_type_option = function(){
+        var accountApi = configApi.one("patient/list_account_type");
+        return accountApi.get();
+    }
+
     configService.system_service_by_clinical = function(clinical_dept_id){
         var serviceApi = configApi.all("system/listServiceByClinical");
         return serviceApi.post({dept:clinical_dept_id});

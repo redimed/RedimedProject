@@ -3,8 +3,8 @@ var fs = require('fs'),
     Sequelize = require('sequelize'),
     lodash = require('lodash'),
     config = require('config'),
-    sequelize = new Sequelize('sakila', 'root', 'root', {
-        host: '192.168.10.53',
+    sequelize = new Sequelize('sakila', 'root', '', {
+        host: 'localhost',
         port: 3306
     }),
     db = {};

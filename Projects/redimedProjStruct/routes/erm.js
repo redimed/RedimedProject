@@ -27,7 +27,10 @@ app.post('/api/erm/doctors/changeTimetable', DoctorController.changeTimetable);
 app.post('/api/erm/doctors/insertTimetable', DoctorController.insertTimetable);
 app.post('/api/erm/doctors/removeTimetable', DoctorController.removeTimetable);
 app.post('/api/erm/doctors/generateTimetable', DoctorController.generateTimetable);
-//app.post('/api/erm/doctors/generateCalendar', DoctorController.generateCalendar);
+app.get('/api/erm/doctors/getMaxId', DoctorController.getMaxId);
+app.post('/api/erm/doctors/update', DoctorController.update);
+app.post('/api/erm/doctors/insert', DoctorController.insert);
+
 
 app.post('/api/erm/appointment/get', AppointmentController.getAppointmentCalendar_bv);
 app.post('/api/erm/appointment/overview', AppointmentController.overviewAppointmentCalendar);
@@ -41,8 +44,10 @@ app.post('/api/erm/system/listServiceByClinical', SystemController.listServiceBy
 /* KHANH RESPONSIBILITY */
 app.get('/api/patient/totals', ClientController.getTotals);
 app.get('/api/patient/list_account_type', ClientController.getAccountTypeList);
+app.get('/api/erm/patient/list_account_type', ClientController.getAccountTypeList);
 app.get('/api/patient/list_private_fund', ClientController.getPrivateFundList);
 app.get('/api/erm/patient/list_provider_type', ClientController.getProviderTypeList);
+app.get('/api/erm/patient/qualification', ClientController.getQualificationList);
 app.post('/api/patient/insert', ClientController.insert);
 app.post('/api/patient/update', ClientController.update);
 
