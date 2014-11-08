@@ -44,10 +44,10 @@
                     <td data-title="'Booking Person'" filter="{ 'Booking_Person': 'text' }">
                         <label>{{b.Booking_Person}}</label>
                     </td>
-                    <td data-title="'User Type'"  >
+                    <td data-title="'User Type'"  filter="{ 'user_type': 'text' }">
                         <label>{{b.user_type}}</label>
                     </td>
-                    <td data-title="'Company'" >
+                    <td data-title="'Company'" filter="{ 'Company_name': 'text' }">
                         <label>{{b.Company_name}}</label>
                     </td>
                     <td data-title="'Contact Email'" >
@@ -67,20 +67,17 @@
 
     </div>
 </div>
-<div class="portlet light bordered">
+<div class="portlet grey-cascade box">
     <div class="portlet-title">
         <div class="caption">
-            <i class="icon icon-users font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Menus</span>
+            <i class="icon icon-list"></i>
+            <span class="caption-subject  uppercase">User Menu</span>
         </div>
-        <div>
-            <div class="btn-group pull-right">
-                <a ng-click="addNewUserMenu()" ng-class="{disabled : selectedId == null}" href="javascript:;" class="btn green" >
-                    Add New &nbsp;&nbsp;<i class="fa fa-plus"></i>
-                </a>
-            </div>
+        <div class="actions">
+            <a href="javascript:;" ng-click="addNewUserMenu()" ng-class="{disabled : selectedId == null}" class="btn green-jungle btn-sm">
+                <i class="fa fa-plus"></i> Add New</a>
         </div>
-    </div>
+   </div>
     <div class="portlet-body form">
         <form name="menuForm" ng-submit="submitUserMenu(menuForm)" method="post" novalidate>
             <div class="form-group">

@@ -69,6 +69,13 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         $scope.showMenu = function(b){
             $scope.selectedId = b.id;
             $scope.selectedRow = null;
+            $scope.info = {
+                id: null,
+                user_id: null,
+                user_name : null,
+                menu_id: null,
+                isEnable: null
+            };
             $scope.arr = [];
             $scope.rs = [];
             OnlineBookingAdminService.getUserMenu(b.id).then(function(data){
@@ -189,6 +196,14 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
 
 .controller('AdminNewUserController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingAdminService,toastr){
         $scope.isEdit = false;
+        $scope.isCompany = false;
+
+        $scope.userTypeChange = function(b){
+            if(b == 'Company')
+                $scope.isCompany = true;
+            else
+                $scope.isCompany = false;
+        }
 
         $scope.info = {
             bookPerson:null,
@@ -253,6 +268,15 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
 
 
         $scope.isEdit = true;
+
+        $scope.isCompany = false;
+
+        $scope.userTypeChange = function(b){
+            if(b == 'Company')
+                $scope.isCompany = true;
+            else
+                $scope.isCompany = false;
+        }
 
         $scope.info = {
             userId: $stateParams.id,
@@ -322,7 +346,12 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             $scope.info.isProject = data.isProject == 1 ? '1':'0';
             $scope.info.isAdmin = data.isAdmin == 1 ? '1':'0';
             $scope.isReceiveEmail = data.isReceiveEmailAfterHour == 1 ? '1':'0';
+
+            if($scope.info.userType == 'Company')
+                $scope.isCompany = true;
         })
+
+
 
         $scope.submitUser = function(userForm){
             $scope.showClickedValidation = true;

@@ -114,7 +114,7 @@ angular.module('app.loggedIn.booking.admin.services',[])
 
         adminBooking.insertNewUser = function(info){
             var user = api.all('users/insert');
-            return user.post({info:info});
+            return user.post({info:info,isReg: false});
         }
 
         adminBooking.getSiteList = function(){

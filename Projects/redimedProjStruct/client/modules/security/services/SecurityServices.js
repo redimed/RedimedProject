@@ -15,7 +15,7 @@ angular.module("app.security.services", [])
     }
      securityService.regNewUser = function(user){
             var userList = securityApi.all('users/insert');
-            return userList.post({user:user});
+            return userList.post({user:user,isReg:true});
      }
         securityService.checkEmail = function(email){
             var emailCheck = securityApi.one('users/checkEmail');
