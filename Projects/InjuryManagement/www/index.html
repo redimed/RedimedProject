@@ -16,109 +16,184 @@
   <script src="lib/ionic/js/ionic.bundle.js"></script>
 
   <!--ui.bootstrap js-->
-  <!--<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>-->
-
-  <!-- cordova script (this will be a 404 during development) -->
-  <script src="cordova.js"></script>
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
 
   <!-- your app's js -->
   <script src="app.js"></script>
 </head>
-<body ng-app="ionicApp" animation="slide-left-right-ios7">
+<body ng-app="starter" animation="slide-left-right-ios7">
+
+<ion-header-bar>
+  <h1 class="title">Add Worker</h1>
+</ion-header-bar>
+
+<ion-nav-bar class="nav-title-slide-ios7 bar-light">
+  <ion-nav-back-button class="button-icon ion-arrow-left-c">
+  </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-nav-view></ion-nav-view>
 
 
-<ion-pane title="Add Worker">
+<script id="templates/intro.html" type="text/ng-template">
+  <ion-view>
+    <ion-nav-buttons side="left">
 
-  <!--<ion-content class="padding">-->
-  <!--<ion-list>-->
-  <!--<!--<div class="item item-divider item-icon-left"-->
-  <!--<!--ng-click="section_click()">-->
-  <!--<!--<i class="icon ion-ios7-person"></i>-->
-  <!--<!--Information-->
-  <!--<!--</div>-->
+      <button class="button button-positive button-clear no-animation"
+              ng-click="startApp()" ng-if="!slideIndex">
+        Cancel
+      </button>
 
-  <!--<!--<div collapse="!show_section">-->
+      <button class="button button-positive button-clear no-animation"
+              ng-click="previous()" ng-if="slideIndex > 0">
+        Back
+      </button>
+    </ion-nav-buttons>
 
-  <!--<div class="list list-inset">-->
+    <ion-nav-buttons side="right">
+      <button class="button button-positive button-clear no-animation"
+              ng-click="next()" ng-if="slideIndex != 2">
+        Next
+      </button>
+      <button class="button button-positive button-clear no-animation"
+              ng-click="startApp()" ng-if="slideIndex == 2">
+        First Page
+      </button>
+    </ion-nav-buttons>
+      <ion-slide-box on-slide-changed="slideChanged(index)">
+        <ion-slide>
+          <ion-content>
 
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
+            <ion-list class="padding">
+              <div class="list">
+                <div class="item item-divider item-icon-left">
+                  <i class="icon ion-ios7-information"></i>
+                  Information
+                </div>
 
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label>-->
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label><label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label><label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label><label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label><label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
-
-  <!--<label class="item item-input">-->
-  <!--<input type="text" placeholder="Last Name">-->
-  <!--</label><label class="item item-input">-->
-  <!--<input type="text" placeholder="First Name">-->
-  <!--</label>-->
+                <div collapse="show_section">
 
 
-  <!--</div>-->
-  <!--</ion-list>-->
-  <!--<!--</div>-->
+                  <label class="item item-input item-select">
+                    <span class="input-label">Title</span>
+                    <select>
+                      <option>Mr</option>
+                      <option>Mrs</option>
+                      <option>Miss</option>
+                    </select>
+                  </label>
+
+                  <label class="item item-input">
+                    <span class="input-label">First Name</span>
+                    <input type="text">
+                  </label>
+
+                  <label class="item item-input">
+                    <span class="input-label">Middle Name</span>
+                    <input type="text">
+                  </label>
+
+                  <label class="item item-input">
+                    <span class="input-label">Sur Name</span>
+                    <input type="text">
+                  </label>
+
+                  <label class="item item-input">
+                    <span class="input-label">Birthday</span>
+                    <input type="text" onfocus="this.type='date';
+this.setAttribute('onfocus','');this.blur();this.focus();">
+                  </label>
+
+                  <label class="item item-input item-select">
+                    <span class="input-label">
+                      Sex
+                    </span>
+                    <select>
+                      <option>Female</option>
+                      <option>Male</option>
+                      <option>Other</option>
+                    </select>
+                  </label>
+
+                </div>
+              </div>
+            </ion-list>
 
 
-  <ion-content>
-    <ion-list>
-      <label class="item item-input">
-        <input type="text" placeholder="Last Name">
-      </label>
-    </ion-list>
-  </ion-content>
-</ion-pane>
+
+
+          </ion-content>
+        </ion-slide>
+        <ion-slide>
+          <ion-content>
+          <ion-list class="padding">
+            <div class="list">
+              <div class="item item-divider item-icon-left">
+                <i class="icon ion-ios7-contact"></i>
+                Contact
+              </div>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="Address">
+                </label>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="Address2">
+                </label>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="Suburb">
+                </label>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="State">
+                </label>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="Post Code">
+
+                </label>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="Country">
+                </label>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="Mobile Phone">
+                </label>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="Home Phone">
+                </label>
+
+                <label class="item item-input">
+                  <input type="text" placeholder="Work Phone">
+                </label>
+
+            </div>
+            <div class="padding-right padding-left">
+              <button type="submit" class="button button-block button-positive">
+                Add Worker
+              </button>
+            </div>
+          </ion-list>
+          </ion-content>
+        </ion-slide>
+
+      </ion-slide-box>
+  </ion-view>
+</script>
+
+<script id="templates/main.html" type="text/ng-template">
+  <ion-view hide-back-button="true" title="Awesome">
+    <ion-content padding="true">
+      <h1>Main app here</h1>
+      <button class="button" ng-click="toIntro()">Do Tutorial Again</button>
+    </ion-content>
+  </ion-view>
+</script>
+
+
+
 </body>
 </html>

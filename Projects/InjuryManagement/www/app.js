@@ -1,64 +1,109 @@
-// Ionic Starter App
+var app = angular.module('starter', ['ionic'])
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-//angular.module('starter', ['ionic'])
-//
-//    .run(function($ionicPlatform) {
-//      $ionicPlatform.ready(function() {
-//        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-//        // for form inputs)
-//        if(window.cordova && window.cordova.plugins.Keyboard) {
-//          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-//        }
-//        if(window.StatusBar) {
-//          StatusBar.styleDefault();
-//        }
-//      });
-//    })
-//
-//    .controller('myCtrl', ['$scope', function($scope){
-//
-//        $scope.show_section = false;
-//
-//        $scope.section_click = function($event) {
-//            $scope.show_section = !$scope.show_section
-//        };
-//    }]);
+    .run(function($ionicPlatform) {
+        $ionicPlatform.ready(function() {
+          if(window.cordova && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+          }
+          if(window.StatusBar) {
+            StatusBar.styleDefault();
+          }
+        });
+    })
+    //.directive('onValidSubmit', ['$parse', '$timeout', function($parse) {
+    //    return {
+    //        require: '^form',
+    //        restrict: 'A',
+    //        link: function(scope, element, attrs, form) {
+    //            form.$submitted = false;
+    //            var fn = $parse(attrs.onValidSubmit);
+    //            element.on('submit', function(event) {
+    //                scope.$apply(function() {
+    //                    element.addClass('ng-submitted');
+    //                    form.$submitted = true;
+    //                    if (form.$valid) {
+    //                        if (typeof fn === 'function') {
+    //                            fn(scope, {$event: event});
+    //                        }
+    //                    }
+    //                });
+    //            });
+    //        }
+    //    }
+    //}])
+    //.directive('validated', ['$parse', function($parse) {
+    //    return {
+    //        restrict: 'AEC',
+    //        require: '^form',
+    //        link: function(scope, element, attrs, form) {
+    //            var inputs = element.find("*");
+    //            for(var i = 0; i < inputs.length; i++) {
+    //                (function(input){
+    //                    var attributes = input.attributes;
+    //                    if (attributes.getNamedItem('name') != void 0) {
+    //                        var field = form[attributes.name.value];
+    //                        if (field != void 0) {
+    //                            scope.$watch(function() {
+    //                                return form.$submitted + "_" + field.$valid;
+    //                            }, function() {
+    //                                if (form.$submitted != true) return;
+    //                                var inp = angular.element(input);
+    //                                if (inp.hasClass('ng-invalid')) {
+    //                                    element.removeClass('has-success');
+    //                                    element.addClass('has-error');
+    //                                } else {
+    //                                    element.removeClass('has-error').addClass('has-success');
+    //                                }
+    //                            });
+    //                        }
+    //                    }
+    //                })(inputs[i]);
+    //            }
+    //        }
+    //    }
+    //}])
 
+    .config(function($stateProvider, $urlRouterProvider) {
 
-var app = angular.module('ionicApp', ['ionic'])
+        $stateProvider
+            .state('intro', {
+                url: '/',
+                templateUrl: 'templates/intro.html',
+                controller: 'IntroCtrl'
+            })
+            .state('main', {
+                url: '/main',
+                templateUrl: 'templates/main.html',
+                controller: 'MainCtrl'
+            });
 
-app.config(function($httpProvider) {
-    $httpProvider.interceptors.push(function($rootScope) {
-        return {
-            request: function(config) {
-                $rootScope.$broadcast('loading:show')
-                return config
-            },
-            response: function(response) {
-                $rootScope.$broadcast('loading:hide')
-                return response
-            }
+        $urlRouterProvider.otherwise("/");
+
+    })
+
+    .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
+
+        // Called to navigate to the main app
+        $scope.startApp = function() {
+            $state.go('main');
+        };
+        $scope.next = function() {
+            $ionicSlideBoxDelegate.next();
+        };
+        $scope.previous = function() {
+            $ionicSlideBoxDelegate.previous();
+        };
+
+        // Called each time the slide changes
+        $scope.slideChanged = function(index) {
+            $scope.slideIndex = index;
+        };
+    })
+
+    .controller('MainCtrl', function($scope, $state) {
+        console.log('MainCtrl');
+
+        $scope.toIntro = function(){
+            $state.go('intro');
         }
-    })
-})
-
-app.run(function($rootScope, $ionicLoading) {
-    $rootScope.$on('loading:show', function() {
-        $ionicLoading.show({template: 'foo'})
-    })
-
-    $rootScope.$on('loading:hide', function() {
-        $ionicLoading.hide()
-    })
-})
-
-app.controller('MainCtrl', function($http, $ionicLoading) {
-    var _this = this
-
-    $http.jsonp('http://api.openbeerdatabase.com/v1/breweries.json?callback=JSON_CALLBACK').then(function(result) {
-        _this.breweries = result.data.breweries
-    })
-})
+    });
