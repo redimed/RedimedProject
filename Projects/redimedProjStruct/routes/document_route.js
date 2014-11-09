@@ -17,14 +17,6 @@ var form18Controller = require('./controllers/DocumentController/form18Controlle
 var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
 var gorgonMAController = require('./controllers/DocumentController/gorgonMAController')
 
-app.get('/api/document/newFA', FAController.newFA);
-app.get('/api/document/loadFA', FAController.loadFA);
-app.get('/api/document/newMA', MAController.newMA);
-app.get('/api/document/loadMA', MAController.loadMA);
-app.get('/api/document/newIDS', IDSController.newIDS);
-app.get('/api/document/loadIDS', IDSController.loadIDS);
-app.post('/api/document/insertUQ', UQController.insertUQ);
-
 /**
  * begin category 2
  */
@@ -67,12 +59,15 @@ app.post('/api/document/checkUser',UQController.checkUser);
 
 //Begin gorgon FA
 app.post('/api/document/insertGorgonFA',gorgonFAController.insertFA);
+app.post('/api/document/editGorgonFA',gorgonFAController.editFA);
+app.post('/api/document/gorgonFAInfo',gorgonFAController.getFA);
 //end
 
 //Begin gorgon MA
 app.post('/api/document/insertGorgonMA',gorgonMAController.insertMA);
+app.post('/api/document/editGorgonMA',gorgonMAController.editMA);
+app.post('/api/document/gorgonMAInfo',gorgonMAController.getMA);
 //end
-
 
 /**
  * begin category 3
@@ -100,7 +95,6 @@ app.post('/api/document/editForm18', form18Controller.editForm18);
 app.post('/api/document/loadMH', MHController.loadMH);
 app.post('/api/document/insertMH', MHController.insertMH);
 app.post('/api/document/editMH', MHController.editMH);
-
 /**
  * end medical history
  */
