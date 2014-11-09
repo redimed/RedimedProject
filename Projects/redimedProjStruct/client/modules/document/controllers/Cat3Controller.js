@@ -171,11 +171,11 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     var info = $scope.info;
                     DocumentService.insertCat3(info).then(function (response) {
                         if (response['status'] === 'success') {
-                            toastr.success("Add new category3 success!", "Success");
+                            toastr.success("Add success!", "Success");
                             $state.go('loggedIn.category3', null, {"reload": true});
                         }
                         else if (response['status'] === 'fail')
-                            toastr.error("Add new category3 fail!", "Error");
+                            toastr.error("Add fail!", "Error");
 
                     });
                 }
@@ -193,12 +193,12 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     var info = $scope.info;
                     DocumentService.editCat3(info).then(function (response) {
                         if (response['status'] === 'success') {
-                            toastr.success("Edit category3 successful!", "Success");
+                            toastr.success("Edit successful!", "Success");
 
                             $state.go('loggedIn.category3', null, {"reload": true});
                         }
                         else if (response['status'] === 'fail') {
-                            toastr.error("Edit category3 fail!", "Error");
+                            toastr.error("Edit fail!", "Error");
                         }
                         else {
                             /**

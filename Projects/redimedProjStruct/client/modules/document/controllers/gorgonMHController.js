@@ -319,11 +319,11 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                     DocumentService.insertGGMH(info)
                         .then(function (response) {
                             if (response['status'] === 'success') {
-                                toastr.success("Add new gorgon medical history success!", "Success");
+                                toastr.success("Add success!", "Success");
                                 $state.go('loggedIn.gorgonMH', null, {"reload": true});
                             }
                             else if (response['status'] === 'fail')
-                                toastr.error("Add new gorgon medical history fail!", "Error");
+                                toastr.error("Add fail!", "Error");
 
                         })
                 }
@@ -340,11 +340,11 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                     DocumentService.editGGMH(info)
                         .then(function (response) {
                             if (response['status'] === 'success') {
-                                toastr.success("Edit gorgon medical history success!", "Success");
+                                toastr.success("Edit success!", "Success");
                                 $state.go('loggedIn.gorgonMH', null, {"reload": true});
                             }
                             else if (response['status'] === 'fail')
-                                toastr.error("Edit gorgon medical history fail!", "Error");
+                                toastr.error("Edit fail!", "Error");
 
                         })
                 }

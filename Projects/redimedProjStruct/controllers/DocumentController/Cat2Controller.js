@@ -195,7 +195,7 @@ module.exports = {
                     r4_2_c: info.r4_2_c,
                     r5_1: info.r5_1,
                     r5_2: info.r5_2,
-                    DATE: new Date(),
+                    DATE: info.DATE,
                     DOCTOR_ID: info.DOCTOR_ID
                 }, {raw: true})
                     .success(function () {
@@ -213,7 +213,6 @@ module.exports = {
     },
     editCat2: function (req, res) {
         var info = req.body.info;
-        console.log(info.ddd);
         db.Category2.update({
             cal_id: 999,
             DocId: info.DocId,
