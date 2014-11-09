@@ -18,7 +18,7 @@ module.exports = function(sequelize,DataTypes){
 	  Creation_date : DataTypes.DATE ,
 	  Last_updated_by : DataTypes.INTEGER(11) ,
 	  Last_update_date: DataTypes.DATE ,
-	  isBookingAtRediMed : DataTypes.INTEGER(11) 
+	  isBookingAtRediMed : DataTypes.INTEGER(11)
 },{
       tableName: 'booking_headers', // đặt tên bảng
       createdAt: 'Creation_date',

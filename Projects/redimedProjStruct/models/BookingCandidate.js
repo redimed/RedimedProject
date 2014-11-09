@@ -33,7 +33,7 @@ module.exports = function(sequelize,DataTypes){
 	  CALENDAR_ID3 : DataTypes.INTEGER(11) ,
 	  CALENDAR_ID4 : DataTypes.INTEGER(11) ,
 	  CALENDAR_ID5 : DataTypes.INTEGER(11) ,
-	  header_candidate_id : DataTypes.INTEGER(11) 
+	  header_candidate_id : DataTypes.INTEGER(11)
 },{
 	 tableName: 'booking_candidates', // đặt tên bảng
 	  createdAt: 'Creation_date',
@@ -41,4 +41,4 @@ module.exports = function(sequelize,DataTypes){
     });
 
     return BookingCandidate;
-};	
+};

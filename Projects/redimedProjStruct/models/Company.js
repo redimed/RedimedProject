@@ -1,6 +1,6 @@
 /**
- * Created by meditech on 22/09/2014.
- */
+* Created by meditech on 22/09/2014.
+*/
 module.exports = function(sequelize,DataTypes){
     var Company = sequelize.define('Company',{
         id : {type:DataTypes.INTEGER(11), primaryKey: true},
@@ -36,7 +36,7 @@ module.exports = function(sequelize,DataTypes){
         Phone : DataTypes.STRING(15) ,
         Site_medic : DataTypes.STRING(100) ,
         User_id : DataTypes.INTEGER(11) ,
-        isPO : DataTypes.INTEGER(11) 
+        isPO : DataTypes.INTEGER(11)
     },{
         tableName: 'companies',
         createdAt:'Creation_date',

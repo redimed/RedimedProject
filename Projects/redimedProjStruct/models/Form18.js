@@ -1,10 +1,10 @@
 /**
- * Created by thanh on 10/10/2014.
- */
+* Created by thanh on 10/10/2014.
+*/
 
 /**
- * begin table gorgon_audiometric_form18
- */
+* begin table gorgon_audiometric_form18
+*/
 module.exports = function (sequelize, DataTypes) {
     var Form18 = sequelize.define("Form18", {
         "GORGON_ID": {type: DataTypes.INTEGER(11), primaryKey: true},
@@ -26,5 +26,5 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /**
- * end table gorgon_audiometric_form18
- */
+* end table gorgon_audiometric_form18
+*/

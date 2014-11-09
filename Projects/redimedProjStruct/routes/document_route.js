@@ -11,14 +11,45 @@ var AUD1Controller = require('./controllers/DocumentController/AUD1Controller');
 var AUD2Controller = require('./controllers/DocumentController/AUD2Controller');
 var Cat3Controller = require('./controllers/DocumentController/Cat3Controller');
 var UQController = require('./controllers/DocumentController/UQController');
+var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
+var gorgonMAController = require('./controllers/DocumentController/gorgonMAController');
 
-app.get('/api/document/newFA', FAController.newFA);
-app.get('/api/document/loadFA', FAController.loadFA);
-app.get('/api/document/newMA', MAController.newMA);
-app.get('/api/document/loadMA', MAController.loadMA);
+// Begin funtion assessment
+app.post('/api/document/newFA', FAController.newFA);
+app.post('/api/document/loadFA', FAController.loadFA);
+app.post('/api/document/insertFA',FAController.insertFA);
+app.post('/api/document/checkFA',FAController.checkFA);
+app.post('/api/document/checkRating',FAController.checkRating);
+//end
+
+// Begin Medical Assessment
+app.post('/api/document/newMA', MAController.newMA);
+app.post('/api/document/loadMA', MAController.loadMA);
+app.post('/api/document/insertMA',MAController.insertMA);
+app.post('/api/document/checkMA',MAController.checkMA);
+// End
+
+//Begin Instant Drug Screen
 app.get('/api/document/newIDS', IDSController.newIDS);
 app.get('/api/document/loadIDS', IDSController.loadIDS);
+app.post('/api/document/insertIDS',IDSController.insertIDS);
+app.post('/api/document/checkIDS',IDSController.checkIDS);
+// end
+
+// Begin User Question
 app.post('/api/document/insertUQ',UQController.insertUQ);
+app.post('/api/document/updateUQ',UQController.updateUQ);
+app.post('/api/document/checkUser',UQController.checkUser);
+// end
+
+//Begin gorgon FA
+app.post('/api/document/insertGorgonFA',gorgonFAController.insertFA);
+//end
+
+//Begin gorgon MA
+app.post('/api/document/insertGorgonMA',gorgonMAController.insertMA);
+//end
+
 /**
  * begin category 3
  */

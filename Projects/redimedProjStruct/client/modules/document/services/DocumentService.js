@@ -6,26 +6,67 @@ angular.module('app.loggedIn.document.services', [])
         var documentService = {};
         var api = Restangular.all("api");
 
-        documentService.newFA = function () {
-            var newFA = api.one("document/newFA");
-            return newFA.get();
+        /* functional Assessment
+            Begin
+         */
+
+        documentService.newFA = function (PATIENT_ID,CAL_ID) {
+            var newFA = api.all("document/newFA");
+            return newFA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
         }
 
-        documentService.loadFA = function () {
-            var loadFA = api.one("document/loadFA");
-            return loadFA.get();
+        documentService.loadFA = function (PATIENT_ID,CAL_ID) {
+            var loadFA = api.all("document/loadFA");
+            return loadFA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
         }
 
-        documentService.newMA = function () {
-            var newMA = api.one("document/newMA");
-            return newMA.get();
+        documentService.insertFA = function(infoH,infoS,infoL,infoD,infoC){
+            var insertFA = api.all("document/insertFA");
+            return insertFA.post({infoL:infoL,infoH:infoH,infoS:infoS,infoD:infoD,infoC:infoC});
         }
 
-        documentService.loadMA = function () {
-            var loadMA = api.one("document/loadMA");
-            return loadMA.get();
+        documentService.checkFA = function(PatientID, calID){
+            var checkFA = api.all("document/checkFA");
+            return checkFA.post({PatientID:PatientID, calID:calID});
         }
 
+        documentService.checkRating = function(id,age, gender, val){
+            var checkRating = api.all("document/checkRating");
+            return checkRating.post({id:id, age:age,gender:gender, value:val});
+        }
+        /* functional Assessment
+            End
+         */
+
+        /* Medical Assessment
+            Begin
+         */
+        documentService.newMA = function (PATIENT_ID,CAL_ID) {
+            var newMA = api.all("document/newMA");
+            return newMA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
+        }
+
+        documentService.loadMA = function (PATIENT_ID,CAL_ID) {
+            var loadMA = api.all("document/loadMA");
+            return loadMA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
+        }
+
+        documentService.insertMA = function(infoL,infoH){
+            var insertMA = api.all("document/insertMA");
+            return insertMA.post({infoL:infoL,infoH:infoH});
+        }
+
+        documentService.checkMA = function(PatientID, calID){
+            var checkMA = api.all("document/checkMA");
+            return checkMA.post({PatientID:PatientID, calID:calID});
+        }
+        /* Medical Assessment
+            End
+         */
+
+        /* Instant Drug Screen
+         Begin
+         */
         documentService.newIDS = function () {
             var newIDS = api.one("document/newIDS");
             return newIDS.get();
@@ -35,6 +76,87 @@ angular.module('app.loggedIn.document.services', [])
             var loadIDS = api.one("document/loadIDS");
             return loadIDS.get();
         }
+
+        documentService.insertIDS = function(infoL,infoH){
+            var insertIDS = api.all("document/insertIDS");
+            return insertIDS.post({infoL:infoL,infoH:infoH});
+        }
+
+        documentService.checkIDS = function(PatientID, calID){
+            var checkIDS = api.all("document/checkIDS");
+            return checkIDS.post({PatientID:PatientID, calID:calID});
+        }
+        /* Instant Drug Screen
+         End
+         */
+
+        /* Gorgon User Questionnaire
+         Begin
+         */
+        documentService.insertUQ = function(info){
+            var insertUQ = api.all("document/insertUQ");
+            return insertUQ.post({info:info});
+        }
+
+        documentService.updateUQ = function(info){
+            var updateUQ = api.all("document/updateUQ");
+            return updateUQ.post({info:info});
+        }
+
+        documentService.checkUser = function(PatientID, calID){
+            var checkUser = api.all("document/checkUser");
+            return checkUser.post({PatientID:PatientID, calID:calID});
+        }
+        /*  Gorgon User Questionnaire
+         End
+         */
+
+        /* GOrgon FA
+         Begin
+         */
+        documentService.insertGorgonFA = function(info){
+            var insertGorgonFA = api.all("document/insertGorgonFA");
+            return insertGorgonFA.post({info:info});
+        }
+
+        /* Gorgon FA
+         End
+         */
+
+        /* gorgon MA
+         Begin
+         */
+        documentService.insertGorgonMA = function(info){
+            var insertGorgonMA = api.all("document/insertGorgonMA");
+            return insertGorgonMA.post({info:info});
+        }
+        /* gorgon MA
+         End
+         */
+
+        /* gorgon MA
+         Begin
+         */
+
+        /* gorgon MA
+         End
+         */
+
+        /* gorgon MA
+         Begin
+         */
+
+        /* gorgon MA
+         End
+         */
+
+        /* gorgon MA
+         Begin
+         */
+
+        /* gorgon MA
+         End
+         */
 
         /**
          * begin medical history
@@ -107,7 +229,6 @@ angular.module('app.loggedIn.document.services', [])
          * end audiogram 2
          */
 
-
         /**
          * begin category 3
          */
@@ -115,13 +236,6 @@ angular.module('app.loggedIn.document.services', [])
             var insertCat3 = api.all("document/insertCat3");
             return insertCat3.post({info: info});
         }
-
-
-        documentService.insertUQ = function(info){
-            var insertUQ = api.all("document/insertUQ");
-            return insertUQ.post({info:info});
-        }
-
 
 
     return documentService;
