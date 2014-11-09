@@ -1,52 +1,50 @@
-<!--Examiner-->
-<div class="caption">
-    <div class="row">
-        <div class="col-md-6">
-            <i class="icon-book-open font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 20px;">Gorgon Medical Assessment</span>
-        </div>
-        <div class="col-md-6 ">
-            <a href="javascript:;" ng-click="submit()"  class="btn green pull-right">Submit</a>
-            <a href="javascript:;" ng-click="print()" class="btn btn-primary blue pull-right">Print PDF</a>
-            <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
-        </div>
-    </div>
-</div>
-<br/>
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Examiner:</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
+
+<form name="gorgonMAForm" ng-submit="submitGorgonMA(gorgonMAForm)" method="post" novalidate>
+    <div class="caption">
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 ">
+                <button type="submit" class="btn green pull-right">Submit</button>
+                <a href="javascript:;"  class="btn btn-primary blue pull-right">Print PDF</a>
+                <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
+            </div>
         </div>
     </div>
-    <div class="portlet-body form">
-        <ul class="text-info">
-            <li>Check that the questionnaire has been completed correctly.</li>
-            <li>Check that an explanation has been given for every positive response.</li>
-            <li>Add any further comments to this form.</li>
-        </ul>
+    <!--Examiner-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Examiner:</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <ul class="text-info">
+                <li>Check that the questionnaire has been completed correctly.</li>
+                <li>Check that an explanation has been given for every positive response.</li>
+                <li>Add any further comments to this form.</li>
+            </ul>
+        </div>
     </div>
-</div>
-<!--Information-->
-<div class="portlet light bordered">
-    </br>
+    <!--Information-->
+    <div class="portlet light bordered">
+        </br>
         <div class="row">
             <div class="col-md-5 col-sm-6" style="margin-left: 14px">
                 <div class="form-group">
                     <label class="control-label">Family Name: </label>
-                    <label class="control-label text-info" >nguyen minh</label>
+                    <label class="control-label text-info" >{{info.EXAMINER_NAME}}</label>
                 </div>
             </div>
 
             <div class="col-md-5 col-sm-6" style="margin-left: 14px">
                 <div class="form-group">
                     <label class="control-label">Givent Name:</label>
-                    <label class="control-label text-info">phuong self</label>
+                    <label class="control-label text-info"></label>
                 </div>
             </div>
         </div>
@@ -57,10 +55,10 @@
                     <div class="clearfix">
                         <div class="btn-group col-sm-6" >
                             <label class="btn">
-                                <input type="radio" name='a' /> Confirmed
+                                <input type="radio" ng-model="info.PHOTO_ID" value="0"/> Confirmed
                             </label>
                             <label class="btn">
-                                <input type="radio" name='a' /> Not sighted
+                                <input type="radio" ng-model="info.PHOTO_ID" value="1"/> Not sighted
                             </label>
                         </div>
                     </div>
@@ -72,10 +70,10 @@
                     <div class="clearfix">
                         <div class="btn-group col-sm-6" >
                             <label class="btn">
-                                <input type="radio" name='a1' /> Right
+                                <input type="radio" ng-model="info.HAND_DOR" value="0"/> Right
                             </label>
                             <label class="btn">
-                                <input type="radio" name='a1' /> Left
+                                <input type="radio" ng-model="info.HAND_DOR" value="1"/> Left
                             </label>
                         </div>
                     </div>
@@ -90,14 +88,14 @@
                     <label class="control-label" style="font-weight: bold">Height</label>
                 </div>
                 <div class="col-md-2 col-sm-3">
-                    <input type="text" style="width: 60px;"/>
+                    <input type="text" ng-model="info.HEIGHT" style="width: 60px;"/>
                     <label> cms</label>
                 </div>
                 <div class="col-md-1 col-sm-2" style="font-weight: bold">
                     <label class="control-label" style="font-weight: bold">Weight</label>
                 </div>
                 <div  class="col-md-2 col-sm-3">
-                    <input type="text" style="width: 60px;"/>
+                    <input type="text" ng-model="info.WEIGHT" style="width: 60px;"/>
                     <label> kg</label>
                 </div>
             </div>
@@ -106,1849 +104,1855 @@
 
         </br>
 
-</div>
-<!--Urinalysis-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Urinalysis</span>
+    </div>
+    <!--Urinalysis-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Urinalysis</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
         </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
+        <div class="portlet-body form">
+            </br>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Protein</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-md-10 col-sm-10" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PROTEIN" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PROTEIN" value="1"/> Trace
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PROTEIN" value="2"/> +
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PROTEIN" value="3"/> ++
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PROTEIN" value="4"/> +++
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-2 col-sm-2" style="font-weight: bold">
+                        <label class="control-label" style="margin-top: 7px">Comment</label>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        <input type="text" ng-model="info.PROTEIN_COMMENT" class="form-control" >
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Glucose</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-md-10 col-sm-10" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.GLUCOSE" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.GLUCOSE" value="1"/> Trace
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.GLUCOSE" value="2"/> +
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.GLUCOSE" value="3"/> ++
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.GLUCOSE" value="4"/> +++
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-2 col-sm-2" style="font-weight: bold">
+                        <label class="control-label" style="margin-top: 7px">Comment</label>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        <input type="text" ng-model="info.GLUCOSE_COMMENT" class="form-control" >
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Blood</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-md-10 col-sm-10" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BLOOD" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BLOOD" value="1"/> Trace
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BLOOD" value="2"/> +
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BLOOD" value="3"/> ++
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BLOOD" value="4"/> +++
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-2 col-sm-2" style="font-weight: bold">
+                        <label class="control-label" style="margin-top: 7px">Comment</label>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        <input type="text" ng-model="info.BLOOD_COMMENT" class="form-control" >
+                    </div>
+                </div>
+            </div>
+            </br>
         </div>
     </div>
-    <div class="portlet-body form">
-        </br>
-        <div class="row">
-            <div class="col-md-6">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Protein</label>
-                <div class="clearfix">
-                    <div class="btn-group col-md-10 col-sm-10" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Trace
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> +
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> ++
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> +++
-                        </label>
-                    </div>
-                </div>
+    <!--Instant Drug Screen-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Instant Drug Screen</span>
             </div>
-            <div class="col-md-6">
-                <div class="col-md-2 col-sm-2" style="font-weight: bold">
-                    <label class="control-label" style="margin-top: 7px">Comment</label>
-                </div>
-                <div class="col-md-10 col-sm-10">
-                    <input type="text" ng-model="info.name" class="form-control" >
-                </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
             </div>
         </div>
-        </br>
-        <div class="row">
-            <div class="col-md-6">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Glucose</label>
-                <div class="clearfix">
-                    <div class="btn-group col-md-10 col-sm-10" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Trace
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> +
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> ++
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> +++
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="col-md-2 col-sm-2" style="font-weight: bold">
-                    <label class="control-label" style="margin-top: 7px">Comment</label>
-                </div>
-                <div class="col-md-10 col-sm-10">
-                    <input type="text" ng-model="info.name" class="form-control" >
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-6">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Blood</label>
-                <div class="clearfix">
-                    <div class="btn-group col-md-10 col-sm-10" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Trace
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> +
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> ++
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> +++
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="col-md-2 col-sm-2" style="font-weight: bold">
-                    <label class="control-label" style="margin-top: 7px">Comment</label>
-                </div>
-                <div class="col-md-10 col-sm-10">
-                    <input type="text" ng-model="info.name" class="form-control" >
-                </div>
-            </div>
-        </div>
-        </br>
-    </div>
-</div>
-<!--Instant Drug Screen-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Instant Drug Screen</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-        </br>
-        <div class="row">
-            <div class="col-md-5 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Cannabis</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-8 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> -ve
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Benzo’s</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-8 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> -ve
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Opiates</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-8 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> -ve
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Cocain</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-8 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> -ve
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Amphet’s</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-8 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> -ve
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Methamph</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-8 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> -ve
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Alcohol</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-8 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> -ve
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> +ve
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-            </div>
-        </div>
-
-
-
-    </div>
-</div>
-<!--Audiogram-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Audiogram</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-            (please complete OR attach audio readout)
-        </p>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-2 col-sm-3">
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>500Hz</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>1000Hz</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>1500Hz</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>2000Hz</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>3000Hz</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>4000Hz</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>6000Hz</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>8000Hz</label>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-2 col-sm-3">
-                    <label class="control-label" >Right Ear(dB)</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1" >
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-2 col-sm-3">
-                    <label class="control-label" >Left Ear(dB)</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-            </div>
-
-        </div>
-        </br>
-    </div>
-</div>
-<!--Spirometry-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Spirometry</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-            please complete OR	attach spiro readout - use actual values not %)
-        </p>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-2 col-sm-3">
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>FEV1</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>FVC</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <label>PERFR</label>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-2 col-sm-3">
-                    <label class="control-label" >Pre-Br/dilator</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1" >
-                    <input type="text" style="width: 60px"/>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-2 col-sm-3">
-                    <label class="control-label" >Pre-Br/dilator</label>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    <input type="text" style="width: 60px"/>
-                </div>
-            </div>
-
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label col-md-6 col-sm-4" style="margin-top: 10px;">Is Spirometry satisfactory?</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-9 col-md-10 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> Yes
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> No
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Candidate ever used a puffer?</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-9 col-md-10 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> Yes
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> No
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label col-md-6 col-sm-8" style="margin-top: 10px;">If Yes to either of above, was there any respiratory problem?</label>
-                    <div class="clearfix">
-                        <div class="btn-group col-sm-9 col-md-10 " >
-                            <label class="btn">
-                                <input type="radio" name='a' /> Yes
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' /> No
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--Examiner Comment-->
-<div class="portlet light bordered">
-    <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-        Examiners Commments
-    </p>
-    <div class="row">
-        <div class="col-md-8" style="margin-left: 15px;">
-            <textarea class="form-control"></textarea>
-        </div>
-    </div>
-</div>
-<!--Vision-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Vision</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-        </br>
-
-        <div class="border" style="border-color: #808080; border-style: dotted;" >
-            <div class="row" >
-                <div class="col-md-10">
-                    <div class="col-md-2 col-sm-12">
-                        <label class="control-label text-info bold" style="margin-top: 30px;">Visual Acuity:</label>
-                    </div>
-                    <div class="col-md-5 col-sm-6" style="text-align: center">
-                        <div class="row">
-                            <label>Uncorrected:</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-6 col-sm-6" style="text-align: center">
-                                    <label>L</label><br>
-                                    <label>/6</label>
-                                    <input type="text" style="width: 60px"/>
-                                </div>
-                                <div class="col-md-6 col-sm-6" style="text-align: center">
-                                    <label>R</label><br>
-                                    <label>/6</label>
-                                    <input type="text" style="width: 60px"/>
-                                </div>
+        <div class="portlet-body form">
+            </br>
+            <div class="row">
+                <div class="col-md-5 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Cannabis</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-8 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.CANNABIS" value="0"/> -ve
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.CANNABIS" value="1"/> +ve
+                                </label>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 col-sm-6" style="text-align: center">
-                        <div class="row">
-                            <label>Corrected:</label>
+                </div>
+                <div class="col-md-5 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Benzo’s</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-8 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.BENZOS" value="0"/> -ve
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.BENZOS" value="1"/> +ve
+                                </label>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-6 col-sm-6" style="text-align: center">
-                                    <label>L</label><br>
-                                    <label>/6</label>
-                                    <input type="text" style="width: 60px"/>
-                                </div>
-                                <div class="col-md-6 col-sm-6" style="text-align: center">
-                                    <label>R</label><br>
-                                    <label>/6</label>
-                                    <input type="text" style="width: 60px"/>
-                                </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Opiates</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-8 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.OPIATES" value="0"/> -ve
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.OPIATES" value="1"/> +ve
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Cocain</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-8 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.COCAIN" value="0"/> -ve
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.COCAIN" value="1"/> +ve
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Amphet’s</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-8 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.AMPHETS" value="0"/> -ve
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.AMPHETS" value="1"/> +ve
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Methamph</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-8 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.METHAMPH" value="0"/> -ve
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.METHAMPH" value="1"/> +ve
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-3" style="margin-top: 10px;">Alcohol</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-8 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.ANCOHOL" value="0"/> -ve
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.ANCOHOL" value="1"/> +ve
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <!--Audiogram-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Audiogram</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+                (please complete OR
+                <input type="checkbox" ng-model="info.AUDIOGRAM" ng-change="checkAudiogram">
+                attach audio readout)
+            </p>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2 col-sm-3">
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>500Hz</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>1000Hz</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>1500Hz</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>2000Hz</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>3000Hz</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>4000Hz</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>6000Hz</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>8000Hz</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2 col-sm-3">
+                        <label class="control-label" >Right Ear(dB)</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.RIGHT_EAR_500" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.RIGHT_EAR_1000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.RIGHT_EAR_1500" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1" >
+                        <input type="text" ng-model="info.RIGHT_EAR_2000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.RIGHT_EAR_3000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.RIGHT_EAR_4000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.RIGHT_EAR_6000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.RIGHT_EAR_8000" style="width: 60px"/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2 col-sm-3">
+                        <label class="control-label" >Left Ear(dB)</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.LEFT_EAR_500" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.LEFT_EAR_1000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.LEFT_EAR_1500" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.LEFT_EAR_2000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.LEFT_EAR_3000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.LEFT_EAR_4000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.LEFT_EAR_6000" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.LEFT_EAR_8000" style="width: 60px"/>
+                    </div>
+                </div>
+
+            </div>
+            </br>
+        </div>
+    </div>
+    <!--Spirometry-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Spirometry</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+                please complete OR
+                <input type="checkbox" ng-model="info.SPIROMETRY" ng-change="checkSpirometry">
+                attach spiro readout - use actual values not %)
+            </p>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2 col-sm-3">
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>FEV1</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>FVC</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <label>PERFR</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2 col-sm-3">
+                        <label class="control-label" >Pre-Br/dilator</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR1_V1" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR1_V2" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR1_V3" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR1_V4" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR1_V5" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR1_V6" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1" >
+                        <input type="text" ng-model="info.PRE_BR1_V7" style="width: 60px"/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2 col-sm-3">
+                        <label class="control-label" >Pre-Br/dilator</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR2_V1" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR2_V2" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR2_V3" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR2_V4" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR2_V5" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR2_V6" style="width: 60px"/>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        <input type="text" ng-model="info.PRE_BR2_V7" style="width: 60px"/>
+                    </div>
+                </div>
+
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-6 col-sm-4" style="margin-top: 10px;">Is Spirometry satisfactory?</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-9 col-md-10 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.SPIROMETRY_STATIS" value="0"/> Yes
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.SPIROMETRY_STATIS" value="1"/> No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Candidate ever used a puffer?</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-9 col-md-10 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.CANDIDATE_EVER" value="0"/> Yes
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.CANDIDATE_EVER" value="1"/> No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-6 col-sm-8" style="margin-top: 10px;">If Yes to either of above, was there any respiratory problem?</label>
+                        <div class="clearfix">
+                            <div class="btn-group col-sm-9 col-md-10 " >
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.YES_TO_EITHER" value="0"/> Yes
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.YES_TO_EITHER" value="1"/> No
+                                </label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        </br>
-
-        <div class="border" style="border-color: #808080; border-style: dotted;" >
-            <div class="row" >
-                <div class="col-md-10">
-                    <div class="col-md-2 col-s-12">
-                        <label class="control-label text-info bold" style="margin-top: 30px;">Near Vision:</label>
-                    </div>
-                    <div class="col-md-5 col-sm-6" style="text-align: center">
-                        <div class="row">
-                            <label>Uncorrected:</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-6 col-sm-6" style="text-align: center">
-                                    <label>L</label><br>
-                                    <label>/N</label>
-                                    <input type="text" style="width: 60px"/>
-                                </div>
-                                <div class="col-md-6 col-sm-6" style="text-align: center">
-                                    <label>R</label><br>
-                                    <label>/N</label>
-                                    <input type="text" style="width: 60px"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-sm-6" style="text-align: center">
-                        <div class="row">
-                            <label>Corrected:</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-6 col-sm-6" style="text-align: center">
-                                    <label>L</label><br>
-                                    <label>/N</label>
-                                    <input type="text" style="width: 60px"/>
-                                </div>
-                                <div class="col-md-6 col-sm-6" style="text-align: center">
-                                    <label>R</label><br>
-                                    <label>/N</label>
-                                    <input type="text" style="width: 60px"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        </br>
-        <label class="control-label text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-            Visual Fields:
-        </label>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label col-md-2 col-sm-1" style="margin-top: 10px;">Left</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-4 col-md-10" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <45°
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <label class="control-label col-md-2 col-sm-1" style="margin-top: 10px;">Right</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-4 col-md-10" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <45°
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-            Ishihara responses: Number wrong <input type="text" > (ONLY IF APPLICABLE TO JOB)
-        </p>
     </div>
-</div>
-<!--Cardiovascular-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Cardiovascular</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-        </br>
-        <div class="row">
-            <div class="col-md-7">
-                <div class="col-md-3" style="font-weight: bold">
-                    <label class="control-label">Systolic BP</label>
-                </div>
-                <div class="col-md-8">
-                    <input type="text" ng-model="info.name" class="form-control" >
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-7">
-                <div class="col-md-3" style="font-weight: bold">
-                    <label class="control-label">Diastolic BP</label>
-                </div>
-                <div class="col-md-8">
-                    <input type="text" ng-model="info.name" class="form-control" >
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-7">
-                <div class="col-md-3" style="font-weight: bold">
-                    <label class="control-label">Pulse</label>
-                </div>
-                <div class="col-md-8">
-                    <input type="text" ng-model="info.name" class="form-control" >
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Heart Rhythm:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-8 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> AF
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Occ.Ectopics
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Freq. Ectopics
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Heart Sounds:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-6 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Abnormal
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Pacemaker:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Yes
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> No
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-
-    </div>
-</div>
-<!--Respiratory-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Respiratory</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px;font-weight: bold">Chest:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-6 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Reduced (<5cm)
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <label class="text-info" style="font-weight: bold;margin-left: 15px">Air Entry:</label>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-left: 20px;">Upper Zones:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-6 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Reduced (<5cm)
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-left: 20px;">Lower Zones:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-6 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Reduced (<5cm)
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Added Sounds:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-12 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Widespread crackles
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Basal crackles
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Wheezes
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Rub
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-
-    </div>
-</div>
-<!--Ears-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Ears</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-3 col-sm-3" style="margin-top: 10px;font-weight: bold">External Canals:</label>
-                <div class="btn-group col-sm-3 col-md-9" >
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />  Dermatitis
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' /> Fungal infection
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' /> Structural abnormality
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' /> Wax
-                    </label>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-3 col-sm-4" style="margin-top: 10px;font-weight: bold">Tympanic Membranes:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-3 col-md-9" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Effusion
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Wet perforation
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Dry perforation
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-    </div>
-</div>
-<!--Skin-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Skin</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-        <label class="text-info" style="font-weight: bold;margin-left: 15px">External Canals:</label>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Eczema/dermatitis</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-8 col-md-8" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />Mild
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Moderate
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Severe
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Psoriasis</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-8 col-md-8" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />Mild
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Moderate
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Severe
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Tinea</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-8 col-md-8" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />Mild
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Moderate
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Severe
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Solar damage</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-8 col-md-8" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />Mild
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Moderate
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Severe
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Folliculitis</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-8 col-md-8" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />Mild
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Moderate
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Severe
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Other</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-8 col-md-8" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />Mild
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Moderate
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Severe
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-    </div>
-</div>
-<!--Examiner Comment-->
-<div class="portlet light bordered">
-    <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-        Examiners Commments
-    </p>
-    <div class="row">
-        <div class="col-md-8" style="margin-left: 15px;">
-            <textarea class="form-control"></textarea>
-        </div>
-    </div>
-</div>
-<!--Abdomen-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Abdomen</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-12 text-info" style="font-weight: bold">Scars: </label>
-
-                    <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Nil</label>
-                    <div class="col-md-1 col-sm-1">
-                        <input class="form-control" type="checkbox" />
-                    </div>
-                    <label class="control-label col-md-1 col-sm-2" style="margin-top: 10px;text-align: right">Appendix</label>
-                    <div class="col-md-1 col-sm-1">
-                        <input class="form-control" type="checkbox" />
-                    </div>
-                    <label class="control-label col-md-1 col-sm-2" style="margin-top: 10px;text-align: right">Gallbladder</label>
-                    <div class="col-md-1 col-sm-1">
-                        <input class="form-control" type="checkbox" />
-                    </div>
-                    <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Hernia</label>
-                    <div class="col-md-1 col-sm-1">
-                        <input class="form-control" type="checkbox" />
-                    </div>
-                    <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Other</label>
-                    <div class="col-md-1 col-sm-1">
-                        <input class="form-control" type="checkbox" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                    <label class="control-label col-md-2 col-sm-3 text-info" style="font-weight: bold;margin-top: 7px">Hernial orifices: </label>
-                        <div class="btn-group  col-md-4 col-sm-5">
-                            <label class="btn">
-                                <input type="radio" name='a' /> Normal
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' />Inguinal hernia
-                            </label>
-                        </div>
-                        <label class="control-label col-md-1 col-sm-1" style="font-weight: bold;margin-top: 10px;text-align: right">L</label>
-                    <div class="col-md-1 col-sm-1">
-                        <input class="form-control" type="checkbox" />
-                    </div>
-                    <label class="control-label col-md-1 col-sm-1" style="font-weight: bold;margin-top: 10px;text-align: right">R</label>
-                    <div class="col-md-1 col-sm-1">
-                        <input class="form-control" type="checkbox" />
-                    </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3 text-info" style="font-weight: bold;margin-top: 7px">Rectus muscles: </label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />Weak/bulging
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-    </div>
-</div>
-<!--CNS-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">CNS</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
-
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle tone:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Reduced
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle power:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Reduced
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle wasting:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Present
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Tremor:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Nil
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> Resting
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Gait:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Reduced
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-
-        <label class="text-info control-label" style="font-weight: bold">Lower limb reflexes:</label>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="control-label col-md-2 col-sm-2 text-info" style="margin-top: 10px;font-weight: bold">Left:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 col-md-10" >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Reduced
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <label class="control-label col-md-2 col-sm-2 text-info" style="margin-top: 10px;font-weight: bold">Right:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Reduced
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-
+    <!--Examiner Comment-->
+    <div class="portlet light bordered">
         <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-            Detail
+            Examiners Commments
         </p>
         <div class="row">
             <div class="col-md-8" style="margin-left: 15px;">
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control" ng-model="info.SPI_EXAMINERS_COMMENTS"></textarea>
             </div>
         </div>
+    </div>
+    <!--Vision-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Vision</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            </br>
+
+            <div class="border" style="border-color: #808080; border-style: dotted;" >
+                <div class="row" >
+                    <div class="col-md-10">
+                        <div class="col-md-2 col-sm-12">
+                            <label class="control-label text-info bold" style="margin-top: 30px;">Visual Acuity:</label>
+                        </div>
+                        <div class="col-md-5 col-sm-6" style="text-align: center">
+                            <div class="row">
+                                <label>Uncorrected:</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-sm-6" style="text-align: center">
+                                        <label>L</label><br>
+                                        <label>/6</label>
+                                        <input type="text" ng-model="info.VA_UNCORRECTED_LEFT" style="width: 60px"/>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" style="text-align: center">
+                                        <label>R</label><br>
+                                        <label>/6</label>
+                                        <input type="text" ng-model="info.VA_UNCORRECTED_RIGHT" style="width: 60px"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6" style="text-align: center">
+                            <div class="row">
+                                <label>Corrected:</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-sm-6" style="text-align: center">
+                                        <label>L</label><br>
+                                        <label>/6</label>
+                                        <input type="text" ng-model="info.VA_CORRECTED_LEFT" style="width: 60px"/>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" style="text-align: center">
+                                        <label>R</label><br>
+                                        <label>/6</label>
+                                        <input type="text" ng-model="info.VA_CORRECTED_RIGHT" style="width: 60px"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </br>
+
+            <div class="border" style="border-color: #808080; border-style: dotted;" >
+                <div class="row" >
+                    <div class="col-md-10">
+                        <div class="col-md-2 col-s-12">
+                            <label class="control-label text-info bold" style="margin-top: 30px;">Near Vision:</label>
+                        </div>
+                        <div class="col-md-5 col-sm-6" style="text-align: center">
+                            <div class="row">
+                                <label>Uncorrected:</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-sm-6" style="text-align: center">
+                                        <label>L</label><br>
+                                        <label>/N</label>
+                                        <input type="text" ng-model="info.NV_UNCORRECTED_LEFT" style="width: 60px"/>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" style="text-align: center">
+                                        <label>R</label><br>
+                                        <label>/N</label>
+                                        <input type="text" ng-model="info.NV_UNCORRECTED_RIGHT" style="width: 60px"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6" style="text-align: center">
+                            <div class="row">
+                                <label>Corrected:</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-sm-6" style="text-align: center">
+                                        <label>L</label><br>
+                                        <label>/N</label>
+                                        <input type="text" ng-model="info.NV_CORRECTED_LEFT" style="width: 60px"/>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" style="text-align: center">
+                                        <label>R</label><br>
+                                        <label>/N</label>
+                                        <input type="text" ng-model="info.NV_CORRECTED_RIGHT" style="width: 60px"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-    </div>
-</div>
-<!--Neck Function-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Neck Function</span>
+            </br>
+            <label class="control-label text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Visual Fields:
+            </label>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label col-md-2 col-sm-1" style="margin-top: 10px;">Left</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-4 col-md-10" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.VF_LEFT" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.VF_LEFT" value="1"/> <45°
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label col-md-2 col-sm-1" style="margin-top: 10px;">Right</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-4 col-md-10" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.VF_RIGHT" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.VF_RIGHT" value="1"/> <45°
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+                Ishihara responses: Number wrong <input type="text" ng-model="info.ISHIHARA_RESPONSE"> (ONLY IF APPLICABLE TO JOB)
+            </p>
         </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
     </div>
-    <div class="portlet-body form">
+    <!--Cardiovascular-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Cardiovascular</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            </br>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="col-md-3" style="font-weight: bold">
+                        <label class="control-label">Systolic BP</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="info.SYSTOLIC_BP" class="form-control" >
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="col-md-3" style="font-weight: bold">
+                        <label class="control-label">Diastolic BP</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="info.DIASTOLIC_BP" class="form-control" >
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="col-md-3" style="font-weight: bold">
+                        <label class="control-label">Pulse</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="info.PULSE" class="form-control" >
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Heart Rhythm:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-8 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.HEART_RHYTHM" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.HEART_RHYTHM" value="1"/> AF
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.HEART_RHYTHM" value="2"/> Occ.Ectopics
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.HEART_RHYTHM" value="3"/> Freq. Ectopics
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Heart Sounds:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-6 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.HEART_SOUNDS" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.HEART_SOUNDS" value="1"/> Abnormal
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Pacemaker:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PACEMAKER" value="0"/> Yes
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PACEMAKER" value="1"/> No
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
 
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Posture:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5  " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Scoliosis
-                        </label>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <!--Respiratory-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Respiratory</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
             </div>
         </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhythm:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-5 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Jerky/painful
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Flexion:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> >=75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 50-75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 25-50%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <25%
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Extension:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> >=75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 50-75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 25-50%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <25%
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Lateral flexion:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> >=75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 50-75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 25-50%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <25%
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Rotation:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> >=75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 50-75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 25-50%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <25%
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
+        <div class="portlet-body form">
 
-    </div>
-</div>
-<!--Back  Function-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Back  Function</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body form">
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px;font-weight: bold">Chest:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-6 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.CHEST" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.CHEST" value="1"/> Reduced (<5cm)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <label class="text-info" style="font-weight: bold;margin-left: 15px">Air Entry:</label>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-left: 20px;">Upper Zones:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-6 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.UPPER_ZONES" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.UPPER_ZONES" value="1"/> Reduced (<5cm)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-left: 20px;">Lower Zones:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-6 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.LOWER_ZONES" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.LOWER_ZONES" value="1"/> Reduced (<5cm)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Added Sounds:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-12 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ADDED_SOUNDS" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ADDED_SOUNDS" value="1"/> Widespread crackles
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ADDED_SOUNDS" value="2"/> Basal crackles
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ADDED_SOUNDS" value="3"/> Wheezes
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ADDED_SOUNDS" value="4"/> Rub
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
 
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Posture:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Scoliosis
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Kyphosis
-                        </label>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <!--Ears-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Ears</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
             </div>
         </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhythm:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' />  Jerky/painful
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Flexion:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> >=75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 50-75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 25-50%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <25%
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Extension:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> >=75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 50-75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 25-50%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <25%
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Lateral flexion:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> >=75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 50-75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 25-50%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <25%
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Rotation:</label>
-                <div class="clearfix">
-                    <div class="btn-group col-sm-9 col-md-10 " >
-                        <label class="btn">
-                            <input type="radio" name='a' /> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> >=75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 50-75%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> 25-50%
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' /> <25%
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
+        <div class="portlet-body form">
 
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-3 col-sm-3" style="margin-top: 10px;font-weight: bold">External Canals:</label>
+                    <div class="btn-group col-sm-3 col-md-9" >
+                        <label class="btn">
+                            <input type="radio" ng-model="info.EXTERNAL_CANALS" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.EXTERNAL_CANALS" value="1"/>  Dermatitis
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.EXTERNAL_CANALS" value="2"/> Fungal infection
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.EXTERNAL_CANALS" value="3"/> Structural abnormality
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.EXTERNAL_CANALS" value="4"/> Wax
+                        </label>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-3 col-sm-4" style="margin-top: 10px;font-weight: bold">Tympanic Membranes:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-3 col-md-9" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TYMPANIC_MEMBRANES" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TYMPANIC_MEMBRANES" value="1"/> Effusion
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TYMPANIC_MEMBRANES" value="2"/> Wet perforation
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TYMPANIC_MEMBRANES" value="3"/> Dry perforation
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+        </div>
     </div>
-</div>
-<!--Examiner Comment-->
-<div class="portlet light bordered">
-    <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-        Examiners Commments
-    </p>
-    <div class="row">
-        <div class="col-md-8" style="margin-left: 15px;">
-            <textarea class="form-control"></textarea>
+    <!--Skin-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Skin</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <label class="text-info" style="font-weight: bold;margin-left: 15px">External Canals:</label>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Eczema/dermatitis</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-8 col-md-8" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ECZEMA" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ECZEMA" value="1"/>Mild
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ECZEMA" value="2"/> Moderate
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.ECZEMA" value="3"/> Severe
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Psoriasis</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-8 col-md-8" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PSORIASIS" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PSORIASIS" value="1"/>Mild
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PSORIASIS" value="2"/> Moderate
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.PSORIASIS" value="3"/> Severe
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Tinea</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-8 col-md-8" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TINEA" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TINEA" value="1"/>Mild
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TINEA" value="2"/> Moderate
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TINEA" value="3"/> Severe
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Solar damage</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-8 col-md-8" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.SOLAR_DAMAGE" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.SOLAR_DAMAGE" value="1"/>Mild
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.SOLAR_DAMAGE" value="2"/> Moderate
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.SOLAR_DAMAGE" value="3"/> Severe
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Folliculitis</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-8 col-md-8" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.FOLLICULITIS" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.FOLLICULITIS" value="1"/>Mild
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.FOLLICULITIS" value="2"/> Moderate
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.FOLLICULITIS" value="3"/> Severe
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-left: 30px;margin-top: 7px">Other</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-8 col-md-8" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.EC_OTHER" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.EC_OTHER" value="1"/>Mild
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.EC_OTHER" value="2"/> Moderate
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.EC_OTHER" value="3"/> Severe
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
         </div>
     </div>
-</div>
-<!--Limb Function-->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-user font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Limb Function</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
+    <!--Examiner Comment-->
+    <div class="portlet light bordered">
+        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+            Examiners Commments
+        </p>
+        <div class="row">
+            <div class="col-md-8" style="margin-left: 15px;">
+                <textarea class="form-control" ng-model="info.SKIN_EXAMINERS_COMMENTS"></textarea>
+            </div>
         </div>
     </div>
-    <div class="portlet-body form">
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Shoulder: </label>
-                <div class="btn-group col-sm-5 col-md-3">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Reduced
-                    </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" />
-                </div>
+    <!--Abdomen-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Abdomen</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
             </div>
         </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Elbows: </label>
-                <div class="btn-group col-sm-5 col-md-3">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Reduced
-                    </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" />
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Wrists: </label>
-                <div class="btn-group col-sm-5 col-md-3">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Reduced
-                    </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" />
+        <div class="portlet-body form">
+
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-12 text-info" style="font-weight: bold">Scars: </label>
+
+                        <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Nil</label>
+                        <div class="col-md-1 col-sm-1">
+                            <input class="form-control" type="checkbox" ng-model="info.SCARS_NIL" />
+                        </div>
+                        <label class="control-label col-md-1 col-sm-2" style="margin-top: 10px;text-align: right">Appendix</label>
+                        <div class="col-md-1 col-sm-1">
+                            <input class="form-control" type="checkbox" ng-model="info.SCARS_APPENDIX" />
+                        </div>
+                        <label class="control-label col-md-1 col-sm-2" style="margin-top: 10px;text-align: right">Gallbladder</label>
+                        <div class="col-md-1 col-sm-1">
+                            <input class="form-control" type="checkbox" ng-model="info.SCARS_GALLBLADDER" />
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Hernia</label>
+                        <div class="col-md-1 col-sm-1">
+                            <input class="form-control" type="checkbox" ng-model="info.SCARS_HERNIA" />
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Other</label>
+                        <div class="col-md-1 col-sm-1">
+                            <input class="form-control" type="checkbox" ng-model="info.SCARS_OTHER" />
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Knees: </label>
-                <div class="btn-group col-sm-5 col-md-3">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Reduced
-                    </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" />
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Ankles: </label>
-                <div class="btn-group col-sm-5 col-md-3">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Reduced
-                    </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" />
+            </br>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3 text-info" style="font-weight: bold;margin-top: 7px">Hernial orifices: </label>
+                    <div class="btn-group  col-md-4 col-sm-5">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.HERNIAL" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.HERNIAL" value="1"/>Inguinal hernia
+                        </label>
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1" style="font-weight: bold;margin-top: 10px;text-align: right">L</label>
+                    <div class="col-md-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.HERNIAL_LEFT" />
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1" style="font-weight: bold;margin-top: 10px;text-align: right">R</label>
+                    <div class="col-md-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.HERNIAL_RIGHT" />
+                    </div>
                 </div>
             </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3 text-info" style="font-weight: bold;margin-top: 7px">Rectus muscles: </label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.RECTUS" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.RECTUS" value="1"/>Weak/bulging
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
         </div>
-        </br>
-        </br>
+    </div>
+    <!--CNS-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">CNS</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle tone:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.MUSCLE_TONE" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.MUSCLE_TONE" value="1"/>  Reduced
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle power:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.MUSCLE_POWER" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.MUSCLE_POWER" value="1"/>  Reduced
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Muscle wasting:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.MUSCLE_WASTING" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.MUSCLE_WASTING" value="1"/>  Present
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Tremor:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TREMOR" value="0"/> Nil
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.TREMOR" value="1"/> Resting
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Gait:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.GAIT" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.GAIT" value="1"/>  Reduced
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+
+            <label class="text-info control-label" style="font-weight: bold">Lower limb reflexes:</label>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label col-md-2 col-sm-2 text-info" style="margin-top: 10px;font-weight: bold">Left:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 col-md-10" >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.LOWER_LEFT" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.LOWER_LEFT" value="1"/>  Reduced
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label col-md-2 col-sm-2 text-info" style="margin-top: 10px;font-weight: bold">Right:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.LOWER_RIGHT" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.LOWER_RIGHT" value="1"/>  Reduced
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Detail
+            </p>
+            <div class="row">
+                <div class="col-md-8" style="margin-left: 15px;">
+                    <textarea class="form-control" ng-model="info.CNS_COMMENTS"></textarea>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!--Neck Function-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Neck Function</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Posture:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5  " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_POSTURE." value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_POSTURE" value="1"/>  Scoliosis
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhythm:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-5 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_RHYTHM" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_RHYTHM" value="1"/>  Jerky/painful
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Flexion:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_FLEXION" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_FLEXION" value="1"/> >=75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_FLEXION" value="2"/> 50-75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_FLEXION" value="3"/> 25-50%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_FLEXION" value="4"/> <25%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Extension:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_EXTENSION" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_EXTENSION" value="1"/> >=75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_EXTENSION" value="2"/> 50-75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_EXTENSION" value="3"/> 25-50%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_EXTENSION" value="4"/> <25%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Lateral flexion:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_LATERAL" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_LATERAL" value="1"/> >=75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_LATERAL" value="2"/> 50-75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_LATERAL" value="3"/> 25-50%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_LATERAL" value="4"/> <25%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Rotation:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_ROTATION" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_ROTATION" value="1"/> >=75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_ROTATION" value="2"/> 50-75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_ROTATION" value="3"/> 25-50%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.NECK_ROTATION" value="4"/> <25%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+
+        </div>
+    </div>
+    <!--Back  Function-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Back  Function</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Posture:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_POSTURE" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_POSTURE" value="1"/>  Scoliosis
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_POSTURE" value="2"/>  Kyphosis
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhythm:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_RHYTHM" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_RHYTHM" value="1"/>  Jerky/painful
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Flexion:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_FLEXION" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_FLEXION" value="1"/> >=75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_FLEXION" value="2"/> 50-75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_FLEXION" value="3"/> 25-50%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_FLEXION" value="4"/> <25%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Extension:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_EXTENSION" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_EXTENSION" value="1"/> >=75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_EXTENSION" value="2"/> 50-75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_EXTENSION" value="3"/> 25-50%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_EXTENSION" value="4"/> <25%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Lateral flexion:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_LATERAL" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_LATERAL" value="1"/> >=75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_LATERAL" value="2"/> 50-75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_LATERAL" value="3"/> 25-50%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_LATERAL" value="4"/> <25%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;">Rotation:</label>
+                    <div class="clearfix">
+                        <div class="btn-group col-sm-9 col-md-10 " >
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_ROTATION" value="0"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_ROTATION" value="1"/> >=75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_ROTATION" value="2"/> 50-75%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_ROTATION" value="3"/> 25-50%
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.BACK_ROTATION" value="4"/> <25%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+
+        </div>
+    </div>
+    <!--Examiner Comment-->
+    <div class="portlet light bordered">
+        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+            Examiners Commments
+        </p>
         <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Grip Strength</label>
+            <div class="col-md-8" style="margin-left: 15px;">
+                <textarea class="form-control" ng-model="info.BACK_EXAMINERS_COMMENTS"></textarea>
+            </div>
+        </div>
+    </div>
+    <!--Limb Function-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-blue-hoki"></i>
+                <span class="caption-subject font-blue-hoki bold uppercase">Limb Function</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Shoulder: </label>
+                    <div class="btn-group col-sm-5 col-md-3">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.SHOULDER" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.SHOULDER" value="1"/>Reduced
+                        </label>
+                    </div>
+                    <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                    <div class="col-md-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.SHOULDER_PAINFUL" />
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Elbows: </label>
+                    <div class="btn-group col-sm-5 col-md-3">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.ELBOWS" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.ELBOWS" value="1"/>Reduced
+                        </label>
+                    </div>
+                    <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                    <div class="col-md-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.ELBOWS_PAINFUL" />
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Wrists: </label>
+                    <div class="btn-group col-sm-5 col-md-3">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.WRISTS" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.WRISTS" value="1"/>Reduced
+                        </label>
+                    </div>
+                    <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                    <div class="col-md-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.WRISTS_PAINFUL" />
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Knees: </label>
+                    <div class="btn-group col-sm-5 col-md-3">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.KNEES" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.KNEES" value="1"/>Reduced
+                        </label>
+                    </div>
+                    <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                    <div class="col-md-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.KNEES_PAINFUL" />
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Ankles: </label>
+                    <div class="btn-group col-sm-5 col-md-3">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.ANKLES" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.ANKLES" value="1"/>Reduced
+                        </label>
+                    </div>
+                    <label class="control-label col-md-1 col-sm-2" style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
+                    <div class="col-md-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.ANKLES_PAINFUL" />
+                    </div>
+                </div>
+            </div>
+            </br>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Grip Strength</label>
                     <div class="btn-group  col-md-3">
                         <label class="btn">
-                            <input type="radio" name='a' /> Normal
+                            <input type="radio" ng-model="info.GRIP_STRENGTH" value="0"/> Normal
                         </label>
                         <label class="btn">
-                            <input type="radio" name='a' />Abnormal
+                            <input type="radio" ng-model="info.GRIP_STRENGTH" value="1"/>Abnormal
                         </label>
                     </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Epicondyles</label>
-                <div class="btn-group  col-md-3">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Abnormal
-                    </label>
                 </div>
             </div>
-        </div>
-        </br>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Heel Walk</label>
-                <div class="btn-group  col-md-3">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Abnormal
-                    </label>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Epicondyles</label>
+                    <div class="btn-group  col-md-3">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.EPICONDYLES" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.EPICONDYLES" value="1"/>Abnormal
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Duck Walk</label>
-                <div class="btn-group  col-md-3 col-sm-5">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Abnormal
-                    </label>
-                </div>
-                <label class="control-label text-info ">(walk in HALF squat position)</label>
-            </div>
-        </div>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Toe Walk</label>
-                <div class="btn-group  col-md-3 col-sm-5">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Abnormal
-                    </label>
+            </br>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Heel Walk</label>
+                    <div class="btn-group  col-md-3">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.HEEL_WALK" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.HEEL_WALK" value="1"/>Abnormal
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-        </br>
-        </br>
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhomberg's</label>
-                <div class="btn-group  col-md-3">
-                    <label class="btn">
-                        <input type="radio" name='a' /> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' />Abnormal
-                    </label>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Duck Walk</label>
+                    <div class="btn-group  col-md-3 col-sm-5">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.DUCK_WALK" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.DUCK_WALK" value="1"/>Abnormal
+                        </label>
+                    </div>
+                    <label class="control-label text-info ">(walk in HALF squat position)</label>
                 </div>
             </div>
-        </div>
-        </br>
-    </div>
-</div>
-<!--Any Further Comments on Questionnaire-->
-<div class="portlet light bordered">
-    <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-        Any Further Comments on Questionnaire
-    </p>
-    <div class="row">
-        <div class="col-md-8" style="margin-left: 15px;">
-            <textarea class="form-control"></textarea>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 10px;font-weight: bold">Toe Walk</label>
+                    <div class="btn-group  col-md-3 col-sm-5">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.TOE_WALK" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.TOE_WALK" value="1"/>Abnormal
+                        </label>
+                    </div>
+                </div>
+            </div>
+            </br>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-sm-3 col-md-2" style="margin-top: 10px;font-weight: bold">Rhomberg's</label>
+                    <div class="btn-group  col-md-3">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.RHOMBERGS" value="0"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.RHOMBERGS" value="1"/>Abnormal
+                        </label>
+                    </div>
+                </div>
+            </div>
+            </br>
         </div>
     </div>
-</div>
-<!--Comments on Examination-->
-<div class="portlet light bordered">
-    <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-        Comments on Examination
-    </p>
-    <div class="row">
-        <div class="col-md-8" style="margin-left: 15px;">
-            <textarea class="form-control"></textarea>
+    <!--Any Further Comments on Questionnaire-->
+    <div class="portlet light bordered">
+        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+            Any Further Comments on Questionnaire
+        </p>
+        <div class="row">
+            <div class="col-md-8" style="margin-left: 15px;">
+                <textarea class="form-control" ng-model="info.FUTHER_COMMENTS"></textarea>
+            </div>
         </div>
     </div>
-</div>
+    <!--Comments on Examination-->
+    <div class="portlet light bordered">
+        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+            Comments on Examination
+        </p>
+        <div class="row">
+            <div class="col-md-8" style="margin-left: 15px;">
+                <textarea class="form-control" ng-model="info.LIMB_EXAMINERS_COMMENTS"></textarea>
+            </div>
+        </div>
+    </div>
+
+</form>
 

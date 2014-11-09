@@ -2,13 +2,14 @@
  * Created by meditech on 24/09/2014.
  */
 var db = require('../../models');
+var util = require('util');
 module.exports = {
 
     newIDS: function(req,res)
     {
-        db.sequelize.query("INSERT INTO `cln_idas_headers` (PATIENT_ID,CAL_ID,IDAS_ID,DF_CODE,ITEM_ID,ISENABLE) SELECT 2,12211,h.IDAS_DF_ID,h.DF_CODE,h.ITEM_ID,h.ISENABLE FROM `sys_idas_headers` h").success(function(){
-            db.sequelize.query("INSERT INTO `cln_idas_groups` (PATIENT_ID,CAL_ID,IDAS_GROUP_ID,IDAS_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE) SELECT 2,12211,IDAS_GROUP_ID,IDAS_DF_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE FROM `sys_idas_groups`").success(function(){
-                db.sequelize.query("INSERT INTO `cln_idas_lines` (PATIENT_ID,CAL_ID,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE) SELECT 2,12211,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE FROM `sys_idas_lines`").success(function(){
+        db.sequelize.query("INSERT INTO `cln_idas_headers` (PATIENT_ID,CAL_ID,IDAS_ID,DF_CODE,ITEM_ID,ISENABLE) SELECT 3,11111,h.IDAS_DF_ID,h.DF_CODE,h.ITEM_ID,h.ISENABLE FROM `sys_idas_headers` h").success(function(){
+            db.sequelize.query("INSERT INTO `cln_idas_groups` (PATIENT_ID,CAL_ID,IDAS_GROUP_ID,IDAS_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE) SELECT 3,11111,IDAS_GROUP_ID,IDAS_DF_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE FROM `sys_idas_groups`").success(function(){
+                db.sequelize.query("INSERT INTO `cln_idas_lines` (PATIENT_ID,CAL_ID,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE) SELECT 3,11111,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE FROM `sys_idas_lines`").success(function(){
                     res.json({status:"success"});
                 });
             });
@@ -29,6 +30,79 @@ module.exports = {
         })
             .error(function(err){
                 res.json({status:"fail"});
+            })
+    },
+
+    insertIDS : function(req, res)
+    {
+        var infoL = req.body.infoL;
+        var infoH = req.body.infoH;
+        db.HeadersIDS.update({
+            DOCTOR_ID : infoH.DOCTOR_ID,
+            NAME : infoH.NAME,
+            IDAS_DATE: infoH.IDAS_DATE,
+            Temperature : infoH.Temperature,
+            Creatinine : infoH.Creatinine,
+            Drug_Test_Time : infoH.Drug_Test_Time,
+            Expiry_Date: infoH.Expiry_Date,
+            Notes : infoH.Notes,
+            Alcohol_Test_Time : infoH.Alcohol_Test_Time,
+            Reading : infoH.Reading,
+            Positive_Negative : infoH.Positive_Negative,
+            Reading2 : infoH.Reading2,
+            Created_by : infoH.Created_by,
+            Creation_date: infoH.Creation_date,
+            Last_updated_by : infoH.Last_updated_by,
+            Last_update_date: infoH.Last_update_date,
+            NAME_COMMENT : infoH.NAME_COMMENT,
+            SIGNATURE:  infoH.SIGNATURE,
+            TesterName : infoH.TesterName,
+            TesterSign:  infoH.TesterSign
+        },{PATIENT_ID : infoH.PATIENT_ID,CAL_ID : infoH.CAL_ID},{raw:true})
+            .success(function(data){
+                for(var i = 0 ; i < infoL.length ; i++)
+                {
+                    db.LinesIDS.update({
+                        YES_NO: infoL[i]
+                    },{PATIENT_ID : infoH.PATIENT_ID,CAL_ID : infoH.CAL_ID, ORD : i+1},{raw:true})
+                        .success(function(data){
+                            res.json({status:'success'});
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
+                }
+
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+
+    checkIDS: function(req,res){
+        var Patient_Id = req.body.PatientID;
+        var CalId = req.body.calID;
+        console.log(Patient_Id + " ================= " + CalId);
+        db.HeadersIDS.find({where:{PATIENT_ID:Patient_Id,CAL_ID : CalId}})
+            .success(function(data){
+                if(data == null)
+                {
+                    res.json({status:'fail'});
+                }else
+                {
+                    var buffer = new Buffer( data.SIGNATURE, 'binary' );
+                    var sign = buffer.toString('base64');
+
+                    var rs = util.format("data:image/png;base64,%s", sign)
+
+                    res.json({data: data, rs: rs});
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
             })
     }
 };

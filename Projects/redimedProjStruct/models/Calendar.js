@@ -9,7 +9,7 @@ module.exports = function(sequelize,DataTypes){
         Created_by : DataTypes.INTEGER(11) ,
         Creation_date : DataTypes.DATE ,
         Last_updated_by : DataTypes.INTEGER(11) ,
-        Last_update_date : DataTypes.DATE 
+        Last_update_date : DataTypes.DATE
     },{
         tableName: 'calendar', // đặt tên bảng
         createdAt: 'Creation_date',
@@ -17,4 +17,4 @@ module.exports = function(sequelize,DataTypes){
     });
 
     return Calendar;
-};	
+};

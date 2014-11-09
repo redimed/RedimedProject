@@ -1,0 +1,56 @@
+
+module.exports = function(sequelize, DataTypes){
+    var HeaderMA = sequelize.define('HeaderMA',{
+        "MA_ID" : DataTypes.INTEGER(11),
+        "Patient_id" : DataTypes.BIGINT(20),
+        "HEIGHT" : DataTypes.INTEGER(11),
+        "WEIGHT" : DataTypes.STRING(500),
+        "BMI" : DataTypes.STRING(500),
+        "URINALYSIS" : DataTypes.STRING(500),
+        "BSL"  : DataTypes.FLOAT,
+        "WAIST_CIR" : DataTypes.INTEGER(11),
+        "HIP_CIR" : DataTypes.INTEGER(11),
+        "WAIST_TO_HIP_RATE"  : DataTypes.FLOAT,
+        "RISK" : DataTypes.INTEGER(11),
+        "DIST_RIGHT_EYE" : DataTypes.INTEGER(11),
+        "DIST_RIGHT_EYE_CORRECTED" : DataTypes.INTEGER(11),
+        "DIST_LEFT_EYE" : DataTypes.INTEGER(11),
+        "DIST_LEFT_EYE_CORRECTED" : DataTypes.INTEGER(11),
+        "NEAR_RIGHT_EYE" : DataTypes.STRING(10),
+        "NEAR_RIGHT_EYE_CORRECTED" : DataTypes.STRING(10),
+        "NEAR_LEFT_EYE" : DataTypes.STRING(10),
+        "NEAR_LEFT_EYE_CORRECTED" : DataTypes.STRING(10),
+        "PERIPHERAL_VISION" : DataTypes.INTEGER(11),
+        "VISUAL_AIDS" : DataTypes.INTEGER(11),
+        "VISUAL_AIDS_TYPE" : DataTypes.STRING(10),
+        "COLOR_VISUAL" : DataTypes.INTEGER(11),
+        "COLOR_VISUAL_SCORE" : DataTypes.INTEGER(11),
+        "ISWOULD" : DataTypes.INTEGER(11),
+        "COMMENTS" : DataTypes.STRING(500),
+        "FINAL_ASS" : DataTypes.STRING(10),
+        "COMMENTS2" : DataTypes.STRING(500),
+        "DOCTOR_NAME" : DataTypes.STRING(500),
+        "SIGN"  : DataTypes.BLOB,
+        "HA_DATE" : DataTypes.DATE,
+        "LOCATION_ID" : DataTypes.INTEGER(11),
+        "QUEST_DF_ID" : DataTypes.INTEGER(11),
+        "Created_by" : DataTypes.INTEGER(11),
+        //"Creation_date" : DataTypes.DATE,
+        "Last_updated_by" : DataTypes.INTEGER(11),
+        "CAL_ID" : DataTypes.INTEGER(11),
+        "DF_CODE" : DataTypes.STRING(10),
+        "ISENABLE" : DataTypes.INTEGER(11),
+        "IS_URINALYSIS" : DataTypes.INTEGER(11),
+        "EXAMINED_COMMENT" : DataTypes.STRING(500),
+        "IS_CANDIDATE_CAN_UNDERTAKE" : DataTypes.INTEGER(11),
+        "IS_CANDIDATE_BE_ADVERSELY_AFFECTED" : DataTypes.INTEGER(11),
+        "CANDIDATE_CAN_UNDERTAKE_COMMENT" : DataTypes.STRING(500),
+        "CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT" : DataTypes.STRING(500),
+        "DESCRIPTION" : DataTypes.STRING(500)
+    },{
+        tableName: 'cln_ma_headers', // đặt tên bảng
+        createdAt : "Creation_date",
+        updatedAt : "Last_update_date"
+    });
+    return HeaderMA;
+};

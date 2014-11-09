@@ -12,10 +12,12 @@ var SA2Controller = require('./controllers/DocumentController/SA2Controller');
 var Cat3Controller = require('./controllers/DocumentController/Cat3Controller');
 var Cat2Controller = require('./controllers/DocumentController/Cat2Controller');
 var UQController = require('./controllers/DocumentController/UQController');
+
+
 var gorgonMHController = require('./controllers/DocumentController/gorgonMHController');
 var form18Controller = require('./controllers/DocumentController/form18Controller');
-var GorgonFAController = require('./controllers/DocumentController/GorgonFAController');
-var GorgonMAController = require('./controllers/DocumentController/GorgonMAController');
+var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
+var gorgonMAController = require('./controllers/DocumentController/gorgonMAController');
 var GorgonMHController = require('./controllers/DocumentController/GorgonMHController');
 var GorgonUQController = require('./controllers/DocumentController/GorgonUQController');
 app.get('/api/document/newFA', FAController.newFA);
@@ -35,6 +37,45 @@ app.post('/api/document/editCat2', Cat2Controller.editCat2);
 /**
  * end category 2
  */
+
+
+
+// Begin funtion assessment
+app.post('/api/document/newFA', FAController.newFA);
+app.post('/api/document/loadFA', FAController.loadFA);
+app.post('/api/document/insertFA',FAController.insertFA);
+app.post('/api/document/checkFA',FAController.checkFA);
+app.post('/api/document/checkRating',FAController.checkRating);
+//end
+
+// Begin Medical Assessment
+app.post('/api/document/newMA', MAController.newMA);
+app.post('/api/document/loadMA', MAController.loadMA);
+app.post('/api/document/insertMA',MAController.insertMA);
+app.post('/api/document/checkMA',MAController.checkMA);
+// End
+
+//Begin Instant Drug Screen
+app.get('/api/document/newIDS', IDSController.newIDS);
+app.get('/api/document/loadIDS', IDSController.loadIDS);
+app.post('/api/document/insertIDS',IDSController.insertIDS);
+app.post('/api/document/checkIDS',IDSController.checkIDS);
+// end
+
+// Begin User Question
+app.post('/api/document/insertUQ',UQController.insertUQ);
+app.post('/api/document/updateUQ',UQController.updateUQ);
+app.post('/api/document/checkUser',UQController.checkUser);
+// end
+
+//Begin gorgon FA
+app.post('/api/document/insertGorgonFA',gorgonFAController.insertFA);
+//end
+
+//Begin gorgon MA
+app.post('/api/document/insertGorgonMA',gorgonMAController.insertMA);
+//end
+
 
 /**
  * begin category 3

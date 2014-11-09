@@ -1,6 +1,6 @@
 /**
- * Created by meditech on 19/09/2014.
- */
+* Created by meditech on 19/09/2014.
+*/
 module.exports = function(sequelize,DataTypes){
     var Function = sequelize.define('Function',{
         function_id: {type:DataTypes.INTEGER(11), primaryKey:true},

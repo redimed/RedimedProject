@@ -1,461 +1,615 @@
-
+<form name="MAForm" ng-submit="submitMA(MAForm)" method="post" novalidate>
+<div class="row">
+    <div class="col-md-12 ">
+        <button type="submit" class="btn green pull-right">Submit</button>
+        <a href="javascript:;"  class="btn btn-primary blue pull-right">Print PDF</a>
+        <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
+    </div>
+</div>
 <div ng-repeat="header in listMA">
-    <div class="caption">
-        <div class="row">
-            <div class="col-md-12">
-                <p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.header_name}}</p>
-            </div>
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12">
+            <p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.header_name}}</p>
         </div>
     </div>
+</div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title bold">Checklist</h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 7px">CANDIDATE NAME:</label>
-                <label class="control-label col-md-3 col-sm-5" style="margin-top: 7px"> John Smith</label>
-                <label class="control-label col-md-1 col-sm-1" style="margin-top: 7px">D.O.B</label>
-                <div class="col-md-3 col-sm-3">
-                    <input type="text" class="form-control">
-                </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title bold">Checklist</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <label class="control-label col-md-2 col-sm-3" style="margin-top: 7px">CANDIDATE NAME:</label>
+            <label class="control-label col-md-3 col-sm-5" style="margin-top: 7px"> John Smith</label>
+            <label class="control-label col-md-1 col-sm-1" style="margin-top: 7px">D.O.B</label>
+            <div class="col-md-3 col-sm-3">
+                <input type="text" ng-model="infoH.aa" class="form-control">
             </div>
-            </br>
-            <div class="row">
+        </div>
+        </br>
+
+        <div class="row">
+            <div ng-class="{'has-error':showClickedValidation && MAForm.HEIGHT.$error.pattern}">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">HEIGHT(cms):</label>
                 <div class="col-md-2 col-sm-2">
-                    <input type="text" class="form-control">
+                    <input type="text" ng-model="infoH.HEIGHT" ng-pattern="/^[0-9]+$/" name="HEIGHT" class="form-control">
+                    <div ng-show="showClickedValidation && MAForm.HEIGHT.$error.pattern">
+                        <div class="help-block" for="HEIGHT"  >
+                            <label>Height must be number</label>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div ng-class="{'has-error':showClickedValidation && MAForm.WEIGHT.$error.pattern}">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">WEIGHT(kg):</label>
                 <div class="col-md-2 col-sm-2">
-                    <input type="text" class="form-control">
-                </div>
-                <label class="control-label col-md-1 col-sm-1" style="margin-top: 7px">BMI:</label>
-                <div class="col-md-2 col-sm-2">
-                    <input type="text" class="form-control">
-                </div>
-            </div>
-            </br>
-
-            <div class="row">
-                <div class="col-md-2 col-sm-3 btn-group">
-                    <label class="control-label text-info bold" >BMI</label></br>
-                    <label class="btn">
-                        <input type="radio" name='a' value="1"/> < 18.5
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="0"/> 18.5 - 24.9
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="1"/> 25.0 - 29.9
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="0"/> 30.0
-                    </label>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <label class="control-label" style="margin-top: 35px">Underweight</label></br>
-                    <label class="control-label " style="margin-top: 10px">Normal</label></br>
-                    <label class="control-label" style="margin-top: 10px">Overweight</label></br>
-                    <label class="control-label" style="margin-top: 10px">Obese</label>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <label class="control-label text-info bold">Rating</label></br>
-                    <label class="control-label" style="margin-top: 8px">Conditional</label></br>
-                    <label class="control-label" style="margin-top: 10px">Satisfactory</label></br>
-                    <label class="control-label" style="margin-top: 10px">Conditional</label></br>
-                    <label class="control-label" style="margin-top: 10px">Unsatisfactory</label>
+                    <input type="text" ng-model="infoH.WEIGHT" ng-pattern="/^[0-9]+$/" name="WEIGHT" class="form-control">
+                    <div ng-show="showClickedValidation && MAForm.WEIGHT.$error.pattern">
+                        <div class="help-block" for="WEIGHT"  >
+                            <label> Must be number</label>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-            <div class="row">
-                <label class="control-label col-md-3 col-sm-4">URINALYSIS:</label>
-                <div class="col-md-7 btn-group">
-                    <label class="btn">
-                        <input type="radio" name='a' value="0"/>NORMAL
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="1"/> ABNORMAL
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="0"/>  DISCUSSED
-                    </label>
-                </div>
+            <label class="control-label col-md-1 col-sm-1" style="margin-top: 7px">BMI:</label>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-control"  style="background-color: #f5f5f5">{{infoH.BMI = infoH.WEIGHT / (infoH.HEIGHT * infoH.HEIGHT) | number : 1}}</div>
             </div>
+        </div>
+        </br>
+
+        <div class="row">
+            <div class="col-md-2 col-sm-3 btn-group">
+                <label class="control-label text-info bold" >BMI</label></br>
+                <label class="btn">
+                    <input type="radio" name="a" disabled ng-checked="infoH.BMI < 18.5" value="0"/> < 18.5
+                </label>
+                <label class="btn">
+                    <input type="radio" name="a" disabled ng-checked="infoH.BMI >= 18.5 && infoH.BMI <= 24.9" value="1"/> 18.5 - 24.9
+                </label>
+                <label class="btn">
+                    <input type="radio" name="a" disabled ng-checked="infoH.BMI >= 25.0 && infoH.BMI <= 29.9" value="2"/> 25.0 - 29.9
+                </label>
+                <label class="btn">
+                    <input type="radio" name="a" disabled ng-checked="infoH.BMI >= 30.0" value="3"/> 30.0
+                </label>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <label class="control-label" style="margin-top: 35px">Underweight</label></br>
+                <label class="control-label " style="margin-top: 10px">Normal</label></br>
+                <label class="control-label" style="margin-top: 10px">Overweight</label></br>
+                <label class="control-label" style="margin-top: 10px">Obese</label>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <label class="control-label text-info bold">Rating</label></br>
+                <label class="control-label" style="margin-top: 8px">Conditional</label></br>
+                <label class="control-label" style="margin-top: 10px">Satisfactory</label></br>
+                <label class="control-label" style="margin-top: 10px">Conditional</label></br>
+                <label class="control-label" style="margin-top: 10px">Unsatisfactory</label>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-4">URINALYSIS:</label>
+            <div class="col-md-7 btn-group">
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.IS_URINALYSIS" value="0"/>NORMAL
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.IS_URINALYSIS" value="1"/> ABNORMAL
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.IS_URINALYSIS" value="2"/>  DISCUSSED
+                </label>
+            </div>
+        </div>
+
+        <div ng-class="{'has-error':showClickedValidation && MAForm.URINALYSIS.$invalid && (infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2)}">
             <div class="row">
-                <label class="control-label col-md-3 col-sm-4">URINALYSIS COMMENT:</label>
+                <label class="control-label col-md-3 col-sm-4">URINALYSIS COMMENT: <span ng-show="infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2" class="bold large">*</span></label>
                 <div class="col-md-5 col-sm-7">
-                    <input type="text" class="form-control">
+                    <input type="text" ng-model="infoH.URINALYSIS" name="URINALYSIS" ng-required="infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2" class="form-control">
                 </div>
             </div>
-            </br>
+            <div class="row" ng-show="showClickedValidation && MAForm.URINALYSIS.$invalid && (infoH.IS_URINALYSIS == 1  || infoH.IS_URINALYSIS == 2)">
+                <div class="col-md-3 col-sm-4"></div>
+                <div class="col-md-5 col-sm-7 help-block"  for="URINALYSIS">
+                    <label>Must be enter if ABNORMAL / DISCUSSED</label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.BSL.$error.pattern}">
             <div class="row">
                 <label class="control-label col-md-3 col-sm-4">BSL(MMOL/L):</label>
                 <div class="col-md-2 col-sm-4">
-                    <input type="text" class="form-control">
+                    <input type="text" ng-model="infoH.BSL" ng-pattern="/^[0-9]+$/" name="BSL" class="form-control">
+                    <div ng-show="showClickedValidation && MAForm.BSL.$error.pattern">
+                        <div class="help-block" for="BSL"  >
+                            <label>BSL must be number</label>
+                        </div>
+                    </div>
                 </div>
-            </div></br>
+            </div>
+        </div>
+        </br>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.WAIST_CIR.$error.pattern}">
             <div class="row">
                 <label class="control-label col-md-3 col-sm-4">WAIST CIRCUMFERENCE(cm):</label>
                 <div class="col-md-2 col-sm-4">
-                    <input type="text" class="form-control">
+                    <input type="text" ng-model="infoH.WAIST_CIR" ng-pattern="/^[0-9]+$/" name="WAIST_CIR" ng-change="Ratio()" class="form-control">
                 </div>
-            </div></br>
+            </div>
+            <div class="row" ng-show="showClickedValidation && MAForm.WAIST_CIR.$error.pattern">
+                <div class="col-md-3 col-sm-4"></div>
+                <div class="col-md-4 col-sm-6 help-block" for="WAIST_CIR"  >
+                    <label>WAIST CIRCUMFERENCE must be number</label>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.HIP_CIR.$error.pattern}">
             <div class="row">
                 <label class="control-label col-md-3 col-sm-4">HIP CIRCUMFERENCE(cm):</label>
                 <div class="col-md-2 col-sm-4">
-                    <input type="text" class="form-control">
-                </div>
-            </div></br>
-            <div class="row">
-                <label class="control-label col-md-3 col-sm-4">WAIST TO HIP RATIO:</label>
-                <div class="col-md-2 col-sm-4">
-                    <input type="text" class="form-control">
+                    <input type="text" ng-model="infoH.HIP_CIR" ng-pattern="/^[0-9]+$/" name="HIP_CIR" ng-change="Ratio()" class="form-control">
                 </div>
             </div>
-            </br>
-            <div class="row">
-                <div class="col-md-2 col-sm-3 btn-group">
-                    <label class="control-label text-info bold" >RISK</label></br>
-                    <label class="btn">
-                        <input type="radio" name='a' value="1"/>Low
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="0"/>Medium
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="1"/>High
-                    </label>
+            <div class="row" ng-show="showClickedValidation && MAForm.HIP_CIR.$error.pattern">
+                <div class="col-md-3 col-sm-4"></div>
+                <div class="col-md-4 col-sm-6 help-block" for="HIP_CIR"  >
+                    <label>HIP CIRCUMFERENCE must be number</label>
                 </div>
-                <div class="col-md-2 col-sm-3">
-                    <label class="control-label text-info bold">FEMALE</label></br>
-                    <label class="control-label" style="margin-top: 8px">< 0.80</label></br>
-                    <label class="control-label " style="margin-top: 10px">0.80 - 0.85</label></br>
-                    <label class="control-label" style="margin-top: 10px"> > 0.85</label>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <label class="control-label text-info bold">MALE</label></br>
-                    <label class="control-label" style="margin-top: 8px">< 0.90</label></br>
-                    <label class="control-label" style="margin-top: 10px">0.90 - 0.95</label></br>
-                    <label class="control-label" style="margin-top: 10px"> > 0.95</label>
-                </div>
+            </div>
+        </div></br>
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-4">WAIST TO HIP RATIO:</label>
+            <div class="col-md-2 col-sm-4">
+                <div class="form-control"  style="background-color: #f5f5f5">{{infoH.WAIST_TO_HIP_RATE | number : 1}}</div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-2 col-sm-3 btn-group">
+                <label class="control-label text-info bold" >RISK</label></br>
+                <label class="btn">
+                    <input type="radio" disabled ng-model="infoH.RISK" value="0"/>Low
+                </label>
+                <label class="btn">
+                    <input type="radio" disabled ng-model="infoH.RISK" value="1"/>Medium
+                </label>
+                <label class="btn">
+                    <input type="radio"  disabled ng-model="infoH.RISK" value="2"/>High
+                </label>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <label class="control-label text-info bold">FEMALE</label></br>
+                <label class="control-label" style="margin-top: 8px">< 0.80</label></br>
+                <label class="control-label " style="margin-top: 10px">0.80 - 0.85</label></br>
+                <label class="control-label" style="margin-top: 10px"> > 0.85</label>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <label class="control-label text-info bold">MALE</label></br>
+                <label class="control-label" style="margin-top: 8px">< 0.90</label></br>
+                <label class="control-label" style="margin-top: 10px">0.90 - 0.95</label></br>
+                <label class="control-label" style="margin-top: 10px"> > 0.95</label>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <div class="portlet box grey-cascade">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-gift"></i>1. VISUAL ACUITY
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse">
-                    </a>
-                </div>
+<div class="row">
+    <div class="portlet box grey-cascade">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>1. VISUAL ACUITY
             </div>
-            <div class="portlet-body">
-                <div class="border" style="border-color: #808080; border-style: dotted;" >
-                    <div class="row" >
-                        <div class="col-md-12">
-                            <div class="col-md-2 col-sm-12">
-                                <label class="control-label bold" style="margin-top: 30px;">DISTANCE VISION:</label>
-                            </div>
-                            <div class="col-md-5 col-sm-6" style="text-align: center">
-                                <div class="row">
-                                    <label>Uncorrected:</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-6 col-sm-6" style="text-align: center">
-                                            <label>L</label><br>
-                                            <label>/6</label>
-                                            <input type="text" style="width: 60px"/>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" style="text-align: center">
-                                            <label>R</label><br>
-                                            <label>/6</label>
-                                            <input type="text" style="width: 60px"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 col-sm-6" style="text-align: center">
-                                <div class="row">
-                                    <label>Corrected:</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-6 col-sm-6" style="text-align: center">
-                                            <label>L</label><br>
-                                            <label>/6</label>
-                                            <input type="text" style="width: 60px"/>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" style="text-align: center">
-                                            <label>R</label><br>
-                                            <label>/6</label>
-                                            <input type="text" style="width: 60px"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                </br>
-
-                <div class="border" style="border-color: #808080; border-style: dotted;" >
-                    <div class="row" >
-                        <div class="col-md-12">
-                            <div class="col-md-2 col-sm-12">
-                                <label class="control-label bold" style="margin-top: 30px;">NEAR VISION:</label>
-                            </div>
-                            <div class="col-md-5 col-sm-6" style="text-align: center">
-                                <div class="row">
-                                    <label>Uncorrected:</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-6 col-sm-6" style="text-align: center">
-                                            <label>L</label><br>
-                                            <label>/N</label>
-                                            <input type="text" style="width: 60px"/>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" style="text-align: center">
-                                            <label>R</label><br>
-                                            <label>/N</label>
-                                            <input type="text" style="width: 60px"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 col-sm-6" style="text-align: center">
-                                <div class="row">
-                                    <label>Corrected:</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-6 col-sm-6" style="text-align: center">
-                                            <label>L</label><br>
-                                            <label>/N</label>
-                                            <input type="text" style="width: 60px"/>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" style="text-align: center">
-                                            <label>R</label><br>
-                                            <label>/N</label>
-                                            <input type="text" style="width: 60px"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </br>
-                <div class="row">
-                    <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">PERIPHERAL VISION NORMAL</label>
-                    <div class="col-md-7 btn-group">
-                        <label class="btn">
-                            <input type="radio" name='a' value="0"/>Yes
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' value="1"/> No
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">VISUAL AIDS TO BE WORN AT WORK</label>
-                    <div class="col-md-2 btn-group col-sm-3">
-                        <label class="btn">
-                            <input type="radio" name='a' value="0"/>Yes
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' value="1"/> No
-                        </label>
-                    </div>
-                    <div class="col-md-2 col-sm-4">
-                        <select class="form-control">
-                            <option>No Selection</option>
-                            <option>GLASSES</option>
-                            <option>CONTACTS</option>
-                            <option>GLASSES-CONTACTS</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">COLOUR VISION NORMAL</label>
-                    <div class="col-md-2 btn-group col-sm-3">
-                        <label class="btn">
-                            <input type="radio" name='a' value="0"/>Yes
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' value="1"/> No
-                        </label>
-                    </div>
-                    <div class="col-md-2 col-sm-4 ">
-                        <input type="text" style="width: 70px;margin-top: 10px">/17
-                    </div>
-                </div>
-
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="portlet box grey-cascade" ng-repeat="group in header.group">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-gift"></i> {{group.group_name}}
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse">
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body" ng-repeat="line in group.line">
-                <label class="control-label bold">{{line.line_name}}</label>
+        <div class="portlet-body">
+            <div class="border" style="border-color: #808080; border-style: dotted;" >
                 <div class="row" >
-                    <div class="col-md-2 col-sm-3 btn-group" ng-if="line.yesno == 2">
-                        <label class="btn">
-                            <input type="radio" name='a' value="0"/>Yes
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name='a' value="1"/> No
-                        </label>
-                    </div>
-                    <div ng-if="line.yesno == 3" >
-                        <div ng-if="line.value1 != null && line.value2 != null">
-                            <label class="col-md-1 col-sm-2" style="margin-top: 5px">{{line.value1}}</label>
-                            <div class="col-md-1 col-sm-2">
-                                <input type="text" class="form-control">
+                    <div class="col-md-12">
+                        <div class="col-md-2 col-sm-12">
+                            <label class="control-label bold" style="margin-top: 30px;">DISTANCE VISION:</label>
+                        </div>
+                        <div class="col-md-5 col-sm-6" style="text-align: center">
+                            <div class="row">
+                                <label>Uncorrected:</label>
                             </div>
-                            <label class="col-md-1 col-sm-2" style="margin-top: 5px">{{line.value2}}</label>
-                            <div class="col-md-1 col-sm-2">
-                                <input type="text" class="form-control">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-class="{'has-error':showClickedValidation && MAForm.DIST_LEFT_EYE.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/6</label>
+                                            <input type="text" ng-model="infoH.DIST_LEFT_EYE" ng-pattern="/^[0-9]+$/" name="DIST_LEFT_EYE" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && MAForm.DIST_LEFT_EYE.$error.pattern">
+                                                <div class="help-block" for="DIST_LEFT_EYE"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-class="{'has-error':showClickedValidation && MAForm.DIST_RIGHT_EYE.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/6</label>
+                                            <input type="text" ng-model="infoH.DIST_RIGHT_EYE" ng-pattern="/^[0-9]+$/" name="DIST_RIGHT_EYE" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && MAForm.DIST_RIGHT_EYE.$error.pattern">
+                                                <div class="help-block" for="DIST_RIGHT_EYE"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="btn-group col-md-3 col-sm-4" >
-                            <label class="btn">
-                                <input type="radio" name='a' value="1"/> Normal
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='a' value="0"/> Abnormal
-                            </label>
+                        <div class="col-md-5 col-sm-6" style="text-align: center">
+                            <div class="row">
+                                <label>Corrected:</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-class="{'has-error':showClickedValidation && MAForm.DIST_LEFT_EYE_CORRECTED.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/6</label>
+                                            <input type="text" ng-model="infoH.DIST_LEFT_EYE_CORRECTED" ng-pattern="/^[0-9]+$/" name="DIST_LEFT_EYE_CORRECTED" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && MAForm.DIST_LEFT_EYE_CORRECTED.$error.pattern">
+                                                <div class="help-block" for="DIST_LEFT_EYE_CORRECTED"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-class="{'has-error':showClickedValidation && MAForm.DIST_RIGHT_EYE_CORRECTED.$error.pattern}">
+                                        <div  class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/6</label>
+                                            <input type="text" ng-model="infoH.DIST_RIGHT_EYE_CORRECTED" ng-pattern="/^[0-9]+$/" name="DIST_RIGHT_EYE_CORRECTED" style="width: 60px;"/>
+                                            <div  ng-show="showClickedValidation && MAForm.DIST_RIGHT_EYE_CORRECTED.$error.pattern">
+                                                <div class="help-block" for="DIST_RIGHT_EYE_CORRECTED"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div ng-if="line.yesno == 1"  >
-                        <label class="col-md-1 col-sm-2" style="margin-top: 10px">{{line.value1}}</label>
-                        <div class="col-md-1 col-sm-2">
-                            <input type="text" class="form-control">
-                        </div>
-                        <label class="col-md-1 col-sm-2" style="margin-top: 10px">{{line.value2}}</label>
-                        <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control">
-                        </div>
-                        <label class="col-md-1 col-sm-2" style="margin-top: 10px"> PREDICTED (%)	</label>
-                        <div class="col-md-2 col-sm-2">
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <label class=" col-md-1 col-sm-2" style="margin-top: 10px">Comment</label>
-                    <div class="col-md-3 col-sm-6">
-                        <textarea class="form-control"></textarea>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title bold">Fitness Report</h3>
-        </div>
-        <div class="panel-body">
-            <label class="control-label">
-                Is candidate mentally and physically fit to undertake assignment now, and for the foreseeable future?
-            </label>
-            <div class="row">
-                <div class="col-md-2 btn-group">
-                    <label class="btn">
-                        <input type="radio" name='a' value="0"/>Yes
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="1"/> No
-                    </label>
-                </div>
-                <div class="col-md-8">
-                    <textarea class="form-control"></textarea>
-                </div>
-            </div>
-            <label class="control-label">
-                Is candidate’s life expectancy or mobility likely to be adversely affected by anything revealed by your examination?
-            </label>
-            <div class="row">
-                <div class="col-md-2 btn-group">
-                    <label class="btn">
-                        <input type="radio" name='a' value="0"/>Yes
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="1"/> No
-                    </label>
-                </div>
-                <div class="col-md-8">
-                    <textarea class="form-control"></textarea>
+            </br>
+
+            <div class="border" style="border-color: #808080; border-style: dotted;" >
+                <div class="row" >
+                    <div class="col-md-12">
+                        <div class="col-md-2 col-sm-12">
+                            <label class="control-label bold" style="margin-top: 30px;">NEAR VISION:</label>
+                        </div>
+                        <div class="col-md-5 col-sm-6" style="text-align: center">
+                            <div class="row">
+                                <label>Uncorrected:</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-class="{'has-error':showClickedValidation && MAForm.NEAR_LEFT_EYE.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/N</label>
+                                            <input type="text" ng-model="infoH.NEAR_LEFT_EYE" ng-pattern="/^[0-9]+$/" name="NEAR_LEFT_EYE" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && MAForm.NEAR_LEFT_EYE.$error.pattern">
+                                                <div class="help-block" for="NEAR_LEFT_EYE"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-class="{'has-error':showClickedValidation && MAForm.NEAR_RIGHT_EYE.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/N</label>
+                                            <input type="text" ng-model="infoH.NEAR_RIGHT_EYE" ng-pattern="/^[0-9]+$/" name="NEAR_RIGHT_EYE" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && MAForm.NEAR_RIGHT_EYE.$error.pattern">
+                                                <div class="help-block" for="NEAR_RIGHT_EYE"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6" style="text-align: center">
+                            <div class="row">
+                                <label>Corrected:</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-class="{'has-error':showClickedValidation && MAForm.NEAR_LEFT_EYE_CORRECTED.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/N</label>
+                                            <input type="text" ng-model="infoH.NEAR_LEFT_EYE_CORRECTED" ng-pattern="/^[0-9]+$/" name="NEAR_LEFT_EYE_CORRECTED" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && MAForm.NEAR_LEFT_EYE_CORRECTED.$error.pattern">
+                                                <div class="help-block" for="NEAR_LEFT_EYE_CORRECTED"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-class="{'has-error':showClickedValidation && MAForm.NEAR_RIGHT_EYE_CORRECTED.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/N</label>
+                                            <input type="text" ng-model="infoH.NEAR_RIGHT_EYE_CORRECTED" ng-pattern="/^[0-9]+$/" name="NEAR_RIGHT_EYE_CORRECTED" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && MAForm.NEAR_RIGHT_EYE_CORRECTED.$error.pattern">
+                                                <div class="help-block" for="NEAR_RIGHT_EYE_CORRECTED"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             </br>
             <div class="row">
-                <label class="control-label col-md-2">
-                    I have examined:
-                </label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control">
-                </div>
-                <label class="control-label col-md-2">
-                    and report:
-                </label>
-            </div>
-            <label class="control-label">
-                That the proposed occupation
-                <label class="btn">
-                    <input type="radio" name='a' value="0"/>* would
-                </label>
-                <label class="btn">
-                    <input type="radio" name='a' value="1"/> would not
-                </label>
-                not require special services or facilities to be provided in order to be suitable for the applicant.
-            </label>
-            <div class="row">
-                <label class="control-label col-md-2">*Comments</label>
-                <div class="col-md-10">
-                    <textarea class="form-control"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <label class="control-label col-md-2">Final Assessment</label>
-                <div class="col-md-6 btn-group">
+                <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">PERIPHERAL VISION NORMAL</label>
+                <div class="col-md-7 btn-group">
                     <label class="btn">
-                        <input type="radio" name='a' value="0"/>FIT
+                        <input type="radio" ng-model="infoH.PERIPHERAL_VISION" value="0"/>Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" name='a' value="1"/> UNFIT
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='a' value="1"/> Fit with Restrictions
+                        <input type="radio" ng-model="infoH.PERIPHERAL_VISION" value="1"/> No
                     </label>
                 </div>
             </div>
             <div class="row">
-                <label class="control-label col-md-2">Comments</label>
-                <div class="col-md-10">
-                    <textarea class="form-control"></textarea>
+                <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">VISUAL AIDS TO BE WORN AT WORK</label>
+                <div class="col-md-2 btn-group col-sm-3">
+                    <label class="btn">
+                        <input type="radio" ng-model="infoH.VISUAL_AIDS" value="0"/>Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="infoH.VISUAL_AIDS" value="1"/> No
+                    </label>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <select class="form-control" ng-model="infoH.VISUAL_AIDS_TYPE">
+                        <option value="">No Selection</option>
+                        <option value="0">GLASSES</option>
+                        <option value="1">CONTACTS</option>
+                        <option value="2">GLASSES-CONTACTS</option>
+                    </select>
                 </div>
             </div>
-            <!--signature of doctor-->
+            <div class="row">
+                <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">COLOUR VISION NORMAL</label>
+                <div class="col-md-2 btn-group col-sm-3">
+                    <label class="btn">
+                        <input type="radio" ng-model="infoH.COLOR_VISUAL" value="0"/>Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="infoH.COLOR_VISUAL" value="1"/> No
+                    </label>
+                </div>
+                <div class="col-md-3 col-sm-4 ">
+                    <label>Color Visual Score</label>
+                    <input type="text" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 70px;margin-top: 10px">/17
+                </div>
+            </div>
+
         </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="portlet box grey-cascade" ng-repeat="group in header.group">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i> {{group.group_name}}
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body" ng-repeat="line in group.line">
+            <label class="control-label bold">{{line.line_name}}</label>
+            <div class="row" >
+                <div class="col-md-2 col-sm-3 btn-group" ng-if="line.yesno == 2">
+                    <label class="btn">
+                        <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="0"/>Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="1"/> No
+                    </label>
+                </div>
+                <div ng-if="line.yesno == 3" >
+                    <div ng-if="line.value1 != null && line.value2 != null">
+                        <label class="col-md-1 col-sm-2" style="margin-top: 5px">{{line.value1}}</label>
+                        <div class="col-md-1 col-sm-2">
+                            <input type="text" ng-model="infoL.VAL1[line.line_id]" class="form-control">
+                        </div>
+                        <label class="col-md-1 col-sm-2" style="margin-top: 5px">{{line.value2}}</label>
+                        <div class="col-md-1 col-sm-2">
+                            <input type="text" ng-model="infoL.VAL2[line.line_id]" class="form-control">
+                        </div>
+                    </div>
+                    <div class="btn-group col-md-3 col-sm-4" >
+                        <label class="btn">
+                            <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="0"/>  Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="1"/>  Abnormal
+                        </label>
+                    </div>
+                </div>
+                <div ng-if="line.yesno == 1"  >
+                    <label class="col-md-1 col-sm-2" style="margin-top: 10px">{{line.value1}}</label>
+                    <div class="col-md-1 col-sm-2">
+                        <input type="text" ng-model="infoL.VAL1[line.line_id]" class="form-control">
+                    </div>
+                    <label class="col-md-1 col-sm-2" style="margin-top: 10px">{{line.value2}}</label>
+                    <div class="col-md-2 col-sm-2">
+                        <input type="text" ng-model="infoL.VAL2[line.line_id]" class="form-control">
+                    </div>
+                    <label class="col-md-1 col-sm-2" style="margin-top: 10px"> PREDICTED (%)	</label>
+                    <div class="col-md-2 col-sm-2">
+                        <input type="text" ng-model="infoL.VAL3[line.line_id]" class="form-control">
+                    </div>
+                </div>
+                <label class=" col-md-1 col-sm-2" style="margin-top: 10px">Comment</label>
+                <div class="col-md-3 col-sm-6">
+                    <textarea class="form-control" ng-model="infoL.COMMENTS[line.line_id]"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title bold">Fitness Report</h3>
+    </div>
+    <div class="panel-body">
+        <label class="control-label">
+            Is candidate mentally and physically fit to undertake assignment now, and for the foreseeable future?
+        </label>
+        <div class="row">
+            <div class="col-md-2 btn-group">
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.IS_CANDIDATE_CAN_UNDERTAKE" value="0"/>Yes
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.IS_CANDIDATE_CAN_UNDERTAKE" value="1"/> No
+                </label>
+                <span ng-show="infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1" class="bold large">*</span>
+            </div>
+            <div ng-class="{'has-error':showClickedValidation && MAForm.CANDIDATE_CAN_UNDERTAKE_COMMENT.$invalid && infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1 }">
+                <div class="row">
+                    <div class="col-md-8">
+                        <textarea class="form-control"  name="CANDIDATE_CAN_UNDERTAKE_COMMENT" ng-required="infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1" ng-model="infoH.CANDIDATE_CAN_UNDERTAKE_COMMENT"></textarea>
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && MAForm.CANDIDATE_CAN_UNDERTAKE_COMMENT.$invalid && infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 help-block"  for="CANDIDATE_CAN_UNDERTAKE_COMMENT">
+                        <label>Must be enter if when no</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label class="control-label">
+            Is candidate’s life expectancy or mobility likely to be adversely affected by anything revealed by your examination?
+        </label>
+        <div class="row">
+            <div class="col-md-2 btn-group">
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED" value="0"/>Yes
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED" value="1"/> No
+                </label>
+                <span ng-show="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0" class="bold large">*</span>
+            </div>
+            <div ng-class="{'has-error':showClickedValidation && MAForm.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT.$invalid && infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0 }">
+                <div class="row">
+                    <div class="col-md-8">
+                        <textarea class="form-control"  name="CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT" ng-required="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0" ng-model="infoH.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT"></textarea>
+                    </div>
+                </div>
+                <div class="row" ng-show="showClickedValidation && MAForm.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT.$invalid && infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 help-block"  for="CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT">
+                        <label>Must be enter if when yes</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <label class="control-label col-md-2">
+                I have examined:
+            </label>
+            <div class="col-md-7">
+                <input type="text" ng-model="infoH.EXAMINED_COMMENT" class="form-control">
+            </div>
+            <label class="control-label col-md-2">
+                and report:
+            </label>
+        </div>
+        <label class="control-label">
+            That the proposed occupation
+            <label class="btn">
+                <input type="radio" ng-model="infoH.ISWOULD" value="0"/>* would
+            </label>
+            <label class="btn">
+                <input type="radio" ng-model="infoH.ISWOULD" value="1"/> would not
+            </label>
+            not require special services or facilities to be provided in order to be suitable for the applicant.
+        </label>
+        <div ng-class="{'has-error':showClickedValidation && MAForm.COMMENTS.$invalid && infoH.ISWOULD == 0 }">
+
+            <div class="row">
+                <label class="control-label col-md-2">Comments<span ng-show="infoH.ISWOULD == 0" class="bold large">*</span></label>
+                <div class="col-md-10">
+                    <textarea class="form-control" name="COMMENTS" ng-required="infoH.ISWOULD == 0" ng-model="infoH.COMMENTS"></textarea>
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && MAForm.COMMENTS.$invalid && infoH.ISWOULD == 0">
+                <div class="col-md-2"></div>
+                <div class="col-md-10 help-block"  for="COMMENTS">
+                    <label>Must be enter if would</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <label class="control-label col-md-2">Final Assessment</label>
+            <div class="col-md-6 btn-group">
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.FINAL_ASS" value="0"/>FIT
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.FINAL_ASS" value="1"/> UNFIT
+                </label>
+                <label class="btn">
+                    <input type="radio" ng-model="infoH.FINAL_ASS" value="2"/> Fit with Restrictions
+                </label>
+            </div>
+        </div>
+        <div ng-class="{'has-error':showClickedValidation && MAForm.COMMENTS2.$invalid}">
+            <div class="row">
+                <label class="control-label col-md-2">Comments<span class="bold large">*</span></label>
+                <div class="col-md-10">
+                    <textarea class="form-control" name="COMMENTS2" required="" ng-model="infoH.COMMENTS2"></textarea>
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && MAForm.COMMENTS2.$invalid">
+                <div class="col-md-2"></div>
+                <div class="col-md-10 help-block" for="COMMENTS2">
+                    <label>Must be enter</label>
+                </div>
+            </div>
+        </div>
+        <!--signature of doctor-->
+    </div>
+</div>
 
 </div>
+</form>
+
