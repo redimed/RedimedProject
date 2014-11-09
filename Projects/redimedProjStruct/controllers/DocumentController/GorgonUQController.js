@@ -1,8 +1,10 @@
+
 // /**
 //  * Created by meditech on 13/10/2014.
 //  */
 var db = require('../../models');
 var mkdirp = require('mkdirp');
+
 //var java = require('java');
 //java.options.push("-Djava.awt.headless=true");
 //
@@ -27,6 +29,7 @@ var mkdirp = require('mkdirp');
 //var Driver = java.import('com.mysql.jdbc.Driver');
 //var InputStream = java.import('java.io.InputStream');
 //var FileInputStream = java.import('java.io.FileInputStream');
+
 
 module.exports = {
     printReport : function(req,res){
@@ -55,3 +58,4 @@ module.exports = {
 
     }
 }
+

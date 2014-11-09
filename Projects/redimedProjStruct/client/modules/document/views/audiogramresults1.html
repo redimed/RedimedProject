@@ -5,50 +5,67 @@
     }
 </style>
 
+<form name="SA1" method="post" novalidate>
 <div class="caption">
     <div class="row">
         <div class="col-md-12 ">
-            <a href="javascript:;" ng-click="submit()" class="btn green pull-right">Submit</a>
+            <a href="javascript:;" ng-click="submit(SA1)" class="btn green pull-right">Submit</a>
             <a href="javascript:;" class="btn btn-primary blue pull-right">Print PDF</a>
             <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
         </div>
     </div>
 </div>
-<br/>
+<!--begin header-->
+<div class="row" ng-repeat="(hIndex,header) in info.headers">
+<!--begin input save headers-->
+<input type="hidden" ng-model="info.headers[hIndex].patient_id"/>
+<input type="hidden" ng-model="info.headers[hIndex].CAL_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].SA_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].SA_NAME"/>
+<input type="hidden" ng-model="info.headers[hIndex].ISENABLE"/>
+<input type="hidden" ng-model="info.headers[hIndex].SA_CODE"/>
+<input type="hidden" ng-model="info.headers[hIndex].Created_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].Creation_date"/>
+<input type="hidden" ng-model="info.headers[hIndex].Last_updated_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].Last_update_date"/>
+<input type="hidden" ng-model="info.headers[hIndex].test_date"/>
+<input type="hidden" ng-model="info.headers[hIndex].tester"/>
+<input type="hidden" ng-model="info.headers[hIndex].report_type"/>
+<input type="hidden" ng-model="info.headers[hIndex].RECIPIENT_NAME"/>
+<input type="hidden" ng-model="info.headers[hIndex].DOCTOR_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].Signature"/>
+<input type="hidden" ng-model="info.headers[hIndex].LOCATION_ID"/>
+<!--end input save headers-->
 
+<!--begin section-->
+<div ng-repeat="(sIndex,section) in header.sections">
+<!--begin input save sections-->
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].patient_id"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].CAL_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].SECTION_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].SA_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].SECTION_NAME"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].ORD"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].USER_TYPE"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].ISENABLE"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].Created_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].Creation_date"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].Last_updated_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].Last_update_date"/>
+<!--end input save sections-->
 <div class="row">
-    <div class="caption">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <p style="font-size: xx-large;text-align: center;font-weight: bolder">
-                    Audiogram 1
-                </p>
-            </div>
-        </div>
+    <div class="col-md-12 col-sm-12">
+        <p style="font-size: xx-large;text-align: center;font-weight: bolder">
+            TO RELEASE WORKCOVER WA <br/>
+            AUDIOMETRIC TEST RESULTS <br/>
+            FORM 406
+        </p>
     </div>
 </div>
-
-<div class="row">
-<div class="col-md-12 col-sm-12">
 <div class="portlet box grey-cascade">
-<div class="portlet-title">
-    <div class="caption">
-        <i class="fa fa-gift"></i>TO RELEASE WORKCOVER WA
-        AUDIOMETRIC TEST RESULTS
-        FORM 406
-    </div>
-    <div class="tools">
-        <a href="javascript:;" class="collapse">
-        </a>
-    </div>
-</div>
 <div class="portlet-body form">
-<!-- BEGIN FORM-->
-<form class="form-horizontal form-bordered">
-<div class="row">
-<div class="col-md-12 col-sm-12">
-<div ng-repeat="section in listAUD1[0].section">
-<div class="portlet-body form">
+<div class="panel panel-default">
+<div class="panel-body">
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -64,7 +81,7 @@
             <label class="control-label">Name:</label>
         </div>
         <div class="col-md-11 col-sm-11" style="text-align: left;">
-            <label class="control-label">Minh Phuong</label>
+            <label class="control-label"></label>
         </div>
     </div>
 </div>
@@ -149,68 +166,61 @@
         </div>
     </div>
 </div>
+<hr/>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-2">
-            <label class="control-label" style="text-align: left;">Please note:</label>
-        </div>
-        <div class="col-md-10 col-sm-10">
-            <label class="control-label" style="text-align: left;">The release of audiometric
-                test results is
-                not compulsory. Signing of this form is at your discretion
-                Approved Audiometric Officers to maintain a copy of this form.
-                Audiologists please return completed form to:
-                Noise Induced Hearing Loss WorkCover WA
-                2 Bedbrook Place
-                SHENTON PARK WA 6008
-                Fax: (08) 9388 5550
-                For further information:
-                Phone: (08) 9388 5661</label>
+        <div class="col-md-12 col-sm-12">
+            <label class="control-label" style="text-align: left;">Please note: The release of audiometric test
+                results
+                is not compulsory. Signing of this form is at your discretion</label>
         </div>
     </div>
 </div>
-<br/>
-
+<hr/>
 <div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-2">
-            <label class="control-label">Signed:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
-        </div>
-        <script type="text/javascript">
-            $('#signBtn').click(function () {
-                $('#modalSign').modal({
-                    show: true
-                });
-            });
+    <div class="col-md-6 col-sm-6">
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
+                <script type="text/javascript">
+                    $('#signBtn').click(function () {
+                        $('#modalSign').modal({
+                            show: true
+                        });
+                    });
 
-        </script>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 col-sm-6" style="margin-left:15px;">
-        <img src="" id="signDisplay" ng-model="info.consentSign"
-             style="width:300px;height: 150px;"/>
-    </div>
-</div>
-<br/>
+                </script>
+            </div>
+            <div class="col-md-6 col-sm-6" style="margin-left:15px;">
+                <img src="" id="signDisplay" ng-model="info.consentSign"
+                     style="width:200px;height: 30px;"/>
+            </div>
+        </div>
+        <br/>
 
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-2">
-            <label class="control-label">Date:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="dob" required
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                   is-open="openDOB1" ng-click="openDOB1 = true"
-                   datepicker-options="dateOptions3" ng-required="true"
-                   close-text="Close"/>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label">Date:</label>
+            </div>
         </div>
     </div>
+
+    <div class="col-md-6 col-sm-6" style="text-align: center;">
+        <label class="control-label bold">Approved Audiometric Officers to
+            maintain
+            a copy of this form.</label>
+        <label class="control-label bold">Audiologists please return completed
+            form
+            to:</label>
+        <label class="control-label">Noise Induced Hearing Loss WorkCover WA</label>
+        <label class="control-label">2 Bedbrook Place</label><br/>
+        <label class="control-label">SHENTON PARK WA 6008</label><br/>
+        <label class="control-label">Fax: (08) 9388 5550</label><br/>
+        <label class="control-label bold">For further information:</label><br/>
+        <label class="control-label">Phone: (08) 9388 5661</label>
+    </div>
 </div>
+<hr/>
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -236,7 +246,8 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label" style="text-align: left;">(2) WorkCover WA shall, on the written request of
+            <label class="control-label" style="text-align: left;">(2) WorkCover WA shall, on the written
+                request of
                 the worker tested, communicate the results of an audiometric test delivered
                 to it under clause 4(2) to any person specified by the worker in
                 that request.</label>
@@ -255,45 +266,36 @@
         </div>
     </div>
 </div>
-<br/>
 </div>
 </div>
 </div>
 </div>
-</form>
-<!--END FORM-->
-</div>
-</div>
-</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <p style="font-size: xx-large;text-align: center;font-weight: bolder">
+            AUDIOGRAM RESULTS <br/>
+            Form 411
+        </p>
+    </div>
 </div>
 <div class="row">
 <div class="col-md-12 col-sm-12">
 <div class="portlet box grey-cascade">
-<div class="portlet-title">
-    <div class="caption">
-        <i class="fa fa-gift"></i>AUDIOGRAM RESULTS
-        Form 411
-    </div>
-    <div class="tools">
-        <a href="javascript:;" class="collapse">
-        </a>
-    </div>
-</div>
 <div class="portlet-body form">
-<!-- BEGIN FORM-->
-<form class="form-horizontal form-bordered">
+<div class="panel panel-default">
+<div class="panel-body">
 <div class="row">
 <div class="col-md-12 col-sm-12">
-<div ng-repeat="section in listAUD1[0].section">
-<div class="portlet-body form">
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12" style="text-align: center;">
             <label class="control-label bold">Must be given to the worker within one
                 month of the date of the test being completed</label>
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -303,6 +305,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-2 col-sm-3">
@@ -313,6 +316,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-10">
         <div class="col-md-2 col-sm-3">
@@ -323,6 +327,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-2 col-sm-3">
@@ -337,18 +342,12 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label">Date:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="dob" required
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
-                   is-open="openDOB2" ng-click="openDOB2 = true"
-                   datepicker-options="dateOptions3" ng-required="true"
-                   close-text="Close"/>
         </div>
     </div>
 </div>
+<hr/>
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -357,6 +356,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -373,51 +373,95 @@
         </div>
     </div>
 </div>
-<br/>
+<div class="panel panel-default" style="width: 700px;">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12" style="text-align: center;">
+                <div class="col-md-3 col-sm-3">
+                    <label class="control-label">Frequence (Hz)</label>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <label class="control-label">Right Ear (dB)</label>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <label class="control-label">Left Ear (dB)</label>
+                </div>
+            </div>
+        </div>
+        <!--begin lines-->
+        <div ng-repeat="(lIndex,line) in section.lines">
+            <!--begin input save lines-->
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].patient_id"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].CAL_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].LINE_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].SECTION_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].SA_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].NAME"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].ISENABLE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Created_by"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Creation_date"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Last_updated_by"/>
+            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Last_update_date"/>
+            <!--end input save lines-->
+            <ng-form name="lineForm">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-3 col-sm-3" style="text-align: center;">
+                            <label class="control-label">{{line.NAME}}</label>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <div ng-class="{'has-error': lineForm.left.$error.pattern}">
+                                <input type="text" class="form-control" name="left"
+                                       ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].VALUE_LEFT"
+                                       ng-pattern="/^(0|\-?[1-9][0-9]*)$/"
+                                        />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <div ng-class="{'has-error': lineForm.right.$error.pattern}">
+                                <input type="text" class="form-control" name="right"
+                                       ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].VALUE_RIGHT"
+                                       ng-pattern="/^(0|\-?[1-9][0-9]*)$/"
+                                        />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-form>
+            <div class="row">
+                <div class="col-md-3">
 
-<div class="row">
-    <div class="col-md-12 col-sm-12" style="text-align: center;">
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label">Frequence (Hz)</label>
+                </div>
+                <div class="col-md-3">
+                    <div ng-class="{'has-error': lineForm.left.$error.pattern}">
+                        <div ng-show="lineForm.left.$error.pattern">
+                            <label class="control-label">Required is number!</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div ng-class="{'has-error': lineForm.right.$error.pattern}">
+                        <div ng-show="lineForm.right.$error.pattern">
+                            <label class="control-label">Required is number!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
         </div>
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label">Right Ear (dB)</label>
-        </div>
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label">Left Ear (dB)</label>
-        </div>
+        <!--end lines-->
     </div>
-</div>
-<div ng-repeat="line in section.line">
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-3" style="text-align: center;">
-                <label class="control-label">{{line.line_name}}</label>
-            </div>
-            <div class="col-md-2 col-sm-3">
-                <input type="text" class="form-control" name=""
-                       value="{{line.line_value_right}}"/>
-            </div>
-            <div class="col-md-2 col-sm-3">
-                <input type="text" class="form-control" name=""
-                       value="{{line.line_value_left}}"/>
-            </div>
-        </div>
-    </div>
-    <br/>
 </div>
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12" style="float: right;">
-            <button ng-click="addData()">Draw</button>
-            <!--<img src="/img/XepHinh.png" alt="" class="img-responsive" style="height: 600px;width: 60%;margin-left: 20%;"/>-->
-
-            <canvas id="canvas" height="600px" width="600px" style="margin-left: 20%"></canvas>
-
+            <img src="/img/audio1.png" alt="" class="img-responsive"
+                 style="height: 600px;width: 60%;margin-left: 20%;"/>
         </div>
     </div>
 </div>
 <br/>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -427,6 +471,8 @@
         </div>
     </div>
 </div>
+<br/>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -435,6 +481,8 @@
         </div>
     </div>
 </div>
+<br/>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -442,6 +490,8 @@
         </div>
     </div>
 </div>
+<br/>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -451,6 +501,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -460,6 +511,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -469,6 +521,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -478,6 +531,8 @@
         </div>
     </div>
 </div>
+<br/>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
@@ -488,25 +543,33 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label" style="text-align: left;">
-                You have three months from the date of receiving these results to notify WorkCover WA that you wish to
+            <label class="control-label bold" style="text-align: left;">
+                You have three months from the date of receiving these results to notify WorkCover WA that you wish
+                to
                 disagree with the results. </label>
         </div>
     </div>
 </div>
+
 <br/>
 </div>
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--end section-->
+
+<!--end header-->
 </form>
-</div>
-</div>
-</div>
-</div>
 
 <div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -553,86 +616,4 @@
 
         })
     })(jQuery)
-</script>
-
-<script type="text/javascript">
-    (function ($) {
-        $(document).ready(function () {
-            var counter = 0;
-            function AUD1Controller($scope) {
-                alert('aaa');
-                var canvas = document.getElementById('canvas');
-                var context = canvas.getContext('2d');
-
-                $scope.data = [
-
-                ];
-
-                $scope.addData = function() {
-
-                    var id = 0;
-                    if($scope.data.length > 0) {
-                        id = $scope.data[$scope.data.length-1].id + 1;
-                    }
-                    var p = {id: id, x: 100, y: 100, amount: 6 };
-                    $scope.data.push(p);
-                    $scope.x = '';
-                    $scope.y = '';
-                    $scope.amount = '';
-                    draw($scope.data);
-                };
-
-                $scope.removePoint = function(point) {
-                    console.log(point);
-                    for(var i=0; i<$scope.data.length; i++) {
-                        if($scope.data[i].id === point.id) {
-                            console.log("removing item at position: "+i);
-                            $scope.data.splice(i, 1);
-                        }
-                    }
-
-                    context.clearRect(0,0,600,400);
-                    draw($scope.data);
-                    console.log($scope.data);
-                }
-
-                function draw(data) {
-                    for(var i=0; i<data.length; i++) {
-                        drawDot(data[i]);
-                        if(i > 0) {
-                            drawLine(data[i], data[i-1]);
-                        }
-                    }
-                }
-
-                function drawDot(data) {
-                    context.beginPath();
-                    context.arc(data.x, data.y, data.amount, 0, 2*Math.PI, false);
-                    context.fillStyle = "#ccddff";
-                    context.fill();
-                    context.lineWidth = 1;
-                    context.strokeStyle = "#666666";
-                    context.stroke();
-                }
-
-                function drawLine(data1, data2) {
-                    context.beginPath();
-                    context.moveTo(data1.x, data1.y);
-                    context.lineTo(data2.x, data2.y);
-                    context.strokeStyle = "black";
-                    context.stroke();
-                }
-
-                // setup
-                canvas.width = 600;
-                canvas.height = 400;
-                context.globalAlpha = 1.0;
-                context.beginPath();
-                draw($scope.data);
-            }
-
-
-        })
-    })(jQuery)
-
 </script>
