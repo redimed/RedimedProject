@@ -3,7 +3,7 @@ var fs = require('fs'),
     Sequelize = require('sequelize'),
     lodash = require('lodash'),
     config = require('config'),
-    sequelize = new Sequelize('sakila', 'root', '', {
+    sequelize = new Sequelize('sakila', 'root', 'root', {
         host: 'localhost',
         port: 3306
     }),
