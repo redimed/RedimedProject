@@ -12,14 +12,11 @@ var SA2Controller = require('./controllers/DocumentController/SA2Controller');
 var Cat3Controller = require('./controllers/DocumentController/Cat3Controller');
 var Cat2Controller = require('./controllers/DocumentController/Cat2Controller');
 var UQController = require('./controllers/DocumentController/UQController');
-
-
 var gorgonMHController = require('./controllers/DocumentController/gorgonMHController');
 var form18Controller = require('./controllers/DocumentController/form18Controller');
 var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
-var gorgonMAController = require('./controllers/DocumentController/gorgonMAController');
-var GorgonMHController = require('./controllers/DocumentController/GorgonMHController');
-var GorgonUQController = require('./controllers/DocumentController/GorgonUQController');
+var gorgonMAController = require('./controllers/DocumentController/gorgonMAController')
+
 app.get('/api/document/newFA', FAController.newFA);
 app.get('/api/document/loadFA', FAController.loadFA);
 app.get('/api/document/newMA', MAController.newMA);
