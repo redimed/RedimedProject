@@ -36,108 +36,130 @@
                                 <div ng-repeat="detail in line.detail">
                                     <ng-form name="numberForm">
                                         <label class="bold">{{detail.detail_name}}</label>
-                                        <div ng-class="{'has-error':showClickedValidation && FAForm.numberForm.$error.pattern}">
-                                            <div class="row">
-                                                <div ng-if="detail.val1_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
-                                                    <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val1_name != null}">
-                                                        {{detail.val1_name}}
-                                                    </label>
-                                                </div>
+                                        <div class="row">
+                                            <div ng-if="detail.val1_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
+                                                <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val1_name != null}">
+                                                    {{detail.val1_name}}
+                                                </label>
+                                            </div>
+                                            <div ng-class="{'has-error':showClickedValidation  && numberForm.value1.$error.pattern}">
                                                 <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val1_isvalue == 1}">
-                                                    <input name="numberValue1" type="text" ng-pattern="/^[0-9]+$/" ng-model="infoD.VAL1_VALUE[detail.detail_id]" ng-change="mathScore(detail.detail_id,line.line_id,line.line_isscore1,line.line_israting1,line.line_isscore2,line.line_israting2,line.score_type1,line.score_type2,line.rating_id1)"  class="form-control">
-                                                </div>
-                                                <div ng-if="detail.val1_ischeckbox == 1"  ng-class="{'col-md-1 col-sm-1' : detail.val1_ischeckbox == 1}">
-                                                    <input class="form-control" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" type="checkbox" ng-checked="infoD.VAL1_CHECKBOX[detail.detail_id]==1"/>
-                                                </div>
-                                                <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val1_ischeckbox == 2}">
-                                                    <div class="btn-group ">
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="0"/> UNABLE
-                                                        </label>
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="1"/> PARTIAL
-                                                        </label>
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="2"/> ABLE
-                                                        </label>
+                                                    <div ng-if="detail.val1Validate != 1">
+                                                        <input name="value1" type="text" ng-model="infoD.VAL1_VALUE[detail.detail_id]"  class="form-control">
+                                                    </div>
+                                                    <div ng-if="detail.val1Validate == 1">
+                                                        <input name="value1" type="text"  ng-pattern="/^[0-9]+$/" ng-model="infoD.VAL1_VALUE[detail.detail_id]" ng-change="mathScore(detail.detail_id,line.line_id,line.line_isscore1,line.line_israting1,line.line_isscore2,line.line_israting2,line.score_type1,line.score_type2,line.rating_id1)"  class="form-control">
                                                     </div>
                                                 </div>
-                                                <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val1_ischeckbox == 3}">
-                                                    <div class="btn-group ">
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="0"/> Yes
-                                                        </label>
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="1"/> No
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div ng-if="detail.val2_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}">
-                                                    <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val2_name != null}" >
-                                                        {{detail.val2_name}}
+                                            </div>
+                                            <div ng-if="detail.val1_ischeckbox == 1"  ng-class="{'col-md-1 col-sm-1' : detail.val1_ischeckbox == 1}">
+                                                <input class="form-control" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" type="checkbox" ng-checked="infoD.VAL1_CHECKBOX[detail.detail_id]==1"/>
+                                            </div>
+                                            <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val1_ischeckbox == 2}">
+                                                <div class="btn-group ">
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="0"/> UNABLE
+                                                    </label>
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="1"/> PARTIAL
+                                                    </label>
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="2"/> ABLE
                                                     </label>
                                                 </div>
+                                            </div>
+                                            <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val1_ischeckbox == 3}">
+                                                <div class="btn-group ">
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="0"/> Yes
+                                                    </label>
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="1"/> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div ng-if="detail.val2_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}">
+                                                <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val2_name != null}" >
+                                                    {{detail.val2_name}}
+                                                </label>
+                                            </div>
+                                            <div ng-class="{'has-error':showClickedValidation  && numberForm.value2.$error.pattern}">
                                                 <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val2_isvalue == 1}">
-                                                    <input type="text" ng-model="infoD.VAL2_VALUE[detail.detail_id]" ng-change="mathScore(detail.detail_id,line.line_id,line.line_isscore1,line.line_israting1,line.line_isscore2,line.line_israting2,line.score_type1,line.score_type2,line.rating_id2)" class="form-control">
-                                                </div>
-                                                <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1 col-sm-1' : detail.val2_ischeckbox == 1}">
-                                                    <input class="form-control" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" type="checkbox" ng-checked="infoD.VAL2_CHECKBOX[detail.detail_id]==1"/>
-                                                </div>
-                                                <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val2_ischeckbox == 2}">
-                                                    <div class="btn-group ">
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="0" /> UNABLE
-                                                        </label>
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="1" /> PARTIAL
-                                                        </label>
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="2" /> ABLE
-                                                        </label>
+                                                    <div ng-if="detail.val2Validate != 1">
+                                                        <input name="value2"  type="text" ng-model="infoD.VAL2_VALUE[detail.detail_id]" class="form-control">
+                                                    </div>
+                                                    <div ng-if="detail.val2Validate == 1">
+                                                        <input name="value2" ng-pattern="/^[0-9]+$/" type="text" ng-model="infoD.VAL2_VALUE[detail.detail_id]" ng-change="mathScore(detail.detail_id,line.line_id,line.line_isscore1,line.line_israting1,line.line_isscore2,line.line_israting2,line.score_type1,line.score_type2,line.rating_id2)" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div ng-if="detail.val2_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val2_ischeckbox == 3}">
-                                                    <div class="btn-group ">
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="0" /> Yes
-                                                        </label>
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="1"/> No
-                                                        </label>
-                                                    </div>
+                                            </div>
+                                            <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1 col-sm-1' : detail.val2_ischeckbox == 1}">
+                                                <input class="form-control" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" type="checkbox" ng-checked="infoD.VAL2_CHECKBOX[detail.detail_id]==1"/>
+                                            </div>
+                                            <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val2_ischeckbox == 2}">
+                                                <div class="btn-group ">
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="0" /> UNABLE
+                                                    </label>
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="1" /> PARTIAL
+                                                    </label>
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="2" /> ABLE
+                                                    </label>
                                                 </div>
+                                            </div>
+                                            <div ng-if="detail.val2_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val2_ischeckbox == 3}">
+                                                <div class="btn-group ">
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="0" /> Yes
+                                                    </label>
+                                                    <label class="btn">
+                                                        <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="1"/> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div ng-class="{'has-error':showClickedValidation  && numberForm.comment.$invalid}">
                                                 <div ng-if="detail.comment_text == 1">
                                                     <div class="form-group col-sm-8 col-md-6">
-                                                        <label class="col-md-4 col-sm-3" style="margin-top: 10px">
+                                                        <label class="col-md-3 col-sm-3" style="margin-top: 5px">
                                                             Comment
                                                         </label>
-                                                        <div class="col-md-8 col-sm-9 " style="margin-top: 5px">
-                                                            <input type="text" ng-model="infoD.COMMENTS[detail.detail_id]" class="form-control">
+                                                        <div class="col-md-8 col-sm-9" style="margin-top: 5px">
+                                                            <input name="comment"
+                                                                   ng-required="((infoD.VAL1_CHECKBOX[detail.detail_id]==false || infoD.VAL1_CHECKBOX[detail.detail_id] == null) && detail.val1_no ==1)||((infoD.VAL2_CHECKBOX[detail.detail_id]==false || infoD.VAL2_CHECKBOX[detail.detail_id] == null) && detail.val2_no ==1) || (infoD.VAL2_CHECKBOX[detail.detail_id] == true && detail.val2_yes == 1) || (infoD.VAL1_CHECKBOX[detail.detail_id] == true && detail.val1_yes == 1)"
+                                                                   type="text" ng-model="infoD.COMMENTS[detail.detail_id]" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row" ng-show="showClickedValidation && FAForm.numberForm.$error.pattern ">
-                                                <div ng-if="detail.val1_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
+                                        </div>
+                                        <div class="row">
+                                            <div ng-if="detail.val1_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
+                                            </div>
+                                            <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val1_isvalue == 1}">
+                                                <label style="color: #8b0000"  ng-show="showClickedValidation && numberForm.value1.$error.pattern ">Must be number</label>
+                                            </div>
+                                            <div ng-if="detail.val1_ischeckbox == 1"  ng-class="{'col-md-1 col-sm-1' : detail.val1_ischeckbox == 1}"></div>
+                                            <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val1_ischeckbox == 2}"> </div>
+                                            <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val1_ischeckbox == 3}"></div>
+                                            <div ng-if="detail.val2_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}"></div>
+                                            <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val2_isvalue == 1}">
+                                                <label style="color: #8b0000"  ng-show="showClickedValidation && numberForm.value2.$error.pattern ">Must be number</label>
+                                            </div>
+                                            <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1 col-sm-1' : detail.val2_ischeckbox == 1}"></div>
+                                            <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val2_ischeckbox == 2}"></div>
+                                            <div ng-if="detail.val2_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val2_ischeckbox == 3}"></div>
+                                            <div ng-if="detail.comment_text == 1">
+                                                <div class="form-group col-sm-8 col-md-6">
+                                                    <label class="col-md-3 col-sm-3" style="margin-top: 5px"></label>
+                                                    <div class="col-md-8 col-sm-9" style="margin-top: 5px">
+                                                        <label style="color: #8b0000"  ng-show="showClickedValidation && numberForm.comment.$invalid ">Must be enter</label>
+                                                    </div>
                                                 </div>
-                                                <div for="numberValue1" ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val1_isvalue == 1}">
-                                                    <label>Must be number</label>
-                                                </div>
-                                                <div ng-if="detail.val1_ischeckbox == 1"  ng-class="{'col-md-1 col-sm-1' : detail.val1_ischeckbox == 1}"></div>
-                                                <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val1_ischeckbox == 2}"> </div>
-                                                <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val1_ischeckbox == 3}"></div>
-                                                <div ng-if="detail.val2_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}"></div>
-                                                <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val2_isvalue == 1}">
-
-                                                </div>
-                                                <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1 col-sm-1' : detail.val2_ischeckbox == 1}"></div>
-                                                <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val2_ischeckbox == 2}"></div>
-                                                <div ng-if="detail.val2_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val2_ischeckbox == 3}"></div>
-                                                <div ng-if="detail.comment_text == 1"></div>
                                             </div>
                                         </div>
                                     </ng-form>
-
                                 </div>
 
                                 <div ng-if="line.line_isscore1 == 1">
@@ -464,10 +486,18 @@
                     </div>
                 </div>
                 </br>
-                <div class="row">
-                    <label class="bold col-md-4">* Comments/Recommendations: </label>
-                    <div class="col-md-3">
-                        <textarea class="form-control" ng-model="infoH.Comments"></textarea>
+                <div  ng-class="{'has-error':showClickedValidation && FAForm.recom.$invalid}">
+                    <div class="row">
+                        <label class="bold col-md-4">* Comments/Recommendations: </label>
+                        <div class="col-md-3">
+                            <textarea class="form-control" name="recom" required ng-model="infoH.Comments"></textarea>
+                        </div>
+                    </div>
+                    <div class="row"  ng-show="showClickedValidation && FAForm.recom.$invalid">
+                        <label class="bold col-md-4"></label>
+                        <div class="col-md-3 help-block">
+                            <label for="recom">Must be enter</label>
+                        </div>
                     </div>
                 </div>
                 </br>

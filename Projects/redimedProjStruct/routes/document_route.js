@@ -17,13 +17,6 @@ var form18Controller = require('./controllers/DocumentController/form18Controlle
 var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
 var gorgonMAController = require('./controllers/DocumentController/gorgonMAController')
 
-app.get('/api/document/newFA', FAController.newFA);
-app.get('/api/document/loadFA', FAController.loadFA);
-app.get('/api/document/newMA', MAController.newMA);
-app.get('/api/document/loadMA', MAController.loadMA);
-app.get('/api/document/newIDS', IDSController.newIDS);
-app.get('/api/document/loadIDS', IDSController.loadIDS);
-app.post('/api/document/insertUQ', UQController.insertUQ);
 
 /**
  * begin category 2
