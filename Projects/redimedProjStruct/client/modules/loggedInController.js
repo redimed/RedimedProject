@@ -47,7 +47,6 @@ angular.module("app.loggedIn.controller",[
 
     //Logout
     $scope.logout = function(){
-        alert("logout")
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
         $state.go("security.login",null,{reload:true});
