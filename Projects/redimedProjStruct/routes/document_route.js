@@ -60,12 +60,15 @@ app.post('/api/document/checkUser',UQController.checkUser);
 
 //Begin gorgon FA
 app.post('/api/document/insertGorgonFA',gorgonFAController.insertFA);
+app.post('/api/document/editGorgonFA',gorgonFAController.editFA);
+app.post('/api/document/gorgonFAInfo',gorgonFAController.getFA);
 //end
 
 //Begin gorgon MA
 app.post('/api/document/insertGorgonMA',gorgonMAController.insertMA);
+app.post('/api/document/editGorgonMA',gorgonMAController.editMA);
+app.post('/api/document/gorgonMAInfo',gorgonMAController.getMA);
 //end
-
 
 /**
  * begin category 3
@@ -93,7 +96,6 @@ app.post('/api/document/editForm18', form18Controller.editForm18);
 app.post('/api/document/loadMH', MHController.loadMH);
 app.post('/api/document/insertMH', MHController.insertMH);
 app.post('/api/document/editMH', MHController.editMH);
-
 /**
  * end medical history
  */

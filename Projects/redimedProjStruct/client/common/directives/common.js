@@ -17,7 +17,16 @@ angular.module("app.directive.common", [])
             return "No";
     }
 })
-
+.filter('arrGetBy', function() {
+  return function(input, key, value) {
+    for (var i=0, len=input.length; i<len; i++) {
+      if (input[i][key] == value) {
+        return input[i];
+      }
+    }
+    return null;
+  }
+})
 .directive("fabric", function(){
     return {
         restrict: "EA",

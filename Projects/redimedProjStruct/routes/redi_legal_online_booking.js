@@ -14,25 +14,29 @@ var structureController=require('./controllers/structureController');
 //-------------------------------------------------------------
 
 //redimedsites
-app.get('/api/rlob/redimedsites/list',RedimedSiteController.list);
+app.get('/api/rlob/redimedsites/list',RedimedSiteController.rlobList);
 
 //rlType
 app.get('/api/rlob/rl_types/list',rlTypesController.list);
+app.get('/api/rlob/rl_types/get-rltype-by-id',rlTypesController.getRlTypeById);
 
 //cln_specialties
 app.get('/api/rlob/cln_specialties/list',clnSpecialitiesController.list);
 app.get('/api/rlob/cln_specialties/filter-by-type',clnSpecialitiesController.filterByType);
+app.get('/api/rlob/cln_specialties/get-speciality-by-id',clnSpecialitiesController.getSpecialityById);
 
 //doctors
 app.get('/api/rlob/doctors/list',doctorsController.list);
 app.get('/api/rlob/doctors/get-doctors-by-speciality',doctorsController.getDoctorOfSpeciality);
 app.get('/api/rlob/doctors/get-doctors-info-by-userid',doctorsController.getDoctorInfoByUserId);
+app.get('/api/rlob/doctors/get-doctors-by-id',doctorsController.getDoctorById);
 
 
 //cln_appointment-calendar
 app.get('/api/rlob/appointment-calendar/list',clnAppointmentCalendarController.list);
 app.get('/api/rlob/appointment-calendar/get-appointment-calendar',clnAppointmentCalendarController.getAppointmentCalendar);
 app.get('/api/rlob/appointment-calendar/check-same-doctor',clnAppointmentCalendarController.checkSameDoctor);
+app.get('/api/rlob/appointment-calendar/get-by-id',clnAppointmentCalendarController.getAppointmentCalendarById);
 
 //rl_bookings
 app.post('/api/rlob/rl_bookings/add',rlBookingsController.add);
@@ -46,6 +50,12 @@ app.get('/api/rlob/rl_bookings/admin/filter-booking',rlBookingsController.lob_fi
 app.post('/api/rlob/rl_bookings/admin/change-appointment-calendar',rlBookingsController.changeAppointmentCalendar);
 app.get('/api/rlob/rl_bookings/admin/get-files-by-booking-id',rlBookingsController.get_files_booking);//nguyen khank
 app.post('/api/rlob/rl_bookings/admin/send-comfirm-email',rlBookingsController.sendConfirmEmail);
+app.get('/api/rlob/rl_bookings/admin/report',rlBookingsController.bookingsList);//chien
+app.get('/api/rlob/rl_bookings/admin/status',rlBookingsController.bookingsListStatus);//chien
+app.get('/api/rlob/rl_bookings/admin/get-pass-booking-not-change-status',rlBookingsController.getPassBookingNotChangeStatus);
+app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document',rlBookingsController.getUpcommingBookingHaveNotClientDocument);
+app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);
+app.get('/api/rlob/rl_bookings/admin/report/get-pass-booking-have-not-result',rlBookingsController.getReportPassBookingHaveNotResult);
 
 //rl_booking_files
 app.get('/api/rlob/rl_booking_files/get-new-key',rlBookingFilesController.getNewKey);
@@ -69,9 +79,11 @@ app.get('/api/rlob/sys_user_notifications/get-items-of-paging',sysUserNotificati
 
 //structure
 app.post('/api/structure/list-appointments-upcoming',structureController.list_appointments_calendar_upcoming);
+app.get('/api/download/structure/attach-file/:sourceName/:refId', structureController.downloadLetterAttachFile);
 
-
-//var multipart = require('connect-multiparty');
-//var multipartMiddleware = multipart();
-//var rlobUploadController=require('./controllers/rlobUploadController');
-//app.post('/api/rlob/rl_booking_files/upload',multipartMiddleware, rlobUploadController.rlobUploadFile);
+//Documents
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+var rlobDocumentsController=require('./controllers/rlobDocumentsController');
+app.post('/api/rlob/rl_booking_files/upload',multipartMiddleware, rlobDocumentsController.rlobUploadFile);
+app.get('/api/download/lob/document/:fileId(*)', rlobDocumentsController.rlobDowloadFile);

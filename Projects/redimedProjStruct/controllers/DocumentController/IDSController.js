@@ -92,10 +92,10 @@ module.exports = {
                     res.json({status:'fail'});
                 }else
                 {
-                    var buffer = new Buffer( data.SIGNATURE, 'binary' );
-                    var sign = buffer.toString('base64');
+                    //var buffer = new Buffer( data.SIGNATURE, 'binary' );
+                    //var sign = buffer.toString('base64');
 
-                    var rs = util.format("data:image/png;base64,%s", sign)
+                    var rs = util.format("data:image/png;base64,%s", "");
 
                     res.json({data: data, rs: rs});
                 }

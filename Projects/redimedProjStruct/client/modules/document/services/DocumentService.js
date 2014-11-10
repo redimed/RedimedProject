@@ -119,6 +119,17 @@ angular.module('app.loggedIn.document.services', [])
             return insertGorgonFA.post({info:info});
         }
 
+        documentService.editGorgonFA = function(info){
+            var edit = api.all('document/editGorgonFA');
+            return edit.post({info:info});
+        }
+
+        documentService.getGorgonFAInfo = function(id)
+        {
+            var info = api.all('document/gorgonFAInfo');
+            return info.post({id:id});
+        }
+
         /* Gorgon FA
          End
          */
@@ -129,6 +140,17 @@ angular.module('app.loggedIn.document.services', [])
         documentService.insertGorgonMA = function(info){
             var insertGorgonMA = api.all("document/insertGorgonMA");
             return insertGorgonMA.post({info:info});
+        }
+
+        documentService.editGorgonMA = function(info){
+            var edit = api.all('document/editGorgonMA');
+            return edit.post({info:info});
+        }
+
+        documentService.getGorgonMAInfo = function(id)
+        {
+            var info = api.all('document/gorgonMAInfo');
+            return info.post({id:id});
         }
         /* gorgon MA
          End

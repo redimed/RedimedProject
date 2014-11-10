@@ -19,6 +19,7 @@ module.exports = {
                                 bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                                     if (compareResult == true) {
                                         delete data["img"];
+
                                         return done(null, {status: 'success',
                                             msg: "Login Successfully!",
                                             userInfo: data,
@@ -37,6 +38,8 @@ module.exports = {
                     {
                         bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                             if (compareResult == true) {
+                                delete data["img"];
+
                                 return done(null, {status: 'success',
                                     msg: "Login Successfully!",
                                     userInfo: data

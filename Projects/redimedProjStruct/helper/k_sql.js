@@ -307,7 +307,7 @@ function K_SQL(req, res) {
         console.log("\n Exec SQL: " + sql)
 
         if (!this.connection) {
-            req.getConnection(function (err, connection) {
+            req.getConnection(function (error, connection) {
                 this.connection = connection;
                 this.connection.query(sql, function (err, data) {
                     if (err) {
@@ -316,8 +316,17 @@ function K_SQL(req, res) {
                             fnErr(err);
                         return;
                     }
-                    if (fnSuc)
-                        fnSuc(data);
+                    if (fnSuc) {
+                        if(!_this.is_exec_row)
+                            fnSuc(data);
+                        else {
+                            if(data.length > 0)
+                                fnSuc(data[0]);
+                            else
+                                fnSuc(null);
+                            _this.is_exec_row = false;
+                        } 
+                    }
                 });
             });
         } else {
@@ -332,7 +341,11 @@ function K_SQL(req, res) {
                     fnSuc(data);
             });
         }
+    }
 
+    this.exec_row = function () {
+        _this.is_exec_row = true;
+        _this.exec.apply(this.exec_row, arguments);
     }
 
     this.new = function () {

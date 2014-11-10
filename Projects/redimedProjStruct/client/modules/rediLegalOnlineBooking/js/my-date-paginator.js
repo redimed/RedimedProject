@@ -9,8 +9,10 @@
  * callBackFunc need passed typical javascript date type
  *
  */
-function MyDatePaginator(momentDate,callBackFunc) {
+function MyDatePaginator(selector,momentDate,callBackFunc) {
     var options = {
+        //startDate:moment().add(14,'day'),
+        //startDateFormat:'DD-MM-YYYY',
         selectedDate: momentDate.format("DD-MM-YYYY"),
         selectedDateFormat: 'DD-MM-YYYY',
         onSelectedDateChanged: function(event, date) {
@@ -18,7 +20,7 @@ function MyDatePaginator(momentDate,callBackFunc) {
             callBackFunc(date);
         }
     }
-    $('#mydatepaginator').datepaginator(options);
+    $(selector).datepaginator(options);
 //    return {
 //        init:function()
 //        {

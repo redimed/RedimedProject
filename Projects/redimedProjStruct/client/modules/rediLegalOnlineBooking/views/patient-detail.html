@@ -1,6 +1,17 @@
 
 
+
 <div class="portlet light">
+
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-basket font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">{{bookingType}} Online Booking (Detail)</span>
+
+        </div>
+
+    </div>
+
     <div class="portlet-body">
         <div class="tabbable">
 
@@ -142,12 +153,12 @@
 
 
                                     <div  ng-if="bookingType=='REDiLEGAL'" class="row form-group" ng-class="{ 'has-error': bookingForm.CLAIM_NO.$invalid  && hadForcused}">
-                                        <div class="col-md-3">
-                                            <label class="control-label" for="CLAIM_NO"></span>Claim number:
+                                        <div class="col-md-4">
+                                            <label class="control-label" for="CLAIM_NO">Claim number:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <input  class="form-control" type="text"
                                                     required
                                                     ng-maxlength="20"
@@ -162,12 +173,12 @@
                                     </div>
 
                                     <div  ng-if="bookingType=='Vaccination'" class="row form-group" ng-class="{ 'has-error': bookingForm.EMPLOYEE_NUMBER.$invalid  && hadForcused}">
-                                        <div class="col-md-3">
-                                            <label class="control-label" for="EMPLOYEE_NUMBER"></span>Employee number:
+                                        <div class="col-md-4">
+                                            <label class="control-label" for="EMPLOYEE_NUMBER">Employee number:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <input  class="form-control" type="text"
                                                     required
                                                     ng-maxlength="20"
@@ -182,12 +193,12 @@
                                     </div>
 
                                     <div  ng-if="bookingType=='Vaccination'" class="row form-group" ng-class="{ 'has-error': bookingForm.DEPARTMENT_NAME.$invalid  && hadForcused}">
-                                        <div class="col-md-3">
-                                            <label class="control-label" for="DEPARTMENT_NAME"></span>Department Name:
+                                        <div class="col-md-4">
+                                            <label class="control-label" for="DEPARTMENT_NAME">Department Name:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <input  class="form-control" type="text"
                                                     required
                                                     ng-maxlength="50"
@@ -203,12 +214,12 @@
 
 
                                     <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_SURNAME.$invalid  && hadForcused}">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <label class="control-label" for="WRK_SURNAME">Surname:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <input class="form-control" type="text"
                                                    required
                                                    ng-maxlength="50"
@@ -224,12 +235,12 @@
                                     </div>
 
                                     <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_OTHERNAMES.$invalid  && hadForcused}">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <label class="control-label" for="WRK_OTHERNAMES">
                                                 Other name:
                                             </label>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <input class="form-control" type="text"
                                                    ng-maxlength="50"
                                                    ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES" name="WRK_OTHERNAMES"/>
@@ -240,13 +251,13 @@
                                     </div>
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_DOB.$invalid  && hadForcused}">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <label class="control-label" for="WRK_DOB">Date of birth:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
 
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <!--<div class="input-group date date-picker " style="width: 150px;" data-date-format="dd/mm/yyyy">-->
                                                 <!--<input ng-model="newBooking.WRK_DOB" id="WRK_DOB" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">-->
                                                 <!--<span class="input-group-btn">-->
@@ -278,12 +289,12 @@
                                     </div>
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_EMAIL.$invalid  && hadForcused}">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <label class="control-label" for="WRK_EMAIL">Email address:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <input class="form-control" type="email" name="WRK_EMAIL"
                                                    required
                                                    ng-maxlength="50"
@@ -302,12 +313,12 @@
                                     </div>
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_CONTACT_NO.$invalid  && hadForcused}">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <label class="control-label" for="WRK_CONTACT_NO">Contact number:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <input class="form-control" type="text" name="WRK_CONTACT_NO"
                                                    required
                                                    ng-maxlength="20"
@@ -323,11 +334,11 @@
                                     </div>
 
                                     <div class="row form-group">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <!--for="ISNEW"-->
                                             <label>Is the patient new to REDiMED:</label>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <!--<input  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW" id="ISNEW">-->
 
                                             <input style="float: left" type="radio" ng-model="newBooking.ISNEW" value="1">YES<br/>
@@ -394,7 +405,8 @@
                                 </fieldset>
 
                                 <button ng-hide="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom"  ng-click="save()">Save</button>
-                                <a ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ui-sref="loggedIn.rlob_booking">Go to booking page</a>
+                                <a ng-if="bookingType=='REDiLEGAL'" ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ui-sref="loggedIn.rlob.rlob_booking">Go to booking page</a>
+                                <a ng-if="bookingType=='Vaccination'" ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ui-sref="loggedIn.vaccinob.vaccinob_booking">Go to booking page</a>
                                 <a ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ng-click="showDialogSendDocument();">Send documents</a>
 
 
@@ -468,7 +480,7 @@
 </div>
 
 <div  id="lob-client-upload-dialog" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -477,60 +489,8 @@
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
-                        <input style="background-color: burlywood" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th width="50%">Name</th>
-                                <th ng-show="uploader.isHTML5">Size</th>
-                                <th ng-show="uploader.isHTML5">Progress</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="item in uploader.queue">
-                                <td><strong>{{ item.file.name }}</strong></td>
-                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                <td ng-show="uploader.isHTML5">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                                </td>
-                                <td nowrap>
-                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                        <span class="glyphicon glyphicon-upload"></span> Upload
-                                    </button>
-                                    <!--<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">-->
-                                    <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
-                                    <!--</button>-->
-                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                        <span class="glyphicon glyphicon-trash"></span> Remove
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <div>
-                            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                                <span class="glyphicon glyphicon-upload"></span> Upload all
-                            </button>
-                            <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
-                            <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel all-->
-                            <!--</button>-->
-                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                <span class="glyphicon glyphicon-trash"></span> Clear all
-                            </button>
-                        </div>
-
-                    </div>
+                    <rlob-upload selected-booking="newBooking">
+                    </rlob-upload>
                 </div>
 
             </div>

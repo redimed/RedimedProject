@@ -2,7 +2,9 @@ angular.module("app.loggedIn.controller",[
 ])
 
 .controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q){
+
     var userInfo = $cookieStore.get('userInfo');
+    $scope.userInfo=userInfo;
     $scope.loggedInMenus = [];
     $scope.user = userInfo.Booking_Person;
     $scope.selectedMenu = null;
@@ -74,6 +76,32 @@ angular.module("app.loggedIn.controller",[
         $scope.$on('$idleTimeout', function() {
             $state.go('lockscreen');
         })
+
+        /****
+         *Config get source link
+         * tannv.dts@gmail.com
+         */
+        var sourceNames={
+            REDiLEGAL:'REDiLEGAL',
+            Vaccination:'Vaccination'
+        }
+
+        var getSourceLink=function(sourceName,refId){
+            var link='';
+            switch(sourceName)
+            {
+                case sourceNames.REDiLEGAL:
+                    link='loggedIn.rlob.rlob_booking_detail({bookingId:'+refId+"})";
+                    break;
+                case sourceNames.Vaccination:
+                    link='loggedIn.vaccinob.vaccinob_booking_detail({bookingId:'+refId+"})";
+                    break;
+                default:
+                    link='';
+            }
+            return link;
+        }
+
         /**
          * Tao scroll cho notification dropdown
          * tannv.dts@gmail.com
@@ -113,8 +141,7 @@ angular.module("app.loggedIn.controller",[
                     $scope.maxIndex=data.data[0].id;
                     for(var i=0;i<data.data.length;i++)
                     {
-
-
+                        data.data[i].link=getSourceLink(data.data[i].source_name,data.data[i].ref_id);
                         if(data.data[i].TYPE=='bell')
                         {
                             $scope.numbersBellUnread++;
@@ -198,11 +225,16 @@ angular.module("app.loggedIn.controller",[
          * show popup hien thi notification moi (dang alert)
          * tannv.dts@gmail.com
          */
-        $scope.showNotificationPopup=function(styleClass,msg)
+        $scope.notificationColor={
+            warning:'warning',
+            danger:'danger',
+            success:'success'
+        }
+        $scope.showNotificationPopup=function(styleClass,msg,notifyColor)
         {
             $(styleClass).notify({
                 message: { text: msg },
-                type:'warning'
+                type:notifyColor
             }).show();
         }
 
@@ -251,10 +283,22 @@ angular.module("app.loggedIn.controller",[
             return result;
         }
 
+        /***
+         * Defined Schedule List
+         * @type {{}}
+         */
+        $scope.scheduleList={
+
+        }
+
         $scope.updateNotification = function() {
             // Don't start a new fight if we are already fighting
             if ( angular.isDefined(notificationSchedule) ) return;
             notificationSchedule = $interval(function() {
+                for(var key in $scope.scheduleList)
+                {
+                    $scope.scheduleList[key]();
+                }
                 $http({
                     method:"GET",
                     url:"/api/rlob/sys_user_notifications/get-new-notifications",
@@ -266,7 +310,8 @@ angular.module("app.loggedIn.controller",[
                             $scope.maxIndex=data.data[0].id;
                             for(var i=0;i<data.data.length;i++)
                             {
-                                $scope.showNotificationPopup(".lob_notification_popup",data.data[i].msg);
+                                data.data[i].link=getSourceLink(data.data[i].source_name,data.data[i].ref_id);
+                                $scope.showNotificationPopup(".lob_notification_popup",data.data[i].msg,$scope.notificationColor.warning);
                                 if(data.data[i].TYPE=='bell')
                                 {
                                     $scope.bellUnreadList.unshift(data.data[i]);
@@ -290,7 +335,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 10000);
+            }, 3000);
         };
 
 
@@ -407,7 +452,12 @@ angular.module("app.loggedIn.controller",[
             .success(function(data) {
                 if(data.status=='success')
                 {
-                    $scope.listNotifications=data.data;
+                    $scope.listNotifications.splice(0,$scope.listNotifications.length);
+                    for(var i=0;i<data.data.length;i++)
+                    {
+                        data.data[i].link=getSourceLink(data.data[i].source_name,data.data[i].ref_id);
+                        $scope.listNotifications.push(data.data[i]);
+                    }
                     deferred.resolve();
 
                 }
@@ -501,10 +551,12 @@ angular.module("app.loggedIn.controller",[
                     for(var i=0;i<data.data.length;i++)
                     {
                         $scope.listAppointmentCalendarUpcoming.push(data.data[i]);
-                        if($scope.listAppointmentCalendarUpcoming[i].SOURCE_TYPE='REDiLEGAL')
-                        {
-                            $scope.listAppointmentCalendarUpcoming[i].link="loggedIn.rlob_booking_detail({bookingId:"+$scope.listAppointmentCalendarUpcoming[i].ID+"})";
-                        }
+                        $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION=
+                            $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION
+                            +' - '+moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("HH:mm")
+                            +' '  +moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("DD/MM/YYYY")
+
+                        $scope.listAppointmentCalendarUpcoming[i].link=getSourceLink($scope.listAppointmentCalendarUpcoming[i].SOURCE_NAME,$scope.listAppointmentCalendarUpcoming[i].ID);
                     }
                 }
                 $scope.setSlimCroll('.appointments-upcoming-dropdown');
@@ -534,4 +586,113 @@ angular.module("app.loggedIn.controller",[
     {
         $("#list-my-calendar").modal('hide');
     }
-})
+
+        /**
+         * Function add notification for global
+         * sourceName: Redilegal or Vaccination...
+         * bellType: message,change status, change appointment calendar...
+         * notification type: bell or letter
+         * content: content of message (if bellType=message)
+         * tannv.dts@gmail.com
+         */
+        $scope.add_notification=function(assId,refId,sourceName,bellType,notificationType,content)
+        {
+            var deferred=$q.defer();
+            var promise=deferred.promise;
+            promise.then(function(data){
+                var msg="";
+                if(notificationType==rlobConstant.notificationType.letter)
+                {
+                    msg="["+sourceName+"] - "
+                        +data.Rl_TYPE_NAME+" - "
+                        +data.WRK_SURNAME+" - "
+                        +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")
+                        +(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"")
+                        +" - "
+                        +moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY");
+                }
+                else if(notificationType==rlobConstant.notificationType.bell)
+                {
+                    msg="["+sourceName+"] - "
+                        +data.WRK_SURNAME+ " - "
+                        +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")+
+                        +(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"")
+                        +" - "
+                        +bellType+(content!=undefined &&content!=null && content!=""?(":"+content):'')
+                        +" - "
+                        +moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY");
+                }
+                $http({
+                    method:"POST",
+                    url:"/api/rlob/sys_user_notifications/add-notification",
+                    data:{assId:assId,refId:refId,sourceName:sourceName,type:notificationType,msg:msg}
+                })
+                    .success(function(data) {
+                        if(data.status=='success')
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    })
+                    .error(function (data) {
+
+                    })
+                    .finally(function() {
+
+                    });
+            },function(reason){
+
+            });
+
+            $http({
+                method:"POST",
+                url:"/api/rlob/rl_bookings/get-booking-by-id",
+                data:{bookingId:refId}
+            })
+                .success(function(data) {
+                    if(data.status=='success')
+                    {
+                        deferred.resolve(data.data);
+                    }
+                    else
+                    {
+                        alert("data not exist!");
+                    }
+                })
+                .error(function (data) {
+                    console.log("error");
+                })
+                .finally(function() {
+                });
+        }
+
+        /***
+         * Contact detail
+         * tannv.dts@gmail.com
+         */
+        $scope.contactDetails=[];
+
+        $scope.myExpand=function(index)
+        {
+            $('.collapse'+index).collapse('toggle')
+        }
+
+
+        /***
+         * 
+         * phanquocchien.c1109g@gmail.com
+         */
+        $scope.userclick = function(){
+            if(userInfo.function_id != null){
+                UserService.getFunction(userInfo.function_id).then(function(data){
+                    $state.go(data.definition);
+                })
+            }
+            else{
+                $state.go("loggedIn.home");
+            }
+        }
+    })

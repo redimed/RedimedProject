@@ -1,20 +1,21 @@
 
 angular.module('app.loggedIn.document.gorgonFA.controllers',[])
     .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window) {
+        var isEdit = false;
 
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
 
-        $scope.info = [];
         var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
         var date = new Date();
         var today = $filter('date')(date,'dd/MM/yyyy');
 
         $scope.info = {
-            patientId : userinfo.id,
-            fName : userinfo.Booking_Person,
+            id: null,
+            patientId : null,
+            fName : null,
             age : 20,
             JAF : null,
             DOB : null,
@@ -36,11 +37,9 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             MS_Medication_Comment : null,
             MS_Other : null,
             MS_Other_Comment : null,
-            //
             MS_ie_Comment : null,
             MS_Mx_Heart_Rage_1 : null,
             MS_Mx_Heart_Rage_2 : null,
-            //
             MS_Mx_Weight_1 : null,
             MS_MX_Weight_2 : null,
             MS_Blood_Pressure_1 : null,
@@ -130,7 +129,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             Score7Comment : null,
             Score8Comment : null,
             FCAToTal : null,
-            FCAResult : null,//
+            FCAResult : null,
             LEPDC : null,
             LAPC : null,
             LComment : null,
@@ -145,7 +144,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             CalId : null,
             DocId : null
 
-    };
+        };
 
         var sex = "female";
         $scope.c_Left3 = function(){
@@ -339,31 +338,66 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             }
         };
 
-
-
         $scope.maxDateDOB = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
         $scope.maxDate = date;
 
 
-        $scope.submitGorgonFA = function(gorgonFAForm){
-            $scope.showClickedValidation = true;
-            if(gorgonFAForm.$invalid){
-                toastr.error("Please Input All Required Information!", "Error");
-            }else
-            {
-                var info = $scope.info;
-                console.log(info);
-                DocumentService.insertGorgonFA(info).then(function(response){
-                    if(response['status'] === 'success') {
-                        alert("Insert Successfully!");
-                    }
-                    else
-                    {
-                        alert("Insert Failed!");
-                    }
-                });
-            }
+        //============================================INSERT===============================
+        if(isEdit == false)
+        {
+            $scope.submitGorgonFA = function(gorgonFAForm){
+                $scope.showClickedValidation = true;
+                if(gorgonFAForm.$invalid){
+                    toastr.error("Please Input All Required Information!", "Error");
+                }else
+                {
+                    var info = $scope.info;
+                    console.log(info);
+                    DocumentService.insertGorgonFA(info).then(function(response){
+                        if(response['status'] === 'success') {
+                            alert("Insert Successfully!");
+                        }
+                        else
+                        {
+                            alert("Insert Failed!");
+                        }
+                    });
+                }
 
-        };
+            };
+        }
+        else
+        {
+            $scope.info.id = 10;
+
+            DocumentService.getGorgonFAInfo(10).then(function(data){
+                $scope.info = data;
+            })
+
+            $scope.submitGorgonFA = function(gorgonFAForm){
+                $scope.showClickedValidation = true;
+                if(gorgonFAForm.$invalid){
+                    toastr.error("Please Input All Required Information!", "Error");
+                }else
+                {
+                    DocumentService.editGorgonFA($scope.info).then(function(response){
+                        if(response['status'] === 'success') {
+                            alert("Edit Successfully!");
+                        }
+                        else
+                        {
+                            alert("Edit Failed!");
+                        }
+                    });
+                }
+
+            };
+        }
+
+
+
+
+
+
 
     });

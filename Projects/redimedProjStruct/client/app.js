@@ -26,10 +26,11 @@ angular.module("app", [
     
     'uz.mailto',                 //angular mailto for [patientdetail]--tannv.dts@gmail.com
     'ui.tree',                   // angular ui tree for [admin_booking]-- tannv.dts@gmail.com
-    'ng-context-menu'            // angular context menu (menu right click) for [admin_booking]-- tannv.dts@gmail.com
+    'ng-context-menu',            // angular context menu (menu right click) for [admin_booking]-- tannv.dts@gmail.com
+	'LocalStorageModule'
 ])
 
-.config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {
     //IDLE TIME
     $idleProvider.idleDuration(15*60);
     $idleProvider.warningDuration(30);
