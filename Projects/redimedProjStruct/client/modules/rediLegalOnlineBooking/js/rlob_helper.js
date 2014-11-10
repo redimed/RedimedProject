@@ -30,6 +30,12 @@ var rlobConstant={
 
         REDiLEGAL:{alias:'rlob',name:'REDiLEGAL'},
         Vaccination:{alias:'vaccinob',name:'Vaccination'}
+    },
+
+    notifyJsColor:{
+    warning:'warning',
+    danger:'danger',
+    success:'success'
     }
 }
 

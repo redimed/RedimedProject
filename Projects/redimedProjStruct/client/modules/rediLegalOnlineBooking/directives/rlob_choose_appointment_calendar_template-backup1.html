@@ -47,11 +47,7 @@
         </div>
 
         <div class="table-responsive" style="margin-top: 20px">
-            <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
-                <h4>No Results</h4>
-                <a ng-click="sendEmail()">Please contact us to make an appointment</a>
-            </div>
-
+            <div style="text-align: center"><h4>{{appointmentsFilter.length<=0?'No Results':''}}</h4></div >
             <div ng-repeat="location in appointmentsFilter">
                 <div class="row">
                     <div class="col-md-2" >
@@ -64,22 +60,20 @@
                                     {{doctor.DOCTOR_NAME}}
                                 </div>
                                 <div class="col-md-10">
-                                    <div ng-repeat="spec in doctor.SPEC_ITEMS">
-                                        <div class="col-md-2">
-                                            {{spec.Specialties_name}}
-                                        </div>
-                                        <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
-                                            <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
-                                               class="btn btn-sm yellow filter-submit margin-bottom"
-                                               style="margin-left: 10px;margin-bottom: 10px; width: 70px"
-                                               ng-click="selectAppointmentCalendar(appointment)">
-                                                {{ appointment.APPOINTMENT_TIME }}
-                                            </a>
-                                        </div>
+                                    <!--<a ng-repeat="appointment in doctor.APPOINTMENT_ITEMS"-->
+                                    <!--class="btn btn-sm yellow filter-submit margin-bottom"-->
+                                    <!--style="margin-left: 10px;margin-bottom: 10px; width: 70px"-->
+                                    <!--ng-click="changeAppointmentCalendar(appointment.CAL_ID,appointment.FROM_TIME,appointment.DOCTOR_ID,appointment.SITE_ID)"-->
 
+                                    <!--{{ appointment.APPOINTMENT_TIME }}-->
+                                    <!--</a>-->
 
-                                    </div>
-
+                                    <a ng-repeat="appointment in doctor.APPOINTMENT_ITEMS"
+                                       class="btn btn-sm yellow filter-submit margin-bottom"
+                                       style="margin-left: 10px;margin-bottom: 10px; width: 70px"
+                                       ng-click="selectAppointmentCalendar(appointment)">
+                                        {{ appointment.APPOINTMENT_TIME }}
+                                    </a>
                                 </div>
                             </div>
                         </div>

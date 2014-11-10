@@ -3,6 +3,7 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q){
     var userInfo = $cookieStore.get('userInfo');
+    $scope.userInfo=userInfo;
     $scope.loggedInMenus = [];
     $scope.user = userInfo.Booking_Person;
 
@@ -223,11 +224,16 @@ angular.module("app.loggedIn.controller",[
          * show popup hien thi notification moi (dang alert)
          * tannv.dts@gmail.com
          */
-        $scope.showNotificationPopup=function(styleClass,msg)
+        $scope.notificationColor={
+            warning:'warning',
+            danger:'danger',
+            success:'success'
+        }
+        $scope.showNotificationPopup=function(styleClass,msg,notifyColor)
         {
             $(styleClass).notify({
                 message: { text: msg },
-                type:'warning'
+                type:notifyColor
             }).show();
         }
 
@@ -276,10 +282,22 @@ angular.module("app.loggedIn.controller",[
             return result;
         }
 
+        /***
+         * Defined Schedule List
+         * @type {{}}
+         */
+        $scope.scheduleList={
+
+        }
+
         $scope.updateNotification = function() {
             // Don't start a new fight if we are already fighting
             if ( angular.isDefined(notificationSchedule) ) return;
             notificationSchedule = $interval(function() {
+                for(var key in $scope.scheduleList)
+                {
+                    $scope.scheduleList[key]();
+                }
                 $http({
                     method:"GET",
                     url:"/api/rlob/sys_user_notifications/get-new-notifications",
@@ -292,7 +310,7 @@ angular.module("app.loggedIn.controller",[
                             for(var i=0;i<data.data.length;i++)
                             {
                                 data.data[i].link=getSourceLink(data.data[i].source_name,data.data[i].ref_id);
-                                $scope.showNotificationPopup(".lob_notification_popup",data.data[i].msg);
+                                $scope.showNotificationPopup(".lob_notification_popup",data.data[i].msg,$scope.notificationColor.warning);
                                 if(data.data[i].TYPE=='bell')
                                 {
                                     $scope.bellUnreadList.unshift(data.data[i]);
@@ -662,4 +680,18 @@ angular.module("app.loggedIn.controller",[
         }
 
 
-})
+        /***
+         * 
+         * phanquocchien.c1109g@gmail.com
+         */
+        $scope.userclick = function(){
+            if(userInfo.function_id != null){
+                UserService.getFunction(userInfo.function_id).then(function(data){
+                    $state.go(data.definition);
+                })
+            }
+            else{
+                $state.go("loggedIn.home");
+            }
+        }
+    })

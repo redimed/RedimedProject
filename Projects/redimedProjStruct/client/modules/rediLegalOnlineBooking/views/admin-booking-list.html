@@ -93,9 +93,18 @@
 
     /*--------------------------------------------*/
     .panel-explorer{
-        height: 370px;
+        height: 500px;
+    }
+
+    .admin-notification-box{
+        font-size: 10pt;
+        font-weight: bold;
+        border-right: 2px solid rgba(117, 117, 117, 0.21);
+        padding-left: 5px;
+        padding-right: 5px;
     }
 </style>
+
 
 
 <!--Bookmark Begin Page-->
@@ -104,19 +113,54 @@
 <div class="portlet light">
 
 
+
 <div class="portlet-title">
     <div class="caption">
-        <i class="icon-basket font-green-sharp"></i>
+        <i class="fa fa-check font-green-sharp"></i>
         <span class="caption-subject font-green-sharp bold uppercase">{{bookingType}} Online Booking (Admin)</span>
 
     </div>
 
 </div>
 
+
+
+
 <div class="actions">
+
+    <div class="row">
+
+        <div class="col-md-12 ">
+            <span>
+                <i class="fa fa-exclamation-triangle" style="color: #f3575e"></i>
+            </span>
+            <!--label label-warning-->
+            <span class="  admin-notification-box">
+                <a ng-click="showListBookingNotification(localNotificationType.type3.alias);">
+                    {{listPassBookingHaveNotResult.length}} Pass bookings have not result
+                </a>
+            </span>
+            <span class=" admin-notification-box">
+                <a ng-click="showListBookingNotification(localNotificationType.type2.alias);">
+                    {{listUpcommingBookingHaveNotClientDocument.length}} Upcomming bookings have not document
+                </a>
+            </span>
+            <span class="   admin-notification-box">
+                <a ng-click="showListBookingNotification(localNotificationType.type1.alias);">
+                    {{listPassBookingNotChangeStatus.length}} Pass booking have not been changed status
+                </a>
+            </span>
+        </div>
+
+    </div>
+    <hr>
+
+
+
+
     <div class="row" style="margin-top:20px;margin-bottom: 10px">
         <div class="col-md-2">
-            <div class="row form-group">
+            <div class=" form-group">
 
                     <div  class="input-group date date-picker" style="width: 150px;" data-date-format="dd-mm-yyyy">
                         <input  ng-model="lobAdminSearch.fromDateKey" id="fromDateKey" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly  name="order_date_from" >
@@ -129,7 +173,7 @@
         </div>
 
         <div class="col-md-2">
-            <div class="row form-group">
+            <div class=" form-group">
 
                     <div class="input-group date date-picker " style="width: 150px;" data-date-format="dd-mm-yyyy">
                         <input  ng-model="lobAdminSearch.toDateKey" id="toDateKey" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="To Date">
@@ -142,7 +186,7 @@
         </div>
 
         <div ng-hide="doctorInfo.doctor_id" class="col-md-3">
-            <div  class="row form-group">
+            <div  class=" form-group">
                 <div class="col-md-3">
                     <label for="doctorKey">Doctor:</label>
                 </div>
@@ -152,7 +196,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="row form-group">
+            <div class=" form-group">
                 <div class="col-md-3">
                     <label for="workerKey">Worker:</label>
                 </div>
@@ -447,7 +491,6 @@
                         -->
                         <rlob-file-download
                                 selected-booking="selectedBooking"
-                                add-notification-function="add_notification"
                                 booking-type="bookingType"
                                 is-admin-get-files="isAdminGetFiles"
                                 files-update-flag="filesUpdateFlag">
@@ -584,5 +627,33 @@
         </div>
     </div>
 </div>
+
+
+<div  id="list-booking-notification-popup" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{listBookingNotificationHeader}}</h4>
+            </div>
+
+            <div class="modal-body">
+                <rlob-admin-local-notification list-booking-notification="listBookingNotification" booking-type="bookingType"></rlob-admin-local-notification>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='notifications top-right rlob_admin_local_notification_popup'></div>
+
+
+
+
+
+
 
 

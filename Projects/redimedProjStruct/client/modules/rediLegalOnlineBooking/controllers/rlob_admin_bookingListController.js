@@ -53,7 +53,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         var initPickers = function () {
 
             //init date pickers
-            $('.date-picker').datepicker({
+            $('.date-picker').rlobdatepicker({
                 rtl: Metronic.isRTL(),
                 autoclose: true
             }).on('changeDate',function(evn){
@@ -760,6 +760,168 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             }
 
         }
+
+
+        /***
+         * Local notification for admin
+         * tannv.dts@gmail.com
+         */
+        //----------------------------------------------------------------------------------
+        $scope.listBookingNotification=[];
+
+        $scope.localNotificationType={
+            type1:{
+                header:'Pass bookings not change status',
+                alias:'passBookingNotChangeStatus'
+            },
+            type2:{
+                header:'Upcomming bookings have not been uploaded document (client)',
+                alias:'upcommingBookingHaveNotDucment'
+            },
+            type3:{
+                header:'Pass bookings have not been uploaded result',
+                alias:'passBookingHaveNotResult'
+            }
+
+        }
+
+        /***
+         * Danh sach cac booking da qua chua doi status
+         * tannv.dts@gmail.com
+         */
+        $scope.listPassBookingNotChangeStatus=[];
+        $scope.getPassBookingNotChangeStatus=function()
+        {
+            rlobService.getPassBookingNotChangeStatus($scope.bookingType)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.listPassBookingNotChangeStatus=data.data;
+                    }
+                },
+                function(error)
+                {
+
+                });
+        }
+
+        /***
+         * Danh sach cac booking sap toi va client chua upload document
+         * tannv.dts@gmail.com
+         */
+        $scope.listUpcommingBookingHaveNotClientDocument=[];
+        $scope.getUpcommingBookingHaveNotClientDocument=function()
+        {
+            rlobService.getUpcommingBookingHaveNotClientDocument($scope.bookingType)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.listUpcommingBookingHaveNotClientDocument=data.data;
+                    }
+                },
+                function(error)
+                {
+
+                });
+        }
+
+        /***
+         * Danh sach cac booking da complete nhung chua co result
+         * tannv.dts@gmail.com
+         */
+        $scope.listPassBookingHaveNotResult=[];
+        $scope.getListPassBookingHaveNotResult=function()
+        {
+            rlobService.getPassBookingHaveNotResult($scope.bookingType)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.listPassBookingHaveNotResult=data.data;
+                    }
+                },
+                function(error)
+                {
+
+                });
+        }
+
+        /**
+         * Xu ly show list booking notificaion (local of admin)
+         * tannv.dts@gmail.com
+         */
+        $scope.showListBookingNotification=function(notificationType)
+        {
+            switch(notificationType)
+            {
+                case $scope.localNotificationType.type1.alias:
+                    $scope.listBookingNotification=$scope.listPassBookingNotChangeStatus;
+                    $scope.listBookingNotificationHeader=$scope.localNotificationType.type1.header;
+                    break;
+                case $scope.localNotificationType.type2.alias:
+                    $scope.listBookingNotification=$scope.listUpcommingBookingHaveNotClientDocument;
+                    $scope.listBookingNotificationHeader=$scope.localNotificationType.type2.header;
+                    break;
+                case $scope.localNotificationType.type3.alias:
+                    $scope.listBookingNotification=$scope.listPassBookingHaveNotResult;
+                    $scope.listBookingNotificationHeader=$scope.localNotificationType.type3.header;
+                    break;
+            }
+            $("#list-booking-notification-popup").modal({show:true,backdrop:'static'});
+
+//            $scope.filterBooking
+
+        }
+
+        /**
+         * Khi tat danh sach xem cac booking local notification thi chay lai tree booking
+         * muc dich de dong nhat data
+         * tannv.dts@gmail.com
+         */
+        $('#list-booking-notification-popup').on('hidden.bs.modal', function (e) {
+            $scope.filterBooking();
+        });
+
+        /***
+         * Cap nhat cac local admin notification
+         * tannv.dts@gmail.com
+         */
+        $scope.updateAdminLocalNotification=function()
+        {
+            $scope.getPassBookingNotChangeStatus();
+            $scope.getUpcommingBookingHaveNotClientDocument();
+            $scope.getListPassBookingHaveNotResult();
+        }
+        $scope.updateAdminLocalNotification();
+        /**
+         * Thêm function cap nhat admin local notification vao schedule
+         * tannv.dts@gmail.com
+         */
+        $scope.scheduleList.rlobUpdateAdminLocalNotification=$scope.updateAdminLocalNotification;
+
+//        $scope.$watch('listPassBookingNotChangeStatus', function(oldValue,newValue){
+//            if($scope.listPassBookingNotChangeStatus.length>0)
+//            {
+//                var msg=$scope.listPassBookingNotChangeStatus.length +' pass booking not change status';
+//                $scope.showNotificationPopup('.rlob_admin_local_notification_popup',msg,$scope.notificationColor.danger);
+//            }
+//
+//        })
+//        $scope.$watch('listUpcommingBookingHaveNotClientDocument', function(oldValue,newValue){
+//            if($scope.listUpcommingBookingHaveNotClientDocument.length>0)
+//            {
+//                var msg=$scope.listUpcommingBookingHaveNotClientDocument.length +' upcomming bookings have not document';
+//                $scope.showNotificationPopup('.rlob_admin_local_notification_popup',msg,$scope.notificationColor.danger);
+//            }
+//
+//        })
+//        $scope.$watch('listPassBookingHaveNotResult', function(oldValue,newValue){
+//            if($scope.listPassBookingHaveNotResult.length>0)
+//            {
+//                var msg=$scope.listPassBookingHaveNotResult.length +' pass booking have not result';
+//                $scope.showNotificationPopup('.rlob_admin_local_notification_popup',msg,$scope.notificationColor.danger);
+//            }
+//        })
+
 
 
 });

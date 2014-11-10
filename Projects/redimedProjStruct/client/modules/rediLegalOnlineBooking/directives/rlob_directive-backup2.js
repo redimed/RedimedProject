@@ -157,7 +157,6 @@ angular.module("app.loggedIn.rlob.directive", [])
             {
 
                 //Google map
-                /*
                 var geocoder;
                 var map;
                 geocoder = new google.maps.Geocoder();
@@ -187,8 +186,6 @@ angular.module("app.loggedIn.rlob.directive", [])
                         codeAddress();
                 });
 
-                 */
-
                 $scope.panelAccordion = {
                     status1: true,
                     status2: true,
@@ -198,25 +195,6 @@ angular.module("app.loggedIn.rlob.directive", [])
             }
         };
     })
-
-    .directive('rlobBookingDetailPrint', function() {
-        return {
-            restrict: 'E',
-            transclude:true,
-            required:['^ngModel'],
-            scope: {
-                selectedBooking:  '=',
-                bookingType:'='
-            },
-            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_detail_template_print.html',
-            controller: function ($scope)
-            {
-
-            }
-        };
-    })
-
-
 
     .directive('rlobUpload', function() {
         return {
@@ -349,17 +327,18 @@ angular.module("app.loggedIn.rlob.directive", [])
                 bookingType:'=',
                 selectedBooking:  '=',
                 isAdminGetFiles:'=',
+                addNotificationFunction:'=',
                 filesUpdateFlag:'='
                 //la so, de danh dau co file moi upload hay khong
                 //set cung bien voi rlobFileDownload directive sẽ tu dong dong bo hoa giup upload vao download
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_download_file_template.html',
-            controller: function ($scope,$http,rlobService)
+            controller: function ($scope,$http)
             {
 
                 $scope.letterType=rlobConstant.letterType;
                 $scope.notificationType=rlobConstant.notificationType;
-                $scope.rlob_add_notification=rlobService.add_notification;
+                $scope.rlob_add_notification=$scope.addNotificationFunction;
                 function getFilesUpload() {
                     $http({
                         method: "GET",
@@ -395,8 +374,6 @@ angular.module("app.loggedIn.rlob.directive", [])
                         $(styleClass).modal({show:true,backdrop:'static'});
                     };
 
-                    $scope.showNotificationPopup=rlobService.showNotificationPopup;
-
                     $http({
                         method:"POST",
                         url:"/api/rlob/rl_booking_files/change-role-download",
@@ -405,18 +382,18 @@ angular.module("app.loggedIn.rlob.directive", [])
                         .success(function(data) {
                             if(data.status=='success')
                             {
-                                //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file',rlobConstant.notifyJsColor.success);
+                                $scope.showMsgDialog(".rlob-file-msg-dialog",'Authority downloads','success','Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file');
                                 if(role==1)
                                     $scope.rlob_add_notification(assId,refId,$scope.bookingType,$scope.letterType.result,$scope.notificationType.letter,'');
                                 getFilesUpload();
                             }
                             else
                             {
-                                //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
+                                $scope.showMsgDialog(".rlob-file-msg-dialog",'Authority downloads','fail','Changing fail!');
                             }
                         })
                         .error(function (data) {
-                            //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
+                            $scope.showMsgDialog(".rlob-file-msg-dialog",'Authority downloads','fail','Changing fail!');
                         })
                         .finally(function() {
 
@@ -446,47 +423,9 @@ angular.module("app.loggedIn.rlob.directive", [])
                 selectedAppointmentCalendar:'='
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_choose_appointment_calendar_template.html',
-            controller: function ($scope,$http,$stateParams,Mailto,$cookieStore,$window) {
-                $scope.loginInfo = $cookieStore.get('userInfo');
-                $scope.companyInfo=$cookieStore.get('companyInfo')[0];
-                //Config Send mail template
-                /***
-                 * Config email template
-                 * tannv.dts@gmail.com
-                 */
-                $scope.mailTemplate={
-                    REDiLEGAL:{
-                        label:'Please contact us to make an appointment',
-                        recepient : "redilegal@redimed.com.au",
-                        options:{
-                            subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
-                            body:
-                                "Please booking for me..."
-                        }
+            controller: function ($scope,$http,$stateParams) {
 
-                    },
-                    Vaccination:{
-                        label:'Please contact us to make an appointment',
-                        recepient : '',
-                        options:{
-                            subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
-                            body:
-                                "Please booking for me..."
-                        }
-
-                    }
-                };
-
-                if($scope.bookingType=='REDiLEGAL')
-                    $scope.mailtoLink = Mailto.url($scope.mailTemplate.REDiLEGAL.recepient, $scope.mailTemplate.REDiLEGAL.options);
-                else if($scope.bookingType=='Vaccination')
-                    $scope.mailtoLink = Mailto.url($scope.mailTemplate.Vaccination.recepient, $scope.mailTemplate.Vaccination.options);
-
-                $scope.sendEmail=function()
-                {
-                    $window.location.href = $scope.mailtoLink;
-                }
-                //-------------------------------------------------------------
+                //Check Booking Type
 
                 $scope.selectedFilter={
                     locationSelected:{},
@@ -533,8 +472,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 {
                     $http({
                         method:"GET",
-                        url:"/api/rlob/redimedsites/list",
-                        params:{bookingType:$scope.bookingType}
+                        url:"/api/rlob/redimedsites/list"
                     })
                         .success(function(data) {
                             $scope.locationsFilter=data;
@@ -651,8 +589,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 //Get Appoiment Calendar
                 $scope.updateAppoinmentsList=function()
                 {
-                    var rlTypeId=$scope.selectedFilter.rltypeSelected && $scope.selectedFilter.rltypeSelected.RL_TYPE_ID?$scope.selectedFilter.rltypeSelected.RL_TYPE_ID:-1;
-                    var specialityId= $scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_id?$scope.selectedFilter.clnSpecialitySelected.Specialties_id:'%';
+                    var specialityId= $scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_id?$scope.selectedFilter.clnSpecialitySelected.Specialties_id:-1;
                     var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.doctor_id?$scope.selectedFilter.doctorSelected.doctor_id:'%';
                     var locationId=$scope.selectedFilter.locationSelected  && $scope.selectedFilter.locationSelected.id?$scope.selectedFilter.locationSelected.id:'%';
                     var fromTime=$scope.selectedFilter.var1.format("YYYY/MM/DD");
@@ -660,7 +597,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                     $http({
                         method:"GET",
                         url:"/api/rlob/appointment-calendar/get-appointment-calendar" ,
-                        params:{RL_TYPE_ID:rlTypeId,Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime}
+                        params:{Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime}
                     })
                         .success(function(data) {
 
@@ -680,26 +617,16 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                                 if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID])
                                 {
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID]={SPEC_ITEMS:[]};
+                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID]={APPOINTMENT_ITEMS:[]};
                                     temp[data[i].SITE_ID].DOCTOR_ITEMS.push({
                                         DOCTOR_ID:data[i].DOCTOR_ID,
                                         DOCTOR_NAME:data[i].NAME
                                     });
                                 }
-
-                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].Specialties_id])
+                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].CAL_ID])
                                 {
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].Specialties_id]={APPOINTMENT_ITEMS:[]};
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID].SPEC_ITEMS.push({
-                                        Specialties_id:data[i].Specialties_id,
-                                        Specialties_name:data[i].Specialties_name
-                                    });
-                                }
-
-                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].Specialties_id][data[i].CAL_ID])
-                                {
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].Specialties_id][data[i].CAL_ID]={};
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].Specialties_id].APPOINTMENT_ITEMS.push({
+                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].CAL_ID]={};
+                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID].APPOINTMENT_ITEMS.push({
                                         CAL_ID:data[i].CAL_ID,
                                         APPOINTMENT_TIME:data[i].appointment_time,
                                         FROM_TIME:data[i].FROM_TIME,
@@ -707,7 +634,6 @@ angular.module("app.loggedIn.rlob.directive", [])
                                         SITE_ID:data[i].SITE_ID
                                     });
                                 }
-
                             }
                             var arr=[];
                             for (var i=0;i<temp.LOCATION_ITEMS.length;i++)
@@ -717,20 +643,12 @@ angular.module("app.loggedIn.rlob.directive", [])
                                 for(var j=0;j<temp[location_item.SITE_ID].DOCTOR_ITEMS.length;j++)
                                 {
                                     var doctor_item=temp[location_item.SITE_ID].DOCTOR_ITEMS[j];
-                                    doctor_item.SPEC_ITEMS=[];
+                                    doctor_item.APPOINTMENT_ITEMS=[];
                                     location_item.DOCTOR_ITEMS.push(doctor_item);
-
-                                    for(var k=0;k<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].SPEC_ITEMS.length;k++)
+                                    for(var k=0;k<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].APPOINTMENT_ITEMS.length;k++)
                                     {
-                                        var spec_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].SPEC_ITEMS[k];
-                                        spec_item.APPOINTMENT_ITEMS=[];
-                                        doctor_item.SPEC_ITEMS.push(spec_item);
-
-                                        for(var l=0;l<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID][spec_item.Specialties_id].APPOINTMENT_ITEMS.length;l++)
-                                        {
-                                            var appointment_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID][spec_item.Specialties_id].APPOINTMENT_ITEMS[l];
-                                            spec_item.APPOINTMENT_ITEMS.push(appointment_item);
-                                        }
+                                        var appointment_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].APPOINTMENT_ITEMS[k];
+                                        doctor_item.APPOINTMENT_ITEMS.push(appointment_item);
                                     }
                                 }
                                 arr.push(location_item);
@@ -791,101 +709,7 @@ angular.module("app.loggedIn.rlob.directive", [])
 
             }
         }
-    })
-    
-    /***
- * booking repost
- * phanquocchien.c1109g@mail.com
- */
-.directive('rlobBookingReport',function(){
-        return {
-            restrict: 'E',
-            transclude:true,
-            scope: {
-                list: '=',
-                listStatus:'='
-            },
-            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_report_template.html'
-        };
-    })
-
-    .directive('rlobAdminLocalNotification', function(rlobService) {
-        return {
-            restrict: 'E',
-            transclude:true,
-            required:['^ngModel'],
-            scope: {
-                listBookingNotification:  '=',
-                bookingType:'='
-            },
-            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_admin_local_notification_template.html',
-            controller: function ($scope)
-            {
-                $scope.setSlimCroll=function(selector)
-                {
-                    $(selector).slimscroll({});
-                };
-
-                $scope.$watch('listBookingNotification',function(oldValue,newValue){
-                    $scope.setSlimCroll('.rlob-admin-local-notification-list');
-                    if($scope.selectedBooking)
-                        $scope.selectedBooking=undefined;
-                });
-
-                $scope.setSelectedBooking=function(bookingId)
-                {
-                    rlobService.getBookingById(bookingId)
-                        .then(function(data){
-                            if(data.status=='success')
-                            {
-                                $scope.selectedBooking=data.data;
-                            }
-                        },function(error){
-
-                        });
-                }
-
-                $scope.isAdminGetFiles=true;
-                $scope.isAdminUpload=true;
-                $scope.accordionStatus={
-                    status1:true
-                }
-            }
-        };
-    })
-
-    .directive('rlobChangeBookingStatus', function(rlobService) {
-        return {
-            restrict: 'E',
-            transclude:true,
-            required:['^ngModel'],
-            scope: {
-                selectedBooking:'='
-            },
-            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_change_status_template.html',
-            controller: function ($scope)
-            {
-                $scope.rlob_change_status=function(assId,bookingId,bookingType,status)
-                {
-                    rlobService.changeBookingStatus(bookingId,status)
-                        .then(function(data){
-                            if(data.status=='success')
-                            {
-                                $scope.selectedBooking.STATUS=status;
-                                var refId=bookingId;
-                                rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
-                            }
-                            else
-                            {
-
-                            }
-                        });
-
-                };
-
-            }
-        };
-    })
+    });
 
 
 

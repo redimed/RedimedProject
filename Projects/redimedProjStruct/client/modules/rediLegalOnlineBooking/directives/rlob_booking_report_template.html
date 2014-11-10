@@ -1,0 +1,35 @@
+<style>
+    .colorred{
+        background-color: rgba(255, 0, 0, 0.27);
+    }
+    .colorgreen{
+        background-color: rgba(37, 252, 37, 0.26);
+    }
+</style>
+
+<table class="table table-responsive table-hover">
+    <thead>
+    <tr>
+        <th>
+            Claim No.
+        </th>
+        <th>
+            Surname
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Appointment Date
+        </th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="booking in list">
+    <tr ng-class='booking.style_class'>
+        <td>{{booking.CLAIM_NO}}</td>
+        <td>{{booking.WRK_SURNAME}}</td>
+        <td>{{booking.Rl_TYPE_NAME}}</td>
+        <td>{{booking.APPOINTMENT_DATE| date:'dd/MM/yyyy HH:mm'}}</td>
+    </tr>
+    </tbody>
+</table>

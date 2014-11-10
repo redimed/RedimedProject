@@ -1,9 +1,9 @@
 /* =========================================================
- * bootstrap-rlobdatepicker.js
- * Repo: https://github.com/eternicode/bootstrap-rlobdatepicker/
- * Demo: http://eternicode.github.io/bootstrap-rlobdatepicker/
- * Docs: http://bootstrap-rlobdatepicker.readthedocs.org/
- * Forked from http://www.eyecon.ro/bootstrap-rlobdatepicker
+ * bootstrap-datepicker.js
+ * Repo: https://github.com/eternicode/bootstrap-datepicker/
+ * Demo: http://eternicode.github.io/bootstrap-datepicker/
+ * Docs: http://bootstrap-datepicker.readthedocs.org/
+ * Forked from http://www.eyecon.ro/bootstrap-datepicker
  * =========================================================
  * Started by Stefan Petre; improvements by Andrew Rowls + contributors
  *
@@ -103,14 +103,14 @@
         this._attachEvents();
 
         if (this.isInline){
-            this.picker.addClass('rlobdatepicker-inline').appendTo(this.element);
+            this.picker.addClass('datepicker-inline').appendTo(this.element);
         }
         else {
-            this.picker.addClass('rlobdatepicker-dropdown dropdown-menu');
+            this.picker.addClass('datepicker-dropdown dropdown-menu');
         }
 
         if (this.o.rtl){
-            this.picker.addClass('rlobdatepicker-rtl');
+            this.picker.addClass('datepicker-rtl');
             this.picker.find('.prev i, .next i')
                 .toggleClass('fa-angle-left fa-angle-right');
         }
@@ -324,7 +324,7 @@
                     }]
                 ];
             }
-            else if (this.element.is('div')){  // inline rlobdatepicker
+            else if (this.element.is('div')){  // inline datepicker
                 this.isInline = true;
             }
             else {
@@ -358,7 +358,7 @@
                 }],
                 [$(document), {
                     'mousedown touchstart': $.proxy(function(e){
-                        // Clicked outside the rlobdatepicker, hide it
+                        // Clicked outside the datepicker, hide it
                         if (!(
                             this.element.is(e.target) ||
                             this.element.find(e.target).length ||
@@ -445,7 +445,7 @@
             this._detachEvents();
             this._detachSecondaryEvents();
             this.picker.remove();
-            delete this.element.data().rlobdatepicker;
+            delete this.element.data().datepicker;
             if (!this.isInput){
                 delete this.element.data().date;
             }
@@ -559,12 +559,12 @@
                 top = offset.top;
 
             this.picker.removeClass(
-                    'rlobdatepicker-orient-top rlobdatepicker-orient-bottom '+
-                    'rlobdatepicker-orient-right rlobdatepicker-orient-left'
+                    'datepicker-orient-top datepicker-orient-bottom '+
+                    'datepicker-orient-right datepicker-orient-left'
             );
 
             if (this.o.orientation.x !== 'auto'){
-                this.picker.addClass('rlobdatepicker-orient-' + this.o.orientation.x);
+                this.picker.addClass('datepicker-orient-' + this.o.orientation.x);
                 if (this.o.orientation.x === 'right')
                     left -= calendarWidth - width;
             }
@@ -572,7 +572,7 @@
             // edge, fudge it sideways
             else {
                 // Default to left
-                this.picker.addClass('rlobdatepicker-orient-left');
+                this.picker.addClass('datepicker-orient-left');
                 if (offset.left < 0)
                     left -= offset.left - visualPadding;
                 else if (offset.left + calendarWidth > windowWidth)
@@ -591,7 +591,7 @@
                 else
                     yorient = 'bottom';
             }
-            this.picker.addClass('rlobdatepicker-orient-' + yorient);
+            this.picker.addClass('datepicker-orient-' + yorient);
             if (yorient === 'top')
                 top += height;
             else
@@ -671,13 +671,13 @@
             if (this.o.calendarWeeks){
                 var cell = '<th class="cw">&nbsp;</th>';
                 html += cell;
-                this.picker.find('.rlobdatepicker-days thead tr:first-child').prepend(cell);
+                this.picker.find('.datepicker-days thead tr:first-child').prepend(cell);
             }
             while (dowCnt < this.o.weekStart + 7){
                 html += '<th class="dow">'+dates[this.o.language].daysMin[(dowCnt++)%7]+'</th>';
             }
             html += '</tr>';
-            this.picker.find('.rlobdatepicker-days thead').append(html);
+            this.picker.find('.datepicker-days thead').append(html);
         },
 
         fillMonths: function(){
@@ -686,7 +686,7 @@
             while (i < 12){
                 html += '<span class="month">'+dates[this.o.language].monthsShort[i++]+'</span>';
             }
-            this.picker.find('.rlobdatepicker-months td').html(html);
+            this.picker.find('.datepicker-months td').html(html);
         },
 
         setRange: function(range){
@@ -747,7 +747,7 @@
                 todaytxt = dates[this.o.language].today || dates['en'].today || '',
                 cleartxt = dates[this.o.language].clear || dates['en'].clear || '',
                 tooltip;
-            this.picker.find('.rlobdatepicker-days thead th.rlobdatepicker-switch')
+            this.picker.find('.datepicker-days thead th.datepicker-switch')
                 .text(dates[this.o.language].months[month]+' '+year);
             this.picker.find('tfoot th.today')
                 .text(todaytxt)
@@ -811,9 +811,9 @@
                 }
                 prevMonth.setUTCDate(prevMonth.getUTCDate()+1);
             }
-            this.picker.find('.rlobdatepicker-days tbody').empty().append(html.join(''));
+            this.picker.find('.datepicker-days tbody').empty().append(html.join(''));
 
-            var months = this.picker.find('.rlobdatepicker-months')
+            var months = this.picker.find('.datepicker-months')
                 .find('th:eq(1)')
                 .text(year)
                 .end()
@@ -836,7 +836,7 @@
 
             html = '';
             year = parseInt(year/10, 10) * 10;
-            var yearCont = this.picker.find('.rlobdatepicker-years')
+            var yearCont = this.picker.find('.datepicker-years')
                 .find('th:eq(1)')
                 .text(year + '-' + (year + 9))
                 .end()
@@ -910,7 +910,7 @@
                 switch (target[0].nodeName.toLowerCase()){
                     case 'th':
                         switch (target[0].className){
-                            case 'rlobdatepicker-switch':
+                            case 'datepicker-switch':
                                 this.showMode(1);
                                 break;
                             case 'prev':
@@ -1238,7 +1238,7 @@
             this.picker
                 .find('>div')
                 .hide()
-                .filter('.rlobdatepicker-'+DPGlobal.modes[this.viewMode].clsName)
+                .filter('.datepicker-'+DPGlobal.modes[this.viewMode].clsName)
                 .css('display', 'block');
             this.updateNavArrows();
         }
@@ -1252,11 +1252,11 @@
         delete options.inputs;
 
         $(this.inputs)
-            .rlobdatepicker(options)
+            .datepicker(options)
             .bind('changeDate', $.proxy(this.dateUpdated, this));
 
         this.pickers = $.map(this.inputs, function(i){
-            return $(i).data('rlobdatepicker');
+            return $(i).data('datepicker');
         });
         this.updateDates();
     };
@@ -1283,7 +1283,7 @@
                 return;
             this.updating = true;
 
-            var dp = $(e.target).data('rlobdatepicker'),
+            var dp = $(e.target).data('datepicker'),
                 new_date = dp.getUTCDate(),
                 i = $.inArray(e.target, this.inputs),
                 l = this.inputs.length;
@@ -1313,7 +1313,7 @@
         },
         remove: function(){
             $.map(this.pickers, function(p){ p.remove(); });
-            delete this.element.data().rlobdatepicker;
+            delete this.element.data().datepicker;
         }
     };
 
@@ -1352,14 +1352,14 @@
         return out;
     }
 
-    var old = $.fn.rlobdatepicker;
-    $.fn.rlobdatepicker = function(option){
+    var old = $.fn.datepicker;
+    $.fn.datepicker = function(option){
         var args = Array.apply(null, arguments);
         args.shift();
         var internal_return;
         this.each(function(){
             var $this = $(this),
-                data = $this.data('rlobdatepicker'),
+                data = $this.data('datepicker'),
                 options = typeof option === 'object' && option;
             if (!data){
                 var elopts = opts_from_el(this, 'date'),
@@ -1372,10 +1372,10 @@
                     var ropts = {
                         inputs: opts.inputs || $this.find('input').toArray()
                     };
-                    $this.data('rlobdatepicker', (data = new DateRangePicker(this, $.extend(opts, ropts))));
+                    $this.data('datepicker', (data = new DateRangePicker(this, $.extend(opts, ropts))));
                 }
                 else {
-                    $this.data('rlobdatepicker', (data = new Datepicker(this, opts)));
+                    $this.data('datepicker', (data = new Datepicker(this, opts)));
                 }
             }
             if (typeof option === 'string' && typeof data[option] === 'function'){
@@ -1390,7 +1390,7 @@
             return this;
     };
 
-    var defaults = $.fn.rlobdatepicker.defaults = {
+    var defaults = $.fn.datepicker.defaults = {
         autoclose: false,
         beforeShowDay: $.noop,
         calendarWeeks: false,
@@ -1412,13 +1412,13 @@
         todayHighlight: false,
         weekStart: 0
     };
-    var locale_opts = $.fn.rlobdatepicker.locale_opts = [
+    var locale_opts = $.fn.datepicker.locale_opts = [
         'format',
         'rtl',
         'weekStart'
     ];
-    $.fn.rlobdatepicker.Constructor = Datepicker;
-    var dates = $.fn.rlobdatepicker.dates = {
+    $.fn.datepicker.Constructor = Datepicker;
+    var dates = $.fn.datepicker.dates = {
         en: {
             days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
             daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
@@ -1601,7 +1601,7 @@
         headTemplate: '<thead>'+
             '<tr>'+
             '<th class="prev"><i class="fa fa-angle-left"></i></th>'+
-            '<th colspan="5" class="rlobdatepicker-switch"></th>'+
+            '<th colspan="5" class="datepicker-switch"></th>'+
             '<th class="next"><i class="fa fa-angle-right"></i></th>'+
             '</tr>'+
             '</thead>',
@@ -1615,22 +1615,22 @@
             '</tr>'+
             '</tfoot>'
     };
-    DPGlobal.template = '<div class="rlobdatepicker">'+
-        '<div class="rlobdatepicker-days">'+
+    DPGlobal.template = '<div class="datepicker">'+
+        '<div class="datepicker-days">'+
         '<table class=" table-condensed">'+
         DPGlobal.headTemplate+
         '<tbody></tbody>'+
         DPGlobal.footTemplate+
         '</table>'+
         '</div>'+
-        '<div class="rlobdatepicker-months">'+
+        '<div class="datepicker-months">'+
         '<table class="table-condensed">'+
         DPGlobal.headTemplate+
         DPGlobal.contTemplate+
         DPGlobal.footTemplate+
         '</table>'+
         '</div>'+
-        '<div class="rlobdatepicker-years">'+
+        '<div class="datepicker-years">'+
         '<table class="table-condensed">'+
         DPGlobal.headTemplate+
         DPGlobal.contTemplate+
@@ -1639,14 +1639,14 @@
         '</div>'+
         '</div>';
 
-    $.fn.rlobdatepicker.DPGlobal = DPGlobal;
+    $.fn.datepicker.DPGlobal = DPGlobal;
 
 
     /* DATEPICKER NO CONFLICT
      * =================== */
 
-    $.fn.rlobdatepicker.noConflict = function(){
-        $.fn.rlobdatepicker = old;
+    $.fn.datepicker.noConflict = function(){
+        $.fn.datepicker = old;
         return this;
     };
 
@@ -1655,19 +1655,19 @@
      * ================== */
 
     $(document).on(
-        'focus.rlobdatepicker.data-api click.rlobdatepicker.data-api',
-        '[data-provide="rlobdatepicker"]',
+        'focus.datepicker.data-api click.datepicker.data-api',
+        '[data-provide="datepicker"]',
         function(e){
             var $this = $(this);
-            if ($this.data('rlobdatepicker'))
+            if ($this.data('datepicker'))
                 return;
             e.preventDefault();
             // component click requires us to explicitly show it
-            $this.rlobdatepicker('show');
+            $this.datepicker('show');
         }
     );
     $(function(){
-        $('[data-provide="rlobdatepicker-inline"]').rlobdatepicker();
+        $('[data-provide="datepicker-inline"]').datepicker();
     });
 
 }(window.jQuery));

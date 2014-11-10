@@ -3,7 +3,7 @@
  */
 
 angular.module('app.loggedIn.rlob.list.controller',[])
-.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader) {
+.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader,rlobService,$window) {
         //Co cho nguoi su dung upload File hay khong, su dung bien isCanUpload
         $scope.isCanUpload=true;
         $scope.loginInfo = $cookieStore.get('userInfo');
@@ -39,8 +39,16 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             //END CONFIG
 
             //GO TO BOOKING DETAIL
+
             $scope.goToBookingDetail = function (l) {
                 //        $state.go("loggedIn.rlob_booking_list.detail", {'bookingId':l.BOOKING_ID});
+
+                if($scope.isClickActionMenu)
+                {
+                    $scope.isClickActionMenu=false;
+                    return;
+                }
+
                 $http({
                     method: "POST",
                     url: "/api/rlob/rl_bookings/get-booking-by-id",
@@ -172,6 +180,29 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                 //alert($scope.search.ORDER_BY);
                 $scope.loadList();
             }
+
+            $scope.isClickActionMenu=false;
+            $scope.clickActionMenu=function(bookingId)
+            {
+                $scope.isClickActionMenu=true;
+                rlobService.getBookingById(bookingId)
+                    .then(function(data){
+                        if(data.status=='success'){
+                            $scope.selectedBooking=data.data;
+                        }
+                    })
+            }
+            $scope.printContent=function()
+            {
+                var printable = document.getElementsByClassName("printable");
+                $(printable[0]).printArea();
+            }
+
+            $scope.downloadResult=function(bookingId)
+            {
+                $window.location.href = '/api/download/structure/attach-file/'+$scope.bookingType+'/'+bookingId;
+            }
+
         });
 
 

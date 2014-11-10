@@ -9,7 +9,8 @@ angular.module('app.loggedIn.rlob',
     ,'app.loggedIn.rlob.adminBookingList.controller'
     ,'app.loggedIn.rlob.bookingDetail.controller'
     ,'app.loggedIn.rlob.services'
-    ,'app.loggedIn.rlob.directive'])
+    ,'app.loggedIn.rlob.directive'
+    ,'app.loggedIn.rlob.adminBookingReport.controller'])
     .config(function($stateProvider){
         $stateProvider
 
@@ -45,7 +46,11 @@ angular.module('app.loggedIn.rlob',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/booking-detail.html',
                 controller: 'rlob_bookingDetailController'
             })
-
+            .state('loggedIn.rlob.rlob_booking_report',{
+                url:'/booking/report',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/admin-booking-report.html',
+                controller: 'rlob_admin_bookingReportController'
+            })
 //            .state('loggedIn.rlob.rlob_booking_detail', {
 //                url: '/booking/booking-detail/:bookingId',
 //                views: {

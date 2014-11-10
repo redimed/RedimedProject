@@ -1,0 +1,54 @@
+<div class="rlob-admin-local-notification-list" style="height: 300px;">
+
+    <table class="table table-hover">
+        <tr>
+            <th>Time</th>
+            <th>Surname</th>
+            <th>Company</th>
+            <th>Type</th>
+        </tr>
+
+        <tbody>
+        <tr ng-repeat="booking in listBookingNotification" ng-click="setSelectedBooking(booking.BOOKING_ID)">
+            <td>{{booking.APPOINTMENT_DATE |date:'dd-MM-yyyy HH:mm'}}</td>
+            <td>{{booking.WRK_SURNAME}}</td>
+            <td>{{booking.Company_name}}</td>
+            <td>{{booking.Rl_TYPE_NAME}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-show="selectedBooking" class="action">
+    <h2 style="margin:10px;">Selected Booking Info:</h2>
+
+    <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
+    <accordion >
+        <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
+            <accordion-heading>
+                <h3 class="panel-title">Documents</h3>
+            </accordion-heading>
+            <div>
+                <!--files-update-flag
+                tham chieu toi cung mot bien se giup dong bo hoa giua upload va download
+                -->
+                <rlob-file-download selected-booking="selectedBooking"
+                                    booking-type="bookingType"
+                                    is-admin-get-files="isAdminGetFiles"
+                                    files-update-flag="filesUpdateFlag"
+                        >
+                </rlob-file-download>
+
+                <rlob-upload
+                        selected-booking="selectedBooking"
+                        files-update-flag="filesUpdateFlag"
+                        is-admin-upload="isAdminUpload">
+                </rlob-upload>
+
+            </div>
+        </accordion-group>
+    </accordion>
+
+    <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
+</div>
+
+

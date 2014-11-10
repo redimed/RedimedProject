@@ -106,6 +106,9 @@
                         Appointment Date
                         <rlob-order-by field-name="APPOINTMENT_DATE" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
                     </th>
+                    <th>
+
+                    </th>
                 </tr>
                 <tr>
                     <!-- SEARCH -->
@@ -130,6 +133,9 @@
                         <button class="btn btn-block btn-primary btn-sm" ng-click="openModal('appointment_date_search')">Search
                         </button>
                     </td>
+                    <td>
+
+                    </td>
                     <!-- END SEARCH -->
                 </tr>
             </thead>
@@ -140,6 +146,30 @@
                     <td>{{l.WRK_SURNAME}}</td>
                     <td>{{l.Rl_TYPE_NAME}}</td>
                     <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>
+                        <!--action-->
+                        <div  class="btn-group dropdown pull-right pull-right"  ng-click="clickActionMenu(l.BOOKING_ID);">
+                            <a type="button" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
+                                </span>
+                                <!--{{selectedBooking.STATUS}}-->
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a class="pointer" role="menuitem" tabindex="1" ng-click="printContent()">
+                                        Print Booking Summary
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a ng-hide="selectedBooking.NUMBER_OF_RESULTS<=0" class="pointer" role="menuitem" tabindex="2" ng-click="downloadResult(l.BOOKING_ID)">
+                                        Download Result
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -168,6 +198,7 @@
                                     <i class="fa fa-cogs"></i>
                                     <span class="file-control pointer underline" ng-click="uploadPanel = false">Download</span>
                                     <span ng-show="selectedBooking.STATUS=='Confirmed'" class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>
+                                    <span class="file-control pointer underline" ng-click="printContent();">Print Summary</span>
                                 </div>
                             </div>
                             <div class="portlet-body">
@@ -183,6 +214,7 @@
 
                                         </rlob-upload>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -198,6 +230,24 @@
         </div>
     </div>
 </div>
+
+
+
+ <div style="display: none">
+     <div class="printable">
+         <rlob-booking-detail-print booking-type="bookingType" selected-booking="selectedBooking"></rlob-booking-detail-print>
+     </div>
+ </div>
+
+ <script>
+     function printContent() {
+         var printable = document.getElementsByClassName("printable");
+         $(printable[0]).printArea();
+     }
+ </script>
+
+
+
 <style>
     .file-control{ border-right: 1px solid white; padding: 0 10px;}
     .file-control:hover{cursor: pointer}
