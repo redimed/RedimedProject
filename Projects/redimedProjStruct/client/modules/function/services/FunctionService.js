@@ -17,7 +17,7 @@ angular.module('app.loggedIn.function.services',[])
         }
 
         functionService.insertFunction = function(f){
-            var insertApi = api.all("function/insert");
+            var insertApi = api.all("function/new");
             return insertApi.post({f:f});
         }
 

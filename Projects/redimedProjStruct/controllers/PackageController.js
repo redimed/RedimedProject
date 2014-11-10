@@ -54,6 +54,27 @@ module.exports = {
 
 
     },
+    updatePackageFee: function(req,res){
+    db.sequelize.query("SELECT * FROM packages",null,{raw:true})
+        .success(function(data){
+            for(var i=0; i<data.length; i++)
+            {
+                db.sequelize.query("update packages p set p.fee = (select sum(ifnull(a.price,0)) from assessments as a where a.id in (select pa.ass_id  from packages_assessments as pa where pa.pack_id = ?)) where p.id = ?",null,{raw:true},
+                    [data[i].id,data[i].id])
+                    .success(function(){
+                        console.log('success');
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+            }
+            res.json({status:'success'});
+        })
+        .error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        })
+},
     deleteAss: function(req,res){
         var id = req.body.id;
         var packId = req.body.packId;

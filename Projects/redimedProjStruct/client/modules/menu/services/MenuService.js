@@ -22,7 +22,7 @@ angular.module('app.loggedIn.menu.services',[])
         }
 
         menuService.insertMenu = function(info){
-            var insert = api.all('menu/insert');
+            var insert = api.all('menu/new');
             return insert.post({info:info});
         }
 

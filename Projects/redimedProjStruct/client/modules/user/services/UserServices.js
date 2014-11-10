@@ -10,7 +10,7 @@ angular.module("app.loggedIn.user.services", [])
     }
 
     userService.menu = function(id){
-        var menuApi = userApi.all("users/home");
+        var menuApi = userApi.all("menu/side");
         return menuApi.post({id:id});
     }
 

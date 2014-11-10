@@ -247,6 +247,18 @@ module.exports = {
                 res.json({status:'error'});
             })
     },
+    removeUserMenu: function(req,res){
+        var id = req.body.id;
+
+        db.UserMenu.destroy({id:id})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
     editProfile: function(req,res){
         var info = req.body.info;
 

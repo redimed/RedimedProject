@@ -22,10 +22,11 @@ app.get('/',function(req, res) {
     res.sendfile(path.join(clientDir, 'login.html'))
 });
 
-
 app.get('/home',AuthenticationController.authenticated,function(req,res){
     res.sendfile(path.join(clientDir, 'home.html'))
 });
+
+
 
 app.post('/api/users/login', passport.authenticate('local'),function(req, res) {
         res.send(req.user);

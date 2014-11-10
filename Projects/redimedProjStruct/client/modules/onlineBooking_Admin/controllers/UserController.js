@@ -76,6 +76,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
                 menu_id: null,
                 isEnable: null
             };
+            $scope.showClickedValidation = false;
             $scope.arr = [];
             $scope.rs = [];
             OnlineBookingAdminService.getUserMenu(b.id).then(function(data){
@@ -121,7 +122,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
                     OnlineBookingAdminService.editUserMenu($scope.info).then(function (data) {
                         if(data.status === 'success') {
                             toastr.success("Edit Successfully!", "Success");
-                            OnlineBookingAdminService.getUserMenu($scope.info.id).then(function (data) {
+                            OnlineBookingAdminService.getUserMenu($scope.selectedId).then(function (data) {
                                 $scope.rs = data;
                             })
 
@@ -149,6 +150,51 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
                     }
                 }
             })
+
+            modalInstance.result.then(function(){
+                OnlineBookingAdminService.getUserMenu($scope.selectedId).then(function(data){
+                    $scope.rs = data;
+                })
+
+                $scope.$watch('rs',function(rs){
+                    $scope.arr = rs;
+                    $scope.tableParams2.reload();
+                })
+            })
+        }
+
+        $scope.deleteUserMenu = function(b){
+
+            OnlineBookingAdminService.delUserMenu(b.id).then(function(data){
+                if(data.status == 'success')
+                {
+                    toastr.success("Delete Successfully!","Success");
+
+                    OnlineBookingAdminService.getUserMenu($scope.selectedId).then(function(data){
+                        $scope.rs = data;
+                    })
+
+                    $scope.$watch('rs',function(rs){
+                        $scope.arr = rs;
+                        $scope.tableParams2.reload();
+                    })
+
+                    $scope.info = {
+                        id: null,
+                        user_id: null,
+                        user_name : null,
+                        menu_id: null,
+                        isEnable: null
+                    };
+                }
+                else
+                {
+                    toastr.error("Delete Failed","Error");
+                }
+
+            })
+
+
         }
 })
 
@@ -181,9 +227,8 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
                     if(data.status === 'success') {
                         toastr.success("Insert Successfully!", "Success");
 
-                        $modalInstance.dismiss('cancel');
+                        $modalInstance.close();
 
-                        $state.go('loggedIn.admin_user',null,{reload:true});
                     }
                     else{
                         toastr.success("Insert Failed!", "Error");

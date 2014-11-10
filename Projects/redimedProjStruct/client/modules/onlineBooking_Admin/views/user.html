@@ -135,19 +135,23 @@
         </form>
         <div class="table-scrollable">
             <table ng-table="tableParams2"  class="table table-bordered table-responsive">
-                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showMenuDetails(b)" ng-class="{selected : b.id == selectedRow}">
-                    <td data-title="'Username'" >
+                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data"  ng-class="{selected : b.id == selectedRow}">
+                    <td data-title="'Username'" ng-click="showMenuDetails(b)">
                         <label>{{b.user_name}}</label>
                     </td>
-                    <td data-title="'Menu'" >
+                    <td data-title="'Menu'" ng-click="showMenuDetails(b)">
                         <label>{{b.MenuTitle}}</label>
                     </td>
-                    <td data-title="'User Type'"  >
+                    <td data-title="'User Type'"  ng-click="showMenuDetails(b)">
                         <label>{{b.user_type}}</label>
                     </td>
-                    <td data-title="'Enable'"  >
+                    <td data-title="'Enable'"  ng-click="showMenuDetails(b)">
                         <input ng-if="b.isEnable == 1" type="checkbox" checked disabled />
                         <input ng-if="b.isEnable == 0 || b.isEnable == null" type="checkbox" disabled />
+                    </td>
+                    <td align="center" data-title="'Actions'">
+                        <a style="width: 75px" href="javascript:;" ng-click="deleteUserMenu(b)" class="btn btn-circle red-flamingo btn-sm">
+                            <i class="fa fa-times"></i> Delete </a>
                     </td>
                 </tr>
             </table>

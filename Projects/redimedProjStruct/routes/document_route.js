@@ -62,9 +62,9 @@ app.get('/api/document/loadAUD2', AUD2Controller.loadAUD2);
 /**
  * end audiogram 2
  */
-
-app.get('/api/document/gorgonFA/print/:id',GorgonFAController.printReport);
-app.get('/api/document/gorgonMA/print/:id',GorgonMAController.printReport);
-app.get('/api/document/gorgonMH/print/:id',GorgonMHController.printReport);
-app.get('/api/document/gorgonUQ/print/:id',GorgonUQController.printReport);
+//
+//app.get('/api/document/gorgonFA/print/:id',GorgonFAController.printReport);
+//app.get('/api/document/gorgonMA/print/:id',GorgonMAController.printReport);
+//app.get('/api/document/gorgonMH/print/:id',GorgonMHController.printReport);
+//app.get('/api/document/gorgonUQ/print/:id',GorgonUQController.printReport);
 

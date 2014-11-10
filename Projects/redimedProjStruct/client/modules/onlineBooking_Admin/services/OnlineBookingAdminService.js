@@ -22,32 +22,32 @@ angular.module('app.loggedIn.booking.admin.services',[])
         }
 
         adminBooking.getAssHeader = function(){
-            var head = api.one('assessment/header');
+            var head = api.one('assessment/header/list');
             return head.get();
         }
 
         adminBooking.getAssessment = function(){
-            var a = api.one('assessment');
+            var a = api.one('assessment/list');
             return a.get();
         }
 
         adminBooking.deleteHeaderAssessment = function(id){
-            var del = api.all('assessment/header/remove');
+            var del = api.all('assessment/header/delete');
             return del.post({id:id});
         }
 
         adminBooking.addNewHeaderAssessment = function(info){
-            var add = api.all('assessment/header/insert');
+            var add = api.all('assessment/header/new');
             return add.post({info:info});
         }
 
         adminBooking.deleteAssessment = function(id){
-            var del = api.all('assessment/remove');
+            var del = api.all('assessment/delete');
             return del.post({id:id});
         }
 
         adminBooking.addNewAssessment = function(info){
-            var add = api.all('assessment/insert');
+            var add = api.all('assessment/new');
             return add.post({info:info});
         }
 
@@ -63,7 +63,7 @@ angular.module('app.loggedIn.booking.admin.services',[])
         }
 
         adminBooking.updatePrice = function(){
-            var a = api.all('assessment/updatePrice');
+            var a = api.all('package/updateFee');
             return a.post();
         }
 
@@ -83,7 +83,7 @@ angular.module('app.loggedIn.booking.admin.services',[])
         }
 
         adminBooking.insertNewCompany = function(info){
-            var add = api.all('company/insert');
+            var add = api.all('company/new');
             return add.post({info:info});
         }
 
@@ -143,7 +143,7 @@ angular.module('app.loggedIn.booking.admin.services',[])
         }
 
         adminBooking.getCalendarById = function(id){
-            var info = api.all('calendar/id');
+            var info = api.all('calendar/info');
             return info.post({id:id});
         }
 
@@ -205,6 +205,11 @@ angular.module('app.loggedIn.booking.admin.services',[])
         adminBooking.insertSuburb = function(info){
             var insert = api.all('redimedsite/state/suburb/insert');
             return insert.post({info:info});
+        }
+
+        adminBooking.delUserMenu = function(id){
+            var del = api.all('users/menu/delete');
+            return del.post({id:id});
         }
 
         return adminBooking;
