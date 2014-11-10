@@ -5,6 +5,7 @@
 angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
     .controller("rlob_admin_bookingReportController", function($scope,rlobService) {
         // chien status
+        $scope.report = 'report1';
         $scope.status = "Confirmed";
         rlobService.getbookingsList().then(function(data){
             for (var i = 0; i < data.length; i++) {

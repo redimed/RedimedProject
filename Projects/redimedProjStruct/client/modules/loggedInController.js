@@ -3,6 +3,7 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q){
     var userInfo = $cookieStore.get('userInfo');
+        alert(JSON.stringify($cookieStore.get('userInfo')));
     $scope.userInfo=userInfo;
     $scope.loggedInMenus = [];
     $scope.user = userInfo.Booking_Person;
