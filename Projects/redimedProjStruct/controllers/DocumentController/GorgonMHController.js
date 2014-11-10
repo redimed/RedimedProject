@@ -30,7 +30,7 @@ var mkdirp = require('mkdirp');
 //var FileInputStream = java.import('java.io.FileInputStream');
 
 module.exports = {
-<<<<<<< HEAD
+
     printReport : function(req,res){
         //mkdirp('./download/report/GorgonMH', function (err) {
         //    if (err) console.error(err)

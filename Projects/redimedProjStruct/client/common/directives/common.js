@@ -179,26 +179,25 @@ angular.module("app.directive.common", [])
 	}
 })
 
-    .directive("minHeight", function () {
-        return{
-            restrict: "A",
-            link: function (scope, element, attrs) {
+.directive("minHeight", function () {
+    return{
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            //Get window height
+            var windowHeight = angular.element(window).height();
+            //Parse to height window
+            element.css("min-height", windowHeight + "px");
+
+            //Window Resize
+            angular.element(window).resize(function () {
                 //Get window height
                 var windowHeight = angular.element(window).height();
                 //Parse to height window
                 element.css("min-height", windowHeight + "px");
-
-                //Window Resize
-                angular.element(window).resize(function () {
-                    //Get window height
-                    var windowHeight = angular.element(window).height();
-                    //Parse to height window
-                    element.css("min-height", windowHeight + "px");
-                });
-            }
+            });
         }
-    })
-
+    }
+})
 
 
 // SELECT FROM DATE TO DATE
@@ -254,7 +253,7 @@ angular.module("app.directive.common", [])
     }
 })
 
-.directive("checkList", [function () {
+.directive("checkList", function () {
     return {
         restrict: "A",
         scope: {
@@ -262,61 +261,39 @@ angular.module("app.directive.common", [])
             value: "@"
         },
         link: function (scope, elem) {
-            scope.$watchCollection("selectedItemsArray", function(newValue){
+            scope.$watchCollection("selectedItemsArray", function (newValue) {
                 if (_.contains(newValue, scope.value)) {
                     elem.prop("checked", true);
                 }
-                else{
+                else {
                     elem.prop("checked", false);
                 }
             });
             if (_.contains(scope.selectedItemsArray, scope.value)) {
                 elem.prop("checked", true);
             }
-        }
-    })
-
-    .directive("checkList", [function () {
-        return {
-            restrict: "A",
-            scope: {
-                selectedItemsArray: "=",
-                value: "@"
-            },
-            link: function (scope, elem) {
-                scope.$watchCollection("selectedItemsArray", function (newValue) {
-                    if (_.contains(newValue, scope.value)) {
-                        elem.prop("checked", true);
+            elem.on("change", function () {
+                if (elem.prop("checked")) {
+                    if (!_.contains(scope.selectedItemsArray, scope.value)) {
+                        scope.$apply(
+                            function () {
+                                scope.selectedItemsArray.push(scope.value);
+                            }
+                        );
                     }
-                    else {
-                        elem.prop("checked", false);
+                } else {
+                    if (_.contains(scope.selectedItemsArray, scope.value)) {
+                        var index = scope.selectedItemsArray.indexOf(scope.value);
+                        scope.$apply(
+                            function () {
+                                scope.selectedItemsArray.splice(index, 1);
+                            });
                     }
-                });
-                if (_.contains(scope.selectedItemsArray, scope.value)) {
-                    elem.prop("checked", true);
                 }
-                elem.on("change", function () {
-                    if (elem.prop("checked")) {
-                        if (!_.contains(scope.selectedItemsArray, scope.value)) {
-                            scope.$apply(
-                                function () {
-                                    scope.selectedItemsArray.push(scope.value);
-                                }
-                            );
-                        }
-                    } else {
-                        if (_.contains(scope.selectedItemsArray, scope.value)) {
-                            var index = scope.selectedItemsArray.indexOf(scope.value);
-                            scope.$apply(
-                                function () {
-                                    scope.selectedItemsArray.splice(index, 1);
-                                });
-                        }
-                    }
-                });
-            }
+            });
         }
-    }])
+    }
+})
 
 
 // SIDEBAR MENU RESPONSIVE
@@ -427,7 +404,7 @@ angular.module("app.directive.common", [])
     })
 
 //VALIDATION INTEGER
-<<<<<<< HEAD
+
 .directive("integer", function(){
 	return {
 		require: "ngModel",
@@ -497,130 +474,38 @@ angular.module("app.directive.common", [])
     };
 })
 
-.directive('appFilereader', function(
-    $q
-    ) {
-    /*
-     made by elmerbulthuis@gmail.com WTFPL licensed
-     */
-    var slice = Array.prototype.slice;
 
-    return {
-        restrict: 'A',
-        require: '?ngModel',
-        link: function(scope, element, attrs, ngModel) {
-            if (!ngModel) return;
 
-            ngModel.$render = function() {}
-
-            element.bind('change', function(e) {
-                var element = e.target;
-                if(!element.value) return;
-
-                element.disabled = true;
-                $q.all(slice.call(element.files, 0).map(readFile))
-                    .then(function(values) {
-                        if (element.multiple) ngModel.$setViewValue(values);
-                        else ngModel.$setViewValue(values.length ? values[0] : null);
-                        element.value = null;
-                        element.disabled = false;
-                    });
-
-                function readFile(file) {
-                    var deferred = $q.defer();
-
-                    var reader = new FileReader()
-                    reader.onload = function(e) {
-                        deferred.resolve(e.target.result);
-=======
-    .directive("integer", function () {
-        return {
-            require: "ngModel",
-            link: function (scope, element, attrs, ctrl) {
-                ctrl.$parsers.unshift(function (number) {
-                    if (typeof number !== 'undefined' && number !== "") {
-                        if (number >= 0 && number % 1 === 0) {
-                            ctrl.$setValidity("integer", true);
-                        } else {
-                            ctrl.$setValidity("integer", false);
-                        }
-                    } else {
-                        ctrl.$setValidity("integer", true);
-                    }
-
-                    return number;
-                });
-            }
-        }
-    })
-
-// LOADING
-    .directive('ngLoading', function ($compile) {
-        return {
-            restrict: 'A',
-            scope: false,
-            link: function (scope, element, attrs) {
-                // 'record' the initial div contents
-                var initialContents = element.html();
-                scope.$watch(attrs.ngLoading, function (loading) {
-                    if (loading === true) {
-                        element.html('<div class="loading-circles">' +
-                            '<div class="loading-circle"></div>' +
-                            '<div class="loading-circle"></div>' +
-                            '<div class="loading-circle"></div>' +
-                            '<div class="loading-circle"></div>' +
-                            '<div class="loading-circle"></div>' +
-                            '<div class="loading-circle"></div>' +
-                            '<div class="loading-circle"></div>' +
-                            '<div class="loading-circle"></div>' +
-                            '</div>');
-                    } else {
-                        // HERE I WANT TO RESTORE THE ORIGINAL CONTENT
-                        element.html(initialContents);
-                        $compile(element.contents())(scope);
->>>>>>> origin/thanh-merce-master
-                    }
-                });
-            }
-        };
-    })
-
-    .directive('appFilereader', function ($q) {
-        /*
-         made by elmerbulthuis@gmail.com WTFPL licensed
-         */
+    .directive('appFilereader', function(
+        $q
+    ){
         var slice = Array.prototype.slice;
 
         return {
-            restrict: 'A',
-            require: '?ngModel',
-            link: function (scope, element, attrs, ngModel) {
-                if (!ngModel) return;
+            restrict: 'A'
+            , require: '?ngModel'
+            , link: function(scope, element, attrs, ngModel){
+                if(!ngModel) return;
 
-                ngModel.$render = function () {
-                }
+                ngModel.$render = function(){}
 
-                element.bind('change', function (e) {
+                element.bind('change', function(e){
                     var element = e.target;
-                    if (!element.value) return;
 
-                    element.disabled = true;
                     $q.all(slice.call(element.files, 0).map(readFile))
-                        .then(function (values) {
-                            if (element.multiple) ngModel.$setViewValue(values);
+                        .then(function(values){
+                            if(element.multiple) ngModel.$setViewValue(values);
                             else ngModel.$setViewValue(values.length ? values[0] : null);
-                            element.value = null;
-                            element.disabled = false;
                         });
 
                     function readFile(file) {
                         var deferred = $q.defer();
 
                         var reader = new FileReader()
-                        reader.onload = function (e) {
+                        reader.onload = function(e){
                             deferred.resolve(e.target.result);
                         }
-                        reader.onerror = function (e) {
+                        reader.onerror = function(e) {
                             deferred.reject(e);
                         }
                         reader.readAsDataURL(file);
@@ -628,9 +513,15 @@ angular.module("app.directive.common", [])
                         return deferred.promise;
                     }
 
-<<<<<<< HEAD
-}) //appFilereader
-	//confirm pass
+                });//change
+
+            }//link
+
+        };//return
+
+    })//appFilereader
+
+    //confirm pass
 	.directive('pwCheck', [function () {
 		return {
 			require: 'ngModel',
@@ -677,14 +568,7 @@ angular.module("app.directive.common", [])
     };
 })
 
-=======
-                }); //change
 
-            } //link
-
-        }; //return
-
-    }) //appFilereader
     .directive("signature", function ($timeout) {
         return {
             restrict: "A",
@@ -716,7 +600,6 @@ angular.module("app.directive.common", [])
             }
         }
     })
->>>>>>> origin/thanh-merce-master
 
     .filter('utc', function () {
 
