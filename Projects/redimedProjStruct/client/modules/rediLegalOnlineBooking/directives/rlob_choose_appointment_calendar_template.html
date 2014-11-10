@@ -72,7 +72,7 @@
                                             <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
                                                class="btn btn-sm yellow filter-submit margin-bottom"
                                                style="margin-left: 10px;margin-bottom: 10px; width: 70px"
-                                               ng-click="selectAppointmentCalendar(appointment)">
+                                               ng-click="selectAppointmentCalendar(appointment,spec.Specialties_id)">
                                                 {{ appointment.APPOINTMENT_TIME }}
                                             </a>
                                         </div>

@@ -781,10 +781,11 @@ angular.module("app.loggedIn.rlob.directive", [])
                     var datePaginator=new MyDatePaginator('#rlob-datepaginator-choice',$scope.selectedFilter.var1,datePaginatorChanged);
                 }
 
-                $scope.selectAppointmentCalendar=function(appointmentCalendar)
+                $scope.selectAppointmentCalendar=function(appointmentCalendar,Specialties_id)
                 {
                     appointmentCalendar.RL_TYPE_ID=$scope.selectedFilter.rltypeSelected.RL_TYPE_ID;
-                    appointmentCalendar.Specialties_id=$scope.selectedFilter.clnSpecialitySelected.Specialties_id;
+                    //appointmentCalendar.Specialties_id=$scope.selectedFilter.clnSpecialitySelected.Specialties_id;
+                    appointmentCalendar.Specialties_id=Specialties_id;
                     $scope.selectedAppointmentCalendar=appointmentCalendar;
 
                 }
