@@ -2,6 +2,7 @@ angular.module("app.loggedIn.controller",[
 ])
 
 .controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q){
+
     var userInfo = $cookieStore.get('userInfo');
     $scope.userInfo=userInfo;
     $scope.loggedInMenus = [];
@@ -46,6 +47,7 @@ angular.module("app.loggedIn.controller",[
 
     //Logout
     $scope.logout = function(){
+        alert("logout")
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
         $state.go("security.login",null,{reload:true});

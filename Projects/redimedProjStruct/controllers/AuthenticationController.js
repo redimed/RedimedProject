@@ -3,7 +3,7 @@ var db = require('../models');
 
 module.exports = {
     login: function(req,username,password,done) {
-
+        console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT" );
         if (typeof username !== 'undefined' && username &&
             typeof password !== 'undefined' && password) {
             db.User.find({
@@ -19,6 +19,7 @@ module.exports = {
                                 bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                                     if (compareResult == true) {
                                         delete data["img"];
+                                        console.log(data);
                                         return done(null, {status: 'success',
                                             msg: "Login Successfully!",
                                             userInfo: data,

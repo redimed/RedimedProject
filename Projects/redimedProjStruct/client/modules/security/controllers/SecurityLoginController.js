@@ -17,6 +17,9 @@ angular.module("app.security.login.controller",[
                     if(typeof response.userInfo !== 'undefined'){
 
                         $cookieStore.put("userInfo", response.userInfo);
+
+
+                        console.log(JSON.stringify( response.userInfo));
 						
 						if(typeof response.companyInfo !== 'undefined')
 							$cookieStore.put("companyInfo", response.companyInfo);
