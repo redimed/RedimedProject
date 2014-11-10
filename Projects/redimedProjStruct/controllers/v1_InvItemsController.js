@@ -2,20 +2,29 @@ var squel = require("squel");
 squel.useFlavour('mysql');
 
 var model_sql = {
-    sql_get_by_dept: function (dept_id) {
-        var dept_items_builder = squel.select().from('cln_dept_item_lists').where('CLINICAL_DEPT_ID = ?', dept_id)
+    sql_get_by_dept: function (dept_id, isenable) {
+        var dept_items_builder = squel.select().from('cln_dept_item_lists')
+                .where('CLINICAL_DEPT_ID = ?', dept_id)
                 .field('POPULAR_HEADER_ID');
 
-        var inv_items_builder = squel.select().from('inv_items').where('isenable = ?', 1)
-                .field('ITEM_ID').field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC');
+        var inv_items_builder = squel.select().from('inv_items')
+                .field('ITEM_ID').field('ITEM_CODE').field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC').field('isenable');
 
+        if(isenable == 1){
+            inv_items_builder.where('isenable = ?', 1);
+        }
         var querybuilder = squel.select().from('cln_popular_item_headers', 'item_headers');
+        if(isenable == 1){
+            querybuilder.where('item_headers.isenable = ?', 1);
+        }
+
         querybuilder.join(dept_items_builder, 'dept_item', 'item_headers.POPULAR_HEADER_ID = dept_item.POPULAR_HEADER_ID')
         querybuilder.join('cln_popular_item_lines', null, 'cln_popular_item_lines.POPULAR_HEADER_ID = item_headers.POPULAR_HEADER_ID')
         querybuilder.join(inv_items_builder, 'inv_items', 'cln_popular_item_lines.ITEM_ID = inv_items.ITEM_ID')
 
         querybuilder.field('inv_items.ITEM_ID', 'ITEM_ID')
-                .field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC')
+                .field('inv_items.isenable', 'ISENABLE')
+                .field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC').field('ITEM_CODE')
                 .field('item_headers.POPULAR_HEADER_ID').field('POPULAR_NAME');
 
         return querybuilder.toString();
@@ -26,15 +35,23 @@ var model_sql = {
         query_builder.field('ITEM_ID').field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC').field('QUANTITY');
         return query_builder.toString();
     },
-    // INSERT HEADER
-    sql_get_header_id: function () {
-        var max_builder = squel.select().field('MAX(POPULAR_HEADER_ID)+1').from('cln_popular_item_headers');
-        return max_builder.toString();
-    },
-    sql_insert_header_item: function (data, header_id) {
-        var query_builder = squel.insert().into('cln_popular_item_headers');
+    // CRUD HEADER
+    sql_get_header: function(dept_id){
+        var dept_items_builder = squel.select().from('cln_dept_item_lists')
+                .where('CLINICAL_DEPT_ID = ?', dept_id)
+                .field('POPULAR_HEADER_ID');
 
-        query_builder.set('POPULAR_HEADER_ID', header_id);
+        var querybuilder = squel.select().from('cln_popular_item_headers', 'item_headers');
+        querybuilder.join(dept_items_builder, 'dept_item', 'item_headers.POPULAR_HEADER_ID = dept_item.POPULAR_HEADER_ID');
+        querybuilder.field('item_headers.POPULAR_HEADER_ID', 'POPULAR_HEADER_ID');
+        querybuilder.field('POPULAR_CODE');
+        querybuilder.field('POPULAR_NAME');
+        querybuilder.field('ISENABLE');
+        return querybuilder.toString();
+    },
+    sql_insert_header: function (data) {
+        var query_builder = squel.insert().into('cln_popular_item_headers');
+        query_builder.set('Creation_date', 'NOW()', {dontQuote: true});
         for (var key in data) {
             query_builder.set(key, data[key]);
         }
@@ -44,30 +61,48 @@ var model_sql = {
         var query_builder = squel.insert().into('cln_dept_item_lists');
         query_builder.set('CLINICAL_DEPT_ID', dept_id);
         query_builder.set('POPULAR_HEADER_ID', header_id);
+        query_builder.set('Creation_date', 'NOW()', {dontQuote: true});
         return query_builder.toString();
     },
-    // END INSERT HEADER
+    sql_delete_header: function(header_id){
+        var query_select_item = squel.select().from('cln_popular_item_lines').where('POPULAR_HEADER_ID = ?', header_id).limit(1).field('POPULAR_LINE_ID');
+        var query_builder = squel.delete().from('cln_popular_item_headers');
+        query_builder.where('POPULAR_HEADER_ID = ?', header_id);
+        query_builder.where('NOT EXISTS ?', query_select_item);
+        return query_builder.toString();
+    },
+    sql_delete_dept_header: function(dept_id, header_id){
+        var query_builder = squel.delete().from('cln_dept_item_lists');
+        query_builder.where('POPULAR_HEADER_ID = ?', header_id);
+        query_builder.where('CLINICAL_DEPT_ID = ?', dept_id);
+        return query_builder.toString();
+    },
+    sql_update_header: function (header_id, data) {
+        var query_builder = squel.update().table('cln_popular_item_headers').where('POPULAR_HEADER_ID = ?', header_id);
+        query_builder.set('Last_update_date', 'NOW()', {dontQuote: true});
+        for (var key in data) {
+            query_builder.set(key, data[key]);
+        }
+        return query_builder.toString();
+    },
+    // END CRUD HEADER
     // 
     // INSERT ITEM 
-    sql_get_item_id: function () {
-        var max_builder = squel.select().field('MAX(ITEM_ID)+1').from('inv_items');
-        return max_builder.toString();
-    },
-    sql_insert_item: function (item_id, data) {
+    sql_insert_item: function (data) {
         var query_builder = squel.insert().into('inv_items');
-
-        query_builder.set('ITEM_ID', item_id);
+        
+        query_builder.set('ISENABLE', 1);
         for (var key in data) {
             query_builder.set(key, data[key]);
         }
         return query_builder.toString();
     },
     sql_insert_item_line: function (header_id, item_id) {
-        var max_builder = squel.select().field('MAX(POPULAR_LINE_ID)+1').from('cln_popular_item_headers');
+      //  var max_builder = squel.select().field('MAX(POPULAR_LINE_ID)+1').from('cln_popular_item_headers');
 
         var query_builder = squel.insert().into('cln_popular_item_lines');
         query_builder.set('ISENABLE', 1);
-        query_builder.set('POPULAR_LINE_ID', max_builder);
+       // query_builder.set('POPULAR_LINE_ID', max_builder);
         query_builder.set('POPULAR_HEADER_ID', header_id);
         query_builder.set('ITEM_ID', item_id);
         return query_builder.toString();
@@ -78,7 +113,10 @@ var model_sql = {
 module.exports = {
     getListByDept: function (req, res) {
         var dept_id = req.query.dept_id;
-        var sql = model_sql.sql_get_by_dept(dept_id);
+        var isenable = req.query.isenable ;
+        console.log('isenable ', isenable);
+
+        var sql = model_sql.sql_get_by_dept(dept_id, isenable);
         var k_sql = res.locals.k_sql;
 
         k_sql.exec(sql, function (data) {
@@ -98,41 +136,128 @@ module.exports = {
             res.json(err);
         });
     },
-    getInsertHeader: function (req, res) {
+    /*
+    *   HEADER OPERATION 
+    */
+
+ 
+    postInsert: function (req, res) {
         var data = req.body.data;
+        var h_item = req.body.h_item;
 
-        // DEPT ID 
-        var dept_id = req.body.dept_id;
+          if(!h_item && !data) {
+            res.end();
+            return;
+        }
+          var errHandler = function (err) {
+            res.json(err);
+        };
 
-        //INSERT HEADER FIRST 
-        // INSERT DEPT HEADER
-
-
-        // EXECUTE QUERY 
+        //INSERT ITEM FIRST 
         var sql = model_sql.sql_insert_item(data);
         var k_sql = res.locals.k_sql;
+        k_sql.exec(sql, function (result) {
+            console.log('JUST INSERT ITEM ID', result.insertId)
+            var item_id = result.insertId;
+            // INSERT ITEM HEADER
+
+            var sql = model_sql.sql_insert_item_line(h_item, item_id);
+            k_sql.exec(sql, function(data2){
+                res.json({status: 'success'});       
+            }, errHandler);
+        }, errHandler);
+    },
+    /*
+    *   HEADER OPERATION 
+    */
+    getGetHeaderByDept: function(req, res) {
+        var dept_id = req.query.dept_id;
+        if(!dept_id) {
+            res.end();
+            return;
+        }
+
+        var sql = model_sql.sql_get_header(dept_id);
+        var k_sql = res.locals.k_sql;
+
         k_sql.exec(sql, function (data) {
             res.json(data);
         }, function (err) {
             res.json(err);
         });
     },
-    getInsertItem: function (req, res) {
+    postInsertHeader: function (req, res) {
         var data = req.body.data;
-        // HEADER ITEM ID 
-        var h_item = req.body.h_item;
-
-        // DEPT ID 
         var dept_id = req.body.dept_id;
 
+        if(!dept_id && !data) {
+            res.end();
+            return;
+        }
 
-        // EXECUTE QUERY 
-        var sql = model_sql.sql_insert_item(data);
-        var k_sql = res.locals.k_sql;
-        k_sql.exec(sql, function (data) {
-            res.json(data);
-        }, function (err) {
+        var errHandler = function (err) {
             res.json(err);
-        });
+        };
+
+        //INSERT HEADER FIRST 
+        var sql = model_sql.sql_insert_header(data);
+        var k_sql = res.locals.k_sql;
+        k_sql.exec(sql, function (result) {
+            // INSERT DEPT HEADER
+            var header_id = result.insertId;
+            var sql = model_sql.sql_insert_dept_header(dept_id, header_id);
+
+            k_sql.exec(sql, function(data){
+                res.json({header_id: header_id, status: 'success'});       
+            }, errHandler);
+        }, errHandler);
+    },
+    postDeleteHeader: function(req, res) {
+        var header_id = req.body.header_id;
+        var dept_id = req.body.dept_id; 
+
+        if(!dept_id && !header_id) {
+            res.end();
+            return;
+        }
+
+        var sql = model_sql.sql_delete_header(header_id);
+        var k_sql = res.locals.k_sql;
+
+        var errHandler = function (err) {
+            res.json({status: 'success', message: 'Fatal Error', err: err});
+        };
+     
+        k_sql.exec(sql, function (data) {
+            var sql = model_sql.sql_delete_dept_header(dept_id, header_id);
+            if(data.affectedRows == 0) {
+                 res.json({status: 'error', message: 'Cannot delete this category !!!'});
+                return;
+            }
+
+            k_sql.exec(sql, function (data2) {
+                res.json({status: 'success'});
+            }, errHandler);
+        }, errHandler);
+    },
+    postUpdateHeader: function (req, res) {
+        var header = req.body.data;
+        if(!header) {
+            res.end();
+            return;
+        }
+
+        var header_id = header.POPULAR_HEADER_ID;
+        delete header.POPULAR_HEADER_ID;
+        var errHandler = function (err) {
+            res.json(err);
+        };
+
+        var sql = model_sql.sql_update_header(header_id, header);
+        var k_sql = res.locals.k_sql;
+        
+        k_sql.exec(sql, function (result) {
+            res.json({header_id: header_id, status: 'success'});       
+        }, errHandler);
     },
 }

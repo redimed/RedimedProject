@@ -1,0 +1,95 @@
+<h3 class="page-title">Item Categories</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.items">Items</a>
+			<i class="fa fa-angle-right"></i>
+        </li>
+		<li>
+            <a>Categories</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>List of Categories
+        </div>
+		<div class="pull-right">
+			<button ng-click="setNewCat()" class="btn green"><i class="fa fa-plus"></i> New Category </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <!-- END PAGINATION -->
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+					<th>#</th>
+					<th>Code</th>
+                    <th>Name</th>
+					<th>Enable</th>
+					<th>Operation</th>	
+                </tr>
+				<!-- NEW CAT -->
+				<tr ng-show="isNewCat">
+					<td>0</td>
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="newCatObj.POPULAR_CODE">
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="newCatObj.POPULAR_NAME">
+                    </td>
+                    <td>
+						<input class="form-control" type="checkbox" name="check" ng-true-value="1" ng-false-value="0" ng-model="newCatObj.ISENABLE" /> 
+                    </td>
+					 <td>
+                        <button class="btn btn-sm btn-circle green" ng-click="saveNewCat()"><i class="fa fa-save"></i> Save</button>
+						<button class="btn btn-sm btn-circle yellow" ng-click="resetNewCat()"><i class="fa fa-times"></i> Cancel</button>
+                    </td>
+                </tr>
+				<!-- END NEW CAT -->
+				
+				<!-- EDIT CAT -->
+				<tr ng-show="isEditCat">
+					<td>0</td>
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="editCatObj.POPULAR_CODE">
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="editCatObj.POPULAR_NAME">
+                    </td>
+                    <td>
+						<input class="form-control" type="checkbox" name="check" ng-true-value="1" ng-false-value="0" ng-model="editCatObj.ISENABLE" /> 
+                    </td>
+					 <td>
+                        <button class="btn btn-sm btn-circle green" ng-click="saveEditCat()"><i class="fa fa-save"></i> Save</button>
+						<button class="btn btn-sm btn-circle yellow" ng-click="isEditCat = false"><i class="fa fa-times"></i> Cancel</button>
+                    </td>
+                </tr>
+				<!-- END EDIT CAT -->
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in list_cat" style="cursor: pointer;">
+					<th>{{$index+1}}</th>
+                    <td>{{item.POPULAR_CODE}}</td>
+                    <td>{{item.POPULAR_NAME| undefined}}</td>
+                    <td>
+						<span ng-if="item.ISENABLE==1" class="label label-sm label-success">Enable</span>
+						<span ng-if="!item.ISENABLE || item.ISENABLE == 0"  class="label label-sm label-danger">Disable</span>
+					</td>
+                    <td>
+						<button class="btn btn-sm btn-circle blue" ng-click="setEditCat($index)"><i class="fa fa-pencil"></i> Edit </button>
+						<button class="btn btn-sm btn-circle red" ng-click="setDeleteCat(item, $index)"><i class="fa fa-trash-o"></i> Delete </button>
+					</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

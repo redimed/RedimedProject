@@ -1,0 +1,71 @@
+<h3 class="page-title">Item Sheet</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Items</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>List of Items
+        </div>
+		<div class="pull-right">
+			<a ui-sref="loggedIn.doctor.items.add" class="btn green"><i class="fa fa-plus"></i> New Items </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div style="float: right; padding-top: 15px;">
+            <b>Total Items:</b> {{item_list.length}}
+        </div>
+        <!-- END PAGINATION -->
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+					<th style="width: 10%;">Item Code</th>
+                    <th>Item Name</th>
+                    <th style="width: 15%;">Category</th>
+					<th style="width: 15%;">Enable</th>
+                </tr>
+                <tr>
+                    <!-- SEARCH -->
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="searchObj.ITEM_CODE" >
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="text" ng-model="searchObj.ITEM_NAME">
+                    </td>
+                    <td>
+                        <select class="form-control input-sm" ng-options="cat.POPULAR_HEADER_ID as cat.POPULAR_NAME for cat in optCat" ng-model="searchObj.POPULAR_HEADER_ID">
+						</select>
+                    </td>
+                    <td>
+                        <select class="form-control input-sm" ng-options="item.code as item.title for item in optEnable" ng-model="searchObj.ISENABLE" >
+							
+						</select>
+                    </td>
+                    <!-- END SEARCH -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in item_list | filter:searchObj"  style="cursor: pointer;">
+                    <td>{{item.ITEM_CODE}}</td>
+                    <td>{{item.ITEM_NAME}}</td>
+                    <td>{{item.POPULAR_NAME}}</td>
+                    <td>
+						<span ng-if="item.ISENABLE==1" class="label label-sm label-success">Enable</span>
+						<span ng-if="!item.ISENABLE || item.ISENABLE == 0"  class="label label-sm label-danger">Disable</span>
+					</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

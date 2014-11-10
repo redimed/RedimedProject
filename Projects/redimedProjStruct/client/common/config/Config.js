@@ -1100,8 +1100,13 @@ angular.module('app.config', [])
     'Friday',
     'Saturday'
 ])
-
-.factory('ConfigService', function (USER_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, COUNTRY_LIST, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, SYS_TITLE, Restangular) {
+.constant('APPT_STATUS', [
+    {code:'Done', title: 'Done'},
+    {code:'NotYet', title: 'Not Yet'},
+    {code:'Billing', title: 'Billing'},
+    {code: null, title: 'Not Met'},
+])
+.factory('ConfigService', function (USER_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, COUNTRY_LIST, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, SYS_TITLE,  APPT_STATUS,  Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
 
@@ -1114,6 +1119,28 @@ angular.module('app.config', [])
     }
     
     /* KHANK */
+    configService.appt_status_option = function(){
+        return APPT_STATUS;
+    }	
+	configService.taxes_option = function(){
+        var siteApi = configApi.one("v1/system/list_taxes");
+        return siteApi.get({is_option: 1});
+    };
+	
+	configService.prefix_headers_option = function(form_code){
+        var siteApi = configApi.one("v1/system/list_prefix_headers");
+        return siteApi.get({is_option: 1, form_code: form_code});
+    };
+	
+	configService.provider_types_option = function(){
+        var siteApi = configApi.one("v1/system/list_provider_types");
+        return siteApi.get({is_option: 1});
+    };
+	
+	configService.inv_uoms_option = function(){
+        var siteApi = configApi.one("v1/inv/list_uoms");
+        return siteApi.get({is_option: 1});
+    };
     configService.country_option = function () {
         return COUNTRY_LIST;
     };
