@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes){
         "FINAL_ASS" : DataTypes.STRING(10),
         "COMMENTS2" : DataTypes.STRING(500),
         "DOCTOR_NAME" : DataTypes.STRING(500),
-        "SIGN"  : DataTypes.BLOB,
+        "SIGN"  : DataTypes.TEXT,
         "HA_DATE" : DataTypes.DATE,
         "LOCATION_ID" : DataTypes.INTEGER(11),
         "QUEST_DF_ID" : DataTypes.INTEGER(11),

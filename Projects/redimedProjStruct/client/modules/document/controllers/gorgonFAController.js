@@ -3,6 +3,24 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
     .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window) {
         var isEdit = false;
 
+        $scope.resetFlag = false;
+        $scope.reset = function () {
+            $scope.resetFlag = !$scope.resetFlag;
+        }
+        //end signature
+
+        //begin show-hidden img signature
+        $scope.sig = false;
+        $scope.sigClick = function () {
+            $scope.sig = true;
+        }
+        $scope.okClick = function () {
+            $scope.sig = false;
+        }
+        $scope.cancelClick = function () {
+            $scope.sig = false;
+        }
+
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -368,9 +386,9 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         }
         else
         {
-            $scope.info.id = 10;
+            $scope.info.id = 14;
 
-            DocumentService.getGorgonFAInfo(10).then(function(data){
+            DocumentService.getGorgonFAInfo(14).then(function(data){
                 $scope.info = data;
             })
 

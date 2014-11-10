@@ -6,6 +6,24 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         $scope.infoH = [];
         $scope.infoL = [];
 
+        $scope.resetFlag = false;
+        $scope.reset = function () {
+            $scope.resetFlag = !$scope.resetFlag;
+        }
+        //end signature
+
+        //begin show-hidden img signature
+        $scope.sig = false;
+        $scope.sigClick = function () {
+            $scope.sig = true;
+        }
+        $scope.okClick = function () {
+            $scope.sig = false;
+        }
+        $scope.cancelClick = function () {
+            $scope.sig = false;
+        }
+
         var sex = "male";
         $scope.Ratio = function(){
             $scope.infoH.WAIST_TO_HIP_RATE = $scope.infoH.WAIST_CIR / $scope.infoH.HIP_CIR;

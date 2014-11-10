@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes){
         "DOB" : DataTypes.DATE,
         "DOA" : DataTypes.DATE,
         "IsConsentReason"  : DataTypes.INTEGER(11),
-        "fsign": DataTypes.BLOB,
+        "fsign": DataTypes.TEXT,
         "fsignDate" : DataTypes.DATE,
         "Estimated" : DataTypes.INTEGER(11),
         "EstimatedComments" : DataTypes.STRING(200),

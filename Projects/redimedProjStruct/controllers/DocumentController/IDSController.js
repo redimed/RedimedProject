@@ -95,9 +95,9 @@ module.exports = {
                     //var buffer = new Buffer( data.SIGNATURE, 'binary' );
                     //var sign = buffer.toString('base64');
 
-                    var rs = util.format("data:image/png;base64,%s", "");
+                    //var rs = util.format("data:image/png;base64,%s", "");
 
-                    res.json({data: data, rs: rs});
+                    res.json({data: data});
                 }
             })
             .error(function(err){

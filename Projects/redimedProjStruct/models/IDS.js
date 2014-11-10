@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes){
         Last_update_date : DataTypes.DATE,
         NAME_COMMENT : DataTypes.STRING(10),
         ISENABLE : DataTypes.INTEGER(11),
-        SIGNATURE: DataTypes.BLOB,
+        SIGNATURE: DataTypes.TEXT,
         TesterName : DataTypes.STRING(10),
         TesterSign: DataTypes.BLOB,
         TesterDate : DataTypes.DATE

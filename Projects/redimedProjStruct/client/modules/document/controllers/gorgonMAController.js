@@ -3,6 +3,29 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
     .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr) {
         var isEdit = true;
 
+        $scope.resetFlag = false;
+        $scope.reset = function () {
+            $scope.resetFlag = !$scope.resetFlag;
+        }
+        //end signature
+
+        //begin show-hidden img signature
+        $scope.sig = false;
+        $scope.sigClick = function () {
+            $scope.sig = true;
+        }
+        $scope.okClick = function () {
+            $scope.sig = false;
+        }
+        $scope.cancelClick = function () {
+            $scope.sig = false;
+        }
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
         var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
 
 		 $scope.print = function(){
@@ -196,9 +219,9 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
             };
         }
         else{
-            $scope.info.GORGON_ID = 10;
+            $scope.info.GORGON_ID = 14;
 
-            DocumentService.getGorgonMAInfo(10).then(function(data){
+            DocumentService.getGorgonMAInfo(14).then(function(data){
                 $scope.info = data;
             })
 

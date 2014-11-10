@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes){
         Att_Lower_Limb_func: DataTypes.INTEGER(11),
         Att_Balance: DataTypes.INTEGER(11),
         ASSESSED_ID: DataTypes.INTEGER(11),
-        ASSESSED_SIGN : DataTypes.BLOB,
+        ASSESSED_SIGN : DataTypes.TEXT,
         ASSESSED_DATE : DataTypes.DATE,
         ASSESSED_NAME : DataTypes.STRING(100),
         ITEM_ID: DataTypes.INTEGER(11)
