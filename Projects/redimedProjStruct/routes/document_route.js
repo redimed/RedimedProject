@@ -100,7 +100,7 @@ app.post('/api/document/editSA2', SA2Controller.editSA2);
 /**
  * begin gorgon medical history
  */
-app.post('/api/document/findGGMH', gorgonMHController.findGGMH);
+app.post('/api/document/loadGGMH', gorgonMHController.loadGGMH);
 app.post('/api/document/insertGGMH', gorgonMHController.insertGGMH);
 app.post('/api/document/editGGMH', gorgonMHController.editGGMH);
 /**

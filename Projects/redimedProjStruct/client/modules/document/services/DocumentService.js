@@ -191,9 +191,9 @@ angular.module('app.loggedIn.document.services', [])
         /**
          * begin gorgon medical history
          */
-        documentService.findGGMH = function (id) {
-            var info = api.all("document/findGGMH");
-            return info.post({id: id});
+        documentService.loadGGMH = function (infoLoad) {
+            var info = api.all("document/loadGGMH");
+            return info.post({info: infoLoad});
         }
         documentService.insertGGMH = function (infoAdd) {
             var info = api.all("document/insertGGMH");

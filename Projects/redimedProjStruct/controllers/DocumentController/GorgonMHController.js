@@ -3,11 +3,11 @@
  */
 var db = require('../../models');
 module.exports = {
-    findGGMH: function (req, res) {
-        var id = req.body.id;
-        db.gorgonMH.find({where: {patient_id: id.Patient_Id}}, {raw: true})
+    loadGGMH: function (req, res) {
+        var info = req.body.info;
+        db.gorgonMH.findAll({where: {patient_id: 999}}, {raw: true})
             .success(function (data) {
-                if (data === null) {
+                if (data.length === 0) {
                     res.json({status: 'findNull'});
                 }
                 else {
@@ -18,6 +18,7 @@ module.exports = {
                 }
             })
             .error(function (err) {
+                console.log("ERROR:" + err);
                 res.json({status: 'fail'});
             })
     },
@@ -263,9 +264,11 @@ module.exports = {
                         res.json({status: 'success'});
                     })
                     .error(function (err) {
+                        console.log("ERROR:" + err);
                         res.json({status: 'fail'});
                     })
             }).error(function (err) {
+                console.log("ERROR:" + err);
                 res.json({status: 'fail'});
             })
     },
@@ -502,11 +505,12 @@ module.exports = {
             DocId: info.DocId,
             Q21Other1Comment: info.Q21Other1Comment,
             PATIENT_SIGNATURE: info.PATIENT_SIGNATURE
-        }, {Gorgon_Id: 1})
+        }, {Gorgon_Id: info.Gorgon_Id})
             .success(function () {
                 res.json({status: 'success'});
             })
             .error(function (err) {
+                console.log("ERROR:" + err);
                 res.json({status: 'fail'});
             });
     }
