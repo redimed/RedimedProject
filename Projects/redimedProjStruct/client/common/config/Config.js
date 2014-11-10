@@ -1101,6 +1101,7 @@ angular.module('app.config', [])
     'Saturday'
 ])
 .constant('APPT_STATUS', [
+	{code: 'ChangePers', title: 'Change Permisssion'},
     {code:'Done', title: 'Done'},
     {code:'NotYet', title: 'Not Yet'},
     {code:'Billing', title: 'Billing'},

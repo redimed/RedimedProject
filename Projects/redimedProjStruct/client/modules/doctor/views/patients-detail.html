@@ -105,7 +105,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in list_appt" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item)"  style="cursor: pointer;">
+                <tr ng-repeat="item in list_appt" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item.APP_TYPE)"  style="cursor: pointer;">
                     <td>{{$index + 1}}</td>
                     <td>{{item.FROM_TIME}}</td>
                     <td>{{item.TO_TIME}}</td>

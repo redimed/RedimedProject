@@ -61,6 +61,11 @@ angular.module("app.loggedIn.doctor.services", [])
                 return instanceApi.post(postData);
 			}
 			
+			doctorService.listCurPatients = function (doctor_id){
+				var instanceApi = doctorApi.one("v1/doctors/list_patients");
+                return instanceApi.get({doctor_id: doctor_id, current: 1});
+			}
+			
 			/*
 			*	NOT USE THIS API
 

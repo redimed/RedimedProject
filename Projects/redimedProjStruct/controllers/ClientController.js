@@ -214,6 +214,15 @@ module.exports = {
         });
     },
     insert: function (req, res) {
+        console.log(req.body);
+        var patient_data = req.body.patient;
+
+        if(!patient_data){
+            res.json({status: 'error'});
+            return;
+        }
+
+
         var sql2 = squel.select().from('cln_patients').field("MAX(Patient_id) + 1", 'new_id').toString();
         req.getConnection(function (err, connection) {
             var query = connection.query(sql2, function (err, data) {
