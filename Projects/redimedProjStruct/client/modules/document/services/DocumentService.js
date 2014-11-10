@@ -169,13 +169,13 @@ angular.module('app.loggedIn.document.services', [])
         /**
          * begin category 3
          */
+        documentService.loadCat3 = function (infoFind) {
+            var info = api.all("document/loadCat3");
+            return info.post({info: infoFind});
+        }
         documentService.insertCat3 = function (infoAdd) {
             var info = api.all("document/insertCat3");
             return info.post({info: infoAdd});
-        }
-        documentService.findCat3 = function (ids) {
-            var info = api.all("document/findCat3");
-            return info.post({ids: ids});
         }
         documentService.editCat3 = function (infoUp) {
             var info = api.all("document/editCat3");

@@ -40,7 +40,7 @@ app.post('/api/document/editCat2', Cat2Controller.editCat2);
  * begin category 3
  */
 app.post('/api/document/insertCat3', Cat3Controller.insertCat3);
-app.post('/api/document/findCat3', Cat3Controller.findCat3);
+app.post('/api/document/loadCat3', Cat3Controller.loadCat3);
 app.post('/api/document/editCat3', Cat3Controller.editCat3);
 /**
  * end category 3
