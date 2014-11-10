@@ -1,0 +1,50 @@
+<div class="btn-group dropdown">
+
+    <a type="button" class="dropdown-toggle btn btn-default" data-toggle="dropdown">
+        <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
+
+        </span>
+        <!--{{selectedBooking.STATUS}}-->
+        Change Status
+    </a>
+
+    <ul class="dropdown-menu" role="menu">
+        <li ng-hide="selectedBooking.STATUS=='Confirmed'" >
+            <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"
+               ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Confirmed')">
+                <span>Confirmed</span>
+
+            </a>
+        </li>
+
+        <li ng-hide="selectedBooking.STATUS=='Arrived'">
+            <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
+                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Arrived')">
+                <span>Arrived</span>
+
+            </a>
+        </li>
+
+        <li ng-hide="selectedBooking.STATUS=='Not Arrived'">
+            <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
+               ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Not Arrived')">
+                <span>Not Arrived</span>
+
+            </a>
+        </li>
+
+        <li ng-hide="selectedBooking.STATUS=='Completed'">
+            <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
+                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Completed')">
+                <span>Completed</span>
+            </a>
+        </li>
+        <li ng-hide="selectedBooking.STATUS=='Cancel'">
+            <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
+                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Cancel')">
+                <span>Cancel</span>
+            </a>
+        </li>
+    </ul>
+</div>
+{{selectedBooking.STATUS}}

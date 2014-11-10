@@ -1,0 +1,88 @@
+<div class="modal-body">
+    <div class="actions">
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                <p>Location</p>
+                <p>
+                    <select class="form-control" ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()">
+                        <option  value=""></option>
+                    </select>
+                </p>
+            </div>
+            <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
+                <p>Type</p>
+                <p>
+                    <select class="form-control "  ng-model="selectedFilter.rltypeSelected" ng-options="rltype.Rl_TYPE_NAME for rltype in rltypesFilter" ng-change="rlTypesFilterChange(selectedFilter.rltypeSelected.RL_TYPE_ID)"></select>
+                </p>
+            </div>
+            <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
+                <p>
+                    Specialty
+                </p>
+                <p>
+                    <select class="form-control " ng-model="selectedFilter.clnSpecialitySelected" ng-options="speciality.Specialties_name for speciality in specialitiesFilter" ng-change="specialitiesChange(selectedFilter.clnSpecialitySelected.Specialties_id)">
+                        <option  value=""></option>
+                    </select>
+                </p>
+            </div>
+            <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
+                <p>Doctor</p>
+                <p>
+                    <select class="form-control "  ng-model="selectedFilter.doctorSelected" ng-options="doctor.NAME for doctor in doctorsFilter" ng-change="updateAppoinmentsList();">
+                        <option  value=""></option>
+                    </select>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <div class="portlet-body">
+
+            <div id="rlob-datepaginator-choice">
+            </div>
+
+        </div>
+
+        <div class="table-responsive" style="margin-top: 20px">
+            <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
+                <h4>No Results</h4>
+                <a ng-click="sendEmail()">Please contact us to make an appointment</a>
+            </div>
+
+            <div ng-repeat="location in appointmentsFilter">
+                <div class="row">
+                    <div class="col-md-2" >
+                        {{location.SITE_NAME}}
+                    </div>
+                    <div class="col-md-10" >
+                        <div ng-repeat="doctor in location.DOCTOR_ITEMS">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    {{doctor.DOCTOR_NAME}}
+                                </div>
+                                <div class="col-md-10">
+                                    <div ng-repeat="spec in doctor.SPEC_ITEMS">
+                                        <div class="col-md-2">
+                                            {{spec.Specialties_name}}
+                                        </div>
+                                        <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
+                                            <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
+                                               class="btn btn-sm yellow filter-submit margin-bottom"
+                                               style="margin-left: 10px;margin-bottom: 10px; width: 70px"
+                                               ng-click="selectAppointmentCalendar(appointment)">
+                                                {{ appointment.APPOINTMENT_TIME }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

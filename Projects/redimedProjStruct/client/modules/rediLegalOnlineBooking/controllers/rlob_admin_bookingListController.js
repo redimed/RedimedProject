@@ -3,14 +3,17 @@
  */
 
 angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
-        .controller("rlob_admin_bookingListController", function($scope, $http,$window,$q,$stateParams,rlTypesService,doctorsService,locationService,FileUploader,$cookieStore,$interval) {
+        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService) {
         //Internal Variable
-        //tannv.dts@gmail.com
-        $scope.bookingType='REDiLEGAL';
-        if($stateParams.bookingType && $stateParams.bookingType=='Vaccination') {
-            $scope.bookingType = $stateParams.bookingType;
-        }
-        //alert($scope.bookingType);
+        //Bien haveNodeFile quy dinh cac file co xuat hien trong tree hay khong
+
+        $scope.haveNodeFile=false;
+        $scope.isAdminUpload=true;
+        $scope.isAdminGetFiles=true;
+        $scope.accordionStatus={status1:true};
+
+        //-----------------------------------------------------------
+
         $scope.newAppointmentPositionFlag=false;
 
         //-----------------------------------------------------------
@@ -31,21 +34,26 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         };
 
         $scope.status=false;
-        $scope.sourceName="REDiLEGAL";
-        $scope.notificationType={
-            bell:   'bell',
-            letter: 'letter'
-        }
-        $scope.rlobNotificationType={
-            'changeStatus':"Change Booking Status",
-            'result': 'Result',
-            'message': 'Message',
-            'changeCalendar':'Change Appointment Calendar'
-        }
+        $scope.sourceName=$scope.bookingType;
+//        $scope.notificationType={
+//            bell:   'bell',
+//            letter: 'letter'
+//        }
+        $scope.notificationType=rlobConstant.notificationType;
+//        $scope.bellType={
+//            'changeStatus':"Change Booking Status",
+//            'result': 'Result',
+//            'message': 'Message',
+//            'changeCalendar':'Change Appointment Calendar'
+//        }
+
+        $scope.bellType=rlobConstant.bellType;
+
+        //--------------------------------------------------
         var initPickers = function () {
 
             //init date pickers
-            $('.date-picker').datepicker({
+            $('.date-picker').rlobdatepicker({
                 rtl: Metronic.isRTL(),
                 autoclose: true
             }).on('changeDate',function(evn){
@@ -81,76 +89,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             });
             return deferred.promise;
         }
-
-        //Lay toan bo thong tin rlType
-        $scope.rltypes=rlTypesService.allSync();
-        if($scope.rltypes.length<=0)
-        {
-            $http({
-                method:"GET",
-                url:"/api/rlob/rl_types/list"
-            })
-                .success(function(data) {
-
-                    for(var i=0;i<data.length;i++)
-                    {
-                        $scope.rltypes.push(data[i]);
-                    }
-                })
-                .error(function (data) {
-                    console.log("error");
-                })
-                .finally(function() {
-
-                });
-        }
-        //----------------------------------------------
-        //Lay toan bo thong tin cac doctor
-        $scope.doctors=doctorsService.allSync();
-        if($scope.doctors.length<=0)
-        {
-            $http({
-                method:"GET",
-                url:"/api/rlob/doctors/list"
-            })
-                .success(function(data) {
-                    for(var i=0;i<data.length;i++)
-                    {
-                        $scope.doctors.push(data[i]);
-                    }
-                })
-                .error(function (data) {
-                    console.log("error");
-                })
-                .finally(function() {
-
-                });
-        }
-        //----------------------------------------------
-        //Lay toan bo location
-        $scope.locations=locationService.allSync();
-        if($scope.locations.length<=0)
-        {
-            $http({
-                method:"GET",
-                url:"/api/rlob/redimedsites/list"
-            })
-                .success(function(data) {
-
-                    for(var i=0;i<data.length;i++)
-                    {
-                        $scope.locations.push(data[i]);
-                    }
-                })
-                .error(function (data) {
-                    console.log("error");
-                })
-                .finally(function() {
-
-                });
-        }
-        //----------------------------------------------
-
 
         /**
          * Chuyen danh sach booking thanh JSON array
@@ -197,7 +135,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                         Company_name:item.Company_name,
                         WRK_SURNAME:item.WRK_SURNAME,
                         STATUS:item.STATUS,
-                        DISPLAY:"["+item.APPOINTMENT_TIME+" -site:"+item.Site_name+"] - [patient: "+item.WRK_SURNAME+" - "+item.Company_name+"]",
+                        DISPLAY:"["+item.APPOINTMENT_TIME+" - "+item.Site_name+"] - ["+item.WRK_SURNAME+" - "+item.Company_name+"]",
                         DISPLAY1:"- Site: "+item.Site_name,
                         DISPLAY2:  "- Patient: "+item.WRK_SURNAME,
                         DISPLAY3:  "- Company: "+item.Company_name,
@@ -205,19 +143,23 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     });
                 }
 
-                if (item.FILE_ID!=null &&!dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID][item.BOOKING_ID][item.FILE_ID]) {
-                    dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID][item.BOOKING_ID][item.FILE_ID] = {};
-                    dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID][item.BOOKING_ID].BOOKING_FILE_ITEMS.push({
-                        PARENT_ID:item.BOOKING_ID,
-                        ASS_ID:item.ASS_ID,
-                        FILE_ID: item.FILE_ID,
-                        FILE_NAME:item.FILE_NAME,
-                        FILE_PATH:item.FILE_PATH,
-                        isClientDownLoad:item.isClientDownLoad,
-                        DISPLAY: item.FILE_NAME,
-                        style_class:'lob_admin_booking_file_node'
-                    });
+                if($scope.haveNodeFile)
+                {
+                    if (item.FILE_ID!=null &&!dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID][item.BOOKING_ID][item.FILE_ID]) {
+                        dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID][item.BOOKING_ID][item.FILE_ID] = {};
+                        dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID][item.BOOKING_ID].BOOKING_FILE_ITEMS.push({
+                            PARENT_ID:item.BOOKING_ID,
+                            ASS_ID:item.ASS_ID,
+                            FILE_ID: item.FILE_ID,
+                            FILE_NAME:item.FILE_NAME,
+                            FILE_PATH:item.FILE_PATH,
+                            isClientDownLoad:item.isClientDownLoad,
+                            DISPLAY: item.FILE_NAME,
+                            style_class:'lob_admin_booking_file_node'
+                        });
+                    }
                 }
+
             }
 
             for (var i = 0; i < dateMaker.DATE_ITEMS.length; i++)
@@ -232,15 +174,19 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     node.nodes[j].nodes=[];
                     node.nodes[j].nodes=dateMaker[date_item.APPOINTMENT_DATE][doctor_item.DOCTOR_ID].BOOKING_ITEMS;
 
-                    for(var k=0;k<dateMaker[date_item.APPOINTMENT_DATE][doctor_item.DOCTOR_ID].BOOKING_ITEMS.length;k++)
+                    if($scope.haveNodeFile)
                     {
-                        var booking_item=dateMaker[date_item.APPOINTMENT_DATE][doctor_item.DOCTOR_ID].BOOKING_ITEMS[k];
-                        node.nodes[j].nodes[k].nodes=[];
-                        node.nodes[j].nodes[k].nodes=
-                            dateMaker[date_item.APPOINTMENT_DATE][doctor_item.DOCTOR_ID][booking_item.BOOKING_ID].BOOKING_FILE_ITEMS;
+                        for(var k=0;k<dateMaker[date_item.APPOINTMENT_DATE][doctor_item.DOCTOR_ID].BOOKING_ITEMS.length;k++)
+                        {
+                            var booking_item=dateMaker[date_item.APPOINTMENT_DATE][doctor_item.DOCTOR_ID].BOOKING_ITEMS[k];
+                            node.nodes[j].nodes[k].nodes=[];
+                            node.nodes[j].nodes[k].nodes=
+                                dateMaker[date_item.APPOINTMENT_DATE][doctor_item.DOCTOR_ID][booking_item.BOOKING_ID].BOOKING_FILE_ITEMS;
+                        }
                     }
                 }
                 $scope.mydata.push(node);
+                rlobHelper.setSlimCroll(".treeScroll");
             }
 
             if($scope.newAppointmentPositionFlag)
@@ -279,6 +225,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 }
             })
                 .success(function(data) {
+                    if(data.length<=0)
+                        $scope.showDetailPanel=false;
                     $scope.parseBookingList(data);
                 })
                 .error(function (data) {
@@ -374,35 +322,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             return d.format("DD/MM/YYYY");
         }
 
-        $scope.getDoctorAddress=function(id)
-        {
-            return doctorsService.getDoctorById(id).Address;
-        }
 
-        //Google map
-        var geocoder;
-        var map;
-        geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(-34.397, 150.644);
-        var mapOptions = {
-            zoom: 16,
-            center: latlng
-        }
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        function codeAddress() {
-            var address=$scope.selectedBooking.Site_addr;
-            geocoder.geocode( { 'address': address}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    map.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: results[0].geometry.location
-                    });
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
 
         $scope.showBookingDetailDialog=function(bookingId)
         {
@@ -416,7 +336,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 {
                     $scope.selectedBooking=data.data;
                     $("#view-detail-booking-dialog").modal({show:true,backdrop:'static'});
-                    codeAddress();
+                    //codeAddress();
                 }
                 else
                 {
@@ -434,74 +354,34 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         {
             $window.location.href = "/api/download/lob/document/"+fileId;
         }
-
+        /*
         //---------------------------------------------------------------
         //HANDLE UPLOAD FILES
         //Upload File
         var uploader = $scope.uploader = new FileUploader({
             url: '/api/rlob/rl_booking_files/upload'
         });
-        // FILTERS
-        uploader.filters.push({
-            name: 'customFilter',
-            fn: function(item /*{File|FileLikeObject}*/, options) {
-                return this.queue.length < 10;
-            }
-        });
-        // CALLBACKS
-        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-            console.info('onWhenAddingFileFailed', item, filter, options);
-        };
-        uploader.onAfterAddingFile = function(fileItem) {
-            console.info('onAfterAddingFile', fileItem);
-        };
-        uploader.onAfterAddingAll = function(addedFileItems) {
-            console.info('onAfterAddingAll', addedFileItems);
-        };
-        uploader.onBeforeUploadItem = function(item) {
-            console.info('onBeforeUploadItem', item);
-        };
-        uploader.onProgressItem = function(fileItem, progress) {
-            console.info('onProgressItem', fileItem, progress);
-        };
-        uploader.onProgressAll = function(progress) {
-            console.info('onProgressAll', progress);
-        };
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
             var fileInfo=response.fileInfo;
             var refId=angular.copy(fileInfo.BOOKING_ID);
 
             fileInfo.DISPLAY=fileInfo.FILE_NAME;
             fileInfo.style_class='lob_admin_booking_file_node';
-            fileInfo.PARENT_ID=angular.copy(fileInfo.BOOKING_ID)
+            fileInfo.PARENT_ID=angular.copy(fileInfo.BOOKING_ID);
             fileInfo.BOOKING_ID=null;
             fileInfo.ASS_ID=$scope.currentNode.ASS_ID;
-            $scope.currentNode.nodes.push(fileInfo);
+            if($scope.haveNodeFile)
+                $scope.currentNode.nodes.push(fileInfo);
             console.info('onSuccessItem', fileItem, response, status, headers);
             //Put notification
             if(fileInfo.isClientDownLoad==1)
             {
-                $scope.rlob_add_notification(fileInfo.ASS_ID,refId,$scope.sourceName,$scope.rlobNotificationType.result,$scope.notificationType.letter,'');
+                $scope.rlob_add_notification(fileInfo.ASS_ID,refId,$scope.sourceName,$scope.bellType.result,$scope.notificationType.letter,'');
             }
-
-
-        };
-        uploader.onErrorItem = function(fileItem, response, status, headers) {
-            console.info('onErrorItem', fileItem, response, status, headers);
-        };
-        uploader.onCancelItem = function(fileItem, response, status, headers) {
-            console.info('onCancelItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteItem = function(fileItem, response, status, headers) {
-            console.info('onCompleteItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteAll = function() {
-            console.info('onCompleteAll');
         };
         console.info('uploader', uploader);
-
-
-
+        */
+        /*
         $scope.show_lob_upload_file_dialog=function(bookingId,scope)
         {
             uploader.clearQueue();
@@ -519,7 +399,33 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                         uploader.formData[0].booking_id=$scope.selectedBooking.BOOKING_ID;
                         uploader.formData[0].company_id=$scope.loginInfo.company_id;
                         uploader.formData[0].worker_name=$scope.selectedBooking.WRK_SURNAME;
-        //                    uploader.formData[0].push({booking_id:$scope.selectedBooking.BOOKING_ID,company_id:$scope.loginInfo.company_id,worker_name:$scope.selectedBooking.WRK_SURNAME});
+                        $("#lob-upload-file-dialog").modal({show:true,backdrop:'static'});
+                        $scope.currentNode=scope.$modelValue;
+                    }
+                    else
+                    {
+                        alert("data not exist!");
+                    }
+                })
+                .error(function (data) {
+                    console.log("error");
+                })
+                .finally(function() {
+                });
+        }
+        */
+
+        $scope.show_lob_upload_file_dialog=function(bookingId,scope)
+        {
+            $http({
+                method:"POST",
+                url:"/api/rlob/rl_bookings/get-booking-by-id",
+                data:{bookingId:bookingId}
+            })
+                .success(function(data) {
+                    if(data.status=='success')
+                    {
+                        $scope.selectedBooking=data.data;
                         $("#lob-upload-file-dialog").modal({show:true,backdrop:'static'});
                         $scope.currentNode=scope.$modelValue;
                     }
@@ -555,68 +461,14 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
 
         /***
-         * Luu notification
+         * Luu notification (tham chieu den function add_notification cua state loggedIn)
          * @param userId: id cua nguoi dang nhap
          * @param refId: id cua booking
          * @param sourceName: booking type
          * @param msg: noi dung thong bao
          * tannv.dts@gmail.com
          */
-        $scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
-        {
-            var deferred=$q.defer();
-            var promise=deferred.promise;
-            promise.then(function(data){
-                var msg="["+sourceName+"]-" + "["+rlobType+(content!=undefined &&content!=null && content!=""?(":"+content):'')+"]-"
-                    + "["+data.WRK_SURNAME + ":"+moment(data.BOOKING_DATE).format("DD/MM/YYYY hh:mm") +"]-"
-                    + "[at: "+moment().format("DD/MM/YYYY HH:mm:ss")+"]";
-                var link="loggedIn.rlob_booking_detail({bookingId:"+refId+"})";
-                $http({
-                    method:"POST",
-                    url:"/api/rlob/sys_user_notifications/add-notification",
-                    data:{assId:assId,refId:refId,sourceName:sourceName,type:type,msg:msg,link:link}
-                })
-                .success(function(data) {
-                    if(data.status=='success')
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-                })
-                .error(function (data) {
-
-                })
-                .finally(function() {
-
-                });
-            },function(reason){
-
-            });
-
-            $http({
-                method:"POST",
-                url:"/api/rlob/rl_bookings/get-booking-by-id",
-                data:{bookingId:refId}
-            })
-            .success(function(data) {
-                if(data.status=='success')
-                {
-                    deferred.resolve(data.data);
-                }
-                else
-                {
-                    alert("data not exist!");
-                }
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-            });
-        }
+        $scope.rlob_add_notification=$scope.add_notification;
 
         /**
          * Gui loi nhan tu client
@@ -633,7 +485,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.sendBookingMessage=function()
         {
-            $scope.rlob_add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,$scope.sourceName,$scope.rlobNotificationType.message,$scope.notificationType.bell,$scope.bookingMessage.message);
+            $scope.rlob_add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,$scope.sourceName,$scope.bellType.message,$scope.notificationType.bell,$scope.bookingMessage.message);
             $("#lob-send-booking-message").modal('hide');
         }
 
@@ -644,31 +496,41 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          */
         $scope.lob_change_status=function(assId,bookingId,status,scope)
         {
-            $http({
-                method:"POST",
-                url:"/api/rlob/rl_bookings/lob-change-status",
-                data:{bookingId:bookingId,status:status}
-            })
-            .success(function(data) {
-                if(data.status=='success')
-                {
-                    scope.$modelValue.STATUS=status;
-                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
-                    var refId=bookingId;
-                    $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.rlobNotificationType.changeStatus,$scope.notificationType.bell,status);
-                }
-                else
-                {
-                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
-                }
-            })
-            .error(function (data) {
-                $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
-            })
-            .finally(function() {
 
-            });
-        }
+            rlobService.getBookingById(bookingId)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.selectedBooking=data.data;
+                        return {status:'success'};
+                    }
+                    else
+                    {
+                        return {status:'fail'};
+                    }
+                })
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        rlobService.changeBookingStatus(bookingId,status)
+                            .then(function(data){
+                                if(data.status=='success')
+                                {
+                                    scope.$modelValue.STATUS=status;
+                                    $scope.selectedBooking.STATUS=status;
+                                    var refId=bookingId;
+                                    $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.changeStatus,$scope.notificationType.bell,status);
+                                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
+                                }
+                                else
+                                {
+                                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
+                                }
+                            });
+                    }
+                })
+
+        };
 
 
         /**
@@ -691,7 +553,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     $scope.showMsgDialog(".lob-msg-dialog",'Authority downloads','success','Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file');
                     var refId=scope.$modelValue.PARENT_ID;
                     if(role==1)
-                        $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.rlobNotificationType.result,$scope.notificationType.letter,'');
+                        $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.result,$scope.notificationType.letter,'');
                 }
                 else
                 {
@@ -705,12 +567,27 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
             });
         }
-
         //------------------------------------------------------------------------------------------------
         /***
          * Change Appointment Calendar
          * tannv.dts@gmail.com
          */
+
+
+        $scope.$watch('selectedAppointmentCalendar',function(oldValue,newValue){
+            if($scope.selectedAppointmentCalendar)
+            {
+                $scope.changeAppointmentCalendar(
+                    $scope.selectedAppointmentCalendar.CAL_ID,
+                    $scope.selectedAppointmentCalendar.FROM_TIME,
+                    $scope.selectedAppointmentCalendar.DOCTOR_ID,
+                    $scope.selectedAppointmentCalendar.SITE_ID,
+                    $scope.selectedAppointmentCalendar.RL_TYPE_ID,
+                    $scope.selectedAppointmentCalendar.Specialties_id);
+            }
+
+        });
+
 
         $scope.selectedFilter={
             locationSelected:{},
@@ -719,199 +596,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             doctorSelected:{},
             var1:{}
         }
-
-
-
-        //Get all location for select
-        $scope.getLocationsFilter=function()
-        {
-            $http({
-                method:"GET",
-                url:"/api/rlob/redimedsites/list"
-            })
-            .success(function(data) {
-                $scope.locationsFilter=data;
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-            });
-        }
-        $scope.getLocationsFilter();
-
-        //Get all rl_types
-
-        $scope.getRlTypesFilter=function()
-        {
-            $http({
-                method:"GET",
-                url:"/api/rlob/rl_types/list"
-            })
-            .success(function(data) {
-                $scope.rltypesFilter=data;
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-
-            });
-        }
-        $scope.getRlTypesFilter();
-
-        $scope.rlTypesFilterChange=function(rlTypeId)
-        {
-            $scope.getSpecialitiesFilter(rlTypeId);
-            $scope.selectedFilter.clnSpecialitySelected={};
-            $scope.getDoctorsFilter(null);
-            $scope.selectedFilter.doctorSelected={};
-            $scope.updateAppoinmentsList();
-        }
-
-        //Get all doctor Specialtity
-        $scope.getSpecialitiesFilter=function(rlTypeId)
-        {
-            $http({
-                method:"GET",
-                url:"/api/rlob/cln_specialties/filter-by-type",
-                params:{RL_TYPE_ID:rlTypeId}
-            })
-            .success(function(data) {
-                if(data.status=='success')
-                    $scope.specialitiesFilter=data.data;
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-
-            });
-        }
-        $scope.specialitiesChange=function(specialtityId)
-        {
-            $scope.getDoctorsFilter(specialtityId);
-            $scope.selectedFilter.doctorSelected={};
-            $scope.updateAppoinmentsList();
-        }
-
-        //Get all Doctors of specialtity
-        $scope.getDoctorsFilter=function(specialtityId)
-        {
-            $http({
-                method:"GET",
-                url:"/api/rlob/doctors/get-doctors-by-speciality",
-                params:{Specialties_id:specialtityId}
-            })
-            .success(function(data) {
-                if(data.status=='success')
-                    $scope.doctorsFilter=data.data;
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-
-            });
-        }
-
-        //Get Appoiment Calendar
-        $scope.updateAppoinmentsList=function()
-        {
-            var specialityId= $scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_id?$scope.selectedFilter.clnSpecialitySelected.Specialties_id:-1;
-            var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.doctor_id?$scope.selectedFilter.doctorSelected.doctor_id:'%';
-            var locationId=$scope.selectedFilter.locationSelected  && $scope.selectedFilter.locationSelected.id?$scope.selectedFilter.locationSelected.id:'%';
-            var fromTime=$scope.selectedFilter.var1.format("YYYY/MM/DD");
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+fromTime);
-            $http({
-                method:"GET",
-                url:"/api/rlob/appointment-calendar/get-appointment-calendar" ,
-                params:{Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime}
-            })
-            .success(function(data) {
-                    var temp={LOCATION_ITEMS:[]};
-
-                    for(var i=0;i<data.length;i++)
-                    {
-                        if(!temp[data[i].SITE_ID])
-                        {
-                            temp[data[i].SITE_ID]={DOCTOR_ITEMS:[]};
-                            temp.LOCATION_ITEMS.push({
-                                SITE_ID: data[i].SITE_ID,
-                                SITE_NAME:data[i].Site_name
-                            });
-
-                        }
-
-                        if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID])
-                        {
-                            temp[data[i].SITE_ID][data[i].DOCTOR_ID]={APPOINTMENT_ITEMS:[]};
-                            temp[data[i].SITE_ID].DOCTOR_ITEMS.push({
-                                DOCTOR_ID:data[i].DOCTOR_ID,
-                                DOCTOR_NAME:data[i].NAME
-                            });
-                        }
-                        if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].CAL_ID])
-                        {
-                            temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].CAL_ID]={};
-                            temp[data[i].SITE_ID][data[i].DOCTOR_ID].APPOINTMENT_ITEMS.push({
-                                CAL_ID:data[i].CAL_ID,
-                                APPOINTMENT_TIME:data[i].appointment_time,
-                                FROM_TIME:data[i].FROM_TIME,
-                                DOCTOR_ID:data[i].DOCTOR_ID,
-                                SITE_ID:data[i].SITE_ID
-                            });
-                        }
-                    }
-                    var arr=[];
-                    for (var i=0;i<temp.LOCATION_ITEMS.length;i++)
-                    {
-                        var location_item=temp.LOCATION_ITEMS[i];
-                        location_item.DOCTOR_ITEMS=[];
-                        for(var j=0;j<temp[location_item.SITE_ID].DOCTOR_ITEMS.length;j++)
-                        {
-                            var doctor_item=temp[location_item.SITE_ID].DOCTOR_ITEMS[j];
-                            doctor_item.APPOINTMENT_ITEMS=[];
-                            location_item.DOCTOR_ITEMS.push(doctor_item);
-                            for(var k=0;k<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].APPOINTMENT_ITEMS.length;k++)
-                            {
-                                var appointment_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].APPOINTMENT_ITEMS[k];
-                                doctor_item.APPOINTMENT_ITEMS.push(appointment_item);
-                            }
-                        }
-                        arr.push(location_item);
-                    }
-                    $scope.appointmentsFilter=arr;
-
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-
-            });
-        }
-
-
-        $('#lob-change-appointment-calendar-dialog').on('shown.bs.modal', function (e) {
-            $scope.selectedFilter.var1=moment();
-            var initPickers = function () {
-
-                //init date pickers
-                $('.date-picker').datepicker({
-                    rtl: Metronic.isRTL(),
-                    autoclose: true
-                });
-
-            }
-            initPickers();
-            var datePaginatorChanged=function(date)
-            {
-                $scope.selectedFilter.var1=date;
-                $scope.updateAppoinmentsList();
-            }
-            var datePaginator=new MyDatePaginator($scope.selectedFilter.var1,datePaginatorChanged);
-        })
 
         $scope.currentUpdatingItem={
             bookingId:null,
@@ -922,8 +606,22 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             assId:null
         };
 
+
+        /***
+         * tannv.dts@gmail.com
+         * Su dung khi muon su dung rlob-choose-appointment-calendar-dialog
+         * Dung de khoi tao date paginator
+         */
+        $('#lob-change-appointment-calendar-dialog').on('shown.bs.modal', function (e) {
+            if(!$scope.usingForDialogFlag)
+                $scope.usingForDialogFlag=0;
+            $scope.usingForDialogFlag=$scope.usingForDialogFlag+1;
+        });
+
+
         $scope.showDialogChangeAppointmentCalendar=function(bookingId,calId,appointmentDateTime,assId)
         {
+            //alert(JSON.stringify([bookingId,calId,appointmentDateTime,assId]));
             $("#lob-change-appointment-calendar-dialog").modal({
                 show:true,
                 backdrop:'static'
@@ -932,10 +630,11 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             $scope.currentUpdatingItem.calId=calId;
             $scope.currentUpdatingItem.appointmentDateTime=appointmentDateTime;
             $scope.currentUpdatingItem.assId=assId;
-            $scope.updateAppoinmentsList();
+            //
+
         }
 
-        $scope.changeAppointmentCalendar=function(newCalId,newAppointmentDateTime,doctorId,siteId)
+        $scope.changeAppointmentCalendar=function(newCalId,newAppointmentDateTime,doctorId,siteId,rlTypeId,specialityId)
         {
             $http({
                 method:"POST",
@@ -945,8 +644,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     doctorId:doctorId,
                     siteId:siteId,
                     appointmentDate:moment(newAppointmentDateTime).format("YYYY/MM/DD HH:mm"),
-                    rlTypeId:$scope.selectedFilter.rltypeSelected.RL_TYPE_ID,
-                    specialityId:$scope.selectedFilter.clnSpecialitySelected.Specialties_id
+                    rlTypeId:rlTypeId,
+                    specialityId:specialityId
                 }
             })
             .success(function(data) {
@@ -978,7 +677,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                                 $scope.lobAdminSearch.doctorKey=null;
                             }
                             //$scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
-                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.rlobNotificationType.changeCalendar,$scope.notificationType.bell,'');
+                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.bellType.changeCalendar,$scope.notificationType.bell,'');
                         }
                     })
                     .error(function (data) {
@@ -1015,6 +714,213 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.newPosition="new-position";
 
+
+        $scope.showDetailPanel=false;
+        $scope.currentNodeBooking={};
+        $scope.getBookingDetailWhenClick=function(bookingId,scope)
+        {
+            $scope.currentNodeBooking=scope;
+            $scope.showDetailPanel=true;
+            $http({
+                method:"POST",
+                url:"/api/rlob/rl_bookings/get-booking-by-id",
+                data:{bookingId:bookingId}
+            })
+            .success(function(data) {
+                if(data.status=='success')
+                {
+                    $scope.selectedBooking=data.data;
+                    $scope.scrollTo($(".detailPanel"),-200);
+                    //rlobHelper.setSlimCroll(".detailScroll");
+
+                }
+                else
+                {
+                    alert("data not exist!");
+                }
+            })
+            .error(function (data) {
+                console.log("error");
+            })
+            .finally(function() {
+            });
+        }
+
+        $scope.getBookingDetailWhenCursor=function(bookingId)
+        {
+            if(bookingId)
+            {
+                rlobService.getBookingById(bookingId).then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.showDetailPanel=true;
+                        $scope.selectedBooking=data.data;
+                    }
+                });
+            }
+
+        }
+
+
+        /***
+         * Local notification for admin
+         * tannv.dts@gmail.com
+         */
+        //----------------------------------------------------------------------------------
+        $scope.listBookingNotification=[];
+
+        $scope.localNotificationType={
+            type1:{
+                header:'Pass bookings not change status',
+                alias:'passBookingNotChangeStatus'
+            },
+            type2:{
+                header:'Upcomming bookings have not been uploaded document (client)',
+                alias:'upcommingBookingHaveNotDucment'
+            },
+            type3:{
+                header:'Pass bookings have not been uploaded result',
+                alias:'passBookingHaveNotResult'
+            }
+
+        }
+
+        /***
+         * Danh sach cac booking da qua chua doi status
+         * tannv.dts@gmail.com
+         */
+        $scope.listPassBookingNotChangeStatus=[];
+        $scope.getPassBookingNotChangeStatus=function()
+        {
+            rlobService.getPassBookingNotChangeStatus($scope.bookingType)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.listPassBookingNotChangeStatus=data.data;
+                    }
+                },
+                function(error)
+                {
+
+                });
+        }
+
+        /***
+         * Danh sach cac booking sap toi va client chua upload document
+         * tannv.dts@gmail.com
+         */
+        $scope.listUpcommingBookingHaveNotClientDocument=[];
+        $scope.getUpcommingBookingHaveNotClientDocument=function()
+        {
+            rlobService.getUpcommingBookingHaveNotClientDocument($scope.bookingType)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.listUpcommingBookingHaveNotClientDocument=data.data;
+                    }
+                },
+                function(error)
+                {
+
+                });
+        }
+
+        /***
+         * Danh sach cac booking da complete nhung chua co result
+         * tannv.dts@gmail.com
+         */
+        $scope.listPassBookingHaveNotResult=[];
+        $scope.getListPassBookingHaveNotResult=function()
+        {
+            rlobService.getPassBookingHaveNotResult($scope.bookingType)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.listPassBookingHaveNotResult=data.data;
+                    }
+                },
+                function(error)
+                {
+
+                });
+        }
+
+        /**
+         * Xu ly show list booking notificaion (local of admin)
+         * tannv.dts@gmail.com
+         */
+        $scope.showListBookingNotification=function(notificationType)
+        {
+            switch(notificationType)
+            {
+                case $scope.localNotificationType.type1.alias:
+                    $scope.listBookingNotification=$scope.listPassBookingNotChangeStatus;
+                    $scope.listBookingNotificationHeader=$scope.localNotificationType.type1.header;
+                    break;
+                case $scope.localNotificationType.type2.alias:
+                    $scope.listBookingNotification=$scope.listUpcommingBookingHaveNotClientDocument;
+                    $scope.listBookingNotificationHeader=$scope.localNotificationType.type2.header;
+                    break;
+                case $scope.localNotificationType.type3.alias:
+                    $scope.listBookingNotification=$scope.listPassBookingHaveNotResult;
+                    $scope.listBookingNotificationHeader=$scope.localNotificationType.type3.header;
+                    break;
+            }
+            $("#list-booking-notification-popup").modal({show:true,backdrop:'static'});
+
+//            $scope.filterBooking
+
+        }
+
+        /**
+         * Khi tat danh sach xem cac booking local notification thi chay lai tree booking
+         * muc dich de dong nhat data
+         * tannv.dts@gmail.com
+         */
+        $('#list-booking-notification-popup').on('hidden.bs.modal', function (e) {
+            $scope.filterBooking();
+        });
+
+        /***
+         * Cap nhat cac local admin notification
+         * tannv.dts@gmail.com
+         */
+        $scope.updateAdminLocalNotification=function()
+        {
+            $scope.getPassBookingNotChangeStatus();
+            $scope.getUpcommingBookingHaveNotClientDocument();
+            $scope.getListPassBookingHaveNotResult();
+        }
+        $scope.updateAdminLocalNotification();
+        /**
+         * Thêm function cap nhat admin local notification vao schedule
+         * tannv.dts@gmail.com
+         */
+        $scope.scheduleList.rlobUpdateAdminLocalNotification=$scope.updateAdminLocalNotification;
+
+//        $scope.$watch('listPassBookingNotChangeStatus', function(oldValue,newValue){
+//            if($scope.listPassBookingNotChangeStatus.length>0)
+//            {
+//                var msg=$scope.listPassBookingNotChangeStatus.length +' pass booking not change status';
+//                $scope.showNotificationPopup('.rlob_admin_local_notification_popup',msg,$scope.notificationColor.danger);
+//            }
+//
+//        })
+//        $scope.$watch('listUpcommingBookingHaveNotClientDocument', function(oldValue,newValue){
+//            if($scope.listUpcommingBookingHaveNotClientDocument.length>0)
+//            {
+//                var msg=$scope.listUpcommingBookingHaveNotClientDocument.length +' upcomming bookings have not document';
+//                $scope.showNotificationPopup('.rlob_admin_local_notification_popup',msg,$scope.notificationColor.danger);
+//            }
+//
+//        })
+//        $scope.$watch('listPassBookingHaveNotResult', function(oldValue,newValue){
+//            if($scope.listPassBookingHaveNotResult.length>0)
+//            {
+//                var msg=$scope.listPassBookingHaveNotResult.length +' pass booking have not result';
+//                $scope.showNotificationPopup('.rlob_admin_local_notification_popup',msg,$scope.notificationColor.danger);
+//            }
+//        })
 
 
 

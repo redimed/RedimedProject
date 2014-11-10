@@ -1,5 +1,4 @@
 var ComponentsPickers = function () {
-
     var handleDatePickers = function () {
 
         if (jQuery().datepicker) {

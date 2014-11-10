@@ -139,19 +139,23 @@ module.exports =
         var SITE_ID=req.query.SITE_ID;
         var FROM_TIME=req.query.FROM_TIME;
         var Specialties_id=req.query.Specialties_id;
+        var RL_TYPE_ID=req.query.RL_TYPE_ID;
+        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^>"+JSON.stringify(req.query));
+        var sql =
+            " SELECT  DISTINCT h.*,CONCAT(HOUR(h.`FROM_TIME`),':',MINUTE(h.`FROM_TIME`)) AS appointment_time,                                    "+
+            "	 `redimedsite`.`Site_name`,`redimedsite`.`Site_addr`, doctor.`NAME`,spec.`Specialties_id`,                                       "+
+            "	 spec.`Specialties_name`                                                                                                         "+
+            " FROM 	 `cln_appointment_calendar` h                                                                                                "+
+            "	 INNER JOIN `doctor_specialities` d ON h.`DOCTOR_ID`=d.`doctor_id`                                                               "+
+            "	 INNER JOIN `cln_specialties` spec ON d.`Specialties_id`=spec.`Specialties_id`                                                   "+
+            "	 INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                                           "+
+            "	 INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                                                 "+
+            " WHERE	 h.`NOTES` IS NULL                                                                                                           "+
+            "	 AND                                                                                                                             "+
+            "	 spec.`RL_TYPE_ID`=? AND d.`Specialties_id` LIKE ? AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?   ";
         req.getConnection(function(err,connection)
         {
-
-            var query = connection.query(
-                " SELECT  DISTINCT h.*,CONCAT(HOUR(h.`FROM_TIME`),':',MINUTE(h.`FROM_TIME`)) AS appointment_time        "+
-                " FROM 	 `cln_appointment_calendar` h                                                                   "+
-                "	 INNER JOIN `doctor_specialities` d ON h.`DOCTOR_ID`=d.`doctor_id`                                  "+
-                "	 INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                              "+
-                " WHERE	 h.`NOTES` IS NULL                                                                              "+
-                "	 AND                                                                                                "+
-                "	 d.`Specialties_id`=? AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?     "
-//            "SELECT h.*,CONCAT(HOUR(h.`FROM_TIME`),':',MINUTE(h.`FROM_TIME`)) AS appointment_time FROM `cln_appointment_calendar`  h WHERE h.`DOCTOR_ID` like ? AND h.`SITE_ID` like ? AND DATE(h.`FROM_TIME`)=?"
-                ,[Specialties_id,DOCTOR_ID,SITE_ID,FROM_TIME],function(err,rows)
+            var query = connection.query(sql,[RL_TYPE_ID,Specialties_id,DOCTOR_ID,SITE_ID,FROM_TIME],function(err,rows)
                 {
                     if(err)
                     {
@@ -161,6 +165,7 @@ module.exports =
                 });
         });
     },
+    
     updateCalendarNote:function(req,res)
     {
         var calid=req.body.CAL_ID;
@@ -183,6 +188,7 @@ module.exports =
                 });
         });
     },
+    
     list:function(req,res)
     {
         req.getConnection(function(err,connection)
@@ -197,6 +203,30 @@ module.exports =
                     }
                     res.json(rows);
                 });
+        });
+    },
+    
+    getAppointmentCalendarById:function(req,res)
+    {
+        var calId=req.query.calId;
+        var sql='SELECT cal.* FROM `cln_appointment_calendar` cal WHERE cal.`CAL_ID`=?';
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,calId,function(err,rows)
+            {
+                if(err)
+                {
+                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                        res.json({status:'success',data:rows[0]});
+                    else
+                        res.json({status:'fail'});
+                }
+            });
         });
     }
 };
