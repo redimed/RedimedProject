@@ -3,7 +3,7 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
 function detectRouteMethod(func, ignore) {
-    var methods = ['get', 'post', 'upload', 'put', 'delete'];
+    var methods = ['get', 'post', 'upload', 'put', 'delete', 'any'];
     if (!ignore)
         ignore = [];
     for (var i = methods.length - 1; i >= 0; --i) {
@@ -43,7 +43,11 @@ module.exports = {
             } else if (rest == 'upload') {
                 var m_name = getRouteName(func, rest);
                 app.post(path + m_name, multipartMiddleware, controller[func]);
-            }
+            } else if ( rest == 'any') {
+				var m_name = getRouteName(func, rest);
+				app.get(path + m_name, controller[func]);
+				app.post(path + m_name, controller[func]);				
+			}
         }
     }
 };
