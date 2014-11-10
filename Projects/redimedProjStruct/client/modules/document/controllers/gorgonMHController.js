@@ -5,6 +5,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             formatYear: 'yy',
             startingDay: 1
         };
+        $scope.today = new Date();
         //end date
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
@@ -12,16 +13,240 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             $state.go('loggedIn.home', null, {"reload": true});
         }
         else {
+            //set value default
             $scope.info = {
-                Patient_Id: userInfo.id,
+                Gorgon_Id: null,
+                Patient_Id: null,
+                JobNo: null,
+                Occupation: null,
+                JobLocation: null,
+                SpecificLocation: null,
+                PhoneNumber: null,
                 Q1_YearFrom1: new Date(),
-                Q1_YearTo1: new Date(),
                 Q1_YearFrom2: new Date(),
+                Q1_YearTo1: new Date(),
                 Q1_YearTo2: new Date(),
-                Creation_date: new Date(),
-                GorgonDate: new Date(),
+                Q1_Job1: null,
+                Q1_Job2: null,
+                Q1_Employer1: null,
+                Q1_Employer2: null,
+                Q1_TypeOfWork: null,
+                Q1_WorkPast: null,
+                Q1_WorkEnvironment: null,
+                Q1_AnyProblems: null,
+                Q1_CauseProblems: null,
+                Q1_Underground: null,
+                Q1_GrainDust: null,
+                Q1_RemoteEnv: null,
+                Q1_AtHeights: null,
+                Q1_WetConditions: null,
+                Q1_Nickel: null,
+                Q1_HumidConditions: null,
+                Q1_FIFO: null,
+                Q1_FIFODone: null,
+                Q1_FIFOProblems: null,
+                Q1_ShiftWork: null,
+                Q1_ShiftWorkDone: null,
+                Q1_ShiftWorkProblems: null,
+                Q1_SafetyEquipment: null,
+                Q1_ExaminersComments: null,
+                Q2_Operation: null,
+                Q2_Accident: null,
+                Q2_SportsInjury: null,
+                Q2_YesWhen: null,
+                Q2_TimeOfWork: null,
+                Q2_HowLongOff: null,
+                Q2_HowLongModified: null,
+                Q2_HowLongTreatment: null,
+                Q2_NormalDuties: null,
+                Q2_Compensation: null,
+                Q2_PsychologicalProblems: null,
+                Q2_ExaminersComments: null,
+                Q2_DentalHealth: null,
+                Q2_Diabetic: null,
+                Q2_Seizure: null,
+                Q2_Epileptic: null,
+                Q2_Asthmatic: null,
+                Q2_AnyScars: null,
+                Q2_MedicAlert: null,
+                Q3_NeckInjury: null,
+                Q3_DiskInjury: null,
+                Q3_Backache: null,
+                Q3_Physio: null,
+                Q3_BackInjury: null,
+                Q3_Sciatica: null,
+                Q3_BackSurgery: null,
+                Q3_SwollenJoints: null,
+                Q3_ArthriticKnee: null,
+                Q3_Arm: null,
+                Q3_HandInjury: null,
+                Q3_LegInjury: null,
+                Q3_KneeCartilage: null,
+                Q3_KneeReconstruction: null,
+                Q3_FootProblems: null,
+                Q3_OtherBone: null,
+                Q3_Rheumatism: null,
+                Q3_RSI: null,
+                Q3_Hernia: null,
+                Q4_MentalHealth: null,
+                Q4_Psychologist: null,
+                Q4_DrugsProblems: null,
+                Q4_Depression: null,
+                Q4_PanicAttacks: null,
+                Q4_NervousProblem: null,
+                Q4_Anxiety: null,
+                Q4_Insomnia: null,
+                Q5_Eczema: null,
+                Q5_Psoriasis: null,
+                Q5_SkinProblem: null,
+                Q5_Dermatitis: null,
+                Q5_SkinCancers: null,
+                Q6_Asthma: null,
+                Q6_LungDisease: null,
+                Q6_Artery: null,
+                Q6_HighBloodPressure: null,
+                Q6_DVT: null,
+                Q6_UsedPuffer: null,
+                Q6_CardiacPacemaker: null,
+                Q6_Emphysema: null,
+                Q6_HeartDisease: null,
+                Q6_Bronchitis: null,
+                Q6_CollapsedLung: null,
+                Q6_HeartAttack: null,
+                Q7_HeadInjury: null,
+                Q7_Epilepsy: null,
+                Q7_SevereHeadaches: null,
+                Q7_NeurologicalDisorder: null,
+                Q8_DOInsulin: null,
+                Q8_DOMedication: null,
+                Q8_DietControl: null,
+                Q8_KidneyProblems: null,
+                Q8_LiverDisease: null,
+                Q8_HearingLoss: null,
+                Q8_Exhaustion: null,
+                Q8_Arthritis: null,
+                Q8_BloodDisorder: null,
+                Q8_Cancer: null,
+                Q8_BowelProblems: null,
+                Q8_Hepatitis: null,
+                Q8_VisionProblem: null,
+                Q8_ChronicIllness: null,
+                Q9_Pregnant: null,
+                Q9_BreastFeeding: null,
+                Q9_ExaminersComments: null,
+                Q10_Disabilities: null,
+                Q11_Climb: null,
+                Q11_Bend: null,
+                Q11_WorkOverhead: null,
+                Q11_WorkHeights: null,
+                Q11_WorkIsolation: null,
+                Q11_Instruments: null,
+                Q11_WorkAwkward: null,
+                Q11_Squat: null,
+                Q11_Push: null,
+                Q11_WorkUnderground: null,
+                Q11_WorkDusty: null,
+                Q11_WorkConfined: null,
+                Q11_WorkGround: null,
+                Q11_WorkVibration: null,
+                Q12_LossFullBack: null,
+                Q12_LossFullLeg: null,
+                Q12_DifficultyHearing: null,
+                Q12_LossEye: null,
+                Q12_Glasses: null,
+                Q12_OtherLoss: null,
+                Q12_LossFullMovements: null,
+                Q12_OtherProblem: null,
+                Q12_LossFullArm: null,
+                Q12_Psychological: null,
+                Q12_Breathing: null,
+                Q12_ChronicSkin: null,
+                Q12_AlcoholMisuse: null,
+                Q12_LossMobility: null,
+                Q12_LossFullNeck: null,
+                Q12_ExaminersComments: null,
+                Q13_AdvisedToChange: null,
+                Q13_AdvisedToChangeComment: null,
+                Q13_AdvisedToLimit: null,
+                Q13_AdvisedToLimitComment: null,
+                Q13_OffInjury: null,
+                Q13_OffInjuryComment: null,
+                Q13_WhatWas: null,
+                Q13_Medi_Vac: null,
+                Q13_Details: null,
+                Q13_ExaminersComments: null,
+                Q14_WorkRelatedDisease: null,
+                Q14_Year: null,
+                Q14_HowLongOff: null,
+                Q14_HowLongModified: null,
+                Q14_HowLongTreatment: null,
+                Q14_NormalDuties: null,
+                Q14_Compensation: null,
+                Q14_Psychological: null,
+                Q14_Details: null,
+                Q14_WCClaim: null,
+                Q14_ExaminersComments: null,
+                Q15_TakeMedications: null,
+                Q15_ListMedication: null,
+                Q16_HayFever: null,
+                Q16_Eczema: null,
+                Q16_Allergic: null,
+                Q16_Adrenaline: null,
+                Q16_Epipen: null,
+                Q16_Asthma: null,
+                Q17_QFever: null,
+                Q17_HepatitisA: null,
+                Q17_Tetanus: null,
+                Q17_HepatitisB: null,
+                Q17_ExaminersComments: null,
+                Q18_IncreasedCough: null,
+                Q18_ChestIllness: null,
+                Q18_SOBHurrying: null,
+                Q18_SOBwalking: null,
+                Q18_SOBWakeUp: null,
+                Q18_CESWheezy: null,
+                Q18_CEFTight: null,
+                Q18_GivenPuffer: null,
+                Q18_LastTimePuffer: null,
+                Q19_Smoke: null,
+                Q19_SmokeDay: null,
+                Q19_SmokeWeek: null,
+                Q19_SmokeYear: null,
+                Q20_DrinkWeek: null,
+                Q20_DrinkMax: null,
+                Q21_Exercise: null,
+                Q21_PlaySport: null,
+                Q21_SportDetails: null,
+                Q21_IsFootball: null,
+                Q21_IsGolf: null,
+                Q21_IsTennis: null,
+                Q21_IsSquash: null,
+                Q21_IsBowls: null,
+                Q21_IsGym: null,
+                Q21_IsOther: null,
+                Q22_SleepDisorder: null,
+                Q22_Choking: null,
+                Q22_UseCPAP: null,
+                Q23_SittingReading: null,
+                Q23_WatchingTV: null,
+                Q23_Inactive: null,
+                Q23_Passenger: null,
+                Q23_LyingDown: null,
+                Q23_SittingTalking: null,
+                Q23_SittingQuietly: null,
+                Q23_InACar: null,
+                Q23_TotalScore: null,
+                Signature: null,
+                GorgonDate: null,
+                Created_by: null,
+                Creation_date: null,
                 Last_updated_by: null,
-                Last_update_date: null
+                Last_update_date: null,
+                CalId: null,
+                DocId: null,
+                Q21_IsComment: null,
+                Q21Other1Comment: null,
+                PATIENT_SIGNATURE: null
             }
             $scope.totals = [
                 {id: 0},
@@ -41,24 +266,13 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             }
             $scope.maxDate = new Date();
             var info = $scope.info;
-            DocumentService.findGGMH(info)
+            DocumentService.loadGGMH(info)
                 .then(function (response) {
                     if (response['status'] === 'fail') {
                         $state.go('loggedIn.home', null, {reload: true});
                     }
                     else if (response['status'] === 'findNull') {
                         $scope.isNew = true;
-                        $scope.info = {
-                            Patient_Id: userInfo.id,
-                            Q1_YearFrom1: new Date(),
-                            Q1_YearTo1: new Date(),
-                            Q1_YearFrom2: new Date(),
-                            Q1_YearTo2: new Date(),
-                            Creation_date: new Date(),
-                            GorgonDate: new Date(),
-                            Last_updated_by: null,
-                            Last_update_date: null
-                        }
                     }
                     else if (response[0].status === 'success') {
                         //find found
@@ -305,51 +519,50 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                         $state.go('loggedIn.home', null, {reload: true});
                     }
                 })
+            $scope.submit = function (gorgonMHForm) {
+                if ($scope.isNew === true) {
+                    /**
+                     * edit gorgon medical history
+                     */
+                    if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
+                        toastr.error("Please Input All Required Information!", "Error");
+                    }
+                    else {
+                        var info = $scope.info;
+                        DocumentService.insertGGMH(info)
+                            .then(function (response) {
+                                if (response['status'] === 'success') {
+                                    toastr.success("Add success!", "Success");
+                                    $state.go('loggedIn.gorgonMH', null, {"reload": true});
+                                }
+                                else if (response['status'] === 'fail')
+                                    toastr.error("Add fail!", "Error");
+
+                            })
+                    }
+                }
+                else {
+                    /**
+                     * add new gorgon medical history
+                     */
+                    if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
+                        toastr.error("Please Input All Required Information!", "Error");
+                    }
+                    else {
+                        var info = $scope.info;
+                        DocumentService.editGGMH(info)
+                            .then(function (response) {
+                                if (response['status'] === 'success') {
+                                    toastr.success("Edit success!", "Success");
+                                    $state.go('loggedIn.gorgonMH', null, {"reload": true});
+                                }
+                                else if (response['status'] === 'fail')
+                                    toastr.error("Edit fail!", "Error");
+
+                            });
+                    }
+                }
+
+            }
         }
-        $scope.submit = function (gorgonMHForm) {
-            if ($scope.isNew === true) {
-                /**
-                 * edit gorgon medical history
-                 */
-                if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
-                    toastr.error("Please Input All Required Information!", "Error");
-                }
-                else {
-                    var info = $scope.info;
-                    DocumentService.insertGGMH(info)
-                        .then(function (response) {
-                            if (response['status'] === 'success') {
-                                toastr.success("Add new gorgon medical history success!", "Success");
-                                $state.go('loggedIn.gorgonMH', null, {"reload": true});
-                            }
-                            else if (response['status'] === 'fail')
-                                toastr.error("Add new gorgon medical history fail!", "Error");
-
-                        })
-                }
-            }
-            else {
-                /**
-                 * add new gorgon medical history
-                 */
-                if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
-                    toastr.error("Please Input All Required Information!", "Error");
-                }
-                else {
-                    var info = $scope.info;
-                    DocumentService.editGGMH(info)
-                        .then(function (response) {
-                            if (response['status'] === 'success') {
-                                toastr.success("Edit gorgon medical history success!", "Success");
-                                $state.go('loggedIn.gorgonMH', null, {"reload": true});
-                            }
-                            else if (response['status'] === 'fail')
-                                toastr.error("Edit gorgon medical history fail!", "Error");
-
-                        })
-                }
-            }
-
-        };
-    }
-)
+    });

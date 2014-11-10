@@ -1,3 +1,4 @@
+
 <html ng-app="app">
 <head>
 	<meta charset="utf-8">
@@ -313,12 +314,17 @@
     <script src="/modules/rediLegalOnlineBooking/controllers/rlobController.js"></script>
 <script src="/modules/rediLegalOnlineBooking/controllers/vaccinobController.js"></script>
 <script src="/modules/rediLegalOnlineBooking/js/rlob_helper.js"></script>
+
 <script src="/modules/rediLegalOnlineBooking/directives/rlob_directive.js"></script>
 <script src="/modules/rediLegalOnlineBooking/services/rlob_Service.js"></script>
 <script src="/modules/rediLegalOnlineBooking/rediLegalOnlineBooking.js"></script>
 <script src="/modules/rediLegalOnlineBooking/controllers/rlob_admin_booking_reportController.js"></script>
 <script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingController.js"></script>
 
+<!--begin signature-->
+<script type="text/javascript" src="lib/jsignature/jSignature.min.js"></script>
+<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
+<!--end signature-->
 
 
 <script src="/modules/rediLegalOnlineBooking/controllers/rlob_patientDetailController.js"></script>
@@ -327,7 +333,8 @@
 <link href="/modules/rediLegalOnlineBooking/css/rlob-printable.css" media="print" rel="stylesheet" type="text/css"/>
 
 
-<link href="/theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.min.css" rel="stylesheet" type="text/css"/>
+<link href="/theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.min.css" rel="stylesheet"
+      type="text/css"/>
 <link href="/theme/assets/global/plugins/angular/angular-ui-tree/my-custom.css" rel="stylesheet" type="text/css"/>
 <script src="/theme/assets/global/plugins/angular/angular-ui-tree/angular-ui-tree.js"></script>
 <script src="/theme/assets/global/plugins/angular/ng-context-menu.js"></script>
@@ -335,6 +342,16 @@
 <script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingDetailController.js"></script>
 
 <script src="/modules/rediLegalOnlineBooking/vaccinOnlineBooking.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css"
+      href="/theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
+<script type="text/javascript" src="/theme/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+        src="/theme/assets/global/plugins/datatables/media/js/jquery.dataTables.columnFilter.js"></script>
+<script type="text/javascript"
+        src="/theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
 
 <script src="/modules/rediLegalOnlineBooking/js/table-editable-lob-edited.js"></script>
 <script src="/modules/rediLegalOnlineBooking/controllers/rlob_bookingListController.js"></script>
@@ -441,11 +458,12 @@
             Index.init();
         });
     </script>
+
 </head>
 <body class="page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-footer-fixed1">
-	<!-- ROOT -->
-	<div ui-view="root"></div>
-	<!-- END ROOT VIEW -->
+<!-- ROOT -->
+<div ui-view="root"></div>
+<!-- END ROOT VIEW -->
 
 
 </body>

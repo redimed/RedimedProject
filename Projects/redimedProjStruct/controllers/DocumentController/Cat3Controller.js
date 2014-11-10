@@ -4,11 +4,11 @@
 var db = require('../../models');
 
 module.exports = {
-    findCat3: function (req, res) {
-        var ids = req.body.ids;
-        db.Category3.find({where: {cal_id: ids.cal_id, patient_id: ids.patient_id}}, {raw: true})
+    loadCat3: function (req, res) {
+        var info = req.body.info; //get cal_id, patient_id
+        db.Category3.findAll({where: {cal_id: 999, patient_id: 999}}, {raw: true})
             .success(function (data) {
-                if (data === null) {
+                if (data.length === 0) {
                     res.json({status: "findNull"});
                 }
                 else {
@@ -28,8 +28,8 @@ module.exports = {
             var cat_id = maxId + 1;
             db.Category3.create({
                 cat_id: cat_id,
-                cal_id: 1,              //edit set calendar id
-                patient_id: info.patient_id,
+                cal_id: 999,              //edit set calendar id
+                patient_id: 999,          //edit patient_id
                 q1_4: info.q1_4,
                 q1_4_c: info.q1_4_c,
                 q1_5_1: info.q1_5_1,
@@ -123,19 +123,21 @@ module.exports = {
                 r4_2_c: info.r4_2_c,
                 r5_1: info.r5_1,
                 r5_2: info.r5_2,
-                DocId: null,                        //edit
-                q1_5_3_c: info.q1_5_3_c,            //edit
-                PATIENT_SIGNATURE: null,            //edit
-                PATIENT_DATE: info.PATIENT_DATE,    //edit
-                DOCTOR_ID: null                     //edit
+                DocId: info.DocId,                            //edit
+                q1_5_3_c: info.q1_5_3_c,                      //edit
+                PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,    //edit
+                PATIENT_DATE: info.PATIENT_DATE,              //edit
+                DOCTOR_ID: info.DOCTOR_ID                     //edit
 
             }, {raw: true})
-                .success(function (data) {
+                .success(function () {
                     res.json({status: "success"});
                 }).error(function (err) {
+                    console.log("ERROR:" + err);
                     res.json({status: "fail"});
                 })
         }).error(function (err) {
+            console.log("ERROR:" + err);
             res.json({status: "fail"});
         })
 
@@ -236,14 +238,15 @@ module.exports = {
             r4_2_c: info.r4_2_c,
             r5_1: info.r5_1,
             r5_2: info.r5_2,
-            DocId: null,                        //edit
-            q1_5_3_c: null,                     //edit
-            PATIENT_SIGNATURE: null,            //edit
-            PATIENT_DATE: null,                 //edit
-            DOCTOR_ID: null                     //edit
-        }, {cal_id: 1, cat_id: 1, patient_id: 237}).success(function () {
+            DocId: info.DocId,                        //edit
+            q1_5_3_c: info.q1_5_3_c,                     //edit
+            PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,            //edit
+            PATIENT_DATE: info.PATIENT_DATE,                 //edit
+            DOCTOR_ID: info.DOCTOR_ID                     //edit
+        }, {cat_id: info.cat_id}).success(function () {
             res.json({status: 'success'});
         }).error(function (err) {
+            console.log("ERROR:" + err);
             res.json({status: 'fail'});
         });
     }

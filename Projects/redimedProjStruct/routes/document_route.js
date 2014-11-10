@@ -74,7 +74,7 @@ app.post('/api/document/gorgonMAInfo',gorgonMAController.getMA);
  * begin category 3
  */
 app.post('/api/document/insertCat3', Cat3Controller.insertCat3);
-app.post('/api/document/findCat3', Cat3Controller.findCat3);
+app.post('/api/document/loadCat3', Cat3Controller.loadCat3);
 app.post('/api/document/editCat3', Cat3Controller.editCat3);
 /**
  * end category 3
@@ -133,7 +133,7 @@ app.post('/api/document/editSA2', SA2Controller.editSA2);
 /**
  * begin gorgon medical history
  */
-app.post('/api/document/findGGMH', gorgonMHController.findGGMH);
+app.post('/api/document/loadGGMH', gorgonMHController.loadGGMH);
 app.post('/api/document/insertGGMH', gorgonMHController.insertGGMH);
 app.post('/api/document/editGGMH', gorgonMHController.editGGMH);
 /**
