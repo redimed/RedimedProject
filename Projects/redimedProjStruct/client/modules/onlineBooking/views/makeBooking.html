@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-4">
                     <select ng-model="c.SubCompanyId" ng-change="subChange(c.SubCompanyId)" class="form-control" ng-options="com.id as com.Company_name for com in companyList" >
-                        <option value="">---Select Sub Company---</option>
+                        <option value=""> ---Select Sub Company--- </option>
                     </select>
                 </div>
             </div>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="col-md-4">
                         <select ng-model="c.PackId" name="package" required ng-change="packageChange(c.PackId)" class="form-control" ng-options="p.PackId as p.package_name + ' ' + p.period for p in packageList" >
-                            <option value="">---Select Package---</option>
+                            <option value=""> ---Select Package--- </option>
                         </select>
                     </div>
                 </div>
@@ -212,11 +212,11 @@
                         <label>{{b.siteName + '  '+ b.displayDate}}</label>
                     </td>
 
-                    <td class="col-md-2" data-title="'Actions'">
-                        <a href="javascript:;" ng-click="editCandidate(b)" class="btn btn-primary">Edit</a>
-
-                        <a href="javascript:;" ng-click="deleteCandidate(b)" class="btn btn-danger">Delete</a>
-
+                    <td align="center" data-title="'Actions'">
+                        <a style="width: 75px" href="javascript:;" ng-click="editCandidate(b)" class="btn btn-circle blue-steel btn-sm">
+                            <i class="fa fa-pencil"></i> Edit </a>
+                        <a style="width: 75px" href="javascript:;" ng-click="deleteCandidate(b)" class="btn btn-circle red-flamingo btn-sm">
+                            <i class="fa fa-times"></i> Delete </a>
                     </td>
                 </tr>
 

@@ -56,7 +56,7 @@ angular.module('app.loggedIn.booking.list.controller',[])
             var modalInstance = $modal.open({
                 templateUrl: 'modules/onlineBooking/views/bookingDetailModal.html',
                 controller: 'BookingDetailController',
-                size: 'lg',
+                size: 'md',
                 resolve: {
                     bookingId: function(){
                         return b.Booking_id;

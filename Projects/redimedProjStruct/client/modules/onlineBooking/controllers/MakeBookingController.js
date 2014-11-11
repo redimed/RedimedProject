@@ -194,35 +194,43 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
         $scope.newCandidate = function()
         {
-            var modalInstance = $modal.open({
-                templateUrl: 'modules/onlineBooking/views/newCandidate.html',
-                controller: 'NewCandidateController',
-                size: 'md',
-                resolve:{
-                    companyId: function(){
-                        return companyInfo[0].id;
-                    },
-                    editInfo: function(){
-                        return null;
-                    },
-                    period: function(){
-                        return period;
-                    },
-                    status: function(){
-                        return companyInfo[0].default_status == null || companyInfo[0].default_status == '' ? 'Pending' : companyInfo[0].default_status;
+            if($scope.c.PackId == null)
+            {
+                toastr.error('Please Choose A Package First!','Error');
+            }
+            else
+            {
+                var modalInstance = $modal.open({
+                    templateUrl: 'modules/onlineBooking/views/newCandidate.html',
+                    controller: 'NewCandidateController',
+                    size: 'md',
+                    resolve:{
+                        companyId: function(){
+                            return companyInfo[0].id;
+                        },
+                        editInfo: function(){
+                            return null;
+                        },
+                        period: function(){
+                            return period;
+                        },
+                        status: function(){
+                            return companyInfo[0].default_status == null || companyInfo[0].default_status == '' ? 'Pending' : companyInfo[0].default_status;
 
+                        }
                     }
-                }
-            });
+                });
 
-            modalInstance.result.then(function (candidateInfo){
-                $scope.data.push(candidateInfo);
+                modalInstance.result.then(function (candidateInfo){
+                    $scope.data.push(candidateInfo);
 
-                $scope.tableParams.reload();
+                    $scope.tableParams.reload();
 
-            },function(err){
-                console.log(err);
-            });
+                },function(err){
+                    console.log(err);
+                });
+            }
+
 
         };
 

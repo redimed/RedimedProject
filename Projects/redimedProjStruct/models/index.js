@@ -6,7 +6,9 @@ var fs = require('fs'),
     config = require('config'),
     sequelize = new Sequelize('sakila', 'root', 'root', {
         host: 'localhost',
-        port: 3306
+        port: 3306,
+        maxConcurrentQueries: 100,
+        pool: { maxConnections: 10, maxIdleTime: 1000}
     }),
     useTransaction(sequelize);
     db = {};

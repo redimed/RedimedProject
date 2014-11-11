@@ -8,7 +8,7 @@ angular.module("app", [
     "ngTouch", // ANGULAR TOUCH
     "pascalprecht.translate",   // ANGULAR TRANSLATE
     "ui.select",                // ANGULAR UI SELECT
-"pascalprecht.translate", // ANGULAR TRANSLATE
+    "pascalprecht.translate", // ANGULAR TRANSLATE
     "localytics.directives", // ANGULAR CHOSEN
     "toastr",                   // ANGULAR TOASTR
     "angular-loading-bar",      // ANGULAR LOADING BAR
@@ -18,12 +18,12 @@ angular.module("app", [
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
      "app.config", // ANGULAR CONFIG
     "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
-"ui.slider", // ANGULAR SLIDER
- "pragmatic-angular", // ANGULAR PRAGMATIC
+    "ui.slider", // ANGULAR SLIDER
+    "pragmatic-angular", // ANGULAR PRAGMATIC
     "cfp.hotkeys",      // ANGULAR HOTKEYS
     "app.directive.common",      // CUSTOM DIRECTIVES
     'angular.filter',            //angular filter for group table--tannv.dts@gmail.com
-    
+    'xeditable',
     'uz.mailto',                 //angular mailto for [patientdetail]--tannv.dts@gmail.com
     'ui.tree',                   // angular ui tree for [admin_booking]-- tannv.dts@gmail.com
     'ng-context-menu',            // angular context menu (menu right click) for [admin_booking]-- tannv.dts@gmail.com
@@ -78,9 +78,12 @@ angular.module("app", [
 })
 
 //When update any route
-.run(function($cookieStore, $state, $rootScope, $idle, $log, $keepalive){
+.run(function($cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions){
     $idle.watch();
     // Use when update any state
+
+    editableOptions.theme = 'bs3';
+
     $rootScope.$on("$stateChangeSuccess", function(e, toState, fromState, fromParams){
         if(!$cookieStore.get("userInfo")){
             if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register"){
