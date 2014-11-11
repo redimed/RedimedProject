@@ -1,0 +1,60 @@
+<ion-view title="Add Worker">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader">
+        <h1 class="title">Information</h1>
+        <button class="button button-clear button-positive" ui-sref="app.worker.contact">
+            Next
+        </button>
+
+    </div>
+
+    <!--information form-->
+    <ion-content class="padding has-header has-subheader">
+        <ion-list>
+
+                <label class="item item-input item-select">
+                    <span class="input-label">Title</span>
+                    <select>
+                        <option>Mr</option>
+                        <option>Mrs</option>
+                        <option>Miss</option>
+                    </select>
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label">First Name</span>
+                    <input type="text">
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label">Middle Name</span>
+                    <input type="text">
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label">Sur Name</span>
+                    <input type="text">
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label">Birthday</span>
+                    <input type="text" onfocus="this.type='date';
+this.setAttribute('onfocus','');this.blur();this.focus();">
+                </label>
+
+                <label class="item item-input item-select">
+<span class="input-label">
+Sex
+</span>
+                    <select>
+                        <option>Female</option>
+                        <option>Male</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+
+        </ion-list>
+    </ion-content>
+</ion-view>

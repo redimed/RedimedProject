@@ -1,0 +1,12 @@
+angular.module('starter.search',[])
+.config(function($stateProvider){
+        $stateProvider
+            .state('app.search',{
+                url:"/search",
+                views:{
+                    'menuContent':{
+                        templateUrl:"modules/search/views/search.html"
+                    }
+                }
+            })
+    })
