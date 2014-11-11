@@ -34,6 +34,7 @@
     "passport-local": "^1.0.0",
     "randomstring": "^1.0.3",
     "sequelize": "^1.7.10",
+    "sequelize-transactions": "^1.0.1",
     "squel": "^3.9.1",
     "static-favicon": "~1.0.0",
     "underscore": "^1.7.0",

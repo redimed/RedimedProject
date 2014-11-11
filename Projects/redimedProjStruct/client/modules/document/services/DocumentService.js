@@ -6,26 +6,67 @@ angular.module('app.loggedIn.document.services', [])
         var documentService = {};
         var api = Restangular.all("api");
 
-        documentService.newFA = function () {
-            var newFA = api.one("document/newFA");
-            return newFA.get();
+        /* functional Assessment
+            Begin
+         */
+
+        documentService.newFA = function (PATIENT_ID,CAL_ID) {
+            var newFA = api.all("document/newFA");
+            return newFA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
         }
 
-        documentService.loadFA = function () {
-            var loadFA = api.one("document/loadFA");
-            return loadFA.get();
+        documentService.loadFA = function (PATIENT_ID,CAL_ID) {
+            var loadFA = api.all("document/loadFA");
+            return loadFA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
         }
 
-        documentService.newMA = function () {
-            var newMA = api.one("document/newMA");
-            return newMA.get();
+        documentService.insertFA = function(infoH,infoS,infoL,infoD,infoC){
+            var insertFA = api.all("document/insertFA");
+            return insertFA.post({infoL:infoL,infoH:infoH,infoS:infoS,infoD:infoD,infoC:infoC});
         }
 
-        documentService.loadMA = function () {
-            var loadMA = api.one("document/loadMA");
-            return loadMA.get();
+        documentService.checkFA = function(PatientID, calID){
+            var checkFA = api.all("document/checkFA");
+            return checkFA.post({PatientID:PatientID, calID:calID});
         }
 
+        documentService.checkRating = function(id,age, gender, val){
+            var checkRating = api.all("document/checkRating");
+            return checkRating.post({id:id, age:age,gender:gender, value:val});
+        }
+        /* functional Assessment
+            End
+         */
+
+        /* Medical Assessment
+            Begin
+         */
+        documentService.newMA = function (PATIENT_ID,CAL_ID) {
+            var newMA = api.all("document/newMA");
+            return newMA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
+        }
+
+        documentService.loadMA = function (PATIENT_ID,CAL_ID) {
+            var loadMA = api.all("document/loadMA");
+            return loadMA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
+        }
+
+        documentService.insertMA = function(infoL,infoH){
+            var insertMA = api.all("document/insertMA");
+            return insertMA.post({infoL:infoL,infoH:infoH});
+        }
+
+        documentService.checkMA = function(PatientID, calID){
+            var checkMA = api.all("document/checkMA");
+            return checkMA.post({PatientID:PatientID, calID:calID});
+        }
+        /* Medical Assessment
+            End
+         */
+
+        /* Instant Drug Screen
+         Begin
+         */
         documentService.newIDS = function () {
             var newIDS = api.one("document/newIDS");
             return newIDS.get();
@@ -36,63 +77,206 @@ angular.module('app.loggedIn.document.services', [])
             return loadIDS.get();
         }
 
-        /**
-         * begin medical history
-         * @returns {*}
-         */
-        documentService.newMH = function () {
-            var newMH = api.one("document/newMH");
-            return newMH.get();
+        documentService.insertIDS = function(infoL,infoH){
+            var insertIDS = api.all("document/insertIDS");
+            return insertIDS.post({infoL:infoL,infoH:infoH});
         }
 
-        documentService.loadMH = function () {
-            var loadMH = api.one("document/loadMH");
-            return loadMH.get();
+        documentService.checkIDS = function(PatientID, calID){
+            var checkIDS = api.all("document/checkIDS");
+            return checkIDS.post({PatientID:PatientID, calID:calID});
+        }
+        /* Instant Drug Screen
+         End
+         */
+
+        /* Gorgon User Questionnaire
+         Begin
+         */
+        documentService.insertUQ = function(info){
+            var insertUQ = api.all("document/insertUQ");
+            return insertUQ.post({info:info});
+        }
+
+        documentService.updateUQ = function(info){
+            var updateUQ = api.all("document/updateUQ");
+            return updateUQ.post({info:info});
+        }
+
+        documentService.checkUser = function(PatientID, calID){
+            var checkUser = api.all("document/checkUser");
+            return checkUser.post({PatientID:PatientID, calID:calID});
+        }
+        /*  Gorgon User Questionnaire
+         End
+         */
+
+        /* GOrgon FA
+         Begin
+         */
+        documentService.insertGorgonFA = function(info){
+            var insertGorgonFA = api.all("document/insertGorgonFA");
+            return insertGorgonFA.post({info:info});
+        }
+
+        documentService.editGorgonFA = function(info){
+            var edit = api.all('document/editGorgonFA');
+            return edit.post({info:info});
+        }
+
+        documentService.getGorgonFAInfo = function(id)
+        {
+            var info = api.all('document/gorgonFAInfo');
+            return info.post({id:id});
+        }
+
+        /* Gorgon FA
+         End
+         */
+
+        /* gorgon MA
+         Begin
+         */
+        documentService.insertGorgonMA = function(info){
+            var insertGorgonMA = api.all("document/insertGorgonMA");
+            return insertGorgonMA.post({info:info});
+        }
+
+        documentService.editGorgonMA = function(info){
+            var edit = api.all('document/editGorgonMA');
+            return edit.post({info:info});
+        }
+
+        documentService.getGorgonMAInfo = function(id)
+        {
+            var info = api.all('document/gorgonMAInfo');
+            return info.post({id:id});
+        }
+        /* gorgon MA
+         End
+         */
+
+        /* gorgon MA
+         Begin
+         */
+
+        /* gorgon MA
+         End
+         */
+
+        /* gorgon MA
+         Begin
+         */
+
+        /* gorgon MA
+         End
+         */
+
+        /* gorgon MA
+         Begin
+         */
+
+        /* gorgon MA
+         End
+         */
+
+        /**
+         * begin medical history
+         */
+        documentService.loadMH = function (infoLoad) {
+            var info = api.all("document/loadMH");
+            return info.post({info: infoLoad});
+        }
+        documentService.insertMH = function (infoAdd) {
+            var insertMH = api.all('document/insertMH');
+            return insertMH.post({info: infoAdd});
+        }
+        documentService.editMH = function (infoEdit) {
+            var editMH = api.all('document/editMH');
+            return editMH.post({info: infoEdit});
         }
         /**
          * end medical history
-         * @returns {*}
          */
 
         /**
          * begin medical results summary
-         * @returns {*}
          */
-        documentService.newMRS = function () {
-            var newMRS = api.one("document/newMRS");
-            return newMRS.get();
+        documentService.loadMRS = function (infoLoad) {
+            var loadMRS = api.all('document/loadMRS');
+            return loadMRS.post({info: infoLoad});
         }
-
-        documentService.loadMRS = function () {
-            var loadMRS = api.one("document/loadMRS");
-            return loadMRS.get();
+        documentService.insertMRS = function (infoAdd) {
+            var insertMRS = api.all('document/insertMRS');
+            return insertMRS.post({info: infoAdd});
+        }
+        documentService.editMRS = function (infoEdit) {
+            var editMRS = api.all('document/editMRS');
+            return editMRS.post({info: infoEdit});
         }
         /**
          * end medical results summary
-         * @returns {*}
+         */
+
+        /**
+         * begin form 18
+         */
+        documentService.loadForm18 = function (infoLoad) {
+            var loadForm = api.all('document/loadForm18');
+            return loadForm.post({info: infoLoad});
+        }
+        documentService.insertForm18 = function (infoAdd) {
+            var insertForm18 = api.all('document/insertForm18');
+            return insertForm18.post({info: infoAdd});
+        }
+        documentService.editForm18 = function (infoEdit) {
+            var editForm18 = api.all('document/editForm18');
+            return editForm18.post({info: infoEdit});
+        }
+        /**
+         * end form 18
          */
 
         /**
          * begin audiogram 1
-         * @returns {*}
          */
-        documentService.newAUD1 = function () {
-            var newAUD1 = api.one("document/newAUD1");
-            return newAUD1.get();
+        documentService.loadSA1 = function (infoLoad) {
+            var loadSA1 = api.all('document/loadSA1');
+            return loadSA1.post({info: infoLoad});
         }
-
-        documentService.loadAUD1 = function () {
-            var loadAUD1 = api.one("document/loadAUD1");
-            return loadAUD1.get();
+        documentService.insertSA1 = function (infoAdd) {
+            var insertSA1 = api.all('document/insertSA1');
+            return insertSA1.post({info: infoAdd});
+        }
+        documentService.editSA1 = function (infoEdit) {
+            var editSA1 = api.all('document/editSA1');
+            return editSA1.post({info: infoEdit});
         }
         /**
          * end audiogram 1
-         * @returns {*}
          */
 
         /**
          * begin audiogram 2
-         * @returns {*}
+         */
+        documentService.loadSA2 = function (infoLoad) {
+            var loadSA2 = api.all('document/loadSA2');
+            return loadSA2.post({info: infoLoad});
+        }
+        documentService.insertSA2 = function (infoAdd) {
+            var insertSA2 = api.all('document/insertSA2');
+            return insertSA2.post({info: infoAdd});
+        }
+        documentService.editSA2 = function (infoEdit) {
+            var editSA2 = api.all('document/editSA2');
+            return editSA2.post({info: infoEdit});
+        }
+        /**
+         * end audiogram 2
+         */
+
+        /**
+         * begin audiogram 2
          */
         documentService.newAUD2 = function () {
             var newAUD2 = api.one("document/newAUD2");
@@ -107,24 +291,77 @@ angular.module('app.loggedIn.document.services', [])
          * end audiogram 2
          */
 
+        /**
+         * begin category 2
+         */
+        documentService.insertCat2 = function (infoAdd) {
+            var insertCat2 = api.all("document/insertCat2");
+            return insertCat2.post({info: infoAdd});
+        }
+        documentService.loadCat2 = function (infoFind) {
+            var loadCat2 = api.all("document/loadCat2");
+            return loadCat2.post({info: infoFind});
+        }
+        documentService.editCat2 = function (infoUp) {
+            var editCat2 = api.all("document/editCat2");
+            return editCat2.post({info: infoUp});
+        }
+        /**
+         * end category 2
+         */
+
 
         /**
          * begin category 3
          */
-        documentService.insertCat3 = function (info) {
-            var insertCat3 = api.all("document/insertCat3");
-            return insertCat3.post({info: info});
+        documentService.loadCat3 = function (infoFind) {
+            var info = api.all("document/loadCat3");
+            return info.post({info: infoFind});
+        }
+        documentService.insertCat3 = function (infoAdd) {
+            var info = api.all("document/insertCat3");
+            return info.post({info: infoAdd});
         }
 
 
-        documentService.insertUQ = function(info){
+        documentService.findCat3 = function (ids) {
+            var info = api.all("document/findCat3");
+            return info.post({ids: ids});
+        }
+
+        documentService.editCat3 = function (infoUp) {
+            var info = api.all("document/editCat3");
+            return info.post({info: infoUp});
+        }
+        /**
+         * end category 3
+         */
+        documentService.insertUQ = function (info) {
             var insertUQ = api.all("document/insertUQ");
-            return insertUQ.post({info:info});
+            return insertUQ.post({info: info});
         }
+        /**
+         * begin gorgon medical history
+         */
+        documentService.loadGGMH = function (infoLoad) {
+            var info = api.all("document/loadGGMH");
+            return info.post({info: infoLoad});
+        }
+        documentService.insertGGMH = function (infoAdd) {
+            var info = api.all("document/insertGGMH");
+            return info.post({info: infoAdd});
+        }
+        documentService.editGGMH = function (infoUp) {
+            var info = api.all("document/editGGMH");
+            return info.post({info: infoUp});
+        }
+        /**
+         * end gorgon medical history
+         */
 
 
+        return documentService;
 
-    return documentService;
 
     })
 

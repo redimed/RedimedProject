@@ -162,7 +162,7 @@
                 <label class="control-label col-md-7 col-sm-9 text-info" style="margin-top: 10px;">a. N,R, or P disposable respirator (filter-mask, non-cartridge type only).
                 </label>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" ng-model="info.isNRP" type="checkbox"/>
+                    <input class="form-control" ng-model="info.isNRP" ng-checked="info.isNRP == 1" ng-checked="info.isNRP == 1" type="checkbox"/>
                 </div>
             </div>
         </div>
@@ -171,7 +171,7 @@
                 <label class="control-label col-md-7 col-sm-9 text-info" style="margin-top: 10px;">b. Other type (for example, half or full-face piece type, powered-air purifying, supplied-air, self contained breathing apparatus).
                 </label>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" ng-model="info.isOtherType" type="checkbox"/>
+                    <input class="form-control" ng-model="info.isOtherType" ng-true-value="1" ng-false-value="0" ng-checked="info.isOtherType == 1" type="checkbox"/>
                 </div>
             </div>
         </div>
@@ -952,7 +952,7 @@
                 <label class="control-label col-md-3 col-sm-4 text-info" style="margin-top: 10px;font-weight: bold">Never used a respirator
                 </label>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" ng-model="info.isUseRespirator" ng-change="checkUseRespirator(info.isUseRespirator)" type="checkbox"  />
+                    <input class="form-control" ng-model="info.isUseRespirator" ng-change="checkUseRespirator(info.isUseRespirator)" ng-checked="info.isUseRespirator == 1" type="checkbox"  />
                 </div>
             </div>
         </div>
@@ -1377,14 +1377,14 @@
                 </label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.isAtmosphere" type="checkbox" />
+                <input class="form-control" ng-model="info.isAtmosphere" ng-checked="info.isAtmosphere == 1" type="checkbox" />
             </div>
             <div class="col-md-3 col-sm-5">
                 <label class="control-label text-info" style="margin-top: 10px;">Continuous-flow respirator
                 </label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.isContinuous" type="checkbox" />
+                <input class="form-control" ng-model="info.isContinuous" ng-checked="info.isContinuous == 1" type="checkbox" />
             </div>
         </div>
         <div class="row">
@@ -1393,14 +1393,14 @@
                 </label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.isOpen" type="checkbox" />
+                <input class="form-control" ng-model="info.isOpen" ng-checked="info.isOpen == 1" type="checkbox" />
             </div>
             <div class="col-md-3 col-sm-5">
                 <label class="control-label text-info" style="margin-top: 10px;">Closed-circuit SCBA
                 </label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.isClose" type="checkbox" />
+                <input class="form-control" ng-model="info.isClose" ng-checked="info.isClose == 1" type="checkbox" />
             </div>
         </div>
         <div class="row">
@@ -1409,14 +1409,14 @@
                 </label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.isSupplied" type="checkbox" />
+                <input class="form-control" ng-model="info.isSupplied" ng-checked="info.isSupplied == 1" type="checkbox" />
             </div>
             <div class="col-md-3 col-sm-5">
                 <label class="control-label text-info" style="margin-top: 10px;">Combination air-line and SCBA
                 </label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.isCombination" type="checkbox" />
+                <input class="form-control" ng-model="info.isCombination" ng-checked="info.isCombination == 1" type="checkbox" />
             </div>
         </div>
         <div class="row">
@@ -1425,14 +1425,14 @@
                 </label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.isAir_NonPow" type="checkbox" />
+                <input class="form-control" ng-model="info.isAir_NonPow" ng-checked="info.isAir_NonPow == 1" type="checkbox" />
             </div>
             <div class="col-md-3 col-sm-5">
                 <label class="control-label text-info" style="margin-top: 10px;">Air-purifying (powered) (PAPR)
                 </label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.isAir_Pow" type="checkbox" />
+                <input class="form-control" ng-model="info.isAir_Pow" ng-checked="info.isAir_Pow == 1" type="checkbox" />
             </div>
         </div>
         </br>
@@ -1574,6 +1574,46 @@
             </div>
         </div>
         </br>
+        <div class="row">
+            <div class="col-md-8 col-sm-7">
+                <div class="form-group">
+                    <label class="control-label col-md-3" style="margin-top: 5px;">Signature</label>
+                    <a href="javascript:;" ng-click="sigClick()" id="signBtn" class="btn green">Sign</a>
+
+                </div>
+            </div>
+        </div>
+        <div ng-show="sig" style="border: none; width: 900px; margin-left: 10px;background-color:#74e4b5;">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div signature ng-model="info.SIGNATURE" reset="resetFlag"></div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-8 col-sm-8"></div>
+                    <div class="col-md-4 col-sm-4">
+                        <a href="javascript:;" class="btn red" ng-click="cancelClick()">Cancel</a>
+                        <a href="javascript:;" class="btn blue" ng-click="reset()">Reset</a>
+                        <a href="javascript:;" class="btn green" ng-click="okClick()">Ok</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+        <div ng-show="info.SIGNATURE!==''&& !sig">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 col-sm-6">
+                        <img src="" ng-src="{{info.SIGNATURE}}" style="width:200px;height: 100px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 

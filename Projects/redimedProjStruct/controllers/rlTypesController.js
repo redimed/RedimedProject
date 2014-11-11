@@ -19,5 +19,27 @@ module.exports =
                 res.json(rows);
             });
         });
+    },
+    getRlTypeById:function(req,res)
+    {
+        var rlTypeId=req.query.rlTypeId;
+        var sql="SELECT rltype.* FROM `rl_types` rltype WHERE rltype.`RL_TYPE_ID`=?";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,rlTypeId,function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                        res.json({status:'success',data:rows[0]});
+                    else
+                        res.json({status:'fail'});
+                }
+            });
+        });
     }
 }

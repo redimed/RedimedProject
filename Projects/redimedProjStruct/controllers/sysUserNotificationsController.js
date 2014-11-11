@@ -40,14 +40,12 @@ module.exports =
         var sourceName=req.body.sourceName;
         var type=req.body.type;
         var msg=req.body.msg;
-        var link=req.body.link;
         var insertRow={
             user_id:assId,
             ref_id:refId,
             source_name:sourceName,
             type:type,
-            msg:msg,
-            link:link
+            msg:msg
         };
         var sql=" INSERT INTO `sys_user_notifications` set ?  ";
         req.getConnection(function(err,connection)

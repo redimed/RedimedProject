@@ -49,6 +49,13 @@ var model_sql = {
                 .from('cln_provider_types');
         return query.toString();
     },
+
+    sql_qualification_list: function(){
+        var query = squel.select()
+                .from('sys_qualifications')
+                .where('Isenable = ?', 1);
+        return query.toString();
+    },
     
     sql_get_by_opt: function(search_opt){
         var limit = (search_opt.limit) ? search_opt.limit : 10;
@@ -79,6 +86,19 @@ var model_sql = {
 };
 
 module.exports = {
+    getQualificationList: function(req, res){
+        var sql = model_sql.sql_qualification_list();
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error'});
+                    return;
+                }
+                res.json({status: 'success', list: data});
+            });
+        });
+    },
     getProviderTypeList: function (req, res) {
         var sql = model_sql.sql_provider_type_list();
         req.getConnection(function (err, connection) {
@@ -194,6 +214,15 @@ module.exports = {
         });
     },
     insert: function (req, res) {
+        console.log(req.body);
+        var patient_data = req.body.patient;
+
+        if(!patient_data){
+            res.json({status: 'error'});
+            return;
+        }
+
+
         var sql2 = squel.select().from('cln_patients').field("MAX(Patient_id) + 1", 'new_id').toString();
         req.getConnection(function (err, connection) {
             var query = connection.query(sql2, function (err, data) {

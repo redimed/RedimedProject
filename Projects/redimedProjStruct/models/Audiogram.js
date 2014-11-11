@@ -1,10 +1,10 @@
 /**
- * Created by thanh on 10/10/2014.
- */
+* Created by thanh on 10/10/2014.
+*/
 
 /**
- * begin table cln_sa_df_headers
- */
+* begin table cln_sa_df_headers
+*/
 module.exports = function (sequelize, DataTypes) {
     var Headers = sequelize.define("Headers", {
         "patient_id": {type: DataTypes.INTEGER(11), primaryKey: true},
@@ -31,12 +31,12 @@ module.exports = function (sequelize, DataTypes) {
     return Headers;
 };
 /**
- * end table cln_sa_df_headers
- */
+* end table cln_sa_df_headers
+*/
 
 /**
- * begin table cln_sa_df_sections
- */
+* begin table cln_sa_df_sections
+*/
 module.exports = function (sequelize, DataTypes) {
     var Sections = sequelize.define('Sections', {
         "patient_id": {type: DataTypes.INTEGER(11), primaryKey: true},
@@ -58,12 +58,12 @@ module.exports = function (sequelize, DataTypes) {
     return Sections;
 };
 /**
- * end table cln_sa_df_sections
- */
+* end table cln_sa_df_sections
+*/
 
 /**
- * begin table cln_sa_df_lines
- */
+* begin table cln_sa_df_lines
+*/
 module.exports = function (sequelize, DataTypes) {
     var Lines = sequelize.define('Lines', {
         "patient_id": {type: DataTypes.INTEGER(11), primaryKey: true},
@@ -86,5 +86,5 @@ module.exports = function (sequelize, DataTypes) {
     return Lines;
 };
 /**
- * end table cln_sa_df_lines
- */
+* end table cln_sa_df_lines
+*/

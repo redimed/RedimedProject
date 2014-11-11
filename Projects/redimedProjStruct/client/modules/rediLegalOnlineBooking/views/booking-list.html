@@ -1,20 +1,3 @@
-<h3 class="page-title">Booking List</h3>
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.home">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a href="javascript:;">REDiLEGAL</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a>Booking List</a>
-        </li>
-    </ul>
-</div>
  <!-- MODAL SEARCH FOR BOOKING DATE -->
 <div id="booking_date_search" class="modal">
     <div class="modal-dialog">
@@ -103,9 +86,13 @@
         <table class="table table-responsive table-hover">
             <thead>
                 <tr>
-                    <th>
+                    <th ng-if="bookingType=='REDiLEGAL'">
                         Claim No.
                         <rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                    </th>
+                    <th ng-if="bookingType=='Vaccination'">
+                        Employee number
+                        <rlob-order-by field-name="EMPLOYEE_NUMBER" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
                     </th>
                     <th>
                         Surname
@@ -119,11 +106,17 @@
                         Appointment Date
                         <rlob-order-by field-name="APPOINTMENT_DATE" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
                     </th>
+                    <th>
+
+                    </th>
                 </tr>
                 <tr>
                     <!-- SEARCH -->
-                    <td>
+                    <td ng-if="bookingType=='REDiLEGAL'">
                         <input class="form-control input-sm" type="text" ng-model="search.data.CLAIM_NO" ng-change="loadList()">
+                    </td>
+                    <td ng-if="bookingType=='Vaccination'">
+                        <input class="form-control input-sm" type="text" ng-model="search.data.EMPLOYEE_NUMBER" ng-change="loadList()">
                     </td>
                     <td>
                         <input class="form-control input-sm" type="text" ng-model="search.data.WRK_SURNAME" ng-change="loadList()">
@@ -140,15 +133,43 @@
                         <button class="btn btn-block btn-primary btn-sm" ng-click="openModal('appointment_date_search')">Search
                         </button>
                     </td>
+                    <td>
+
+                    </td>
                     <!-- END SEARCH -->
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="l in list.results" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
-                    <td>{{l.CLAIM_NO}}</td>
+                    <td ng-if="bookingType=='REDiLEGAL'">{{l.CLAIM_NO}}</td>
+                    <td ng-if="bookingType=='Vaccination'">{{l.EMPLOYEE_NUMBER}}</td>
                     <td>{{l.WRK_SURNAME}}</td>
                     <td>{{l.Rl_TYPE_NAME}}</td>
                     <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>
+                        <!--action-->
+                        <div  class="btn-group dropdown pull-right pull-right"  ng-click="clickActionMenu(l.BOOKING_ID);">
+                            <a type="button" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
+                                </span>
+                                <!--{{selectedBooking.STATUS}}-->
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a class="pointer" role="menuitem" tabindex="1" ng-click="printContent()">
+                                        Print Booking Summary
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a ng-hide="selectedBooking.NUMBER_OF_RESULTS<=0" class="pointer" role="menuitem" tabindex="2" ng-click="downloadResult(l.BOOKING_ID)">
+                                        Download Result
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -163,348 +184,45 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Success</h4>
+                <h4 class="modal-title">Booking Detail</h4>
             </div>
 
             <div class="modal-body">
+                <rlob-booking-detail selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail>
+                <!--<rlob-documents selected-booking="selectedBooking" is-can-upload="isCanUpload"></rlob-documents>-->
                 <div class="row">
-                    <div class="col-md-6 con-sm-6">
-                        <div class="portlet yellow-crusta box">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="fa fa-cogs"></i>
-                                    Detail of the person requesting the assessment
-                                </div>
-
-                            </div>
-                            <div class="portlet-body">
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Surname
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.ASS_SURNAME}}
-                                    </div>
-                                </div>
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Other name:
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.ASS_OTHERNAMES}}
-                                    </div>
-                                </div>
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Contact number:
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.ASS_CONTACT_NO}}
-                                    </div>
-                                </div>
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Email address:
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.ASS_EMAIL}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="portlet yellow-crusta box">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="fa fa-cogs"></i>
-                                    Summary of Booking
-                                </div>
-
-                            </div>
-                            <div class="portlet-body">
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Date:
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.APPOINTMENT_DATE|date:'dd/MM/yyyy'}}
-                                        <!--{{getShortDateString(selectedBooking.APPOINTMENT_DATE)}}-->
-                                    </div>
-                                </div>
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Time:
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.APPOINTMENT_DATE|date:'HH:mm'}}
-                                        <!--{{getTimeString(selectedBooking.APPOINTMENT_DATE)}}-->
-                                    </div>
-                                </div>
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Type of appointment:
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.Rl_TYPE_NAME}}
-                                        <!--{{getRlTypeName(selectedBooking.RL_TYPE_ID)}}-->
-                                    </div>
-                                </div>
-
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Doctor:
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.NAME}}
-                                        <!--{{getDoctorName(selectedBooking.DOCTOR_ID)}}-->
-                                    </div>
-                                </div>
-                                <div class="row static-info">
-                                    <div class="col-md-5 name">
-                                        Address:
-                                    </div>
-                                    <div class="col-md-7 value">
-                                        {{selectedBooking.Site_addr}}
-                                        <!--{{getLocationAddress(selectedBooking.SITE_ID)}}-->
-                                    </div>
-                                </div>
-
-                                <div class="portlet light">
-                                    <div class="portlet-title">
-                                        <div class="tools">
-                                            <label style="font-weight: bolder; color: #585858">Show on map</label>
-                                            <a class="collapse">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="row  portlet-body">
-                                        <div id="map-canvas" class="col-md-12" style="height: 200px;"></div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 con-sm-6">
-                        <div class="portlet yellow-crusta box">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="fa fa-cogs"></i>
-                                    Patient 's Information
-                                </div>
-
-                            </div>
-                            <div class="portlet-body">
-                                <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <label for="CLAIM_NO">Claim number:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!--<input class="form-control" type="text" ng-model="newBooking.CLAIM_NO" id="CLAIM_NO"/>-->
-                                        <p id="CLAIM_NO" ng-bind="selectedBooking.CLAIM_NO"></p>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <label for="WRK_SURNAME">Surname:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!--<input class="form-control" type="text" ng-model="newBooking.WRK_SURNAME" id="WRK_SURNAME"/>-->
-                                        <p id="WRK_SURNAME" ng-bind="selectedBooking.WRK_SURNAME"></p>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <label for="WRK_OTHERNAMES">Other name:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!--<input class="form-control" type="text"  ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES"/>-->
-                                        <p id="WRK_OTHERNAMES" ng-bind="selectedBooking.WRK_OTHERNAMES"></p>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <label for="WRK_DOB">Date of birth: </label>
-                                    </div>
-                                    <div class="col-md-8">
-
-                                        <!--<div class="input-group date date-picker " style="width: 150px;" data-date-format="dd/mm/yyyy">-->
-                                        <!--<input ng-model="newBooking.WRK_DOB" id="WRK_DOB" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">-->
-                                        <!--<span class="input-group-btn">-->
-                                        <!--<button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa glyphicon glyphicon-calendar "></i></button>-->
-                                        <!--</span>-->
-                                        <!--</div>-->
-                                        <p id="WRK_DOB" ng-bind="selectedBooking.WRK_DOB|date:'dd/MM/yyyy'"></p>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <label for="WRK_EMAIL">Email address:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!--<input class="form-control" type="email" ng-model="newBooking.WRK_EMAIL" id="WRK_EMAIL"/>-->
-                                        <p id="WRK_EMAIL" ng-bind="selectedBooking.WRK_EMAIL"></p>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <label for="WRK_CONTACT_NO">Contact number:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!--<input class="form-control" type="text" ng-model="newBooking.WRK_CONTACT_NO" id="WRK_CONTACT_NO"/>-->
-                                        <p id="WRK_CONTACT_NO" ng-bind="selectedBooking.WRK_CONTACT_NO"></p>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label for="ISNEW">Is the patient new to REDiMED:</label>
-                                        <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
-                                               ng-checked="selectedBooking.ISNEW==1"
-                                               ng-model="selectedBooking.ISNEW" id="ISNEW">
-
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-
-                                    <div class="col-md-4">
-                                        <label for="ISNEW">Description of injury</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!--<textarea placeholder="Description of injury" class="form-control" rows="2" ng-model="newBooking.DESC_INJURY"/>-->
-                                        <p ng-bind="selectedBooking.DESC_INJURY"></p>
-                                    </div>
-
-                                </div>
-
-
-                                <label style="font-weight: bolder; color: #585858; font-size: x-large">
-                                    Appointment
-                                </label>
-
-                                <p>
-                                    REDiLEGAL to contact the patient and arrage a time
-                                    <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
-                                           ng-checked="selectedBooking.ISCONTACTPATIENT==1"
-                                           ng-model="selectedBooking.ISCONTACTPATIENT">
-                                </p>
-
-                                <p>
-                                    REDiLEGAL to contact the case manager to arrange a time for the worker
-                                    <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
-                                           ng-checked="selectedBooking.ISCONTACTMANAGER==1"
-                                           ng-model="selectedBooking.ISCONTACTMANAGER">
-                                </p>
-
-                                <p>
-                                    Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment
-                                    <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
-                                           ng-checked="selectedBooking.isUrgent==1"
-                                           ng-model="selectedBooking.isUrgent">
-                                </p>
-
-                                <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <label>Notes:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!--<textarea placeholder="Description of injury" class="form-control" rows="2" ng-model="newBooking.DESC_INJURY"/>-->
-                                        <p ng-bind="selectedBooking.NOTES"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                     <div class="col-sm-12">
                         <div class="portlet yellow-crusta box">
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="fa fa-cogs"></i>
-                                    <span class="file-control" ng-click="uploadPanel = false">Download</span>
-                                    <span class="file-control" ng-click="uploadPanel = true">Upload</span>
+                                    <span class="file-control pointer underline" ng-click="uploadPanel = false">Download</span>
+                                    <span ng-show="selectedBooking.STATUS=='Confirmed'" class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>
+                                    <span class="file-control pointer underline" ng-click="printContent();">Print Summary</span>
                                 </div>
                             </div>
                             <div class="portlet-body">
                                 <div class="tab-content">
                                     <div class="row form-group" ng-hide="uploadPanel" id="file-download-panel">
-                                        <div ng-repeat="f in files" class="col-lg-3 col-md-4 col-sm-6">
-                                            <a href="/api/download/lob/document/{{f.FILE_ID}}"><i class="fa fa-paperclip"></i> {{f.FILE_NAME}}</a>
-                                        </div>
+                                        <rlob-file-download
+                                                selected-booking="selectedBooking"
+                                                booking-type="bookingType">
+                                        </rlob-file-download>
                                     </div>
                                     <div class="row form-group" ng-show="uploadPanel" id="file-upload-panel">
+                                        <rlob-upload selected-booking="selectedBooking">
 
-
-                                        <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
-                                            <input style="background-color: burlywood" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th width="50%">Name</th>
-                                                        <th ng-show="uploader.isHTML5">Size</th>
-                                                        <th ng-show="uploader.isHTML5">Progress</th>
-                                                        <th>Status</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr ng-repeat="item in uploader.queue">
-                                                        <td><strong>{{ item.file.name}}</strong></td>
-                                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size / 1024 / 1024|number:2 }} MB</td>
-                                                        <td ng-show="uploader.isHTML5">
-                                                            <div class="progress" style="margin-bottom: 0;">
-                                                                <div class="progress-bar" role="progressbar" ng-style="{
-                                                        'width': item.progress + '%' }"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                                            <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                                            <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                                                        </td>
-                                                        <td nowrap>
-                                                            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                                                <span class="glyphicon glyphicon-upload"></span> Upload
-                                                            </button>
-                                                            <!--<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">-->
-                                                            <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
-                                                            <!--</button>-->
-                                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                                <span class="glyphicon glyphicon-trash"></span> Remove
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
-                                            <div>
-                                                <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                                                    <span class="glyphicon glyphicon-upload"></span> Upload all
-                                                </button>
-                                                <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
-                                                <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel all-->
-                                                <!--</button>-->
-                                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                                    <span class="glyphicon glyphicon-trash"></span> Clear all
-                                                </button>
-                                            </div>
-
-                                        </div>
+                                        </rlob-upload>
                                     </div>
+
                                 </div>
-                            </div>     
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
@@ -512,6 +230,24 @@
         </div>
     </div>
 </div>
+
+
+
+ <div style="display: none">
+     <div class="printable">
+         <rlob-booking-detail-print booking-type="bookingType" selected-booking="selectedBooking"></rlob-booking-detail-print>
+     </div>
+ </div>
+
+ <script>
+     function printContent() {
+         var printable = document.getElementsByClassName("printable");
+         $(printable[0]).printArea();
+     }
+ </script>
+
+
+
 <style>
     .file-control{ border-right: 1px solid white; padding: 0 10px;}
     .file-control:hover{cursor: pointer}

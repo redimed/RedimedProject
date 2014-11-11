@@ -1,0 +1,279 @@
+<h3 class="page-title">Item Sheet</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.items">Items</a>
+			<i class="fa fa-angle-right"></i>
+        </li>
+		<li>
+            <a>{{info.action}}</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>{{info.action}} Item
+        </div>
+		<div class="pull-right">
+			<button class="btn green" ng-click="save()"><i class="fa fa-save"></i> Save </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+		<!-- FORM -->
+        <form name="mainForm" novalidate>
+			<!-- CODE -->
+			<div class="form-group" ng-class="{'has-error': isSubmit && mainForm.ITEM_CODE.$invalid}">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Item Code <span class="required"> * </span>
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<input class="form-control" type="text" name="ITEM_CODE"
+						ng-model="modelObjectMap.ITEM_CODE" placeholder="Item Code"
+						required ng-maxlength="20">
+					<span ng-show="isSubmit && mainForm.ITEM_CODE.$invalid">
+						<span class="help-block help-block-error" ng-show="mainForm.ITEM_CODE.$error.required">
+							Item Code is required.
+						</span>
+						<span class="help-block help-block-error" ng-show="mainForm.ITEM_CODE.$error.maxlength">
+							Maximum 20 characters. 
+						</span>
+					</span>
+				</div>
+			</div>
+			<!-- END CODE -->
+			<!-- CATEGORY -->
+			<div class="form-group" ng-class="{'has-error': isSubmit && mainForm.POPULAR_HEADER_ID.$invalid}">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Category
+					<span class="required"> * </span>
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<select class="form-control" name="POPULAR_HEADER_ID"
+						ng-model="POPULAR_HEADER_ID"
+						ng-options="header.POPULAR_HEADER_ID as header.POPULAR_NAME for header in options.item_headers"
+						required>
+						<option value="">-- Select Category --</option>
+					</select>
+					<span ng-show="isSubmit && mainForm.POPULAR_HEADER_ID.$invalid">
+						<span class="help-block help-block-error" ng-show="mainForm.POPULAR_HEADER_ID.$error.required">
+							Category is required
+						</span>
+					</span>
+				</div>
+			</div>
+			<!-- END CATEGORY -->			
+			<div class="break-row"></div>
+		
+			<!-- NAME -->
+			<div class="form-group" ng-class="{'has-error': isSubmit && mainForm.ITEM_NAME.$invalid}">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Item Name <span class="required"> * </span>
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<input class="form-control" type="text" name="ITEM_NAME"
+						ng-model="modelObjectMap.ITEM_NAME" placeholder="Item Name"
+						required ng-maxlength="5000">
+					<span ng-show="isSubmit && mainForm.ITEM_NAME.$invalid">
+						<span class="help-block help-block-error" ng-show="mainForm.ITEM_NAME.$error.required">
+							Item Name is required
+						</span>
+						<span class="help-block help-block-error" ng-show="mainForm.ITEM_NAME.$error.maxlength">
+							Maximum 5000 characters. 
+						</span>
+					</span>
+				</div>
+			</div>
+			<!-- END NAME -->
+			<!-- ALT NAME -->
+			<div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Alt Name
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<input class="form-control" type="text" name="ALT_NAME"
+						ng-model="modelObjectMap.ALT_NAME" placeholder="Alt Name"			
+						ng-maxlength="100">
+					
+					<span ng-show="isSubmit && mainForm.ALT_NAME.$invalid">
+						<span class="help-block help-block-error" ng-show="mainForm.ALT_NAME.$error.maxlength">
+							Maximum 100 characters. 
+						</span>
+					</span>
+				</div>
+			</div>
+			<!-- END ALT NAME -->
+			<div class="break-row"></div>
+			
+			<!-- DESC -->
+			<div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Description
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<textarea class="form-control" name="DESCRIPTION"
+						ng-model="modelObjectMap.DESCRIPTION" placeholder="Description"></textarea>
+				</div>
+			</div>
+			<!-- END DESC -->
+			<!-- ITEM TYPE -->
+			<div class="form-group" ng-class="{'has-error': isSubmit && mainForm.ITEM_TYPE.$invalid}">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Item Type
+					<span class="required"> * </span>
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<select class="form-control" name="ITEM_TYPE"
+						ng-model="modelObjectMap.ITEM_TYPE"
+						ng-options="type.PREFIX_NAME as type.PREFIX_NAME for type in options.prefix_headers"
+						required>
+						<option value="">-- Select Item Type --</option>
+					</select>
+					<span ng-show="isSubmit && mainForm.ITEM_TYPE.$invalid">
+						<span class="help-block help-block-error" ng-show="mainForm.ITEM_TYPE.$error.required">
+							Item Type is required
+						</span>
+					</span>
+				</div>
+			</div>
+			<!-- END ITEM TYPE -->			
+			<div class="break-row"></div>
+			
+			<!-- START DATE -->
+			<div class="form-group" ng-class="{'has-error': isSubmit &&  invalid.ITEM_START_DATE}">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Start Date
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<input custom-date class="form-control" type="text" name="ITEM_START_DATE"
+						ng-model="modelObjectMap.ITEM_START_DATE" placeholder="dd/mm/yyyy"  
+						ng-change="modeFormItem.validate()">
+						<span ng-show="isSubmit && invalid.ITEM_START_DATE">
+							<span class="help-block help-block-error">
+								Invalid Format Date
+							</span>
+						</span>
+				</div>
+			</div>
+			<!-- END END DATE -->
+			<!-- END DATE -->
+			<div class="form-group" ng-class="{'has-error': isSubmit &&  invalid.ITEM_END_DATE}">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					End Date
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<input custom-date class="form-control" type="text" name="ITEM_END_DATE"
+						ng-model="modelObjectMap.ITEM_END_DATE" placeholder="dd/mm/yyyy" 
+						ng-change="modeFormItem.validate()">
+						<span ng-show="isSubmit && invalid.ITEM_END_DATE">
+							<span class="help-block help-block-error">
+								Invalid Format Date
+							</span>
+						</span>
+				</div>
+			</div>
+			<!-- END END DATE -->
+			<div class="break-row"></div>
+			
+
+			<div class="break-row"></div>
+			<div class="col-lg-8 col-lg-offset-2"><hr></div>
+			<div class="break-row"></div>
+			
+			<!-- AMA CODE -->
+			<div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					AMA Code
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<input class="form-control" type="text" name="AMA_CODE"
+						ng-model="modelObjectMap.AMA_CODE" placeholder="AMA Code">
+				</div>
+			</div>
+			<!-- END AMA CODE -->
+			<!-- AMA DESC -->
+			<div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					AMA Description
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<textarea class="form-control" name="AMA_DESC"
+						ng-model="modelObjectMap.AMA_DESC" placeholder="AMA Description"></textarea>
+				</div>
+			</div>
+			<!-- END AMA DESC -->
+			
+			<div class="break-row"></div>
+			
+			<!-- ITEM TAX -->
+			<div class="form-group" ng-class="{'has-error': isSubmit && mainForm.ITEM_TYPE.$invalid}">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Tax
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<select class="form-control" name="TAX_ID"
+						ng-model="modelObjectMap.TAX_ID"
+						ng-options="type.TAX_ID as type.TAX_NAME for type in options.taxes">
+						<option value="">-- Select Tax --</option>
+					</select>
+				</div>
+			</div>
+			<!-- END TAX -->			
+			<!-- FEE -->
+			<div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Fee Type
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<select class="form-control" name="FEE_TYPE"
+						ng-model="modelObjectMap.FEE_TYPE"
+						ng-options="item.code as item.title for item in options.fees">
+						<option value="">-- Select Fee Type --</option>
+					</select>
+				</div>
+			</div>
+			<!-- END FEE -->			
+			<div class="break-row"></div>
+			
+			<!-- PROVIDER -->
+			<div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					Provider
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<select class="form-control" name="PROVIDER_TYPE"
+						ng-model="modelObjectMap.PROVIDER_TYPE"
+						ng-options="item.code as item.title for item in options.providers">
+						<option value="">-- Select Provider --</option>
+					</select>
+				</div>
+			</div>
+			<!-- END PROVIDER -->	
+			<!-- UOM -->
+			<div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-6">
+					UOM
+				</label>
+				<div class="col-md-4 col-sm-3 col-xs-6">
+					<select class="form-control" name="UOM"
+						ng-model="modelObjectMap.UOM"
+						ng-options="item.UOM as item.UOM_NAME group by item.CLASS_NAME for item in options.uoms">
+						<option value="">-- Select UOM --</option>
+					</select>
+				</div>
+			</div>
+			<!-- END UOM -->	
+			<div class="break-row"></div>
+			
+			<div class="clearfix"></div>
+		</form>
+		
+    </div>
+</div>

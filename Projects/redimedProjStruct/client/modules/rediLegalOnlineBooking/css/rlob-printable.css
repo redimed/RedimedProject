@@ -1,0 +1,19 @@
+@media print {
+    .rlob-print-label{
+        font-size: 12pt;
+        font-style: italic;
+    }
+    .rlob-print-value{
+        font-size: 11pt;
+        font-weight: bold;
+    }
+    .rlob-print-group-header{
+        font-weight: bold;
+        font-size: 12pt;
+        /*text-align: center;*/
+    }
+    .rlob-print-group{
+        margin:10px;
+    }
+
+}

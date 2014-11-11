@@ -29,21 +29,33 @@
         height: 800px;
     }
 </style>
+<form name="mhForm" method="post" novalidate>
 <div class="caption">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <a href="javascript:;" ng-click="submit()" class="btn green pull-right">Submit</a>
+            <a href="javascript:;" ng-click="submit(mhForm)" class="btn green pull-right">Submit</a>
             <a href="javascript:;" ng-click="print()" class="btn btn-primary blue pull-right">Print PDF</a>
             <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
         </div>
     </div>
 </div>
 <br/>
-<div ng-repeat="header in listMH">
+
+<div ng-repeat="(hIndex,header) in info.headers">
 <div class="caption">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <h1 style="font-weight: bolder; text-align: center">{{header.header_name}}</h1>
+            <h1 style="font-weight: bolder; text-align: center">{{header.DESCRIPTION}}</h1>
+            <!--begin input store headers-->
+            <input type="hidden" ng-model="info.headers[hIndex].MH_DF_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].DF_CODE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].DESCRIPTION"/>
+            <input type="hidden" ng-model="info.headers[hIndex].ISENABLE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].CREATED_BY"/>
+            <input type="hidden" ng-model="info.headers[hIndex].CREATION_DATE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].Last_updated_by"/>
+            <input type="hidden" ng-model="info.headers[hIndex].Last_update_date"/>
+            <!--end input store headers-->
         </div>
     </div>
 </div>
@@ -52,8 +64,6 @@
 <div class="col-md-12 col-sm-12">
 <div class="portlet box grey-cascade">
 <div class="portlet-body form">
-<!-- BEGIN FORM-->
-<form class="form-horizontal form-bordered">
 <div style="background-color: lightgrey; vertical-align: middle; height: 35px">
     <label class="control-label bold" style="margin-left: 10px">Personal Details</label>
     <label class="control-label">(to be filled in by Patient)</label>
@@ -85,10 +95,10 @@
             <div class="col-md-4 col-sm-5">
                 <div class="btn-group" style="margin-left:25%;margin-top: 10%;">
                     <label class="btn">
-                        <input type="radio" name='a'/> Male
+                        <input type="radio" name='check' ng-model="info.check" ng-value="0"/> Male
                     </label>
                     <label class="btn">
-                        <input type="radio" name='a'/> Female
+                        <input type="radio" name='check' ng-model="info.check" ng-value="1"/> Female
                     </label>
                 </div>
             </div>
@@ -175,9 +185,7 @@
             <label class="control-label">Name:</label>
             <input type="text" class="form-control"/>
         </div>
-        <div class="col-md-4 col-sm-4">
-            <label class="control-label">Sign:</label>
-            <br/>
+        <div class="col-md-4 col-sm-4" style="margin-top: 25px;">
             <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
             <script type="text/javascript">
                 $('#signBtn').click(function () {
@@ -188,9 +196,9 @@
 
             </script>
             <img src="" id="signDisplay" ng-model="info.consentSign"
-                 style="width:300px;height: 150px;"/>
+                 style="width:200px;height: 30px;"/>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-3 col-sm-3">
             <label class="control-label">Date:</label>
             <input type="text" class="form-control col-md-12" name="dob1" required
                    datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob1"
@@ -233,59 +241,55 @@
             to reveal any prescription drugs that I am taking.</p>
     </div>
     <div class="row">
-        <div class="col-md-1 col-sm-1">
-            <label class="control-label">Signed:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <a href="javascript:;" id="signBtn1" class="btn green" style="margin-top: 5%;">Sign</a>
-        </div>
-        <script type="text/javascript">
-            $('#signBtn1').click(function () {
-                $('#modalSign1').modal({
-                    show: true
-                });
-            });
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-1 col-sm-1">
+                <a href="javascript:;" id="signBtn1" class="btn green" style="margin-top: 5%;">Sign</a>
 
-        </script>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-6">
-            <img src="" id="signDisplay1" ng-model="info.consentSign"
-                 style="width:300px;height: 150px;"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-1 col-sm-1">
-            <label class="control-label">Witness:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <a href="javascript:;" id="signBtn2" class="btn green" style="margin-top: 5%;">Sign</a>
-        </div>
-        <script type="text/javascript">
-            $('#signBtn2').click(function () {
-                $('#modalSign2').modal({
-                    show: true
-                });
-            });
+                <script type="text/javascript">
+                    $('#signBtn1').click(function () {
+                        $('#modalSign1').modal({
+                            show: true
+                        });
+                    });
 
-        </script>
+                </script>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <img src="" id="signDisplay1" ng-model="info.consentSign"
+                     style="width:200px;height: 30px;"/>
+            </div>
+        </div>
     </div>
+    <br/>
+
     <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label">Witness:</label>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <input type="text" class="form-control"/>
+            </div>
+        </div>
         <div class="col-md-6 col-sm-6" style="margin-left:15px;">
             <img src="" id="signDisplay2" ng-model="info.consentSign"
                  style="width:300px;height: 150px;"/>
         </div>
     </div>
+    <br/>
+
     <div class="row">
-        <div class="col-md-1 col-sm-1">
-            <label class="control-label">Date:</label>
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <input type="text" class="form-control col-md-12" name="dob2" required
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob2"
-                   is-open="openDOB2" ng-click="openDOB2 = true"
-                   datepicker-options="dateOptions3" ng-required="true"
-                   close-text="Close"/>
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label">Date:</label>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <input type="text" class="form-control col-md-12" name="dob2" required
+                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob2"
+                       is-open="openDOB2" ng-click="openDOB2 = true"
+                       datepicker-options="dateOptions3" ng-required="true"
+                       close-text="Close"/>
+            </div>
         </div>
     </div>
 </div>
@@ -324,59 +328,54 @@
             drug screen to the appropriate management staff of my company.</p>
     </div>
     <div class="row">
-        <div class="col-md-1 col-sm-1">
-            <label class="control-label">Signed:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <a href="javascript:;" id="signBtn3" class="btn green" style="margin-top: 5%;">Sign</a>
-        </div>
-        <script type="text/javascript">
-            $('#signBtn3').click(function () {
-                $('#modalSign3').modal({
-                    show: true
-                });
-            });
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-1 col-sm-1">
+                <a href="javascript:;" id="signBtn3" class="btn green" style="margin-top: 5%;">Sign</a>
+                <script type="text/javascript">
+                    $('#signBtn3').click(function () {
+                        $('#modalSign3').modal({
+                            show: true
+                        });
+                    });
 
-        </script>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-6" style="margin-left:15px;">
-            <img src="" id="signDisplay3" ng-model="info.consentSign"
-                 style="width:300px;height: 150px;"/>
+                </script>
+            </div>
+            <div class="col-md-6 col-sm-6" style="margin-left:15px;">
+                <img src="" id="signDisplay3" ng-model="info.consentSign"
+                     style="width:200px;height: 30px;"/>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-1 col-sm-1">
-            <label class="control-label">Witness:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <a href="javascript:;" id="signBtn4" class="btn green" style="margin-top: 5%;">Sign</a>
-        </div>
-        <script type="text/javascript">
-            $('#signBtn4').click(function () {
-                $('#modalSign4').modal({
-                    show: true
-                });
-            });
+    <br/>
 
-        </script>
-    </div>
     <div class="row">
-        <div class="col-md-6 col-sm-6" style="margin-left:15px;">
-            <img src="" id="signDisplay4" ng-model="info.consentSign"
-                 style="width:300px;height: 150px;"/>
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label">Witness:</label>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <input type="text" class="form-control"/>
+            </div>
+            <div class="col-md-6 col-sm-6" style="margin-left:15px;">
+                <img src="" id="signDisplay4" ng-model="info.consentSign"
+                     style="width:200px;height: 30px;"/>
+            </div>
         </div>
     </div>
+    <br/>
+
     <div class="row">
-        <div class="col-md-1 col-sm-1">
-            <label class="control-label">Date:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="dob3" required
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob3"
-                   is-open="openDOB3" ng-click="openDOB3 = true"
-                   datepicker-options="dateOptions3" ng-required="true"
-                   close-text="Close"/>
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-1 col-sm-1">
+                <label class="control-label">Date:</label>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <input type="text" class="form-control col-md-12" name="dob3" required
+                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob3"
+                       is-open="openDOB3" ng-click="openDOB3 = true"
+                       datepicker-options="dateOptions3" ng-required="true"
+                       close-text="Close"/>
+            </div>
         </div>
     </div>
 </div>
@@ -400,102 +399,275 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="portlet box grey-cascade" ng-repeat="group in header.group">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-gift"></i> {{group.group_name}}
+<div class="col-md-12 col-sm-12">
+<div class="portlet box grey-cascade" ng-repeat="(gIndex, group) in header.group">
+<div class="portlet-title">
+    <div class="caption">
+        <i class="fa fa-gift"></i> {{group.GROUP_NAME}}
+    </div>
+    <div class="tools">
+        <a href="javascript:;" class="collapse">
+        </a>
+    </div>
+</div>
+<!--begin input save group-->
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].GROUP_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].MH_DF_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].ORD"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].GROUP_NAME"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].ISENABLE"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].CREATED_BY"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].CREATION_DATE"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Last_updated_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Last_update_date"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].USER_TYPE"/>
+<!--end input save group-->
+
+<div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
+<ng-form name="lineForm">
+<!--begin input save line-->
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MH_LINE_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].GROUP_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MH_DF_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ORD"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUESTION"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_YES"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_NO"/>
+<input type="hidden"
+       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISDETAILS_ANSWER_ONLY"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISENABLE"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CREATED_BY"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CREATION_DATE"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_updated_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_update_date"/>
+<input type="hidden"
+       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISDetails_Answer_IfYes"/>
+<!--end input save line-->
+
+<!--begin not subquestion-->
+<div ng-if="line.subquestion.length == 0">
+    <div class="panel-heading">
+        <label class="control-label bold" style="text-align: left;">{{line.ORD + ". " +
+            line.QUESTION}}</label>
+
+        <div class="row">
+            <div class="clo-md-12">
+                <div class="col-md-1 col-sm-2">
+                    <label class="control-label">Answer:</label>
                 </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse">
-                    </a>
+                <div class="col-md-4 col-sm-4">
+                    <div class="btn-group">
+                        <label class="btn">
+                            <input type="radio"
+                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
+                                   ng-value="1"/>
+                            Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio"
+                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
+                                   ng-value="0"/>
+                            No
+                        </label>
+                    </div>
                 </div>
             </div>
-            <div class="portlet-body form" ng-repeat="line in group.line">
-                <div class="panel-heading">
-                    <label class="control-label bold" style="text-align: left;">{{line.line_ord + ". " +
-                        line.line_name}}</label>
+        </div>
+        <div class="row"
+             style="margin-top: 10px; text-align: left;">
+            <div class="col-md-1 col-sm-2">
+                <label class="control-label"><span
+                        ng-show="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Comment:</label>
+            </div>
+            <div class="col-md-5 col-sm-5">
+                <div ng-class="{'has-error': lineForm.Comments.$error.required || lineForm.Comments.$error.maxlength}">
+                    <input type="text" class="form-control" name="Comments"
+                           ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Comments"
+                           ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].YES_NO &&
+                    info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_YES) ||
+                    (!info.headers[hIndex].group[gIndex].line[lIndex].YES_NO &&
+                    info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_NO
+                    )" ng-maxlength="200"/>
 
-                    <div class="row">
-                        <div class="clo-md-12">
-                            <div class="col-md-1 col-sm-2">
-                                <label class="control-label">Answer:</label>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="btn-group">
-                                    <label class="btn">
-                                        <input type="radio" name='a'/> Yes
-                                    </label>
-                                    <label class="btn">
-                                        <input type="radio" name='a'/> No
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                    <div ng-show="lineForm.Comments.$error.required">
+                        <label class="help-block">Required!</label>
                     </div>
-                    <div class="row" ng-if="line.subquestion.length == 0" style="margin-top: 10px; text-align: left;">
-                        <div class="col-md-1 col-sm-2">
-                            <label class="control-label">Comment:</label>
-                        </div>
-                        <div class="col-md-5 col-sm-5">
-                            <input type="text" class="form-control"/>
-                        </div>
-                    </div>
-                    <div ng-repeat="subquestion in line.subquestion">
-                        <label class="control-label bold" style="margin-top: 10px;text-align: left;">{{line.line_ord +
-                            ". " +
-                            subquestion.subquestion_ord + ". "
-                            + subquestion.subquestion_name}}</label>
-
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="col-md-1 col-sm-2" style="margin-top: 15px">
-                                    <label>Answer:</label>
-                                </div>
-                                <div class="col-md-4 col-sm-4" style="margin-top: 10px;">
-                                    <div class="btn-group">
-                                        <label class="btn">
-                                            <input type="radio" name='a'/> Yes
-                                        </label>
-                                        <label class="btn">
-                                            <input type="radio" name='a'/> No
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1 col-sm-2">
-                                <label class="control-label">Comment:</label>
-                            </div>
-                            <div class="col-md-5 col-sm-5">
-                                <input type="text" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-if="line.line_id != group.line[group.line.length - 1].line_id">
-                        <hr/>
+                    <div ng-show="lineForm.Comments.$error.maxlength">
+                        <label class="help-block">Comment too long!</label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--end line not subquestion-->
+
+<!--begin line has subquestion-->
+<div ng-if="line.subquestion.length != 0">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label bold" style="text-align: left;">{{line.ORD + ". " +
+                    line.QUESTION}}</label>
+            </div>
+        </div>
+
+        <div class="row" ng-if="line.ISDetails_Answer_IfYes">
+            <div class="col-md-12">
+                <div class="col-md-1 col-sm-2">
+                    <label class="control-label">Answer:</label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="btn-group">
+                        <label class="btn">
+                            <input type="radio"
+                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
+                                   ng-value="1"/>
+                            Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio"
+                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
+                                   ng-value="0"/>
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end line has subquestion-->
+
+<!--begin input save subquestion-->
+<div ng-repeat="(sIndex,subquestion) in line.subquestion">
+    <ng-form name="subForm">
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_SUB_ID"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_ID"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ORD"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].QUESTION"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_YES"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISENABLE"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].CREATED_BY"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].CREATION_DATE"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Last_updated_by"/>
+        <input type="hidden"
+               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Last_update_date"/>
+        <!--end input save subquestion-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <label class="control-label bold" style="margin-top: 10px;text-align: left;">{{line.ORD +
+                        ". " +
+                        subquestion.ORD + ". "
+                        + subquestion.QUESTION}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-1 col-sm-2" style="margin-top: 15px">
+                    <label class="control-label"><span
+                            ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISDetails_Answer_IfYes &&
+                            info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Answer:</label>
+                </div>
+                <div class="col-md-4 col-sm-4" style="margin-top: 10px;">
+                    <div class="btn-group">
+                        <label class="btn">
+                            <input type="radio"
+                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
+                                   ng-value="1"/> Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio"
+                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
+                                   ng-value="0"/> No
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-1 col-sm-2">
+                    <label class="control-label"><span
+                            ng-show="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO">*</span>Comment:</label>
+                </div>
+                <div class="col-md-5 col-sm-5">
+                    <div ng-class="{'has-error': subForm.Comments.$error.required ||
+                    subForm.Comments.$error.maxlength}">
+                        <input type="text" class="form-control" name="Comments"
+                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Comments"
+                               ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
+                               info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_YES) ||
+                               (!info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
+                               info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO)"
+                               ng-maxlength="200"/>
+
+                        <div ng-show="subForm.Comments.$error.required">
+                            <label class="control-label">Required!</label>
+                        </div>
+                        <div ng-show="subForm.Comments.$error.maxlength">
+                            <label class="control-label">Comment too long!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </ng-form>
+    </div>
+<!--</div>-->
+<!--end subquestion-->
+<div ng-if="line.line_id != group.line[group.line.length - 1].line_id">
+    <hr/>
+</div>
+</ng-form>
+</div>
+<!--</div>-->
+</div>
+</div>
+
 <div class="row">
-    <div class="col-md-12 col-sm-12" style="margin-left: 10px; font-weight: bold;">
-        <p><u>Statement</u></p>
+    <div class="col-md-12">
+        <div class="col-md-12 col-sm-12">
+            <p style="font-weight: bold; margin-left: 10px;"><u>Statement</u></p>
+        </div>
     </div>
-    <div class="col-md-12 col-sm-12" style="margin-left: 10px; font-weight: bold;">
-        <p>Section 79 of the Western Australian Workers' Compensation and Injury Management Act 1981
-            gives an arbitrator discretion to refuse to award compensation which would otherwise be payable
-            where it is proved that the worker has, at the time of seeking or entering employment in respect of
-            which he claims compensation for an injury, wilfully and falsely represented himself as not having
-            previously suffered from the injury.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12 col-sm-12">
+            <p style="font-weight: bold; text-align: left; margin-left: 10px;">Section 79 of the Western Australian
+                Workers' Compensation and Injury Management Act 1981
+                gives an arbitrator discretion to refuse to award compensation which would otherwise be payable
+                where it is proved that the worker has, at the time of seeking or entering employment in respect of
+                which he claims compensation for an injury, wilfully and falsely represented himself as not having
+                previously suffered from the injury.</p>
+        </div>
     </div>
-    <div class="col-md-12 col-sm-12" style="margin-left: 10px;">
-        <p>I have read the above statements. The answers are correct, and no information concerning my present or
-            past health has been withheld.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12 col-sm-12">
+            <p style="text-align: left; margin-left: 10px;">I have read the above statements. The answers are correct,
+                and no information concerning my present or
+                past health has been withheld.</p>
+        </div>
     </div>
+</div>
 </div>
 <div class="row">
     <div class="col-md-12 col-sm-12">
@@ -512,27 +684,19 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-1 col-sm-1">
-            <label class="control-label">Signed:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
             <a href="javascript:;" id="signBtn5" class="btn green">Sign</a>
-        </div>
-        <script type="text/javascript">
-            $('#signBtn5').click(function () {
-                $('#modalSign5').modal({
-                    show: true
+            <script type="text/javascript">
+                $('#signBtn5').click(function () {
+                    $('#modalSign5').modal({
+                        show: true
+                    });
                 });
-            });
 
-        </script>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
+            </script>
+        </div>
         <div class="col-md-6 col-sm-6" style="margin-left:15px;">
             <img src="" id="signDisplay5" ng-model="info.consentSign"
-                 style="width:300px;height: 150px;"/>
+                 style="width:200px;height: 30px;"/>
         </div>
     </div>
 </div>
@@ -553,12 +717,12 @@
     </div>
 </div>
 <hr/>
+</div>
+</div>
+</div>
+</div>
+</div>
 </form>
-</div>
-</div>
-</div>
-</div>
-</div>
 <!--=============================== Signature Form ============================================-->
 <div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

@@ -1,12 +1,14 @@
 var fs = require('fs'),
     path = require('path'),
     Sequelize = require('sequelize'),
+    useTransaction = require('sequelize-transactions');
     lodash = require('lodash'),
     config = require('config'),
     sequelize = new Sequelize('sakila', 'root', 'root', {
         host: 'localhost',
         port: 3306
     }),
+    useTransaction(sequelize);
     db = {};
 
 fs

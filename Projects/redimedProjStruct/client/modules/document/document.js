@@ -2,7 +2,7 @@
  * Created by meditech on 24/09/2014.
  */
 
-angular.module("app.loggedIn.document",[
+angular.module("app.loggedIn.document", [
     "app.loggedIn.document.cat2.controllers",
     "app.loggedIn.document.cat3.controllers",
     "app.loggedIn.document.FA.controllers",
@@ -15,79 +15,79 @@ angular.module("app.loggedIn.document",[
     "app.loggedIn.document.services",
     "app.loggedIn.document.MH.controllers",
     "app.loggedIn.document.MRS.controllers",
-    "app.loggedIn.document.AUD1.controllers",
-    "app.loggedIn.document.AUD2.controllers",
+    "app.loggedIn.document.SA1.controllers",
+    "app.loggedIn.document.SA2.controllers",
     "app.loggedIn.document.form18.controllers"
 ])
-    .config(function($stateProvider){
+    .config(function ($stateProvider) {
         $stateProvider
 
-            .state("loggedIn.category2",{
-                url:"/category2",
+            .state("loggedIn.category2", {
+                url: "/category2",
 
                 templateUrl: "modules/document/views/category2.html",
                 controller: 'Cat2Controller'
 
             })
 
-            .state("loggedIn.category3",{
-                url:"/category3",
+            .state("loggedIn.category3", {
+                url: "/category3",
 
                 templateUrl: "modules/document/views/category3.html",
                 controller: 'Cat3Controller'
 
             })
 
-            .state("loggedIn.FA",{
-                url:"/FA",
+            .state("loggedIn.FA", {
+                url: "/FA",
 
                 templateUrl: "modules/document/views/functionAssessment.html",
                 controller: 'FAController'
 
             })
 
-            .state("loggedIn.MA",{
-                url:"/MA",
+            .state("loggedIn.MA", {
+                url: "/MA",
 
                 templateUrl: "modules/document/views/medicalAssessment.html",
                 controller: 'MAController'
 
             })
 
-            .state("loggedIn.IDS",{
-                url:"/IDS",
+            .state("loggedIn.IDS", {
+                url: "/IDS",
 
                 templateUrl: "modules/document/views/instantScreen.html",
                 controller: 'IDSController'
 
             })
 
-            .state("loggedIn.gorgonFA",{
-                url:"/gorgonFA",
+            .state("loggedIn.gorgonFA", {
+                url: "/gorgonFA",
 
                 templateUrl: "modules/document/views/gorgonFA.html",
                 controller: 'gorgonFAController'
 
             })
 
-            .state("loggedIn.gorgonMA",{
-                url:"/gorgonMA",
+            .state("loggedIn.gorgonMA", {
+                url: "/gorgonMA",
 
                 templateUrl: "modules/document/views/gorgonMA.html",
                 controller: 'gorgonMAController'
 
             })
 
-            .state("loggedIn.gorgonMH",{
-                url:"/gorgonMH",
+            .state("loggedIn.gorgonMH", {
+                url: "/gorgonMH",
 
                 templateUrl: "modules/document/views/gorgonMH.html",
                 controller: 'gorgonMHController'
 
             })
 
-            .state("loggedIn.gorgonUQ",{
-                url:"/gorgonUQ",
+            .state("loggedIn.gorgonUQ", {
+                url: "/gorgonUQ",
 
                 templateUrl: "modules/document/views/gorgonUQ.html",
                 controller: 'gorgonUQController'
@@ -115,18 +115,18 @@ angular.module("app.loggedIn.document",[
                 controller: 'MRSController'
             })
 
-            .state("loggedIn.AUD1", {
-                url: "/AUD1",
+            .state("loggedIn.SA1", {
+                url: "/SA1",
 
                 templateUrl: "modules/document/views/audiogramresults1.html",
-                controller: 'AUD1Controller'
+                controller: 'SA1Controller'
             })
 
-            .state("loggedIn.AUD2", {
-                url: "/AUD2",
+            .state("loggedIn.SA2", {
+                url: "/SA2",
 
                 templateUrl: "modules/document/views/audiogramresults2.html",
-                controller: 'AUD2Controller'
+                controller: 'SA2Controller'
             })
 
 

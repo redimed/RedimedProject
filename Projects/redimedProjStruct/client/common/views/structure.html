@@ -21,7 +21,7 @@
 <div class="top-menu">
 <ul class="nav navbar-nav pull-right">
 <!-- BEGIN NOTIFICATION DROPDOWN -->
-<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+<li ng-show="userInfo.HAVE_BELL==1" class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
     <a  class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
         <i class="icon-bell"></i>
 						<span class="badge badge-danger">
@@ -88,11 +88,14 @@
                 See all notifications <i class="icon-arrow-right"></i>
             </a>
         </li>
+        <li>
+
+        </li>
     </ul>
 </li>
 <!-- END NOTIFICATION DROPDOWN -->
 <!-- BEGIN INBOX DROPDOWN -->
-<li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+<li ng-show="userInfo.HAVE_LETTER==1" class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
     <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
         <i class="icon-envelope-open"></i>
 						<span class="badge badge-primary">
@@ -149,7 +152,7 @@
 </li>
 <!-- END INBOX DROPDOWN -->
 <!-- BEGIN TODO DROPDOWN -->
-<li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
+<li ng-show="userInfo.HAVE_CALENDAR==1" class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
     <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
         <i class="icon-calendar"></i>
         <span class="badge badge-success">
@@ -188,19 +191,32 @@
 
                 <li ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">
                     <a ui-sref="{{appointmentUpcoming.link}}">
-                        <span class="task">
-                            <span class="desc">
-                                {{appointmentUpcoming.MESSAGE}}
-                            </span>
-                            <span class="percent">
-                                {{appointmentUpcoming.DATE_UPCOMING|date:'dd/MM/yyyy HH:mm'}}
-                            </span>
+                        <span class="label label-sm label-icon label-primary">
+                        <i class="fa fa-calendar-o"></i>
                         </span>
-
+                        {{appointmentUpcoming.NOTIFICATION}}
                     </a>
+
+                    <!--<a ui-sref="{{appointmentUpcoming.link}}">-->
+                        <!--<span class="task">-->
+                            <!--<span class="desc">-->
+
+                            <!--</span>-->
+                            <!--<span class="percent">-->
+                                <!--{{appointmentUpcoming.DATE_UPCOMING|date:'dd/MM/yyyy HH:mm'}}-->
+                            <!--</span>-->
+                        <!--</span>-->
+
+                    <!--</a>-->
                 </li>
 
             </ul>
+        </li>
+
+        <li class="external">
+            <a ng-click="showMyCalendar();">
+                See all my calendar <i class="icon-arrow-right"></i>
+            </a>
         </li>
         <!--<li class="external">-->
             <!--<a href="page_todo.html">-->
@@ -230,7 +246,7 @@
             <a ui-sref="loggedIn.userProfile">
                 <i class="icon-user"></i> My Profile </a>
         </li>
-        <li>
+        <li ng-show="userInfo.HAVE_CALENDAR==1">
             <a ng-click="showMyCalendar();">
                 <i class="icon-calendar"></i>
                 My Calendar
@@ -240,7 +256,7 @@
             </a>
 
         </li>
-        <li>
+        <li ng-show="userInfo.HAVE_LETTER==1">
             <a ng-click="getListNotification('letter');">
                 <i class="icon-envelope-open"></i>
                 My Inbox
@@ -249,7 +265,7 @@
                 </span>
             </a>
         </li>
-        <li>
+        <li ng-show="userInfo.HAVE_BELL==1">
             <a ng-click="getListNotification('bell');">
                 <i class="icon-bell"></i>
                     My notifications
@@ -294,7 +310,7 @@
 <!-- BEGIN SIDEBAR MENU -->
 <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-auto-scroll="true" data-slide-speed="200">
     <li class="start">
-        <a ui-sref="loggedIn.home">
+        <a  href="javascript:;" ng-click="userclick()">
             <i class="icon-home"></i>
 
             <span class="title" >Home</span>
@@ -303,9 +319,10 @@
     </li>
 
     <li ng-repeat="menu in loggedInMenus">
-        <a ui-sref="{{menu.parent.definition}}" >
+        <a ui-sref="{{menu.parent.definition}}">
             <i class="icon-star"></i>
             <span class="title">{{menu.parent.name}}</span>
+
         </a>
         <ul ng-if="menu.parent.childs.length > 0" class="sub-menu">
             <li ng-repeat="submenu in menu.parent.childs">
@@ -336,7 +353,11 @@
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
     <div class="page-footer-inner">
-        2014 &copy; REDiMED.
+        <!--2014 &copy; Metronic by keenthemes.-->
+        <p ng-repeat="detail in contactDetails">
+            {{detail.label}}   {{detail.content}}
+        </p>
+
     </div>
     <div class="scroll-to-top">
         <i class="icon-arrow-up"></i>
@@ -355,7 +376,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">List Notifications</h4>
+                <h4 class="modal-title">My Inbox</h4>
             </div>
 
             <div class="modal-body">
@@ -375,13 +396,21 @@
                             <td>{{item.time_created |date:'dd-MM-yyyy HH:mm:ss'}}</td>
                             <td>{{item.msg}}</td>
                             <td>
-                                <a
+                                <a  ng-show="item.TYPE=='bell'"
                                     class="btn btn-sm yellow filter-submit margin-bottom"
                                     style="margin-left: 10px;margin-bottom: 10px;"
                                     ng-click="closeNotificationListPopup()"
                                     ui-sref="{{item.link}}">
                                     View details
                                 </a>
+
+                                <a      ng-show="item.TYPE=='letter'"
+                                        class="btn btn-sm yellow filter-submit margin-bottom"
+                                        style="margin-left: 10px;margin-bottom: 10px;"
+                                        href="/api/download/structure/attach-file/{{item.source_name}}/{{item.ref_id}}">
+                                    Download document
+                                </a>
+
                             </td>
                             <!--<td>-->
                                 <!--<input type="checkbox"   ng-model="item.STATUS" ng-true-value="1" ng-false-value="0" ng-checked="item.STATUS">-->
@@ -421,7 +450,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">List Calendar</h4>
+                <h4 class="modal-title">My Calendar</h4>
             </div>
 
 
@@ -440,23 +469,33 @@
             <!--</li>-->
             <div class="modal-body">
                 <div class="notification-list" style="height: 350px;">
+
                     <table class="table table-hover">
                         <tr>
                             <th>Time</th>
-                            <th>Patient</th>
+                            <!--SOURCE_TYPE-->
+                            <th>Type</th>
+                            <th>Surname</th>
                             <th></th>
                             <th></th>
                             <!--<th>Read</th>-->
                         </tr>
 
                         <tbody>
-                        <tr  ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming"
-                                >
+                        <tr ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">
                             <td>{{appointmentUpcoming.DATE_UPCOMING |date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                            <td>{{appointmentUpcoming.MESSAGE}}</td>
+                            <td>{{appointmentUpcoming.SOURCE_TYPE}}</td>
+                            <td>{{appointmentUpcoming.PERSON_INFO}}</td>
                             <td>
-                                {{appointmentUpcoming.DETAIL}}
+                                <p data-toggle="collapse" ng-click="myExpand($index)" style="cursor: pointer">
+                                    {{appointmentUpcoming.MESSAGE}}
+                                </p>
 
+                                <div class="panel-collapse collapse collapse{{$index}}">
+                                    <div class="panel-body">
+                                        {{appointmentUpcoming.DETAIL}}
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 <a

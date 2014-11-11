@@ -31,9 +31,6 @@ module.exports = {
                 res.json({status:'error'});
             })
     },
-    regUser: function(req,res){
-
-    },
     insertUser: function(req,res){
         var isReg = req.body.isReg;
         var info;

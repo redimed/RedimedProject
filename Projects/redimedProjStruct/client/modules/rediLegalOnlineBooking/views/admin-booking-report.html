@@ -1,0 +1,85 @@
+<style type="text/css">
+    .portlet.box > .portlet-title {
+        border-bottom: 1px solid white;
+        padding: 0px 10px;
+        margin-bottom: 0;
+        color: #fff;
+    }
+    .portlet.box.grey-cascade > .portlet-title > .caption {
+        color: white;
+        width: 100%;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="portlet grey-cascade box ng-scope">
+            <div class="portlet-title">
+                <div class="caption">
+                    <ul style="margin-bottom: -8px;border: none;" class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a ng-click="report = 'report1'" role="tab" data-toggle="tab"> <i class="fa fa-cogs"></i>Upcomming booking</a></li>
+                        <li role="presentation"><a ng-click="report = 'report2'" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Pass booking</a></li>
+                        <li role="presentation"><a ng-click="report = 'report3'" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Outstanding Report </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" ng-show="report=='report1'">
+                        <rlob-booking-report list="bookingslist"></rlob-booking-report>
+                        <pagination boundary-links="true" total-items="totalItems1" ng-model="currentPage1" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                    </div>
+                    <div role="tabpanel" class="tab-pane active" ng-show="report=='report2'">
+                        <rlob-booking-report list="bookingslistStatus"></rlob-booking-report>
+                        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane active" ng-show="report=='report3'">
+                        <table class="table table-responsive table-hover">
+                            <thead>
+                            <tr>
+                                <th>Doctor </th>
+                                <th>Week overdue</th>
+                                <th ng-if="bookingType=='REDiLEGAL'">
+                                    Claim No.
+                                    <!--<rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+                                </th>
+                                <th ng-if="bookingType=='Vaccination'">
+                                    Employee number
+                                    <!--<rlob-order-by field-name="EMPLOYEE_NUMBER" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+                                </th>
+                                <th>
+                                    Surname
+                                    <!--<rlob-order-by field-name="WRK_SURNAME" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+                                </th>
+                                <th>
+                                    Type
+                                    <!--<rlob-order-by field-name="Rl_TYPE_NAME" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+                                </th>
+                                <th>
+                                    Appointment Date
+                                    <!--<rlob-order-by field-name="APPOINTMENT_DATE" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+                                </th>
+
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="booking in reportPassBookingHaveNotResult"  style="cursor: pointer;">
+                                <td>{{booking.NAME}}</td>
+                                <td>{{booking.WEEK_OVERDUE}}</td>
+                                <td ng-if="bookingType=='REDiLEGAL'">{{booking.CLAIM_NO}}</td>
+                                <td ng-if="bookingType=='Vaccination'">{{booking.EMPLOYEE_NUMBER}}</td>
+                                <td>{{booking.WRK_SURNAME}}</td>
+                                <td>{{booking.Rl_TYPE_NAME}}</td>
+                                <td>{{booking.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

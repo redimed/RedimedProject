@@ -5,9 +5,101 @@
 var db = require('../models');
 var util = require('util');
 var common_function = require("../functions.js");
+var squel = require("squel");
+squel.useFlavour('mysql');
 
 module.exports =
 {
+    getCasualCalendar: function(req, res){
+        var from_time = common_function.toDateDatabase(req.body.from_time);
+        var to_time = common_function.toDateDatabase(req.body.to_time);
+        var doctor_id = req.body.doctor_id;
+
+        var sql = "SELECT * FROM cln_appointment_calendar WHERE DOCTOR_ID = "+doctor_id
+                +" AND DATE(FROM_TIME) BETWEEN '"+from_time+"' AND '"+to_time+"'";
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
+    getMaxId: function(req, res){
+        var sql = "SELECT MAX(doctor_id) AS doctor_id FROM doctors LIMIT 1";
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data[0]});
+            });
+        });
+    },
+    insert: function(req, res){
+        var created_by = req.body.Created_by;
+
+        delete req.body.Created_by;
+
+        var sqlbuilder = squel.insert()
+                .into("doctors")
+                .set('Creation_date', 'NOW()', {dontQuote: true})
+                .set('Created_by', created_by);
+        ;
+
+        var data = req.body;
+
+        for (var key in data) {
+            if (data[key] || data[key] === 0 || data[key] === '0')
+                sqlbuilder.set(key, data[key]);
+        }
+
+        var sql = sqlbuilder.toString();
+        
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
+    update: function(req, res){
+        var doctor_id = req.body.doctor_id;
+        delete req.body.doctor_id;
+        delete req.body.Last_update_date;
+
+        var sqlbuilder = squel.update()
+                .table("doctors")
+                .set('Last_update_date', 'NOW()', {dontQuote: true})
+                .where('doctor_id = ?', doctor_id);
+
+        var data = req.body;
+
+        for (var key in data) {
+            if (data[key] || data[key] === 0 || data[key] === '0')
+                sqlbuilder.set(key, data[key]);
+        }
+
+        var sql = sqlbuilder.toString();
+        
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
     generateTimetable: function(req, res){
         var timetable_data = req.body.data.timetable;
         var timetable_interval = req.body.data.interval;
@@ -82,8 +174,8 @@ module.exports =
                             var add_from_time = common_function.toTime(from);
                             var add_to_time = common_function.toTime(parseInt(from+timetable_interval));
 
-                            var FROM_DATE = common_function.getDateOffset(current_date, add_from_time, offset);
-                            var TO_DATE = common_function.getDateOffset(current_date, add_to_time, offset);
+                            var FROM_DATE = common_function.getFirstDateOffset(current_date, add_from_time, offset);
+                            var TO_DATE = common_function.getFirstDateOffset(current_date, add_to_time, offset);
 
                             // SITE
                             var site_id = 0;
@@ -573,6 +665,8 @@ module.exports =
                 });
         });
     },
+    
+ //tannv.dts@gmail.com   
     list:function(req,res)
     {
         req.getConnection(function(err,connection)
@@ -590,6 +684,8 @@ module.exports =
                 });
         });
     },
+    
+//tannv.dts@gmail.com    
     getDoctorOfSpeciality:function(req,res)
     {
         var Specialties_id=req.query.Specialties_id;
@@ -597,7 +693,7 @@ module.exports =
         {
 
             var query = connection.query(
-                'SELECT d.* FROM doctors d INNER JOIN  doctor_specialities s ON d.`doctor_id`=s.`doctor_id` WHERE s.Specialties_id=?'
+                'SELECT DISTINCT d.* FROM doctors d INNER JOIN  doctor_specialities s ON d.`doctor_id`=s.`doctor_id` WHERE s.Specialties_id=?'
                 ,Specialties_id,function(err,rows)
                 {
                     if(err)
@@ -614,6 +710,7 @@ module.exports =
         });
     },
 
+//tannv.dts@gmail.com
     getDoctorInfoByUserId:function(req,res)
     {
         var userId=req.query.userId;
@@ -639,6 +736,33 @@ module.exports =
                     }
 
                 });
+        });
+    },
+
+//tannv.dts@gmail.com
+    getDoctorById:function(req,res)
+    {
+        var doctorId=req.query.doctorId;
+        var sql='SELECT doctor.`doctor_id`,doctor.`NAME` FROM `doctors` doctor WHERE doctor.`doctor_id`=?';
+        req.getConnection(function(err,connection)
+        {
+
+            var query = connection.query(sql,doctorId,function(err,rows)
+            {
+                if(err)
+                {
+                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'})
+                }
+                else
+                {
+                    if(rows.length>0)
+                        res.json({status:'success',data:rows[0]});
+                    else
+                        res.json({status:'fail'});
+                }
+
+            });
         });
     }
 }

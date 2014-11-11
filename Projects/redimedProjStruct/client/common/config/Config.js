@@ -1091,7 +1091,23 @@ angular.module('app.config', [])
     {code:4, name: 'Week 4'},
 ])
 
-.factory('ConfigService', function (USER_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, COUNTRY_LIST, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, SYS_TITLE, Restangular) {
+.constant("REAL_DAY_OF_WEEK", [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+])
+.constant('APPT_STATUS', [
+	{code: 'ChangePers', title: 'Change Permisssion'},
+    {code:'Done', title: 'Done'},
+    {code:'NotYet', title: 'Not Yet'},
+    {code:'Billing', title: 'Billing'},
+    {code: null, title: 'Not Met'},
+])
+.factory('ConfigService', function (USER_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, COUNTRY_LIST, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, SYS_TITLE,  APPT_STATUS,  Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
 
@@ -1104,6 +1120,28 @@ angular.module('app.config', [])
     }
     
     /* KHANK */
+    configService.appt_status_option = function(){
+        return APPT_STATUS;
+    }	
+	configService.taxes_option = function(){
+        var siteApi = configApi.one("v1/system/list_taxes");
+        return siteApi.get({is_option: 1});
+    };
+	
+	configService.prefix_headers_option = function(form_code){
+        var siteApi = configApi.one("v1/system/list_prefix_headers");
+        return siteApi.get({is_option: 1, form_code: form_code});
+    };
+	
+	configService.provider_types_option = function(){
+        var siteApi = configApi.one("v1/system/list_provider_types");
+        return siteApi.get({is_option: 1});
+    };
+	
+	configService.inv_uoms_option = function(){
+        var siteApi = configApi.one("v1/inv/list_uoms");
+        return siteApi.get({is_option: 1});
+    };
     configService.country_option = function () {
         return COUNTRY_LIST;
     };
@@ -1140,13 +1178,24 @@ angular.module('app.config', [])
         return providerApi.get();
     }
 
+    configService.qualification_option = function(){
+        var qualificationApi = configApi.one("patient/qualification");
+        return qualificationApi.get();
+    }
+
+    configService.account_type_option = function(){
+        var accountApi = configApi.one("patient/list_account_type");
+        return accountApi.get();
+    }
+
     configService.system_service_by_clinical = function(clinical_dept_id){
         var serviceApi = configApi.all("system/listServiceByClinical");
         return serviceApi.post({dept:clinical_dept_id});
     }
 
     configService.getCommonDate = function(dateTime){
-        dateTime = new Date(dateTime);
+        if(typeof dateTime === 'string')
+            dateTime = new Date(dateTime);
 
         var year = dateTime.getFullYear();
         var month = dateTime.getMonth()+1;
@@ -1161,7 +1210,20 @@ angular.module('app.config', [])
         }
 
         return year+"-"+month+"-"+date;
-    };
+    }
+
+    configService.getDayFromTime = function(time){
+        var date = new Date(time);
+
+        return date.getDay();
+    }
+
+    configService.getWeekFromDate = function(date){
+        if(typeof date === 'string')
+            date = new Date(date);
+        var firstDay = new Date(date.getFullYear(), date.getMonth()+1, 1).getDay();
+        return Math.ceil((date.getDate() + firstDay)/7);
+    }
 
     configService.getCommonDateDatabase = function(dateTime){
         if(dateTime === '' || typeof dateTime === 'undefined')
@@ -1196,17 +1258,19 @@ angular.module('app.config', [])
     };
 
     configService.convertToDate = function(dateTime){
-        if(dateTime !== null){
+        if(typeof dateTime === 'string')
             dateTime = new Date(dateTime);
 
-            var year = dateTime.getFullYear();
-            var month = dateTime.getMonth()+1;
-            var date = dateTime.getDate();
+        var year = dateTime.getFullYear();
+        var month = dateTime.getMonth()+1;
 
-            return date+"/"+month+"/"+year;
-        }else{
-            return "";
-        }
+        if(month < 10) month = "0"+month;
+
+        var date = dateTime.getDate();
+
+        if(date < 10) date = "0"+date;
+
+        return date+"/"+month+"/"+year;
     }
 
     configService.acc_type_option = function(){

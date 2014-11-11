@@ -3,6 +3,25 @@ angular.module("app.loggedIn.patient.services", [])
 .factory("PatientService", function (Restangular) {
     var instanceService = {};
     var appApi = Restangular.all("api");
+	
+	/**
+	 * KHANK API
+	 */
+
+	instanceService.getAppointment = function (patient_id) {
+		var detailApi = appApi.one("erm/v1/appointment/get_by_patient");
+		return detailApi.get({patient_id: patient_id});
+	}
+	
+	instanceService.getById = function (patient_id) {
+		var detailApi = appApi.one("erm/v1/patients/get_by_id");
+		return detailApi.get({patient_id: patient_id});
+	}
+
+	/**
+	 * END KHANK API
+	 */
+
 
     instanceService.search = function(option){
         var listApi = appApi.all("erm/v1/patients/search");

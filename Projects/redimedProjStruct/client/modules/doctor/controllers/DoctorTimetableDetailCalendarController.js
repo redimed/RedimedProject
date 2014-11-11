@@ -152,4 +152,10 @@ angular.module("app.loggedIn.doctor.timetable.detail.calendar.controller",[])
 		})
 	}
 	// END ACTION
+
+	// GO TO
+	$scope.goToDoctor = function(){
+		$state.go("loggedIn.doctor.add");
+	}
+	// END GO TO
 })

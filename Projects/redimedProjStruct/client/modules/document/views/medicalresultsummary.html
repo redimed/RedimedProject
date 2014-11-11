@@ -4,11 +4,11 @@
         height: 800px;
     }
 </style>
-
+<form name="mrsForm" novalidate method="post">
 <div class="caption">
     <div class="row">
         <div class="col-md-12 ">
-            <a href="javascript:;" ng-click="submit()" class="btn green pull-right">Submit</a>
+            <a href="javascript:;" ng-click="submit(mrsForm)" class="btn green pull-right">Submit</a>
             <a href="javascript:;" class="btn btn-primary blue pull-right">Print PDF</a>
             <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
         </div>
@@ -16,12 +16,28 @@
 </div>
 <br/>
 
-<div ng-repeat="header in listMRS">
-
+<div ng-repeat="(hIndex,header) in info.headers">
+<!--begin input save headers-->
+<input type="hidden" ng-model="info.headers[hIndex].MRS_DF_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].PATIENT_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].CAL_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].DF_CODE"/>
+<input type="hidden" ng-model="info.headers[hIndex].ITEM_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].DESCRIPTION"/>
+<input type="hidden" ng-model="info.headers[hIndex].ISENABLE"/>
+<input type="hidden" ng-model="info.headers[hIndex].Created_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].Creation_date"/>
+<input type="hidden" ng-model="info.headers[hIndex].Last_updated_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].Last_update_date"/>
+<input type="hidden" ng-model="info.headers[hIndex].practitioner"/>
+<input type="hidden" ng-model="info.headers[hIndex].practitionSign"/>
+<input type="hidden" ng-model="info.headers[hIndex].practitionDate"/>
+<input type="hidden" ng-model="info.headers[hIndex].isReview"/>
+<!--end input save headers-->
 <div class="caption">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.header_name}}</p>
+            <p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.DESCRIPTION}}</p>
         </div>
     </div>
 </div>
@@ -135,139 +151,268 @@
 
 <div class="row">
 <div class="col-md-12 col-sm-12">
-<div class="portlet box grey-cascade" ng-repeat="group in header.group">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-gift"></i> {{group.group_name}}
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
+<div class="portlet box grey-cascade" ng-repeat="(gIndex,group) in header.group">
+<!--begin input save group-->
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].MRS_GROUP_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].MRS_DF_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].PATIENT_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].CAL_ID"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].ORD"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].GROUP_NAME"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].USER_TYPE"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].ISENABLE"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Created_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Creation_date"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Last_updated_by"/>
+<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Last_update_date"/>
+<!--end input save group-->
+<div class="portlet-title">
+    <div class="caption">
+        <i class="fa fa-gift"></i> {{group.GROUP_NAME}}
+    </div>
+    <div class="tools">
+        <a href="javascript:;" class="collapse">
+        </a>
+    </div>
+</div>
+<div class="portlet-body form">
+<div style="background-color: lightgrey; vertical-align: middle;">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-5 col-sm-3" style="text-align: center;">
+                <label class="control-label bold" style="text-align: center;">Component
+                    of Medical (as applicabel)</label>
+            </div>
+            <div class="col-md-3 col-sm-5" style="text-align: center;">
+                <label class="control-label bold" style="text-align: center;">Satisfactory
+                    (S) Conditional (C)
+                    Unsatisfactory (US)</label>
+            </div>
+            <div class="col-md-4 col-sm-4" style="text-align: center;">
+                <label class="control-label bold" style="text-align: center;">Comments/Further
+                    information</label>
+            </div>
         </div>
     </div>
-    <div class="portlet-body form">
-        <div style="background-color: lightgrey; vertical-align: middle;">
+</div>
+<br/>
+
+<div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
+    <ng-form name="lineForm">
+        <div ng-if="line.COMP_TYPE == 3">
+            <!--begin input save type =3-->
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_LINE_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_GROUP_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_DF_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].PATIENT_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CAL_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ORD"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].COMP_TYPE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_LABEL"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].COMMENT_LABEL"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISENABLE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Created_by"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Creation_date"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_updated_by"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_update_date"/>
+            <!--end input save type =3-->
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-5 col-sm-3" style="text-align: center;">
-                        <label class="control-label bold" style="text-align: center;">Component
-                            of Medical (as applicabel)</label>
+                    <div class="col-md-5 col-sm-3">
+                        <label class="control-label bold" style="text-align: left;">{{line.QUEST_LABEL}}</label>
                     </div>
-                    <div class="col-md-3 col-sm-5" style="text-align: center;">
-                        <label class="control-label bold" style="text-align: center;">Satisfactory
-                            (S) Conditional (C)
-                            Unsatisfactory (US)</label>
+                    <div class="col-md-3 col-sm-5">
+                        <div class="btn-group" style="margin-left: 12%;">
+                            <label class="btn">
+                                <input type="radio"
+                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"
+                                       ng-value="0"/> S
+                            </label>
+                            <label class="btn">
+                                <input type="radio"
+                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"
+                                       ng-value="1"/> C
+                            </label>
+                            <label class="btn">
+                                <input type="radio"
+                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"
+                                       ng-value="2"/> US
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-md-4 col-sm-4" style="text-align: center;">
-                        <label class="control-label bold" style="text-align: center;">Comments/Further
-                            information</label>
+                    <div class="col-md-4 col-sm-4">
+                        <div ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT">
+                            <div ng-class="{'has-error': lineForm.comments.$error.required}">
+                                <input type="text" class="form-control" name="comments"
+                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"
+                                       ng-required="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"/>
+
+                                <div ng-show="lineForm.comments.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <hr/>
         </div>
-        <br/>
-
-        <div class="portlet-body form" ng-repeat="line in group.line">
-            <div ng-if="line.line_type == 3">
+        <div ng-if="line.COMP_TYPE == 1">
+            <div ng-if="line.ORD == 8">
+                <!--begin input save type =3 ord=8-->
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_LINE_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_GROUP_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_DF_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].PATIENT_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CAL_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ORD"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].COMP_TYPE"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_LABEL"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].COMMENT_LABEL"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISENABLE"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Created_by"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Creation_date"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_updated_by"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_update_date"/>
+                <!--end input save type =3 ord=8-->
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <div class="col-md-5 col-sm-3">
-                            <label class="control-label bold" style="text-align: left;">{{line.line_name}}</label>
-                        </div>
-                        <div class="col-md-3 col-sm-5">
-                            <div class="btn-group" style="margin-left: 12%;">
-                                <label class="btn">
-                                    <input type="radio" name='a'/> S
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='a'/> C
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='a'/> US
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <input type="text" class="form-control"/>
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label bold"
+                                   style="text-align: left;">{{line.QUEST_LABEL}}</label>
+                            <textarea class="form-control"
+                                      ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"></textarea>
                         </div>
                     </div>
                 </div>
                 <hr/>
             </div>
-            <div ng-if="line.line_type == 1">
-                <div ng-if="line.line_ord == 8">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-12 col-sm-12">
-                                <label class="control-label bold" style="text-align: left;">{{line.line_name}}</label>
-                                <textarea class="form-control"></textarea>
-                            </div>
+            <div ng-if="line.ORD == 9">
+                <!--begin input save type =3 ord=9-->
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_LINE_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_GROUP_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_DF_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].PATIENT_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CAL_ID"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ORD"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].COMP_TYPE"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_LABEL"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].COMMENT_LABEL"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISENABLE"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Created_by"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Creation_date"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_updated_by"/>
+                <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_update_date"/>
+                <!--end input save type =3 ord=9-->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-3 col-sm-4">
+                            <label class="control-label" style="text-align: left;">
+                                {{line.QUEST_LABEL}}</label>
                         </div>
-                    </div>
-                    <hr/>
-                </div>
-                <div ng-if="line.line_ord == 9">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-3 col-sm-4">
-                                <label class="control-label" style="text-align: left;">
-                                    {{line.line_name}}</label>
-                            </div>
-                            <div class="col-md-4 col-sm-6">
-                                <input type="text" class="form-control"/>
-                            </div>
-                            <div class="col-md-5 col-sm-7">
-                                <label class="control-label">(name) is given the below
-                                    rating for the proposed job.</label>
-                            </div>
+                        <div class="col-md-4 col-sm-6">
+                            <input type="text" class="form-control"
+                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"/>
+                        </div>
+                        <div class="col-md-5 col-sm-7">
+                            <label class="control-label">(name) is given the below
+                                rating for the proposed job.</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <br/>
+    </ng-form>
+</div>
+<br/>
 
-        <div class="portlet-body form">
-            <div style="background-color: lightgrey; vertical-align: middle;">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="col-md-2 col-sm-2" style="text-align: center;">
-                            <label class="control-label bold">Rating</label>
-                        </div>
-                        <div class="col-md-2 col-sm-2" style="text-align: center;">
-                            <label class="control-label bold">Please Tick</label>
-                        </div>
-                        <div class="col-md-8 col-sm-8" style="text-align: center;">
-                            <label class="control-label bold">Comments</label>
-                        </div>
-                    </div>
+<div class="portlet-body form">
+    <div style="background-color: lightgrey; vertical-align: middle;">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-2 col-sm-2" style="text-align: center;">
+                    <label class="control-label bold">Rating</label>
                 </div>
-            </div>
-            <br/>
-        </div>
-        <div class="portlet-body form" ng-repeat="line in group.line">
-            <div ng-if="line.line_type == 2">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="col-md-2 col-sm-2" style="text-align: center;">
-                            <label class="control-label bold" style="text-align: center;">{{line.line_name}}</label>
-                        </div>
-                        <div class="col-md-2 col-sm-2" style="margin-top: 1%;">
-                            <input type="checkbox" class="form-control"/>
-                        </div>
-                        <div class="col-md-8 col-sm-8">
-                            <label class="control-label" style="text-align: left;">{{line.line_label}}</label>
-                            <textarea class="form-control"></textarea>
-                        </div>
-                    </div>
+                <div class="col-md-2 col-sm-2" style="text-align: center;">
+                    <label class="control-label bold">Please Tick</label>
                 </div>
-                <div ng-if="line.line_id != group.line[group.line.length - 1].line_id">
-                    <hr/>
+                <div class="col-md-8 col-sm-8" style="text-align: center;">
+                    <label class="control-label bold">Comments</label>
                 </div>
             </div>
         </div>
-        <br/>
     </div>
+    <br/>
+</div>
+<div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
+    <ng-form name="lineForm">
+        <div ng-if="line.COMP_TYPE == 2">
+            <!--begin input save type =2-->
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_LINE_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_GROUP_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_DF_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].PATIENT_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CAL_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ORD"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].COMP_TYPE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_LABEL"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].COMMENT_LABEL"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISENABLE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Created_by"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Creation_date"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_updated_by"/>
+            <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_update_date"/>
+            <!--end input save type =2-->
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-2 col-sm-2" style="text-align: center;">
+                        <label class="control-label bold"
+                               style="text-align: center;">{{line.QUEST_LABEL}}</label>
+                    </div>
+                    <div class="col-md-2 col-sm-2" style="margin-top: 1%;">
+                        <input type="checkbox" class="form-control"
+                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].checkComments"
+                               ng-true-value="1"
+                               ng-false-value="0"
+                               ng-change="checkChange(hIndex,gIndex,lIndex)"
+                               ng-checked="info.headers[hIndex].group[gIndex].line[lIndex].comments"/>
+                    </div>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label" style="text-align: left;">{{line.COMMENT_LABEL}}</label>
+
+                        <div ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT">
+                            <div ng-class="{'has-error': lineForm.comments.$error.required}">
+                                <textarea class="form-control" name="comments"
+                                          ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"
+                                          ng-required="info.headers[hIndex].group[gIndex].line[lIndex].checkComments"></textarea>
+
+                                <div ng-show="lineForm.comments.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="line.MRS_LINE_ID != group.line[group.line.length - 1].MRS_LINE_ID">
+                <hr/>
+            </div>
+        </div>
+    </ng-form>
+</div>
+<br/>
+</div>
 </div>
 
 <div class="portlet-body form">
@@ -279,10 +424,10 @@
             <div class="col-md-7 col-sm-5">
                 <div class="btn-group" style="margin-left: 12%;">
                     <label class="btn">
-                        <input type="radio" name='a'/> Yes
+                        <input type="radio" ng-model="info.headers[hIndex].isReview" ng-value="1"/> Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" name='a'/> No
+                        <input type="radio" ng-model="info.headers[hIndex].isReview" ng-value="0"/> No
                     </label>
                 </div>
             </div>
@@ -300,26 +445,21 @@
             </div>
         </div>
         <div class="col-md-4 col-sm-4">
-            <div class="col-md-2 col-sm-2">
-                <label class="control-label">Sign:</label>
-            </div>
             <div class="row">
-                <div class="col-md-3 col-sm-3" style="margin-left: 10px;">
+                <div class="col-md-1 col-sm-1" style="margin-left: 10px;">
                     <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
-                </div>
-                <script type="text/javascript">
-                    $('#signBtn').click(function () {
-                        $('#modalSign').modal({
-                            show: true
+                    <script type="text/javascript">
+                        $('#signBtn').click(function () {
+                            $('#modalSign').modal({
+                                show: true
+                            });
                         });
-                    });
 
-                </script>
-            </div>
-            <div class="row">
+                    </script>
+                </div>
                 <div class="col-md-6 col-sm-6" style="margin-left:10px;">
                     <img src="" id="signDisplay" ng-model="info.consentSign"
-                         style="width:300px;height: 150px;"/>
+                         style="width:200px;height: 30px;"/>
                 </div>
             </div>
         </div>
@@ -345,6 +485,7 @@
 </div>
 </div>
 </div>
+</form>
 <!--Signature-->
 <div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

@@ -1,40 +1,112 @@
 angular.module("app.loggedIn.doctor.services", [])
-
         .factory("DoctorService", function (Restangular) {
             var doctorService = {};
             var doctorApi = Restangular.all("api/erm");
             /**
              * KHANK API
              */
-
-            doctorService.getItemByDept = function (dept_id) {
+			 
+			doctorService.insertItemAppt = function (appt_id, items) {
+                var instanceApi = doctorApi.all("v1/appointment/insert_items");
+                return instanceApi.post({'cal_id':appt_id, items: items});
+            }
+			doctorService.deleteItemAppt = function (appt_id, items) {
+                var instanceApi = doctorApi.all("v1/appointment/delete_items");
+                return instanceApi.post({'cal_id':appt_id, items: items});
+            }
+			doctorService.getItemAppt = function (appt_id) {
+                var instanceApi = doctorApi.all("v1/appointment/get_items");
+                return instanceApi.post({'appt_id':appt_id});
+            }
+		
+			 
+            doctorService.getItemByDept = function (dept_id, isenable) {
                 var instanceApi = doctorApi.one("v1/items/list_by_dept");
-                return instanceApi.get({'dept_id': dept_id});
+				
+				var enable = (isenable !== undefined) ? parseInt(isenable) : 1;
+                return instanceApi.get({'dept_id': dept_id, 'isenable': enable});
             }
             
-            doctorService.getItemByAppt = function (appt_id) {
+			doctorService.getItemHeader = function (dept_id){
+				var instanceApi = doctorApi.one("v1/items/get_header_by_dept");
+                return instanceApi.get({'dept_id': dept_id});
+			}
+			doctorService.insertItemHeader = function (dept_id, data){
+				var instanceApi = doctorApi.all("v1/items/insert_header");
+                return instanceApi.post({'dept_id': dept_id, 'data': data});
+			}
+			doctorService.deleteItemHeader = function (dept_id, header_id){
+				var instanceApi = doctorApi.all("v1/items/delete_header");
+                return instanceApi.post({'dept_id': dept_id, 'header_id': header_id});
+			}		
+			doctorService.updateItemHeader = function (data){
+				var instanceApi = doctorApi.all("v1/items/update_header");
+                return instanceApi.post({'data': data});
+			}
+
+			doctorService.insertItem = function (header_id, data){
+				var instanceApi = doctorApi.all("v1/items/insert");
+                return instanceApi.post({h_item: header_id, 'data': data});
+			}
+			
+			doctorService.getApptById = function (appt_id){
+				var instanceApi = doctorApi.one("v1/appointment/get_by_id");
+                return instanceApi.get({cal_id: appt_id});
+			}
+			
+			doctorService.updateAppt = function (appt_id, data){
+				var instanceApi = doctorApi.all("v1/appointment/update");
+				var postData = {cal_id: appt_id, data: data};
+				console.log(postData);
+                return instanceApi.post(postData);
+			}
+			
+			doctorService.listCurPatients = function (doctor_id){
+				var instanceApi = doctorApi.one("v1/doctors/list_patients");
+                return instanceApi.get({doctor_id: doctor_id, current: 1});
+			}
+			
+			/*
+			*	NOT USE THIS API
+
+			doctorService.getItemByAppt = function (appt_id) {
                 var instanceApi = doctorApi.one("v1/items/list_by_appt");
                 return instanceApi.get({'appt_id': appt_id});
             }
-            
+			*/
 //            doctorService.getById = function (doctor_id) {
 //                var instanceApi = doctorApi.one("v1/doctors/by_id");
 //                return instanceApi.get({'doctor_id': doctor_id});
 //            }
 
-            /**
-             * END KHANK API
-             */
+    /**
+     * END KHANK API
+     */
 
-            doctorService.getByUserId = function (user_id) {
-                var instanceApi = doctorApi.all("v1/doctors/by_user_id");
-                return instanceApi.post({'user_id': user_id});
-            }
+    doctorService.getMaxId = function(){
+    	var maxApi = doctorApi.one("doctors/getMaxId");
+    	return maxApi.get();
+    }
 
-            doctorService.listPatients = function (option) {
-                var listApi = doctorApi.all("v1/patients/search");
-                return listApi.post(option);
-            };
+    doctorService.update = function(options){
+    	var updateApi = doctorApi.all("doctors/update");
+    	return updateApi.post(options);
+    }
+
+    doctorService.insert = function(options){
+    	var insertApi = doctorApi.all("doctors/insert");
+    	return insertApi.post(options);
+    }
+
+    doctorService.getByUserId = function (user_id) {
+        var instanceApi = doctorApi.all("v1/doctors/by_user_id");
+        return instanceApi.post({'user_id': user_id});
+    }
+
+    doctorService.listPatients = function (option) {
+        var listApi = doctorApi.all("v1/patients/search");
+        return listApi.post(option);
+    };
 
 	doctorService.all = function(){
 		var allApi = doctorApi.one("doctors/list");
@@ -99,6 +171,11 @@ angular.module("app.loggedIn.doctor.services", [])
 	doctorService.generateTimetable = function(data){
 		var generateApi = doctorApi.all("doctors/generateTimetable");
 		return generateApi.post({'data':data});
+	}
+
+	doctorService.getCasualCalendar = function(data){
+		var casualApi = doctorApi.all("doctors/getCasualCalendar");
+		return casualApi.post(data);
 	}
 
 	return doctorService;

@@ -121,7 +121,7 @@ module.exports = function(sequelize, DataTypes){
         "Last_update_date" : DataTypes.DATE,
         "CalId" : DataTypes.INTEGER(20),
         "DocId" : DataTypes.INTEGER(11),
-        "SIGNATURE" : DataTypes.BLOB,
+        "SIGNATURE" : DataTypes.TEXT,
         "isUseRespirator" : DataTypes.INTEGER(11)
     },{
         tableName: 'userquestionnaire', // đặt tên bảng

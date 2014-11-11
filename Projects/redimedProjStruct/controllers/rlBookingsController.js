@@ -118,19 +118,23 @@ module.exports =
     {
         var bookingId=req.body.bookingId;
         var userId=(req.body.userId)?req.body.userId:null;
+        var sql=
+            " SELECT booking.*,company.`Company_name`,doctor.`NAME`,redi.`Site_addr`,redi.`Site_name`,rltype.`Rl_TYPE_NAME`,                     "+
+            "	COUNT(files.`FILE_ID`) AS NUMBER_OF_RESULTS                                                                                      "+
+            " FROM `rl_bookings` booking                                                                                                         "+
+            " INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                "+
+            " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                              "+
+            " INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                    "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                         "+
+            " LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`     "+
+            " WHERE booking.`BOOKING_ID`= ?                                                                                                      "+
+            (userId!=null?' AND booking.ASS_ID=? ':'')+
+            " GROUP BY booking.`BOOKING_ID`                                                                                   ";
+
         req.getConnection(function(err,connection)
         {
 
-            var query = connection.query(
-                    " SELECT booking.*,company.`Company_name`,doctor.`NAME`,redi.`Site_addr`,redi.`Site_name`,rltype.`Rl_TYPE_NAME`   "+
-                    " FROM `rl_bookings` booking                                                                                      "+
-                    " INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                             "+
-                    " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                           "+
-                    " INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                 "+
-                    " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                      "+
-                    " WHERE booking.`BOOKING_ID`= ?                          "
-                    + (userId!=null?' AND booking.ASS_ID=? ':'')
-                ,userId!=null?[bookingId,userId]:[bookingId],function(err,rows)
+            var query = connection.query(sql,userId!=null?[bookingId,userId]:[bookingId],function(err,rows)
                 {
                     if(err)
                     {
@@ -247,14 +251,20 @@ module.exports =
             
     /**
      * Khank
+     * modified: Neu la Admin thi se tra ve tat ca cac file cua booking do
+     * modified by: tannv.dts@gmail.com
      */
     get_files_booking: function (req, res) {
         var bookingId = req.query.bookingId;
+        var isAdminGetFiles=req.query.isAdminGetFiles && req.query.isAdminGetFiles=='true'?true:false;
+        var sql=
+            " SELECT files.*, bookings.`ASS_ID`                                                                             "+
+            " FROM `rl_booking_files` files INNER JOIN `rl_bookings` bookings ON files.`BOOKING_ID`=bookings.`BOOKING_ID`   "+
+            " WHERE files.`BOOKING_ID`=?                                                                                    "+
+            (isAdminGetFiles==false?' AND isClientDownLoad=1 ':'')
         req.getConnection(function (err, connection)
         {
-            var query = connection.query(
-                    'SELECT * FROM `rl_booking_files` booking_files WHERE booking_files.`BOOKING_ID`=? AND isClientDownLoad=1'
-                    , bookingId, function (err, rows)
+            var query = connection.query(sql, bookingId, function (err, rows)
                     {
                         if (err)
                         {
@@ -414,9 +424,167 @@ module.exports =
             });
 
         });
+    },
+    /**
+     *select rl_bookings co APPOINTMENT_DATE > now() dete
+     * phanquocchien.c1109g@gmail.com
+     */
+    bookingsList: function(req,res){
+       db.sequelize.query('SELECT booking.*,files.FILE_ID,rltype.`Rl_TYPE_NAME` '+
+        ' FROM `rl_bookings` booking '+
+        ' LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID` '+
+	' INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID` '+
+' WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP GROUP BY booking.`APPOINTMENT_DATE`',null,{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    /**
+     *Pass booking: chua change status red, dã change status screen
+     * phanquocchien.c1109g@gmail.com
+     */
+    bookingsListStatus: function(req,res){
+        db.sequelize.query('SELECT * FROM `rl_bookings` WHERE `APPOINTMENT_DATE` < CURRENT_TIMESTAMP GROUP BY `APPOINTMENT_DATE` DESC',null,{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    
+    getPassBookingNotChangeStatus:function(req,res)
+    {
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+        var sql=
+            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`       "+
+            "FROM 	`rl_bookings` booking                                                                "+
+            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                 "+
+            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`      "+
+            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                      "+
+            "WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP AND booking.`STATUS`='Confirmed'         "+
+            " AND booking.`BOOKING_TYPE`=? "+
+            "ORDER BY booking.`APPOINTMENT_DATE` ASC ";
+        db.sequelize.query(sql,null,{raw:true},[bookingType])
+            .success(function(data){
+                if(data.length>0)
+                {
+                    res.json({status:'success',data:data})
+                }
+                else
+                {
+                    res.json({status:'fail'});
+                }
+
+            })
+            .error(function(err){
+                res.json({status:'fail'});
+            })
+    },
+
+    getUpcommingBookingHaveNotClientDocument:function(req,res)
+    {
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+        var sql=
+            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
+            "	files.`FILE_NAME`                                                                           "+
+            "FROM 	`rl_bookings` booking                                                                   "+
+            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
+            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`         "+
+            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                         "+
+            "	LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`               "+
+            "WHERE 	files.`FILE_ID` IS NULL                                                                 "+
+            "	AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                            "+
+            "	AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                 "+
+            "	AND booking.`BOOKING_TYPE`=?                                                                "+
+            "ORDER BY booking.`APPOINTMENT_DATE` ASC ";
+        db.sequelize.query(sql,null,{raw:true},[bookingType])
+            .success(function(data){
+                if(data.length>0)
+                {
+                    res.json({status:'success',data:data})
+                }
+                else
+                {
+                    res.json({status:'fail'});
+                }
+
+            })
+            .error(function(err){
+                res.json({status:'fail'});
+            })
+    },
+
+    getPassBookingHaveNotResult:function(req,res)
+    {
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+
+        var sql=
+            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,                                                "+
+            "	files.`FILE_NAME`                                                                                                                  "+
+            "FROM 	`rl_bookings` booking                                                                                                          "+
+            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                           "+
+            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                                "+
+            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                "+
+            "	LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`     "+
+            "WHERE 	files.`FILE_ID` IS NULL                                                                                                        "+
+            "	AND booking.`STATUS`='Completed'                                                                                                   "+
+            "	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                   "+
+            "	AND booking.`BOOKING_TYPE`=?                                                                                                       "+
+            "ORDER BY booking.`APPOINTMENT_DATE` ASC                                                                                               ";
+        db.sequelize.query(sql,null,{raw:true},[bookingType])
+            .success(function(data){
+                if(data.length>0)
+                {
+                    res.json({status:'success',data:data})
+                }
+                else
+                {
+                    res.json({status:'fail'});
+                }
+
+            })
+            .error(function(err){
+                res.json({status:'fail'});
+            })
+    },
+
+    getReportPassBookingHaveNotResult:function(req,res)
+    {
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+        var sql=
+            "SELECT dr.`NAME`,TRUNCATE(DATEDIFF(CURRENT_DATE,DATE(booking.`APPOINTMENT_DATE`))/7,0) AS WEEK_OVERDUE,                               "+
+            " 	booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,files.`FILE_NAME`                                    "+
+            " FROM 	`rl_bookings` booking                                                                                                           "+
+            " 	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                            "+
+            " 	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                                 "+
+            " 	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                 "+
+            " 	INNER JOIN `doctors` dr ON dr.`doctor_id`=booking.`DOCTOR_ID`                                                                       "+
+            " 	LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`      "+
+            " WHERE 	files.`FILE_ID` IS NULL                                                                                                     "+
+            " 	AND booking.`STATUS`='Completed'                                                                                                    "+
+            " 	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                    "+
+            " 	AND booking.`BOOKING_TYPE`=?                                                                                                        "+
+            " ORDER BY dr.`NAME` ASC,WEEK_OVERDUE DESC, booking.`APPOINTMENT_DATE` ASC                                                              ";
+        db.sequelize.query(sql,null,{raw:true},[bookingType])
+            .success(function(data){
+                if(data.length>0)
+                {
+                    res.json({status:'success',data:data})
+                }
+                else
+                {
+                    res.json({status:'fail'});
+                }
+
+            })
+            .error(function(err){
+                res.json({status:'fail'});
+            })
     }
-
-
 
     
 }

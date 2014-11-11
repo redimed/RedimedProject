@@ -18,19 +18,50 @@ module.exports =
             });
         });
     },
+
     filterByType:function(req,res)
     {
-        var rl_id=req.query.rl_id;
+        var RL_TYPE_ID=req.query.RL_TYPE_ID;
         req.getConnection(function(err,connection)
         {
 
-            var query = connection.query('SELECT * FROM cln_specialties where RL_TYPE_ID=?',rl_id,function(err,rows)
+            var query = connection.query('SELECT * FROM cln_specialties where RL_TYPE_ID=?',RL_TYPE_ID,function(err,rows)
             {
                 if(err)
                 {
                     console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
                 }
-                res.json(rows);
+                else
+                {
+                    res.json({status:'success',data:rows})
+                }
+
+            });
+        });
+    },
+
+    getSpecialityById:function(req,res)
+    {
+        var specialityId=req.query.specialityId;
+        var sql="SELECT spec.* FROM `cln_specialties` spec WHERE spec.`Specialties_id`=?";
+        req.getConnection(function(err,connection)
+        {
+
+            var query = connection.query(sql,specialityId,function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                        res.json({status:'success',data:rows[0]});
+                    else
+                        res.json({status:'fail'});
+                }
+
             });
         });
     }

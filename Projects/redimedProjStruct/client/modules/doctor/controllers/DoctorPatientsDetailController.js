@@ -1,31 +1,23 @@
 angular.module("app.loggedIn.doctor.patients.detail.controller", [
     "app.loggedIn.doctor.patients.detail.appt.controller"
-]).controller("DoctorPatientsDetailController", function ($scope, $state, $cookieStore, DoctorService, PatientService) {
-    $scope.setClassAppt = function (row) {
-        if (row.APP_TYPE === null)
-            return 'danger';
-        if (row.APP_TYPE === 'Done')
-            return 'success';
-        if (row.APP_TYPE === 'NotYet')
-            return 'warning';
-        if (row.APP_TYPE === 'Billing')
-            return 'info';
-    }
-
+]).controller("DoctorPatientsDetailController", function ($scope, $state, $cookieStore, DoctorService, PatientService, localStorageService) {
+  
     $scope.goToApptDetail = function (row) {
-        // row.CAL_ID
-        $cookieStore.put("apptTempInfo", row);
+		localStorageService.set("apptTempInfo", {CAL_ID: row.CAL_ID});
         $state.go("loggedIn.doctor.patients.detail.appt");
     }
 
     var init = function () {
-        $scope.patient = $cookieStore.get("patientTempInfo");
-//                $cookieStore.remove('patientTempInfo');
-        console.log($scope.patient);
+	    $scope.patient = localStorageService.get("patientTempInfo");
+	
         PatientService.getAppointment($scope.patient.Patient_id).then(function (data) {
-            console.log(data)
             $scope.list_appt = data;
-        })
+        });
+		
+		PatientService.getById ($scope.patient.Patient_id).then(function (data) {
+            $scope.patient = data;
+        });
+		
     };
     init();
 });

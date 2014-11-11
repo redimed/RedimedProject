@@ -22,6 +22,16 @@ angular.module("app.loggedIn.doctor", [
             }
         }
     })
+    //ADD
+    .state("loggedIn.doctor.add", {
+        url: "/doctor/add",
+        views: {
+            "main-content": {
+                templateUrl: "modules/doctor/views/add.html",
+                controller: "DoctorAddController"
+            }
+        }
+    })
     // TIMETABLE
     .state("loggedIn.doctor.timetable", {
         url: "/doctor/timetable",
@@ -72,32 +82,59 @@ angular.module("app.loggedIn.doctor", [
                 url: "/casual",
                 views: {
                     "main-content-timetable": {
-                        templateUrl: "modules/doctor/views/timetable-casual.html"
+                        templateUrl: "modules/doctor/views/timetable-casual.html",
+                        controller: "DoctorTimetableDetailCasualController"
                     }
                 }
             })
 
-            // ITEM SHEET
-            .state("loggedIn.doctor.itemsheet", {
-                url: "/doctor/itemsheet",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/doctor/views/itemsheet.html"
-                        , controller: "DoctorItemSheetController"
-                    }
-                }
-            })
-
-            // LIST PATIENTS
-            .state("loggedIn.doctor.patients", {
-                url: "/doctor/patients",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/doctor/views/patients.html",
-                        controller: "DoctorPatientsController"
-                    }
-                }
-            })
+	// ITEM SHEET
+	.state("loggedIn.doctor.items", {
+		url: "/doctor/items",
+		views: {
+			"main-content": {
+				templateUrl: "modules/doctor/views/items.html",
+				controller: "DoctorItemsController"
+			}
+		}
+	})
+	.state("loggedIn.doctor.items.cat", {
+		url: "/cat",
+		views: {
+			"main-content@loggedIn.doctor": {
+				templateUrl: "modules/doctor/views/items-cat.html",
+				controller: "DoctorItemsCatController"
+			}
+		}
+	})
+	.state("loggedIn.doctor.items.add", {
+		url: "/add",
+		views: {
+			"main-content@loggedIn.doctor": {
+				templateUrl: "modules/doctor/views/items-form.html",
+				controller: "DoctorItemsAddController"
+			}
+		}
+	})
+	.state("loggedIn.doctor.items.edit", {
+		url: "/edit",
+		views: {
+			"main-content@loggedIn.doctor": {
+				templateUrl: "modules/doctor/views/items-form.html",
+				controller: "DoctorItemsEditController"
+			}
+		}
+	})
+	// LIST PATIENTS
+	.state("loggedIn.doctor.patients", {
+		url: "/doctor/patients",
+		views: {
+			"main-content": {
+				templateUrl: "modules/doctor/views/patients.html",
+				controller: "DoctorPatientsController"
+			}
+		}
+	})
 
             .state("loggedIn.doctor.patients.detail", {
                 url: "/detail",

@@ -13,6 +13,35 @@ module.exports = {
                 res.json({status:"fail"});
             })
     },
+
+    rlobList:function(req,res)
+    {
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+        var sql='';
+        switch(bookingType)
+        {
+            case 'REDiLEGAL':
+                sql='SELECT sites.* FROM `redimedsites` sites WHERE sites.`FOR_REDILEGAL`=1;';
+                break;
+            case 'Vaccination':
+                sql='SELECT sites.* FROM `redimedsites` sites WHERE sites.`FOR_VACCINATION`=1;';
+                break;
+            default:
+                sql='SELECT sites.* FROM `redimedsites` sites ';
+                break;
+        }
+        console.log(">>>>>>>>>>>>>>>>"+sql)
+        db.sequelize.query(sql,null,{raw:true})
+            .success(function(data){
+                res.json(data);
+
+            })
+            .error(function(err){
+                res.json({status:'fail'});
+            })
+
+    },
+
     siteInfo: function(req,res){
         var id = req.body.id;
         db.RedimedSite.find({where:{id:id}},{raw:true})

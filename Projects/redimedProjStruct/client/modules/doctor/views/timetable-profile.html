@@ -1,382 +1,413 @@
-<h3 class="page-title">Appointment</h3>
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.doctor.home">Home</a>
-            <i class="fa fa-angle-right"></i>
-            <a ui-sref="loggedIn.doctor.timetable">Timetable</a>
-            <i class="fa fa-angle-right"></i>
-            <a>{{doctor.NAME}}</a>
-        </li>
-        <li>
-            <a></a>
-        </li>
-    </ul>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="portlet grey-cascade box">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-info-circle"></i> Doctor Detail
-                </div>
-                <div class="pull-right">
-                    <button  ng-click="saveDoctor()" class="btn blue"><i class="fa fa-save"></i> Save </button>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <!-- HEADER -->
-                <form name="doctorForm" novalidate  ng-submit="submit()">
-                    <div class="col-md-12">
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- TITLE -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-title" class="control-label col-xs-4"><b>Title</b></label>
-                                    <div class="col-xs-8"> 
-                                        <select required ng-model="doctor.Title" name="Title" class="form-control"
-                                                ng-options="row.code as row.name for row in options.titles">
-                                            <option value="">--Select Title--</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END TITLE  -->
-                            <!-- FIRST_NAME -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-first_name" class="control-label col-xs-4"><b>First Name</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="First_name" ng-maxlength="30" ng-model="doctor.First_name" class="form-control"  id="fc-first_name"/>      
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END FIRST_NAME  -->
-
+<div class="panel panel-primary">
+    <div class="panel-heading">Doctor Detail</div>
+    <div class="panel-body">
+        <!-- FORM -->
+        <form name="mainForm" novalidate>
+            <!-- FORM BODY -->
+            <div class="form-body">
+            
+                <span ng-show="step == 1">
+                    <!-- NAME -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.name.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Name
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="text" name="name"
+                                ng-model="modelObjectMap.NAME" placeholder="Name"
+                                required>
+                            <span ng-show="isSubmit && mainForm.name.$invalid">
+                                <span class="help-block help-block-error" ng-show="mainForm.name.$error.required">
+                                    Name is required
+                                </span>
+                            </span>
                         </div>
-                        <!-- END ROW -->
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- SUR_NAME -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-sur_name" class="control-label col-xs-4"><b>Sur Name</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="Sur_name" ng-maxlength="50" ng-model="doctor.Sur_name" class="form-control"  id="fc-sur_name"/>      
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END SUR_NAME  -->
-                            <!-- MIDDLE_NAME -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-middle_name" class="control-label col-xs-4"><b>Middle Name</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="Middle_name" ng-maxlength="30" ng-model="doctor.Middle_name" class="form-control"  id="fc-middle_name"/>      
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END MIDDLE_NAME  -->
-                        </div>
-                        <!-- END ROW -->
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- CLINICAL_DEPT_ID -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-clinical_dept_id" class="control-label col-xs-4"><b>Department</b></label>
-                                    <div class="col-xs-8">
-                                        <select required ng-model="doctor.CLINICAL_DEPT_ID" name="CLINICAL_DEPT_ID" class="form-control"
-                                                ng-options="row.CLINICAL_DEPT_ID as row.CLINICAL_DEPT_NAME for row in options.clinicals">
-                                            <option value="">--Select Department--</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END CLINICAL_DEPT_ID  -->
-                            <!-- PROVIDER_TYPE -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-provider_type" class="control-label col-xs-4"><b>Provider Type</b></label>
-                                    <div class="col-xs-8">
-                                        <select required ng-model="doctor.Provider_type" name="Provider_type" class="form-control"
-                                                ng-options="row.Provider_types_id as row.Provider_types_name for row in options.providers">
-                                            <option value="">--Select Type--</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END PROVIDER_TYPE  -->
-                        </div>
-                        <!-- END ROW -->
-
-
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- NAME -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-name" class="control-label col-xs-4"><b>Name</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="NAME" ng-maxlength="100" ng-model="doctor.NAME" class="form-control"  id="fc-name"/>      
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END NAME  -->
-
-                            <!-- PHONE -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-phone" class="control-label col-xs-4"><b>Phone</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="Phone" ng-maxlength="15" ng-model="doctor.Phone" class="form-control"  id="fc-phone"/>      
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END PHONE  -->
-                        </div>
-                        <!-- END ROW -->
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- EMAIL -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-email" class="control-label col-xs-4"><b>Email</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="Email" ng-maxlength="100" ng-model="doctor.Email" class="form-control"  id="fc-email"/>      
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END EMAIL  -->
-                            <!-- ISRECEIVEEMAILAFTERHOUR -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-isreceiveemailafterhour" class="control-label col-xs-4"><b>Receive Email After Hour</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="checkbox"  name="isReceiveEmailAfterHour"  ng-true-value="1" ng-false-value="0" ng-checked="doctor.isReceiveEmailAfterHour == 1" ng-model="doctor.isReceiveEmailAfterHour" class="form-control"  id="fc-isreceiveemailafterhour" />
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END ISRECEIVEEMAILAFTERHOUR  -->
-                        </div>
-                        <!-- END ROW -->
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- PROVIDER_NO -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-provider_no" class="control-label col-xs-4"><b>Provider No</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="Provider_no" ng-maxlength="100" ng-model="doctor.Provider_no" class="form-control"  id="fc-provider_no"/>      
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END PROVIDER_NO  -->
-                            <!-- PAYEE_PROVIDER_NO -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-payee_provider_no" class="control-label col-xs-4"><b>Payee Provider No</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" name="Payee_provider_no" ng-model="doctor.Payee_provider_no" class="form-control"  id="fc-payee_provider_no"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END PAYEE_PROVIDER_NO  -->
-
-                        </div>
-                        <!-- END ROW -->
-
-
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- MEDICAL_REGISTRATION_NO -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-medical_registration_no" class="control-label col-xs-4"><b>Medical Registration No</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" name="Medical_Registration_no" ng-model="doctor.Medical_Registration_no" class="form-control"  id="fc-medical_registration_no"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END MEDICAL_REGISTRATION_NO  -->
-                            <!-- ABN_NO -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-abn_no" class="control-label col-xs-4"><b>Abn No</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" name="ABN_no" ng-model="doctor.ABN_no" class="form-control"  id="fc-abn_no"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END ABN_NO  -->
-                        </div>
-                        <!-- END ROW -->
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-
-                            <!-- OSHC_ID -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-oshc_id" class="control-label col-xs-4"><b>Oshc Id</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" name="OSHC_ID" ng-model="doctor.OSHC_ID" class="form-control"  id="fc-oshc_id"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END OSHC_ID  -->
-                            <!-- DEFAULT_BANK_ACCOUNT_ID -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-default_bank_account_id" class="control-label col-xs-4"><b>Default Bank Account Id</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" name="Default_bank_account_id" ng-model="doctor.Default_bank_account_id" class="form-control"  id="fc-default_bank_account_id"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END DEFAULT_BANK_ACCOUNT_ID  -->
-                        </div>
-                        <!-- END ROW -->
-
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- PRESCRIBER_NO -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-prescriber_no" class="control-label col-xs-4"><b>Prescriber No</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" name="Prescriber_no" ng-model="doctor.Prescriber_no" class="form-control"  id="fc-prescriber_no"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END PRESCRIBER_NO  -->
-                        </div>
-                        <!-- END ROW -->
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-
-                        </div>
-                        <!-- END ROW -->
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- ADDRESS -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-address" class="control-label col-xs-4"><b>Address</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="Address" ng-maxlength="100" ng-model="doctor.Address" class="form-control"  id="fc-address"/>      
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END ADDRESS  -->
-
-                            <!-- APPT_INTERVAL -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-appt_interval" class="control-label col-xs-4"><b>Appt Interval</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" step="15" min="15" name="Appt_interval" ng-model="doctor.Appt_interval" class="form-control"  id="fc-appt_interval"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END APPT_INTERVAL  -->
-
-
-                        </div>
-                        <!-- END ROW -->
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- QUALIFICATION_ID -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-qualification_id" class="control-label col-xs-4"><b>Qualification Id</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" name="Qualification_id" ng-model="doctor.Qualification_id" class="form-control"  id="fc-qualification_id"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END QUALIFICATION_ID  -->
-
-                            <!-- SPECIALTY_ID -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-specialty_id" class="control-label col-xs-4"><b>Specialty Id</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="number" name="Specialty_id" ng-model="doctor.Specialty_id" class="form-control"  id="fc-specialty_id"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END SPECIALTY_ID  -->
-                        </div>
-                        <!-- END ROW -->
-
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- USER_ID -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-user_id" class="control-label col-xs-4"><b>Username</b></label>
-                                    <div class="col-xs-8">
-                                        <p class="form-control-static ng-binding">
-                                            {{user.user_name}}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END USER_ID  -->
-
-                            <!-- ISNEWCALENDARSLOT -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-isnewcalendarslot" class="control-label col-xs-4"><b>New Calendar Slot</b></label>
-                                    <div class="col-xs-8">
-                                        <input type="checkbox" name="isNewCalendarSlot"  ng-true-value="1" ng-false-value="0" ng-checked="doctor.isNewCalendarSlot == 1"  ng-model="doctor.isNewCalendarSlot" class="form-control"  id="fc-isnewcalendarslot" />
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END ISNEWCALENDARSLOT  -->
-                        </div>
-                        <!-- END ROW -->
-
-
-                        <!-- ROW GROUP -->
-                        <div class="row margin-bottom-25">
-                            <!-- SIGNATURE -->
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="fc-signature" class="control-label col-xs-4"><b>Signature</b></label>
-                                    <div class="col-xs-8">
-                                    	<img ng-src="{{doctor.Signature}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END SIGNATURE  -->
-                        </div>
-                        <!-- END ROW -->
-
                     </div>
-                </form>
-                <!-- END HEADER -->
+                    <!-- END NAME -->
 
+                    <!-- EMAIL -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.email.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Email
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="email" name="email"
+                                ng-model="modelObjectMap.Email" placeholder="Email">
+                            <span ng-show="isSubmit && mainForm.email.$invalid">
+                                <span class="help-block help-block-error" ng-show="mainForm.email.$error.email">
+                                    Email is typing wrong...
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END EMAIL -->
 
-                <div class="clearfix"></div>
-            </div>
+                    <div class="break-row"></div>
+
+                    <!-- PHONE -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Phone
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="text" name="phone"
+                                ng-model="modelObjectMap.Phone" placeholder="Phone">
+                        </div>
+                    </div>
+                    <!-- END PHONE -->
+
+                    <!-- ADDRESS -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Address
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="text" name="address"
+                                ng-model="modelObjectMap.Address" placeholder="Address">
+                        </div>
+                    </div>
+                    <!-- END ADDRESS -->
+
+                    <div class="break-row"></div>
+
+                    <!-- TITLE -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Title
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select class="form-control" name="title"
+                                ng-model="modelObjectMap.Title"
+                                ng-options="title.code as title.name for title in options.titles">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- END TITLE -->
+
+                    <!-- FIRST NAME -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            First Name
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="text" name="first_name"
+                                ng-model="modelObjectMap.First_name" placeholder="First Name">
+                        </div>
+                    </div>
+                    <!-- END FIRST NAME -->
+
+                    <div class="break-row"></div>
+
+                    <!-- MIDDLE NAME -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Middle Name
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="text" name="middle_name"
+                                ng-model="modelObjectMap.Middle_name" placeholder="Middle Name">
+                        </div>
+                    </div>
+                    <!-- END MIDDLE NAME -->
+
+                    <!-- SUR NAME -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Sur Name
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="text" name="sur_name"
+                                ng-model="modelObjectMap.Sur_name" placeholder="Sur Name">
+                        </div>
+                    </div>
+                    <!-- END SUR NAME -->
+
+                    <div class="break-row"></div>
+
+                    <!-- CLINICAL DEPT -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.clinical_dept_id.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Clinical Department
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select class="form-control" name="clinical_dept_id"
+                                ng-model="modelObjectMap.CLINICAL_DEPT_ID"
+                                ng-options="clinical.CLINICAL_DEPT_ID as clinical.CLINICAL_DEPT_NAME for clinical in options.clinicals"
+                                required>
+                            </select>
+                            <span ng-show="isSubmit && mainForm.clinical_dept_id.$invalid">
+                                <span class="help-block help-block-error" ng-show="mainForm.clinical_dept_id.$error.required">
+                                    Clinical Dept is required
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END CLINICAL DEPT -->
+
+                    <!-- APPT INTERVAL -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.appt_interval.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Appt Interval
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="number" name="appt_interval"
+                                placeholder="Appt Interval" ng-model="modelObjectMap.Appt_interval"
+                                required min="0">
+                            <span ng-show="isSubmit && mainForm.appt_interval.$invalid">
+                                <span class="help-block help-block-error" ng-show="mainForm.appt_interval.$error.required">
+                                    Interval is required
+                                </span>
+                                <span class="help-block help-block-error" ng-show="mainForm.appt_interval.$error.number">
+                                    Interval must be number
+                                </span>
+                                <span class="help-block help-block-error" ng-show="mainForm.appt_interval.$error.min">
+                                    Interval must be larger than 0
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END APPT INTERVAL -->
+
+                    <div class="break-row"></div>
+
+                    <!-- PROVIDER NUMBER -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.provider_no.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Provider Number
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="text" name="provider_no"
+                                placeholder="Provider No" ng-model="modelObjectMap.Provider_no">
+                        </div>
+                    </div>
+                    <!-- END PROVIDER NUMBER -->
+
+                    <!-- PROVIDER TYPE -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Provider Type
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select class="form-control" name="provider_type"
+                                ng-model="modelObjectMap.Provider_type"
+                                ng-options="type.Provider_types_id as type.Provider_types_name for type in options.providers">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- END PROVIDER TYPE -->
+
+                    <div class="break-row"></div>
+
+                    <!-- SIGNATURE -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Signature
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <img ng-show="modelObjectMap.Signature" ng-src="{{modelObjectMap.Signature}}" style="width: 100%; height: 100px;">
+                            <p class="form-control-static" ng-show="!modelObjectMap.Signature">No Sign</p>
+                        </div>
+                    </div>
+                    <!-- END SIGNATURE -->
+
+                    <div class="break-row"></div>
+                </span> <!-- END STEP 1 -->
+                <!-- STEP 2-->
+                <span ng-show= "step == 2">
+                    <!-- Receive Email After Hour -->
+                    <div class="form-group">
+                        <label class="control-label col-md-6 col-sm-3 col-xs-6">
+                            <input type="checkbox" name="isReceiveEmailAfterHour"
+                                ng-model="modelObjectMap.isReceiveEmailAfterHour"
+                                ng-true-value=1 ng-false-value=0>
+                            Receive Email After Hour
+                        </label>
+                    </div>
+                    <!-- END Receive Email After Hour -->
+                    <!-- QUALIFICATION -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Qualification
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select class="form-control" name="Qualification_id"
+                                ng-model="modelObjectMap.Qualification_id"
+                                ng-options="qua.Qualifications_id as qua.Qualifications_name for qua in options.qualifications">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- END QUALIFICATION -->
+                    <div class="break-row"></div>
+                    <!-- PRESCRIBER_NO -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.Prescriber_no.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Prescriber no
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="number" name="Prescriber_no" 
+                                placeholder="Prescriber no" ng-model="modelObjectMap.Prescriber_no"
+                                min="0">
+                            <span ng-show="isSubmit && mainForm.Prescriber_no.$invalid">
+                                <span class="help-block help-block-error" ng-show="mainForm.Prescriber_no.$error.number">
+                                    Prescriber Number must be number
+                                </span>
+                                <span class="help-block help-block-error" ng-show="mainForm.Prescriber_no.$error.min">
+                                    Prescriber Number must be larger than 0
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END PRESCRIBER_NO -->
+                    <!-- SIGN OFF -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Sign off
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="text" name="Sign_off"
+                                ng-model="modelObjectMap.Sign_off" placeholder="Sign off">
+                        </div>
+                    </div>
+                    <!-- END SIGN OFF -->
+                    <div class="break-row"></div>
+                    <!-- Payee_provider_no -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.Payee_provider_no.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Payee Provider No
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="number" name="Payee_provider_no" 
+                                placeholder="Payee provider_no" ng-model="modelObjectMap.Payee_provider_no"
+                                min="0">
+                            <span ng-show="isSubmit && mainForm.Payee_provider_no.$invalid">
+                                <span class="help-block help-block-error" ng-show="mainForm.Payee_provider_no.$error.number">
+                                    Payee provider Number must be number
+                                </span>
+                                <span class="help-block help-block-error" ng-show="mainForm.Payee_provider_no.$error.min">
+                                    Payee provider Number must be larger than 0
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END Payee_provider_no -->
+                    <!-- ABN_no-->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.ABN_no.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            ABN no
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="number" name="ABN_no" 
+                                placeholder="ABN no" ng-model="modelObjectMap.ABN_no"
+                                min="0">
+                            <span ng-show="isSubmit && mainForm.ABN_no.$invalid">
+                                <span class="help-block help-block-error" ng-show="mainForm.ABN_no.$error.number">
+                                    ABN Number must be number
+                                </span>
+                                <span class="help-block help-block-error" ng-show="mainForm.ABN_no.$error.min">
+                                    ABN Number must be larger than 0
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END ABN_no-->
+                    <div class="break-row"></div>
+                    <!-- Default_bank_acount_id -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Default bank account
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select class="form-control" name="Default_bank_account_id"
+                                placeholder="Default bank acount" ng-model="modelObjectMap.Default_bank_account_id"
+                                ng-options="account.Account_id as account.Account_name for account in options.account_types">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- END Default_bank_acount_id -->
+                    <!-- Medical_Registration_no-->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && mainForm.Medical_Registration_no.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            Medical Registration no
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="number" name="Medical_Registration_no" 
+                                placeholder="Medical Registration no" ng-model="modelObjectMap.Medical_Registration_no"
+                                min="0">
+                            <span ng-show="isSubmit && mainForm.Medical_Registration_no.$invalid">
+                                <span class="help-block help-block-error" ng-show="mainForm.Medical_Registration_no.$error.number">
+                                    Medical Registration Number must be number
+                                </span>
+                                <span class="help-block help-block-error" ng-show="mainForm.Medical_Registration_no.$error.min">
+                                    Medical Registration Number must be larger than 0
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END Medical_Registration_no-->
+                    <div class="break-row"></div>
+                    <!-- OSHC_ID -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            OSHC
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select class="form-control" name="OSHC_ID"
+                                placeholder="OSHC" ng-model="modelObjectMap.OSHC_ID"
+                                >
+                            </select>
+                        </div>
+                    </div>
+                    <!-- END OSHC_ID -->
+                    <!-- isAppointmentBook -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-4">
+                            <input type="checkbox" name="isAppointmentBook"
+                                ng-model="modelObjectMap.isAppointmentBook"
+                                ng-true-value=1 ng-false-value=0>
+                            Appointment Book
+                        </label>
+                    </div>
+                    <!-- END isAppointmentBook -->
+
+                    <!-- isenable -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-4">
+                            <input type="checkbox" name="isenable"
+                                ng-model="modelObjectMap.Isenable"
+                                ng-true-value=1 ng-false-value=0>
+                            Enable
+                        </label>
+                    </div>
+                    <!-- END isenable -->
+
+                    <!-- isNewCalendarSlot -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-4">
+                            <input type="checkbox" name="isNewCalendarSlot"
+                                ng-model="modelObjectMap.isNewCalendarSlot"
+                                ng-true-value=1 ng-false-value=0>
+                            New Calendar Slot
+                        </label>
+                    </div>
+                    <!-- END isNewCalendarSlot -->
+                    <div class="break-row"></div>
+                </span>
+                <!--END STEP 2-->
+
+            </div> <!-- END FORM BODY -->
+
+        </form>
+        <!-- END FORM -->
+    </div><!-- END PANEL-BODY -->
+</div> <!-- END PANEL-PRIMARY -->
+<div class="form-actions">
+    <div class="row">
+        <div class="col-md-9">
+            <button class="btn btn-warning" ng-click="prevStep()" ng-show="step > 1">Back</button>
+            <button class="btn btn-primary" ng-click="nextStep()">{{label_step}}</button>
         </div>
-
     </div>
-</div>
+</div> <!-- END FORM ACTIONS -->
