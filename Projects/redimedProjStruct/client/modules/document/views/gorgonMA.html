@@ -84,22 +84,31 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-1 col-sm-2">
-                    <label class="control-label" style="font-weight: bold">Height</label>
+                <div  ng-class="{'has-error':showClickedValidation && gorgonMAForm.HEIGHT.$error.pattern}">
+                    <div class="col-md-1 col-sm-2">
+                        <label class="control-label" style="font-weight: bold">Height</label>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" name="HEIGHT" ng-pattern="/^[0-9]+$/" ng-model="info.HEIGHT" style="width: 60px;"/>
+                        <label> cms</label>
+                        <div class="help-block" ng-show="showClickedValidation && gorgonMAForm.HEIGHT.$error.pattern">
+                            <label>Height must be number</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2 col-sm-3">
-                    <input type="text" ng-model="info.HEIGHT" style="width: 60px;"/>
-                    <label> cms</label>
-                </div>
-                <div class="col-md-1 col-sm-2" style="font-weight: bold">
-                    <label class="control-label" style="font-weight: bold">Weight</label>
-                </div>
-                <div  class="col-md-2 col-sm-3">
-                    <input type="text" ng-model="info.WEIGHT" style="width: 60px;"/>
-                    <label> kg</label>
+                <div  ng-class="{'has-error':showClickedValidation && gorgonMAForm.WEIGHT.$error.pattern}">
+                    <div class="col-md-1 col-sm-2" style="font-weight: bold">
+                        <label class="control-label" style="font-weight: bold">Weight</label>
+                    </div>
+                    <div  class="col-md-3 col-sm-4">
+                        <input type="text" name="WEIGHT" ng-pattern="/^[0-9]+$/" ng-model="info.WEIGHT" style="width: 60px;"/>
+                        <label> kg</label>
+                        <div class="help-block" ng-show="showClickedValidation && gorgonMAForm.WEIGHT.$error.pattern">
+                            <label>Weight must be number</label>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
 
         </br>
@@ -409,64 +418,70 @@
                     <div class="col-md-2 col-sm-3">
                         <label class="control-label" >Right Ear(dB)</label>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.RIGHT_EAR_500" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.RIGHT_EAR_500.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.RIGHT_EAR_500" ng-pattern="/^[0-9]+$/" name="RIGHT_EAR_500" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.RIGHT_EAR_1000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.RIGHT_EAR_1000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.RIGHT_EAR_1000" ng-pattern="/^[0-9]+$/" name="RIGHT_EAR_1000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.RIGHT_EAR_1500" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.RIGHT_EAR_1500.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.RIGHT_EAR_1500" ng-pattern="/^[0-9]+$/" name="RIGHT_EAR_1500" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1" >
-                        <input type="text" ng-model="info.RIGHT_EAR_2000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.RIGHT_EAR_2000.$error.pattern}" >
+                        <input class="form-control" type="text" ng-model="info.RIGHT_EAR_2000" ng-pattern="/^[0-9]+$/" name="RIGHT_EAR_2000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.RIGHT_EAR_3000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.RIGHT_EAR_3000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.RIGHT_EAR_3000" ng-pattern="/^[0-9]+$/" name="RIGHT_EAR_3000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.RIGHT_EAR_4000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.RIGHT_EAR_4000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.RIGHT_EAR_4000" ng-pattern="/^[0-9]+$/" name="RIGHT_EAR_4000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.RIGHT_EAR_6000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.RIGHT_EAR_6000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.RIGHT_EAR_6000" ng-pattern="/^[0-9]+$/" name="RIGHT_EAR_6000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.RIGHT_EAR_8000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.RIGHT_EAR_8000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.RIGHT_EAR_8000" ng-pattern="/^[0-9]+$/" name="RIGHT_EAR_8000" style="width: 60px;height: 25px"/>
                     </div>
                 </div>
-
+            </div>
+            <div class="row" ng-show="showClickedValidation && (gorgonMAForm.RIGHT_EAR_500.$error.pattern || gorgonMAForm.RIGHT_EAR_1000.$error.pattern || gorgonMAForm.RIGHT_EAR_1500.$error.pattern || gorgonMAForm.RIGHT_EAR_2000.$error.pattern || gorgonMAForm.RIGHT_EAR_3000.$error.pattern || gorgonMAForm.RIGHT_EAR_4000.$error.pattern || gorgonMAForm.RIGHT_EAR_6000.$error.pattern || gorgonMAForm.RIGHT_EAR_8000.$error.pattern)">
+                <div class="col-md-2 col-sm-3"></div>
+                <label style="color: #8b0000;margin-left: 50px">Right Ear(dB) must be number</label>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2 col-sm-3">
                         <label class="control-label" >Left Ear(dB)</label>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.LEFT_EAR_500" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.LEFT_EAR_500.$error.pattern}">
+                        <input type="text" ng-model="info.LEFT_EAR_500" ng-pattern="/^[0-9]+$/" class="form-control" name="LEFT_EAR_500" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.LEFT_EAR_1000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.LEFT_EAR_1000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.LEFT_EAR_1000" ng-pattern="/^[0-9]+$/" name="LEFT_EAR_1000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.LEFT_EAR_1500" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.LEFT_EAR_1500.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.LEFT_EAR_1500" ng-pattern="/^[0-9]+$/" name="LEFT_EAR_1500" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.LEFT_EAR_2000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.LEFT_EAR_2000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.LEFT_EAR_2000" ng-pattern="/^[0-9]+$/" name="LEFT_EAR_2000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.LEFT_EAR_3000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.LEFT_EAR_3000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.LEFT_EAR_3000" ng-pattern="/^[0-9]+$/" name="LEFT_EAR_3000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.LEFT_EAR_4000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.LEFT_EAR_4000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.LEFT_EAR_4000" ng-pattern="/^[0-9]+$/" name="LEFT_EAR_4000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.LEFT_EAR_6000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.LEFT_EAR_6000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.LEFT_EAR_6000" ng-pattern="/^[0-9]+$/" name="LEFT_EAR_6000" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.LEFT_EAR_8000" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.LEFT_EAR_8000.$error.pattern}">
+                        <input class="form-control" type="text" ng-model="info.LEFT_EAR_8000" ng-pattern="/^[0-9]+$/" name="LEFT_EAR_8000" style="width: 60px;height: 25px"/>
                     </div>
                 </div>
-
+            </div>
+            <div class="row" ng-show="showClickedValidation && (gorgonMAForm.LEFT_EAR_500.$error.pattern || gorgonMAForm.LEFT_EAR_1000.$error.pattern || gorgonMAForm.LEFT_EAR_1500.$error.pattern || gorgonMAForm.LEFT_EAR_2000.$error.pattern || gorgonMAForm.LEFT_EAR_3000.$error.pattern || gorgonMAForm.LEFT_EAR_4000.$error.pattern || gorgonMAForm.LEFT_EAR_6000.$error.pattern || gorgonMAForm.LEFT_EAR_8000.$error.pattern)">
+                <div class="col-md-2 col-sm-3"></div>
+                <label style="color: #8b0000;margin-left: 50px">Left Ear(dB) must be number</label>
             </div>
             </br>
         </div>
@@ -511,58 +526,64 @@
                     <div class="col-md-2 col-sm-3">
                         <label class="control-label" >Pre-Br/dilator</label>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR1_V1" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR1_V1.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR1_V1" ng-pattern="/^[0-9]+$/" name="PRE_BR1_V1" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR1_V2" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR1_V2.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR1_V2"  ng-pattern="/^[0-9]+$/" name="PRE_BR1_V2" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR1_V3" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR1_V3.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR1_V3" ng-pattern="/^[0-9]+$/" name="PRE_BR1_V3" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR1_V4" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR1_V4.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR1_V4"  ng-pattern="/^[0-9]+$/" name="PRE_BR1_V4" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR1_V5" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR1_V5.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR1_V5" ng-pattern="/^[0-9]+$/" name="PRE_BR1_V5" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR1_V6" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR1_V6.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR1_V6" ng-pattern="/^[0-9]+$/" name="PRE_BR1_V6" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1" >
-                        <input type="text" ng-model="info.PRE_BR1_V7" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1"  ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR1_V7.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR1_V7" ng-pattern="/^[0-9]+$/" name="PRE_BR1_V7" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
                 </div>
-
+            </div>
+            <div class="row" ng-show="showClickedValidation && (gorgonMAForm.PRE_BR1_V1.$error.pattern || gorgonMAForm.PRE_BR1_V2.$error.pattern || gorgonMAForm.PRE_BR1_V3.$error.pattern || gorgonMAForm.PRE_BR1_V4.$error.pattern || gorgonMAForm.PRE_BR1_V5.$error.pattern || gorgonMAForm.PRE_BR1_V6.$error.pattern || gorgonMAForm.PRE_BR1_V7.$error.pattern)">
+                <div class="col-md-2 col-sm-3"></div>
+                <label style="color: #8b0000;margin-left: 50px">Pre-Br/dilator must be number</label>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2 col-sm-3">
                         <label class="control-label" >Pre-Br/dilator</label>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR2_V1" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR2_V1.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR2_V1" ng-pattern="/^[0-9]+$/" name="PRE_BR2_V1" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR2_V2" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR2_V2.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR2_V2" ng-pattern="/^[0-9]+$/" name="PRE_BR2_V2" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR2_V3" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR2_V3.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR2_V3" ng-pattern="/^[0-9]+$/" name="PRE_BR2_V3" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR2_V4" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR2_V4.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR2_V4" ng-pattern="/^[0-9]+$/" name="PRE_BR2_V4" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR2_V5" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR2_V5.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR2_V5" ng-pattern="/^[0-9]+$/" name="PRE_BR2_V5" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR2_V6" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR2_V6.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR2_V6" ng-pattern="/^[0-9]+$/" name="PRE_BR2_V6" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
-                    <div class="col-md-1 col-sm-1">
-                        <input type="text" ng-model="info.PRE_BR2_V7" style="width: 60px"/>
+                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':showClickedValidation && gorgonMAForm.PRE_BR2_V7.$error.pattern}">
+                        <input type="text" ng-model="info.PRE_BR2_V7" ng-pattern="/^[0-9]+$/" name="PRE_BR2_V7" class="form-control" style="width: 60px;height: 25px"/>
                     </div>
                 </div>
-
+            </div>
+            <div class="row" ng-show="showClickedValidation && (gorgonMAForm.PRE_BR2_V1.$error.pattern || gorgonMAForm.PRE_BR2_V2.$error.pattern || gorgonMAForm.PRE_BR2_V3.$error.pattern || gorgonMAForm.PRE_BR2_V4.$error.pattern || gorgonMAForm.PRE_BR2_V5.$error.pattern || gorgonMAForm.PRE_BR2_V6.$error.pattern || gorgonMAForm.PRE_BR2_V7.$error.pattern)">
+                <div class="col-md-2 col-sm-3"></div>
+                <label style="color: #8b0000;margin-left: 50px">Pre-Br/dilator must be number</label>
             </div>
             </br>
             <div class="row">
@@ -604,7 +625,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-6 col-sm-8" style="margin-top: 10px;">If Yes to either of above, was there any respiratory problem?</label>
                         <div class="clearfix">
-                            <div class="btn-group col-sm-9 col-md-10 " >
+                            <div class="btn-group col-sm-9 col-md-10 ">
                                 <label class="btn">
                                     <input type="radio" ng-model="info.YES_TO_EITHER" value="0"/> Yes
                                 </label>
@@ -623,9 +644,12 @@
         <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
             Examiners Commments
         </p>
-        <div class="row">
+        <div class="row"  ng-class="{'has-error':showClickedValidation && gorgonMAForm.SPI_EXAMINERS_COMMENTS.$invalid}">
             <div class="col-md-8" style="margin-left: 15px;">
-                <textarea class="form-control" ng-model="info.SPI_EXAMINERS_COMMENTS"></textarea>
+                <textarea class="form-control" ng-required="info.YES_TO_EITHER==0" name="SPI_EXAMINERS_COMMENTS" ng-model="info.SPI_EXAMINERS_COMMENTS"></textarea>
+            </div>
+            <div class="col-md-6 help-block" style="margin-left: 20px;" ng-show="showClickedValidation && gorgonMAForm.SPI_EXAMINERS_COMMENTS.$invalid">
+                <label >Comment must be enter when yes</label>
             </div>
         </div>
     </div>
@@ -656,15 +680,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-6 col-sm-6" style="text-align: center">
-                                        <label>L</label><br>
-                                        <label>/6</label>
-                                        <input type="text" ng-model="info.VA_UNCORRECTED_LEFT" style="width: 60px"/>
+                                    <div ng-class="{'has-error':showClickedValidation && gorgonMAForm.VA_UNCORRECTED_LEFT.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/6</label>
+                                            <input type="text" ng-model="info.VA_UNCORRECTED_LEFT" ng-pattern="/^[0-9]+$/" name="VA_UNCORRECTED_LEFT" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && gorgonMAForm.VA_UNCORRECTED_LEFT.$error.pattern">
+                                                <div class="help-block" for="VA_UNCORRECTED_LEFT"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6" style="text-align: center">
-                                        <label>R</label><br>
-                                        <label>/6</label>
-                                        <input type="text" ng-model="info.VA_UNCORRECTED_RIGHT" style="width: 60px"/>
+                                    <div ng-class="{'has-error':showClickedValidation && gorgonMAForm.VA_UNCORRECTED_RIGHT.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/6</label>
+                                            <input type="text" ng-model="info.VA_UNCORRECTED_RIGHT" ng-pattern="/^[0-9]+$/" name="VA_UNCORRECTED_RIGHT" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && gorgonMAForm.VA_UNCORRECTED_RIGHT.$error.pattern">
+                                                <div class="help-block" for="VA_UNCORRECTED_RIGHT"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -675,15 +713,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-6 col-sm-6" style="text-align: center">
-                                        <label>L</label><br>
-                                        <label>/6</label>
-                                        <input type="text" ng-model="info.VA_CORRECTED_LEFT" style="width: 60px"/>
+                                    <div ng-class="{'has-error':showClickedValidation && gorgonMAForm.VA_CORRECTED_LEFT.$error.pattern}">
+                                            <div class="col-md-6 col-sm-6" style="text-align: center">
+                                                <label>L</label><br>
+                                                <label>/6</label>
+                                                <input type="text" ng-model="info.VA_CORRECTED_LEFT" ng-pattern="/^[0-9]+$/" name="VA_CORRECTED_LEFT" style="width: 60px"/>
+                                                <div  ng-show="showClickedValidation && gorgonMAForm.VA_CORRECTED_LEFT.$error.pattern">
+                                                    <div class="help-block" for="VA_CORRECTED_LEFT"  >
+                                                        <label>Must be number</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6" style="text-align: center">
-                                        <label>R</label><br>
-                                        <label>/6</label>
-                                        <input type="text" ng-model="info.VA_CORRECTED_RIGHT" style="width: 60px"/>
+                                    <div ng-class="{'has-error':showClickedValidation && gorgonMAForm.VA_CORRECTED_RIGHT.$error.pattern}">
+                                            <div class="col-md-6 col-sm-6" style="text-align: center">
+                                                <label>R</label><br>
+                                                <label>/6</label>
+                                                <input type="text" ng-model="info.VA_CORRECTED_RIGHT" ng-pattern="/^[0-9]+$/" name="VA_CORRECTED_RIGHT" style="width: 60px"/>
+                                                <div  ng-show="showClickedValidation && gorgonMAForm.VA_CORRECTED_RIGHT.$error.pattern">
+                                                    <div class="help-block" for="VA_CORRECTED_RIGHT"  >
+                                                        <label>Must be number</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -706,15 +758,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-6 col-sm-6" style="text-align: center">
-                                        <label>L</label><br>
-                                        <label>/N</label>
-                                        <input type="text" ng-model="info.NV_UNCORRECTED_LEFT" style="width: 60px"/>
+                                    <div ng-class="{'has-error':showClickedValidation && gorgonMAForm.NV_UNCORRECTED_LEFT.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/N</label>
+                                            <input type="text" ng-model="info.NV_UNCORRECTED_LEFT" ng-pattern="/^[0-9]+$/" name="NV_UNCORRECTED_LEFT" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && gorgonMAForm.NV_UNCORRECTED_LEFT.$error.pattern">
+                                                <div class="help-block" for="NV_UNCORRECTED_LEFT"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6" style="text-align: center">
-                                        <label>R</label><br>
-                                        <label>/N</label>
-                                        <input type="text" ng-model="info.NV_UNCORRECTED_RIGHT" style="width: 60px"/>
+                                    <div ng-class="{'has-error':showClickedValidation && gorgonMAForm.NV_UNCORRECTED_RIGHT.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/N</label>
+                                            <input type="text" ng-model="info.NV_UNCORRECTED_RIGHT" ng-pattern="/^[0-9]+$/" name="NV_UNCORRECTED_RIGHT" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && gorgonMAForm.NV_UNCORRECTED_RIGHT.$error.pattern">
+                                                <div class="help-block" for="NV_UNCORRECTED_RIGHT"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -725,15 +791,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-6 col-sm-6" style="text-align: center">
-                                        <label>L</label><br>
-                                        <label>/N</label>
-                                        <input type="text" ng-model="info.NV_CORRECTED_LEFT" style="width: 60px"/>
+                                    <div ng-class="{'has-error':showClickedValidation && gorgonMAForm.NV_CORRECTED_LEFT.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>L</label><br>
+                                            <label>/N</label>
+                                            <input type="text" ng-model="info.NV_CORRECTED_LEFT" ng-pattern="/^[0-9]+$/" name="NV_CORRECTED_LEFT" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && gorgonMAForm.NV_CORRECTED_LEFT.$error.pattern">
+                                                <div class="help-block" for="NV_CORRECTED_LEFT"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6" style="text-align: center">
-                                        <label>R</label><br>
-                                        <label>/N</label>
-                                        <input type="text" ng-model="info.NV_CORRECTED_RIGHT" style="width: 60px"/>
+                                    <div ng-class="{'has-error':showClickedValidation && gorgonMAForm.NV_CORRECTED_RIGHT.$error.pattern}">
+                                        <div class="col-md-6 col-sm-6" style="text-align: center">
+                                            <label>R</label><br>
+                                            <label>/N</label>
+                                            <input type="text" ng-model="info.NV_CORRECTED_RIGHT" ng-pattern="/^[0-9]+$/" name="NV_CORRECTED_RIGHT" style="width: 60px"/>
+                                            <div  ng-show="showClickedValidation && gorgonMAForm.NV_CORRECTED_RIGHT.$error.pattern">
+                                                <div class="help-block" for="NV_CORRECTED_RIGHT"  >
+                                                    <label>Must be number</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -777,7 +857,13 @@
             </div>
             </br>
             <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                Ishihara responses: Number wrong <input type="text" ng-model="info.ISHIHARA_RESPONSE"> (ONLY IF APPLICABLE TO JOB)
+                Ishihara responses: Number wrong
+                 <span ng-class="{'has-error':showClickedValidation && gorgonMAForm.ISHIHARA_RESPONSE.$error.pattern}">
+                 <input type="text" name="ISHIHARA_RESPONSE" ng-pattern="/^[0-9]+$/" ng-model="info.ISHIHARA_RESPONSE">
+                  <label style="color: #8b0000" ng-show="showClickedValidation && gorgonMAForm.ISHIHARA_RESPONSE.$error.pattern">Must be number</label>
+                 </span>
+                  (ONLY IF APPLICABLE TO JOB)
+
             </p>
         </div>
     </div>

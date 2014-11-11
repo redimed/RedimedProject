@@ -166,9 +166,6 @@ module.exports = {
     },
     editMA: function(req,res){
         var info = req.body.info;
-
-
-
                 db.gorgonMA.update({
                     PHOTO_ID : info.PHOTO_ID ,
                     HAND_DOR : info.HAND_DOR ,
