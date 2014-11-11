@@ -386,7 +386,7 @@ module.exports =
                             htmlBody:'',
                             textBody:''
                         };
-                        emailInfo.subject='Confirmation of Redilegal booking – '+row.WRK_SURNAME;
+                        emailInfo.subject='Confirmation of Redilegal booking ï¿½ '+row.WRK_SURNAME;
                         emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
                         emailInfo.recipients=row.Contact_email;
                         emailInfo.htmlBody=
@@ -433,7 +433,7 @@ module.exports =
 
         var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
-            'SELECT booking.*,files.FILE_ID,rltype.`Rl_TYPE_NAME` '+
+            'SELECT DISTINCT booking.*,files.FILE_ID,rltype.`Rl_TYPE_NAME` '+
             ' FROM `rl_bookings` booking '+
             ' LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID` '+
             ' INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID` '+
@@ -461,7 +461,7 @@ module.exports =
 
         var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
-            'SELECT * FROM `rl_bookings` WHERE `APPOINTMENT_DATE` < CURRENT_TIMESTAMP and DOCTOR_ID like ? order by APPOINTMENT_DATE asc';
+            'SELECT DISTINCT * FROM `rl_bookings` WHERE `APPOINTMENT_DATE` < CURRENT_TIMESTAMP and DOCTOR_ID like ? order by APPOINTMENT_DATE asc';
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[doctorId],function(err,rows)
@@ -488,7 +488,7 @@ module.exports =
         var bookingType=req.query.bookingType?req.query.bookingType:'';
         var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
-            "SELECT dr.`NAME`,TRUNCATE(DATEDIFF(CURRENT_DATE,DATE(booking.`APPOINTMENT_DATE`))/7,0) AS WEEK_OVERDUE,                               "+
+            "SELECT DISTINCT dr.`NAME`,TRUNCATE(DATEDIFF(CURRENT_DATE,DATE(booking.`APPOINTMENT_DATE`))/7,0) AS WEEK_OVERDUE,                               "+
             " 	booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,files.`FILE_NAME`                                    "+
             " FROM 	`rl_bookings` booking                                                                                                           "+
             " 	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                            "+
@@ -530,7 +530,7 @@ module.exports =
         var bookingType=req.query.bookingType?req.query.bookingType:'';
         var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
-            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`       "+
+            "SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`       "+
             "FROM 	`rl_bookings` booking                                                                "+
             "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                 "+
             "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`      "+
@@ -575,7 +575,7 @@ module.exports =
         var bookingType=req.query.bookingType?req.query.bookingType:'';
         var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
-            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
+            "SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
             "	files.`FILE_NAME`                                                                           "+
             "FROM 	`rl_bookings` booking                                                                   "+
             "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
@@ -623,7 +623,7 @@ module.exports =
         var bookingType=req.query.bookingType?req.query.bookingType:'';
         var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
-            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,                                                "+
+            "SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,                                                "+
             "	files.`FILE_NAME`                                                                                                                  "+
             "FROM 	`rl_bookings` booking                                                                                                          "+
             "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                           "+
