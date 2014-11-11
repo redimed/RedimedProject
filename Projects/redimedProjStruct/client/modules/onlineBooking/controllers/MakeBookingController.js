@@ -114,7 +114,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     var modalInstance = $modal.open({
                         templateUrl:'modules/onlineBooking/views/customPackage.html',
                         controller: 'CustomPackageController',
-                        size:'lg'
+                        size:'md'
                     })
 
                     modalInstance.result.then(function (data){

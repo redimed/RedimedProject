@@ -1,13 +1,14 @@
 <div class="modal-header">
+    <h3>Custom Package</h3>
 </div>
 <div class="modal-body">
     <div class="row" ng-repeat="ass in assList">
         <div class="col-md-1"></div>
-        <div class="col-md-1">
-            <input type="checkbox" value="{{ass.id}}" id="{{ass.id}}" check-list="" selected-items-array="info.checkedAss"/>
-        </div>
-        <div class="col-md-10">
-            <label for="{{ass.id}}" class="control-label">{{ass.ass_name}}</label>
+        <div class="col-md-11">
+            <label>
+                <input type="checkbox" value="{{ass.id}}" id="{{ass.id}}" check-list="" selected-items-array="info.checkedAss"/>
+                {{ass.ass_name}}
+            </label>
         </div>
     </div>
 

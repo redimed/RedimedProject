@@ -1,0 +1,790 @@
+/*!
+ * Datepicker for Bootstrap
+ *
+ * Copyright 2012 Stefan Petre
+ * Improvements by Andrew Rowls
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+.rlobdatepicker {
+  padding: 4px;
+  border-radius: 4px;
+  direction: ltr;
+  /*.dow {
+		border-top: 1px solid #ddd !important;
+	}*/
+}
+.rlobdatepicker-inline {
+  width: 220px;
+}
+.rlobdatepicker.rlobdatepicker-rtl {
+  direction: rtl;
+}
+.rlobdatepicker.rlobdatepicker-rtl table tr td span {
+  float: right;
+}
+.rlobdatepicker-dropdown {
+  top: 0;
+  left: 0;
+}
+.rlobdatepicker-dropdown:before {
+  content: '';
+  display: inline-block;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-top: 0;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+}
+.rlobdatepicker-dropdown:after {
+  content: '';
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #fff;
+  border-top: 0;
+  position: absolute;
+}
+.rlobdatepicker-dropdown.rlobdatepicker-orient-left:before {
+  left: 6px;
+}
+.rlobdatepicker-dropdown.rlobdatepicker-orient-left:after {
+  left: 7px;
+}
+.rlobdatepicker-dropdown.rlobdatepicker-orient-right:before {
+  right: 6px;
+}
+.rlobdatepicker-dropdown.rlobdatepicker-orient-right:after {
+  right: 7px;
+}
+.rlobdatepicker-dropdown.rlobdatepicker-orient-top:before {
+  top: -7px;
+}
+.rlobdatepicker-dropdown.rlobdatepicker-orient-top:after {
+  top: -6px;
+}
+.rlobdatepicker-dropdown.rlobdatepicker-orient-bottom:before {
+  bottom: -7px;
+  border-bottom: 0;
+  border-top: 7px solid #999;
+}
+.rlobdatepicker-dropdown.rlobdatepicker-orient-bottom:after {
+  bottom: -6px;
+  border-bottom: 0;
+  border-top: 6px solid #fff;
+}
+.rlobdatepicker > div {
+  display: none;
+}
+.rlobdatepicker.days div.rlobdatepicker-days {
+  display: block;
+}
+.rlobdatepicker.months div.rlobdatepicker-months {
+  display: block;
+}
+.rlobdatepicker.years div.rlobdatepicker-years {
+  display: block;
+}
+.rlobdatepicker table {
+  margin: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.rlobdatepicker table tr td,
+.rlobdatepicker table tr th {
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  border: none;
+}
+.table-striped .rlobdatepicker table tr td,
+.table-striped .rlobdatepicker table tr th {
+  background-color: transparent;
+}
+.rlobdatepicker table tr td.day:hover,
+.rlobdatepicker table tr td.day.focused {
+  background: #eeeeee;
+  cursor: pointer;
+}
+.rlobdatepicker table tr td.old,
+.rlobdatepicker table tr td.new {
+  color: #999999;
+}
+.rlobdatepicker table tr td.disabled,
+.rlobdatepicker table tr td.disabled:hover {
+  background: none;
+  color: #999999;
+  cursor: default;
+}
+.rlobdatepicker table tr td.today,
+.rlobdatepicker table tr td.today:hover,
+.rlobdatepicker table tr td.today.disabled,
+.rlobdatepicker table tr td.today.disabled:hover {
+  color: #000000;
+  background-color: #ffdb99;
+  border-color: #ffb733;
+}
+.rlobdatepicker table tr td.today:hover,
+.rlobdatepicker table tr td.today:hover:hover,
+.rlobdatepicker table tr td.today.disabled:hover,
+.rlobdatepicker table tr td.today.disabled:hover:hover,
+.rlobdatepicker table tr td.today:focus,
+.rlobdatepicker table tr td.today:hover:focus,
+.rlobdatepicker table tr td.today.disabled:focus,
+.rlobdatepicker table tr td.today.disabled:hover:focus,
+.rlobdatepicker table tr td.today:active,
+.rlobdatepicker table tr td.today:hover:active,
+.rlobdatepicker table tr td.today.disabled:active,
+.rlobdatepicker table tr td.today.disabled:hover:active,
+.rlobdatepicker table tr td.today.active,
+.rlobdatepicker table tr td.today:hover.active,
+.rlobdatepicker table tr td.today.disabled.active,
+.rlobdatepicker table tr td.today.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.today,
+.open .dropdown-toggle.rlobdatepicker table tr td.today:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td.today.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td.today.disabled:hover {
+  color: #000000;
+  background-color: #ffcd70;
+  border-color: #f59e00;
+}
+.rlobdatepicker table tr td.today:active,
+.rlobdatepicker table tr td.today:hover:active,
+.rlobdatepicker table tr td.today.disabled:active,
+.rlobdatepicker table tr td.today.disabled:hover:active,
+.rlobdatepicker table tr td.today.active,
+.rlobdatepicker table tr td.today:hover.active,
+.rlobdatepicker table tr td.today.disabled.active,
+.rlobdatepicker table tr td.today.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.today,
+.open .dropdown-toggle.rlobdatepicker table tr td.today:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td.today.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td.today.disabled:hover {
+  background-image: none;
+}
+.rlobdatepicker table tr td.today.disabled,
+.rlobdatepicker table tr td.today:hover.disabled,
+.rlobdatepicker table tr td.today.disabled.disabled,
+.rlobdatepicker table tr td.today.disabled:hover.disabled,
+.rlobdatepicker table tr td.today[disabled],
+.rlobdatepicker table tr td.today:hover[disabled],
+.rlobdatepicker table tr td.today.disabled[disabled],
+.rlobdatepicker table tr td.today.disabled:hover[disabled],
+fieldset[disabled] .rlobdatepicker table tr td.today,
+fieldset[disabled] .rlobdatepicker table tr td.today:hover,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled:hover,
+.rlobdatepicker table tr td.today.disabled:hover,
+.rlobdatepicker table tr td.today:hover.disabled:hover,
+.rlobdatepicker table tr td.today.disabled.disabled:hover,
+.rlobdatepicker table tr td.today.disabled:hover.disabled:hover,
+.rlobdatepicker table tr td.today[disabled]:hover,
+.rlobdatepicker table tr td.today:hover[disabled]:hover,
+.rlobdatepicker table tr td.today.disabled[disabled]:hover,
+.rlobdatepicker table tr td.today.disabled:hover[disabled]:hover,
+fieldset[disabled] .rlobdatepicker table tr td.today:hover,
+fieldset[disabled] .rlobdatepicker table tr td.today:hover:hover,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled:hover,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled:hover:hover,
+.rlobdatepicker table tr td.today.disabled:focus,
+.rlobdatepicker table tr td.today:hover.disabled:focus,
+.rlobdatepicker table tr td.today.disabled.disabled:focus,
+.rlobdatepicker table tr td.today.disabled:hover.disabled:focus,
+.rlobdatepicker table tr td.today[disabled]:focus,
+.rlobdatepicker table tr td.today:hover[disabled]:focus,
+.rlobdatepicker table tr td.today.disabled[disabled]:focus,
+.rlobdatepicker table tr td.today.disabled:hover[disabled]:focus,
+fieldset[disabled] .rlobdatepicker table tr td.today:focus,
+fieldset[disabled] .rlobdatepicker table tr td.today:hover:focus,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled:focus,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled:hover:focus,
+.rlobdatepicker table tr td.today.disabled:active,
+.rlobdatepicker table tr td.today:hover.disabled:active,
+.rlobdatepicker table tr td.today.disabled.disabled:active,
+.rlobdatepicker table tr td.today.disabled:hover.disabled:active,
+.rlobdatepicker table tr td.today[disabled]:active,
+.rlobdatepicker table tr td.today:hover[disabled]:active,
+.rlobdatepicker table tr td.today.disabled[disabled]:active,
+.rlobdatepicker table tr td.today.disabled:hover[disabled]:active,
+fieldset[disabled] .rlobdatepicker table tr td.today:active,
+fieldset[disabled] .rlobdatepicker table tr td.today:hover:active,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled:active,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled:hover:active,
+.rlobdatepicker table tr td.today.disabled.active,
+.rlobdatepicker table tr td.today:hover.disabled.active,
+.rlobdatepicker table tr td.today.disabled.disabled.active,
+.rlobdatepicker table tr td.today.disabled:hover.disabled.active,
+.rlobdatepicker table tr td.today[disabled].active,
+.rlobdatepicker table tr td.today:hover[disabled].active,
+.rlobdatepicker table tr td.today.disabled[disabled].active,
+.rlobdatepicker table tr td.today.disabled:hover[disabled].active,
+fieldset[disabled] .rlobdatepicker table tr td.today.active,
+fieldset[disabled] .rlobdatepicker table tr td.today:hover.active,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled.active,
+fieldset[disabled] .rlobdatepicker table tr td.today.disabled:hover.active {
+  background-color: #ffdb99;
+  border-color: #ffb733;
+}
+.rlobdatepicker table tr td.today:hover:hover {
+  color: #000;
+}
+.rlobdatepicker table tr td.today.active:hover {
+  color: #fff;
+}
+.rlobdatepicker table tr td.range,
+.rlobdatepicker table tr td.range:hover,
+.rlobdatepicker table tr td.range.disabled,
+.rlobdatepicker table tr td.range.disabled:hover {
+  background: #eeeeee;
+  border-radius: 0;
+}
+.rlobdatepicker table tr td.range.today,
+.rlobdatepicker table tr td.range.today:hover,
+.rlobdatepicker table tr td.range.today.disabled,
+.rlobdatepicker table tr td.range.today.disabled:hover {
+  color: #000000;
+  background-color: #f7ca77;
+  border-color: #f1a417;
+  border-radius: 0;
+}
+.rlobdatepicker table tr td.range.today:hover,
+.rlobdatepicker table tr td.range.today:hover:hover,
+.rlobdatepicker table tr td.range.today.disabled:hover,
+.rlobdatepicker table tr td.range.today.disabled:hover:hover,
+.rlobdatepicker table tr td.range.today:focus,
+.rlobdatepicker table tr td.range.today:hover:focus,
+.rlobdatepicker table tr td.range.today.disabled:focus,
+.rlobdatepicker table tr td.range.today.disabled:hover:focus,
+.rlobdatepicker table tr td.range.today:active,
+.rlobdatepicker table tr td.range.today:hover:active,
+.rlobdatepicker table tr td.range.today.disabled:active,
+.rlobdatepicker table tr td.range.today.disabled:hover:active,
+.rlobdatepicker table tr td.range.today.active,
+.rlobdatepicker table tr td.range.today:hover.active,
+.rlobdatepicker table tr td.range.today.disabled.active,
+.rlobdatepicker table tr td.range.today.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.range.today,
+.open .dropdown-toggle.rlobdatepicker table tr td.range.today:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td.range.today.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td.range.today.disabled:hover {
+  color: #000000;
+  background-color: #f4bb51;
+  border-color: #bf800c;
+}
+.rlobdatepicker table tr td.range.today:active,
+.rlobdatepicker table tr td.range.today:hover:active,
+.rlobdatepicker table tr td.range.today.disabled:active,
+.rlobdatepicker table tr td.range.today.disabled:hover:active,
+.rlobdatepicker table tr td.range.today.active,
+.rlobdatepicker table tr td.range.today:hover.active,
+.rlobdatepicker table tr td.range.today.disabled.active,
+.rlobdatepicker table tr td.range.today.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.range.today,
+.open .dropdown-toggle.rlobdatepicker table tr td.range.today:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td.range.today.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td.range.today.disabled:hover {
+  background-image: none;
+}
+.rlobdatepicker table tr td.range.today.disabled,
+.rlobdatepicker table tr td.range.today:hover.disabled,
+.rlobdatepicker table tr td.range.today.disabled.disabled,
+.rlobdatepicker table tr td.range.today.disabled:hover.disabled,
+.rlobdatepicker table tr td.range.today[disabled],
+.rlobdatepicker table tr td.range.today:hover[disabled],
+.rlobdatepicker table tr td.range.today.disabled[disabled],
+.rlobdatepicker table tr td.range.today.disabled:hover[disabled],
+fieldset[disabled] .rlobdatepicker table tr td.range.today,
+fieldset[disabled] .rlobdatepicker table tr td.range.today:hover,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled:hover,
+.rlobdatepicker table tr td.range.today.disabled:hover,
+.rlobdatepicker table tr td.range.today:hover.disabled:hover,
+.rlobdatepicker table tr td.range.today.disabled.disabled:hover,
+.rlobdatepicker table tr td.range.today.disabled:hover.disabled:hover,
+.rlobdatepicker table tr td.range.today[disabled]:hover,
+.rlobdatepicker table tr td.range.today:hover[disabled]:hover,
+.rlobdatepicker table tr td.range.today.disabled[disabled]:hover,
+.rlobdatepicker table tr td.range.today.disabled:hover[disabled]:hover,
+fieldset[disabled] .rlobdatepicker table tr td.range.today:hover,
+fieldset[disabled] .rlobdatepicker table tr td.range.today:hover:hover,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled:hover,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled:hover:hover,
+.rlobdatepicker table tr td.range.today.disabled:focus,
+.rlobdatepicker table tr td.range.today:hover.disabled:focus,
+.rlobdatepicker table tr td.range.today.disabled.disabled:focus,
+.rlobdatepicker table tr td.range.today.disabled:hover.disabled:focus,
+.rlobdatepicker table tr td.range.today[disabled]:focus,
+.rlobdatepicker table tr td.range.today:hover[disabled]:focus,
+.rlobdatepicker table tr td.range.today.disabled[disabled]:focus,
+.rlobdatepicker table tr td.range.today.disabled:hover[disabled]:focus,
+fieldset[disabled] .rlobdatepicker table tr td.range.today:focus,
+fieldset[disabled] .rlobdatepicker table tr td.range.today:hover:focus,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled:focus,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled:hover:focus,
+.rlobdatepicker table tr td.range.today.disabled:active,
+.rlobdatepicker table tr td.range.today:hover.disabled:active,
+.rlobdatepicker table tr td.range.today.disabled.disabled:active,
+.rlobdatepicker table tr td.range.today.disabled:hover.disabled:active,
+.rlobdatepicker table tr td.range.today[disabled]:active,
+.rlobdatepicker table tr td.range.today:hover[disabled]:active,
+.rlobdatepicker table tr td.range.today.disabled[disabled]:active,
+.rlobdatepicker table tr td.range.today.disabled:hover[disabled]:active,
+fieldset[disabled] .rlobdatepicker table tr td.range.today:active,
+fieldset[disabled] .rlobdatepicker table tr td.range.today:hover:active,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled:active,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled:hover:active,
+.rlobdatepicker table tr td.range.today.disabled.active,
+.rlobdatepicker table tr td.range.today:hover.disabled.active,
+.rlobdatepicker table tr td.range.today.disabled.disabled.active,
+.rlobdatepicker table tr td.range.today.disabled:hover.disabled.active,
+.rlobdatepicker table tr td.range.today[disabled].active,
+.rlobdatepicker table tr td.range.today:hover[disabled].active,
+.rlobdatepicker table tr td.range.today.disabled[disabled].active,
+.rlobdatepicker table tr td.range.today.disabled:hover[disabled].active,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.active,
+fieldset[disabled] .rlobdatepicker table tr td.range.today:hover.active,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled.active,
+fieldset[disabled] .rlobdatepicker table tr td.range.today.disabled:hover.active {
+  background-color: #f7ca77;
+  border-color: #f1a417;
+}
+.rlobdatepicker table tr td.selected,
+.rlobdatepicker table tr td.selected:hover,
+.rlobdatepicker table tr td.selected.disabled,
+.rlobdatepicker table tr td.selected.disabled:hover {
+  color: #ffffff;
+  background-color: #999999;
+  border-color: #555555;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.rlobdatepicker table tr td.selected:hover,
+.rlobdatepicker table tr td.selected:hover:hover,
+.rlobdatepicker table tr td.selected.disabled:hover,
+.rlobdatepicker table tr td.selected.disabled:hover:hover,
+.rlobdatepicker table tr td.selected:focus,
+.rlobdatepicker table tr td.selected:hover:focus,
+.rlobdatepicker table tr td.selected.disabled:focus,
+.rlobdatepicker table tr td.selected.disabled:hover:focus,
+.rlobdatepicker table tr td.selected:active,
+.rlobdatepicker table tr td.selected:hover:active,
+.rlobdatepicker table tr td.selected.disabled:active,
+.rlobdatepicker table tr td.selected.disabled:hover:active,
+.rlobdatepicker table tr td.selected.active,
+.rlobdatepicker table tr td.selected:hover.active,
+.rlobdatepicker table tr td.selected.disabled.active,
+.rlobdatepicker table tr td.selected.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.selected,
+.open .dropdown-toggle.rlobdatepicker table tr td.selected:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td.selected.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td.selected.disabled:hover {
+  color: #ffffff;
+  background-color: #858585;
+  border-color: #373737;
+}
+.rlobdatepicker table tr td.selected:active,
+.rlobdatepicker table tr td.selected:hover:active,
+.rlobdatepicker table tr td.selected.disabled:active,
+.rlobdatepicker table tr td.selected.disabled:hover:active,
+.rlobdatepicker table tr td.selected.active,
+.rlobdatepicker table tr td.selected:hover.active,
+.rlobdatepicker table tr td.selected.disabled.active,
+.rlobdatepicker table tr td.selected.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.selected,
+.open .dropdown-toggle.rlobdatepicker table tr td.selected:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td.selected.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td.selected.disabled:hover {
+  background-image: none;
+}
+.rlobdatepicker table tr td.selected.disabled,
+.rlobdatepicker table tr td.selected:hover.disabled,
+.rlobdatepicker table tr td.selected.disabled.disabled,
+.rlobdatepicker table tr td.selected.disabled:hover.disabled,
+.rlobdatepicker table tr td.selected[disabled],
+.rlobdatepicker table tr td.selected:hover[disabled],
+.rlobdatepicker table tr td.selected.disabled[disabled],
+.rlobdatepicker table tr td.selected.disabled:hover[disabled],
+fieldset[disabled] .rlobdatepicker table tr td.selected,
+fieldset[disabled] .rlobdatepicker table tr td.selected:hover,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled:hover,
+.rlobdatepicker table tr td.selected.disabled:hover,
+.rlobdatepicker table tr td.selected:hover.disabled:hover,
+.rlobdatepicker table tr td.selected.disabled.disabled:hover,
+.rlobdatepicker table tr td.selected.disabled:hover.disabled:hover,
+.rlobdatepicker table tr td.selected[disabled]:hover,
+.rlobdatepicker table tr td.selected:hover[disabled]:hover,
+.rlobdatepicker table tr td.selected.disabled[disabled]:hover,
+.rlobdatepicker table tr td.selected.disabled:hover[disabled]:hover,
+fieldset[disabled] .rlobdatepicker table tr td.selected:hover,
+fieldset[disabled] .rlobdatepicker table tr td.selected:hover:hover,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled:hover,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled:hover:hover,
+.rlobdatepicker table tr td.selected.disabled:focus,
+.rlobdatepicker table tr td.selected:hover.disabled:focus,
+.rlobdatepicker table tr td.selected.disabled.disabled:focus,
+.rlobdatepicker table tr td.selected.disabled:hover.disabled:focus,
+.rlobdatepicker table tr td.selected[disabled]:focus,
+.rlobdatepicker table tr td.selected:hover[disabled]:focus,
+.rlobdatepicker table tr td.selected.disabled[disabled]:focus,
+.rlobdatepicker table tr td.selected.disabled:hover[disabled]:focus,
+fieldset[disabled] .rlobdatepicker table tr td.selected:focus,
+fieldset[disabled] .rlobdatepicker table tr td.selected:hover:focus,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled:focus,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled:hover:focus,
+.rlobdatepicker table tr td.selected.disabled:active,
+.rlobdatepicker table tr td.selected:hover.disabled:active,
+.rlobdatepicker table tr td.selected.disabled.disabled:active,
+.rlobdatepicker table tr td.selected.disabled:hover.disabled:active,
+.rlobdatepicker table tr td.selected[disabled]:active,
+.rlobdatepicker table tr td.selected:hover[disabled]:active,
+.rlobdatepicker table tr td.selected.disabled[disabled]:active,
+.rlobdatepicker table tr td.selected.disabled:hover[disabled]:active,
+fieldset[disabled] .rlobdatepicker table tr td.selected:active,
+fieldset[disabled] .rlobdatepicker table tr td.selected:hover:active,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled:active,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled:hover:active,
+.rlobdatepicker table tr td.selected.disabled.active,
+.rlobdatepicker table tr td.selected:hover.disabled.active,
+.rlobdatepicker table tr td.selected.disabled.disabled.active,
+.rlobdatepicker table tr td.selected.disabled:hover.disabled.active,
+.rlobdatepicker table tr td.selected[disabled].active,
+.rlobdatepicker table tr td.selected:hover[disabled].active,
+.rlobdatepicker table tr td.selected.disabled[disabled].active,
+.rlobdatepicker table tr td.selected.disabled:hover[disabled].active,
+fieldset[disabled] .rlobdatepicker table tr td.selected.active,
+fieldset[disabled] .rlobdatepicker table tr td.selected:hover.active,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled.active,
+fieldset[disabled] .rlobdatepicker table tr td.selected.disabled:hover.active {
+  background-color: #999999;
+  border-color: #555555;
+}
+.rlobdatepicker table tr td.active,
+.rlobdatepicker table tr td.active:hover,
+.rlobdatepicker table tr td.active.disabled,
+.rlobdatepicker table tr td.active.disabled:hover {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.rlobdatepicker table tr td.active:hover,
+.rlobdatepicker table tr td.active:hover:hover,
+.rlobdatepicker table tr td.active.disabled:hover,
+.rlobdatepicker table tr td.active.disabled:hover:hover,
+.rlobdatepicker table tr td.active:focus,
+.rlobdatepicker table tr td.active:hover:focus,
+.rlobdatepicker table tr td.active.disabled:focus,
+.rlobdatepicker table tr td.active.disabled:hover:focus,
+.rlobdatepicker table tr td.active:active,
+.rlobdatepicker table tr td.active:hover:active,
+.rlobdatepicker table tr td.active.disabled:active,
+.rlobdatepicker table tr td.active.disabled:hover:active,
+.rlobdatepicker table tr td.active.active,
+.rlobdatepicker table tr td.active:hover.active,
+.rlobdatepicker table tr td.active.disabled.active,
+.rlobdatepicker table tr td.active.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.active:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td.active.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td.active.disabled:hover {
+  color: #ffffff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+}
+.rlobdatepicker table tr td.active:active,
+.rlobdatepicker table tr td.active:hover:active,
+.rlobdatepicker table tr td.active.disabled:active,
+.rlobdatepicker table tr td.active.disabled:hover:active,
+.rlobdatepicker table tr td.active.active,
+.rlobdatepicker table tr td.active:hover.active,
+.rlobdatepicker table tr td.active.disabled.active,
+.rlobdatepicker table tr td.active.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.active,
+.open .dropdown-toggle.rlobdatepicker table tr td.active:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td.active.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td.active.disabled:hover {
+  background-image: none;
+}
+.rlobdatepicker table tr td.active.disabled,
+.rlobdatepicker table tr td.active:hover.disabled,
+.rlobdatepicker table tr td.active.disabled.disabled,
+.rlobdatepicker table tr td.active.disabled:hover.disabled,
+.rlobdatepicker table tr td.active[disabled],
+.rlobdatepicker table tr td.active:hover[disabled],
+.rlobdatepicker table tr td.active.disabled[disabled],
+.rlobdatepicker table tr td.active.disabled:hover[disabled],
+fieldset[disabled] .rlobdatepicker table tr td.active,
+fieldset[disabled] .rlobdatepicker table tr td.active:hover,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled:hover,
+.rlobdatepicker table tr td.active.disabled:hover,
+.rlobdatepicker table tr td.active:hover.disabled:hover,
+.rlobdatepicker table tr td.active.disabled.disabled:hover,
+.rlobdatepicker table tr td.active.disabled:hover.disabled:hover,
+.rlobdatepicker table tr td.active[disabled]:hover,
+.rlobdatepicker table tr td.active:hover[disabled]:hover,
+.rlobdatepicker table tr td.active.disabled[disabled]:hover,
+.rlobdatepicker table tr td.active.disabled:hover[disabled]:hover,
+fieldset[disabled] .rlobdatepicker table tr td.active:hover,
+fieldset[disabled] .rlobdatepicker table tr td.active:hover:hover,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled:hover,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled:hover:hover,
+.rlobdatepicker table tr td.active.disabled:focus,
+.rlobdatepicker table tr td.active:hover.disabled:focus,
+.rlobdatepicker table tr td.active.disabled.disabled:focus,
+.rlobdatepicker table tr td.active.disabled:hover.disabled:focus,
+.rlobdatepicker table tr td.active[disabled]:focus,
+.rlobdatepicker table tr td.active:hover[disabled]:focus,
+.rlobdatepicker table tr td.active.disabled[disabled]:focus,
+.rlobdatepicker table tr td.active.disabled:hover[disabled]:focus,
+fieldset[disabled] .rlobdatepicker table tr td.active:focus,
+fieldset[disabled] .rlobdatepicker table tr td.active:hover:focus,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled:focus,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled:hover:focus,
+.rlobdatepicker table tr td.active.disabled:active,
+.rlobdatepicker table tr td.active:hover.disabled:active,
+.rlobdatepicker table tr td.active.disabled.disabled:active,
+.rlobdatepicker table tr td.active.disabled:hover.disabled:active,
+.rlobdatepicker table tr td.active[disabled]:active,
+.rlobdatepicker table tr td.active:hover[disabled]:active,
+.rlobdatepicker table tr td.active.disabled[disabled]:active,
+.rlobdatepicker table tr td.active.disabled:hover[disabled]:active,
+fieldset[disabled] .rlobdatepicker table tr td.active:active,
+fieldset[disabled] .rlobdatepicker table tr td.active:hover:active,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled:active,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled:hover:active,
+.rlobdatepicker table tr td.active.disabled.active,
+.rlobdatepicker table tr td.active:hover.disabled.active,
+.rlobdatepicker table tr td.active.disabled.disabled.active,
+.rlobdatepicker table tr td.active.disabled:hover.disabled.active,
+.rlobdatepicker table tr td.active[disabled].active,
+.rlobdatepicker table tr td.active:hover[disabled].active,
+.rlobdatepicker table tr td.active.disabled[disabled].active,
+.rlobdatepicker table tr td.active.disabled:hover[disabled].active,
+fieldset[disabled] .rlobdatepicker table tr td.active.active,
+fieldset[disabled] .rlobdatepicker table tr td.active:hover.active,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled.active,
+fieldset[disabled] .rlobdatepicker table tr td.active.disabled:hover.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.rlobdatepicker table tr td span {
+  display: block;
+  width: 23%;
+  height: 54px;
+  line-height: 54px;
+  float: left;
+  margin: 1%;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.rlobdatepicker table tr td span:hover {
+  background: #eeeeee;
+}
+.rlobdatepicker table tr td span.disabled,
+.rlobdatepicker table tr td span.disabled:hover {
+  background: none;
+  color: #999999;
+  cursor: default;
+}
+.rlobdatepicker table tr td span.active,
+.rlobdatepicker table tr td span.active:hover,
+.rlobdatepicker table tr td span.active.disabled,
+.rlobdatepicker table tr td span.active.disabled:hover {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.rlobdatepicker table tr td span.active:hover,
+.rlobdatepicker table tr td span.active:hover:hover,
+.rlobdatepicker table tr td span.active.disabled:hover,
+.rlobdatepicker table tr td span.active.disabled:hover:hover,
+.rlobdatepicker table tr td span.active:focus,
+.rlobdatepicker table tr td span.active:hover:focus,
+.rlobdatepicker table tr td span.active.disabled:focus,
+.rlobdatepicker table tr td span.active.disabled:hover:focus,
+.rlobdatepicker table tr td span.active:active,
+.rlobdatepicker table tr td span.active:hover:active,
+.rlobdatepicker table tr td span.active.disabled:active,
+.rlobdatepicker table tr td span.active.disabled:hover:active,
+.rlobdatepicker table tr td span.active.active,
+.rlobdatepicker table tr td span.active:hover.active,
+.rlobdatepicker table tr td span.active.disabled.active,
+.rlobdatepicker table tr td span.active.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td span.active,
+.open .dropdown-toggle.rlobdatepicker table tr td span.active:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td span.active.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td span.active.disabled:hover {
+  color: #ffffff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+}
+.rlobdatepicker table tr td span.active:active,
+.rlobdatepicker table tr td span.active:hover:active,
+.rlobdatepicker table tr td span.active.disabled:active,
+.rlobdatepicker table tr td span.active.disabled:hover:active,
+.rlobdatepicker table tr td span.active.active,
+.rlobdatepicker table tr td span.active:hover.active,
+.rlobdatepicker table tr td span.active.disabled.active,
+.rlobdatepicker table tr td span.active.disabled:hover.active,
+.open .dropdown-toggle.rlobdatepicker table tr td span.active,
+.open .dropdown-toggle.rlobdatepicker table tr td span.active:hover,
+.open .dropdown-toggle.rlobdatepicker table tr td span.active.disabled,
+.open .dropdown-toggle.rlobdatepicker table tr td span.active.disabled:hover {
+  background-image: none;
+}
+.rlobdatepicker table tr td span.active.disabled,
+.rlobdatepicker table tr td span.active:hover.disabled,
+.rlobdatepicker table tr td span.active.disabled.disabled,
+.rlobdatepicker table tr td span.active.disabled:hover.disabled,
+.rlobdatepicker table tr td span.active[disabled],
+.rlobdatepicker table tr td span.active:hover[disabled],
+.rlobdatepicker table tr td span.active.disabled[disabled],
+.rlobdatepicker table tr td span.active.disabled:hover[disabled],
+fieldset[disabled] .rlobdatepicker table tr td span.active,
+fieldset[disabled] .rlobdatepicker table tr td span.active:hover,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled:hover,
+.rlobdatepicker table tr td span.active.disabled:hover,
+.rlobdatepicker table tr td span.active:hover.disabled:hover,
+.rlobdatepicker table tr td span.active.disabled.disabled:hover,
+.rlobdatepicker table tr td span.active.disabled:hover.disabled:hover,
+.rlobdatepicker table tr td span.active[disabled]:hover,
+.rlobdatepicker table tr td span.active:hover[disabled]:hover,
+.rlobdatepicker table tr td span.active.disabled[disabled]:hover,
+.rlobdatepicker table tr td span.active.disabled:hover[disabled]:hover,
+fieldset[disabled] .rlobdatepicker table tr td span.active:hover,
+fieldset[disabled] .rlobdatepicker table tr td span.active:hover:hover,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled:hover,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled:hover:hover,
+.rlobdatepicker table tr td span.active.disabled:focus,
+.rlobdatepicker table tr td span.active:hover.disabled:focus,
+.rlobdatepicker table tr td span.active.disabled.disabled:focus,
+.rlobdatepicker table tr td span.active.disabled:hover.disabled:focus,
+.rlobdatepicker table tr td span.active[disabled]:focus,
+.rlobdatepicker table tr td span.active:hover[disabled]:focus,
+.rlobdatepicker table tr td span.active.disabled[disabled]:focus,
+.rlobdatepicker table tr td span.active.disabled:hover[disabled]:focus,
+fieldset[disabled] .rlobdatepicker table tr td span.active:focus,
+fieldset[disabled] .rlobdatepicker table tr td span.active:hover:focus,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled:focus,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled:hover:focus,
+.rlobdatepicker table tr td span.active.disabled:active,
+.rlobdatepicker table tr td span.active:hover.disabled:active,
+.rlobdatepicker table tr td span.active.disabled.disabled:active,
+.rlobdatepicker table tr td span.active.disabled:hover.disabled:active,
+.rlobdatepicker table tr td span.active[disabled]:active,
+.rlobdatepicker table tr td span.active:hover[disabled]:active,
+.rlobdatepicker table tr td span.active.disabled[disabled]:active,
+.rlobdatepicker table tr td span.active.disabled:hover[disabled]:active,
+fieldset[disabled] .rlobdatepicker table tr td span.active:active,
+fieldset[disabled] .rlobdatepicker table tr td span.active:hover:active,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled:active,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled:hover:active,
+.rlobdatepicker table tr td span.active.disabled.active,
+.rlobdatepicker table tr td span.active:hover.disabled.active,
+.rlobdatepicker table tr td span.active.disabled.disabled.active,
+.rlobdatepicker table tr td span.active.disabled:hover.disabled.active,
+.rlobdatepicker table tr td span.active[disabled].active,
+.rlobdatepicker table tr td span.active:hover[disabled].active,
+.rlobdatepicker table tr td span.active.disabled[disabled].active,
+.rlobdatepicker table tr td span.active.disabled:hover[disabled].active,
+fieldset[disabled] .rlobdatepicker table tr td span.active.active,
+fieldset[disabled] .rlobdatepicker table tr td span.active:hover.active,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled.active,
+fieldset[disabled] .rlobdatepicker table tr td span.active.disabled:hover.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.rlobdatepicker table tr td span.old,
+.rlobdatepicker table tr td span.new {
+  color: #999999;
+}
+.rlobdatepicker th.rlobdatepicker-switch {
+  width: 145px;
+}
+.rlobdatepicker thead tr:first-child th,
+.rlobdatepicker tfoot tr th {
+  cursor: pointer;
+}
+.rlobdatepicker thead tr:first-child th:hover,
+.rlobdatepicker tfoot tr th:hover {
+  background: #eeeeee;
+}
+.rlobdatepicker .cw {
+  font-size: 10px;
+  width: 12px;
+  padding: 0 2px 0 5px;
+  vertical-align: middle;
+}
+.rlobdatepicker thead tr:first-child th.cw {
+  cursor: default;
+  background-color: transparent;
+}
+.input-group.date .input-group-addon i {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+.input-daterange input {
+  text-align: center;
+}
+.input-daterange input:first-child {
+  border-radius: 3px 0 0 3px;
+}
+.input-daterange input:last-child {
+  border-radius: 0 3px 3px 0;
+}
+.input-daterange .input-group-addon {
+  width: auto;
+  min-width: 16px;
+  padding: 4px 5px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  text-shadow: 0 1px 0 #fff;
+  vertical-align: middle;
+  background-color: #eeeeee;
+  border: solid #cccccc;
+  border-width: 1px 0;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.rlobdatepicker.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  min-width: 160px;
+  list-style: none;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  color: #333333;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.428571429;
+}
+.rlobdatepicker.dropdown-menu th,
+.rlobdatepicker.dropdown-menu td {
+  padding: 4px 5px;
+}

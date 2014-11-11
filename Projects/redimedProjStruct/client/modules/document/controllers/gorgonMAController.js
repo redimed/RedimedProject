@@ -1,7 +1,7 @@
 
 angular.module('app.loggedIn.document.gorgonMA.controllers',[])
     .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr) {
-        var isEdit = true;
+        var isEdit = false;
 
         $scope.resetFlag = false;
         $scope.reset = function () {
