@@ -430,131 +430,63 @@ module.exports =
      * phanquocchien.c1109g@gmail.com
      */
     bookingsList: function(req,res){
-       db.sequelize.query('SELECT booking.*,files.FILE_ID,rltype.`Rl_TYPE_NAME` '+
-        ' FROM `rl_bookings` booking '+
-        ' LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID` '+
-	' INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID` '+
-' WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP GROUP BY booking.`APPOINTMENT_DATE`',null,{raw:true})
-            .success(function(data){
-                res.json(data);
-            })
-            .error(function(err){
-                res.json({status:'error'});
-            })
+
+        var doctorId=req.query.doctorId?req.query.doctorId:'%';
+        var sql=
+            'SELECT booking.*,files.FILE_ID,rltype.`Rl_TYPE_NAME` '+
+            ' FROM `rl_bookings` booking '+
+            ' LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID` '+
+            ' INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID` '+
+            ' WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP and booking.DOCTOR_ID like ? order by booking.APPOINTMENT_DATE asc';
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[doctorId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'error'});
+                }
+                else
+                {
+                    res.json(rows);
+                }
+            });
+        });
     },
     /**
-     *Pass booking: chua change status red, dã change status screen
+     *Pass booking: chua change status red, d? change status screen
      * phanquocchien.c1109g@gmail.com
      */
     bookingsListStatus: function(req,res){
-        db.sequelize.query('SELECT * FROM `rl_bookings` WHERE `APPOINTMENT_DATE` < CURRENT_TIMESTAMP GROUP BY `APPOINTMENT_DATE` DESC',null,{raw:true})
-            .success(function(data){
-                res.json(data);
-            })
-            .error(function(err){
-                res.json({status:'error'});
-            })
-    },
-    
-    getPassBookingNotChangeStatus:function(req,res)
-    {
-        var bookingType=req.query.bookingType?req.query.bookingType:'';
+
+        var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
-            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`       "+
-            "FROM 	`rl_bookings` booking                                                                "+
-            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                 "+
-            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`      "+
-            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                      "+
-            "WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP AND booking.`STATUS`='Confirmed'         "+
-            " AND booking.`BOOKING_TYPE`=? "+
-            "ORDER BY booking.`APPOINTMENT_DATE` ASC ";
-        db.sequelize.query(sql,null,{raw:true},[bookingType])
-            .success(function(data){
-                if(data.length>0)
+            'SELECT * FROM `rl_bookings` WHERE `APPOINTMENT_DATE` < CURRENT_TIMESTAMP and DOCTOR_ID like ? order by APPOINTMENT_DATE asc';
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[doctorId],function(err,rows)
+            {
+                if(err)
                 {
-                    res.json({status:'success',data:data})
+                    res.json({status:'error'});
                 }
                 else
                 {
-                    res.json({status:'fail'});
+                    res.json(rows);
                 }
-
-            })
-            .error(function(err){
-                res.json({status:'fail'});
-            })
+            });
+        });
     },
 
-    getUpcommingBookingHaveNotClientDocument:function(req,res)
-    {
-        var bookingType=req.query.bookingType?req.query.bookingType:'';
-        var sql=
-            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
-            "	files.`FILE_NAME`                                                                           "+
-            "FROM 	`rl_bookings` booking                                                                   "+
-            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
-            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`         "+
-            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                         "+
-            "	LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`               "+
-            "WHERE 	files.`FILE_ID` IS NULL                                                                 "+
-            "	AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                            "+
-            "	AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                 "+
-            "	AND booking.`BOOKING_TYPE`=?                                                                "+
-            "ORDER BY booking.`APPOINTMENT_DATE` ASC ";
-        db.sequelize.query(sql,null,{raw:true},[bookingType])
-            .success(function(data){
-                if(data.length>0)
-                {
-                    res.json({status:'success',data:data})
-                }
-                else
-                {
-                    res.json({status:'fail'});
-                }
-
-            })
-            .error(function(err){
-                res.json({status:'fail'});
-            })
-    },
-
-    getPassBookingHaveNotResult:function(req,res)
-    {
-        var bookingType=req.query.bookingType?req.query.bookingType:'';
-
-        var sql=
-            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,                                                "+
-            "	files.`FILE_NAME`                                                                                                                  "+
-            "FROM 	`rl_bookings` booking                                                                                                          "+
-            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                           "+
-            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                                "+
-            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                "+
-            "	LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`     "+
-            "WHERE 	files.`FILE_ID` IS NULL                                                                                                        "+
-            "	AND booking.`STATUS`='Completed'                                                                                                   "+
-            "	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                   "+
-            "	AND booking.`BOOKING_TYPE`=?                                                                                                       "+
-            "ORDER BY booking.`APPOINTMENT_DATE` ASC                                                                                               ";
-        db.sequelize.query(sql,null,{raw:true},[bookingType])
-            .success(function(data){
-                if(data.length>0)
-                {
-                    res.json({status:'success',data:data})
-                }
-                else
-                {
-                    res.json({status:'fail'});
-                }
-
-            })
-            .error(function(err){
-                res.json({status:'fail'});
-            })
-    },
-
+    /**
+     * admin report
+     *tannv.dts@gmail.com
+     *
+     */
     getReportPassBookingHaveNotResult:function(req,res)
     {
         var bookingType=req.query.bookingType?req.query.bookingType:'';
+        var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
             "SELECT dr.`NAME`,TRUNCATE(DATEDIFF(CURRENT_DATE,DATE(booking.`APPOINTMENT_DATE`))/7,0) AS WEEK_OVERDUE,                               "+
             " 	booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,files.`FILE_NAME`                                    "+
@@ -567,24 +499,166 @@ module.exports =
             " WHERE 	files.`FILE_ID` IS NULL                                                                                                     "+
             " 	AND booking.`STATUS`='Completed'                                                                                                    "+
             " 	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                    "+
-            " 	AND booking.`BOOKING_TYPE`=?                                                                                                        "+
+            " 	AND booking.`BOOKING_TYPE`=?   and booking.DOCTOR_ID like ?                                                                                                     "+
             " ORDER BY dr.`NAME` ASC,WEEK_OVERDUE DESC, booking.`APPOINTMENT_DATE` ASC                                                              ";
-        db.sequelize.query(sql,null,{raw:true},[bookingType])
-            .success(function(data){
-                if(data.length>0)
-                {
-                    res.json({status:'success',data:data})
-                }
-                else
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[bookingType,doctorId],function(err,rows)
+            {
+                if(err)
                 {
                     res.json({status:'fail'});
                 }
+                else
+                {
+                    res.json({status:'success',data:rows})
+                }
+            });
+        });
+    },
 
-            })
-            .error(function(err){
-                res.json({status:'fail'});
-            })
+    /**
+     * admin local notification
+     * pass booking not change status
+     * tannv.dts@gmail.com
+     * @param req
+     * @param res
+     */
+    getPassBookingNotChangeStatus:function(req,res)
+    {
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+        var doctorId=req.query.doctorId?req.query.doctorId:'%';
+        var sql=
+            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`       "+
+            "FROM 	`rl_bookings` booking                                                                "+
+            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                 "+
+            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`      "+
+            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                      "+
+            "WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP AND booking.`STATUS`='Confirmed'         "+
+            " AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ? "+
+            "ORDER BY booking.`APPOINTMENT_DATE` ASC ";
+
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[bookingType,doctorId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+
+    },
+
+    /***
+     * tannv.dts@gmail.com
+     * admin local notification upcomming booking have not upload client document
+     * @param req
+     * @param res
+     */
+    getUpcommingBookingHaveNotClientDocument:function(req,res)
+    {
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+        var doctorId=req.query.doctorId?req.query.doctorId:'%';
+        var sql=
+            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
+            "	files.`FILE_NAME`                                                                           "+
+            "FROM 	`rl_bookings` booking                                                                   "+
+            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
+            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`         "+
+            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                         "+
+            "	LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`               "+
+            "WHERE 	files.`FILE_ID` IS NULL                                                                 "+
+            "	AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                            "+
+            "	AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                 "+
+            "	AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ?                                                                "+
+            "ORDER BY booking.`APPOINTMENT_DATE` ASC ";
+
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[bookingType,doctorId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    },
+
+    /**
+     * tannv.dts@gmail.com
+     * admin local notification completing booking have not result
+     * @param req
+     * @param res
+     */
+    getPassBookingHaveNotResult:function(req,res)
+    {
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+        var doctorId=req.query.doctorId?req.query.doctorId:'%';
+        var sql=
+            "SELECT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,                                                "+
+            "	files.`FILE_NAME`                                                                                                                  "+
+            "FROM 	`rl_bookings` booking                                                                                                          "+
+            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                           "+
+            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                                "+
+            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                "+
+            "	LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`     "+
+            "WHERE 	files.`FILE_ID` IS NULL                                                                                                        "+
+            "	AND booking.`STATUS`='Completed'                                                                                                   "+
+            "	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                   "+
+            "	AND booking.`BOOKING_TYPE`=?  and booking.DOCTOR_ID like ?                                                                                                     "+
+            "ORDER BY booking.`APPOINTMENT_DATE` ASC                                                                                               ";
+
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[bookingType,doctorId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
     }
 
-    
+
 }

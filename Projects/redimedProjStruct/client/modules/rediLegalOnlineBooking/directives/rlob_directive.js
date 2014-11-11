@@ -268,7 +268,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                     console.info('onProgressAll', progress);
                 };
                 uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                    $scope.filesUpdateFlag=$scope.filesUpdateFlag+1;
+                    if($scope.filesUpdateFlag)
+                        $scope.filesUpdateFlag=$scope.filesUpdateFlag+1;
                     console.info('onSuccessItem', fileItem, response, status, headers);
                 };
                 uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -448,43 +449,49 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_choose_appointment_calendar_template.html',
             controller: function ($scope,$http,$stateParams,Mailto,$cookieStore,$window) {
                 $scope.loginInfo = $cookieStore.get('userInfo');
-                $scope.companyInfo=$cookieStore.get('companyInfo')[0];
+
+
                 //Config Send mail template
                 /***
                  * Config email template
                  * tannv.dts@gmail.com
                  */
-                $scope.mailTemplate={
-                    REDiLEGAL:{
-                        label:'Please contact us to make an appointment',
-                        recepient : "redilegal@redimed.com.au",
-                        options:{
-                            subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
-                            body:
-                                "Please booking for me..."
-                        }
 
-                    },
-                    Vaccination:{
-                        label:'Please contact us to make an appointment',
-                        recepient : '',
-                        options:{
-                            subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
-                            body:
-                                "Please booking for me..."
-                        }
-
-                    }
-                };
-
-                if($scope.bookingType=='REDiLEGAL')
-                    $scope.mailtoLink = Mailto.url($scope.mailTemplate.REDiLEGAL.recepient, $scope.mailTemplate.REDiLEGAL.options);
-                else if($scope.bookingType=='Vaccination')
-                    $scope.mailtoLink = Mailto.url($scope.mailTemplate.Vaccination.recepient, $scope.mailTemplate.Vaccination.options);
-
-                $scope.sendEmail=function()
+                if($cookieStore.get('companyInfo'))
                 {
-                    $window.location.href = $scope.mailtoLink;
+                    $scope.companyInfo=$cookieStore.get('companyInfo')[0];
+                    $scope.mailTemplate={
+                        REDiLEGAL:{
+                            label:'Please contact us to make an appointment',
+                            recepient : "redilegal@redimed.com.au",
+                            options:{
+                                subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
+                                body:
+                                    "Please booking for me..."
+                            }
+
+                        },
+                        Vaccination:{
+                            label:'Please contact us to make an appointment',
+                            recepient : '',
+                            options:{
+                                subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
+                                body:
+                                    "Please booking for me..."
+                            }
+
+                        }
+                    };
+
+                    if($scope.bookingType=='REDiLEGAL')
+                        $scope.mailtoLink = Mailto.url($scope.mailTemplate.REDiLEGAL.recepient, $scope.mailTemplate.REDiLEGAL.options);
+                    else if($scope.bookingType=='Vaccination')
+                        $scope.mailtoLink = Mailto.url($scope.mailTemplate.Vaccination.recepient, $scope.mailTemplate.Vaccination.options);
+
+                    $scope.sendEmail=function()
+                    {
+                        $window.location.href = $scope.mailtoLink;
+                    }
                 }
                 //-------------------------------------------------------------
 

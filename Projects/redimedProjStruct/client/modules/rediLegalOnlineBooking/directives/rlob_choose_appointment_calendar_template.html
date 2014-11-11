@@ -49,7 +49,7 @@
         <div class="table-responsive" style="margin-top: 20px">
             <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
                 <h4>No Results</h4>
-                <a ng-click="sendEmail()">Please contact us to make an appointment</a>
+                <a ng-show="mailtoLink" ng-click="sendEmail()">Please contact us to make an appointment</a>
             </div>
 
             <div ng-repeat="location in appointmentsFilter">

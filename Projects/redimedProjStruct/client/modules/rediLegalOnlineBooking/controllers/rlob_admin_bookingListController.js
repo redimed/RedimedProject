@@ -237,17 +237,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 });
         };
 
-        if($scope.loginInfo.user_type=='Doctor')
-        {
-            $scope.getDoctorInfoByUserId()
-            .then($scope.filterBooking);
-        }
-        else
-        {
-            $scope.filterBooking();
-        }
-
-
         //--------------------------------------------------
 
 
@@ -767,6 +756,10 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * tannv.dts@gmail.com
          */
         //----------------------------------------------------------------------------------
+
+
+
+
         $scope.listBookingNotification=[];
 
         $scope.localNotificationType={
@@ -790,9 +783,9 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * tannv.dts@gmail.com
          */
         $scope.listPassBookingNotChangeStatus=[];
-        $scope.getPassBookingNotChangeStatus=function()
+        $scope.getPassBookingNotChangeStatus=function(doctorId)
         {
-            rlobService.getPassBookingNotChangeStatus($scope.bookingType)
+            rlobService.getPassBookingNotChangeStatus($scope.bookingType,doctorId)
                 .then(function(data){
                     if(data.status=='success')
                     {
@@ -810,9 +803,9 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * tannv.dts@gmail.com
          */
         $scope.listUpcommingBookingHaveNotClientDocument=[];
-        $scope.getUpcommingBookingHaveNotClientDocument=function()
+        $scope.getUpcommingBookingHaveNotClientDocument=function(doctorId)
         {
-            rlobService.getUpcommingBookingHaveNotClientDocument($scope.bookingType)
+            rlobService.getUpcommingBookingHaveNotClientDocument($scope.bookingType,doctorId)
                 .then(function(data){
                     if(data.status=='success')
                     {
@@ -830,9 +823,9 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * tannv.dts@gmail.com
          */
         $scope.listPassBookingHaveNotResult=[];
-        $scope.getListPassBookingHaveNotResult=function()
+        $scope.getListPassBookingHaveNotResult=function(doctorId)
         {
-            rlobService.getPassBookingHaveNotResult($scope.bookingType)
+            rlobService.getPassBookingHaveNotResult($scope.bookingType,doctorId)
                 .then(function(data){
                     if(data.status=='success')
                     {
@@ -887,11 +880,25 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          */
         $scope.updateAdminLocalNotification=function()
         {
-            $scope.getPassBookingNotChangeStatus();
-            $scope.getUpcommingBookingHaveNotClientDocument();
-            $scope.getListPassBookingHaveNotResult();
+            var doctorId=$scope.doctorInfo?$scope.doctorInfo.doctor_id:'';
+            $scope.getPassBookingNotChangeStatus(doctorId);
+            $scope.getUpcommingBookingHaveNotClientDocument(doctorId);
+            $scope.getListPassBookingHaveNotResult(doctorId);
         }
-        $scope.updateAdminLocalNotification();
+
+        if($scope.loginInfo.user_type=='Doctor')
+        {
+            $scope.getDoctorInfoByUserId()
+                .then($scope.filterBooking)
+                .then($scope.updateAdminLocalNotification)
+        }
+        else
+        {
+            $scope.filterBooking();
+            $scope.updateAdminLocalNotification();
+        }
+
+        //$scope.updateAdminLocalNotification();
         /**
          * Thêm function cap nhat admin local notification vao schedule
          * tannv.dts@gmail.com
