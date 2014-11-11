@@ -12,7 +12,8 @@ angular.module('starter', ['ionic',
   'starter.search',
   'starter.security',
   'starter.user',
-  'LocalStorageModule'
+  'LocalStorageModule',
+    'starter.worker'
 
 //
   //'starter.playlist'
@@ -59,17 +60,13 @@ angular.module('starter', ['ionic',
             }
     })
 
-
-      //$urlRouterProvider.otherwise('/app/browse');
-
-
 })
-    .run(function($cookieStore, $state, $rootScope,localStorageService){
+    .run(function($state, $rootScope,localStorageService){
 
       $rootScope.$on("$stateChangeSuccess", function(e, toState){
         if(!localStorageService.get("userInfo")){
           if(toState.name !== "security.forgot" && toState.name !== "security.login" ){
-            e.preventDef;ault();
+            e.preventDefault();
             $state.go("security.login");
           }
         }

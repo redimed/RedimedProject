@@ -27,6 +27,7 @@ angular.module('starter.security.login.controller',[])
                                     else
                                     {
                                         alert('2');
+                                        alert(JSON.stringify(rs));
                                        // $state.go(rs[0],{reload:true});
                                         $state.go('app.browse');
                                     }
