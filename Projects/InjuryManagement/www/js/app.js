@@ -5,10 +5,15 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic',
-
+  "restangular",
+  "ngCookies",
   'starter.browse',
   'starter.menu',
   'starter.search',
+  'starter.security',
+  'starter.user',
+  'LocalStorageModule'
+
 //
   //'starter.playlist'
 ])
@@ -27,18 +32,48 @@ angular.module('starter', ['ionic',
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
   $stateProvider
 
+      RestangularProvider.setBaseUrl("http://192.168.135.46:3000");
 
 
+      $urlRouterProvider.otherwise('/');
+      $stateProvider
+          .state("init", {
+            url: "/",
+            resolve: {
+
+              initHome: function($timeout,$state,localStorageService){
+
+                if(!localStorageService.get("userInfo")){
+                  $timeout(function(){
+                    $state.go("security.login");
+                  }, 100);
+                }else{
+                  $timeout(function(){
+                    $state.go("app.browse");
+                  }, 100);
+                }
+              }
+            }
+    })
 
 
+      //$urlRouterProvider.otherwise('/app/browse');
 
 
-      // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/app/search');
+})
+    .run(function($cookieStore, $state, $rootScope,localStorageService){
 
+      $rootScope.$on("$stateChangeSuccess", function(e, toState){
+        if(!localStorageService.get("userInfo")){
+          if(toState.name !== "security.forgot" && toState.name !== "security.login" ){
+            e.preventDef;ault();
+            $state.go("security.login");
+          }
+        }
 
-});
+      });
+    });
 
