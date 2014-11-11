@@ -6,7 +6,6 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic',
   "restangular",
-  "ngCookies",
   'starter.browse',
   'starter.menu',
   'starter.search',
