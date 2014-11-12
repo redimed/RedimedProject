@@ -13,7 +13,9 @@
             <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
                 <p>Type</p>
                 <p>
-                    <select class="form-control "  ng-model="selectedFilter.rltypeSelected" ng-options="rltype.Rl_TYPE_NAME for rltype in rltypesFilter" ng-change="rlTypesFilterChange(selectedFilter.rltypeSelected.RL_TYPE_ID)"></select>
+                    <select class="form-control "  ng-model="selectedFilter.rltypeSelected" ng-options="rltype.Rl_TYPE_NAME for rltype in rltypesFilter" ng-change="rlTypesFilterChange(selectedFilter.rltypeSelected.RL_TYPE_ID)">
+                        <option  value=""></option>
+                    </select>
                 </p>
             </div>
             <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
@@ -64,19 +66,28 @@
                                     {{doctor.DOCTOR_NAME}}
                                 </div>
                                 <div class="col-md-10">
-                                    <div ng-repeat="spec in doctor.SPEC_ITEMS">
+                                    <div ng-repeat="type in doctor.TYPE_ITEMS">
                                         <div class="col-md-2">
-                                            {{spec.Specialties_name}}
+                                            {{type.Rl_TYPE_NAME}}
                                         </div>
-                                        <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
-                                            <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
-                                               class="btn btn-sm yellow filter-submit margin-bottom"
-                                               style="margin-left: 10px;margin-bottom: 10px; width: 70px"
-                                               ng-click="selectAppointmentCalendar(appointment,spec.Specialties_id)">
-                                                {{ appointment.APPOINTMENT_TIME }}
-                                            </a>
+                                        <div class="col-md-10">
+                                            <div ng-repeat="spec in type.SPEC_ITEMS">
+                                                <div class="col-md-2">
+                                                    {{spec.Specialties_name}}
+                                                </div>
+                                                <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
+                                                    <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
+                                                       class="btn btn-sm yellow filter-submit margin-bottom"
+                                                       style="margin-left: 10px;margin-bottom: 10px; width: 70px"
+                                                       ng-click="selectAppointmentCalendar(appointment,spec.Specialties_id)">
+                                                        {{ appointment.APPOINTMENT_TIME }}
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>

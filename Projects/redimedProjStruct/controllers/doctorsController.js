@@ -709,7 +709,7 @@ module.exports =
         });
     },
     
-//tannv.dts@gmail.com    
+    //tannv.dts@gmail.com
     getDoctorOfSpeciality:function(req,res)
     {
         var Specialties_id=req.query.Specialties_id;
@@ -723,6 +723,34 @@ module.exports =
                     if(err)
                     {
                         console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'})
+                    }
+                    else
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+
+                });
+        });
+    },
+
+    //tannv.dts@gmail.com
+    getDoctorForSourceType:function(req,res)
+    {
+        var sourceType=req.query.sourceType;
+        var sql=
+            " SELECT DISTINCT doctor.*                                                                                      "+
+            " FROM 	doctors doctor INNER JOIN doctor_specialities doctorSpec ON doctor.`doctor_id`=doctorSpec.`doctor_id`   "+
+            " 	INNER JOIN `cln_specialties` spec ON spec.`Specialties_id`=doctorSpec.`Specialties_id`                      "+
+            " 	INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                       "+
+            " WHERE 	rltype.`SOURCE_TYPE`=?                                                                              ";
+        req.getConnection(function(err,connection)
+        {
+
+            var query = connection.query(sql,[sourceType],function(err,rows)
+                {
+                    if(err)
+                    {
                         res.json({status:'fail'})
                     }
                     else
