@@ -51,16 +51,12 @@ app.get('/api/rlob/rl_bookings/admin/filter-booking',rlBookingsController.lob_fi
 app.post('/api/rlob/rl_bookings/admin/change-appointment-calendar',rlBookingsController.changeAppointmentCalendar);
 app.get('/api/rlob/rl_bookings/admin/get-files-by-booking-id',rlBookingsController.get_files_booking);//nguyen khank
 app.post('/api/rlob/rl_bookings/admin/send-comfirm-email',rlBookingsController.sendConfirmEmail);
-app.get('/api/rlob/rl_bookings/admin/status',rlBookingsController.bookingsListStatus);//chien
 app.get('/api/rlob/rl_bookings/admin/report',rlBookingsController.bookingsList);//chien
-app.get('/api/rlob/rl_bookings/admin/report/get-pass-booking-have-not-result',rlBookingsController.getReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: get pass booking have not result
-app.get('/api/rlob/rl_bookings/admin/report/get-count-pass-booking-have-not-result',rlBookingsController.getCountReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: count total number of pass booking have not result
-app.get('/api/rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have-not-result',rlBookingsController.getItemsOfPageReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: items of page pass booking have not result
-
-
+app.get('/api/rlob/rl_bookings/admin/status',rlBookingsController.bookingsListStatus);//chien
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-not-change-status',rlBookingsController.getPassBookingNotChangeStatus);
 app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document',rlBookingsController.getUpcommingBookingHaveNotClientDocument);
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);
+app.get('/api/rlob/rl_bookings/admin/report/get-pass-booking-have-not-result',rlBookingsController.getReportPassBookingHaveNotResult);
 
 //rl_booking_files
 app.get('/api/rlob/rl_booking_files/get-new-key',rlBookingFilesController.getNewKey);
