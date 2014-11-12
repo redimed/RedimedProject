@@ -137,21 +137,22 @@ angular.module('app.loggedIn.booking.setting.controller',[])
             isViewAllData:"1",
             phone:null,
             username:null,
-            companyId:companyInfo[0].id
+            companyId:companyInfo[0].id,
+            userType:'Company'
         };
 
         OnlineBookingService.getUserInfo($stateParams.id).then(function(data){
             $scope.info.bookPerson = data.Booking_Person;
             $scope.info.email = data.Contact_email;
-            $scope.info.isDownload = data.isDownloadResult;
-            $scope.info.isEnable = data.isEnable;
-            $scope.info.isMakeBooking = data.isMakeBooking;
-            $scope.info.isPackage = data.isPackage;
-            $scope.info.isPosition = data.isPosition;
-            $scope.info.isSetting = data.isSetting;
-            $scope.info.isShowAll = data.isAll;
-            $scope.info.isShowBooking = data.isBooking;
-            $scope.info.isViewAllData = data.isAllCompanyData;
+            $scope.info.isDownload = data.isDownloadResult == 1 ? '1':'0';
+            $scope.info.isEnable = data.isEnable == 1 ? '1':'0';
+            $scope.info.isMakeBooking = data.isMakeBooking == 1 ? '1':'0';
+            $scope.info.isPackage = data.isPackage == 1 ? '1':'0';
+            $scope.info.isPosition = data.isPosition == 1 ? '1':'0';
+            $scope.info.isSetting = data.isSetting == 1 ? '1':'0';
+            $scope.info.isShowAll = data.isAll == 1 ? '1':'0';
+            $scope.info.isShowBooking = data.isBooking == 1 ? '1':'0';
+            $scope.info.isViewAllData = data.isAllCompanyData == 1 ? '1':'0';
             $scope.info.phone = data.Contact_number;
             $scope.info.username = data.user_name;
         })
