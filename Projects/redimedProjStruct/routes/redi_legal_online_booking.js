@@ -30,6 +30,7 @@ app.get('/api/rlob/doctors/list',doctorsController.list);
 app.get('/api/rlob/doctors/get-doctors-by-speciality',doctorsController.getDoctorOfSpeciality);
 app.get('/api/rlob/doctors/get-doctors-info-by-userid',doctorsController.getDoctorInfoByUserId);
 app.get('/api/rlob/doctors/get-doctors-by-id',doctorsController.getDoctorById);
+app.get('/api/rlob/doctors/get-doctors-for-source-type',doctorsController.getDoctorForSourceType);
 
 
 //cln_appointment-calendar

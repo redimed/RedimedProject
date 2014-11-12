@@ -31,9 +31,12 @@ app.post('/api/erm/doctors/getCasualCalendar', DoctorController.getCasualCalenda
 app.get('/api/erm/doctors/getMaxId', DoctorController.getMaxId);
 app.post('/api/erm/doctors/update', DoctorController.update);
 app.post('/api/erm/doctors/insert', DoctorController.insert);
+app.post('/api/erm/doctors/changeCasual', DoctorController.changeCasual);
 
 
 app.post('/api/erm/appointment/get', AppointmentController.getAppointmentCalendar_bv);
+app.post('/api/erm/appointment/update', AppointmentController.bookingUpdate);
+app.post('/api/erm/appointment/delete', AppointmentController.bookingDelete);
 app.post('/api/erm/appointment/overview', AppointmentController.overviewAppointmentCalendar);
 app.post('/api/erm/appointment/booking', AppointmentController.booking);
 app.post('/api/erm/appointment/getById', AppointmentController.getById);

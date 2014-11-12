@@ -5,16 +5,24 @@ var db = require('../models');
 module.exports =
 {
     list:function(req,res){
+        var sourceType=req.query.sourceType;
+        var sql=
+            " SELECT spec.*                                                                                     "+
+            " FROM `cln_specialties` spec INNER JOIN `rl_types` rltype ON spec.`RL_TYPE_ID`=rltype.`RL_TYPE_ID` "+
+            " WHERE rltype.`SOURCE_TYPE`=?                                                                      ";
         req.getConnection(function(err,connection)
         {
-
-            var query = connection.query('SELECT * FROM cln_specialties',function(err,rows)
+            var query = connection.query(sql,[sourceType],function(err,rows)
             {
                 if(err)
                 {
-                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
                 }
-                res.json(rows);
+                else
+                {
+                    res.json({status:'success',data:rows})
+                }
+
             });
         });
     },

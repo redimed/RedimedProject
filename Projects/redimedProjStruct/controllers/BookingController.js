@@ -636,8 +636,6 @@ module.exports = {
     editAppointmentNote: function(req,res){
         var info = req.body.info;
 
-        console.log(info);
-
         db.BookingCandidate.update({
             Appointment_notes: info.note
         },{Booking_id:info.bookingId, Candidate_id:info.candidateId})
