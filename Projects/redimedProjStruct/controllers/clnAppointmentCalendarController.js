@@ -7,6 +7,77 @@ var common_functions = require("../functions");
 
 module.exports =
 {
+    bookingDelete: function(req, res){
+        var cal_id = (req.body.cal_id)?req.body.cal_id:0;
+
+        var sql = "UPDATE cln_appointment_calendar cac"
+                +" SET cac.Patient_id=NULL"
+                +", cac.STATUS='No Appointment'"
+                +", cac.NOTES=''"
+                +", cac.PHONE=NULL"
+                +", cac.APP_TYPE=NULL"
+                +", cac.ARR_TIME=NULL"
+                +", cac.ATTEND_TIME=NULL"
+                +", cac.AVAILABLE=NULL"
+                +", cac.SERVICE_ID=NULL"
+                +", cac.ACC_TYPE=NULL"
+                +", cac.bill_to=NULL"
+                +" WHERE cac.CAL_ID="+cal_id;
+
+        req.getConnection(function(err, connection){
+            var query = connection.query(
+                sql,
+                function(err, rows){
+                    if(err){
+                        console.log("Error Selecting : %s ",err );
+                    }
+                    else{
+                        res.json(rows);
+                    }
+                }
+            );
+        });
+    },
+    bookingUpdate: function(req, res){
+        var cal_id = req.body.CAL_ID;
+        var arr_time = common_functions.convertFromHoursToDateTime(req.body.ARR_TIME);
+        var acc_type = req.body.ACC_TYPE;
+        var app_type = req.body.APP_TYPE;
+        var attend_time = common_functions.convertFromHoursToDateTime(req.body.ATTEND_TIME);
+        var notes = req.body.NOTES;
+        var phone = req.body.PHONE;
+        var service_id = req.body.SERVICE_ID;
+        var status = req.body.STATUS;
+        var bill_to = req.body.bill_to;
+
+        var sql = "UPDATE cln_appointment_calendar cac"
+                +" SET ARR_TIME='"+arr_time+"'"
+                +", ATTEND_TIME='"+attend_time+"'"
+                +", ACC_TYPE='"+acc_type+"'"
+                +", APP_TYPE='"+app_type+"'"
+                +", NOTES='"+notes+"'"
+                +", PHONE='"+phone+"'"
+                +", SERVICE_ID='"+service_id+"'"
+                +", STATUS='"+status+"'"
+                +", BILL_TO='"+bill_to+"'"
+                +" WHERE CAL_ID='"+cal_id+"'";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql, function(err,rows)
+            {
+                if(err)
+                {
+                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:rows});
+                }
+            });
+        });
+    },
     getById: function(req, res){
         var booking_id = (req.body.booking_id)?req.body.booking_id:0;
 
