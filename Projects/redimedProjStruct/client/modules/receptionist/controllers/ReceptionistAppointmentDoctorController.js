@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.appointment.doctor.controller", [])
 
-.controller("ReceptionistAppointmentDoctorController", function($scope, $modal, $cookieStore, DoctorService, PatientService, ReceptionistService, ConfigService){
+.controller("ReceptionistAppointmentDoctorController", function($scope, $state, $cookieStore, DoctorService, PatientService, ReceptionistService, ConfigService){
 	$scope.modelObjectMap = {};
 	$scope.doctor = {};
 	$scope.appointmentList = [];
@@ -52,27 +52,18 @@ angular.module("app.loggedIn.receptionist.appointment.doctor.controller", [])
 
 	/* BOOKING */
 	$scope.bookingPatient = function(data){
-		var modalTemp = {
-			templateUrl: "modules/patient/views/popup/action.html",
-			controller: "PatientActionController",
-		}
-
-		console.log(data);
-
-		var modalInstance = $modal.open({
-			templateUrl: modalTemp.templateUrl,
-			size: "lg",
-			controller: modalTemp.controller,
-			resolve: {
-		        items: function () {
-		        	return {cal_id: data.CAL_ID, bookingObject: data, data: data, options: $scope.options};
-		        }
-		    }
+		$cookieStore.put("patientBookingInfo", {
+			cal_id: data.CAL_ID,
+			data: $cookieStore.get("appointmentDoctor")
 		});
 
-		modalInstance.result.then(function(data){
-			$scope.refreshAppointment();
-		});
+		ReceptionistService.getById(data.CAL_ID).then(function(data){
+			if(data.Patient_id === null){
+				$state.go("loggedIn.patient.booking");
+			}else{
+				$state.go("loggedIn.patient.detail");
+			}
+		})
 	}
 	/* END BOOKING */
 })

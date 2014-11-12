@@ -1,13 +1,5 @@
-<div class="portlet grey-cascade box">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-search"></i> Search Patient
-        </div>
-        <div class="pull-right">
-            <a ui-sref="loggedIn.patient.add" class="btn btn-primary"><i class="fa fa-plus-circle"></i> New Patient</a>
-        </div>
-    </div>
-    <div class="portlet-body">
+<div class="panel panel-default">
+    <div class="panel-body">
         <!-- PAGINATION -->
         <div class="pull-left">
             <pagination boundary-links="true" total-items="list.count" ng-model="search.currentPage" 
@@ -58,7 +50,6 @@
             </thead>
             <tbody>
                 <tr ng-repeat="l in list.results" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
-
                     <td>{{l.First_name}}</td>
                     <td>{{l.Sur_name}}</td>
                     <td>{{l.Sex}}</td>
@@ -69,10 +60,3 @@
         </table>
     </div>
 </div>
-
-
-
-<style>
-    .file-control{ border-right: 1px solid white; padding: 0 10px;}
-    .file-control:hover{cursor: pointer}
-</style>

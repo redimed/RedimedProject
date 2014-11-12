@@ -55,39 +55,41 @@ angular.module('app.loggedIn.rlob.services',[])
         }
 	
 	    //chien bookingsList
-        rlobService.getbookingsList=function(){
+        rlobService.getbookingsList=function(doctorId){
             var bookingsList=api.one('rlob/rl_bookings/admin/report');
-            return bookingsList.get();
+            return bookingsList.get({doctorId:doctorId});
         }
 
 	    //chien
-        rlobService.getbookingsListStatus=function(){
+        rlobService.getbookingsListStatus=function(doctorId){
             var bookingsListStaus=api.one('rlob/rl_bookings/admin/status');
-            return bookingsListStaus.get();
+            return bookingsListStaus.get({doctorId:doctorId});
         }
 
-        rlobService.getPassBookingNotChangeStatus=function(bookingType)
-        {
-            var result=api.one('rlob/rl_bookings/admin/get-pass-booking-not-change-status');
-            return result.get({bookingType:bookingType});
-        }
-
-        rlobService.getUpcommingBookingHaveNotClientDocument=function(bookingType)
-        {
-            var result=api.one('rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document');
-            return result.get({bookingType:bookingType});
-        }
-        rlobService.getPassBookingHaveNotResult=function(bookingType)
-        {
-            var result=api.one('rlob/rl_bookings/admin/get-pass-booking-have-not-result');
-            return result.get({bookingType:bookingType});
-        }
-
-        rlobService.getReportPassBookingHaveNotResult=function(bookingType)
+        rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');
-            return result.get({bookingType:bookingType});
+            return result.get({bookingType:bookingType,doctorId:doctorId});
         }
+
+        rlobService.getPassBookingNotChangeStatus=function(bookingType,doctorId)
+        {
+            var result=api.one('rlob/rl_bookings/admin/get-pass-booking-not-change-status');
+            return result.get({bookingType:bookingType,doctorId:doctorId});
+        }
+
+        rlobService.getUpcommingBookingHaveNotClientDocument=function(bookingType,doctorId)
+        {
+            var result=api.one('rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document');
+            return result.get({bookingType:bookingType,doctorId:doctorId});
+        }
+        rlobService.getPassBookingHaveNotResult=function(bookingType,doctorId)
+        {
+            var result=api.one('rlob/rl_bookings/admin/get-pass-booking-have-not-result');
+            return result.get({bookingType:bookingType,doctorId:doctorId});
+        }
+
+
 
         //-------------------------------------------------------------------
 

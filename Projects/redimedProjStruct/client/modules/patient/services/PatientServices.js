@@ -20,8 +20,7 @@ angular.module("app.loggedIn.patient.services", [])
 
 	/**
 	 * END KHANK API
-	 */
-
+	 */ 
 
     instanceService.search = function(option){
         var listApi = appApi.all("erm/v1/patients/search");

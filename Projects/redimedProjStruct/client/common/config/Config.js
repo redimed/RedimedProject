@@ -1070,6 +1070,7 @@ angular.module('app.config', [])
 .constant('COUNTRY_LIST', COUNTRY_LIST)
 
 .constant('MODE_ROW', [
+    {code:5},
     {code:10},
     {code:20},
     {code:50},
@@ -1191,6 +1192,25 @@ angular.module('app.config', [])
     configService.system_service_by_clinical = function(clinical_dept_id){
         var serviceApi = configApi.all("system/listServiceByClinical");
         return serviceApi.post({dept:clinical_dept_id});
+    }
+
+    configService.getCommonDateDefault = function(dateTime){
+        if(typeof dateTime === 'string')
+            dateTime = new Date(dateTime);
+
+        var year = dateTime.getFullYear();
+        var month = dateTime.getMonth()+1;
+        var date = dateTime.getDate();
+
+        if(month < 10){
+            month = "0"+month;
+        }
+
+        if(date < 10){
+            date = "0"+date;
+        }
+
+        return date+"/"+month+"/"+year;
     }
 
     configService.getCommonDate = function(dateTime){

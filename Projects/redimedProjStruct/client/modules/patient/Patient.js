@@ -26,9 +26,19 @@ angular.module("app.loggedIn.patient", [
     .state("loggedIn.patient.booking", {
         url: "/booking",
         views: {
-            "main-content": {
+            "main-content":{
                 templateUrl: "modules/patient/views/booking.html",
                 controller: "PatientBookingController"
+            }
+        }
+    })
+
+    .state("loggedIn.patient.detail", {
+        url: "/detail",
+        views: {
+            "main-content":{
+                templateUrl: "modules/patient/views/detail.html",
+                controller: "PatientDetailController"
             }
         }
     })

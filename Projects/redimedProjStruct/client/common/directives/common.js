@@ -613,4 +613,23 @@ angular.module("app.directive.common", [])
                 date.getUTCSeconds());
         };
 
-    });
+})
+
+.directive("signature", function(){
+    return {
+        restrict: "A",
+        require: "ngModel",
+        scope: {
+            'ngModel': "="
+        },
+        link: function(scope, element, attr){
+            element.jSignature();
+
+            element.bind("change", function(e){
+                scope.$apply(function(){
+                    scope.ngModel = element.jSignature("getData");
+                })
+            })
+        }
+    }
+})

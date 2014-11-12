@@ -77,16 +77,17 @@ angular.module("app.loggedIn.doctor", [
         }
     })
 
-            // TIMETABLE DETAIL CASUAL
-            .state("loggedIn.doctor.timetable.detail.casual", {
-                url: "/casual",
-                views: {
-                    "main-content-timetable": {
-                        templateUrl: "modules/doctor/views/timetable-casual.html",
-                        controller: "DoctorTimetableDetailCasualController"
-                    }
-                }
-            })
+    // TIMETABLE DETAIL CASUAL
+    .state("loggedIn.doctor.timetable.detail.casual", {
+        url: "/casual",
+        views: {
+            "main-content-timetable": {
+                templateUrl: "modules/doctor/views/timetable-casual.html",
+                controller: "DoctorTimetableDetailCasualController"
+            }
+        }
+    })
+
 
 	// ITEM SHEET
 	.state("loggedIn.doctor.items", {
@@ -136,22 +137,23 @@ angular.module("app.loggedIn.doctor", [
 		}
 	})
 
-            .state("loggedIn.doctor.patients.detail", {
-                url: "/detail",
-                views: {
-                    "main-content@loggedIn.doctor": {
-                        templateUrl: "modules/doctor/views/patients-detail.html",
-                        controller: "DoctorPatientsDetailController"
-                    }
-                }
-            })
-            .state("loggedIn.doctor.patients.detail.appt", {
-                url: "/appt",
-                views: {
-                    "main-content@loggedIn.doctor": {
-                        templateUrl: "modules/doctor/views/patients-detail-appt.html",
-                        controller: "DoctorPatientsDetailApptController"
-                    }
-                }
-            })
+
+    .state("loggedIn.doctor.patients.detail", {
+        url: "/detail",
+        views: {
+            "main-content@loggedIn.doctor": {
+                templateUrl: "modules/doctor/views/patients-detail.html",
+                controller: "DoctorPatientsDetailController"
+            }
+        }
+    })
+    .state("loggedIn.doctor.patients.detail.appt", {
+        url: "/appt",
+        views: {
+            "main-content@loggedIn.doctor": {
+                templateUrl: "modules/doctor/views/patients-detail-appt.html",
+                controller: "DoctorPatientsDetailApptController"
+            }
+        }
+    })
 })

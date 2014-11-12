@@ -24,5 +24,15 @@ angular.module("app.loggedIn.receptionist.services", [])
 		return getApi.post({'booking_id': id});
 	}
 
+	receptionistService.deleteBooking = function(options){
+		var deleteApi = receptionistApi.all("appointment/delete");
+		return deleteApi.post(options);
+	}
+
+	receptionistService.updateBooking = function(options){
+		var updateApi = receptionistApi.all("appointment/update");
+		return updateApi.post(options);
+	}
+
 	return receptionistService;
 })

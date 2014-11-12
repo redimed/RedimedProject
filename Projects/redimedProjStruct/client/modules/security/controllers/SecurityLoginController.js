@@ -26,13 +26,14 @@ angular.module("app.security.login.controller",[
 						 */
 						 if (response.userInfo.user_type == 'Doctor') {
 							DoctorService.getByUserId(response.userInfo.id).then(function (data) {
-						
-								$cookieStore.put('doctorInfo', {
-									doctor_id: data.doctor_id, 
-									NAME: data.NAME, 
-									Provider_no: data.Provider_no,
-									CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
-								});
+						        if(data){
+                                    $cookieStore.put('doctorInfo', {
+                                        doctor_id: data.doctor_id, 
+                                        NAME: data.NAME, 
+                                        Provider_no: data.Provider_no,
+                                        CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
+                                    });
+                                }
 							});
 						}
 					}

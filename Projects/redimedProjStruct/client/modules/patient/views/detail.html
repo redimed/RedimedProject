@@ -1,0 +1,197 @@
+<div class="row">
+	<div class="col-md-12">
+		<button class="btn btn-danger" ng-click="deleteAppointment()">Delete Appointment</button>
+		<button class="btn btn-primary" ng-click="updateAppointment()">{{label_update_view}}</button>
+	</div>
+</div>
+<div class="break-row"></div>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<b>APPOINTMENT INFORMATION</b>
+	</div>
+	<div class="panel-body">
+		<div class="break-row"></div>
+		<!-- DOCTOR NAME -->
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                Doctor
+            </label>
+            <div class="col-md-4 col-sm-3 col-xs-6">
+                <p class="form-control-static">{{modelObjectBookingMap.DOCTOR_NAME}}</p>
+            </div>
+        </div>
+        <!-- END DOCTOR NAME -->
+        <!-- DATE BOOKING -->
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                Date Booking
+            </label>
+            <div class="col-md-4 col-sm-3 col-xs-6">
+                <p class="form-control-static">{{bookingPatientInfo.datepicker}}</p>
+            </div>
+        </div>
+        <!-- END DATE BOOKING -->
+
+		<div class="break-row"></div>
+
+		<!-- SITE -->
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                Site Name
+            </label>
+            <div class="col-md-4 col-sm-3 col-xs-6">
+                <p class="form-control-static">{{modelObjectBookingMap.SITE_NAME}}</p>
+            </div>
+        </div>
+        <!-- END SITE -->
+
+        <!-- CILINICAL DEPARTMENT -->
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                Clinical Department
+            </label>
+            <div class="col-md-4 col-sm-3 col-xs-6">
+                <p class="form-control-static">{{modelObjectBookingMap.CLINICAL_DEPT_NAME}}</p>
+            </div>
+        </div>
+        <!-- END CLINICAL DEPARTMENT -->
+
+        <div class="break-row"></div>
+
+        <!-- SERVICE -->
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                Service
+            </label>
+            <div class="col-md-4 col-sm-3 col-xs-6">
+                <select class="form-control input-sm" ng-model="modelObjectBookingMap.SERVICE_ID"
+                    ng-options="service.SERVICE_ID as service.SERVICE_NAME for service in options.services"
+                    ng-disabled="mode=='view'">
+                </select>
+            </div>
+        </div>
+        <!-- END SERVICE -->
+
+        <!-- TIME -->
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                Time
+            </label>
+            <div class="col-md-4 col-sm-3 col-xs-6">
+                <p class="form-control-static">
+                    {{bookingPatientInfo.FROM_TIME}} - {{bookingPatientInfo.TO_TIME}}
+                </p>
+            </div>
+        </div>
+        <!-- END TIME -->
+
+        <div class="break-row"></div>
+
+            <!-- ACCOUNT TYPE -->
+            <div class="form-group">
+                <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                    Account Type
+                </label>
+                <div class="col-md-4 col-sm-3 col-xs-6">
+                    <select class="form-control input-sm" ng-model="modelObjectBookingMap.ACC_TYPE"
+                        ng-options="acc_type.code as acc_type.name for acc_type in options.acc_types"
+                        ng-disabled="mode=='view'">
+                    </select>
+                </div>
+            </div>
+            <!-- END ACCOUNT TYPE -->
+
+            <!-- APP TYPE -->
+            <div class="form-group">
+                <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                    App Type
+                </label>
+                <div class="col-md-4 col-sm-3 col-xs-6">
+                    <select class="form-control input-sm" ng-model="modelObjectBookingMap.APP_TYPE"
+                        ng-options="app_type.code as app_type.name for app_type in options.app_types"
+                        ng-disabled="mode=='view'">
+                    </select>
+                </div>
+            </div>
+            <!-- END APP TYPE -->
+
+            <div class="break-row"></div>
+
+            <!-- STATUS -->
+            <div class="form-group">
+                <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                    Status
+                </label>
+                <div class="col-md-4 col-sm-3 col-xs-6">
+                    <input type="text" ng-disabled="mode=='view'" ng-model="modelObjectBookingMap.STATUS" 
+                        class="form-control">
+                </div>
+            </div>
+            <!-- END STATUS -->
+
+            <!-- BILL TO -->
+            <div class="form-group">
+                <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                    Bill to
+                </label>
+                <div class="col-md-4 col-sm-3 col-xs-6">
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="modelObjectBookingMap.bill_to" value="1" ng-disabled="mode=='view'"> Self
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="modelObjectBookingMap.bill_to" value="2" ng-disabled="mode=='view'"> Employer
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="modelObjectBookingMap.bill_to" value="3" ng-disabled="mode=='view'"> Insurer
+                    </label>
+                </div>
+            </div>
+            <!-- END BILL TO -->
+
+            <div class="break-row"></div>
+
+            <!-- ARRANGE TIME -->
+            <div class="form-group">
+                <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                    Arrange Time
+                </label>
+                <div class="col-md-4 col-sm-3 col-xs-6">
+                    <input custom-timepicker ng-model="modelObjectBookingMap.ARR_TIME" ng-disabled="mode=='view'"
+                        class="form-control">
+                </div>
+            </div>
+            <!-- END ARRANGE TIME -->
+
+            <!-- ATTEND TIME -->
+            <div class="form-group">
+                <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                    Attend Time
+                </label>
+                <div class="col-md-4 col-sm-3 col-xs-6">
+                    <input custom-timepicker ng-model="modelObjectBookingMap.ATTEND_TIME" ng-disabled="mode=='view'"
+                        class="form-control">
+                </div>
+            </div>
+            <!-- END ATTEND TIME -->
+
+            <div class="break-row"></div>
+
+            <!-- NOTES -->
+            <div class="form-group">
+                <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                    Notes
+                </label>
+                <div class="col-md-4 col-sm-3 col-xs-6">
+                    <input type="text" ng-model="modelObjectBookingMap.NOTES" ng-disabled="mode=='view'" 
+                        class="form-control">
+                </div>
+            </div>
+            <!-- END NOTES -->
+	</div> <!-- END PANEL BODY -->
+</div><!-- END PANEL PRIMARY -->
+
+<div class="row" ng-show="mode=='update'">
+    <div class="col-md-12">
+        <button class="btn btn-primary btn-sm" ng-click="updateBooking()">Update Info</button>
+    </div>
+</div>
