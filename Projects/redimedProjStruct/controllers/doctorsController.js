@@ -10,6 +10,30 @@ squel.useFlavour('mysql');
 
 module.exports =
 {
+    changeCasual: function(req, res){
+        var from_time = common_function.convertFromHoursToDateTime(req.body.FROM_TIME);
+        var to_time = common_function.convertFromHoursToDateTime(req.body.TO_TIME);
+        var site_id = req.body.SITE_ID;
+        var doctor_id = req.body.DOCTOR_ID;
+        var cal_id = req.body.CAL_ID;
+
+        var sql = "UPDATE cln_appointment_calendar"
+                +" SET FROM_TIME='"+from_time+"'"
+                +", TO_TIME='"+to_time+"'"
+                +", SITE_ID="+site_id
+                +" WHERE DOCTOR_ID="+doctor_id
+                +" AND CAL_ID="+cal_id;
+        
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
     getCasualCalendar: function(req, res){
         var from_time = common_function.toDateDatabase(req.body.from_time);
         var to_time = common_function.toDateDatabase(req.body.to_time);

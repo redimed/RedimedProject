@@ -178,5 +178,10 @@ angular.module("app.loggedIn.doctor.services", [])
 		return casualApi.post(data);
 	}
 
+	doctorService.changeCasual = function(options){
+		var casualApi = doctorApi.all("doctors/changeCasual");
+		return casualApi.post(options);
+	}
+
 	return doctorService;
 })

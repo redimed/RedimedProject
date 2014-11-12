@@ -12,7 +12,7 @@
             </label>
             <div class="col-md-4 col-sm-3 col-xs-6">
                 <input placeholder="From Time" ng-model="modelObjectMap.from_time" 
-                	name="from_time" class="form-control" custom-date>
+                	name="from_time" class="form-control" custom-date ng-change="changeTime()">
             </div>
         </div>
         <!-- END FROM TIME -->
@@ -24,33 +24,51 @@
             </label>
             <div class="col-md-4 col-sm-3 col-xs-6">
                 <input placeholder="To Time" ng-model="modelObjectMap.to_time" 
-                	name="to_time" class="form-control" custom-date>
+                	name="to_time" class="form-control" custom-date ng-change="changeTime()">
             </div>
         </div>
         <!-- END END TIME -->
 
         <div class="break-row"></div>
 
-        <table class="table table-bordered">
-        	<thead>
-        		<tr>
-	        		<th>Week</th>
-	        		<th>Day</th>
-	        		<th>From Time</th>
-	        		<th>To Time</th>
-	        		<th>Site</th>
-	        		<th>Description</th>
-	        	</tr>
-        	</thead>
+        <table class="table">
         	<tbody>
-        		<tr ng-repeat="list in casual_list">
-        			<td>{{list.week}} - {{list.convert_date}}</td>
-        			<td>{{list.day_of_week}}</td>
-        			<td>{{list.from_time_map}}</td>
-        			<td>{{list.to_time_map}}</td>
-        			<td>{{list.SITE_ID}}</td>
-        			<td>{{list.STATUS}}</td>
-        		</tr>
+                <tr ng-repeat="list in real_list_map">
+                    <td style="font-size: 14px;">
+                        <b>Date: </b>{{list.convert_date}}<br>
+                        <b>Day: </b>{{list.day_of_week}}<br>
+                        <b>Week: </b>{{list.week}}
+                    </td>
+                    <td>
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>From Time</th>
+                                <th>To Time</th>
+                                <th>Site</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="l in list.items">
+                                    <td>
+                                        <input ng-model="l.from_time_map" name="from_time" 
+                                        custom-timepicker style="width: 50px;" readonly 
+                                        ng-change="changeCalendar({'data':l})">
+                                    </td>
+                                    <td>
+                                        <input ng-model="l.to_time_map" name="from_time" 
+                                        custom-timepicker style="width: 50px;" readonly 
+                                        ng-change="changeCalendar({'data':l})">
+                                    </td>
+                                    <td>
+                                        <select ng-model="l.SITE_ID"
+                                            ng-options="site.id as site.Site_name for site in options.sites_option"
+                                            ng-change="changeCalendar({'data':l})">
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
         	</tbody>
         </table>
 	</div>

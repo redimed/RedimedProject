@@ -12,7 +12,10 @@ module.exports =
 
         req.getConnection(function(err, connection){
             var query = connection.query(
-                "SELECT * FROM cln_appointment_calendar WHERE CAL_ID="+booking_id,
+                "SELECT cac.*, d.NAME AS DOCTOR_NAME, r.Site_name AS SITE_NAME, ccd.CLINICAL_DEPT_NAME FROM cln_appointment_calendar cac"+
+                " INNER JOIN doctors d ON d.doctor_id=cac.DOCTOR_ID AND cac.CAL_ID="+booking_id+
+                " INNER JOIN redimedsites r ON r.id=cac.SITE_ID"+
+                " INNER JOIN cln_clinical_depts ccd ON ccd.CLINICAL_DEPT_ID=cac.CLINICAL_DEPT_ID",
                 function(err, rows){
                     if(err){
                         console.log("Error Selecting : %s ",err );

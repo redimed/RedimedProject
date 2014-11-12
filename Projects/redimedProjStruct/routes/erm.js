@@ -31,6 +31,7 @@ app.post('/api/erm/doctors/getCasualCalendar', DoctorController.getCasualCalenda
 app.get('/api/erm/doctors/getMaxId', DoctorController.getMaxId);
 app.post('/api/erm/doctors/update', DoctorController.update);
 app.post('/api/erm/doctors/insert', DoctorController.insert);
+app.post('/api/erm/doctors/changeCasual', DoctorController.changeCasual);
 
 
 app.post('/api/erm/appointment/get', AppointmentController.getAppointmentCalendar_bv);

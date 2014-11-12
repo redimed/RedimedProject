@@ -58,7 +58,7 @@ var model_sql = {
     },
     
     sql_get_by_opt: function(search_opt){
-        var limit = (search_opt.limit) ? search_opt.limit : 10;
+        var limit = (search_opt.limit) ? search_opt.limit : 0;
         var offset = (search_opt.offset) ? search_opt.offset : 0;
         var search_data = search_opt.data;
         
