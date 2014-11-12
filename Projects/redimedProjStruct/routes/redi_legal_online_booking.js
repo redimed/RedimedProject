@@ -50,8 +50,10 @@ app.get('/api/rlob/rl_bookings/admin/filter-booking',rlBookingsController.lob_fi
 app.post('/api/rlob/rl_bookings/admin/change-appointment-calendar',rlBookingsController.changeAppointmentCalendar);
 app.get('/api/rlob/rl_bookings/admin/get-files-by-booking-id',rlBookingsController.get_files_booking);//nguyen khank
 app.post('/api/rlob/rl_bookings/admin/send-comfirm-email',rlBookingsController.sendConfirmEmail);
-app.get('/api/rlob/rl_bookings/admin/report',rlBookingsController.bookingsList);//chien
-app.get('/api/rlob/rl_bookings/admin/status',rlBookingsController.bookingsListStatus);//chien
+app.get('/api/rlob/rl_bookings/count-total-bookings',rlBookingsController.countTotalBooking);//chien Upcomming booking
+app.get('/api/rlob/rl_bookings/get-items-of-paging-bookings',rlBookingsController.getItemsOfPagingBooking);//chien Upcomming booking
+app.get('/api/rlob/rl_bookings/count-total-bookings-status',rlBookingsController.countTotalBookingStatus);//chien Status
+app.get('/api/rlob/rl_bookings/get-items-of-paging-bookings-status',rlBookingsController.getItemsOfPagingBookingStatus);//chien Status
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-not-change-status',rlBookingsController.getPassBookingNotChangeStatus);
 app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document',rlBookingsController.getUpcommingBookingHaveNotClientDocument);
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);

@@ -9,10 +9,14 @@
         color: white;
         width: 100%;
     }
+    a {
+        text-shadow: none;
+        color: #ffffff;
+    }
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <div class="portlet grey-cascade box ng-scope">
+        <div class="portlet box green ng-scope">
             <div class="portlet-title">
                 <div class="caption">
                     <ul style="margin-bottom: -8px;border: none;" class="nav nav-tabs" role="tablist">
@@ -21,16 +25,23 @@
                         <li role="presentation"><a ng-click="report = 'report3'" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Booking Outstanding </a></li>
                     </ul>
                 </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
             </div>
-            <div class="portlet-body">
+            <div class="portlet-body flip-scroll">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" ng-show="report=='report1'">
+                        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="pagingBookingsChange()"></pagination>
                         <rlob-booking-report list="bookingslist"></rlob-booking-report>
-                        <pagination boundary-links="true" total-items="totalItems1" ng-model="currentPage1" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                        <!--<pagination boundary-links="true" total-items="totalItems1" ng-model="currentPage1" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>-->
                     </div>
                     <div role="tabpanel" class="tab-pane active" ng-show="report=='report2'">
+                        <pagination boundary-links="true" total-items="totalItemsStatus" ng-model="currentPageStatus" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="pagingBookingsStatusChange()"></pagination>
                         <rlob-booking-report list="bookingslistStatus"></rlob-booking-report>
-                        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                     </div>
 
                     <div role="tabpanel" class="tab-pane active" ng-show="report=='report3'">
@@ -72,7 +83,6 @@
                                 <td>{{booking.WRK_SURNAME}}</td>
                                 <td>{{booking.Rl_TYPE_NAME}}</td>
                                 <td>{{booking.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
-
                             </tr>
                             </tbody>
                         </table>

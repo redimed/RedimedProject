@@ -53,19 +53,26 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.all('rlob/rl_bookings/lob-change-status');
             return result.post({bookingId:bookingId,status:status});
         }
-	
-	    //chien bookingsList
-        rlobService.getbookingsList=function(){
-            var bookingsList=api.one('rlob/rl_bookings/admin/report');
-            return bookingsList.get();
+        //chien Upcomming booking
+        rlobService.getcountTotalBookings=function(){
+            var TotalBookings=api.one('rlob/rl_bookings/count-total-bookings');
+            return TotalBookings.get();
         }
-
-	    //chien
-        rlobService.getbookingsListStatus=function(){
-            var bookingsListStaus=api.one('rlob/rl_bookings/admin/status');
-            return bookingsListStaus.get();
+        //chien Upcomming booking
+        rlobService.getItemsOfPagingBookings=function(currentPage,itemsPerPage){
+            var getItemsBookings=api.one('rlob/rl_bookings/get-items-of-paging-bookings');
+            return getItemsBookings.get({currentPage:currentPage,itemsPerPage:itemsPerPage});
         }
-
+        //chien Status
+        rlobService.getcountTotalBookingsStatus=function(){
+            var TotalBookings=api.one('rlob/rl_bookings/count-total-bookings-status');
+            return TotalBookings.get();
+        }
+        //chien Status
+        rlobService.getItemsOfPagingBookingsStatus=function(currentPageStatus,itemsPerPageStatus){
+            var getItemsBookings=api.one('rlob/rl_bookings/get-items-of-paging-bookings-status');
+            return getItemsBookings.get({currentPageStatus:currentPageStatus,itemsPerPageStatus:itemsPerPageStatus});
+        }
         rlobService.getPassBookingNotChangeStatus=function(bookingType)
         {
             var result=api.one('rlob/rl_bookings/admin/get-pass-booking-not-change-status');

@@ -426,36 +426,109 @@ module.exports =
         });
     },
     /**
-     *select rl_bookings co APPOINTMENT_DATE > now() dete
+     *count total bookings
      * phanquocchien.c1109g@gmail.com
      */
-    bookingsList: function(req,res){
-       db.sequelize.query('SELECT booking.*,files.FILE_ID,rltype.`Rl_TYPE_NAME` '+
-        ' FROM `rl_bookings` booking '+
-        ' LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID` '+
-	' INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID` '+
-' WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP GROUP BY booking.`APPOINTMENT_DATE`',null,{raw:true})
-            .success(function(data){
-                res.json(data);
-            })
-            .error(function(err){
-                res.json({status:'error'});
-            })
+    countTotalBooking:function(req,res)
+{
+    var sql="SELECT COUNT(BOOKING_ID) AS count_bookings FROM `rl_bookings` WHERE`APPOINTMENT_DATE`>CURRENT_TIMESTAMP";
+    req.getConnection(function(err,connection)
+    {
+        var query = connection.query(sql,function(err,rows)
+        {
+            if(err || rows.length<1)
+            {
+                //console.log("Error Selecting : %s ",err );
+                res.json({status:'fail'});
+            }
+            else
+            {
+                res.json({status:'success',data:{count_bookings:rows[0].count_bookings}});
+            }
+        });
+    });
+},
+    /**
+     *get items booking
+     * phanquocchien.c1109g@gmail.com
+     */
+    getItemsOfPagingBooking:function(req,res)
+    {
+        console.log(req.query);
+        var pageIndex=req.query.currentPage;
+        var itemsPerPage=req.query.itemsPerPage;
+        var sql=" SELECT booking.*,files.FILE_ID,rltype.`Rl_TYPE_NAME`                                              "+
+            " FROM `rl_bookings` booking                                                                            "+
+            " LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`                         "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                              "+
+            " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP GROUP BY booking.`APPOINTMENT_DATE` LIMIT ?,?      ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[parseInt((pageIndex-1)*itemsPerPage),parseInt(itemsPerPage)],function(err,rows)
+            {
+                if(err || rows.length<1)
+                {
+                    //console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    //console.log(">>>>>>>>>>>>>>>>>>>>>>>>"+data)
+                    res.json({status:'success',data:rows});
+                }
+            });
+        });
     },
     /**
-     *Pass booking: chưa change status red, đã change status screen
+     *count total bookings status < CURRENT_TIMESTAMP
      * phanquocchien.c1109g@gmail.com
      */
-    bookingsListStatus: function(req,res){
-        db.sequelize.query('SELECT * FROM `rl_bookings` WHERE `APPOINTMENT_DATE` < CURRENT_TIMESTAMP GROUP BY `APPOINTMENT_DATE` DESC',null,{raw:true})
-            .success(function(data){
-                res.json(data);
-            })
-            .error(function(err){
-                res.json({status:'error'});
-            })
+    countTotalBookingStatus:function(req,res)
+    {
+        var sql="SELECT COUNT(BOOKING_ID) AS count_bookings_status FROM `rl_bookings` WHERE`APPOINTMENT_DATE`< CURRENT_TIMESTAMP";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err || rows.length<1)
+                {
+                    //console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:{count_bookings_status:rows[0].count_bookings_status}});
+                }
+            });
+        });
     },
-    
+    /**
+     *get items booking
+     * phanquocchien.c1109g@gmail.com
+     */
+    getItemsOfPagingBookingStatus:function(req,res)
+    {
+        console.log(req.query);
+        var pageIndex=req.query.currentPageStatus;
+        var itemsPerPage=req.query.itemsPerPageStatus;
+        var sql="SELECT * FROM `rl_bookings` WHERE`APPOINTMENT_DATE`< CURRENT_TIMESTAMP LIMIT ?,?";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[parseInt((pageIndex-1)*itemsPerPage),parseInt(itemsPerPage)],function(err,rows)
+            {
+                if(err || rows.length<1)
+                {
+                    //console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    //console.log(">>>>>>>>>>>>>>>>>>>>>>>>"+data)
+                    res.json({status:'success',data:rows});
+                }
+            });
+        });
+    },
     getPassBookingNotChangeStatus:function(req,res)
     {
         var bookingType=req.query.bookingType?req.query.bookingType:'';

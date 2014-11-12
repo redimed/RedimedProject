@@ -25,7 +25,7 @@ angular.module('app.loggedIn.booking',
             })
 
             .state('loggedIn.package',{
-                url:'/onlineBooking/package',
+                    url:'/onlineBooking/package',
                 templateUrl: 'modules/onlineBooking/views/package.html',
                 controller: 'PackageController'
             })

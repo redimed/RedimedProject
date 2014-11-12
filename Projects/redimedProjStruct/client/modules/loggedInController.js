@@ -413,7 +413,6 @@ angular.module("app.loggedIn.controller",[
             .success(function(data) {
                 if(data.status=='success')
                 {
-
                     $scope.totalItems=data.data.count_total_notification;
                     $scope.itemsPerPage=10;
                     $scope.maxSize=10;
@@ -449,17 +448,18 @@ angular.module("app.loggedIn.controller",[
                 params:{userId:userInfo.id,type:data.type,pageIndex:data.pageIndex,itemsPerPage:data.itemsPerPage}
             })
             .success(function(data) {
-                if(data.status=='success')
-                {
-                    $scope.listNotifications.splice(0,$scope.listNotifications.length);
-                    for(var i=0;i<data.data.length;i++)
+                    if(data.status=='success')
                     {
-                        data.data[i].link=getSourceLink(data.data[i].source_name,data.data[i].ref_id);
-                        $scope.listNotifications.push(data.data[i]);
-                    }
-                    deferred.resolve();
+                        $scope.listNotifications.splice(0,$scope.listNotifications.length);
+                        for(var i=0;i<data.data.length;i++)
+                        {
+                            data.data[i].link=getSourceLink(data.data[i].source_name,data.data[i].ref_id);
+                            $scope.listNotifications.push(data.data[i]);
+                        }
+                        $scope.
+                        deferred.resolve();
 
-                }
+                     }
             })
             .error(function (data) {
                 console.log("error");

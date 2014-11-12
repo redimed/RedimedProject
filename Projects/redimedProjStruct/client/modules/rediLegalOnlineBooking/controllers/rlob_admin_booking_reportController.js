@@ -3,81 +3,105 @@
  */
 
 angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
-    .controller("rlob_admin_bookingReportController", function($scope,rlobService) {
-        // chien status
+    .controller("rlob_admin_bookingReportController", function($scope,rlobService,$q) {
         $scope.status = "Confirmed";
-        rlobService.getbookingsList().then(function(data){
-            for (var i = 0; i < data.length; i++) {
-                if(data[i].FILE_ID == null){
-                    data[i].style_class = "danger";
-                }
-                else{
-                    data[i].style_class = "success";
-                }
-            }
-            //$scope.bookingslist = data;
-            $scope.totalItems1 = data.length;
-            $scope.itemsPerPage1 = 10;
-            $scope.currentPage1 = 1;
-
-            //$scope.maxSize = 5;
-            //$scope.bigTotalItems = 175;
-            //$scope.bigCurrentPage = 1;
-
-            $scope.pageCount = function () {
-                return Math.ceil(data.length / $scope.itemsPerPage1);
-            };
-
-            $scope.$watch('currentPage1 + itemsPerPage1', function() {
-                var begin = (($scope.currentPage1 - 1) * $scope.itemsPerPage1),
-                    end = begin + $scope.itemsPerPage1;
-
-                $scope.bookingslist = data.slice(begin, end);
-            });
-        })
-        rlobService.getbookingsListStatus().then(function(data){
-            for (var i = 0; i < data.length; i++) {
-                if(data[i].STATUS == $scope.status){
-                    data[i].style_class = "danger";
-                }
-                else{
-                    data[i].style_class = "success";
-                }
-            }
-            //$scope.bookingslistStatus = data;
-            //console.log(data);
-            $scope.totalItems = data.length;
-            $scope.itemsPerPage = 10;
-            $scope.currentPage = 1;
-
-            //$scope.maxSize = 5;
-            //$scope.bigTotalItems = 175;
-            //$scope.bigCurrentPage = 1;
-
-            $scope.pageCount = function () {
-                return Math.ceil(data.length / $scope.itemsPerPage);
-            };
-
-            $scope.$watch('currentPage + itemsPerPage', function() {
-                var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-                    end = begin + $scope.itemsPerPage;
-
-                $scope.bookingslistStatus = data.slice(begin, end);
-            });
-        })
-
+        $scope.report = "report1";
         /**
-         * Report Pass booking (completed) have not result
-         * tannv.dts@gmail.com
+         * Paging Upcomming booking
+         * phanquocchien.c1109g@gmail.com
          */
-        $scope.reportPassBookingHaveNotResult=[];
-        rlobService.getReportPassBookingHaveNotResult($scope.bookingType)
-            .then(function(data){
-                if(data.status=='success')
-                {
-                    $scope.reportPassBookingHaveNotResult=data.data;
-                }
-            },function(error){
+        rlobService.getcountTotalBookings().then(function(data){
+            var deferred=$q.defer();
+            if(data.status=='success')
+            {
+                $scope.totalItems=data.data.count_bookings;
+                $scope.itemsPerPage=10;
+                $scope.maxSize=10;
+                $scope.currentPage=1;
+                deferred.resolve({currentPage:$scope.currentPage,itemsPerPage:$scope.itemsPerPage});
+            }
+            return deferred.promise;
+        });
 
-            })
-    });
+        function getItemsPagingBooking(data){
+            rlobService.getItemsOfPagingBookings($scope.currentPage,$scope.itemsPerPage).then(function(data){
+                var deferred=$q.defer();
+                if(data.status == 'success')
+                {
+                    for (var i = 0; i < data.data.length; i++) {
+                        if(data.data[i].FILE_ID == null){
+                            data.data[i].style_class = "danger";
+                        }
+                        else{
+                            data.data[i].style_class = "success";
+                        }
+                    }
+                    $scope.bookingslist= data.data;
+                    deferred.resolve();
+                }
+                return deferred.promise;
+            });
+        }
+        rlobService.getcountTotalBookings()
+                .then(getItemsPagingBooking)
+        $scope.pagingBookingsChange=function()
+        {
+            getItemsPagingBooking($scope.currentPage,$scope.itemsPerPage);
+        }
+        /**
+         * Paging booking Status
+         * phanquocchien.c1109g@gmail.com
+         */
+        rlobService.getcountTotalBookingsStatus().then(function(data){
+            var deferred=$q.defer();
+            if(data.status=='success')
+            {
+                $scope.totalItemsStatus=data.data.count_bookings_status;
+                $scope.itemsPerPageStatus=10;
+                $scope.maxSizeStatus=10;
+                $scope.currentPageStatus=1;
+                deferred.resolve({currentPageStatus:$scope.currentPageStatus,itemsPerPageStatus:$scope.itemsPerPageStatus});
+            }
+            return deferred.promise;
+        });
+
+        function getItemsPagingBookingStatus(data){
+            rlobService.getItemsOfPagingBookingsStatus($scope.currentPageStatus,$scope.itemsPerPageStatus).then(function(data){
+                var deferred=$q.defer();
+                if(data.status == 'success')
+                {
+                    for (var i = 0; i < data.data.length; i++) {
+                        if(data.data[i].STATUS == $scope.status){
+                            data.data[i].style_class = "danger";
+                        }
+                        else{
+                            data.data[i].style_class = "success";
+                        }
+                    }
+                    $scope.bookingslistStatus= data.data;
+                    deferred.resolve();
+                }
+                return deferred.promise;
+            });
+        }
+        rlobService.getcountTotalBookingsStatus()
+            .then(getItemsPagingBookingStatus)
+        $scope.pagingBookingsStatusChange=function()
+        {
+            getItemsPagingBookingStatus($scope.currentPageStatus,$scope.itemsPerPageStatus);
+        }
+/**
+ * Report Pass booking (completed) have not result
+ * tannv.dts@gmail.com
+ */
+$scope.reportPassBookingHaveNotResult=[];
+rlobService.getReportPassBookingHaveNotResult($scope.bookingType)
+    .then(function(data){
+        if(data.status=='success')
+        {
+            $scope.reportPassBookingHaveNotResult=data.data;
+        }
+    },function(error){
+
+    })
+});
