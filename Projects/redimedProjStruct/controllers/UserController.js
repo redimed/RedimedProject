@@ -23,7 +23,7 @@ module.exports = {
 
     userByCompany: function(req,res){
         var comId = req.body.comId;
-        db.User.findAll({where:{company_id:comId}},{raw:true})
+        db.sequelize.query("SELECT u.*,p.`Company_name` FROM users u INNER JOIN companies p ON u.`company_id` = p.`id` WHERE u.`user_type` LIKE 'Company' AND u.`company_id` = ?",null,{raw:true},[comId])
             .success(function(data){
                 res.json(data);
             })

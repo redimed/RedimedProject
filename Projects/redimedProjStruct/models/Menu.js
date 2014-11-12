@@ -11,7 +11,9 @@ module.exports = function(sequelize,DataTypes){
       seq : DataTypes.INTEGER(11) ,
       is_mutiple_instance : DataTypes.INTEGER(11) ,
       function_id : DataTypes.INTEGER(11) ,
-      isEnable : DataTypes.INTEGER(11) 
+      isEnable : DataTypes.INTEGER(11) ,
+      isMobile : DataTypes.INTEGER(11) ,
+      isWeb : DataTypes.INTEGER(11)
 },{
       tableName: 'redi_menus', // đặt tên bảng
         timestamps: false // đặt false để ko tự động tạo các cột timestamp

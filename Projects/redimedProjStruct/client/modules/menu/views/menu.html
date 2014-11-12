@@ -42,7 +42,7 @@
                     <td width="200px" data-title="'Description'" sortable="'description'" ng-click="showChild(m)"  filter="{ 'description': 'text' }">
                         <label >{{m.description}}</label>
                     </td>
-                    <td width="400px" data-title="'Definition'" sortable="'definition'" ng-click="showChild(m)"  filter="{ 'definition': 'text' }">
+                    <td width="200px" data-title="'Definition'" sortable="'definition'" ng-click="showChild(m)"  filter="{ 'definition': 'text' }">
                         <label >{{m.definition}}</label>
                     </td>
                     <td width="100px" data-title="'Type'" sortable="'type'" ng-click="showChild(m)"  filter="{ 'type': 'text' }">
@@ -51,6 +51,14 @@
                     <td align="center" width="100px" data-title="'Enable'" ng-click="showChild(m)"  >
                         <label ng-if="m.isEnable===1" ><input  type="checkbox" disabled   checked /></label>
                         <label ng-if="m.isEnable!==1" ><input  type="checkbox" disabled  /></label>
+                    </td>
+                    <td align="center" width="100px" data-title="'For Website'" ng-click="showChild(m)"  >
+                        <label ng-if="m.isWeb===1" ><input  type="checkbox" disabled   checked /></label>
+                        <label ng-if="m.isWeb!==1" ><input  type="checkbox" disabled  /></label>
+                    </td>
+                    <td align="center" width="100px" data-title="'For Mobile'" ng-click="showChild(m)"  >
+                        <label ng-if="m.isMobile===1" ><input  type="checkbox" disabled   checked /></label>
+                        <label ng-if="m.isMobile!==1" ><input  type="checkbox" disabled  /></label>
                     </td>
                     <td align="center" data-title="'Actions'">
                         <a style="width: 75px" href="javascript:;" ng-click="editMenu(m)" class="btn btn-circle blue-steel btn-sm">
@@ -78,7 +86,7 @@
             <span class="caption-subject uppercase">{{childTitle}}</span>
         </div>
         <div class="actions">
-            <a href="javascript:;" ng-click="addNewSubMenu()" class="btn btn-circle green-jungle btn-sm">
+            <a href="javascript:;" ng-click="addNewSubMenu()" class="btn green-jungle btn-sm">
                 <i class="fa fa-plus"></i> Add New</a>
         </div>
     </div>
@@ -89,7 +97,7 @@
                     <td width="200px" data-title="'Description'" sortable="'description'" filter="{ 'description': 'text' }">
                         <label>{{m.description}}</label>
                     </td>
-                    <td width="400px" data-title="'Function'" sortable="'decription'" filter="{ 'decription': 'text' }">
+                    <td width="200px" data-title="'Function'" sortable="'decription'" filter="{ 'decription': 'text' }">
                         <label >{{m.decription}}</label>
                     </td>
                     <td width="100px" data-title="'Type'" sortable="'type'" filter="{ 'type': 'text' }">
@@ -98,6 +106,14 @@
                     <td align="center" width="100px" data-title="'Enable'" >
                         <label ng-if="m.isEnable===1" ><input  type="checkbox" disabled   checked /></label>
                         <label ng-if="m.isEnable!==1" ><input  type="checkbox" disabled  /></label>
+                    </td>
+                    <td align="center" width="100px" data-title="'For Website'" ng-click="showChild(m)"  >
+                        <label ng-if="m.isWeb===1" ><input  type="checkbox" disabled   checked /></label>
+                        <label ng-if="m.isWeb!==1" ><input  type="checkbox" disabled  /></label>
+                    </td>
+                    <td align="center" width="100px" data-title="'For Mobile'" ng-click="showChild(m)"  >
+                        <label ng-if="m.isMobile===1" ><input  type="checkbox" disabled   checked /></label>
+                        <label ng-if="m.isMobile!==1" ><input  type="checkbox" disabled  /></label>
                     </td>
                     <td align="center" data-title="'Actions'">
                         <a style="width: 75px" href="javascript:;" ng-click="editSubMenu(m)" class="btn btn-circle blue-steel btn-sm">

@@ -245,6 +245,8 @@ angular.module('app.loggedIn.menu.controller',[])
             MenuDefinition: null,
             MenuType: null,
             MenuEnable: null,
+            MenuWeb: null,
+            MenuMobile: null,
             FunctionID: null,
             ParentID: parentId
         }
@@ -294,6 +296,8 @@ angular.module('app.loggedIn.menu.controller',[])
             MenuDescription: null,
             MenuDefinition: null,
             MenuEnable: null,
+            MenuWeb: null,
+            MenuMobile: null,
             MenuType: null,
             FunctionID: null
         }
@@ -303,6 +307,8 @@ angular.module('app.loggedIn.menu.controller',[])
             $scope.info.MenuDescription = data.description;
             $scope.info.MenuDefinition = data.definition;
             $scope.info.MenuEnable = data.isEnable == 1 ? '1':'0';
+            $scope.info.MenuWeb = data.isWeb == 1 ? '1':'0';
+            $scope.info.MenuMobile = data.isMobile == 1 ? '1':'0';
             $scope.info.MenuType = data.type;
             $scope.info.FunctionID = data.function_id != null || data.function_id != '' ? data.function_id : null;
         })

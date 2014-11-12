@@ -72,9 +72,7 @@
                             <label>{{b.Booking_Person}}</label>
                         </td>
                         <td data-title="'Appointment Notes'" sortable="'Appointment_notes'">
-                            <!--<a href="javascript:;" ng-click="showAppointmentNote(b)" ng-if="b.Appointment_notes != null || b.Appointment_notes != ''">{{b.Appointment_notes}}</a>-->
-                            <!--<a href="javascript:;" class="btn blue" ng-click="showAppointmentNote(b)" ng-if="b.Appointment_notes == null || b.Appointment_notes == ''">Write Notes</a>-->
-                            <a href="#" editable-textarea="b.Appointment_notes">{{ b.Appointment_notes || "Empty" }}</a>
+                            <a href="#" onaftersave="updateNote(b)" editable-textarea="b.Appointment_notes">{{ b.Appointment_notes || "Empty" }}</a>
                         </td>
                         <td data-title="'Appointment Status'" sortable="'Appointment_status'" >
                             <label>{{b.Appointment_status}}</label>

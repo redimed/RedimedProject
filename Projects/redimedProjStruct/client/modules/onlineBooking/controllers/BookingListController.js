@@ -56,7 +56,7 @@ angular.module('app.loggedIn.booking.list.controller',[])
             var modalInstance = $modal.open({
                 templateUrl: 'modules/onlineBooking/views/bookingDetailModal.html',
                 controller: 'BookingDetailController',
-                size: 'md',
+                size: 'lg',
                 resolve: {
                     bookingId: function(){
                         return b.Booking_id;
@@ -118,54 +118,16 @@ angular.module('app.loggedIn.booking.list.controller',[])
             })
         }
 
-        $scope.showAppointmentNote = function(b){
-            var modalInstance = $modal.open({
-                templateUrl:'modules/onlineBooking/views/appointmentNote.html',
-                controller:'AppointmentNoteController',
-                size:'md',
-                resolve:{
-                    bookId: function(){
-                        return b.Booking_id;
-                    },
-                    canId: function(){
-                        return b.Candidate_id;
-                    },
-                    note: function(){
-                        return b.Appointment_notes;
-                    }
-                }
-            });
+        $scope.updateNote = function(b){
+            var a = {
+                bookingId: b.Booking_id,
+                candidateId: b.Candidate_id,
+                note: b.Appointment_notes
+            }
 
-            modalInstance.result.then(function(){
-                OnlineBookingService.getBookingList(companyInfo[0].id).then(function(data) {
-                    if (data.status === 'success') {
-                        $scope.data = data.rs;
-
-                        $scope.$watch('data',function(data){
-                            $scope.data = data;
-                            $scope.tableParams.reload();
-                        })
-                    }
-                })
-
-            })
-        };
-
-    })
-
-    .controller('AppointmentNoteController',function($scope,$modalInstance,OnlineBookingService,bookId,canId,note,toastr){
-
-        $scope.info = {
-            bookingId: bookId,
-            candidateId: canId,
-            note: note
-        }
-
-        $scope.okClick = function(){
-            OnlineBookingService.updateNote($scope.info).then(function(data){
+            OnlineBookingService.updateNote(a).then(function(data){
                 if(data.status === 'success')
                 {
-                    $modalInstance.close();
                     toastr.success("Edit Successfully!","Success");
                 }
                 else
@@ -175,9 +137,6 @@ angular.module('app.loggedIn.booking.list.controller',[])
             })
         }
 
-        $scope.cancel = function(){
-            $modalInstance.dismiss('cancel');
-        }
     })
 
     .controller('SearchBookingController',function($scope,$modalInstance,OnlineBookingService,companyId){

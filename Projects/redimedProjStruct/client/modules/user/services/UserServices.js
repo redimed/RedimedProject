@@ -11,7 +11,7 @@ angular.module("app.loggedIn.user.services", [])
 
     userService.menu = function(id){
         var menuApi = userApi.all("menu/side");
-        return menuApi.post({id:id});
+        return menuApi.post({id:id,isWeb:true});
     }
 
     userService.getFunction = function(id){

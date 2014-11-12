@@ -6,17 +6,32 @@ module.exports = {
     loadSideMenu: function(req,res)
     {
         var id = req.body.id;
-        db.sequelize.query("SELECT m.Menu_Id,m.Description,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.Seq,m.Is_Mutiple_Instance,m.isEnable " +
-                            "FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id" +
-                            " WHERE m.isEnable = 1 AND m.Menu_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1) " +
-                            "OR m.Parent_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1) AND m.isEnable = 1 ORDER BY m.Menu_Id",null,{raw:true},[id,id])
-            .success(function(data){
-                res.json(data);
-            })
-            .error(function(err){
-                res.json({status:'fail',
-                    error:err});
-            })
+        var isWeb = req.body.isWeb;
+
+        if(isWeb == true)
+        {
+            db.sequelize.query("SELECT m.Menu_Id,m.Description,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile`, m.`isWeb` FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id WHERE m.isEnable = 1 AND (m.Menu_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1) OR m.Parent_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1)) AND m.`isWeb` = 1 ORDER BY m.Menu_Id;",null,{raw:true},[id,id])
+                .success(function(data){
+                    res.json(data);
+                })
+                .error(function(err){
+                    res.json({status:'fail',
+                        error:err});
+                })
+        }
+        else
+        {
+            db.sequelize.query("SELECT m.Menu_Id,m.Description,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile`, m.`isWeb` FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id WHERE m.isEnable = 1 AND (m.Menu_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1) OR m.Parent_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1)) AND m.`isMobile` = 1 ORDER BY m.Menu_Id;",null,{raw:true},[id,id])
+                .success(function(data){
+                    res.json(data);
+                })
+                .error(function(err){
+                    res.json({status:'fail',
+                        error:err});
+                })
+        }
+
+
     },
     list: function(req,res)
     {
@@ -36,7 +51,9 @@ module.exports = {
         var m = req.body.info;
         var functionId = m.FunctionID == null || m.FunctionID == '' ? null : m.FunctionID;
         db.Menu.update({
-            isEnable: m.MenuEnable,
+            isEnable: m.MenuEnable == 1 ? 1 : 0,
+            isWeb: m.MenuWeb == 1 ? 1 : 0,
+            isMobile: m.MenuMobile == 1 ? 1 : 0,
             description: m.MenuDescription,
             type: m.MenuType,
             definition: m.MenuDefinition,
@@ -59,7 +76,9 @@ module.exports = {
                 description: m.MenuDescription,
                 definition: m.MenuDefinition,
                 type: m.MenuType,
-                isEnable: m.MenuEnable,
+                isEnable: m.MenuEnable == 1 ? 1 : 0,
+                isWeb: m.MenuWeb == 1 ? 1 : 0,
+                isMobile: m.MenuMobile == 1 ? 1 : 0,
                 function_id: functionId,
                 parent_id: m.ParentID
             }).success(function(){

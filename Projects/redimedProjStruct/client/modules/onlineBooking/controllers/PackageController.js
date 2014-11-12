@@ -70,14 +70,24 @@ angular.module('app.loggedIn.booking.package.controller',[])
 
         $scope.removePackage = function(p)
         {
-            OnlineBookingService.deletePackage(p.id,companyInfo[0].id).then(function(data){
+            OnlineBookingService.deletePackage(p.PackId,companyInfo[0].id).then(function(data){
                 if(data.status === 'success')
                 {
-                    $state.go('loggedIn.package',null,{reload:true});
+                    OnlineBookingService.getPackage(companyInfo[0].id).then(function(d){
+                        if(d.status === 'success')
+                        {
+                            $scope.data = d.rs;
+                        }
+                        $scope.$watch('data',function(data){
+                            $scope.data = data;
+                            $scope.tableParams.reload();
+                        })
+                    })
+                    toastr.success('Delete Successfully','Success');
                 }
                 else
                 {
-                    alert('Failed To Delete!');
+                    toastr.error('Delete Failed','Error');
                 }
             })
         }
@@ -94,19 +104,33 @@ angular.module('app.loggedIn.booking.package.controller',[])
                     }
                 }
             });
+            modalInstance.result.then(function(){
+                OnlineBookingService.getPackage(companyInfo[0].id).then(function(d){
+                    if(d.status === 'success')
+                    {
+                        $scope.data = d.rs;
+                    }
+                    $scope.$watch('data',function(data){
+                        $scope.data = data;
+                        $scope.tableParams.reload();
+                    })
+                })
+            })
         }
 
         $scope.addPackageAss = function(){
             var modalInstances = $modal.open({
                 templateUrl: 'modules/onlineBooking/views/addPackageAss.html',
                 controller:'AddPackageAssController',
-                size:'lg',
+                size:'md',
                 resolve:{
                     packId: function(){
                         return $scope.selectedPack;
                     }
                 }
-            })
+            });
+
+
         }
 
         $scope.showChild = function(p)
@@ -169,8 +193,7 @@ angular.module('app.loggedIn.booking.package.controller',[])
                     if(data.status === 'success')
                     {
                         toastr.success("Insert Successfully!","Success");
-                        $modalInstance.dismiss('cancel');
-                        $state.go('loggedIn.package',null,{reload:true});
+                        $modalInstance.close();
                     }
                     else
                     {
