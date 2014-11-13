@@ -511,7 +511,7 @@ module.exports =
         console.log(req.query);
         var pageIndex=req.query.currentPageStatus;
         var itemsPerPage=req.query.itemsPerPageStatus;
-        var sql="SELECT * FROM `rl_bookings` WHERE`APPOINTMENT_DATE`< CURRENT_TIMESTAMP LIMIT ?,?";
+        var sql="SELECT booking.*,rltype.`Rl_TYPE_NAME` FROM `rl_bookings` booking INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID` WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP LIMIT ?,?";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[parseInt((pageIndex-1)*itemsPerPage),parseInt(itemsPerPage)],function(err,rows)

@@ -11,6 +11,8 @@ angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
          * phanquocchien.c1109g@gmail.com
          */
         rlobService.getcountTotalBookings().then(function(data){
+
+            $scope.bookingType
             var deferred=$q.defer();
             if(data.status=='success')
             {

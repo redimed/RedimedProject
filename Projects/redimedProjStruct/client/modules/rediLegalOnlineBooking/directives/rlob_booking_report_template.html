@@ -1,5 +1,5 @@
 
-<table class="table table-responsive table-hover table-bordered table-striped table-condensed flip-content">
+<table class="table table-responsive table-hover">
     <thead class="flip-content">
     <tr>
         <th>
@@ -14,6 +14,30 @@
         <th>
             Appointment Date
         </th>
+    </tr>
+    <tr>
+        <!-- SEARCH -->
+        <!--<td ng-if="bookingType=='REDiLEGAL'">-->
+        <td>
+            <input class="form-control input-sm" type="text" ng-model="search.data.CLAIM_NO" ng-change="loadList()">
+        </td>
+        <!--<td ng-if="bookingType=='Vaccination'">-->
+        <td>
+            <input class="form-control input-sm" type="text" ng-model="search.data.WRK_SURNAME" ng-change="loadList()">
+        </td>
+        <td>
+            <select ng-model="search.data.RL_TYPE_ID" class="form-control input-sm"
+                    ng-options="type.RL_TYPE_ID as type.Rl_TYPE_NAME for type in rl_types"
+                    ng-change="loadList()">
+                <option value="">--Select All--</option>
+            </select>
+        </td>
+
+        <td>
+            <button class="btn btn-block btn-primary btn-sm" ng-click="openModal('appointment_date_search')">Search
+            </button>
+        </td>
+        <!-- END SEARCH -->
     </tr>
     </thead>
     <tbody ng-repeat="booking in list">
