@@ -698,7 +698,7 @@ angular.module("app.loggedIn.controller",[
     
 		$scope.navigator = {
 			next: function(){
-				window.history.next();
+				window.history.forward();
 			},
 			prev: function(){
 				window.history.back();
