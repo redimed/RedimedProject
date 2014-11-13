@@ -9,8 +9,8 @@ angular.module('starter.user.services',[])
         }
 
         userService.menu = function(id){
-            var menuApi = userApi.all("users/home");
-            return menuApi.post({id:id});
+            var menuApi = userApi.all("menu/side");
+            return menuApi.post({id:id,isWeb:false});
         }
 
         userService.getFunction = function(id){
