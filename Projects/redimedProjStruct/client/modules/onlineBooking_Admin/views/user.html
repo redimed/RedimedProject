@@ -36,8 +36,8 @@
     <div class="portlet-body">
 
         <div class="table-scrollable">
-            <table ng-table="tableParams" show-filter="true"  class="table table-bordered table-responsive">
-                <tr style="white-space: nowrap" ng-repeat="b in $data" ng-click="showMenu(b)" ng-class="{selected : b.id == selectedId}">
+            <table ng-table="tableParams" show-filter="true"  class="table table-hover table-bordered table-responsive">
+                <tr style="white-space: nowrap; cursor: pointer;" ng-repeat="b in $data" ng-click="showMenu(b)" ng-class="{selected : b.id == selectedId}">
                     <td data-title="'Username'" filter="{ 'user_name': 'text' }" >
                         <label>{{b.user_name}}</label>
                     </td>
@@ -134,8 +134,8 @@
             </div>
         </form>
         <div class="table-scrollable">
-            <table ng-table="tableParams2"  class="table table-bordered table-responsive">
-                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data"  ng-class="{selected : b.id == selectedRow}">
+            <table ng-table="tableParams2"  class="table table-hover table-bordered table-responsive">
+                <tr style="white-space: nowrap; cursor: pointer;" align="center" ng-repeat="b in $data"  ng-class="{selected : b.id == selectedRow}">
                     <td data-title="'Username'" ng-click="showMenuDetails(b)">
                         <label>{{b.user_name}}</label>
                     </td>

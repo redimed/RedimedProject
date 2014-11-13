@@ -37,7 +37,7 @@
     </div>
     <div class="portlet-body">
         <div class="table-scrollable" id="content">
-            <table ng-table="tableParams" show-filter="true" class="table table-bordered table-responsive">
+            <table ng-table="tableParams" show-filter="true" class="table table-hover table-bordered table-responsive">
                 <thead>
                     <tr>
                         <th>Company</th>
@@ -55,7 +55,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="b in $data" style="white-space: nowrap" ng-click="bookingSelected(b)" ng-class="{selected : b.Candidate_id === selectedCanId && b.Booking_id === selectedBookId}">
+                    <tr ng-repeat="b in $data" style="white-space: nowrap; cursor: pointer;" ng-click="bookingSelected(b)" ng-class="{selected : b.Candidate_id === selectedCanId && b.Booking_id === selectedBookId}">
                         <td class="col-md-12" data-title="'Company'" sortable="'company_name'" filter="{'company_name':'text'}">
                             <label >{{b.company_name}}</label>
                         </td>
@@ -75,7 +75,12 @@
                             <a href="#" onaftersave="updateNote(b)" editable-textarea="b.Appointment_notes">{{ b.Appointment_notes || "Empty" }}</a>
                         </td>
                         <td data-title="'Appointment Status'" sortable="'Appointment_status'" >
-                            <label>{{b.Appointment_status}}</label>
+                            <span ng-if="b.Appointment_status == 'Pending'" class="label label-sm label-warning">
+													Pending </span>
+                            <span ng-if="b.Appointment_status == 'Confirmed'" class="label label-sm label-success">
+													Confirmed </span>
+                            <span ng-if="b.Appointment_status == 'Cancelled'" class="label label-sm label-danger">
+													Cancelled </span>
                         </td>
                         <td ng-if="isExtra == 1" data-title="'Package'" sortable="'package_name'">
                             <label>{{b.package_name}}</label>

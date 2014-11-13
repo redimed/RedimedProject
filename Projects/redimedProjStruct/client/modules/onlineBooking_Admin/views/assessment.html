@@ -1,51 +1,58 @@
 <style>
     .selected {
-        background-color: #ffca87;
+        background-color: rgba(69, 51, 36, 0.36);
     }
+
 </style>
-<div class="caption">
-    <div class="row">
-        <div class="col-md-12">
-            <i class="font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 25px;">Office Site</span>
-        </div>
-    </div>
+<h3 class="page-title">Assessment</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:;">Office Site</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Assessment</a>
+        </li>
+    </ul>
 </div>
-<br/>
-<div class="portlet light bordered ">
+<div class="portlet grey-cascade box ">
     <div class="portlet-title">
-        <div class="caption">
-            <i class=" glyphicon glyphicon-align-justify font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Assessment Header</span>
+        <div class="caption ">
+            <i class="icon-list"></i>
+            <span class="caption-subject uppercase"> Assessment Header</span>
         </div>
-        <div>
-            <div class="btn-group pull-right">
-                <a ng-click="addHeader()" href="javascript:;" class="btn green" >
-                    Add New Header &nbsp;&nbsp;<i class="fa fa-plus"></i>
-                </a>
-            </div>
+        <div class="actions">
+            <a href="javascript:;" ng-click="addHeader()" class="btn green-jungle btn-sm">
+                <i class="fa fa-plus"></i> Add New</a>
         </div>
     </div>
-    <div class="portlet-body form">
+    <div class="portlet-body">
         <div class="table-scrollable">
-            <table ng-table="tableParams" class="table table-bordered table-responsive">
-                <tr style="white-space: nowrap"  ng-repeat="p in $data  | orderBy:'id'" ng-click="showChild(p)" ng-class="{selected : p.id === selectedId}">
+            <table ng-table="tableParams" class="table table-hover table-bordered table-responsive">
+                <tr style="white-space: nowrap; cursor: pointer"  ng-repeat="p in $data  | orderBy:'id'" ng-click="showChild(p)" ng-class="{selected : p.id === selectedId}">
                     <td class="col-md-9" data-title="'Assessment Name'" sortable="'ass_name'">
                         <label>{{p.ass_name}}</label>
                     </td>
-                    <td class="col-md-3" data-title="'Action'" >
-                        <a style="width: 100px" href="javascript:;" ng-click="removeHeaderAssessment(p)" class="btn btn-danger col-md-3">Delete</a>
+                    <td align="center" data-title="'Actions'">
+                        <a style="width: 75px" href="javascript:;" ng-click="removeHeaderAssessment(p)" class="btn btn-circle red-flamingo btn-sm">
+                            <i class="fa fa-times"></i> Delete </a>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
-<div class="portlet light bordered ">
+<div class="portlet grey-cascade box ">
     <div class="portlet-title">
         <div class="caption">
-            <i class=" glyphicon glyphicon-align-justify font-blue-hoki"></i>
-            <span class="caption-subject font-blue-hoki bold uppercase">Assessment</span>
+            <i class=" glyphicon glyphicon-align-justify "></i>
+            <span class="caption-subject uppercase">Assessment</span>
         </div>
         <div>
             <div class="btn-group pull-right" ng-show="isSelected">

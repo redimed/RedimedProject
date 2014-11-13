@@ -34,8 +34,8 @@
     </div>
     <div class="portlet-body">
         <div class="table-scrollable">
-            <table ng-table="tableParams"  show-filter="true" class="table table-bordered table-responsive">
-                <tr  ng-repeat="p in $data track by $index | orderBy:'package_name'" ng-click="showChild(p)" ng-class="{selected : p.PackId === selectedPack}">
+            <table ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered table-responsive">
+                <tr style="cursor: pointer;"  ng-repeat="p in $data track by $index | orderBy:'package_name'" ng-click="showChild(p)" ng-class="{selected : p.PackId === selectedPack}">
                     <td class="col-md-10" data-title="'Package Name'" sortable="'package_name'">
                         <span>{{p.package_name}}</span>
                     </td>

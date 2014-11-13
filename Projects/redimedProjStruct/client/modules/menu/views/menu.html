@@ -37,8 +37,8 @@
     <div class="portlet-body">
 
         <div class="table-scrollable" id="content">
-            <table ng-table="tableParams"  show-filter="true" class="table table-bordered table-responsive">
-                <tr ng-repeat="m in $data | orderBy:'menu_id'" ng-class="{selected : m.menu_id == selectedId}">
+            <table ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered table-responsive">
+                <tr style="white-space: nowrap; cursor: pointer;" ng-repeat="m in $data | orderBy:'menu_id'" ng-class="{selected : m.menu_id == selectedId}">
                     <td width="200px" data-title="'Description'" sortable="'description'" ng-click="showChild(m)"  filter="{ 'description': 'text' }">
                         <label >{{m.description}}</label>
                     </td>
