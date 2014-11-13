@@ -3,6 +3,7 @@ angular.module("starter.menu.controller",[])
         var userInfo= localStorageService.get("userInfo");
         $scope.Injurymenu = [];
         $scope.user = userInfo.Booking_Person;
+        $scope.userName = userInfo.user_name;
         $scope.selectedMenu = null;
         UserService.getUserInfo(userInfo.id).then(function(data){
             $scope.img = data.img;
