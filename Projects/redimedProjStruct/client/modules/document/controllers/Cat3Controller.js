@@ -13,6 +13,11 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
             $state.go('loggedIn.home', null, {"reload": true});
         }
         else {
+            //function check show-hidden signature
+            $scope.isSignature = false;
+            $scope.showSignature = function () {
+                $scope.isSignature = !$scope.isSignature;
+            }
             //set value default
             $scope.info = {
                 cat_id: null,

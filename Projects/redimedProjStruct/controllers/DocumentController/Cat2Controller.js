@@ -20,7 +20,7 @@ module.exports = {
                 }
             })
             .error(function () {
-                res.jon({status: 'fail'});
+                res.json({status: 'fail'});
             })
     },
     insertCat2: function (req, res) {

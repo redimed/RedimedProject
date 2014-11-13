@@ -3,16 +3,14 @@
  */
 angular.module('app.loggedIn.document.MH.controllers', [])
     .controller("MHController", function ($scope, DocumentService, $http, $cookieStore, toastr, $state) {
-        $scope.info = [];
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
         }
         else {
-            var patient_id = userInfo.id;
-            $scope.info = {
-                patient_id: patient_id
-            }
+            $scope.info = [];
+            $scope.info.headers = [];
+            var oriInfo;
             var info = $scope.info;
             DocumentService.loadMH(info).then(function (response) {
                 if (response['status'] === 'fail') {
@@ -33,8 +31,6 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 /**
                  * load data normal input
                  */
-                $scope.info = [];
-                $scope.info.headers = [];
                 var data = response[0];
                 var i = 0;
                 angular.forEach(data.headers, function (dataH) {
@@ -83,53 +79,67 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                                                 "Last_update_date": dataS.Last_update_date
                                             });
                                         }
-                                    })
+                                    });
                                     k++;
                                 }
-                            })
+                            });
                             j++;
                         }
-                    })
+                    });
                     i++;
                 });
+                oriInfo = angular.copy($scope.info.headers);
             });
-        }
-        $scope.submit = function (mhForm) {
-            if ($scope.isNew) {
-                /**
-                 * new document
-                 */
-//                $scope.info.patient_id = userInfo.id; //get patient id
-//                $scope.info.cal_id = 1; //set temp cal id
-                var info = $scope.info;
-                DocumentService.insertMH(info.headers).then(function (response) {
-                    if (response['status'] === 'success') {
-                        toastr.success("Add success!", "Success");
-                        $state.go('loggedIn.MH', null, {"reload": true});
-                    }
-                    else if (response['status'] === 'fail') {
-                        toastr.error("Add fail!", "Error");
-                    }
-                })
+
+            $scope.resetForm = function () {
+                $scope.info.headers = angular.copy(oriInfo);
+                $scope.mhForm.$setPristine();
             }
 
-            else {
-                /**
-                 * edit document
-                 */
-                var info = $scope.info;
-                DocumentService.editMH(info.headers).then(function (response) {
-                    if (response['status'] === 'success') {
-                        toastr.success("Edit success!", "Success");
-                        $state.go('loggedIn.MH', null, {"reload": true});
+            $scope.infoChanged = function () {
+                return !angular.equals(oriInfo, $scope.info.headers);
+            }
+            $scope.submit = function (mhForm) {
+                //check validate
+                if (mhForm.$error.required || mhForm.$error.maxlength || mhForm.$error.pattern) {
+                    toastr.error("Please Input All Required Information!", "Error");
+                }
+                else {
+                    if ($scope.isNew) {
+                        /**
+                         * new document
+                         */
+                        var info = $scope.info;
+                        DocumentService.insertMH(info.headers).then(function (response) {
+                            if (response['status'] === 'success') {
+                                toastr.success("Add success!", "Success");
+                                $state.go('loggedIn.MH', null, {"reload": true});
+                            }
+                            else if (response['status'] === 'fail') {
+                                toastr.error("Add fail!", "Error");
+                            }
+                        })
                     }
-                    else if (response['status'] === 'fail') {
-                        toastr.error("Edit fail!", "Error");
+
+                    else {
+                        /**
+                         * edit document
+                         */
+                        var info = $scope.info;
+                        DocumentService.editMH(info.headers).then(function (response) {
+                            if (response['status'] === 'success') {
+                                toastr.success("Edit success!", "Success");
+                                $state.go('loggedIn.MH', null, {"reload": true});
+                            }
+                            else if (response['status'] === 'fail') {
+                                toastr.error("Edit fail!", "Error");
+                            }
+                        });
                     }
-                })
+                }
             }
         }
-    })
+    });
 
 
 

@@ -16,10 +16,7 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
             $state.go('loggedIn.SA1', null, {'reload': true});
         }
         else {
-            $scope.info = {
-                PATIENT_ID: 999,
-                CAL_ID: 999
-            }
+            var oriInfo;
             var info = $scope.info;
             DocumentService.loadSA2(info).then(function (response) {
                 if (response['status'] === 'fail') {
@@ -100,49 +97,60 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                         }
                     });
                 });
+                oriInfo = angular.copy($scope.info.headers);
             });
-        }
-        $scope.submit = function (SA2) {
-            if (SA2.$error.required || SA2.$error.maxlength) {
-                toastr.error("Please Input All Required Information!", "Error");
+
+            $scope.resetForm = function () {
+                $scope.info.headers = angular.copy(oriInfo);
+                $scope.SA2.$setPristine();
             }
-            else {
-                var info = $scope.info;
-                if ($scope.isNew === true) {
-                    //add new sa2
-                    DocumentService.insertSA2(info).then(function (response) {
-                        if (response['status'] === 'fail') {
-                            //add new fail
-                            toastr.error("Add fail!", "Error");
-                        }
-                        else if (response['status'] === 'success') {
-                            //edit success
-                            toastr.success("Add success!", "Success");
-                            $state.go('loggedIn.SA2', null, {"reload": true});
-                        }
-                        else {
-                            //throw exception
-                            $state.go('loggedIn.home', null, {'reload': true});
-                        }
-                    });
+
+            $scope.infoChanged = function () {
+                return !angular.equals(oriInfo, $scope.info.headers);
+            }
+
+            $scope.submit = function (SA2) {
+                if (SA2.$error.required || SA2.$error.maxlength) {
+                    toastr.error("Please Input All Required Information!", "Error");
                 }
-                else if ($scope.isNew === false) {
-                    //edit old sa2
-                    DocumentService.editSA2(info).then(function (response) {
-                        if (response['status'] === 'fail') {
-                            //edit fail
-                            toastr.error("Edit fail!", "Error");
-                        }
-                        else if (response['status'] === 'success') {
-                            //edit success
-                            toastr.success("Edit success!", "Success");
-                            $state.go('loggedIn.SA2', null, {'reload': true});
-                        }
-                        else {
-                            //throw exception
-                            $state.go("loggedIn.home", null, {'reload': true});
-                        }
-                    })
+                else {
+                    var info = $scope.info.headers;
+                    if ($scope.isNew === true) {
+                        //add new sa2
+                        DocumentService.insertSA2(info).then(function (response) {
+                            if (response['status'] === 'fail') {
+                                //add new fail
+                                toastr.error("Add fail!", "Error");
+                            }
+                            else if (response['status'] === 'success') {
+                                //edit success
+                                toastr.success("Add success!", "Success");
+                                $state.go('loggedIn.SA2', null, {"reload": true});
+                            }
+                            else {
+                                //throw exception
+                                $state.go('loggedIn.home', null, {'reload': true});
+                            }
+                        });
+                    }
+                    else if ($scope.isNew === false) {
+                        //edit old sa2
+                        DocumentService.editSA2(info).then(function (response) {
+                            if (response['status'] === 'fail') {
+                                //edit fail
+                                toastr.error("Edit fail!", "Error");
+                            }
+                            else if (response['status'] === 'success') {
+                                //edit success
+                                toastr.success("Edit success!", "Success");
+                                $state.go('loggedIn.SA2', null, {'reload': true});
+                            }
+                            else {
+                                //throw exception
+                                $state.go("loggedIn.home", null, {'reload': true});
+                            }
+                        });
+                    }
                 }
             }
         }

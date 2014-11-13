@@ -578,16 +578,17 @@ angular.module("app.directive.common", [])
                 'reset': "="
             },
             link: function (scope, element, attr) {
-                var canvas = document.querySelector("#"+attr.id);
+
+                var canvas = document.querySelector("#" + attr.id);
 
                 var signaturePad = new SignaturePad(canvas);
 
                 signaturePad.maxWidth = 3;
-                signaturePad.penColor = "blue";
+                signaturePad.penColor = "black";
 
-                scope.$watch('ngModel', function(newModel){
-                    if(typeof newModel !== 'undefined'){
-                        if(!signaturePad.isEmpty()){
+                scope.$watch('ngModel', function (newModel) {
+                    if (typeof newModel !== 'undefined') {
+                        if (!signaturePad.isEmpty()) {
                             signaturePad.clear();
                         }
                         signaturePad.fromDataURL(newModel);
@@ -596,6 +597,7 @@ angular.module("app.directive.common", [])
 
                 signaturePad.onEnd = function(){
                     scope.$apply(function(){
+
                         scope.ngModel = signaturePad.toDataURL();
                     })
                 }
@@ -616,3 +618,4 @@ angular.module("app.directive.common", [])
         };
 
 })
+
