@@ -2,11 +2,15 @@ angular.module("app.loggedIn.controller",[
 ])
 
 .controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q){
-
-    var userInfo = $cookieStore.get('userInfo');
-    $scope.userInfo=userInfo;
+    var userInfo = null;
+    if( typeof $cookieStore.get('userInfo') != 'undefined')
+         userInfo = $cookieStore.get('userInfo');
+    if(userInfo != null)
+    {
+        $scope.userInfo=userInfo;
+        $scope.user = userInfo.Booking_Person;
+    }
     $scope.loggedInMenus = [];
-    $scope.user = userInfo.Booking_Person;
     $scope.selectedMenu = null;
 
     UserService.getUserInfo(userInfo.id).then(function(data){
