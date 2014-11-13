@@ -11,7 +11,8 @@ angular.module('starter', ['ionic',
   'starter.security',
   'starter.user',
   'LocalStorageModule',
-    'starter.worker'
+    'starter.worker',
+
 
 //
   //'starter.playlist'
@@ -34,7 +35,7 @@ angular.module('starter', ['ionic',
 .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
   $stateProvider
 
-      RestangularProvider.setBaseUrl("http://192.168.135.46:3000");
+      RestangularProvider.setBaseUrl("http://192.168.135.47:3000");
 
 
       $urlRouterProvider.otherwise('/');
@@ -69,7 +70,6 @@ angular.module('starter', ['ionic',
             $state.go("security.login");
           }
         }
-
       });
     });
 

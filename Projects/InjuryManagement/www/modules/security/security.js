@@ -1,6 +1,7 @@
 angular.module('starter.security',[
     'starter.security.services',
     'starter.security.controller'
+
 ])
 .config(function($stateProvider){
         $stateProvider
@@ -31,4 +32,5 @@ angular.module('starter.security',[
                     }
                 }
             })
+
     })

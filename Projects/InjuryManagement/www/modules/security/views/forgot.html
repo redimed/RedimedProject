@@ -1,39 +1,36 @@
-<ion-view class="">
-<ion-content class="">
+<ion-view >
     <div class="logo">
         <a ui-sref="login">
             <img src="theme/assets/logo.png">
         </a>
     </div>
     <div class="content">
-        <form method="post" class="forget-form" novalidate name="forgetForm" style="display: block;"   >
+        <form method="post" class="" novalidate name="forgetForm" style="display: block;"   >
             <h3>Forget Password ?</h3>
             <p>
                 Enter your e-mail address below to reset your password.
+
             </p>
-            <div class="form-group">
-                <div class="item item-input">
 
-
-                    <input class="form-control placeholder-no-fix" type="email" autocomplete="off" ng-model="email" placeholder="Email" name="email" required />
-
+            <div class="form-group" >
+                <div class="input-icon">
+                    <input type="text" ng-model="email" placeholder="Email"/>
                 </div>
-                <!--validate-->
-
-                <!--end validate-->
             </div>
 
             <div class="form-actions">
                 <button type="button" id="back-btn" ui-sref="security.login" class="button button-small button-positive">
-                     Back </button>
+                    Back </button>
                 <button class="button button-small button-positive" ng-click="forgotPass()">
                     Submit </i>
                 </button>
             </div>
         </form>
     </div>
+
+
     <div class="copyright ">
         2014 &copy; REDIMED Dashboard
     </div>
-</ion-content>
+
 </ion-view>

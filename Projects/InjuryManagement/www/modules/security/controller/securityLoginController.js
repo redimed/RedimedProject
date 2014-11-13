@@ -3,7 +3,6 @@ angular.module('starter.security.login.controller',[])
         // SUBMIT LOGIN
         $scope.login = function(){
 
-
                 SecurityService.login($scope.modelUser).then(function(response){
                     UserService.detail().then(function(response){
                         if(typeof response.userInfo !== 'undefined')

@@ -13,4 +13,9 @@ angular.module("starter.user",[
                     }
                 }
             })
+            .state('home', {
+                url: "/home",
+                templateUrl: "home.html",
+                controller: 'HomeTabCtrl'
+            })
     })
