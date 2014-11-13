@@ -13,9 +13,21 @@ angular.module('app.loggedIn.document.form18.controllers', [])
             $state.go('loggedIn.home', null, {"reload": true});
         }
         else {
+            //set value default
             $scope.info = {
-                PATIENT_ID: userInfo.id
-            }
+                GORGON_ID: null,
+                PATIENT_ID: null,
+                CAL_ID: null,
+                DocId: null,
+                TIME_TEST: new Date(),
+                WORK_COVER_NO: null,
+                PERSON_ARRANGING_SIGNATURE: null,
+                PERSON_ARRANGING_NAME: null,
+                PERSON_ARRANGING_POSITION: null,
+                DOCTOR_ID: null,
+                WORKER_SIGNATURE: null
+            };
+            var oriInfo = angular.copy($scope.info);
             var info = $scope.info;
             DocumentService.loadForm18(info).then(function (response) {
                 if ('fail' === response['status']) {
@@ -41,50 +53,66 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                         DOCTOR_ID: data[0].DOCTOR_ID,
                         WORKER_SIGNATURE: data[0].WORKER_SIGNATURE
                     };
+                    oriInfo = angular.copy($scope.info);
                 }
                 else {
                     $state.go('loggedIn.home', null, {"reload": true});
                 }
             })
-        }
 
-        $scope.submit = function () {
-            var info = $scope.info;
-            if ($scope.isNew === true) {
-                /**
-                 * add new
-                 */
-                DocumentService.insertForm18(info).then(function (response) {
-                    if (response['status'] === 'success') {
-                        toastr.success("Add success!", 'Success');
-                        $state.go("loggedIn.Form18", null, {"reload": true});
-                    }
-                    else if (response['status'] === 'fail') {
-                        toastr.error("Add fail!", "fail");
-                    }
-                    else {
-                        //throw exception
-                        $state.go("loggedIn.home", null, {'reload': true});
-                    }
-                })
+            $scope.resetForm = function () {
+                $scope.info = angular.copy(oriInfo);
+                $scope.form18.$setPristine();
             }
-            else if ($scope.isNew === false) {
-                /**
-                 * edit
-                 */
-                DocumentService.editForm18(info).then(function (response) {
-                    if (response['status'] === 'success') {
-                        toastr.success("Edit success!", 'Success');
-                        $state.go("loggedIn.Form18", null, {"reload": true});
-                    }
-                    else if (response['status'] === 'fail') {
-                        toastr.error("Edit fail!", "fail");
-                    }
-                    else {
-                        //throw exception
-                        $state.go("loggedIn.home", null, {'reload': true});
-                    }
-                })
+
+            $scope.infoChanged = function () {
+                return !angular.equals(oriInfo, $scope.info);
             }
-        };
+
+            $scope.submit = function (form18) {
+                if (form18.$error.maxlength || form18.$error.required || form18.$error.pattern) {
+                    toastr.error("Please Input All Required Information!", "Success");
+                }
+                else {
+                    var info = $scope.info;
+
+                    if ($scope.isNew === true) {
+                        /**
+                         * add new
+                         */
+                        DocumentService.insertForm18(info).then(function (response) {
+                            if (response['status'] === 'success') {
+                                toastr.success("Add success!", 'Success');
+                                $state.go("loggedIn.Form18", null, {"reload": true});
+                            }
+                            else if (response['status'] === 'fail') {
+                                toastr.error("Add fail!", "Error");
+                            }
+                            else {
+                                //throw exception
+                                $state.go("loggedIn.home", null, {'reload': true});
+                            }
+                        })
+                    }
+                    else if ($scope.isNew === false) {
+                        /**
+                         * edit
+                         */
+                        DocumentService.editForm18(info).then(function (response) {
+                            if (response['status'] === 'success') {
+                                toastr.success("Edit success!", 'Success');
+                                $state.go("loggedIn.Form18", null, {"reload": true});
+                            }
+                            else if (response['status'] === 'fail') {
+                                toastr.error("Edit fail!", "Error");
+                            }
+                            else {
+                                //throw exception
+                                $state.go("loggedIn.home", null, {'reload': true});
+                            }
+                        });
+                    }
+                }
+            }
+        }
     });

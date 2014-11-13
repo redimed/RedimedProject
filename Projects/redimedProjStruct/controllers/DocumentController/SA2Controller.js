@@ -65,7 +65,7 @@ module.exports = {
     },
     insertSA2: function (req, res) {
         var info = req.body.info;
-        info.headers.forEach(function (infoH, hIndex) {
+        info.forEach(function (infoH, hIndex) {
             db.headersSACLN.create({
                 PATIENT_ID: 999,
                 CAL_ID: 999,
@@ -86,7 +86,7 @@ module.exports = {
                 LOCATION_ID: infoH.LOCATION_ID
             }, {raw: true})
                 .success(function () {
-                    info.headers[hIndex].sections.forEach(function (infoS, sIndex) {
+                    info[hIndex].sections.forEach(function (infoS, sIndex) {
                         db.sectionsSACLN.create({
                             PATIENT_ID: 999,
                             CAL_ID: 999,
@@ -102,7 +102,7 @@ module.exports = {
                             LAST_UPDATE_DATE: new Date()
                         }, {raw: true})
                             .success(function () {
-                                info.headers[hIndex].sections[sIndex].lines.forEach(function (infoL, sIndex) {
+                                info[hIndex].sections[sIndex].lines.forEach(function (infoL, lIndex) {
                                     db.linesSACLN.create({
                                         PATIENT_ID: 999,
                                         CAL_ID: 999,
@@ -146,7 +146,7 @@ module.exports = {
     },
     editSA2: function (req, res) {
         var info = req.body.info;
-        info.headers.forEach(function (infoH, hIndex) {
+        info.forEach(function (infoH, hIndex) {
             db.headersSACLN.update({
                 SA_NAME: infoH.SA_NAME,
                 ISENABLE: infoH.ISENABLE,
@@ -164,7 +164,7 @@ module.exports = {
                 LOCATION_ID: infoH.LOCATION_ID
             }, {PATIENT_ID: 999, CAL_ID: 999, SA_ID: infoH.SA_ID})
                 .success(function () {
-                    info.headers[hIndex].sections.forEach(function (infoS, sIndex) {
+                    info[hIndex].sections.forEach(function (infoS, sIndex) {
                         db.sectionsSACLN.update({
                             SA_ID: infoS.SA_ID,
                             SECTION_NAME: infoS.SECTION_NAME,
@@ -177,7 +177,7 @@ module.exports = {
                             LAST_UPDATE_DATE: new Date()
                         }, { PATIENT_ID: 999, CAL_ID: 999, SECTION_ID: infoS.SECTION_ID})
                             .success(function () {
-                                info.headers[hIndex].sections[sIndex].lines.forEach(function (infoL, sIndex) {
+                                info[hIndex].sections[sIndex].lines.forEach(function (infoL, lIndex) {
                                     db.linesSACLN.update({
                                         SECTION_ID: infoL.SECTION_ID,
                                         SA_ID: infoL.SA_ID,

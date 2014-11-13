@@ -13,13 +13,12 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
             $state.go("loggedIn.MRS", null, {"reload": true});
         }
         else {
+            $scope.info = [];
+            $scope.info.headers = [];
             /**
              * exist cookies
              */
-            var PATIENT_ID = userInfo.id;
-            $scope.info = {
-                PATIENT_ID: PATIENT_ID
-            };
+            var oriInfo;
             var info = $scope.info;
             DocumentService.loadMRS(info).then(function (response) {
                 if (response['status'] === 'fail') {
@@ -35,22 +34,16 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 /**
                  * load data to input
                  */
-                $scope.info = [];
-                $scope.info.headers = [];
                 var PATIENT_ID = 999;
                 var CAL_ID = 999;
                 var data = response[0];
-                if (data.headers[0].PATIENT_ID !== undefined) {
-                    PATIENT_ID = data.headers[0].PATIENT_ID;
-                    CAL_ID = data.headers[0].CAL_ID;
-                }
                 angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({
                         "MRS_DF_ID": dataH.MRS_DF_ID, "PATIENT_ID": PATIENT_ID, "CAL_ID": CAL_ID, "DF_CODE": dataH.DF_CODE, "ITEM_ID": dataH.ITEM_ID,
                         "DESCRIPTION": dataH.DESCRIPTION, "ISENABLE": dataH.ISENABLE, "Created_by": dataH.Created_by,
                         "Creation_date": dataH.Creation_date, "Last_updated_by": dataH.Last_updated_by,
                         "Last_update_date": dataH.Last_update_date, "practitioner": dataH.practitioner,
-                        "practitionSign": dataH.practitionSign, "practitionDate": dataH.practitionDate, "isReview": dataH.isReview, "group": []
+                        "practitionSign": dataH.practitionSign, "practitionDate": dataH.practitionDate || new Date(), "isReview": dataH.isReview, "group": []
                     })
                     angular.forEach(data.groups, function (dataG, gIndex) {
                         if (dataG.MRS_DF_ID === $scope.info.headers[hIndex].MRS_DF_ID) {
@@ -69,8 +62,8 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                                     "MRS_LINE_ID": dataL.MRS_LINE_ID,
                                     "MRS_GROUP_ID": dataL.MRS_GROUP_ID,
                                     "MRS_DF_ID": dataL.MRS_DF_ID,
-                                    "PATIENT_ID": dataL.PATIENT_ID,
-                                    "CAL_ID": dataL.CAL_ID,
+                                    "PATIENT_ID": PATIENT_ID,
+                                    "CAL_ID": CAL_ID,
                                     "ORD": dataL.ORD,
                                     "COMP_TYPE": dataL.COMP_TYPE,
                                     "QUEST_LABEL": dataL.QUEST_LABEL,
@@ -84,53 +77,62 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                                     "Creation_date": dataL.Creation_date,
                                     "Last_updated_by": dataL.Last_updated_by,
                                     "Last_update_date": dataL.Last_update_date
-                                })
+                                });
                             }
-                        })
+                        });
+                    });
+                });
+                oriInfo = angular.copy($scope.info.headers);
+            });
+            $scope.checkChange = function (hIndex, gIndex, lIndex) {
+                if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 1) {
+                    $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = true;
+                }
+                else if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 0) {
+                    $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = false;
+                    $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments = 0;
+                }
+            }
+            $scope.resetForm = function () {
+                $scope.info.headers = angular.copy(oriInfo);
+                $scope.mrsForm.$setPristine();
+            }
+
+            $scope.infoChanged = function () {
+                return !angular.equals(oriInfo, $scope.info.headers);
+            }
+            $scope.submit = function (mrsForm) {
+                var info = $scope.info.headers;
+                if ($scope.isNew == true) {
+                    //add new mrs
+                    DocumentService.insertMRS(info).then(function (response) {
+                        if (response['status'] === 'fail') {
+                            //insert error
+                            toastr.error("Add fail", "Error");
+                        }
+                        else if (response['status'] === 'success') {
+                            toastr.success("Add success", "Success");
+                            $state.go('loggedIn.MRS', null, {"reload": true});
+                        }
+                        else {
+                            //throw exception
+                            $state.go('loggedIn.MRS', null, {"reload": true});
+                        }
                     })
-                })
-            })
+                }
+                else if ($scope.isNew == false) {
+                    //edit old mrs
+                    DocumentService.editMRS(info).then(function (response) {
+                        if (response['status'] === 'fail') {
+                            //edit error
+                            toastr.error("Edit fail!", "Error");
+                        }
+                        else if (response['status'] === 'success') {
+                            toastr.success("Edit success!", "Success");
+                            $state.go('loggedIn.MRS', null, {"reload": true});
+                        }
+                    });
+                }
+            }
         }
-        $scope.checkChange = function (hIndex, gIndex, lIndex) {
-            if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 1) {
-                $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = true;
-            }
-            else if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 0) {
-                $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = false;
-                $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments = 0;
-            }
-        }
-        $scope.submit = function (mrsForm) {
-            var info = $scope.info;
-            if ($scope.isNew == true) {
-                //add new mrs
-                DocumentService.insertMRS(info.headers).then(function (response) {
-                    if (response['status'] === 'fail') {
-                        //insert error
-                        toastr.error("Add fail", "Error");
-                    }
-                    else if (response['status'] === 'success') {
-                        toastr.success("Add success", "Success");
-                        $state.go('loggedIn.MRS', null, {"reload": true});
-                    }
-                    else {
-                        //throw exception
-                        $state.go('loggedIn.MRS', null, {"reload": true});
-                    }
-                })
-            }
-            else if ($scope.isNew == false) {
-                //edit old mrs
-                DocumentService.editMRS(info.headers).then(function (response) {
-                    if (response['status'] === 'fail') {
-                        //edit error
-                        toastr.error("Edit fail!", "Error");
-                    }
-                    else if (response['status'] === 'success') {
-                        toastr.success("Edit success!", "Success");
-                        $state.go('loggedIn.MRS', null, {"reload": true});
-                    }
-                })
-            }
-        };
     });

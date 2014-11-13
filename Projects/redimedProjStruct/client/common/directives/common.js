@@ -578,25 +578,27 @@ angular.module("app.directive.common", [])
                 'reset': "="
             },
             link: function (scope, element, attr) {
-                element.jSignature();
+                var canvas = document.querySelector("#" + attr.id);
 
-                element.bind("change", function (e) {
-                    scope.$apply(function () {
-                        scope.ngModel = element.jSignature("getData");
-                    })
-                })
+                var signaturePad = new SignaturePad(canvas);
 
-                scope.$watch('reset', function(newReset, oldReset){
-                    if(typeof newReset !== 'undefined'){
-                        $timeout(function(){
-                            element.jSignature('reset');
-                            scope.$apply(function(){
-                                scope.ngModel = '';
-                                scope.reset = false;
-                            })
-                        }, 200)
+                signaturePad.maxWidth = 3;
+                signaturePad.penColor = "black";
+
+                scope.$watch('ngModel', function (newModel) {
+                    if (typeof newModel !== 'undefined') {
+                        if (!signaturePad.isEmpty()) {
+                            signaturePad.clear();
+                        }
+                        signaturePad.fromDataURL(newModel);
                     }
                 })
+
+                signaturePad.onEnd = function () {
+                    scope.$apply(function () {
+                        scope.ngModel = signaturePad.toDataURL();
+                    })
+                }
             }
         }
     })
@@ -615,21 +617,3 @@ angular.module("app.directive.common", [])
 
 })
 
-.directive("signature", function(){
-    return {
-        restrict: "A",
-        require: "ngModel",
-        scope: {
-            'ngModel': "="
-        },
-        link: function(scope, element, attr){
-            element.jSignature();
-
-            element.bind("change", function(e){
-                scope.$apply(function(){
-                    scope.ngModel = element.jSignature("getData");
-                })
-            })
-        }
-    }
-})

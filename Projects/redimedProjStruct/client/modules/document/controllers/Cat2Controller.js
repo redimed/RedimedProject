@@ -1,22 +1,12 @@
 angular.module('app.loggedIn.document.cat2.controllers', [])
     .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter) {
-        //begin reset signature
-        $scope.resetFlag = false;
-        $scope.reset = function () {
-            $scope.resetFlag = !$scope.resetFlag;
-        }
-        //end signature
-
         //begin show-hidden img signature
-        $scope.sig = false;
-        $scope.sigClick = function () {
-            $scope.sig = true;
+        //clear signature
+        $scope.clearSignature = function () {
+            $scope.info.Signature = '';
         }
-        $scope.okClick = function () {
-            $scope.sig = false;
-        }
-        $scope.cancelClick = function () {
-            $scope.sig = false;
+        $scope.resetSignature = function () {
+            $scope.info.Signature = oriInfo.Signature;
         }
         //end show-hidden signature
 

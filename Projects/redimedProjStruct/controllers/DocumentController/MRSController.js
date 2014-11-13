@@ -86,7 +86,7 @@ module.exports = {
                 Last_update_date: infoH.Last_update_date,
                 practitioner: infoH.practitioner,
                 practitionSign: infoH.practitionSign,
-                practitionDate: new Date(),                             //edit
+                practitionDate: infoH.practitionDate,
                 isReview: infoH.isReview
             }, {raw: true})
                 .success(function () {
@@ -162,7 +162,7 @@ module.exports = {
                 Last_update_date: infoH.Last_update_date,
                 practitioner: infoH.practitioner,
                 practitionSign: infoH.practitionSign,
-                practitionDate: new Date(),                             //edit
+                practitionDate: infoH.practitionDate,
                 isReview: infoH.isReview
             }, { MRS_DF_ID: infoH.MRS_DF_ID, PATIENT_ID: infoH.PATIENT_ID, CAL_ID: infoH.CAL_ID})
                 .success(function () {

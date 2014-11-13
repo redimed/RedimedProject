@@ -4,7 +4,7 @@
 var db = require('../../models');
 module.exports = {
     loadForm18: function (req, res) {
-        var info = req.body.info;
+        var info = req.body.info; //get param
         db.Form18.findAll({where: {PATIENT_ID: 999, CAL_ID: 999}}, {raw: true})
             .success(function (dataF18) {
                 if (dataF18.length === 0) {
@@ -55,8 +55,6 @@ module.exports = {
     },
     editForm18: function (req, res) {
         var info = req.body.info;
-        console.log("info");
-        console.log(info);
         db.Form18.update({
             DocId: info.DocId,
             TIME_TEST: info.TIME_TEST,
