@@ -2,59 +2,66 @@
     <ion-nav-buttons>
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
-        <div class="bar bar-subheader">
-            <button class="button button-clear button-positive" ui-sref="app.worker.add">
-                Back
+    <div class="bar bar-subheader">
+        <button class="button button-clear button-positive" ui-sref="app.worker.add">
+            Back
+        </button>
+        <h1 class="title">Contact</h1>
+    </div>
+
+    <ion-content class="padding has-subheader has-header">
+        <ion-list>
+            <label class="item item-input" ng-class="{'has-error':isSubmit && workerForm.Address1.$invalid}">
+                <span class="input-label span-input-color">Address</span>
+                <input ng-required="true" type="text" ng-model="worker.Address1" name="Address1">
+                <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && workerForm.Address1.$invalid}"></i>
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label span-input-color">Address 2</span>
+                <input type="text" ng-model="worker.Address2" name="Address2">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label span-input-color">Post Code</span>
+                <input type="number" ng-model="worker.Post_code" name="Post_code">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label span-input-color">Suburb</span>
+                <input type="text" ng-model="worker.Suburb" name="Suburb">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label span-input-color">State</span>
+                <input type="text" ng-model="worker.State" name="State">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label span-input-color">Country</span>
+                <input type="text" ng-model="worker.Country" name="Country">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label span-input-color">Mobile Phone</span>
+                <input type="number" ng-model="worker.Mobile" name="Mobile">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label span-input-color">Home Phone</span>
+                <input type="number" ng-model="worker.Home_phone" name="Home_phone">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label span-input-color">Work Phone</span>
+                <input type="number" ng-model="worker.Work_phone" name="Work_phone">
+            </label>
+        </ion-list>
+
+        <div class="padding-right padding-left">
+            <button type="submit" class="button button-block button-positive" ng-click="submit(workerForm)">
+                Add Worker
             </button>
-
-            <h1 class="title">Contact</h1>
         </div>
-
-        <ion-content class="padding has-subheader has-header">
-            <ion-list>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="Address">
-                    </label>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="Address2">
-                    </label>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="Suburb">
-                    </label>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="State">
-                    </label>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="Post Code">
-
-                    </label>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="Country">
-                    </label>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="Mobile Phone">
-                    </label>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="Home Phone">
-                    </label>
-
-                    <label class="item item-input">
-                        <input type="text" placeholder="Work Phone">
-                    </label>
-
-                <div class="padding-right padding-left">
-                    <button type="submit" class="button button-block button-positive">
-                        Add Worker
-                    </button>
-                </div>
-            </ion-list>
-        </ion-content>
+    </ion-content>
 </ion-view>

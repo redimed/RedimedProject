@@ -1,9 +1,9 @@
 <ion-side-menus>
+
   <ion-pane ion-side-menu-content>
-    <ion-nav-bar class="bar-stable nav-title-slide-ios7 bar bar-header bar-assertive">
-
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+      <!--<ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>-->
     </ion-nav-bar>
-
     <ion-nav-view name="menuContent" animation="slide-left-right">
 
     </ion-nav-view>
@@ -11,7 +11,7 @@
 
   <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">Menu</h1>
     </header>
     <ion-content class="has-header">
       <ion-list>
@@ -23,9 +23,11 @@
           Browse
         </ion-item>
         <ion-item nav-clear menu-close ui-sref="app.worker.add">
-          Add Worker
+          Worker
         </ion-item>
-
+        <ion-item ng-click="logout()">
+          Logout
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
