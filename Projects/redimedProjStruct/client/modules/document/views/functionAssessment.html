@@ -37,7 +37,7 @@
                                     <ng-form name="numberForm">
                                         <label class="bold">{{detail.detail_name}}</label>
                                         <div class="row">
-                                            <div ng-if="detail.val1_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
+                                            <div ng-if="detail.val1_name != null" ng-class="{'col-md-3 col-lg-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
                                                 <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val1_name != null}">
                                                     {{detail.val1_name}}
                                                 </label>
@@ -55,7 +55,7 @@
                                             <div ng-if="detail.val1_ischeckbox == 1"  ng-class="{'col-md-1 col-sm-1' : detail.val1_ischeckbox == 1}">
                                                 <input class="form-control" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" type="checkbox" ng-checked="infoD.VAL1_CHECKBOX[detail.detail_id]==1"/>
                                             </div>
-                                            <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val1_ischeckbox == 2}">
+                                            <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-6 col-lg-4 col-sm-6' : detail.val1_ischeckbox == 2}">
                                                 <div class="btn-group ">
                                                     <label class="btn">
                                                         <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="0"/> UNABLE
@@ -78,7 +78,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div ng-if="detail.val2_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}">
+                                            <div ng-if="detail.val2_name != null" ng-class="{'col-md-3 col-lg-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}">
                                                 <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val2_name != null}" >
                                                     {{detail.val2_name}}
                                                 </label>
@@ -96,7 +96,7 @@
                                             <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1 col-sm-1' : detail.val2_ischeckbox == 1}">
                                                 <input class="form-control" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" type="checkbox" ng-checked="infoD.VAL2_CHECKBOX[detail.detail_id]==1"/>
                                             </div>
-                                            <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val2_ischeckbox == 2}">
+                                            <div ng-if="detail.val2_ischeckbox == 2" ng-class="{'col-md-6 col-lg-4 col-sm-6' : detail.val2_ischeckbox == 2}">
                                                 <div class="btn-group ">
                                                     <label class="btn">
                                                         <input type="radio" ng-model="infoD.VAL2_CHECKBOX[detail.detail_id]" value="0" /> UNABLE
@@ -121,11 +121,11 @@
                                             </div>
                                             <div ng-class="{'has-error':showClickedValidation  && numberForm.comment.$invalid}">
                                                 <div ng-if="detail.comment_text == 1">
-                                                    <div class="form-group col-sm-8 col-md-6">
-                                                        <label class="col-md-3 col-sm-3" style="margin-top: 5px">
+                                                    <div class="form-group col-sm-8 col-lg-5 col-md-6">
+                                                        <label class="col-md-3 col-lg-2 col-sm-3" style="margin-top: 5px">
                                                             Comment
                                                         </label>
-                                                        <div class="col-md-8 col-sm-9" style="margin-top: 5px">
+                                                        <div class="col-md-8 col-lg-10 col-sm-9" style="margin-top: 5px">
                                                             <input name="comment"
                                                                    ng-required="((infoD.VAL1_CHECKBOX[detail.detail_id]==false || infoD.VAL1_CHECKBOX[detail.detail_id] == null) && detail.val1_no ==1)||((infoD.VAL2_CHECKBOX[detail.detail_id]==false || infoD.VAL2_CHECKBOX[detail.detail_id] == null) && detail.val2_no ==1) || (infoD.VAL2_CHECKBOX[detail.detail_id] == true && detail.val2_yes == 1) || (infoD.VAL1_CHECKBOX[detail.detail_id] == true && detail.val1_yes == 1)"
                                                                    type="text" ng-model="infoD.COMMENTS[detail.detail_id]" class="form-control">
@@ -166,14 +166,14 @@
                                     <div ng-if="line.line_israting1 == 1">
                                         <div ng-if="line.score_type1 == 3">
                                             <div class="row" style="margin-top: 15px">
-                                                <div class="col-md-2 col-sm-3">
+                                                <div class="col-md-3 col-lg-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Score(AVG)</label>
                                                 </div>
                                                 <div class="col-md-2 col-sm-3">
                                                     <input type="text" ng-model="infoL.SCORE1[line.line_id]" readonly class="form-control">
                                                 </div>
                                                 <div ng-if="line.line_isscore2 == 1 && line.line_israting2 == 1 && line.score_type2 == 3">
-                                                    <div class="col-md-2 col-sm-3">
+                                                    <div class="col-md-3 col-lg-2 col-sm-3">
                                                         <label  style="margin-top: 5px" class="pull-right" >Score(AVG)</label>
                                                     </div>
                                                     <div class="col-md-2 col-sm-3">
@@ -182,7 +182,7 @@
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-top: 15px">
-                                                <div class="col-md-2 col-sm-3">
+                                                <div class="col-md-3 col-lg-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Rating</label>
                                                 </div>
                                                 <div class="col-md-2 col-sm-3">
@@ -190,7 +190,7 @@
                                                     <div ng-model="infoL.RATING_VALUE1[line.line_id]"></div>
                                                 </div>
                                                 <div ng-if="line.line_isscore2 == 1 && line.line_israting2 == 1 && line.score_type2 == 3">
-                                                    <div class="col-md-2 col-sm-3">
+                                                    <div class="col-md-3 col-lg-2 col-sm-3">
                                                         <label  style="margin-top: 5px" class="pull-right" >Rating</label>
                                                     </div>
                                                     <div class="col-md-2 col-sm-3">
@@ -217,7 +217,7 @@
                                         </div>
                                         <div ng-if="line.score_type1 == 6">
                                             <div class="row" style="margin-top: 15px">
-                                                <div class="col-md-2 col-sm-3">
+                                                <div class="col-md-3 col-lg-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Rating</label>
                                                 </div>
                                                 <div class="col-md-2 col-sm-3">
@@ -254,10 +254,10 @@
                                     <div ng-if="line.line_israting1 == 0">
                                         <div ng-if="line.score_type1 == 7">
                                             <div class="row"  style="margin-top: 15px">
-                                                <div class="col-md-2 col-sm-3">
+                                                <div class="col-md-3 col-lg-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Score/Rating</label>
                                                 </div>
-                                                <div class="col-md-5 col-sm-8">
+                                                <div class="col-md-7 col-sm-8">
                                                     <div class="btn-group ">
                                                         <label class="btn">
                                                             <input type="radio" ng-model="infoL.SCORE1[line.line_id]" value="0"/> UNABLE
@@ -274,7 +274,7 @@
                                         </div>
                                         <div ng-if="line.score_type1 == 9">
                                             <div class="row"  style="margin-top: 15px">
-                                                <div class="col-md-2 col-sm-3">
+                                                <div class="col-md-3 col-lg-2 col-sm-3">
                                                     <label class="pull-right">Manage </label>
                                                 </div>
                                                 <div class="col-md-2 col-sm-3">
@@ -282,10 +282,10 @@
                                                 </div>
                                             </div>
                                             <div class="row"  style="margin-top: 15px">
-                                                <div class="col-md-2 col-sm-3">
+                                                <div class="col-md-3 col-lg-2 col-sm-3">
                                                     <label  style="margin-top: 5px" class="pull-right" >Score/Rating</label>
                                                 </div>
-                                                <div class="col-md-5 col-sm-8">
+                                                <div class="col-md-7 col-sm-8">
                                                     <div class="btn-group ">
                                                         <label class="btn">
                                                             <input type="radio" ng-model="infoL.SCORE1[line.line_id]" value="0"/> UNABLE
@@ -325,7 +325,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div ng-if="nameC.comment_type == 4" ng-class="{'col-md-4 col-sm-6' : nameC.comment_type == 4}">
+                                                <div ng-if="nameC.comment_type == 4" ng-class="{'col-md-6 col-sm-6' : nameC.comment_type == 4}">
                                                     <div class="btn-group " >
                                                         <label class="btn">
                                                             <input type="radio" ng-model="infoC.VALUE[nameC.comment_id]" value="0"/> GOOD
@@ -338,7 +338,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div ng-if="nameC.comment_type == 5" ng-class="{'col-md-5 col-sm-8' : nameC.comment_type == 5}">
+                                                <div ng-if="nameC.comment_type == 5" ng-class="{'col-md-7 col-sm-8' : nameC.comment_type == 5}">
                                                     <div class="btn-group " >
                                                         <label class="btn">
                                                             <input type="radio" ng-model="infoC.VALUE[nameC.comment_id]" value="0"/> MINIMAL
@@ -351,7 +351,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div ng-if="nameC.comment_type == 6" ng-class="{'col-md-8' : nameC.comment_type == 6}">
+                                                <div ng-if="nameC.comment_type == 6" ng-class="{'col-md-8 col-lg-8' : nameC.comment_type == 6}">
                                                     <textarea class="form-control" ng-model="infoC.VALUE[nameC.comment_id]" placeholder="aaaaaaaa"></textarea>
                                                 </div>
                                             </div>
@@ -408,7 +408,7 @@
                                         {{detail.val1_name}}
                                     </label>
                                 </div>
-                                <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val1_ischeckbox == 3}">
+                                <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-3 col-lg-2 col-sm-3' : detail.val1_ischeckbox == 3}">
                                     <div class="btn-group ">
                                         <label class="btn">
                                             <input type="radio" ng-model="infoD.VAL1_CHECKBOX[detail.detail_id]" value="0" /> Yes
@@ -422,7 +422,7 @@
                                     <label class="col-md-1 col-sm-2" style="margin-top: 10px" >
                                         Comment
                                     </label>
-                                    <div class="col-md-3 col-sm-8">
+                                    <div class="col-md-3 col-lg-4 col-sm-8">
                                         <textarea class="form-control" ng-model="infoD.COMMENTS[detail.detail_id]"></textarea>
                                     </div>
                                 </div>
@@ -489,20 +489,20 @@
                 <div  ng-class="{'has-error':showClickedValidation && FAForm.recom.$invalid}">
                     <div class="row">
                         <label class="bold col-md-4">* Comments/Recommendations: </label>
-                        <div class="col-md-3">
+                        <div class="col-md-7">
                             <textarea class="form-control" name="recom" required ng-model="infoH.Comments"></textarea>
                         </div>
                     </div>
                     <div class="row"  ng-show="showClickedValidation && FAForm.recom.$invalid">
                         <label class="bold col-md-4"></label>
                         <div class="col-md-3 help-block">
-                            <label for="recom">Must be enter</label>
+                            <label>Must be enter</label>
                         </div>
                     </div>
                 </div>
                 </br>
                 <div class="row">
-                    <label class="bold col-md-5 col-sm-8" style="margin-top: 10px">Health and Rehab Coorinator Review Recommended: </label>
+                    <label class="bold col-md-7 col-lg-5 col-sm-8" style="margin-top: 10px">Health and Rehab Coorinator Review Recommended: </label>
                     <div class="col-md-5 col-sm-4">
                         <div class="btn-group ">
                             <label class="btn">
@@ -555,6 +555,48 @@
                         <input type="checkbox"  ng-model="infoH.Att_Balance" ng-checked="infoH.Att_Balance == 1" class="form-control">
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-8 col-sm-7">
+                        <div class="form-group">
+                            <label class="control-label col-md-3" style="margin-top: 5px;">Signature</label>
+                            <a href="javascript:;" ng-click="sigClick()" id="signBtn" class="btn green">Sign</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="sig" style="border: none; width: 900px; margin-left: 10px;background-color:#74e4b5;">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-12 col-sm-12">
+                                <div signature ng-model="infoH.ASSESSED_SIGN" reset="resetFlag"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-8 col-sm-8"></div>
+                            <div class="col-md-4 col-sm-4">
+                                <a href="javascript:;" class="btn red" ng-click="cancelClick()">Cancel</a>
+                                <a href="javascript:;" class="btn blue" ng-click="reset()">Reset</a>
+                                <a href="javascript:;" class="btn green" ng-click="okClick()">Ok</a>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+                <div ng-show="infoH.ASSESSED_SIGN!==''&& !sig">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 col-sm-6">
+                                <img src="" ng-src="{{infoH.ASSESSED_SIGN}}" style="width:200px;height: 100px;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 </div>

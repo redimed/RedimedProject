@@ -8,9 +8,9 @@ module.exports = {
     {
         var PATIENT_ID = req.body.PATIENT_ID;
         var CAL_ID = req.body.CAL_ID;
-        db.sequelize.query("INSERT INTO `cln_ma_headers` (Patient_id,CAL_ID,MA_ID,DF_CODE,ISENABLE, DESCRIPTION, Creation_date) SELECT ?,?,h.QUEST_DF_ID,h.`DF_CODE`,h.`ISENABLE`,h.DESCRIPTION,?  FROM `sys_ma_df_headers` h;",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
+        db.sequelize.query("INSERT INTO `cln_ma_headers` (Patient_id,CAL_ID,MA_ID,DF_CODE,ISENABLE, DESCRIPTION, Creation_date) SELECT ?,?,h.QUEST_DF_ID,h.`DF_CODE`,h.`ISENABLE`,h.DESCRIPTION,?  FROM `sys_ma_df_headers` h;",null,{raw:true},[PATIENT_ID,CAL_ID, new Date()]).success(function(){
             db.sequelize.query("INSERT INTO `cln_ma_group` (PATIENT_ID, CAL_ID, GROUP_ID, GROUP_NAME, MA_ID,USER_TYPE,ISENABLE) SELECT ?,?,g.`GROUP_ID`, g.`GROUP_NAME`,g.`QUEST_DF_ID`,g.`USER_TYPE`,g.`ISENABLE` FROM `sys_ma_df_group` g;",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-                db.sequelize.query("INSERT INTO `cln_ma_lines` (PATIENT_ID,CAL_ID,MA_LINE_ID,QUESTION,VAL1_NAME,VAL2_NAME,YES_NO,ORD,GROUP_ID,ISENABLE) SELECT ?,?,l.MA_LINE_ID, l.QUESTION, l.VAL1_NAME, l.VAL2_NAME, l.YES_NO, l.ORD, l.GROUP_ID,l.ISENABLE FROM `sys_ma_df_lines` l;",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
+                db.sequelize.query("INSERT INTO `cln_ma_lines` (PATIENT_ID,CAL_ID,MA_LINE_ID,QUESTION,VAL1_NAME,VAL2_NAME,YES_NO,ORD,GROUP_ID,ISENABLE, Creation_date) SELECT ?,?,l.MA_LINE_ID, l.QUESTION, l.VAL1_NAME, l.VAL2_NAME, l.YES_NO, l.ORD, l.GROUP_ID,l.ISENABLE,? FROM `sys_ma_df_lines` l;",null,{raw:true},[PATIENT_ID,CAL_ID, new Date()]).success(function(){
                     res.json({status:"success"});
                 });
             });

@@ -1,14 +1,6 @@
 angular.module("app.loggedIn.patient.search.controller", [])
 
-.controller("PatientSearchController", function ($scope, $modalInstance, ConfigService, PatientService) {
-    $scope.ok = function(){
-        $modalInstance.close("sasaas");
-    }
-
-    $scope.cancel = function(){
-        $modalInstance.dismiss("cancel");
-    }
-
+.controller("PatientSearchController", function ($scope, ConfigService, PatientService) {
     $scope.search_map = {
         limit: 10,
         offset: 0,
@@ -25,7 +17,6 @@ angular.module("app.loggedIn.patient.search.controller", [])
     }
     $scope.list = {};
     $scope.loadList = function () {
-        console.log($scope.search);
         PatientService.getByOption({search: $scope.search}).then(function (data) {
 
             for (var i = 0, len = data.list.length; i < len; ++i) {

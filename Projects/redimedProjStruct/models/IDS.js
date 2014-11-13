@@ -22,16 +22,16 @@ module.exports = function(sequelize, DataTypes){
         Created_by : DataTypes.INTEGER(11),
         Creation_date : DataTypes.DATE,
         Last_updated_by : DataTypes.INTEGER(11),
-        Last_update_date : DataTypes.DATE,
+        //Last_update_date : DataTypes.DATE,
         NAME_COMMENT : DataTypes.STRING(10),
         ISENABLE : DataTypes.INTEGER(11),
-        SIGNATURE: DataTypes.BLOB,
+        SIGNATURE: DataTypes.TEXT,
         TesterName : DataTypes.STRING(10),
         TesterSign: DataTypes.BLOB,
         TesterDate : DataTypes.DATE
     },{
         tableName: 'cln_idas_headers', // đặt tên bảng
-        timestamps: false // đặt false để ko tự động tạo các cột timestamp
+        updatedAt : "Last_update_date"
     });
     return HeadersIDS;
 };

@@ -455,9 +455,9 @@
         </br>
 
             <div class="row">
-                <div class="col-md-7">
-                    <label class="control-label col-md-8  text-info" style="margin-top: 10px;">l) Any other lung problem that you’ve been told about:</label>
-                    <div class="btn-group" >
+                <div class="col-md-8">
+                    <label class="control-label col-md-7  text-info" style="margin-top: 10px;">l) Any other lung problem that you’ve been told about:</label>
+                    <div class="btn-group col-md-5" >
                         <label class="btn">
                             <input type="radio" ng-model="info.isOtherLung" value="1"/> Yes
                         </label>
@@ -778,9 +778,9 @@
         </div>
         </br>
         <div class="row">
-            <div class="col-md-7">
-                <label class="control-label col-md-8 text-info" style="margin-top: 10px;">h) Any other heart problem that you’ve been told about:</label>
-                <div class="btn-group">
+            <div class="col-md-8">
+                <label class="control-label col-md-7 text-info" style="margin-top: 10px;">h) Any other heart problem that you’ve been told about:</label>
+                <div class="btn-group col-md-5">
                     <label class="btn">
                         <input type="radio" ng-model="info.isOtherHeart" value="1"/> Yes
                     </label>
@@ -949,7 +949,7 @@
         <label class="control-label">8. If you’ve used a respirator, have you ever had any of the following problem? (if you’ve never used a respirator, check the following space and go to question 9):</label>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-3 col-sm-4 text-info" style="margin-top: 10px;font-weight: bold">Never used a respirator
+                <label class="control-label col-md-4 col-lg-3 col-sm-4 text-info" style="margin-top: 10px;font-weight: bold">Never used a respirator
                 </label>
                 <div class="col-md-1 col-sm-1">
                     <input class="form-control" ng-model="info.isUseRespirator" ng-change="checkUseRespirator(info.isUseRespirator)" ng-checked="info.isUseRespirator == 1" type="checkbox"  />
@@ -1481,7 +1481,7 @@
 
         <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.LengthOfTime.$invalid}">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-5 col-lg-4">
                     <label class="control-label text-info" style="font-weight: bold">Length of Time anticipated Effort in Hours:</label>
                 </div>
                 <div class="col-md-5" style="margin-left: 10px">
@@ -1574,6 +1574,46 @@
             </div>
         </div>
         </br>
+        <div class="row">
+            <div class="col-md-8 col-sm-7">
+                <div class="form-group">
+                    <label class="control-label col-md-3" style="margin-top: 5px;">Signature</label>
+                    <a href="javascript:;" ng-click="sigClick()" id="signBtn" class="btn green">Sign</a>
+
+                </div>
+            </div>
+        </div>
+        <div ng-show="sig" style="border: none; width: 900px; margin-left: 10px;background-color:#74e4b5;">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div signature ng-model="info.SIGNATURE" reset="resetFlag"></div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-8 col-sm-8"></div>
+                    <div class="col-md-4 col-sm-4">
+                        <a href="javascript:;" class="btn red" ng-click="cancelClick()">Cancel</a>
+                        <a href="javascript:;" class="btn blue" ng-click="reset()">Reset</a>
+                        <a href="javascript:;" class="btn green" ng-click="okClick()">Ok</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+        <div ng-show="info.SIGNATURE!==''&& !sig">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 col-sm-6">
+                        <img src="" ng-src="{{info.SIGNATURE}}" style="width:200px;height: 100px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 

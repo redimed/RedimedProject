@@ -32,7 +32,7 @@ var model_sql = {
     sql_get_by_appt: function (appt_id) {
         var query_builder = squel.select().from('inv_items').where('cal_id = ?', appt_id);
         query_builder.join('cln_appt_items', 'appt_items', 'appt_items.CLN_ITEM_ID = inv_items.ITEM_ID');
-        query_builder.field('ITEM_ID').field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC').field('QUANTITY');
+        query_builder.field('ITEM_CODE').field('ITEM_ID').field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC').field('QUANTITY');
         return query_builder.toString();
     },
     // CRUD HEADER
@@ -87,7 +87,7 @@ var model_sql = {
     },
     // END CRUD HEADER
     // 
-    // INSERT ITEM 
+    // POPULAR ITEM 
     sql_insert_item: function (data) {
         var query_builder = squel.insert().into('inv_items');
         
@@ -106,11 +106,56 @@ var model_sql = {
         query_builder.set('POPULAR_HEADER_ID', header_id);
         query_builder.set('ITEM_ID', item_id);
         return query_builder.toString();
+    },
+
+    squel_search_item: function(code, name, type){
+        var querybuilder = squel.select().from('inv_items');
+        if(code)
+            querybuilder.where("ITEM_CODE LIKE ?", code + '%');
+        if(name)
+            querybuilder.where("ITEM_NAME LIKE ?", '%' + name + '%');
+        if(type)
+            querybuilder.where("ITEM_TYPE = ?", type);
+        return querybuilder;
+    },
+    sql_search_item: function(limit, offset, code, name, type){
+        var querybuilder = this.squel_search_item(code, name, type);
+        querybuilder.limit(limit).offset(offset);
+        querybuilder.field('ITEM_ID').field('ITEM_NAME').field('ITEM_CODE').field('ITEM_TYPE');
+
+        return querybuilder.toString();
+    },
+    sql_search_item_count: function(code, name, type) {
+        var querybuilder = this.squel_search_item(code, name, type);
+        querybuilder.field('COUNT(1)', 'count');
+        return querybuilder.toString();
     }
-    // END INSERT ITEM
+
+    // END POPULAR ITEM
 }
 
 module.exports = {
+    getSearch: function(req, res){
+        var limit = (req.query.limit) ? req.query.limit : 10;
+        var offset = (req.query.offset) ? req.query.offset : 0;
+
+        var name = req.query.k, type = req.query.type, code = req.query.code;
+
+        var sql = model_sql.sql_search_item(limit, offset, code, name, type);
+
+        var k_sql = res.locals.k_sql;
+        k_sql.exec(sql, function (data) {
+
+            var sql = model_sql.sql_search_item_count(code, name, type);
+            k_sql.exec_row(sql, function (row) {
+                res.json({list: data, count: row.count});
+            }, function (err) {
+                res.json(err);
+            });
+        }, function (err) {
+            res.json(err);
+        });
+    },
     getListByDept: function (req, res) {
         var dept_id = req.query.dept_id;
         var isenable = req.query.isenable ;
@@ -125,6 +170,8 @@ module.exports = {
             res.json(err);
         });
     },
+    /*
+    USE APPOINTMENT CONTROLLER INSTEAD
     getListByAppt: function (req, res) {
         var appt_id = req.query.appt_id;
         var sql = model_sql.sql_get_by_appt(appt_id);
@@ -136,6 +183,7 @@ module.exports = {
             res.json(err);
         });
     },
+    */
     /*
     *   HEADER OPERATION 
     */

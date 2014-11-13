@@ -19,72 +19,12 @@
 <div class="portlet grey-cascade box">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i> General Information
+            <i class="fa fa-cogs"></i> Patient Information
         </div>
     </div>
     <div class="portlet-body">
-		<div class="row">
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Full name: </strong></div>
-				<div class="col-sm-8">{{patient.First_name || ''}} {{patient.Middle_name || ''}} {{patient.Sur_name || ''}}</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Nick name: </strong></div>
-				<div class="col-sm-8">{{patient.Known_as}}</div>
-			</div>
-			
-		</div>
-		<div class="break-row"></div>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Sex: </strong></div>
-				<div class="col-sm-8">{{patient.Sex}}</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>DOB: </strong></div>
-				<div class="col-sm-8">{{patient.DOB}}</div>
-			</div>
-		</div>
-		<div class="break-row"></div>
-		
-		<div class="row">
-
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Mobile: </strong></div>
-				<div class="col-sm-8">{{patient.Mobile}}</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Email: </strong></div>
-				<div class="col-sm-8">{{patient.Email}}</div>
-			</div>	
-		</div>
-		<div class="break-row"></div>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Country: </strong></div>
-				<div class="col-sm-8">{{patient.Country}}</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Post code: </strong></div>
-				<div class="col-sm-8">{{patient.Post_code}}</div>
-			</div>
-		</div>
-		<div class="break-row"></div>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Address 1: </strong></div>
-				<div class="col-sm-8">{{patient.Address1}}</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Address 2: </strong></div>
-				<div class="col-sm-8">{{patient.Address2}}</div>
-			</div>
-		</div>
-		<div class="break-row"></div>
-    </div>
+		<div ng-include="views.patient_info"></div>
+	</div>
 </div>
 
 <div class="portlet grey-cascade box">
@@ -105,7 +45,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in list_appt" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item)"  style="cursor: pointer;">
+                <tr ng-repeat="item in list_appt" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item.APP_TYPE)"  style="cursor: pointer;">
                     <td>{{$index + 1}}</td>
                     <td>{{item.FROM_TIME}}</td>
                     <td>{{item.TO_TIME}}</td>

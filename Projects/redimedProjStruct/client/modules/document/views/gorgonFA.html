@@ -74,7 +74,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-7" style="margin-top: 10px;">Is there any reason that you could not perform the work fitness assessment today?</label>
                     <div class="clearfix">
-                        <div class="col-md-2 btn-group">
+                        <div class="col-md-4 btn-group">
                             <label class="btn">
                                 <input type="radio" ng-model="info.IsConsentReason" value="0"/>Yes
                             </label>
@@ -87,34 +87,53 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 col-sm-7">
+            <div class="col-md-5 col-sm-5">
                 <div class="form-group">
-                    <label class="control-label col-md-3" style="margin-top: 5px;">Signature</label>
-                    <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
+                    <label class="control-label col-md-4" style="margin-top: 5px;">Signature</label>
+                    <a href="javascript:;" ng-click="sigClick()" id="signBtn" class="btn green">Sign</a>
 
                 </div>
             </div>
-            <script type="text/javascript">
-                $('#signBtn').click(function () {
-                    $('#modalSign').modal({
-                        show: true
-                    });
-                });
-
-            </script>
 
             <div class="col-md-4 col-sm-5">
                 <div class="form-group">
-                    <label class="control-label col-md-2" style="margin-top: 5px;">Date</label>
-                    <input type="text"  ng-model="info.fsignDate" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
-
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 5px">Date</label>
+                    <div class="col-md-3 col-sm-7">
+                        <input style="margin-top: 10px" type="text"  ng-model="info.fsignDate" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
+                    </div>
                 </div>
             </div>
 
         </div>
-        <div class="row">
-            <div class="col-md-6" style="margin-left:15px;">
-                <img  src="" id="signDisplay" ng-model="info.fsign" style="width:300px;height: 150px;" />
+        <div ng-show="sig" style="border: none; width: 900px; margin-left: 10px;background-color:#74e4b5;">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div signature ng-model="info.fsign" reset="resetFlag"></div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-8 col-sm-8"></div>
+                    <div class="col-md-4 col-sm-4">
+                        <a href="javascript:;" class="btn red" ng-click="cancelClick()">Cancel</a>
+                        <a href="javascript:;" class="btn blue" ng-click="reset()">Reset</a>
+                        <a href="javascript:;" class="btn green" ng-click="okClick()">Ok</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+        <div ng-show="info.fsign!==''&& !sig">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 col-sm-6">
+                        <img src="" ng-src="{{info.fsign}}" style="width:200px;height: 100px;"/>
+                    </div>
+                </div>
             </div>
         </div>
         <br/>
@@ -177,103 +196,103 @@
     <div class="portlet-body form">
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-sm-3">
+            <div class="col-md-4 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Heart Conditions</label>
             </div>
-            <div class="btn-group col-md-4 col-sm-3">
+            <div class="btn-group col-md-4 col-lg-2 col-sm-4">
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_HeartConditions" value="0"> Yes </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_HeartConditions" value="1"> No </label>
             </div>
-            <div class="col-md-4 col-sm-6 ">
+            <div class="col-md-4 col-lg-6 col-sm-5 ">
                 <input type="text" ng-model="info.MS_HeartConditions_Comment" ng-model="info.MS_HeartConditions_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-sm-3">
+            <div class="col-md-4 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Lungs Conditions/Asthma</label>
             </div>
-            <div class="btn-group col-sm-3 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Lung_Asthma" value="0"> Yes </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Lung_Asthma" value="1"> No </label>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Lung__Asthma_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-sm-3">
+            <div class="col-md-4 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Diabetes</label>
             </div>
-            <div class="btn-group col-sm-3 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Diabetes" value="0"> Yes </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Diabetes" value="1"> No </label>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Diabetes_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-sm-3">
+            <div class="col-md-4 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Fits/Seizures</label>
             </div>
-            <div class="btn-group col-sm-3 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Fits" value="0"> Yes </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Fits" value="1"> No </label>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Fits_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-sm-3">
+            <div class="col-md-4 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Medication</label>
             </div>
-            <div class="btn-group col-sm-3 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Medication" value="0"> Yes </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Medication" value="1"> No </label>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Medication_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-sm-3">
+            <div class="col-md-4 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Others(ie Surgery,Physio)</label>
             </div>
-            <div class="btn-group col-sm-3 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Other" value="0"> Yes </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.MS_Other" value="1"> No </label>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Other_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-6 col-sm-5">
+            <div class="col-md-6 col-lg-5 col-sm-5">
                 <label class="control-label" style="margin-top: 7px">Maximum Heart Rate For Assessment</label>
             </div>
             <div class="col-md-6 col-sm-7" >
@@ -283,7 +302,7 @@
         <br/>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.MS_Mx_Weight.$error.pattern}">
             <div class="row" style="margin-left:10px;margin-right:10px;">
-                <div class="col-md-6 col-sm-5">
+                <div class="col-md-6 col-lg-5 col-sm-5">
                     <label class="control-label" style="margin-top: 7px">Maximum Weight For Manual Handling Assessment</label>
                 </div>
                 <div class="col-md-6 col-sm-7" >
@@ -295,7 +314,7 @@
                 </div>
             </div>
             <div class="row" ng-show="showClickedValidation && gorgonFAForm.MS_Mx_Weight.$error.pattern" >
-                <div class="col-md-6 col-sm-5"></div>
+                <div class="col-md-6 col-lg-5 col-sm-5"></div>
                 <div class="col-md-6 col-sm-7 help-block" for="MS_Mx_Weight" >
                     <label>Weight must be number</label>
                 </div>
@@ -304,7 +323,7 @@
         <br/>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.MS_Blood_Pressure_1.$error.pattern || gorgonFAForm.MS_Blood_Pressure_2.$error.pattern}">
             <div class="row" style="margin-left:10px;margin-right:10px;">
-                <div class="col-md-6 col-sm-5">
+                <div class="col-md-6 col-lg-5 col-sm-5">
                     <label class="control-label" style="margin-top: 7px">Blood Pressure</label>
                 </div>
                 <div class="col-md-6 col-sm-5" >
@@ -314,7 +333,7 @@
                 </div>
             </div>
             <div class="row" style="margin-left:10px;margin-right:10px;" ng-show="showClickedValidation && gorgonFAForm.MS_Blood_Pressure_1.$error.pattern || gorgonFAForm.MS_Blood_Pressure_2.$error.pattern">
-                <div class="col-md-6 col-sm-5"></div>
+                <div class="col-md-6 col-lg-5 col-sm-5"></div>
                 <div class="col-md-6 col-sm-5 help-block" for="MS_Blood_Pressure_1 || MS_Blood_Pressure_2">
                     <label>Blood Pressure must be number</label>
                 </div>
@@ -323,7 +342,7 @@
         <br/>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.MS_Resting_Heart_Rate.$error.pattern}">
             <div class="row" style="margin-left:10px;margin-right:10px;">
-                <div class="col-md-6 col-sm-5">
+                <div class="col-md-6 col-lg-5 col-sm-5">
                     <label class="control-label" style="margin-top: 7px">Resting Heart Rate</label>
                 </div>
                 <div class="col-md-6 col-sm-5" >
@@ -332,7 +351,7 @@
                 </div>
             </div>
             <div class="row" style="margin-left:10px;margin-right:10px;"  ng-show="showClickedValidation && gorgonFAForm.MS_Resting_Heart_Rate.$error.pattern">
-                <div class="col-md-6 col-sm-5"></div>
+                <div class="col-md-6 col-lg-5 col-sm-5"></div>
                 <div class="col-md-6 col-sm-5 help-block" for="MS_Resting_Heart_Rate" >
                     <label>Heart Rate must be number</label>
                 </div>
@@ -360,7 +379,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Neck</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Neck1" value="2"> Normal </label>
                 <label class="btn">
@@ -374,7 +393,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Thoratic</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Thoracic1" value="2"> Normal </label>
                 <label class="btn">
@@ -382,13 +401,13 @@
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Thoracic1" value="0"> Painful </label>
             </div>
-        </div>Rom_Neck1 Rom_Thoracic1
+        </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Lumbar</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Lumbar1" value="2"> Normal </label>
                 <label class="btn">
@@ -402,7 +421,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Shoulder</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Shoulder1" value="2"> Normal </label>
                 <label class="btn">
@@ -416,7 +435,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Elbow</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Elbow1" value="2"> Normal </label>
                 <label class="btn">
@@ -430,7 +449,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Wrist</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Wrist1" value="2"> Normal </label>
                 <label class="btn">
@@ -444,7 +463,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Fingers/Thumb</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Fingers1" value="2"> Normal </label>
                 <label class="btn">
@@ -458,7 +477,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Hips</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Hips1" value="2"> Normal </label>
                 <label class="btn">
@@ -472,7 +491,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Knees</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Knees1" value="2"> Normal </label>
                 <label class="btn">
@@ -486,7 +505,7 @@
             <div class="col-md-2 col-sm-2">
                 <label class="control-label" style="margin-top: 7px">Ankles</label>
             </div>
-            <div class="btn-group col-sm-8 col-md-4" >
+            <div class="btn-group col-sm-8 col-md-8" >
                 <label class="btn">
                     <input type="radio" ng-model="info.Rom_Ankles1" value="2"> Normal </label>
                 <label class="btn">
@@ -543,10 +562,10 @@
         <div  class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.Heart_Rate_30S2.$error.pattern}">
             <div class="row">
                 <label class="col-md-2 col-sm-3" style="margin-left: 20px;margin-top: 10px">30 secs</label>
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-2 col-sm-2">
                     <input type="text" ng-model="info.Heart_Rate_30S2" ng-pattern="/^[0-9]+$/" name="Heart_Rate_30S2" class="form-control">
                 </div>
-                <div class="col-md-3 col-sm-5 help-block" for="Heart_Rate_30S2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_30S2.$error.pattern">
+                <div class="col-md-4 col-sm-5 help-block" for="Heart_Rate_30S2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_30S2.$error.pattern">
                     <label>Heart Rate must be number</label>
                 </div>
             </div>
@@ -554,10 +573,10 @@
         <div  class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.Heart_Rate_1M2.$error.pattern}">
             <div class="row">
                 <label class="col-md-2 col-sm-3" style="margin-left: 20px;margin-top: 10px">1 min</label>
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-2 col-sm-2">
                     <input type="text" ng-model="info.Heart_Rate_1M2" ng-pattern="/^[0-9]+$/" name="Heart_Rate_1M2" class="form-control">
                 </div>
-                <div class="col-md-3 col-sm-5 help-block" for="Heart_Rate_1M2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_1M2.$error.pattern">
+                <div class="col-md-4 col-sm-5 help-block" for="Heart_Rate_1M2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_1M2.$error.pattern">
                     <label>Heart Rate must be number</label>
                 </div>
             </div>
@@ -565,10 +584,10 @@
         <div  class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.Heart_Rate_1M_30S2.$error.pattern}">
             <div class="row">
                 <label class="col-md-2 col-sm-3" style="margin-left: 20px;margin-top: 10px">1 min 30 secs</label>
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-2 col-sm-2">
                     <input type="text" ng-model="info.Heart_Rate_1M_30S2" ng-pattern="/^[0-9]+$/" name="Heart_Rate_1M_30S2" class="form-control">
                 </div>
-                <div class="col-md-3 col-sm-5 help-block" for="Heart_Rate_1M_30S2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_1M_30S2.$error.pattern">
+                <div class="col-md-4 col-sm-5 help-block" for="Heart_Rate_1M_30S2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_1M_30S2.$error.pattern">
                     <label>Heart Rate must be number</label>
                 </div>
             </div>
@@ -576,10 +595,10 @@
         <div  class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.Heart_Rate_2M2.$error.pattern}">
             <div class="row">
                 <label class="col-md-2 col-sm-3" style="margin-left: 20px;margin-top: 10px">2 mins</label>
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-2 col-sm-2">
                     <input type="text" ng-model="info.Heart_Rate_2M2" ng-pattern="/^[0-9]+$/" name="Heart_Rate_2M2"  class="form-control">
                 </div>
-                <div class="col-md-3 col-sm-5 help-block" for="Heart_Rate_2M2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_2M2.$error.pattern">
+                <div class="col-md-4 col-sm-5 help-block" for="Heart_Rate_2M2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_2M2.$error.pattern">
                     <label>Heart Rate must be number</label>
                 </div>
             </div>
@@ -587,10 +606,10 @@
         <div  class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.Heart_Rate_2M_30S2.$error.pattern}">
             <div class="row">
                 <label class="col-md-2 col-sm-3" style="margin-left: 20px;margin-top: 10px">2 mins 30 secs</label>
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-2 col-sm-2">
                     <input type="text" ng-model="info.Heart_Rate_2M_30S2" ng-pattern="/^[0-9]+$/" name="Heart_Rate_2M_30S2"  class="form-control">
                 </div>
-                <div class="col-md-3 col-sm-5 help-block" for="Heart_Rate_2M_30S2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_2M_30S2.$error.pattern">
+                <div class="col-md-4 col-sm-5 help-block" for="Heart_Rate_2M_30S2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_2M_30S2.$error.pattern">
                     <label>Heart Rate must be number</label>
                 </div>
             </div>
@@ -598,10 +617,10 @@
         <div  class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.Heart_Rate_3M2.$error.pattern}">
             <div class="row">
                 <label class="col-md-2 col-sm-3" style="margin-left: 20px;margin-top: 10px">30 secs</label>
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-2 col-sm-2">
                     <input type="text" ng-model="info.Heart_Rate_3M2" ng-pattern="/^[0-9]+$/" name="Heart_Rate_3M2"  class="form-control">
                 </div>
-                <div class="col-md-3 col-sm-5 help-block" for="Heart_Rate_3M2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_3M2.$error.pattern">
+                <div class="col-md-4 col-sm-5 help-block" for="Heart_Rate_3M2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_3M2.$error.pattern">
                     <label>Heart Rate must be number</label>
                 </div>
             </div>
@@ -609,10 +628,10 @@
         <div  class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.Heart_Rate_1M_Post2.$error.pattern}">
             <div class="row">
                 <label class="col-md-2 col-sm-3" style="margin-left: 20px;margin-top: 10px">1 min post</label>
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-2 col-sm-2">
                     <input type="text" ng-model="info.Heart_Rate_1M_Post2" ng-pattern="/^[0-9]+$/" name="Heart_Rate_1M_Post2"  class="form-control">
                 </div>
-                <div class="col-md-3 col-sm-5 help-block" for="Heart_Rate_1M_Post2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_1M_Post2.$error.pattern">
+                <div class="col-md-4 col-sm-5 help-block" for="Heart_Rate_1M_Post2"  ng-show="showClickedValidation && gorgonFAForm.Heart_Rate_1M_Post2.$error.pattern">
                     <label>Heart Rate must be number</label>
                 </div>
             </div>
@@ -628,7 +647,7 @@
             <div class="col-md-1 col-sm-2">
                 <label class="control-label" style="margin-left:15px;margin-top: 7px">Results</label>
             </div>
-            <div class="btn-group col-md-8 col-sm-10">
+            <div class="btn-group col-md-10 col-sm-10">
                 <label class="btn">
                     <input type="radio" ng-model="info.Step_Result2" value="1"> Poor </label>
                 <label class="btn">
@@ -643,10 +662,10 @@
         </div>
         <br/>
         <div class="row">
-            <div class="col-md-5 col-sm-7">
+            <div class="col-md-6 col-lg-5 col-sm-7">
                 <label class="control-label" style="margin-left:15px;margin-top: 7px">Correct pace maintained for duration of assessment</label>
             </div>
-            <div class="btn-group col-md-2 col-sm-4">
+            <div class="btn-group col-md-3 col-sm-4">
                 <label class="btn">
                     <input type="radio" ng-model="info.Step_Correct2" value="0"> Yes </label>
                 <label class="btn">
@@ -753,14 +772,14 @@
         </div>
         <br/>
         <div class="row">
-            <div class="btn-group col-md-3 col-sm-3" style="margin-left:15px">
+            <div class="btn-group col-md-3 col-sm-4" style="margin-left:15px">
                 <label class="btn">
                     <input type="radio" ng-model="info.c_Grip3" value="0" ng-change="c_Right3()"> RHD </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.c_Grip3" value="1" ng-change="c_Left3()"> LHD </label>
             </div>
             <div   ng-class="{'has-error':showClickedValidation && gorgonFAForm.c_Right3.$error.pattern || gorgonFAForm.c_Left3.$error.pattern}">
-                <div class="col-md-2 col-sm-3" style="margin-top: 10px">
+                <div class="col-md-3 col-sm-3" style="margin-top: 10px">
                     <input type="text" ng-model="info.c_Right3" ng-pattern="/^[0-9]+$/" name="c_Right3" ng-change="c_Right3()" style="width:50px;">
                     <label>/</label>
                     <input type="text" ng-model="info.c_Left3" ng-pattern="/^[0-9]+$/" name="c_Left3" ng-change="c_Left3()" style="width:50px;">
@@ -883,13 +902,13 @@
         </div>
         <br/>
         <div class="row">
-            <div class="col-md-2 col-sm-3">
+            <div class="col-md-3 col-sm-3">
                 <div class="row" style="margin-left: 20px">
                     <label >Total</label>
                     <input type="text" ng-model="info.bTotal4" ng-pattern="/^[0-9]+$/" name="bTotal4"  style="width:100px;" />
                 </div>
             </div>
-            <div class="col-md-3 col-sm-9">
+            <div class="col-md-4 col-sm-9">
                 <label class="control-label" style="margin-left:15px;">Crepitus</label>
                 <div class="btn-group" >
                     <label class="btn">
@@ -985,7 +1004,7 @@
         </div>
         <br/>
 
-        <div class="btn-group  col-md-12">
+        <div class="btn-group  col-md-12 col-sm-12">
             <label class="btn">
                 <input type="radio" ng-model="info.aPosture5" value="1"> Severe Change </label>
             <label class="btn">
@@ -1101,10 +1120,10 @@
         </div>
         <br/>
         <div class="row">
-            <div class="btn-group col-md-3 col-sm-5" style="margin-left: 20px">
+            <div class="btn-group col-md-4 col-lg-3 col-sm-5" style="margin-left: 20px">
                 <label class="bold ">Right</label><br/>
                 <label class="btn">
-                    <input type="radio" ng-model="info.fRight5" value="0.5">Hip flexion < 160°</label>
+                    <input type="radio" ng-model="info.fRight5" value="0.5">Hip flexion < 160° </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.fRight5" value="1">Hip flexion 160°-180°</label>
                 <label class="btn">
@@ -1114,7 +1133,7 @@
                 <label class="btn">
                     <input type="radio" ng-model="info.fRight5" value="2.5">Hip flexion > 180°</label>
             </div>
-            <div class="btn-group  col-md-3 col-sm-5" style="margin-left: 20px">
+            <div class="btn-group col-lg-3 col-md-3 col-sm-5" style="margin-left: 20px">
                 <label class="bold">Left</label><br/>
                 <label class="btn">
                     <input type="radio" ng-model="info.fLeft5" value="0.5">Hip flexion < 160°</label>
@@ -1137,7 +1156,7 @@
         </div>
         <br/>
         <div class="row">
-            <div class="btn-group col-md-4 col-sm-5" style="margin-left: 20px">
+            <div class="btn-group col-md-4 col-lg-3 col-sm-5" style="margin-left: 20px">
                 <label class="bold control-label">Right</label><br/>
                 <label class="btn">
                     <input type="radio" ng-model="info.gRight5" value="0.5">Knee Extension < 120°</label>
@@ -1256,11 +1275,11 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-5">
                 <label style="margin-top: 10px">Kept load close to body</label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.c_16" type="checkbox" />
+                <input class="form-control" ng-model="info.c_16" ng-checked="info.c_16==1" type="checkbox" />
             </div>
             <div class="col-md-5 col-sm-6">
                 <input class="form-control" ng-model="info.c_1Comment6" placeholder="Comment" type="text" />
@@ -1268,11 +1287,11 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-5">
                 <label style="margin-top: 10px">Kept a natural spine</label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.c_26" type="checkbox" />
+                <input class="form-control" ng-model="info.c_26" ng-checked="info.c_26==1" type="checkbox" />
             </div>
             <div class="col-md-5 col-sm-6">
                 <input class="form-control" ng-model="info.c_2Comment6" placeholder="Comment" type="text" />
@@ -1280,11 +1299,11 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-5">
                 <label style="margin-top: 10px">Demonstrated good squat position to lift load</label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.c_36" type="checkbox" />
+                <input class="form-control" ng-model="info.c_36" ng-checked="info.c_36==1" type="checkbox" />
             </div>
             <div class="col-md-5 col-sm-6">
                 <input class="form-control" ng-model="info.c_3Comment6" placeholder="Comment" type="text" />
@@ -1292,11 +1311,11 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-5">
                 <label style="margin-top: 10px">Avoids trunk rotation</label>
             </div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" ng-model="info.c_46" type="checkbox" />
+                <input class="form-control" ng-model="info.c_46" ng-checked="info.c_46==1" type="checkbox" />
             </div>
             <div class="col-md-5 col-sm-6">
                 <input class="form-control" ng-model="info.c_4Comment6" placeholder="Comment" type="text" />
@@ -1304,11 +1323,11 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-5">
                 <label style="margin-top: 10px">Demonstrated good base of support</label>
             </div>
             <div class="col-md-1  col-sm-1">
-                <input class="form-control" ng-model="info.c_56" type="checkbox" />
+                <input class="form-control" ng-model="info.c_56" ng-checked="info.c_56==1" type="checkbox" />
             </div>
             <div class="col-md-5  col-sm-6">
                 <input class="form-control" ng-model="info.c_5Comment6" placeholder="Comment" type="text" />
@@ -1321,7 +1340,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 col-sm-10" style="margin-left: 15px;">
+            <div class="col-md-8 col-lg-10 col-sm-10" style="margin-left: 15px;">
                 <textarea class="form-control" ng-model="info.Comments6"></textarea>
             </div>
         </div>
@@ -1355,88 +1374,88 @@
         <br/>
 
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <label>1.Range of Motion</label>
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label>{{info.Rom_Total1}}</label>
                 <label>/20</label>
             </div>
-            <div class="col-md-5 col-sm-6">
+            <div class="col-md-5  col-sm-6">
                 <input class="form-control" ng-model="info.Score1Comment" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <label>2.Cardio-Vascular Fitness</label>
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label>{{info.Total2}}</label>
                 <label>/5</label>
             </div>
-            <div class="col-md-5 col-sm-6">
+            <div class="col-md-5  col-sm-6">
                 <input class="form-control" ng-model="info.Score2Comment" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <label>3.Upper Limb Fitness</label>
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label>{{info.Total3}}</label>
                 <label>/20</label>
             </div>
-            <div class="col-md-5 col-sm-6">
+            <div class="col-md-5  col-sm-6">
                 <input class="form-control" ng-model="info.Score3Comment" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <label>4.Lower Limb Fitness</label>
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label>{{info.Total4}}</label>
                 <label>/15</label>
             </div>
-            <div class="col-md-5 col-sm-6">
+            <div class="col-md-5  col-sm-6">
                 <input class="form-control" ng-model="info.Score4Comment" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <label>5.Back Fitness</label>
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label>{{info.Total5}}</label>
                 <label>/35</label>
             </div>
-            <div class="col-md-5 col-sm-6">
+            <div class="col-md-5  col-sm-6">
                 <input class="form-control" ng-model="info.Score5Comment" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <label>6.Manual Handling Technique</label>
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label>{{info.Total6}}</label>
                 <label>/5</label>
             </div>
-            <div class="col-md-5 col-sm-6">
+            <div class="col-md-5  col-sm-6">
                 <input class="form-control" ng-model="info.Score6Comment" placeholder="Comment" type="text" />
             </div>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <label>Lifting Floor to Bench(900mm)</label>
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label>{{info.aMax6}}Kg</label>
             </div>
             <div class="col-md-5 col-sm-6">
@@ -1445,10 +1464,10 @@
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
-            <div class="col-md-5 col-sm-4">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <label>Lifting Floor to Bench(900mm) to Shoulder</label>
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-2 col-sm-2">
                 <label>{{info.bMax6}}Kg</label>
             </div>
             <div class="col-md-5 col-sm-6">

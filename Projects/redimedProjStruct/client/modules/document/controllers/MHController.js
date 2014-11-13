@@ -104,11 +104,11 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 var info = $scope.info;
                 DocumentService.insertMH(info.headers).then(function (response) {
                     if (response['status'] === 'success') {
-                        toastr.success("Add new medical history success!", "Success");
+                        toastr.success("Add success!", "Success");
                         $state.go('loggedIn.MH', null, {"reload": true});
                     }
                     else if (response['status'] === 'fail') {
-                        toastr.error("Add new medical history fail!", "Error");
+                        toastr.error("Add fail!", "Error");
                     }
                 })
             }
@@ -120,11 +120,11 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 var info = $scope.info;
                 DocumentService.editMH(info.headers).then(function (response) {
                     if (response['status'] === 'success') {
-                        toastr.success("Edit medical history success!", "Success");
+                        toastr.success("Edit success!", "Success");
                         $state.go('loggedIn.MH', null, {"reload": true});
                     }
                     else if (response['status'] === 'fail') {
-                        toastr.error("Edit medical history fail!", "Error");
+                        toastr.error("Edit fail!", "Error");
                     }
                 })
             }

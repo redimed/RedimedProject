@@ -135,20 +135,7 @@ angular.module("app.directive.common", [])
     } // END RETURN
 })
 
-.directive("minHeight", function () {
-    return{
-        restrict: "A",
-        link: function (scope, element, attrs) {
-            /*element.css("height","0px");
-             element.css("height", angular.element(document).height()+"px");
-             
-             angular.element(window).resize(function(){
-             element.css("height","0px");
-             element.css("height", angular.element(document).height()+"px");
-             });*/
-        }
-    }
-})
+
 
 .directive("radio", function () {
     return {
@@ -192,33 +179,55 @@ angular.module("app.directive.common", [])
 	}
 })
 
+.directive("minHeight", function () {
+    return{
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            //Get window height
+            var windowHeight = angular.element(window).height();
+            //Parse to height window
+            element.css("min-height", windowHeight + "px");
+
+            //Window Resize
+            angular.element(window).resize(function () {
+                //Get window height
+                var windowHeight = angular.element(window).height();
+                //Parse to height window
+                element.css("min-height", windowHeight + "px");
+            });
+        }
+    }
+})
+
+
 // SELECT FROM DATE TO DATE
-/*.directive("inputDate", function(){
-	return {
-		restrict: "A",
-		link: function(scope, element, attrs){
-			var defaultDate = "dd/mm/yy";
-			var params = scope.$eval(attrs.inputDate);
+    /*.directive("inputDate", function(){
+     return {
+     restrict: "A",
+     link: function(scope, element, attrs){
+     var defaultDate = "dd/mm/yy";
+     var params = scope.$eval(attrs.inputDate);
 
-			if(params.type === "from")
-				var type = "minDate";
-			else
-				var type = "maxDate";
+     if(params.type === "from")
+     var type = "minDate";
+     else
+     var type = "maxDate";
 
-			element.datepicker({
-				onClose: function(selectedDate){
-					angular.element("#"+params.id).datepicker();
-					angular.element("#"+params.id).datepicker("option", type, selectedDate);
-					angular.element("#"+params.id).datepicker("option", "dateFormat", defaultDate);
-				}
-			});
+     element.datepicker({
+     onClose: function(selectedDate){
+     angular.element("#"+params.id).datepicker();
+     angular.element("#"+params.id).datepicker("option", type, selectedDate);
+     angular.element("#"+params.id).datepicker("option", "dateFormat", defaultDate);
+     }
+     });
 
-			element.datepicker("option", "dateFormat", defaultDate);
-		}
-	}
-})*/
+     element.datepicker("option", "dateFormat", defaultDate);
+     }
+     }
+     })*/
 
 // INPUT DATE
+
 .directive("customDate", function () {
     return {
         restrict: "A",
@@ -244,7 +253,7 @@ angular.module("app.directive.common", [])
     }
 })
 
-.directive("checkList", [function () {
+.directive("checkList", function () {
     return {
         restrict: "A",
         scope: {
@@ -252,11 +261,11 @@ angular.module("app.directive.common", [])
             value: "@"
         },
         link: function (scope, elem) {
-            scope.$watchCollection("selectedItemsArray", function(newValue){
+            scope.$watchCollection("selectedItemsArray", function (newValue) {
                 if (_.contains(newValue, scope.value)) {
                     elem.prop("checked", true);
                 }
-                else{
+                else {
                     elem.prop("checked", false);
                 }
             });
@@ -267,7 +276,7 @@ angular.module("app.directive.common", [])
                 if (elem.prop("checked")) {
                     if (!_.contains(scope.selectedItemsArray, scope.value)) {
                         scope.$apply(
-                            function(){
+                            function () {
                                 scope.selectedItemsArray.push(scope.value);
                             }
                         );
@@ -276,7 +285,7 @@ angular.module("app.directive.common", [])
                     if (_.contains(scope.selectedItemsArray, scope.value)) {
                         var index = scope.selectedItemsArray.indexOf(scope.value);
                         scope.$apply(
-                            function(){
+                            function () {
                                 scope.selectedItemsArray.splice(index, 1);
                             });
                     }
@@ -284,117 +293,118 @@ angular.module("app.directive.common", [])
             });
         }
     }
-}])
+})
 
 
 // SIDEBAR MENU RESPONSIVE
-.directive("sidebarRes", function(){
-	return {
-		restrict: "A",
-		link: function(scope, element, attrs){
-			//Get window width
-			var windowWidth = angular.element(window).width();
+    .directive("sidebarRes", function () {
+        return {
+            restrict: "A",
+            link: function (scope, element, attrs) {
+                //Get window width
+                var windowWidth = angular.element(window).width();
 
-			if(windowWidth < 768){
-				element.find(".not-mobile").hide();
-				element.find(".mobile").show();
+                if (windowWidth < 768) {
+                    element.find(".not-mobile").hide();
+                    element.find(".mobile").show();
 
-				element.addClass("sidebar-mobile");
-				element.find("#main-menu").hide();
-				element.find(".sidebar-menu").css("min-height","0px");
-				element.find(".sidebar-menu").addClass("sidebar-mobile");
-				element.find(".sidebar-menu").css("position","relative");
-				element.addClass("sidebar-padding-left");
-				element.removeClass("sidebar-collapsed");
-			}
-			else if(windowWidth < 992){
-				element.find(".not-mobile").show();
-				element.find(".mobile").hide();
+                    element.addClass("sidebar-mobile");
+                    element.find("#main-menu").hide();
+                    element.find(".sidebar-menu").css("min-height", "0px");
+                    element.find(".sidebar-menu").addClass("sidebar-mobile");
+                    element.find(".sidebar-menu").css("position", "relative");
+                    element.addClass("sidebar-padding-left");
+                    element.removeClass("sidebar-collapsed");
+                }
+                else if (windowWidth < 992) {
+                    element.find(".not-mobile").show();
+                    element.find(".mobile").hide();
 
-				element.find("#main-menu").show();
-				element.addClass("sidebar-collapsed");
-				element.removeClass("sidebar-mobile");
-				element.find(".sidebar-menu").removeClass("sidebar-mobile");
-				element.find(".sidebar-menu").css("position","absolute");
-				element.removeClass("sidebar-padding-left");
-			}else{
-				element.find(".not-mobile").show();
-				element.find(".mobile").hide();
+                    element.find("#main-menu").show();
+                    element.addClass("sidebar-collapsed");
+                    element.removeClass("sidebar-mobile");
+                    element.find(".sidebar-menu").removeClass("sidebar-mobile");
+                    element.find(".sidebar-menu").css("position", "absolute");
+                    element.removeClass("sidebar-padding-left");
+                } else {
+                    element.find(".not-mobile").show();
+                    element.find(".mobile").hide();
 
-				element.find("#main-menu").show();
-				element.removeClass("sidebar-collapsed");
-				element.removeClass("sidebar-mobile");
-				element.find(".sidebar-menu").removeClass("sidebar-mobile");
-				element.find(".sidebar-menu").css("position","absolute");
-				element.removeClass("sidebar-padding-left");
-			}
+                    element.find("#main-menu").show();
+                    element.removeClass("sidebar-collapsed");
+                    element.removeClass("sidebar-mobile");
+                    element.find(".sidebar-menu").removeClass("sidebar-mobile");
+                    element.find(".sidebar-menu").css("position", "absolute");
+                    element.removeClass("sidebar-padding-left");
+                }
 
-			//Window Resize
-			angular.element(window).resize(function(){
-				//Get window width
-				var windowWidth = angular.element(window).width();
+                //Window Resize
+                angular.element(window).resize(function () {
+                    //Get window width
+                    var windowWidth = angular.element(window).width();
 
-				if(windowWidth < 768){
-					element.find(".not-mobile").hide();
-					element.find(".mobile").show();
+                    if (windowWidth < 768) {
+                        element.find(".not-mobile").hide();
+                        element.find(".mobile").show();
 
-					element.addClass("sidebar-mobile");
-					element.find("#main-menu").hide();
-					element.find(".sidebar-menu").css("min-height","0px");
-					element.find(".sidebar-menu").css("position","relative");
-					element.addClass("sidebar-padding-left");
-					element.removeClass("sidebar-collapsed");
-				}
-				else if(windowWidth < 992){
-					element.find(".not-mobile").show();
-					element.find(".mobile").hide();
+                        element.addClass("sidebar-mobile");
+                        element.find("#main-menu").hide();
+                        element.find(".sidebar-menu").css("min-height", "0px");
+                        element.find(".sidebar-menu").css("position", "relative");
+                        element.addClass("sidebar-padding-left");
+                        element.removeClass("sidebar-collapsed");
+                    }
+                    else if (windowWidth < 992) {
+                        element.find(".not-mobile").show();
+                        element.find(".mobile").hide();
 
-					element.find("#main-menu").show();
-					element.addClass("sidebar-collapsed");
-					element.removeClass("sidebar-mobile");
-					element.find(".sidebar-menu").removeClass("sidebar-mobile");
-					element.find(".sidebar-menu").css("position","absolute");
-					element.removeClass("sidebar-padding-left");
-				}else{
-					element.find(".not-mobile").show();
-					element.find(".mobile").hide();
+                        element.find("#main-menu").show();
+                        element.addClass("sidebar-collapsed");
+                        element.removeClass("sidebar-mobile");
+                        element.find(".sidebar-menu").removeClass("sidebar-mobile");
+                        element.find(".sidebar-menu").css("position", "absolute");
+                        element.removeClass("sidebar-padding-left");
+                    } else {
+                        element.find(".not-mobile").show();
+                        element.find(".mobile").hide();
 
-					element.find("#main-menu").show();
-					element.removeClass("sidebar-collapsed");
-					element.removeClass("sidebar-mobile");
-					element.find(".sidebar-menu").removeClass("sidebar-mobile");
-					element.find(".sidebar-menu").css("position","absolute");
-					element.removeClass("sidebar-padding-left");
-				}
-			});
-		}
-	}
-})
+                        element.find("#main-menu").show();
+                        element.removeClass("sidebar-collapsed");
+                        element.removeClass("sidebar-mobile");
+                        element.find(".sidebar-menu").removeClass("sidebar-mobile");
+                        element.find(".sidebar-menu").css("position", "absolute");
+                        element.removeClass("sidebar-padding-left");
+                    }
+                });
+            }
+        }
+    })
 
 // VALIDATION EMAIL
-.directive("email", function(){
-	return {
-		require: "ngModel",
-		link: function(scope, element, attrs, ctrl){
-			ctrl.$parsers.unshift(function(email){
-				var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-				if(typeof email !== 'undefined' && email !== ""){
-	    			if(re.test(email)){
-	    				ctrl.$setValidity("email", true);
-	    			}else{
-	    				ctrl.$setValidity("email", false);
-	    			}
-	    		}else{
-	    			ctrl.$setValidity("email", true);
-	    		}
+    .directive("email", function () {
+        return {
+            require: "ngModel",
+            link: function (scope, element, attrs, ctrl) {
+                ctrl.$parsers.unshift(function (email) {
+                    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    if (typeof email !== 'undefined' && email !== "") {
+                        if (re.test(email)) {
+                            ctrl.$setValidity("email", true);
+                        } else {
+                            ctrl.$setValidity("email", false);
+                        }
+                    } else {
+                        ctrl.$setValidity("email", true);
+                    }
 
-	    		return email;
-			});
-		}
-	}
-})
+                    return email;
+                });
+            }
+        }
+    })
 
 //VALIDATION INTEGER
+
 .directive("integer", function(){
 	return {
 		require: "ngModel",
@@ -464,58 +474,54 @@ angular.module("app.directive.common", [])
     };
 })
 
-.directive('appFilereader', function(
-    $q
-    ) {
-    /*
-     made by elmerbulthuis@gmail.com WTFPL licensed
-     */
-    var slice = Array.prototype.slice;
 
-    return {
-        restrict: 'A',
-        require: '?ngModel',
-        link: function(scope, element, attrs, ngModel) {
-            if (!ngModel) return;
 
-            ngModel.$render = function() {}
+    .directive('appFilereader', function(
+        $q
+    ){
+        var slice = Array.prototype.slice;
 
-            element.bind('change', function(e) {
-                var element = e.target;
-                if(!element.value) return;
+        return {
+            restrict: 'A'
+            , require: '?ngModel'
+            , link: function(scope, element, attrs, ngModel){
+                if(!ngModel) return;
 
-                element.disabled = true;
-                $q.all(slice.call(element.files, 0).map(readFile))
-                    .then(function(values) {
-                        if (element.multiple) ngModel.$setViewValue(values);
-                        else ngModel.$setViewValue(values.length ? values[0] : null);
-                        element.value = null;
-                        element.disabled = false;
-                    });
+                ngModel.$render = function(){}
 
-                function readFile(file) {
-                    var deferred = $q.defer();
+                element.bind('change', function(e){
+                    var element = e.target;
 
-                    var reader = new FileReader()
-                    reader.onload = function(e) {
-                        deferred.resolve(e.target.result);
+                    $q.all(slice.call(element.files, 0).map(readFile))
+                        .then(function(values){
+                            if(element.multiple) ngModel.$setViewValue(values);
+                            else ngModel.$setViewValue(values.length ? values[0] : null);
+                        });
+
+                    function readFile(file) {
+                        var deferred = $q.defer();
+
+                        var reader = new FileReader()
+                        reader.onload = function(e){
+                            deferred.resolve(e.target.result);
+                        }
+                        reader.onerror = function(e) {
+                            deferred.reject(e);
+                        }
+                        reader.readAsDataURL(file);
+
+                        return deferred.promise;
                     }
-                    reader.onerror = function(e) {
-                        deferred.reject(e);
-                    }
-                    reader.readAsDataURL(file);
 
-                    return deferred.promise;
-                }
+                });//change
 
-            }); //change
+            }//link
 
-        } //link
+        };//return
 
-    }; //return
+    })//appFilereader
 
-}) //appFilereader
-	//confirm pass
+    //confirm pass
 	.directive('pwCheck', [function () {
 		return {
 			require: 'ngModel',
@@ -563,16 +569,67 @@ angular.module("app.directive.common", [])
 })
 
 
-.filter('utc', function(){
+    .directive("signature", function ($timeout) {
+        return {
+            restrict: "A",
+            require: "ngModel",
+            scope: {
+                'ngModel': "=",
+                'reset': "="
+            },
+            link: function (scope, element, attr) {
+                element.jSignature();
 
-    return function(val){
-        var date = new Date(val);
-        return new Date(date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate(),
-            date.getUTCHours(),
-            date.getUTCMinutes(),
-            date.getUTCSeconds());
-    };
+                element.bind("change", function (e) {
+                    scope.$apply(function () {
+                        scope.ngModel = element.jSignature("getData");
+                    })
+                })
 
-});
+                scope.$watch('reset', function(newReset, oldReset){
+                    if(typeof newReset !== 'undefined'){
+                        $timeout(function(){
+                            element.jSignature('reset');
+                            scope.$apply(function(){
+                                scope.ngModel = '';
+                                scope.reset = false;
+                            })
+                        }, 200)
+                    }
+                })
+            }
+        }
+    })
+
+    .filter('utc', function () {
+
+        return function (val) {
+            var date = new Date(val);
+            return new Date(date.getUTCFullYear(),
+                date.getUTCMonth(),
+                date.getUTCDate(),
+                date.getUTCHours(),
+                date.getUTCMinutes(),
+                date.getUTCSeconds());
+        };
+
+})
+
+.directive("signature", function(){
+    return {
+        restrict: "A",
+        require: "ngModel",
+        scope: {
+            'ngModel': "="
+        },
+        link: function(scope, element, attr){
+            element.jSignature();
+
+            element.bind("change", function(e){
+                scope.$apply(function(){
+                    scope.ngModel = element.jSignature("getData");
+                })
+            })
+        }
+    }
+})

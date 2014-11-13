@@ -36,5 +36,4 @@ angular.module("app.loggedIn.doctor.items.controller",[
 	}
 	
 	init();
-
-})
+});

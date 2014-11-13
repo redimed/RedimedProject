@@ -286,66 +286,61 @@ function K_SQL(req, res) {
         return sql;
     }
 
-    this.exec = function () {
-        if (arguments.length > 0) {
-            if (typeof arguments[0] == 'string') {
-                var sql = arguments[0];
-                if (arguments.length > 1)
-                    var fnSuc = arguments[1];
-                if (arguments.length > 2)
-                    var fnErr = arguments[2];
-            } else {
-                var sql = this.toSQL();
-                var fnSuc = arguments[0];
-                if (arguments.length > 1)
-                    var fnErr = arguments[1];
+    this.execQuery = function(sql, fnSuc, fnErr){
+    	this.connection.query(sql, function (err, data) {
+            if (err) {
+                console.error('DB SQL: ', err)
+                if (fnErr)
+                    fnErr(err);
+                return;
             }
-        } else {
-            var sql = this.toSQL();
-        }
-
-        console.log("\n Exec SQL: " + sql)
-
-        if (!this.connection) {
-            req.getConnection(function (error, connection) {
-                this.connection = connection;
-                this.connection.query(sql, function (err, data) {
-                    if (err) {
-                        console.error('DB SQL: ', err)
-                        if (fnErr)
-                            fnErr(err);
-                        return;
-                    }
-                    if (fnSuc) {
-                        if(!_this.is_exec_row)
-                            fnSuc(data);
-                        else {
-                            if(data.length > 0)
-                                fnSuc(data[0]);
-                            else
-                                fnSuc(null);
-                            _this.is_exec_row = false;
-                        } 
-                    }
-                });
-            });
-        } else {
-            this.connection.query(sql, function (err, data) {
-                if (err) {
-                    console.error('DB SQL: ', err)
-                    if (fnErr)
-                        fnErr(err);
-                    return;
-                }
-                if (fnSuc)
-                    fnSuc(data);
-            });
-        }
+            if (fnSuc) {
+                fnSuc(data);
+            }
+        });
+    }
+    
+    
+    this.execQueryRow = function(sql, fnSuc, fnErr){
+    	this.connection.query(sql, function (err, data) {
+            if (err) {
+                console.error('DB SQL: ', err)
+                if (fnErr)
+                    fnErr(err);
+                return;
+            }
+            if (fnSuc) {
+	    	if(data.length > 0)
+                   fnSuc(data[0]);
+		else 
+		   fnSuc(null);
+            }
+        });
     }
 
-    this.exec_row = function () {
-        _this.is_exec_row = true;
-        _this.exec.apply(this.exec_row, arguments);
+    this.exec = function (sql, fnSuc, fnErr) {
+        console.log("\n Exec SQL: " + sql)
+        if (!this.connection) {
+            req.getConnection(function (error, connection) {
+                _this.connection = connection;     
+		_this.execQuery(sql, fnSuc, fnErr);           
+            });
+        } else {
+		_this.execQuery(sql, fnSuc, fnErr);   
+	}
+	
+    }
+
+    this.exec_row = function (sql, fnSuc, fnErr) {
+        console.log("\n Exec SQL Row: " + sql)
+        if (!this.connection) {
+            req.getConnection(function (error, connection) {
+                _this.connection = connection;     
+		_this.execQueryRow(sql, fnSuc, fnErr);           
+            });
+        } else {
+		_this.execQueryRow(sql, fnSuc, fnErr);   
+	}
     }
 
     this.new = function () {

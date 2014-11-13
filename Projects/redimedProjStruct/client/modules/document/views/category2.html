@@ -1,36 +1,28 @@
-<style>
-    #modalSign .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-
-    #modalSign1 .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-
-    #modalSign2 .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-
-</style>
-
+<!--BEGIN FORM-->
 <form method="post" name="cat2Form" novalidate>
+<!--BUTTON SUBMIT-->
 <div class="caption">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <a href="javascript:;" ng-click="submit(cat2Form)" class="btn green pull-right">Submit</a>
-            <a href="javascript:;" ng-click="print()" class="btn btn-primary blue pull-right">Print PDF</a>
-            <button type="reset" class="btn btn-danger pull-right">Reset</button>
+            <button type="button"
+                    ng-disabled="cat2Form.$error.pattern || cat2Form.$error.maxlength || cat2Form.$error.required"
+                    ng-click="submit(cat2Form)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+            </button>
+            <button type="button"
+                    ng-disabled="cat2Form.$error.pattern || cat2Form.$error.maxlength || cat2Form.$error.required"
+                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+            </button>
+            <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>
 </div>
 <br/>
+<!--END SUBMIT-->
 
+<!--BEGIN HEADER-->
 <div class="caption">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12">
             <p style="font-size: xx-large;text-align: center;font-weight: bolder">Category 2 (Safety Critical
                 Worker)</p>
 
@@ -41,24 +33,24 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="col-md-1 col-sm-1"></div>
         <div class="col-md-1 col-sm-1">
             <input class="form-control" type="checkbox"/>
         </div>
-        <label class="control-label col-md-9 col-sm-10 bold" style="margin-top: 10px;">Has the declaration sections on
+        <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Has the declaration sections on
             pages 3 and 6 of the Health Assessment Form been signed by the candidate.</label>
     </div>
 </div>
 </br>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="col-md-1 col-sm-1"></div>
         <div class="col-md-1 col-sm-1">
             <input class="form-control" type="checkbox"/>
         </div>
-        <label class="control-label col-md-9 col-sm-10 bold" style="margin-top: 10px;">Has the Safety Critical Worker -
+        <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Has the Safety Critical Worker -
             Health Questionaire been completed.</label>
 
     </div>
@@ -66,12 +58,12 @@
 </br>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="col-md-1 col-sm-1"></div>
         <div class="col-md-1 col-sm-1">
             <input class="form-control" type="checkbox"/>
         </div>
-        <div class="col-md-9 col-sm-10 bold">
+        <div class="col-md-10 col-sm-10 bold">
             <label class="control-label bold" style="margin-top: 10px;">Have the following pathology tests been
                 ordered.</label>
             <ul>
@@ -90,7 +82,7 @@
         <div class="col-md-1 col-sm-1">
             <input class="form-control" type="checkbox"/>
         </div>
-        <label class="control-label col-md-9 col-sm-10 bold" style="margin-top: 10px;">Audiometric Examination
+        <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Audiometric Examination
             Conducted. (Unless already organised by the employer)</label>
     </div>
 </div>
@@ -98,7 +90,7 @@
 
 <div class="caption">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12">
             <p style="font-size: xx-large;text-align: center;font-weight: bolder">Category 2 (Safety Critical
                 Worker)</p>
 
@@ -107,9 +99,11 @@
         </div>
     </div>
 </div>
+<!--END HEADER-->
 
+<!--BEGIN SECTION 1-->
 <div class="row">
-<div class="col-md-12">
+<div class="col-md-12 col-sm-12">
 <div class="portlet box grey-cascade">
 <div class="portlet-title">
     <div class="caption">
@@ -132,19 +126,19 @@
 <br/>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-6">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-6 col-sm-6">
             <label class="control-label">Surname:</label>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
             <label class="control-label">First name:</label>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <div class="control-label">
                 <label class="control-label">Location:</label>
             </div>
@@ -153,18 +147,18 @@
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-6">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-6 col-sm-6">
             <label class="control-label">Company Employment Number:</label>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
             <label class="control-label">Date Of Birth:</label>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
             <label class="control-label">Prospective/Current Position:</label>
         </div>
@@ -173,8 +167,8 @@
 <br/>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12" style="background-color: lightgrey; vertical-align: middle;">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12" style="background-color: lightgrey; vertical-align: middle;">
             <label class="control-label bold">1.2 Employer Details</label>
         </div>
     </div>
@@ -182,30 +176,30 @@
 <br/>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label">Supervisor/Contact:</label>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-4">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-4 col-sm-4">
             <label class="control-label">Date of Request:</label>
         </div>
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-4">
             <label class="control-label">Phone:</label>
         </div>
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-4">
             <label class="control-label">Fax:</label>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label">Account to be sent to:</label>
         </div>
     </div>
@@ -213,8 +207,8 @@
 <br/>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12" style="background-color: lightgrey; vertical-align: middle;">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12" style="background-color: lightgrey; vertical-align: middle;">
             <label class="control-label bold">1.3 Health Assessment
                 Appointment Details</label>
         </div>
@@ -223,46 +217,46 @@
 <br/>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label">Health Professional:</label>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label">Address:</label>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="col-md-6 col-sm-6">
             <label class="control-label">Phone:</label>
         </div>
         <div class="col-md-6 col-sm-6">
-            <label class="contron-label">Fax</label>
+            <label class="control-label">Fax</label>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-6">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-6 col-sm-6">
             <label class="control-label">Appointment date:</label>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
             <label class="control-label">Appointment time:</label>
         </div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label">Test Required: </label>
             <ul>
                 <li>Audiometry</li>
@@ -283,7 +277,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="col-md-1 col-sm-1">
             <input class="form-control" type="checkbox" ng-model="info.q1_4" ng-true-value="1" ng-false-value="0"
                    ng-checked="info.q1_4"/>
@@ -298,8 +292,15 @@
         <div class="col-md-12">
             <label class="control-label">Description</label>
         </div>
-        <div class="col-md-8 col-sm-8">
-            <textarea class="form-control" name="q1_4_c" ng-model="info.q1_4_c"></textarea>
+        <div ng-class="{'has-error':cat2Form.q1_4_c.$error.maxlength}">
+            <div class="col-md-8 col-sm-8">
+                <textarea class="form-control" name="q1_4_c" ng-model="info.q1_4_c" ng-maxlength="200"></textarea>
+            </div>
+            <div class="help-block" ng-show="cat2Form.q1_4_c.$error.maxlength">
+                <div class="col-md-8 col-sm-8">
+                    <label class="control-label">Too long!</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -355,8 +356,15 @@
 </div>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8">
-            <textarea class="form-control" ng-model="info.q1_5_3_c" name="q1_5_3_c"></textarea>
+        <div ng-class="{'has-error': cat2Form.q1_5_3_c.$error.maxlength}">
+            <div class="col-md-8 col-sm-8">
+                <textarea class="form-control" ng-model="info.q1_5_3_c" name="q1_5_3_c" ng-maxlength="200"></textarea>
+            </div>
+            <div class="help-block" ng-show="cat2Form.q1_5_3_c.$error.maxlength">
+                <div class="col-md-8 col-sm-8">
+                    <label class="control-label">Too long!</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -365,9 +373,11 @@
 </div>
 </div>
 </div>
+<!--END SECTION 1-->
 
+<!--BEGIN SECTION 2-->
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12">
         <div class="portlet box grey-cascade">
             <div class="portlet-title">
                 <div class="caption">
@@ -381,7 +391,7 @@
             <div class="portlet-body form">
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <div class="col-md-12" style="background-color: lightgrey; vertical-align: middle;">
+                        <div class="col-md-12 col-sm-12" style="background-color: lightgrey; vertical-align: middle;">
                             <label class="control-label bold" style="margin-left: 10px">2.1 Important information to the
                                 employee/applicant</label>
                         </div>
@@ -389,7 +399,7 @@
                 </div>
                 <div class="form-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6">
                             <ul>
                                 <li>
                                     You are required to attend a health assessment assess your fitness or
@@ -442,7 +452,7 @@
                                 criteria, your supervisor will discuss with you the appropriate action to be taken.
                             </p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6">
                             <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
                                 DISCLOSURE O HEALTH INFORMATION - PLEASE READ CAREFULLY AND SIGN TO INDICATE YOUR
                                 UNDERS TANDING OF HOW YOUR HEALTH INORMATION IS REPORTED, STORED AND ACCESSED
@@ -495,20 +505,12 @@
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
-                                    <div class="col-md-2 col-sm-2">
-                                        <a href="javascript:;" id="signBtn" class="btn green">Signature</a>
-                                        <script type="text/javascript">
-                                            $('#signBtn').click(function () {
-                                                $('#modalSign').modal({
-                                                    show: true
-                                                });
-                                            });
-
-                                        </script>
+                                    <div class="col-md-2 col-sm-3" style="margin-top: 10px;">
+                                        <label class="control-label">Signature:</label>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
-                                        <img src="" id="signDisplay" ng-model="info.consentSign"
-                                             style="width:200px;height:30px;"/>
+                                        <img src="" ng-model="info.consentSign"
+                                             style="width:200px;height:40px;"/>
                                     </div>
                                 </div>
                             </div>
@@ -519,12 +521,8 @@
                                     <div class="col-md-2 col-sm-3">
                                         <label class="control-label">Date:</label>
                                     </div>
-                                    <div class="col-md-4 col-sm-5">
-                                        <input type="text" class="form-control col-md-12" name="PATIENT_DATE"
-                                               datepicker-popup="dd/MM/yyyy" data-ng-model="info.PATIENT_DATE"
-                                               is-open="openDOB" ng-click="openDOB = true"
-                                               datepicker-options="dateOptions" ng-required="true"
-                                               close-text="Close"/>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label">{{today|date:"dd/MM/yyyy"}}</label>
                                     </div>
                                 </div>
                             </div>
@@ -535,9 +533,11 @@
         </div>
     </div>
 </div>
+<!--END SECTION 2-->
 
+<!--BEGIN SECTION 3-->
 <div class="row">
-<div class="col-md-12">
+<div class="col-md-12 col-sm-12">
 <div class="portlet box grey-cascade">
 <div class="portlet-title">
     <div class="caption">
@@ -572,7 +572,7 @@
 </br>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-6 col-sm-6" style="margin-top: 5px;">
+        <div class="col-md-6 col-sm-9" style="margin-top: 5px;">
             <label class="control-label bold">1. Are you currently being treated by a doctor
                 for
                 any illness or injury?</label>
@@ -593,8 +593,15 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8">
-            <textarea class="form-control" ng-model="info.q3_1_1_c" name="q3_1_1_c"></textarea>
+        <div ng-class="{'has-error': cat2Form.q3_1_1_c.$error.maxlength}">
+            <div class="col-md-8 col-sm-8">
+                <textarea class="form-control" ng-model="info.q3_1_1_c" name="q3_1_1_c" ng-maxlength="200"></textarea>
+            </div>
+            <div class="help-block" ng-show="cat2Form.q3_1_1_c.$error.maxlength">
+                <div class="col-md-8 col-sm-8">
+                    <label class="control-label">Too long!</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -602,7 +609,7 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-6 col-sm-6" style="margin-top: 5px;">
+        <div class="col-md-6 col-sm-9" style="margin-top: 5px;">
             <label class="control-label bold">2. Are you receiving any medical treatment or
                 taking
                 any medication?</label>
@@ -622,15 +629,22 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <label class="text-info col-md-10">(Please take any medications with you to show the
+        <label class="text-info col-md-10 col-sm-12">(Please take any medications with you to show the
             doctor) Please note brief details</label>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8">
-            <textarea class="form-control" ng-model="info.q3_1_2_c" name="q3_1_2_c"></textarea>
+        <div ng-class="{'has-error': cat2Form.q3_1_2_c.$error.maxlength}">
+            <div class="col-md-8 col-sm-8">
+                <textarea class="form-control" ng-model="info.q3_1_2_c" name="q3_1_2_c" ng-maxlength="200"></textarea>
+            </div>
+            <div class="help-block" ng-show="cat2Form.q3_1_2_c.$error.maxlength">
+                <div class="col-md-8 col-sm-8">
+                    <label class="control-label">Too long!</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -638,7 +652,7 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-7 col-sm-7">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">3. Have you ever had, or been told by a doctor that
                 you had any of the following?</label>
         </div>
@@ -650,10 +664,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.1 High blood pressure</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_1" ng-value="1"/> Yes
@@ -667,10 +681,10 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
-                <label class="control-label">3.13 Dizziness,vertigo,problems with balance</label>
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
+                <label class="control-label">3.13 Dizziness, vertigo, problems with balance</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_13" ng-value="1"/> Yes
@@ -688,10 +702,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.2 High disease</label>
             </div>
-            <div class="col-md-4 col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_2" ng-value="1"/> Yes
@@ -705,10 +719,10 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.14 Double vision,difficulty seeing:</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_14" ng-value="1"/> Yes
@@ -726,10 +740,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.3 Chest pain, angina</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_3" ng-value="1"/> Yes
@@ -743,10 +757,10 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.15 Colour blindness</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_15" ng-value="1"/> Yes
@@ -763,10 +777,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.4 Any condition requiring heart surgery</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_4" ng-value="1"/> Yes
@@ -780,10 +794,10 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.16 Kidney disease</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_16" ng-value="1"/> Yes
@@ -800,10 +814,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.5 Palpitations/Irregular heartbeat</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_5" ng-value="1"/> Yes
@@ -817,10 +831,10 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8">
+            <div class="col-md-8 col-sm-6">
                 <label class="control-label" style="margin-top: 5px;">3.17 Diabetes</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_17" ng-value="1"/> Yes
@@ -837,10 +851,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.6 Abnormal shortness of breath</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_6" ng-value="1"/> Yes
@@ -854,10 +868,10 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
-                <label class="control-label">3.18 Neck,back or limb disorders</label>
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
+                <label class="control-label">3.18 Neck, back or limb disorders</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_18" ng-value="1"/> Yes
@@ -874,10 +888,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.7 Do you smoke or have you ever been a smoker?</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_7" ng-value="1"/> Yes
@@ -891,11 +905,11 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.19 Hearing loss or deafness or had an ear operation or use a hearing
                     aid?</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_19" ng-value="1"/> Yes
@@ -912,10 +926,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.8 Head injury, spinal injury</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_8" ng-value="1"/> Yes
@@ -929,11 +943,11 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.20 Do you have difficulty hearing people on the telephone (including use
                     of hearing aid if worn)?</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_20" ng-value="1"/> Yes
@@ -950,10 +964,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8">
-                <label class="control-label" style="margin-top: 5px;">3.9 Seizures,fits,convulsions,epilepsy</label>
+            <div class="col-md-8 col-sm-6">
+                <label class="control-label" style="margin-top: 5px;">3.9 Seizures, fits, convulsions, epilepsy</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_9" ng-value="1"/> Yes
@@ -967,11 +981,11 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label"> 3.21 Have your ever had, or been told by a doctor that you had a
                     psychiatric illness or nervous disorder?</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_21" ng-value="1"/> Yes
@@ -988,10 +1002,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.10 Blackouts or fainting</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_10" ng-value="1"/> Yes
@@ -1005,12 +1019,12 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.22 Have your ever had any other serious injury,illness,operation, or
                     been
                     in hospital for any reason?</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_22" ng-value="1"/> Yes
@@ -1027,10 +1041,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.11 Migraine:</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_11" ng-value="1"/> Yes
@@ -1044,10 +1058,10 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.23 Do you use illicit drugs?</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_23" ng-value="1"/> Yes
@@ -1065,10 +1079,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+            <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
                 <label class="control-label">3.12 Stroke:</label>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="info.q3_1_3_12" ng-value="1"/> Yes
@@ -1100,7 +1114,7 @@
             <label class="control-label">4.1 Have you ever had, or been told by a doctor that you had a sleep disorder,
                 sleep apnoea, or narcolepsy?</label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-3">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_4_1" ng-value="1"/> Yes
@@ -1176,16 +1190,16 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
     </div>
-    <div class="col-md-4 col-sm-4" style="margin-left: 32px;">
-        <label class="control-label bold">Chance of Dozing (0-3)</label>
+    <div class="col-md-4 col-sm-6">
+        <label class="control-label bold" style="margin-left: 40px;">Chance of Dozing (0-3)</label>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-6 col-sm-6">
+    <div class="col-md-6 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">4.3.1 Sitting and reading:</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_4_3_1" ng-value="0"/> 0
@@ -1208,7 +1222,7 @@
     <div class="col-md-6 col-sm-6">
         <label class="control-label" style="margin-top: 5px;">4.3.2 Watching TV</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_4_3_2" ng-value="0"/> 0
@@ -1231,7 +1245,7 @@
         <label class="control-label">4.3.3 Sitting, inactive in a public place(eg. a theatre or
             meeting):</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_4_3_3" ng-value="0"/> 0
@@ -1253,7 +1267,7 @@
     <div class="col-md-6 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">4.3.4 As a passenger in a car for an hour without a break:</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_4_3_4" ng-value="0"/> 0
@@ -1276,7 +1290,7 @@
         <label class="control-label">4.3.5 Lying down to rest in the afternoon when circumstances
             permit:</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_4_3_5" ng-value="0"/> 0
@@ -1298,7 +1312,7 @@
     <div class="col-md-6 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">4.3.6 Sitting and talking to someone:</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_4_3_6" ng-value="0"/> 0
@@ -1321,7 +1335,7 @@
         <label class="control-label" style="margin-top: 5px;">4.3.7 Sitting quitely after a lunch without
             alcohol:</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_4_3_7" ng-value="0"/> 0
@@ -1344,7 +1358,7 @@
     <div class="col-md-6 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">4.3.8 In a car, while stopped for a few minutes in the traffic:</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_4_3_8" ng-value="0"/> 0
@@ -1375,38 +1389,42 @@
 <div class="panel-body">
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">0 = Never</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">1 = Monthly or less</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">2 = Two or four times a month</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">3 = Two or three times a month</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">4 = Four or more times a week</label>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12" style="margin-left: 700px;">
-        <label class="control-label bold">Please circle the response that is correct for
-            you </label>
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-8 col-sm-6"></div>
+        <div class="col-md-4 col-sm-6" style="text-align: center;">
+            <label class="control-label bold">Please circle the response
+                that is correct for
+                you </label>
+        </div>
     </div>
 </div>
 
 </br>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+        <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
             <label class="control-label">5.1 How often do you have a drink containing alcohol?</label>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-6">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_1" ng-value="0"/> 0
@@ -1431,13 +1449,13 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-6 col-sm-6" style="margin-top: 5px;">
+        <div class="col-md-6 col-sm-12" style="margin-top: 5px;">
             <label class="control-label">5.2 How many drinks containing alcohol do you have on
                 a typical day when
                 you
                 are drinking?</label>
         </div>
-        <div class="col-md-6 col-sm-6">
+        <div class="col-md-6 col-sm-12">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_2" ng-value="0"/> 1 or 2
@@ -1462,10 +1480,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+        <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
             <label class="control-label">5.3 How often do you have six or more drinks on one occasion?</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-4 col-sm-6">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_3" ng-value="0"/> 0
@@ -1490,11 +1508,11 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+        <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
             <label class="control-label">5.4 How often during the last year have you found that you were not able to
                 stop drinking once you had started?"</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-4 col-sm-6">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_4" ng-value="0"/> 0
@@ -1519,11 +1537,11 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+        <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
             <label class="control-label">5.5 How often during the last year have you failed to do what was normally
                 expected from you because of drinking?</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-4 col-sm-6">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_5" ng-value="0"/> 0
@@ -1548,11 +1566,11 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+        <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
             <label class="control-label">5.6 How often during the last year have you needed a first drink in the morning
                 to get yourself going after a heavy drinking session?</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-4 col-sm-6">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_6" ng-value="0"/> 0
@@ -1577,12 +1595,12 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+        <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
             <label class="control-label">5.7 How often during the last year have you had a feeling of guilt or
                 remorse
                 after drinking?</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-4 col-sm-6">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_7" ng-value="0"/> 0
@@ -1607,11 +1625,11 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-8 col-sm-8" style="margin-top: 5px;">
+        <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
             <label class="control-label">5.8 How often during the last year have you been unable to remember what
                 happened the night before because you had been drinking?</label>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-4 col-sm-6">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_8" ng-value="0"/> 0
@@ -1636,11 +1654,11 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-5 col-sm-5" style="margin-top: 5px;">
+        <div class="col-md-5 col-sm-12" style="margin-top: 5px;">
             <label class="control-label">5.9 Have you or someone else been injured as a result of your
                 drinking?</label>
         </div>
-        <div class="col-md-7 col-sm-7">
+        <div class="col-md-7 col-sm-12">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_9" ng-value="0"/>No - (0)
@@ -1659,12 +1677,12 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-5 col-sm-5" style="margin-top: 5px;">
+        <div class="col-md-5 col-sm-12" style="margin-top: 5px;">
             <label class="control-label">5.10 Has a relative or friend,or a doctor or other health worker been
                 concerned
                 about your drinking or suggested you cut down?</label>
         </div>
-        <div class="col-md-7 col-sm-7">
+        <div class="col-md-7 col-sm-12">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q3_1_5_10" ng-value="0"/>No - (0)
@@ -1693,19 +1711,19 @@
 <div class="panel-body">
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">5 = All of the time</label>
         </div>
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">4 = Most of the time</label>
         </div>
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">3 = Some of the time</label>
         </div>
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">2 = A little of the time</label>
         </div>
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-12 col-sm-12">
             <label class="control-label bold">1 = None of the time</label>
         </div>
     </div>
@@ -1713,18 +1731,22 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <label class="control-label bold">Please tick the answer that is correct for
-            you</label>
+        <div class="col-md-8 col-sm-6"></div>
+        <div class="col-md-4 col-sm-6" style="text-align: center;">
+            <label class="control-label bold">Please
+                tick the
+                answer that is correct for
+                you</label></div>
     </div>
 </div>
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.1 In the past 4 weeks, about how often did you feel tired out for no good
             reason?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_1" ng-value="5"/> 5
@@ -1747,10 +1769,10 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.2 In the past 4 weeks, about how often did you feel nervous?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_2" ng-value="5"/> 5
@@ -1773,11 +1795,11 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.3 In the past 4 weeks, about how often did you feel so nervous that nothing
             could calm you down?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_3" ng-value="5"/> 5
@@ -1800,10 +1822,10 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.4 In the past 4 weeks, about how often did you feel hopeless?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_4" ng-value="5"/> 5
@@ -1826,11 +1848,11 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.5 In the past 4 weeks, about how often did you feel restless or
             fidgety?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_5" ng-value="5"/> 5
@@ -1853,11 +1875,11 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.6 In the past 4 weeks, about how often did you feel so restless you could not
             sit still?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_6" ng-value="5"/> 5
@@ -1880,10 +1902,10 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.7 In the past 4 weeks, about how often did you feel depressed?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_7" ng-value="5"/> 5
@@ -1906,11 +1928,11 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.8 In the past 4 weeks, about how often did you feel that everything was an
             effort?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_8" ng-value="5"/> 5
@@ -1933,11 +1955,11 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.9 In the past 4 weeks, about how often did you feel so sad that nothing could
             cheer you up?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_9" ng-value="5"/> 5
@@ -1960,10 +1982,10 @@
 </br>
 
 <div class="row">
-    <div class="col-md-8 col-sm-8">
+    <div class="col-md-8 col-sm-6" style="margin-top: 5px;">
         <label class="control-label">6.10 In the past 4 weeks, about how often did you feel worthless?</label>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-6">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q3_1_6_10" ng-value="5"/> 5
@@ -2002,8 +2024,15 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-12 col-sm-12">
-            <textarea class="form-control" ng-model="info.q3_1_6_c"></textarea>
+        <div ng-class="{'has-error': cat2Form.q3_1_6_c.$error.maxlength}">
+            <div class="col-md-8 col-sm-8">
+                <textarea class="form-control" ng-model="info.q3_1_6_c" name="q3_1_6_c" ng-maxlength="200"></textarea>
+            </div>
+            <div class="help-block" ng-show="cat2Form.q3_1_6_c.$error.maxlength">
+                <div class="col-md-8 col-sm-8">
+                    <label class="control-label">Too long!</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -2047,7 +2076,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">I, Phuong(Print name).</label>
+            <label class="control-label">I, Phuong Nguyen.</label>
         </div>
     </div>
 </div>
@@ -2071,41 +2100,59 @@
         or clarify information relating to my current health status.
     </li>
 </ul>
-
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-4 col-sm-5">
             <label class="control-label" style="margin-top: 5px;">Employee/Applicant Signature:&nbsp;&nbsp;</label>
-            <a href="javascript:;" id="signBtn1" class="btn green">Sign</a>
-            <script type="text/javascript">
-                $('#signBtn1').click(function () {
-                    $('#modalSign1').modal({
-                        show: true
-                    });
-                });
-
-            </script>
+            <a class="btn green" ng-click="sigClick()">Sign</a>
         </div>
         <div class="col-md-1 col-sm-1">
             <label class="control-label col-md-2 col-sm-2" style="margin-top: 5px;">Date:</label>
         </div>
-        <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="PATIENT_DATE"
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.PATIENT_DATE"
+        <div class="col-md-2 col-sm-3">
+            <input type="text" class="form-control" name="DATE"
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.DATE"
                    is-open="openDOB1" ng-click="openDOB1 = true"
                    datepicker-options="dateOptions" ng-required="true"
                    close-text="Close"/>
         </div>
     </div>
 </div>
+<br/>
+<!--signature-->
+<div ng-show="sig" style="border: none; width: 900px; margin-left: 10px;background-color:#74e4b5;">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-12 col-sm-12">
+                <div signature ng-model="info.Signature" reset="resetFlag"></div>
+            </div>
+        </div>
+    </div>
+    <br/>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-6 col-sm-6">
-            <img src="" id="signDisplay1" ng-model="info.consentSign" style="width:200px;height: 30px;"/>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-8 col-sm-8"></div>
+            <div class="col-md-4 col-sm-4">
+                <button class="btn red" ng-click="cancelClick()">Cancel</button>
+                <button class="btn blue" ng-click="reset()">Reset</button>
+                <button class="btn green" ng-click="okClick()">Ok</button>
+            </div>
+        </div>
+    </div>
+    <br/>
+</div>
+<!--signature-->
+<div ng-show="info.Signature!==''&& !sig">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6 col-sm-6">
+                <img src="" ng-src="{{info.Signature}}" style="width:200px;height: 100px;"/>
+            </div>
         </div>
     </div>
 </div>
+<br/>
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
@@ -2120,8 +2167,8 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1">
-            <label class="control-label" style="text-align: right; margin-top: 5px;">Name:</label>
+        <div class="col-md-1 col-sm-2">
+            <label class="control-label" style="text-align: right; margin-top: 10px;">Name:</label>
         </div>
         <div class="col-md-3 grey col-sm-3">
             <select class="bs-select form-control" ng-model="info.ddd"
@@ -2133,35 +2180,17 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-4 col-sm-4">
-            <label class="control-label" style="margin-top: 5px;">Signature:&nbsp;&nbsp;</label>
-            <a href="javascript:;" id="signBtn2" class="btn green">Sign</a>
-            <script type="text/javascript">
-                $('#signBtn2').click(function () {
-                    $('#modalSign2').modal({
-                        show: true
-                    });
-                });
-
-            </script>
-        </div>
-        <div class="col-md-1 col-sm-1">
-            <label class="control-label col-md-2 col-sm-2" style="margin-top: 5px;">Date:</label>
+        <div class="col-md-1 col-sm-2" style="margin-top: 10px;">
+            <label class="control-label">Signature:</label>
         </div>
         <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="PATIENT_DATE"
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.PATIENT_DATE"
-                   is-open="openDOB2" ng-click="openDOB2 = true"
-                   datepicker-options="dateOptions" ng-required="true"
-                   close-text="Close"/>
+            <img src="" ng-model="info.Signature1" style="width:200px;height: 40px;"/>
         </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-6 col-sm-6">
-            <img src="" id="signDisplay2" ng-model="info.consentSign" style="width:200px;height: 30px;"/>
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px;">Date:</label>
+        </div>
+        <div class="col-md-3 col-sm-3" style="margin-top: 10px;">
+            <label class="control-label">{{today|date:"dd/MM/yyyy"}}</label>
         </div>
     </div>
 </div>
@@ -2171,9 +2200,11 @@
 </div>
 </div>
 </div>
+<!--END SECTION 3-->
 
+<!--BEGIN SECTION 4-->
 <div class="row">
-<div class="col-md-12">
+<div class="col-md-12 col-sm-12">
 <div class="portlet box grey-cascade">
 <div class="portlet-title">
     <div class="caption">
@@ -2259,47 +2290,47 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-2">
+            <div class="col-md-1 col-sm-2" style="margin-top: 5px;">
                 <label class="control-label">Systolic</label>
             </div>
             <div ng-class="{'has-error':cat2Form.q4_2_1_1_1.$error.pattern}">
 
                 <div class="col-md-1 col-sm-2">
                     <input type="text" class="form-control" name="q4_2_1_1_1" ng-model="info.q4_2_1_1_1"
-                           ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"
+                           ng-pattern="/^(0|[1-9][0-9]*)$/"
                            style="width: 80px;"/>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-2">
+            <div class="col-md-1 col-sm-2" style="margin-top: 5px;">
                 <label class="control-label"> mm Hg</label>
             </div>
-            <div class="col-md-1 col-sm-2">
+            <div class="col-md-1 col-sm-2" style="margin-top: 5px;">
                 <label class="control-label">Diastolic</label>
             </div>
             <div ng-class="{'has-error':cat2Form.q4_2_1_1_2.$error.pattern}">
                 <div class="col-md-1 col-sm-2">
                     <input type="text" class="form-control" name="q4_2_1_1_2" ng-model="info.q4_2_1_1_2"
-                           ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"
+                           ng-pattern="/^(0|[1-9][0-9]*)$/"
                            style="width: 80px;"/>
                 </div>
             </div>
-            <div class="col-md-1 col-sm-2">
+            <div class="col-md-1 col-sm-2" style="margin-top: 5px;">
                 <label class="control-label"> mm Hg</label>
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-1 col-sm-2">
                     </div>
-                    <div ng-class="{'has-error':cat2Form.q4_2_1_2.$error.pattern}">
-                        <div class="col-md-4 col-sm-4">
-                            <div class="help-block" ng-show="cat2Form.q4_2_1_2.$error.pattern">
+                    <div ng-class="{'has-error':cat2Form.q4_2_1_1_1.$error.pattern}">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="help-block" ng-show="cat2Form.q4_2_1_1_1.$error.pattern">
                                 <label class="control-label">Required is number!</label>
                             </div>
                         </div>
                     </div>
-                    <div ng-class="{'has-error':cat2Form.q4_2_1_2.$error.pattern}">
+                    <div ng-class="{'has-error':cat2Form.q4_2_1_1_2.$error.pattern}">
                         <div class="col-md-3 col-sm-3">
-                            <div class="help-block" ng-show="cat2Form.q4_2_1_2.$error.pattern">
+                            <div class="help-block" ng-show="cat2Form.q4_2_1_1_2.$error.pattern">
                                 <label class="control-label">Required is number!</label>
                             </div>
                         </div>
@@ -2312,13 +2343,13 @@
 </br>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-3" style="margin-top: 5px;">
             <label class="control-label bold">1.2 Pulse Rate:</label>
         </div>
         <div ng-class="{'has-error':cat2Form.q4_2_1_2_c.$error.pattern}">
             <div class="col-md-1 col-sm-2">
                 <input type="text" class="form-control" name="q4_2_1_2_c" ng-model="info.q4_2_1_2_c"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"
+                       ng-pattern="/^(0|[1-9][0-9]*)$/"
                        style="width: 80px;"/>
             </div>
         </div>
@@ -2338,9 +2369,9 @@
 <div class="row">
     <div class="col-md-2 col-sm-3">
     </div>
-    <div ng-class="{'has-error':cat2Form.q4_2_1_2.$error.pattern}">
-        <div class="col-md-4 col-sm-9">
-            <div class="help-block" ng-show="cat2Form.q4_2_1_2.$error.pattern">
+    <div ng-class="{'has-error':cat2Form.q4_2_1_2_c.$error.pattern}">
+        <div class="col-md-4 col-sm-4">
+            <div class="help-block" ng-show="cat2Form.q4_2_1_2_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
@@ -2350,10 +2381,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-3" style="margin-top: 5px;">
             <label class="control-label bold">1.3 Heart Sounds:</label>
         </div>
-        <div class="col-md-3 col-sm-7">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_1_3" value="1"/> Normal
@@ -2368,10 +2399,10 @@
 </br>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-3" style="margin-top: 5px;">
             <label class="control-label bold">1.4 Peripheral Pulses:</label>
         </div>
-        <div class="col-md-3 col-sm-7">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_1_4" value="1"/> Normal
@@ -2387,10 +2418,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-3" style="margin-top: 5px;">
             <label class="control-label text-info bold text-info">2. Chest/Lungs:</label>
         </div>
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_2" value="1"/> Normal
@@ -2406,10 +2437,10 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-4">
+        <div class="col-md-3 col-sm-3" style="margin-top: 5px;">
             <label class="control-label bold text-info">3. Abdomen(liver):</label>
         </div>
-        <div class="col-md-5 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_3" ng-value="1"/> Normal
@@ -2425,11 +2456,18 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12" style="margin-top: 5px;">
             <label class="control-label bold text-info">4. Medications:</label>
         </div>
-        <div class="col-md-8 col-sm-8">
-            <textarea class="form-control" ng-model="info.q4_2_4_c"></textarea>
+        <div ng-class="{'has-error': cat2Form.q4_2_4_c.$error.maxlength}">
+            <div class="col-md-8 col-sm-8">
+                <textarea class="form-control" ng-model="info.q4_2_4_c" name="q4_2_4_c" ng-maxlength="200"></textarea>
+            </div>
+            <div class="help-block" ng-show="cat2Form.q4_2_4_c.$error.maxlength">
+                <div class="col-md-8 col-sm-8">
+                    <label class="control-label">Too long!</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -2445,10 +2483,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label bold" style="margin-left: 10px;">5.1 Cervical spine rotation:</label>
         </div>
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_5_1" value="1"/> Normal
@@ -2464,10 +2502,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label bold" style="margin-left: 10px;">5.2 Back movement:</label>
         </div>
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_5_2" value="1"/> Normal
@@ -2491,10 +2529,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label" style="margin-left: 30px;">a) Appearance:</label>
         </div>
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_5_3_1" value="1"/> Normal
@@ -2509,10 +2547,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label" style="margin-left: 30px">b) Joint movements:</label>
         </div>
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_5_3_2" value="1"/> Normal
@@ -2536,10 +2574,10 @@
 
 <div class="row">
 <div class="col-md-12 col-sm-12">
-<div class="col-md-3 col-sm-4">
+<div class="col-md-3 col-sm-4" style="margin-top: 5px;">
     <label class="control-label" style="margin-left: 30px;">a) Appearance:</label>
 </div>
-<div class="col-md-3 col-sm-5">
+<div class="col-md-3 col-sm-4">
     <div class="btn-group">
         <label class="btn">
             <input type="radio" ng-model="info.q4_2_5_4_1" value="1"/> Normal
@@ -2554,10 +2592,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label" style="margin-left: 30px">b) Joint movements:</label>
         </div>
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_5_4_2" value="1"/> Normal
@@ -2573,10 +2611,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label bold" style="margin-left: 10px;">5.5 Gait:</label>
         </div>
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_5_5" value="1"/> Normal
@@ -2592,10 +2630,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label bold" style="margin-left: 10px;">5.6 Romberg's Test:</label>
         </div>
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_5_6" value="1"/> Normal
@@ -2616,10 +2654,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label bold" style="margin-left: 10px;">6.1 Protein</label>
         </div>
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_6_1" ng-value="1"/> Normal
@@ -2634,10 +2672,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
             <label class="control-label bold" style="margin-left: 10px;">6.2 Glucose</label>
         </div>
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-3 col-sm-4">
             <div class="btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.q4_2_6_2" ng-value="1"/> Normal
@@ -2661,29 +2699,29 @@
     <div class="col-md-12">
         <div class="col-md-1 col-sm-1">
         </div>
-        <div class="col-md-1 col-sm-1">
-            <label>0.5KHz</label>
+        <div class="col-md-1 col-sm-1" style="text-align: center;">
+            <label class="control-label">0.5KHz</label>
         </div>
-        <div class="col-md-1 col-sm-1">
-            <label>1.0KHz</label>
+        <div class="col-md-1 col-sm-1" style="text-align: center;">
+            <label class="control-label">1.0KHz</label>
         </div>
-        <div class="col-md-1 col-sm-1">
-            <label>1.5KHz</label>
+        <div class="col-md-1 col-sm-1" style="text-align: center;">
+            <label class="control-label">1.5KHz</label>
         </div>
-        <div class="col-md-1 col-sm-1">
-            <label>2.0KHz</label>
+        <div class="col-md-1 col-sm-1" style="text-align: center;">
+            <label class="control-label">2.0KHz</label>
         </div>
-        <div class="col-md-1 col-sm-1">
-            <label>3.0KHz</label>
+        <div class="col-md-1 col-sm-1" style="text-align: center;">
+            <label class="control-label">3.0KHz</label>
         </div>
-        <div class="col-md-1 col-sm-1">
-            <label>4.0KHz</label>
+        <div class="col-md-1 col-sm-1" style="text-align: center;">
+            <label class="control-label">4.0KHz</label>
         </div>
-        <div class="col-md-1 col-sm-1">
-            <label>6.0KHz</label>
+        <div class="col-md-1 col-sm-1" style="text-align: center;">
+            <label class="control-label">6.0KHz</label>
         </div>
-        <div class="col-md-1 col-sm-1">
-            <label>8.0KHz</label>
+        <div class="col-md-1 col-sm-1" style="text-align: center;">
+            <label class="control-label">8.0KHz</label>
         </div>
     </div>
 
@@ -2691,76 +2729,76 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-1 col-sm-1">
-            <label class="control-label">Left</label>
+            <label class="control-label" style="margin-top: 5px;text-align: right">Left</label>
         </div>
         <div ng-class="{'has-error':cat2Form.q4_2_7_L_1.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_L_1" ng-model="info.q4_2_7_L_1"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_L_2.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_L_2" ng-model="info.q4_2_7_L_2"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_L_3.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_L_3" ng-model="info.q4_2_7_L_3"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error':  cat2Form.q4_2_7_L_4.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_L_4" ng-model="info.q4_2_7_L_4"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_L_5.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_L_5" ng-model="info.q4_2_7_L_5"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"
+                       ng-pattern="/^(0|[1-9][0-9]*)$/"
                        style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_L_6.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_L_6" ng-model="info.q4_2_7_L_6"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_L_7.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_L_7" ng-model="info.q4_2_7_L_7"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_L_8.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_L_8" ng-model="info.q4_2_7_L_8"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
-        <div ng-class="{'has-error': cat2Form.s3_q2_1_1.$error.pattern ||
-        cat2Form.s3_q2_1_2.$error.pattern || cat2Form.s3_q2_1_3.$error.pattern ||
-        cat2Form.s3_q2_1_4.$error.pattern || cat2Form.s3_q2_1_5.$error.pattern ||
-        cat2Form.s3_q2_1_6.$error.pattern || cat2Form.s3_q2_1_7.$error.pattern ||
-        cat2Form.s3_q2_1_8.$error.pattern || cat2Form.s3_q2_2_1.$error.pattern ||
-        cat2Form.s3_q2_2_2.$error.pattern || cat2Form.s3_q2_2_3.$error.pattern ||
-        cat2Form.s3_q2_2_4.$error.pattern || cat2Form.s3_q2_2_5.$error.pattern ||
-        cat2Form.s3_q2_2_6.$error.pattern || cat2Form.s3_q2_2_7.$error.pattern ||
-        cat2Form.s3_q2_2_8.$error.pattern}">
-            <div class="help-block" ng-show="cat2Form.s3_q2_1_1.$error.pattern ||
-        cat2Form.s3_q2_1_2.$error.pattern || cat2Form.s3_q2_1_3.$error.pattern ||
-        cat2Form.s3_q2_1_4.$error.pattern || cat2Form.s3_q2_1_5.$error.pattern ||
-        cat2Form.s3_q2_1_6.$error.pattern || cat2Form.s3_q2_1_7.$error.pattern ||
-        cat2Form.s3_q2_1_8.$error.pattern || cat2Form.s3_q2_2_1.$error.pattern ||
-        cat2Form.s3_q2_2_2.$error.pattern || cat2Form.s3_q2_2_3.$error.pattern ||
-        cat2Form.s3_q2_2_4.$error.pattern || cat2Form.s3_q2_2_5.$error.pattern ||
-        cat2Form.s3_q2_2_6.$error.pattern || cat2Form.s3_q2_2_7.$error.pattern ||
-        cat2Form.s3_q2_2_8.$error.pattern">
-                <div class="col-md-2">
+        <div ng-class="{'has-error':
+        cat2Form.q4_2_7_L_1.$error.pattern || cat2Form.q4_2_7_L_2.$error.pattern ||
+        cat2Form.q4_2_7_L_3.$error.pattern || cat2Form.q4_2_7_L_4.$error.pattern ||
+        cat2Form.q4_2_7_L_5.$error.pattern || cat2Form.q4_2_7_L_6.$error.pattern ||
+        cat2Form.q4_2_7_L_7.$error.pattern || cat2Form.q4_2_7_L_8.$error.pattern ||
+        cat2Form.q4_2_7_R_1.$error.pattern || cat2Form.q4_2_7_R_2.$error.pattern ||
+        cat2Form.q4_2_7_R_3.$error.pattern || cat2Form.q4_2_7_R_4.$error.pattern ||
+        cat2Form.q4_2_7_R_5.$error.pattern || cat2Form.q4_2_7_R_6.$error.pattern ||
+        cat2Form.q4_2_7_R_7.$error.pattern || cat2Form.q4_2_7_R_8.$error.pattern}">
+            <div class="help-block" ng-show="
+        cat2Form.q4_2_7_L_1.$error.pattern || cat2Form.q4_2_7_L_2.$error.pattern ||
+        cat2Form.q4_2_7_L_3.$error.pattern || cat2Form.q4_2_7_L_4.$error.pattern ||
+        cat2Form.q4_2_7_L_5.$error.pattern || cat2Form.q4_2_7_L_6.$error.pattern ||
+        cat2Form.q4_2_7_L_7.$error.pattern || cat2Form.q4_2_7_L_8.$error.pattern ||
+        cat2Form.q4_2_7_R_1.$error.pattern || cat2Form.q4_2_7_R_2.$error.pattern ||
+        cat2Form.q4_2_7_R_3.$error.pattern || cat2Form.q4_2_7_R_4.$error.pattern ||
+        cat2Form.q4_2_7_R_5.$error.pattern || cat2Form.q4_2_7_R_6.$error.pattern ||
+        cat2Form.q4_2_7_R_7.$error.pattern || cat2Form.q4_2_7_R_8.$error.pattern">
+                <div class="col-md-2 col-sm-3">
                     <label class="control-label">Required is number!</label>
                 </div>
             </div>
@@ -2772,62 +2810,62 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-1 col-sm-1">
-            <label class="control-label">Right</label>
+            <label class="control-label" style="margin-top: 5px; text-align: right;">Right</label>
         </div>
         <div ng-class="{'has-error':cat2Form.q4_2_7_R_1.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_R_1" ng-model="info.q4_2_7_R_1"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_R_2.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_R_2" ng-model="info.q4_2_7_R_2"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_R_3.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_R_3" ng-model="info.q4_2_7_R_3"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error':  cat2Form.q4_2_7_R_4.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_R_4" ng-model="info.q4_2_7_R_4"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_R_5.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_R_5" ng-model="info.q4_2_7_R_5"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"
+                       ng-pattern="/^(0|[1-9][0-9]*)$/"
                        style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_R_6.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_R_6" ng-model="info.q4_2_7_R_6"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_R_7.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_R_7" ng-model="info.q4_2_7_R_7"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_7_R_8.$error.pattern}">
             <div class="col-md-1 col-sm-1">
                 <input type="text" class="form-control" name="q4_2_7_R_8" ng-model="info.q4_2_7_R_8"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" style="width: 60px"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
             </div>
         </div>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-5 col-sm-7">
+    <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;text-align: left;">Has the applicant been quite for
             the past 16
             hours?</label>
@@ -2846,7 +2884,7 @@
 <hr>
 
 <div class="row">
-    <div class="col-md-12 col-sm-12">
+    <div class="col-md-12 col-sm-12" style="margin-top: 5px;">
         <label class="control-label bold text-info" style="margin-left: 10px;">8. Drug Screen:</label>
     </div>
 </div>
@@ -2857,39 +2895,39 @@
                       ng-maxlength="200"></textarea>
         </div>
     </div>
-    <div class="help-block" ng-show="cat2Form.s3_q6_c.$error.maxlength">
+    <div class="help-block" ng-show="cat2Form.q4_2_8_c.$error.maxlength">
         <div class="col-md-12">
-            <label class="control-label">Drug Screen too long!</label>
+            <label class="control-label">Too long!</label>
         </div>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-5" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Creatinine:</label>
     </div>
     <div class="col-md-2 col-sm-2">
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_1_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_1_c" ng-model="info.q4_2_8_1_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
-            <div class="help-block" ng-show="cat2Form.s3_q6_1.$error.pattern">
+            <div class="help-block" ng-show="cat2Form.q4_2_8_1_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1 col-sm-1">
+    <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
         <label class="control-label"> mmol/L</label>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Sympathomimetic Amines:</label>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-2 col-sm-3">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q4_2_8_2_1" value="1"/> NEG
@@ -2900,25 +2938,25 @@
         </div>
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_2_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_2_c" ng-model="info.q4_2_8_2_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
-            <div class="help-block" ng-show="cat2Form.s3_q6_2_2.$error.pattern">
+            <div class="help-block" ng-show="cat2Form.q4_2_8_2_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1 col-sm-1">
+    <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
         <label class="control-label"> ng/mL</label>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Barbiturates (non-AS4308):</label>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-2 col-sm-3">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q4_2_8_3_1" value="1"/> NEG
@@ -2929,25 +2967,25 @@
         </div>
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_3_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_3_c" ng-model="info.q4_2_8_3_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
             <div class="help-block" ng-show="cat2Form.q4_2_8_3_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1 col-sm-1">
+    <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
         <label class="control-label"> ng/mL</label>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label  bold" style="margin-left: 10px;">Benzodiazepines:</label>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-2 col-sm-3">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q4_2_8_4_1" value="1"/> NEG
@@ -2958,25 +2996,25 @@
         </div>
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_4_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_4_c" ng-model="info.q4_2_8_4_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
             <div class="help-block" ng-show="cat2Form.q4_2_8_4_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-1" style="margin-top: 5px;">
         <label class="control-label">ng/mL</label>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Cocaine:</label>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-2 col-sm-3">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q4_2_8_5_1" value="1"/> NEG
@@ -2987,25 +3025,25 @@
         </div>
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_5_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_5_c" ng-model="info.q4_2_8_5_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
             <div class="help-block" ng-show="cat2Form.q4_2_8_5_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1 col-sm-1">
+    <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
         <label class="control-label">ng/mL</label>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Methadone(non-AS308):</label>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-2 col-sm-3">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q4_2_8_6_1" value="1"/> NEG
@@ -3016,25 +3054,25 @@
         </div>
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_6_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_6_c" ng-model="info.q4_2_8_6_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
             <div class="help-block" ng-show="cat2Form.q4_2_8_6_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1 col-sm-1">
+    <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
         <label class="control-label">ng/mL</label>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Cannabinoids:</label>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-2 col-sm-3">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q4_2_8_7_1" value="1"/> NEG
@@ -3045,25 +3083,25 @@
         </div>
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_7_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_7_c" ng-model="info.q4_2_8_7_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
             <div class="help-block" ng-show="cat2Form.q4_2_8_7_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1 col-sm-1">
+    <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
         <label class="control-label">ng/mL</label>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Opiates:</label>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-2 col-sm-3">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q4_2_8_8_1" value="1"/> NEG
@@ -3074,25 +3112,25 @@
         </div>
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_8_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_8_c" ng-model="info.q4_2_8_8_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
             <div class="help-block" ng-show="cat2Form.q4_2_8_8_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1 col-sm-1">
+    <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
         <label class="control-label">ng/mL</label>
     </div>
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Alcohol:</label>
     </div>
-    <div class="col-md-2 col-sm-2">
+    <div class="col-md-2 col-sm-3">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" ng-model="info.q4_2_8_9_1" value="1"/> NEG
@@ -3103,16 +3141,16 @@
         </div>
     </div>
     <div ng-class="{'has-error': cat2Form.q4_2_8_9_c.$error.pattern}">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-3">
             <input type="text" class="form-control" name="q4_2_8_9_c" ng-model="info.q4_2_8_9_c"
-                   ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
             <div class="help-block" ng-show="cat2Form.q4_2_8_9_c.$error.pattern">
                 <label class="control-label">Required is number!</label>
             </div>
         </div>
     </div>
-    <div class="col-md-1 col-sm-1">
+    <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
         <label class="control-label">mg%</label>
     </div>
 </div>
@@ -3133,39 +3171,37 @@
     </div>
 </div>
 
-<div class="border" style="border-color: #808080; border-style: double;width: 800px; margin-left: 10px;">
+<div class="border" style="border-color: #808080; border-style: double;width: 400px; margin-left: 10px;">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Question</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Question</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Score</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Score</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Question</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Question</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Score</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Score</label>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 4.3.1</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_4_3_1 + 0}}" readonly
-                       style="text-align: center"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_4_3_1 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 4.3.5</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_4_3_5 + 0}}"
-                       style="text-align: center"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_4_3_5 + 0"></span>
             </div>
         </div>
     </div>
@@ -3173,19 +3209,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 4.3.2</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_4_3_2 + 0}}" readonly
-                       style="text-align: center"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_4_3_2 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 4.3.6</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_4_3_6 + 0}}"
-                       style="text-align: center"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_4_3_6 + 0"></span>
             </div>
         </div>
     </div>
@@ -3193,19 +3227,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 4.3.3</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_4_3_3 + 0}}"
-                       style="text-align: center"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_4_3_3 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 4.3.7</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_4_3_7 + 0}}"
-                       style="text-align: center"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_4_3_7 + 0"></span>
             </div>
         </div>
     </div>
@@ -3213,34 +3245,30 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 4.3.4</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_4_3_4 + 0}}" readonly
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_4_3_4 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 4.3.8</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" name="aa" class="form-control" value="{{info.q3_1_4_3_8 + 0}}" readonly
-                       style="text-align: center"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_4_3_8 + 0"></span>
             </div>
         </div>
     </div>
-    <br/>
-
+    <hr/>
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2">
-                <label class="control-label bold" style="margin-top: 5px;">TOTAL SCORE:</label>
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label bold">TOTAL SCORE:</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" ng-model="info.q4_2_9" name="q4_2_9"
-                       value="{{info.q3_1_4_3_1 + info.q3_1_4_3_2 + info.q3_1_4_3_3 + info.q3_1_4_3_4 +
-                       info.q3_1_4_3_5 + info.q3_1_4_3_6 + info.q3_1_4_3_7 + info.q3_1_4_3_8 + 0}}" readonly
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3">
+                <span ng-bind="info.q3_1_4_3_1 + info.q3_1_4_3_2 + info.q3_1_4_3_3 + info.q3_1_4_3_4 + info.q3_1_4_3_5 +
+                info.q3_1_4_3_6 + info.q3_1_4_3_7 + info.q3_1_4_3_8 + 0" class="control-label bold"></span>
+                <input type="hidden" ng-model="info.q4_2_9"/>
             </div>
         </div>
     </div>
@@ -3256,12 +3284,12 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-1 col-sm-1">
-            <label class="control-label bold" style="margin-left: 10px;margin-top: 5px;">Weight</label>
+            <label class="control-label bold" style="margin-top: 10px;">Weight</label>
         </div>
         <div ng-class="{'has-error': cat2Form.q4_2_10_1.$error.pattern}">
             <div class="col-md-2 col-sm-3">
                 <input type="text" class="form-control" name="q4_2_10_1" ng-model="info.q4_2_10_1"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
                 <div class="help-block" ng-show="cat2Form.q4_2_10_1.$error.pattern">
                     <label class="control-label">Required is number!</label>
@@ -3269,15 +3297,15 @@
             </div>
         </div>
         <div class="col-md-1 col-sm-1">
-            <label class="control-label" style="margin-top: 5px;"> cms</label>
+            <label class="control-label" style="margin-top: 10px;"> cms</label>
         </div>
         <div class="col-md-1 col-sm-1" style="font-weight: bold">
-            <label class="control-label" style="font-weight: bold;margin-top: 5px;">Height</label>
+            <label class="control-label" style="font-weight: bold;margin-top: 10px;">Height</label>
         </div>
         <div class="col-md-2 col-sm-3">
             <div ng-class="{'has-error': cat2Form.q4_2_10_2.$error.pattern}">
                 <input type="text" class="form-control" name="q4_2_10_2" ng-model="info.q4_2_10_2"
-                       ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/"/>
 
                 <div class="help-block" ng-show="cat2Form.q4_2_10_2.$error.pattern">
                     <label class="control-label">Required is number!</label>
@@ -3285,7 +3313,7 @@
             </div>
         </div>
         <div class="col-md-1 col-sm-1">
-            <label class="control-label" style="margin-top: 5px;"> kg</label>
+            <label class="control-label" style="margin-top: 10px;"> kg</label>
         </div>
     </div>
 </div>
@@ -3301,39 +3329,37 @@
     </div>
 </div>
 
-<div class="border" style="border-color: #808080; border-style: double;width: 800px; margin-left: 10px;">
+<div class="border" style="border-color: #808080; border-style: double;width: 400px; margin-left: 10px;">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Question</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Question</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Score</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Score</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Question</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Question</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Score</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Score</label>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.1</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_1 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_1 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.6</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_6 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_6 + 0"></span>
             </div>
         </div>
     </div>
@@ -3341,19 +3367,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.2</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_2 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_2 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.7</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_7 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_7 + 0"></span>
             </div>
         </div>
     </div>
@@ -3361,19 +3385,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.3</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_3 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_3 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.8</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_8 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_8 + 0"></span>
             </div>
         </div>
     </div>
@@ -3381,19 +3403,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.4</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_4 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_4 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.9</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_9 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_9 + 0"></span>
             </div>
         </div>
     </div>
@@ -3401,19 +3421,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.5</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_5 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_5 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 5.10</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" readonly value="{{info.q3_1_5_10 + 0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_5_10 + 0"></span>
             </div>
         </div>
     </div>
@@ -3421,14 +3439,14 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2">
-                <label class="control-label bold" style="margin-top: 5px;">TOTAL SCORE:</label>
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label bold">TOTAL SCORE:</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" name="q4_2_11" ng-model="info.q4_2_11" class="form-control" readonly
-                       value="{{info.q3_1_5_1 + info.q3_1_5_2 + info.q3_1_5_3 + info.q3_1_5_4 + info.q3_1_5_5 +
-                       info.q3_1_5_6 + info.q3_1_5_7 + info.q3_1_5_8 + info.q3_1_5_9 + info.q3_1_5_10 +0}}"
-                       style="text-align: center;"/>
+            <div class="col-md-3 col-sm-3">
+                <span class="control-label bold" ng-bind="info.q3_1_5_1 + info.q3_1_5_2 + info.q3_1_5_3 + info.q3_1_5_4
+                + info.q3_1_5_5 + info.q3_1_5_6 + info.q3_1_5_7 + info.q3_1_5_8 + info.q3_1_5_9 + info.q3_1_5_10 + 0">
+                </span>
+                <input type="hidden" ng-model="info.q4_2_11"/>
             </div>
         </div>
     </div>
@@ -3440,45 +3458,44 @@
     <div class="col-md-12 col-sm-12">
         <label class="control-label col-md-12  col-sm-12 text-info bold">12. Psychological Health:</label>
         <label class="control-label col-md-12  col-sm-12 bold" style="margin-left: 10px">12.1 K10 Questionaire</label>
-        <label class="control-label col-md-12 bold" style="margin-left: 20px">(Record results from Question 6 of the
+        <label class="control-label col-md-12 col-sm-12 bold" style="margin-left: 20px">(Record results from Question 6
+            of the
             Health
             Questionaire)</label>
     </div>
 </div>
 
-<div class="border" style="border-color: #808080; border-style: double;width: 800px; margin-left: 10px;">
+<div class="border" style="border-color: #808080; border-style: double;width: 400px; margin-left: 10px;">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Question</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Question</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Score</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Score</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Question</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Question</label>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label">Score</label>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <label class="control-label bold">Score</label>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.1</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_1 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_1 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.6</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_6 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_6 + 0"></span>
             </div>
         </div>
     </div>
@@ -3486,19 +3503,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.2</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_2 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_2 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.7</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_7 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_7 + 0"></span>
             </div>
         </div>
     </div>
@@ -3506,19 +3521,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.3</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_3 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_3 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.8</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_8 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_8 + 0"></span>
             </div>
         </div>
     </div>
@@ -3526,19 +3539,17 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.4</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_4 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_4 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.9</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_9 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_9 + 0"></span>
             </div>
         </div>
     </div>
@@ -3546,34 +3557,31 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.5</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_5 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_5 + 0"></span>
             </div>
-            <div class="col-md-2 col-sm-2" style="text-align: center; margin-top: 5px;">
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
                 <label class="control-label">Q 6.10</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" class="form-control" value="{{info.q3_1_6_10 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3" style="text-align: center;">
+                <span class="control-label bold" ng-bind="info.q3_1_6_10 + 0"></span>
             </div>
         </div>
     </div>
-    <br/>
+    <hr/>
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2">
+            <div class="col-md-4 col-sm-4">
                 <label class="control-label bold">TOTAL SCORE:</label>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <input type="text" name="q4_2_12_1" ng-model="info.q4_2_12_1" class="form-control"
-                       value="{{info.q3_1_6_1 + info.q3_1_6_2 + info.q3_1_6_3 + info.q3_1_6_4 + info.q3_1_6_5 +
-                       info.q3_1_6_6 + info.q3_1_6_7 + info.q3_1_6_8 + info.q3_1_6_9 + info.q3_1_6_10 + 0}}" readonly
-                       style="margin-top: 5px; text-align: center;"/>
+            <div class="col-md-3 col-sm-3">
+                <span class="control-label bold" ng-bind="info.q3_1_6_1 + info.q3_1_6_2 + info.q3_1_6_3 + info.q3_1_6_4 + info.q3_1_6_5 +
+                       info.q3_1_6_6 + info.q3_1_6_7 + info.q3_1_6_8 + info.q3_1_6_9 + info.q3_1_6_10 + 0"></span>
+                <input type="hidden" ng-model="info.q4_2_12_1"/>
             </div>
         </div>
     </div>
@@ -3582,7 +3590,7 @@
 <br/>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">12.2 Is attitude, speech and behaviour
             appropriate?</label>
 
@@ -3609,131 +3617,156 @@
     </div>
 </div>
 </br>
-<div class="border" style="border-color: #808080; border-style: double;width: 800px; margin-left: 10px;">
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2"></div>
-            <div class="col-md-3 col-sm-3" style="text-align: center;">
-                <label class="control-label bold"> Uncorrected </label>
-            </div>
-            <div class="col-md-2 col-sm-2"></div>
-            <div class="col-md-5 col-sm-5" style="text-align: center;">
-                <label class="control-label bold"> Corrected </label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-2">
-                <label class="control-label bold text-info"> Visual Acuity:</label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-1"></div>
-            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                <label class="control-label bold">R</label>
-            </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-2 col-sm-3" style="text-align: center;">
-                <label class="control-label bold">L</label>
-            </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-2 col-sm-3" style="text-align: center;">
-                <label class="control-label bold">R</label>
-            </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-2 col-sm-3" style="text-align: center;">
-                <label class="control-label bold">L</label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-1 col-sm-1" style="text-align: right;">
-                <label class="control-label bold">6/</label>
-            </div>
-            <div ng-class="{'has-error': cat2Form.q4_2_13_1_1.$error.pattern}">
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="q4_2_13_1_1" ng-model="info.q4_2_13_1_1"
-                           ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+<div class="row" style="margin-left: 10px;">
+    <div class="border" style="border-color: #808080; border-style: double; width: 90%;">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-6 col-sm-6" style="text-align: center;">
+                    <label class="control-label bold" style="text-align: center;margin-left: 5px;"> Uncorrected </label>
+                </div>
+                <div class="col-md-6 col-sm-6" style="text-align: center;">
+                    <label class="control-label bold" style="text-align: center;margin-left: 5px;"> Corrected </label>
                 </div>
             </div>
-            <div class="col-md-1 col-sm-1" style="text-align: right;">
-                <label class="control-label bold">6/</label>
-            </div>
-            <div ng-class="{'has-error': cat2Form.q4_2_13_1_2.$error.pattern}">
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
                 <div class="col-md-2 col-sm-2">
-                    <input type="text" class="form-control" name="q4_2_13_1_2" ng-model="info.q4_2_13_1_2"
-                           ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
-                </div>
-            </div>
-            <div class="col-md-1 col-sm-1" style="text-align: right;">
-                <label class="control-label bold">6/</label>
-            </div>
-            <div ng-class="{'has-error': cat2Form.q4_2_13_1_3.$error.pattern}">
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="q4_2_13_1_3" ng-model="info.q4_2_13_1_3"
-                           ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
-                </div>
-            </div>
-            <div class="col-md-1 col-sm-1" style="text-align: right;">
-                <label class="control-label bold">6/</label>
-            </div>
-            <div ng-class="{'has-error': cat2Form.q4_2_13_1_4.$error.pattern}">
-                <div class="col-md-2 col-sm-2">
-                    <input type="text" class="form-control" name="q4_2_13_1_4" ng-model="info.q4_2_13_1_4"
-                           ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                    <label class="control-label bold text-info"> Visual Acuity:</label>
                 </div>
             </div>
         </div>
-    </div>
-    <div ng-class="{'has-error': cat2Form.q4_2_13_1_1.$error.pattern ||
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-3 col-sm-3" style="text-align: center;">
+                    <label class="control-label bold">R</label>
+                </div>
+                <div class="col-md-3 col-sm-3" style="text-align: center;">
+                    <label class="control-label bold">L</label>
+                </div>
+                <div class="col-md-3 col-sm-3" style="text-align: center;">
+                    <label class="control-label bold">R</label>
+                </div>
+                <div class="col-md-3 col-sm-3" style="text-align: center;">
+                    <label class="control-label bold">L</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-3 col-sm-3">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-1 col-sm-1">
+                                <label class="control-label bold" style="margin-top: 10px;">6/</label>
+                            </div>
+                            <div class="col-md-9 col-sm-9">
+                                <div ng-class="{'has-error': cat2Form.q4_2_13_1_1.$error.pattern}">
+                                    <input type="text" class="form-control" name="q4_2_13_1_1"
+                                           ng-model="info.q4_2_13_1_1"
+                                           ng-pattern="/^(0|[1-9][0-9]*)$/"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-1 col-sm-1">
+                                <label class="control-label bold" style="margin-top: 10px;">6/</label>
+                            </div>
+                            <div class="col-md-9 col-sm-9">
+                                <div ng-class="{'has-error': cat2Form.q4_2_13_1_2.$error.pattern}">
+                                    <input type="text" class="form-control" name="q4_2_13_1_2"
+                                           ng-model="info.q4_2_13_1_2"
+                                           ng-pattern="/^(0|[1-9][0-9]*)$/"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-1 col-sm-1">
+                                <label class="control-label bold" style="margin-top: 10px;">6/</label>
+                            </div>
+                            <div class="col-md-9 col-sm-9">
+                                <div ng-class="{'has-error': cat2Form.q4_2_13_1_3.$error.pattern}">
+                                    <input type="text" class="form-control" name="q4_2_13_1_3"
+                                           ng-model="info.q4_2_13_1_3"
+                                           ng-pattern="/^(0|[1-9][0-9]*)$/"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-1 col-sm-1">
+                                <label class="control-label bold" style="margin-top: 10px;">6/</label>
+                            </div>
+                            <div class="col-md-9 col-sm-9">
+                                <div ng-class="{'has-error': cat2Form.q4_2_13_1_4.$error.pattern}">
+                                    <input type="text" class="form-control" name="q4_2_13_1_4"
+                                           ng-model="info.q4_2_13_1_4"
+                                           ng-pattern="/^(0|[1-9][0-9]*)$/"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-class="{'has-error': cat2Form.q4_2_13_1_1.$error.pattern ||
     cat2Form.q4_2_13_1_2.$error.pattern || cat2Form.q4_2_13_1_3.$error.pattern ||
     cat2Form.q4_2_13_1_4.$error.pattern}">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-3">
-                    <div class="help-block" ng-show="cat2Form.q4_2_13_1_1.$error.pattern">
-                        <label class="control-label">Required is number!</label>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-3 col-sm-3">
+                        <div class="help-block" ng-show="cat2Form.q4_2_13_1_1.$error.pattern">
+                            <label class="control-label">Required is number!</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="help-block" ng-show="cat2Form.q4_2_13_1_2.$error.pattern">
-                        <label class="control-label">Required is number!</label>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="help-block" ng-show="cat2Form.q4_2_13_1_2.$error.pattern">
+                            <label class="control-label">Required is number!</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="help-block" ng-show="cat2Form.q4_2_13_1_3.$error.pattern">
-                        <label class="control-label">Required is number!</label>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="help-block" ng-show="cat2Form.q4_2_13_1_3.$error.pattern">
+                            <label class="control-label">Required is number!</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="help-block" ng-show="cat2Form.q4_2_13_1_4.$error.pattern">
-                        <label class="control-label">Required is number!</label>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="help-block" ng-show="cat2Form.q4_2_13_1_4.$error.pattern">
+                            <label class="control-label">Required is number!</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </br>
+        </br>
 
-    <div class="row">
-        <div class="col-md-1 col-sm-1"></div>
-        <div class="col-md-4 col-sm-4">
-            <label class="control-label bold" style="margin-left: 10px;">Are contact lenses worn?</label>
-        </div>
-        <div class="col-md-3 col-sm-5">
-            <div class="btn-group">
-                <label class="btn">
-                    <input type="radio" ng-model="info.q4_2_13_2" value="1"/> Yes
-                </label>
-                <label class="btn">
-                    <input type="radio" ng-model="info.q4_2_13_2" value="0"/> No
-                </label>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-3 col-sm-4">
+                    <label class="control-label bold" style="margin-top: 5px;">Are contact lenses
+                        worn?</label>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="btn-group">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.q4_2_13_2" value="1"/> Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.q4_2_13_2" value="0"/> No
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -3741,7 +3774,7 @@
 </br>
 
 <div class="row">
-    <div class="col-md-5 col-sm-7">
+    <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
         <label class="control-label " style="margin-left: 10px;"><span class="bold">13.2 Visual Fields:</span>
             (Confrontation to each eye)</label>
     </div>
@@ -3759,7 +3792,7 @@
 </br>
 
 <div class="row">
-    <div class="col-md-5 col-sm-7">
+    <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
         <label class="control-label" style="margin-left: 10px;"><span class="bold">13.3 Colour Vision:</span>
             (Ishihara: ≥ 2 errors/12 plates is a fail)</label>
     </div>
@@ -3777,7 +3810,7 @@
 </br>
 
 <div class="row">
-    <div class="col-md-5 col-sm-7">
+    <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">13.4 Near Vision Test</label>
     </div>
     <div class="col-md-3 col-sm-5">
@@ -3794,7 +3827,7 @@
 </br>
 
 <div class="row">
-    <div class="col-md-5 col-sm-7">
+    <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">13.5 Far Vision Test</label>
     </div>
     <div class="col-md-3 col-sm-5">
@@ -3811,7 +3844,7 @@
 </br>
 
 <div class="row">
-    <div class="col-md-5 col-sm-7">
+    <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">13.6 Screen Based Examination</label>
     </div>
     <div class="col-md-3 col-sm-5">
@@ -3841,8 +3874,18 @@
 </p>
 
 <div class="row">
-    <div class="col-md-11" style="margin-left: 40px">
-        <textarea class="form-control" style="height: 350px" name="rel_cmt" ng-model="info.rel_cmt"></textarea>
+    <div class="col-md-12 col-sm-12">
+        <div ng-class="{'has-error': cat2Form.rel_cmt.$error.maxlength}">
+            <div class="col-md-11 col-sm-11">
+                <textarea class="form-control" style="height: 350px" name="rel_cmt" ng-model="info.rel_cmt"
+                          ng-maxlength="500"></textarea>
+            </div>
+            <div class="help-block" ng-show="cat2Form.rel_cmt.$error.maxlength">
+                <div class="col-md-11 col-sm-11">
+                    <label class="control-label">Too long!</label>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <br/>
@@ -3853,16 +3896,24 @@
             <label class="control-label">Name of Examining Health Professional: Dr. Hanh
                 Nguyen</label>
         </div>
-        <div class="col-md-4 col-sm-5">
+        <div class="col-md-1 col-sm-2" style="margin-top: 10px;">
             <label class="control-label">Signature:</label>
-            <img src="" alt="" style="width: 200px; height: 30px;"/>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <img src="" alt="" style="width: 100%; height: 40px;"/>
         </div>
     </div>
 </div>
+<br/>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-4 col-sm-5">
-            <label class="control-label">Date 11/10/2014</label>
+        <div class="col-md-5 col-sm-7"></div>
+        <div class="col-md-1 col-sm-2">
+            <label class="control-label">Date:</label>
+        </div>
+        <div class="col-md-3 col-sm-3" style="text-align: left;">
+            <label class="control-label">{{today|date:"dd/MM/yyyy"}}</label>
         </div>
     </div>
 </div>
@@ -3888,11 +3939,14 @@
         </div>
     </div>
 </div>
+<br/>
+</div>
+</div>
+</div>
+</div>
+<!--END SECTION 4-->
 
-</div>
-</div>
-</div>
-</div>
+<!--BEGIN RECOMMENDATION-->
 <div class="row">
 <div class="col-md-12 col-sm-12">
 <div class="portlet box grey-cascade">
@@ -3957,7 +4011,7 @@
                 <input type="checkbox" class="form-control" ng-model="info.r1_3" ng-true-value="1"
                        ng-false-value="0" ng-checked="info.r1_3"/>
             </div>
-            <div class="col-md-4 col-sm-5" style="width: 41%;">
+            <div class="col-md-4 col-sm-5" style="width: 41%;margin-top: 10px;">
                 <label class="control-label">Medical review in</label>
             </div>
             <div ng-class="{'has-error': cat2Form.r1_4_y.$error.pattern}">
@@ -3966,7 +4020,7 @@
                            ng-pattern="/^[0-9]+$/"/>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-1">
+            <div class="col-md-2 col-sm-2" style="margin-top: 5px;">
                 <label class="control-label">years</label>
             </div>
         </div>
@@ -4016,7 +4070,7 @@
                               ng-maxlength="200"></textarea>
 
                     <div class="help-block" ng-show="cat2Form.r1_8_c.$error.maxlength">
-                        <label class="control-label">Comment too long!</label>
+                        <label class="control-label">Too long!</label>
                     </div>
                 </div>
             </div>
@@ -4054,16 +4108,16 @@
                 <input type="checkbox" class="form-control" ng-model="info.r2_2" ng-true-value="1" ng-false="0"
                        ng-checked="info.r2_2"/>
             </div>
-            <div class="col-md-4 col-sm-5" style="width: 41%;">
+            <div class="col-md-4 col-sm-5" style="width: 41%;margin-top: 10px">
                 <label class="control-label">Medical review in</label>
             </div>
             <div ng-class="{'has-error': cat2Form.r2_2_y.$error.pattern}">
                 <div class="col-md-3 col-sm-3" style="width: 23%;">
                     <input type="text" class="form-control" name="r2_2_y" ng-model="info.r2_2_y"
-                           ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/"/>
+                           ng-pattern="/^[0-9]+$/"/>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-1">
+            <div class="col-md-2 col-sm-1" style="margin-top: 5px;">
                 <label class="control-label">years</label>
             </div>
         </div>
@@ -4109,16 +4163,16 @@
 
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="col-md-6 col-sm-8">
+                <div class="col-md-5 col-sm-7" style="margin-top: 10px;">
                     <label class="control-label">This certificate is valid until: </label>
                 </div>
                 <div ng-class="{'has-error': cat2Form.r2_7_c.$error.maxlength}">
-                    <div class="col-md-6 col-sm-4">
+                    <div class="col-md-7 col-sm-5">
                         <input type="text" class="form-control" name="r2_7_c" ng-model="info.r2_7_c"
                                ng-maxlength="50">
 
                         <div class="help-block" ng-show="cat2Form.r2_7_c.$error.maxlength">
-                            <label class="control-label">Certificate too long!</label>
+                            <label class="control-label">Too long!</label>
                         </div>
                     </div>
                 </div>
@@ -4165,7 +4219,7 @@
                 <div class="col-md-12">
                     <div class="col-md-12">
                         <div class="help-block" ng-show="cat2Form.r3_2_c.$error.maxlength">
-                            <label class="control-label">Comment too long!</label>
+                            <label class="control-label">Too long!</label>
                         </div>
                     </div>
                 </div>
@@ -4214,7 +4268,7 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="help-block" ng-show="cat2Form.r4_2_c.$error.maxlength">
-                            <label class="control-label">Comment too long!</label>
+                            <label class="control-label">Too long!</label>
                         </div>
                     </div>
                 </div>
@@ -4258,7 +4312,7 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="help-block" ng-show="cat2Form.r5_2.$error.maxlength">
-                            <label class="control-label">Comment too long!</label>
+                            <label class="control-label">Too long!</label>
                         </div>
                     </div>
                 </div>
@@ -4273,16 +4327,24 @@
             <label class="control-label">Name of Examining Health Professional: Dr. Hanh
                 Nguyen</label>
         </div>
-        <div class="col-md-4 col-sm-5">
-            <label class="control-label">Signature:</label>
-            <img src="" alt="" style="width: 200px; height: 30px;"/>
+        <div class="col-md-1 col-sm-2">
+            <label class="control-label" style="margin-top: 10px;">Signature:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <img src="" alt="" style="width: 100%; height: 40px;"/>
         </div>
     </div>
 </div>
+<br/>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-6">
-            <label class="control-label">Date 11/10/2014</label>
+        <div class="col-md-5 col-sm-7"></div>
+        <div class="col-md-1 col-sm-2">
+            <label class="control-label">Date:</label>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <label class="control-label">{{today|date:"dd/MM/yyyy"}}</label>
         </div>
     </div>
 </div>
@@ -4293,145 +4355,6 @@
 </div>
 </div>
 </div>
+<!--END RECOMMENDATION-->
 </form>
-
-<!--=============================== Signature Form ============================================-->
-<div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalSign1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature1"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig1" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig1" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalSign2" class="modal fade" tabindex="-2" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature2"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig2" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig2" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 900, height: 500});
-
-            $('#resetSig').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay').attr("src", data);
-                    $('#signDisplay').show();
-                }
-
-                $('#modalSign').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay1').hide();
-            var $sigdiv = $("#signature1").jSignature({lineWidth: 2, width: 900, height: 500});
-
-            $('#resetSig1').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig1').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay1').attr("src", data);
-                    $('#signDisplay1').show();
-                }
-
-                $('#modalSign1').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay2').hide();
-            var $sigdiv = $("#signature2").jSignature({lineWidth: 2, width: 900, height: 500});
-
-            $('#resetSig2').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig2').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay2').attr("src", data);
-                    $('#signDisplay2').show();
-                }
-
-                $('#modalSign2').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
+<!--END FORM-->

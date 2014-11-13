@@ -154,7 +154,7 @@
 				<div class="col-md-4 col-sm-3 col-xs-6">
 					<input custom-date class="form-control" type="text" name="ITEM_START_DATE"
 						ng-model="modelObjectMap.ITEM_START_DATE" placeholder="dd/mm/yyyy"  
-						ng-change="validateForm()">
+						ng-change="modeFormItem.validate()">
 						<span ng-show="isSubmit && invalid.ITEM_START_DATE">
 							<span class="help-block help-block-error">
 								Invalid Format Date
@@ -171,7 +171,7 @@
 				<div class="col-md-4 col-sm-3 col-xs-6">
 					<input custom-date class="form-control" type="text" name="ITEM_END_DATE"
 						ng-model="modelObjectMap.ITEM_END_DATE" placeholder="dd/mm/yyyy" 
-						ng-change="validateForm()">
+						ng-change="modeFormItem.validate()">
 						<span ng-show="isSubmit && invalid.ITEM_END_DATE">
 							<span class="help-block help-block-error">
 								Invalid Format Date

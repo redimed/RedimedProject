@@ -1,0 +1,111 @@
+<h3 class="page-title">More Items</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.patients">Patients</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.patients.detail">{{(patient.Title != null ? patient.Title + ' ' : '') + patient.Sur_name}}</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.patients.detail.appt" >Appointment</a>
+			<i class="fa fa-angle-right"></i>
+        </li>
+		<li>
+            <a>More Items</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="portlet box red">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Item Sheet
+        </div>
+		
+        <div class="pull-right navbar-right">
+            <button ng-click="submit()" class="btn blue"><i class="fa fa-save"></i> Choose </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+		<!-- PAGINATION -->
+        <div style="float: left;">
+            <pagination boundary-links="true" total-items="data.count" ng-model="searchObjectMap.currentPage" 
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
+                        items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
+        </div>
+        <div style="float: right; padding-top: 15px;">
+            <button class="btn btn-sm" ng-click="reset()">Reset</button>
+            <b>Total Items:</b> {{data.count}}
+            <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows" 
+                    ng-change="setPageLimit()">
+            </select>
+        </div>
+        <!-- END PAGINATION -->
+	
+        <div class="table-scrollable">
+
+            <table class="table table-bordered items-table">
+				<thead>
+					<tr>
+						<th style="width: 5%">#</th>
+						<th>Item code</th>
+						<th style="width: 85%">Item name</th>
+						<th style="width: 85%">Item type</th>
+					</tr>
+					 <tr>
+						<!-- SEARCH -->
+						<td></td>
+						<td>
+							<input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.code" 
+								   ng-change="loadList()">
+						</td>
+						<td>
+							<input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.name" 
+								   ng-change="loadList()">
+						</td>
+						<td>
+							<select ng-change="loadList()" class="form-control input-sm" 
+								ng-options="item.PREFIX_NAME as item.PREFIX_NAME for item in options.prefixs" ng-model="searchObjectMap.data.type">
+								<option value="" >-- All --</option>
+							</select>
+						</td>
+						<!-- END SEARCH -->
+					</tr>
+				</thead>
+                <tbody>
+					<tr ng-repeat="item in chosenItems" class="success">
+                        <td>
+                            <input class="form-control" type="checkbox"  name="check" 
+								ng-true-value="1" ng-false-value="0" ng-model="item.checked" 
+								ng-change="removeItem(item, $index)"
+							/>
+                        </td>
+                        <td>{{item.ITEM_CODE}}</td>
+                        <td>{{item.ITEM_NAME}}</td>
+						<td>{{item.ITEM_TYPE}}</td>
+                    </tr>
+                    <tr ng-repeat="item in data.list" ng-hide="item.chosen">
+                        <td>
+                            <input class="form-control" type="checkbox"  name="check" 
+								ng-true-value="1" ng-false-value="0" ng-model="item.checked" 
+								ng-change="chooseItem(item, $index)"
+							/>
+                        </td>
+                        <td>{{item.ITEM_CODE}}</td>
+                        <td>{{item.ITEM_NAME}}</td>
+						<td>{{item.ITEM_TYPE}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

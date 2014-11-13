@@ -5,6 +5,29 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         $scope.infoL = [];
         $scope.listIDS = [];
 
+        $scope.resetFlag = false;
+        $scope.reset = function () {
+            $scope.resetFlag = !$scope.resetFlag;
+        }
+        //end signature
+
+        //begin show-hidden img signature
+        $scope.sig = false;
+        $scope.sigClick = function () {
+            $scope.sig = true;
+        }
+        $scope.okClick = function () {
+            $scope.sig = false;
+        }
+        $scope.cancelClick = function () {
+            $scope.sig = false;
+        }
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
         $scope.infoH = {
             IDAS_ID : null,
             PATIENT_ID : 3,
@@ -36,6 +59,8 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         };
 
         $scope.infoL.YES_NO = [];
+        $scope.infoL.PATIENT_ID = 3;
+        $scope.infoL.CAL_ID = 11111;
 
 //        $scope.infoL ={
 //            IDAS_LINE_ID : null,
@@ -56,8 +81,6 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
 
 
         $scope.submitIDS = function(IDSForm){
-            var imageSign = document.getElementById('signDisplay').src;
-            $scope.infoH.SIGNATURE = imageSign;
             $scope.showClickedValidation = true;
             if(IDSForm.$invalid){
                 toastr.error("Please Input All Required Information!", "Error");
@@ -79,11 +102,11 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
 
         };
 
-        DocumentService.checkIDS("2","12211").then(function(response){
+        DocumentService.checkIDS($scope.infoL.PATIENT_ID,$scope.infoL.CAL_ID).then(function(response){
             if(response['status'] === 'fail') {
                 alert("aaaaaaaaaaaaaaaaaaaa");
-                DocumentService.newIDS().then(function(response){
-                    DocumentService.loadIDS().then(function(response){
+                DocumentService.newIDS($scope.infoL.PATIENT_ID,$scope.infoL.CAL_ID).then(function(response){
+                    DocumentService.loadIDS($scope.infoL.PATIENT_ID,$scope.infoL.CAL_ID).then(function(response){
                         if(response['status'] === 'fail') {
                             alert("load fail!");
                         }
@@ -112,7 +135,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
             }else
             {
                 alert("qqqqqqqqqqqqqqqqqqqqqqqqqqq");
-                DocumentService.loadIDS().then(function(response){
+                DocumentService.loadIDS($scope.infoL.PATIENT_ID,$scope.infoL.CAL_ID).then(function(response){
                     if(response['status'] === 'fail') {
                         alert("load fail!");
                     }
@@ -166,7 +189,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                     Last_update_date : response.data.Last_update_date,
                     NAME_COMMENT :  response.data.NAME_COMMENT,
                     ISENABLE : response.data.ISENABLE,
-                    SIGNATURE: response.rs,
+                    SIGNATURE: response.data.SIGNATURE,
                     TesterName :  response.data.TesterName,
                     TesterSign: response.data.TesterSign,
                     TesterDate : response.data.TesterDate

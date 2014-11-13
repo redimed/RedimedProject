@@ -5,16 +5,27 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.overviewAppointment = [];
 
 	var init = function(){
-		$scope.modelObjectMap = angular.copy($scope.modelObject);
+		if($cookieStore.get("patientBookingInfo")){
+			$scope.modelObjectMap = angular.copy($cookieStore.get("patientBookingInfo").data);
+			$scope.modelObjectMap.datepicker = new Date($scope.modelObjectMap.datepicker);
+		}else{
+			$scope.modelObjectMap = angular.copy($scope.modelObject);
+		}
+
 		ConfigService.redimed_sites_option().then(function(list){
 			$scope.options.redimedsites = list;
-			$scope.modelObjectMap.site = parseInt(list[0].id);
+
+			if(!$cookieStore.get("patientBookingInfo")){
+				$scope.modelObjectMap.site = parseInt(list[0].id);
+			}
 
 			ConfigService.clinical_option().then(function(list){
 				$scope.options.dept = list;
-				$scope.modelObjectMap.dept = parseInt(list[0].CLINICAL_DEPT_ID);
+				if(!$cookieStore.get("patientBookingInfo")){
+					$scope.modelObjectMap.dept = parseInt(list[0].CLINICAL_DEPT_ID);
+				}
 
-				ConfigService.system_service_by_clinical(list[0].CLINICAL_DEPT_ID).then(function(list){
+				ConfigService.system_service_by_clinical($scope.modelObjectMap.dept).then(function(list){
 					$scope.options.services = list;
 				})
 
@@ -74,7 +85,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 								$scope.overviewAppointment[i].cals.push("");
 							}
 						}
-					}
+					}// end for
 				})
 			}else{
 				$scope.options.doctors = [];
@@ -96,7 +107,24 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 	/* BOOKING */
 	$scope.bookingPatient = function(data, parentIndex, index){
-		var modalTemp = {
+		$scope.modelObjectMap.FROM_TIME = data.from_time_map;
+		$scope.modelObjectMap.TO_TIME = data.to_time_map;		
+
+		$cookieStore.put("patientBookingInfo", {
+			cal_id: data.cals[index],
+			data: $scope.modelObjectMap,
+
+		});
+
+		ReceptionistService.getById(data.cals[index]).then(function(data){
+			if(data.Patient_id === null){
+				$state.go("loggedIn.patient.booking");
+			}else{
+				$state.go("loggedIn.patient.detail");
+			}
+		})
+
+		/*var modalTemp = {
 			templateUrl: "modules/patient/views/popup/action.html",
 			controller: "PatientActionController",
 		}
@@ -114,7 +142,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 		modalInstance.result.then(function(data){
 			$scope.refreshAppointment();
-		});
+		});*/
 	}
 	/* END BOOKING */
 
@@ -186,8 +214,6 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			}else{
 				$scope.list_of_booking.splice(isSelected, 1);
 			}
-
-			console.log($scope.list_of_booking);
 			// END
 		}
 	}

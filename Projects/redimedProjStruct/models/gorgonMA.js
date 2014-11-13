@@ -101,11 +101,11 @@ module.exports = function(sequelize, DataTypes){
         FUTHER_COMMENTS : DataTypes.STRING(500),
         LIMB_EXAMINERS_COMMENTS : DataTypes.STRING(500),
         GORGON_DATE : DataTypes.DATE,
-        SIGNATURE : DataTypes.BLOB,
+        SIGNATURE : DataTypes.TEXT,
         Created_by : DataTypes.INTEGER(11),
-        Creation_date : DataTypes.DATE,
+        //Creation_date : DataTypes.DATE,
         Last_updated_by : DataTypes.INTEGER(11),
-        Last_update_date : DataTypes.DATE,
+        //Last_update_date : DataTypes.DATE,
         CalId : DataTypes.INTEGER(20),
         DocId : DataTypes.INTEGER(11),
         EXAMINER_NAME : DataTypes.STRING(100),
@@ -146,7 +146,8 @@ module.exports = function(sequelize, DataTypes){
 
     },{
         tableName: 'gorgon_doc_ma', // đặt tên bảng
-        timestamps: false // đặt false để ko tự động tạo các cột timestamp
+        createdAt : "Creation_date",
+        updatedAt : "Last_update_date"
     });
     return gorgonMA;
 };

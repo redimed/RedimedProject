@@ -7,7 +7,7 @@ angular.module("app.loggedIn.patient.list.controller", [])
 
     // LOAD DOCTOR DETAIL
     var loadDoctorDetail = function(){
-    	DoctorService.getByUserId($cookieStore.get("userInfo").userInfo.id).then(function(data){
+    	DoctorService.getByUserId($cookieStore.get("userInfo").id).then(function(data){
     		$scope.searchObjectMap.doctor_id = data.doctor_id;
     	})
     }
@@ -22,11 +22,13 @@ angular.module("app.loggedIn.patient.list.controller", [])
     }
 
     $scope.loadList = function(){
-    	DoctorService.getByUserId($cookieStore.get("userInfo").userInfo.id).then(function(data){
-    		$scope.searchObjectMap.doctor_id = data.doctor_id;
-    		PatientService.search($scope.searchObjectMap).then(function(response){
-	    		$scope.list = response;
-	    	})
+    	DoctorService.getByUserId($cookieStore.get("userInfo").id).then(function(data){
+            if(data){
+                $scope.searchObjectMap.doctor_id = data.doctor_id;
+                PatientService.search($scope.searchObjectMap).then(function(response){
+                    $scope.list = response;
+                })
+            }
     	})
     }
 

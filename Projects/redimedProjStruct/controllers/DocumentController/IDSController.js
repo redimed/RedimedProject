@@ -7,9 +7,11 @@ module.exports = {
 
     newIDS: function(req,res)
     {
-        db.sequelize.query("INSERT INTO `cln_idas_headers` (PATIENT_ID,CAL_ID,IDAS_ID,DF_CODE,ITEM_ID,ISENABLE) SELECT 3,11111,h.IDAS_DF_ID,h.DF_CODE,h.ITEM_ID,h.ISENABLE FROM `sys_idas_headers` h").success(function(){
-            db.sequelize.query("INSERT INTO `cln_idas_groups` (PATIENT_ID,CAL_ID,IDAS_GROUP_ID,IDAS_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE) SELECT 3,11111,IDAS_GROUP_ID,IDAS_DF_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE FROM `sys_idas_groups`").success(function(){
-                db.sequelize.query("INSERT INTO `cln_idas_lines` (PATIENT_ID,CAL_ID,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE) SELECT 3,11111,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE FROM `sys_idas_lines`").success(function(){
+        var PATIENT_ID = req.body.PATIENT_ID;
+        var CAL_ID = req.body.CAL_ID;
+        db.sequelize.query("INSERT INTO `cln_idas_headers` (PATIENT_ID,CAL_ID,IDAS_ID,DF_CODE,ITEM_ID,ISENABLE) SELECT ?,?,h.IDAS_DF_ID,h.DF_CODE,h.ITEM_ID,h.ISENABLE FROM `sys_idas_headers` h",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
+            db.sequelize.query("INSERT INTO `cln_idas_groups` (PATIENT_ID,CAL_ID,IDAS_GROUP_ID,IDAS_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE) SELECT ?,?,IDAS_GROUP_ID,IDAS_DF_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE FROM `sys_idas_groups`",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
+                db.sequelize.query("INSERT INTO `cln_idas_lines` (PATIENT_ID,CAL_ID,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE) SELECT ?,?,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE FROM `sys_idas_lines`",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
                     res.json({status:"success"});
                 });
             });
@@ -20,9 +22,11 @@ module.exports = {
 
     loadIDS: function(req,res){
         var data = [];
-        db.sequelize.query("SELECT h.`IDAS_ID` FROM `cln_idas_headers` h WHERE h.`ISENABLE` = 1 AND h.PATIENT_ID = 2 AND h.CAL_ID=12211 ;",null,{raw:true}).success(function(dataH){
-            db.sequelize.query("SELECT g.`IDAS_GROUP_ID`,g.`IDAS_ID`,g.`GROUP_NAME`,g.`USER_TYPE` FROM `cln_idas_groups` g WHERE g.`ISENABLE` = 1 AND g.PATIENT_ID = 2 AND g.CAL_ID=12211 ORDER BY g.`ORD`;",null,{raw:true}).success(function(dataG){
-                db.sequelize.query("SELECT l.`IDAS_LINE_ID`, l.`IDAS_GROUP_ID`, l.`QUESTION`,l.`YES_NO` FROM `cln_idas_lines` l WHERE l.`ISENABLE` = 1 AND l.PATIENT_ID = 2 AND l.CAL_ID=12211 ORDER BY l.`ORD`;",null,{raw:true}).success(function(dataL){
+        var PATIENT_ID = req.body.PATIENT_ID;
+        var CAL_ID = req.body.CAL_ID;
+        db.sequelize.query("SELECT h.`IDAS_ID` FROM `cln_idas_headers` h WHERE h.`ISENABLE` = 1 AND h.PATIENT_ID = ? AND h.CAL_ID=? ;",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(dataH){
+            db.sequelize.query("SELECT g.`IDAS_GROUP_ID`,g.`IDAS_ID`,g.`GROUP_NAME`,g.`USER_TYPE` FROM `cln_idas_groups` g WHERE g.`ISENABLE` = 1 AND g.PATIENT_ID = ? AND g.CAL_ID=? ORDER BY g.`ORD`;",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(dataG){
+                db.sequelize.query("SELECT l.`IDAS_LINE_ID`, l.`IDAS_GROUP_ID`, l.`QUESTION`,l.`YES_NO` FROM `cln_idas_lines` l WHERE l.`ISENABLE` = 1 AND l.PATIENT_ID = ? AND l.CAL_ID=? ORDER BY l.`ORD`;",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(dataL){
                     data = [{"Header": dataH, "Group" : dataG,"Line": dataL}];
                     res.json(data);
                 });
@@ -95,9 +99,9 @@ module.exports = {
                     //var buffer = new Buffer( data.SIGNATURE, 'binary' );
                     //var sign = buffer.toString('base64');
 
-                    var rs = util.format("data:image/png;base64,%s", "");
+                    //var rs = util.format("data:image/png;base64,%s", "");
 
-                    res.json({data: data, rs: rs});
+                    res.json({data: data});
                 }
             })
             .error(function(err){

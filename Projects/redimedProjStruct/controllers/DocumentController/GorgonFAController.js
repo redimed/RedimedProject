@@ -17,7 +17,7 @@ module.exports = {
                     DOB : info.DOB ,
                     DOA : info.DOA ,
                     IsConsentReason : info.IsConsentReason ,
-                    //fsign : info.fsign ,
+                    fsign : info.fsign ,
                     fsignDate : info.fsignDate ,
                     Estimated : info.Estimated ,
                     EstimatedComments : info.EstimatedComments ,
@@ -134,9 +134,9 @@ module.exports = {
                     LName : info.LName ,
                     LPosition : info.LPosition ,
                     Created_by : info.Created_by ,
-                    Creation_date : info.Creation_date ,
+                    //Creation_date : info.Creation_date ,
                     Last_updated_by : info.Last_updated_by ,
-                    Last_update_date : info.Last_update_date ,
+                    //Last_update_date : info.Last_update_date ,
                     CalId : info.CalId ,
                     DocId : info.DocId
 
@@ -162,7 +162,7 @@ module.exports = {
                 DOB : info.DOB ,
                 DOA : info.DOA ,
                 IsConsentReason : info.IsConsentReason ,
-                //fsign : info.fsign ,
+                fsign : info.fsign ,
                 fsignDate : info.fsignDate ,
                 Estimated : info.Estimated ,
                 EstimatedComments : info.EstimatedComments ,
@@ -279,9 +279,9 @@ module.exports = {
                 LName : info.LName ,
                 LPosition : info.LPosition ,
                 Created_by : info.Created_by ,
-                Creation_date : info.Creation_date ,
-                Last_updated_by : info.Last_updated_by ,
-                Last_update_date : info.Last_update_date
+                //Creation_date : info.Creation_date ,
+                Last_updated_by : info.Last_updated_by// ,
+                //Last_update_date : info.Last_update_date
             },{id:info.id})
                 .success(function(data){
                     res.json({status:'success'});
@@ -291,15 +291,22 @@ module.exports = {
                     console.log(err);
                 })
     },
-    getFA: function(req,res){
-        var id = req.body.id;
+    checkGorgonFA: function(req,res){
+        var Patient_Id = req.body.PatientID;
+        var CalId = req.body.calID;
 
-        db.gorgonFA.find({where:{id:id}},{raw:true})
+        db.gorgonFA.find({where:{patientId:Patient_Id,CalId : CalId}})
             .success(function(data){
-                res.json(data);
+                if(data == null)
+                {
+                    res.json({status:'fail'});
+                }else
+                {
+                    res.json(data);
+                }
             })
             .error(function(err){
-                res.json({status:'err'});
+                res.json({status:'error'});
                 console.log(err);
             })
     }

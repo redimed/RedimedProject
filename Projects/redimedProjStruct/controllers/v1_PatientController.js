@@ -75,14 +75,13 @@ module.exports = {
         var k_sql = res.locals.k_sql;
         var sql = model_sql.sql_get_by_id(patient_id);
 
-        k_sql.exec(sql, function (data) {
-            if(data.length > 0)
-                res.json(data[0]);
-            else 
-                res.json(null);
+        k_sql.exec_row(sql, function (data) {
+            res.json(data);
         }, function (err) {
             res.json(err);
         });
 
-    }
+    },
+
+
 }

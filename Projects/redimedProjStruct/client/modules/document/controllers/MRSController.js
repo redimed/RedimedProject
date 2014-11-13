@@ -66,14 +66,24 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         angular.forEach(data.lines, function (dataL, lIndex) {
                             if (dataL.MRS_GROUP_ID === $scope.info.headers[hIndex].group[gIndex].MRS_GROUP_ID) {
                                 $scope.info.headers[hIndex].group[gIndex].line.push({
-                                    "MRS_LINE_ID": dataL.MRS_LINE_ID, "MRS_GROUP_ID": dataL.MRS_GROUP_ID,
-                                    "MRS_DF_ID": dataL.MRS_DF_ID, "PATIENT_ID": PATIENT_ID,
-                                    "CAL_ID": CAL_ID, "ORD": dataL.ORD, "COMP_TYPE": dataL.COMP_TYPE,
+                                    "MRS_LINE_ID": dataL.MRS_LINE_ID,
+                                    "MRS_GROUP_ID": dataL.MRS_GROUP_ID,
+                                    "MRS_DF_ID": dataL.MRS_DF_ID,
+                                    "PATIENT_ID": dataL.PATIENT_ID,
+                                    "CAL_ID": dataL.CAL_ID,
+                                    "ORD": dataL.ORD,
+                                    "COMP_TYPE": dataL.COMP_TYPE,
                                     "QUEST_LABEL": dataL.QUEST_LABEL,
-                                    "ISCOMMENT": dataL.ISCOMMENT, "COMMENT_LABEL": dataL.COMMENT_LABEL,
-                                    "ISREQ_COMMENT": dataL.ISREQ_COMMENT, "ISENABLE": dataL.ISENABLE,
-                                    "Created_by": dataL.Created_by, "Creation_date": dataL.Creation_date,
-                                    "Last_updated_by": dataL.Last_updated_by, "Last_update_date": dataL.Last_update_date
+                                    "QUEST_VALUE": dataL.QUEST_VALUE,
+                                    "ISCOMMENT": dataL.ISCOMMENT,
+                                    "COMMENT_LABEL": dataL.COMMENT_LABEL,
+                                    "comments": dataL.comments,
+                                    "ISREQ_COMMENT": dataL.ISREQ_COMMENT,
+                                    "ISENABLE": dataL.ISENABLE,
+                                    "Created_by": dataL.Created_by,
+                                    "Creation_date": dataL.Creation_date,
+                                    "Last_updated_by": dataL.Last_updated_by,
+                                    "Last_update_date": dataL.Last_update_date
                                 })
                             }
                         })
@@ -97,10 +107,10 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 DocumentService.insertMRS(info.headers).then(function (response) {
                     if (response['status'] === 'fail') {
                         //insert error
-                        toastr.error("Add new medical results summary fail", "Error");
+                        toastr.error("Add fail", "Error");
                     }
                     else if (response['status'] === 'success') {
-                        toastr.success("Add new medical results summary success", "Success");
+                        toastr.success("Add success", "Success");
                         $state.go('loggedIn.MRS', null, {"reload": true});
                     }
                     else {
@@ -114,10 +124,10 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 DocumentService.editMRS(info.headers).then(function (response) {
                     if (response['status'] === 'fail') {
                         //edit error
-                        toastr.error("Edit medical results summary fail!", "Error");
+                        toastr.error("Edit fail!", "Error");
                     }
                     else if (response['status'] === 'success') {
-                        toastr.success("Edit medical results summary success!", "Success");
+                        toastr.success("Edit success!", "Success");
                         $state.go('loggedIn.MRS', null, {"reload": true});
                     }
                 })

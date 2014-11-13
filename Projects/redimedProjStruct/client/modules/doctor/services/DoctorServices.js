@@ -7,6 +7,8 @@ angular.module("app.loggedIn.doctor.services", [])
              */
 			 
 			doctorService.insertItemAppt = function (appt_id, items) {
+			if(!appt_id) {console.log('MISSING INFO APPT_ID')}
+			
                 var instanceApi = doctorApi.all("v1/appointment/insert_items");
                 return instanceApi.post({'cal_id':appt_id, items: items});
             }
@@ -59,6 +61,24 @@ angular.module("app.loggedIn.doctor.services", [])
 				var postData = {cal_id: appt_id, data: data};
 				console.log(postData);
                 return instanceApi.post(postData);
+			}
+			
+			doctorService.listCurPatients = function (doctor_id){
+				var instanceApi = doctorApi.one("v1/doctors/list_patients");
+                return instanceApi.get({doctor_id: doctor_id, current: 1});
+			}
+			
+			doctorService.searchItem = function(option){
+				//var option = {limit: limit, offset: offset, code: code, k: name, type: type};
+				var opt = {
+					limit: option.limit,
+					offset: option.offset,
+					k: option.data.name,
+					code: option.data.code,
+					type: option.data.type,
+				};
+				var instanceApi = doctorApi.one("v1/items/search");
+                return instanceApi.get(opt);
 			}
 			
 			/*
@@ -171,6 +191,11 @@ angular.module("app.loggedIn.doctor.services", [])
 	doctorService.getCasualCalendar = function(data){
 		var casualApi = doctorApi.all("doctors/getCasualCalendar");
 		return casualApi.post(data);
+	}
+
+	doctorService.changeCasual = function(options){
+		var casualApi = doctorApi.all("doctors/changeCasual");
+		return casualApi.post(options);
 	}
 
 	return doctorService;

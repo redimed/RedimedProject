@@ -198,7 +198,7 @@
 <br/>
 
 <div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
-    <ng-form name="line{{lIndex}}">
+    <ng-form name="lineForm">
         <div ng-if="line.COMP_TYPE == 3">
             <!--begin input save type =3-->
             <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_LINE_ID"/>
@@ -244,12 +244,12 @@
                     </div>
                     <div class="col-md-4 col-sm-4">
                         <div ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT">
-                            <div ng-class="{'has-error': line{{lIndex}}.comments.$error.required}">
+                            <div ng-class="{'has-error': lineForm.comments.$error.required}">
                                 <input type="text" class="form-control" name="comments"
                                        ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"
                                        ng-required="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"/>
 
-                                <div ng-show="line{{lIndex}}.comments.$error.required">
+                                <div ng-show="lineForm.comments.$error.required">
                                     <label class="control-label">Required!</label>
                                 </div>
                             </div>
@@ -353,7 +353,7 @@
     <br/>
 </div>
 <div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
-    <ng-form name="line{{lIndex}}">
+    <ng-form name="lineForm">
         <div ng-if="line.COMP_TYPE == 2">
             <!--begin input save type =2-->
             <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MRS_LINE_ID"/>
@@ -385,18 +385,19 @@
                                ng-model="info.headers[hIndex].group[gIndex].line[lIndex].checkComments"
                                ng-true-value="1"
                                ng-false-value="0"
-                               ng-change="checkChange(hIndex,gIndex,lIndex)"/>
+                               ng-change="checkChange(hIndex,gIndex,lIndex)"
+                               ng-checked="info.headers[hIndex].group[gIndex].line[lIndex].comments"/>
                     </div>
                     <div class="col-md-8 col-sm-8">
                         <label class="control-label" style="text-align: left;">{{line.COMMENT_LABEL}}</label>
 
                         <div ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT">
-                            <div ng-class="{'has-error': line{{lIndex}}.comments.$error.required}">
+                            <div ng-class="{'has-error': lineForm.comments.$error.required}">
                                 <textarea class="form-control" name="comments"
                                           ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"
                                           ng-required="info.headers[hIndex].group[gIndex].line[lIndex].checkComments"></textarea>
 
-                                <div ng-show="line{{lIndex}}.comments.$error.required">
+                                <div ng-show="lineForm.comments.$error.required">
                                     <label class="control-label">Required!</label>
                                 </div>
                             </div>

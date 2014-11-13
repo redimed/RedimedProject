@@ -1,3 +1,39 @@
-<!--<span audiogram="thanh"></span>-->
-<!--<span audiogram="thanh" data="data"></span>-->
-<fabric></fabric>
+<h3 class="page-title">Patient List</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+        </li>
+    </ul>
+</div>
+
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>List of Patients
+        </div>
+    </div>
+    <div class="portlet-body">
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+					<th>#</th>
+                    <th>First Name</th>
+                    <th>Sur Name</th>
+					<th>From time</th>
+					<th>To time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in list_appts" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item.APP_TYPE)" style="cursor: pointer;">
+					<td>{{$index+1}}</td>
+					<td>{{item.First_name}}</td>
+                    <td>{{item.Sur_name}}</td>
+                    <td>{{item.FROM_TIME}}</td>
+					<td>{{item.TO_TIME}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

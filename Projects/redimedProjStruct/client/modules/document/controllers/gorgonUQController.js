@@ -8,6 +8,23 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
         };
         $scope.info = [];
 
+        $scope.resetFlag = false;
+        $scope.reset = function () {
+            $scope.resetFlag = !$scope.resetFlag;
+        }
+        //end signature
+
+        //begin show-hidden img signature
+        $scope.sig = false;
+        $scope.sigClick = function () {
+            $scope.sig = true;
+        }
+        $scope.okClick = function () {
+            $scope.sig = false;
+        }
+        $scope.cancelClick = function () {
+            $scope.sig = false;
+        }
 
 
         $scope.checkUseRespirator = function(value)

@@ -58,7 +58,7 @@ var model_sql = {
     },
     
     sql_get_by_opt: function(search_opt){
-        var limit = (search_opt.limit) ? search_opt.limit : 10;
+        var limit = (search_opt.limit) ? search_opt.limit : 0;
         var offset = (search_opt.offset) ? search_opt.offset : 0;
         var search_data = search_opt.data;
         
@@ -214,6 +214,15 @@ module.exports = {
         });
     },
     insert: function (req, res) {
+        console.log(req.body);
+        var patient_data = req.body.patient;
+
+        if(!patient_data){
+            res.json({status: 'error'});
+            return;
+        }
+
+
         var sql2 = squel.select().from('cln_patients').field("MAX(Patient_id) + 1", 'new_id').toString();
         req.getConnection(function (err, connection) {
             var query = connection.query(sql2, function (err, data) {

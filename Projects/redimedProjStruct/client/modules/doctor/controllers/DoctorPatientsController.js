@@ -39,7 +39,6 @@ angular.module("app.loggedIn.doctor.patients.controller", [
             //GO TO DETAIL
             $scope.goToTimetableDetail = function (list) {
 				localStorageService.set("patientTempInfo", list);
-                //$cookieStore.put("patientTempInfo", list);
                 $state.go("loggedIn.doctor.patients.detail");
             }
             //END GO TO DETAIL
