@@ -7,7 +7,5 @@ angular.module('starter.security.forgot.controller',[])
                 alert('success');
                 $state.go('security.login');
             })
-
-
         }
     })

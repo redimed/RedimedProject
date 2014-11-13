@@ -20,14 +20,13 @@ angular.module('starter.security.login.controller',[])
                                     {
                                         var r = rs[1].split(')');
                                         var params = eval("("+r[0]+")");
-
                                         alert('1');
                                         $state.go(rs[0],params,{reload:true});
                                     }
                                     else
                                     {
                                         alert('2');
-                                        alert(JSON.stringify(rs));
+                                        alert(JSON.stringify(rs[0]));
                                        // $state.go(rs[0],{reload:true});
                                         $state.go('app.browse');
                                     }

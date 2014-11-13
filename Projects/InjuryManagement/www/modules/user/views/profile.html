@@ -1,0 +1,50 @@
+<ion-view title="Profile">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <div class="bar bar-subheader">
+    <h1 class="title">Information</h1>
+  </div>
+  <ion-content class="padding has-header has-subheader">
+    <form name="userForm" ng-submit="updateUserProfile(userForm)" method="post" novalidate>
+      <ion-list>
+
+
+
+        <label class="item item-input">
+          <span class="input-label">User Name</span>
+          <label class="bold">{{info.username}}</label>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">PassWord</span>
+          <div class="col-md-5">
+            <a  class="btn btn-primary" ng-click="modal.show()">Change Password</a>
+          </div>
+        </label>
+
+
+
+        <label class="item item-input">
+          <span class="input-label">Full Name</span>
+          <input type="text" class="form-control" ng-model="detail.Booking_Person" />
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Phone</span>
+          <input type="text" class="form-control" ng-model="detail.Contact_number" />
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" class="form-control" ng-model="detail.Contact_email" />
+        </label>
+
+
+      </ion-list>
+    </form>
+
+
+  </ion-content>
+
+</ion-view>

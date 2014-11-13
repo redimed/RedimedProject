@@ -8,7 +8,6 @@ angular.module('starter', ['ionic',
   "restangular",
   'starter.browse',
   'starter.menu',
-  'starter.search',
   'starter.security',
   'starter.user',
   'LocalStorageModule',
@@ -51,6 +50,7 @@ angular.module('starter', ['ionic',
                     $state.go("security.login");
                   }, 100);
                 }else{
+
                   $timeout(function(){
                     $state.go("app.browse");
                   }, 100);

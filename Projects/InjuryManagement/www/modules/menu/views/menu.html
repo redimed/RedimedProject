@@ -2,32 +2,42 @@
 
   <ion-pane ion-side-menu-content>
     <ion-nav-bar class="bar-stable nav-title-slide-ios7">
-      <!--<ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>-->
+      <ion-nav-buttons side="right">
+        <button class="button button-clear button-positive" menu-toggle="right" ui-sref="app.profile">Setting</button>
+      </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent" animation="slide-left-right">
 
     </ion-nav-view>
+
   </ion-pane>
+
 
   <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
       <h1 class="title">Menu</h1>
     </header>
     <ion-content class="has-header">
-      <ion-list>
+      <ion-list ng-repeat="menu in Injurymenu">
+        <ion-item>
+            {{menu.parent.name}}
+          <div ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}">
+            {{submenu.name}}
+          </div>
+        </ion-item>
 
-        <ion-item nav-clear menu-close ui-sref="app.search">
-          Search
-        </ion-item>
-        <ion-item nav-clear menu-close ui-sref="app.browse">
-          Browse
-        </ion-item>
-        <ion-item nav-clear menu-close ui-sref="app.worker.add">
-          Worker
-        </ion-item>
-        <ion-item ng-click="logout()">
-          Logout
-        </ion-item>
+        <!--<ion-item nav-clear menu-close ui-sref="app.search">-->
+          <!--Search-->
+        <!--</ion-item>-->
+        <!--<ion-item nav-clear menu-close ui-sref="app.browse">-->
+          <!--Browse-->
+        <!--</ion-item>-->
+        <!--<ion-item nav-clear menu-close ui-sref="app.worker.add">-->
+          <!--Worker-->
+        <!--</ion-item>-->
+        <!--<ion-item ng-click="logout()">-->
+          <!--Logout-->
+        <!--</ion-item>-->
       </ion-list>
     </ion-content>
   </ion-side-menu>

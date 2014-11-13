@@ -1,3 +1,16 @@
 angular.module("starter.user",[
-    'starter.user.services'
+    'starter.user.services',
+    'starter.user.controller'
 ])
+.config(function($stateProvider){
+        $stateProvider
+            .state('app.profile',{
+                url:"/profile",
+                views:{
+                    'menuContent':{
+                        templateUrl:"modules/user/views/profile.html",
+                        controller:'userProfileController'
+                    }
+                }
+            })
+    })
