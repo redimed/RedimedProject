@@ -22,7 +22,7 @@ angular.module("app.loggedIn.doctor.patients.controller", [
                 DoctorService.getByUserId(userInfo.id).then(function (data) {
                     $scope.searchObjectMap.doctor_id = data.doctor_id;
                     DoctorService.listPatients($scope.searchObjectMap).then(function (response) {
-						//console.log(response);
+						console.log(response);
                         $scope.list = response;
                     })
                 })

@@ -37,5 +37,10 @@ angular.module("app.loggedIn.doctor.timetable.controller",[
     }
     //END GO TO DETAIL
 
+    // GO TO
+    $scope.goToDoctor = function(){
+        $state.go("loggedIn.doctor.add");
+    }
+    // END GO TO
     
 })

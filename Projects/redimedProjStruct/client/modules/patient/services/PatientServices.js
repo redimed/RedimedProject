@@ -3,6 +3,11 @@ angular.module("app.loggedIn.patient.services", [])
 .factory("PatientService", function (Restangular) {
     var instanceService = {};
     var appApi = Restangular.all("api");
+
+    instanceService.getSkinApp = function(image){
+        var skinappApi = appApi.all("v1/skinapp/patient/image");
+        return skinappApi.post({'image': image});
+    }
 	
 	/**
 	 * KHANK API

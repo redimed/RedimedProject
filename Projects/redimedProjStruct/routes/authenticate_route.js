@@ -28,6 +28,7 @@ app.get('/home',AuthenticationController.authenticated,function(req,res){
 });
 
 app.post('/api/users/login', passport.authenticate('local'),function(req, res) {
+        //console.log(req.body);
         res.send(req.user);
     }
 );

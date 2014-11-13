@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.doctor.timetable.detail.profile.controller",[])
 
-.controller("DoctorTimetableDetailProfileController", function($scope, $stateParams, toastr, ConfigService, DoctorService){
+.controller("DoctorTimetableDetailProfileController", function($scope, $stateParams, toastr, ConfigService, DoctorService, PatientService){
 	// LOAD OPTION
 	var loadOption = function(){
 		ConfigService.clinical_option().then(function(list){
@@ -23,13 +23,24 @@ angular.module("app.loggedIn.doctor.timetable.detail.profile.controller",[])
 	loadOption();
 	// END LOAD OPTION
 
+	$scope.getImage = function(image){
+		PatientService.getSkinApp(image).then(function(response){
+			
+		})
+	}
+
 	// INIT
 	$scope.modelObjectMap = {};
+	var sign_map = "";
 	var init = function () {
 		$scope.modelObjectMap = angular.copy($scope.modelDoctorObject);
 
         DoctorService.getById($stateParams.doctorId).then(function(detail){
         	angular.extend($scope.modelObjectMap, detail);
+
+        	// KEEP SIGN
+        	sign_map = $scope.modelObjectMap.Signature;
+        	// END KEEP SIGN
 
         	if($scope.modelObjectMap.isReceiveEmailAfterHour)
         		$scope.modelObjectMap.isReceiveEmailAfterHour = $scope.modelObjectMap.isReceiveEmailAfterHour.toString();
@@ -83,4 +94,14 @@ angular.module("app.loggedIn.doctor.timetable.detail.profile.controller",[])
 		}
 	}
 	// END STEP
+
+	// UDPATE SIGNATURE
+	$scope.resetSignature = function(){
+		$scope.modelObjectMap.Signature = sign_map;
+	}
+
+	$scope.clearSignature = function(){
+		$scope.modelObjectMap.Signature = "";
+	}
+	// END UPDATE SIGNATURE
 })

@@ -167,9 +167,11 @@ module.exports =
                 " GROUP_CONCAT(cac.DOCTOR_ID ORDER BY cac.DOCTOR_ID) AS doctor,"+
                 " GROUP_CONCAT(d.NAME ORDER BY cac.DOCTOR_ID) AS doctor_name,"+
                 " GROUP_CONCAT(cac.STATUS ORDER BY cac.DOCTOR_ID) AS status,"+
-                " GROUP_CONCAT(cac.CAL_ID ORDER BY cac.DOCTOR_ID) AS CAL_ID"+
+                " GROUP_CONCAT(cac.CAL_ID ORDER BY cac.DOCTOR_ID) AS CAL_ID,"+
+                " GROUP_CONCAT(IFNULL(CONCAT(p.First_name, p.Sur_name), 'No Patient') ORDER BY cac.DOCTOR_ID) AS PATIENT"+
                 " FROM cln_appointment_calendar cac"+
                 " INNER JOIN doctors d ON d.doctor_id=cac.DOCTOR_ID"+
+                " LEFT OUTER JOIN cln_patients p ON p.Patient_id=cac.Patient_id"+
                 " WHERE cac.CLINICAL_DEPT_ID="+dept+
                 " AND cac.SITE_ID="+site+
                 " AND DATE(cac.FROM_TIME) LIKE '%"+datepicker+"%'"+
@@ -192,7 +194,7 @@ module.exports =
 
         req.getConnection(function(err, connection){
             var query = connection.query(
-                "SELECT h.*, p.First_name, p.Sur_name FROM `cln_appointment_calendar` h"+
+                "SELECT h.*, IFNULL(CONCAT(p.First_name, p.Sur_name), 'No Patient') AS PATIENT_NAME FROM `cln_appointment_calendar` h"+
                 " LEFT OUTER JOIN cln_patients p ON p.Patient_id=h.Patient_id"+
                 " WHERE h.`DOCTOR_ID`="+DOCTOR_ID+
                 " AND h.`SITE_ID`="+SITE_ID+
