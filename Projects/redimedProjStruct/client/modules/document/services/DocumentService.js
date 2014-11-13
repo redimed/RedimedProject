@@ -6,6 +6,11 @@ angular.module('app.loggedIn.document.services', [])
         var documentService = {};
         var api = Restangular.all("api");
 
+        documentService.loadPatient = function () {
+            var loadPatient = api.one("document/loadPatient");
+            return loadPatient.get();
+        }
+
         /* functional Assessment
             Begin
          */
@@ -67,14 +72,15 @@ angular.module('app.loggedIn.document.services', [])
         /* Instant Drug Screen
          Begin
          */
-        documentService.newIDS = function () {
-            var newIDS = api.one("document/newIDS");
-            return newIDS.get();
+
+        documentService.newIDS = function (PATIENT_ID,CAL_ID) {
+            var newIDS = api.all("document/newIDS");
+            return newIDS.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
         }
 
-        documentService.loadIDS = function () {
-            var loadIDS = api.one("document/loadIDS");
-            return loadIDS.get();
+        documentService.loadIDS = function (PATIENT_ID,CAL_ID) {
+            var loadIDS = api.all("document/loadIDS");
+            return loadIDS.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
         }
 
         documentService.insertIDS = function(infoL,infoH){
@@ -124,10 +130,9 @@ angular.module('app.loggedIn.document.services', [])
             return edit.post({info:info});
         }
 
-        documentService.getGorgonFAInfo = function(id)
-        {
-            var info = api.all('document/gorgonFAInfo');
-            return info.post({id:id});
+        documentService.checkGorgonFA = function(PatientID, calID){
+            var checkGorgonFA = api.all("document/checkGorgonFA");
+            return checkGorgonFA.post({PatientID:PatientID, calID:calID});
         }
 
         /* Gorgon FA
@@ -147,38 +152,14 @@ angular.module('app.loggedIn.document.services', [])
             return edit.post({info:info});
         }
 
-        documentService.getGorgonMAInfo = function(id)
-        {
-            var info = api.all('document/gorgonMAInfo');
-            return info.post({id:id});
+        documentService.checkGorgonMA = function(PatientID, calID){
+            var checkGorgonMA = api.all("document/checkGorgonMA");
+            return checkGorgonMA.post({PatientID:PatientID, calID:calID});
         }
         /* gorgon MA
          End
          */
 
-        /* gorgon MA
-         Begin
-         */
-
-        /* gorgon MA
-         End
-         */
-
-        /* gorgon MA
-         Begin
-         */
-
-        /* gorgon MA
-         End
-         */
-
-        /* gorgon MA
-         Begin
-         */
-
-        /* gorgon MA
-         End
-         */
 
         /**
          * begin medical history

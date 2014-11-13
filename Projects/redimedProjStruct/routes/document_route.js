@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 08/10/2014.
  */
-
+var demoController = require('./controllers/DocumentController/demoController');
 var FAController = require('./controllers/DocumentController/FAController');
 var MAController = require('./controllers/DocumentController/MAController');
 var IDSController = require('./controllers/DocumentController/IDSController');
@@ -15,7 +15,16 @@ var UQController = require('./controllers/DocumentController/UQController');
 var gorgonMHController = require('./controllers/DocumentController/gorgonMHController');
 var form18Controller = require('./controllers/DocumentController/form18Controller');
 var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
-var gorgonMAController = require('./controllers/DocumentController/gorgonMAController')
+var gorgonMAController = require('./controllers/DocumentController/gorgonMAController');
+
+
+/**
+ * begin demo
+ */
+app.get('/api/document/loadPatient', demoController.loadPatient);
+/**
+ * end demo
+ */
 
 
 /**
@@ -46,8 +55,8 @@ app.post('/api/document/checkMA',MAController.checkMA);
 // End
 
 //Begin Instant Drug Screen
-app.get('/api/document/newIDS', IDSController.newIDS);
-app.get('/api/document/loadIDS', IDSController.loadIDS);
+app.post('/api/document/newIDS', IDSController.newIDS);
+app.post('/api/document/loadIDS', IDSController.loadIDS);
 app.post('/api/document/insertIDS',IDSController.insertIDS);
 app.post('/api/document/checkIDS',IDSController.checkIDS);
 // end
@@ -61,13 +70,13 @@ app.post('/api/document/checkUser',UQController.checkUser);
 //Begin gorgon FA
 app.post('/api/document/insertGorgonFA',gorgonFAController.insertFA);
 app.post('/api/document/editGorgonFA',gorgonFAController.editFA);
-app.post('/api/document/gorgonFAInfo',gorgonFAController.getFA);
+app.post('/api/document/checkGorgonFA',gorgonFAController.checkGorgonFA);
 //end
 
 //Begin gorgon MA
 app.post('/api/document/insertGorgonMA',gorgonMAController.insertMA);
 app.post('/api/document/editGorgonMA',gorgonMAController.editMA);
-app.post('/api/document/gorgonMAInfo',gorgonMAController.getMA);
+app.post('/api/document/checkGorgonMA',gorgonMAController.checkGorgonMA);
 //end
 
 /**

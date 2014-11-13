@@ -30,139 +30,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         var date = new Date();
         var today = $filter('date')(date,'dd/MM/yyyy');
 
-        $scope.info = {
-            id: null,
-            patientId : null,
-            fName : null,
-            age : 20,
-            JAF : null,
-            DOB : null,
-            DOA : date,
-            IsConsentReason : null,
-            fsign : null,
-            fsignDate : date,
-            Estimated : null,
-            EstimatedComments : null,
-            MS_HeartConditions : null,
-            MS_HeartConditions_Comment : null,
-            MS_Lung_Asthma : null,
-            MS_Lung__Asthma_Comment : null,
-            MS_Diabetes : null,
-            MS_Diabetes_Comment : null,
-            MS_Fits : null,
-            MS_Fits_Comment : null,
-            MS_Medication : null,
-            MS_Medication_Comment : null,
-            MS_Other : null,
-            MS_Other_Comment : null,
-            MS_ie_Comment : null,
-            MS_Mx_Heart_Rage_1 : null,
-            MS_Mx_Heart_Rage_2 : null,
-            MS_Mx_Weight_1 : null,
-            MS_MX_Weight_2 : null,
-            MS_Blood_Pressure_1 : null,
-            MS_Blood_Pressure_2 : null,
-            MS_Resting_Heart_Rate : null,
-            Rom_Neck1 : null,
-            Rom_Thoracic1 : null,
-            Rom_Lumbar1 : null,
-            Rom_Shoulder1 : null,
-            Rom_Elbow1 : null,
-            Rom_Wrist1 : null,
-            Rom_Fingers1 : null,
-            Rom_Hips1 : null,
-            Rom_Knees1 : null,
-            Rom_Ankles1 : null,
-            Rom_Comments1 : null,
-            Rom_Total1 : null,
-            Heart_Rate_30S2 : null,
-            Heart_Rate_1M2 : null,
-            Heart_Rate_1M_30S2 : null,
-            Heart_Rate_2M2 : null,
-            Heart_Rate_2M_30S2 : null,
-            Heart_Rate_3M2 : null,
-            Heart_Rate_1M_Post2 : null,
-            Step_Result2 : null,
-            Step_Correct2 : null,
-            Comments2 : null,
-            Total2 : null,
-            a_Right3 : null,
-            a_Left3 : null,
-            b_Right3 : null,
-            b_Left3: null,
-            c_Grip3 : null,
-            c_Right3 : null,
-            c_Left3 : null,
-            c_Result3 : 0,//
-            d_Push_ups_total3 : null,
-            d_Result3 : 0,//
-            e_total3 : null,
-            e_Result3 : 0,//
-            Comments3 : null,
-            Total3 : null,
-            aSec4 : null,//
-            aResult4 : null,//
-            bTotal4 : null,
-            bCrepitus4 : null,
-            bResult4 : null,//
-            cKneeling4 : null,
-            cResult4 : null, //
-            Comments4 : null,
-            Total4 : null,
-            aPosture5 : null,
-            bHoverResult5: null,
-            cStrenght5 : null,
-            cResult5 : null,//
-            dTotal5 : null,
-            dResult5 : null,//
-            eWaitesBow5 : null,
-            eResult5 : null,//
-            fRight5 : null,
-            fLeft5 : null,
-            gRight5 : null,
-            gFloat5 : null,
-            Total5 : null,
-            aMax6 : null,
-            aResult6 : null,
-            bMax6 : null,
-            bResult6 : null,
-            c_16 : null,
-            c_1Comment6 : null,
-            c_26 : null,
-            c_2Comment6 : null,
-            c_36 : null,
-            c_3Comment6 : null,
-            c_46 : null,
-            c_4Comment6 : null,
-            c_56 : null,
-            c_5Comment6 : null,
-            Comments6 : null,
-            Total6 : null,
-            Score1Comment : null,
-            Score2Comment : null,
-            Score3Comment : null,
-            Score4Comment : null,
-            Score5Comment : null,
-            Score6Comment : null,
-            Score7Comment : null,
-            Score8Comment : null,
-            FCAToTal : null,
-            FCAResult : null,
-            LEPDC : null,
-            LAPC : null,
-            LComment : null,
-            Lsign : null,
-            LDate : date,
-            LName : null,
-            LPosition : null,
-            Created_by : null,
-            Creation_date : null,
-            Last_updated_by : null,
-            Last_update_date : null,
-            CalId : null,
-            DocId : null
 
-        };
 
         var sex = "female";
         $scope.c_Left3 = function(){
@@ -355,22 +223,304 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                 $scope.info.bResult6 = 4;
             }
         };
-
+//                var date = new Date();
+//                var today = $filter('date')(date,'dd/MM/yyyy');
         $scope.maxDateDOB = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
+        //$scope.maxDate = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
         $scope.maxDate = date;
+        $scope.info = {
+            id: null,
+            patientId : 4,
+            fName : null,
+            age : 20,
+            JAF : null,
+            DOB : null,
+            DOA : date,
+            IsConsentReason : null,
+            fsign : null,
+            fsignDate : date,
+            Estimated : null,
+            EstimatedComments : null,
+            MS_HeartConditions : null,
+            MS_HeartConditions_Comment : null,
+            MS_Lung_Asthma : null,
+            MS_Lung__Asthma_Comment : null,
+            MS_Diabetes : null,
+            MS_Diabetes_Comment : null,
+            MS_Fits : null,
+            MS_Fits_Comment : null,
+            MS_Medication : null,
+            MS_Medication_Comment : null,
+            MS_Other : null,
+            MS_Other_Comment : null,
+            MS_ie_Comment : null,
+            MS_Mx_Heart_Rage_1 : null,
+            MS_Mx_Heart_Rage_2 : null,
+            MS_Mx_Weight_1 : null,
+            MS_MX_Weight_2 : null,
+            MS_Blood_Pressure_1 : null,
+            MS_Blood_Pressure_2 : null,
+            MS_Resting_Heart_Rate : null,
+            Rom_Neck1 : null,
+            Rom_Thoracic1 : null,
+            Rom_Lumbar1 : null,
+            Rom_Shoulder1 : null,
+            Rom_Elbow1 : null,
+            Rom_Wrist1 : null,
+            Rom_Fingers1 : null,
+            Rom_Hips1 : null,
+            Rom_Knees1 : null,
+            Rom_Ankles1 : null,
+            Rom_Comments1 : null,
+            Rom_Total1 : null,
+            Heart_Rate_30S2 : null,
+            Heart_Rate_1M2 : null,
+            Heart_Rate_1M_30S2 : null,
+            Heart_Rate_2M2 : null,
+            Heart_Rate_2M_30S2 : null,
+            Heart_Rate_3M2 : null,
+            Heart_Rate_1M_Post2 : null,
+            Step_Result2 : null,
+            Step_Correct2 : null,
+            Comments2 : null,
+            Total2 : null,
+            a_Right3 : null,
+            a_Left3 : null,
+            b_Right3 : null,
+            b_Left3: null,
+            c_Grip3 : null,
+            c_Right3 : null,
+            c_Left3 : null,
+            c_Result3 : 0,//
+            d_Push_ups_total3 : null,
+            d_Result3 : 0,//
+            e_total3 : null,
+            e_Result3 : 0,//
+            Comments3 : null,
+            Total3 : null,
+            aSec4 : null,//
+            aResult4 : null,//
+            bTotal4 : null,
+            bCrepitus4 : null,
+            bResult4 : null,//
+            cKneeling4 : null,
+            cResult4 : null, //
+            Comments4 : null,
+            Total4 : null,
+            aPosture5 : null,
+            bHoverResult5: null,
+            cStrenght5 : null,
+            cResult5 : null,//
+            dTotal5 : null,
+            dResult5 : null,//
+            eWaitesBow5 : null,
+            eResult5 : null,//
+            fRight5 : null,
+            fLeft5 : null,
+            gRight5 : null,
+            gFloat5 : null,
+            Total5 : null,
+            aMax6 : null,
+            aResult6 : null,
+            bMax6 : null,
+            bResult6 : null,
+            c_16 : 0,
+            c_1Comment6 : null,
+            c_26 : 0,
+            c_2Comment6 : null,
+            c_36 : 0,
+            c_3Comment6 : null,
+            c_46 : 0,
+            c_4Comment6 : null,
+            c_56 : 0    ,
+            c_5Comment6 : null,
+            Comments6 : null,
+            Total6 : 0,
+            Score1Comment : null,
+            Score2Comment : null,
+            Score3Comment : null,
+            Score4Comment : null,
+            Score5Comment : null,
+            Score6Comment : null,
+            Score7Comment : null,
+            Score8Comment : null,
+            FCAToTal : null,
+            FCAResult : null,
+            LEPDC : null,
+            LAPC : null,
+            LComment : null,
+            Lsign : null,
+            LDate : date,
+            LName : null,
+            LPosition : null,
+            Created_by : null,
+            //Creation_date : null,
+            Last_updated_by : null,
+            //Last_update_date : null,
+            CalId : 11111,
+            DocId : null
+
+        };
+
+        //============================================INSERT && UPDATE===============================
+        var insert = true;
+
+        DocumentService.checkGorgonFA("4","11111").then(function(response){
+            if(response['status'] === 'fail')
+            {
+                insert = true;
+            }
+            else
+            {
+                insert = false;
+                $scope.info = {
+                    id: response['id'],
+                    patientId :response['patientId'],
+                    fName : response['fName'],
+                    age : response['age'],
+                    JAF : response['JAF'],
+                    DOB : response['DOB'],
+                    DOA : response['DOA'],
+                    IsConsentReason : response['IsConsentReason'],
+                    fsign : response['fsign'],
+                    fsignDate : response['fsignDate'],
+                    Estimated : response['Estimated'],
+                    EstimatedComments : response['EstimatedComments'],
+                    MS_HeartConditions : response['MS_HeartConditions'],
+                    MS_HeartConditions_Comment : response['MS_HeartConditions_Comment'],
+                    MS_Lung_Asthma : response['MS_Lung_Asthma'],
+                    MS_Lung__Asthma_Comment : response['MS_Lung__Asthma_Comment'],
+                    MS_Diabetes : response['MS_Diabetes'],
+                    MS_Diabetes_Comment : response['MS_Diabetes_Comment'],
+                    MS_Fits : response['MS_Fits'],
+                    MS_Fits_Comment : response['MS_Fits_Comment'],
+                    MS_Medication : response['MS_Medication'],
+                    MS_Medication_Comment : response['MS_Medication_Comment'],
+                    MS_Other : response['MS_Other'],
+                    MS_Other_Comment : response['MS_Other_Comment'],
+                    MS_ie_Comment : response['MS_ie_Comment'],
+                    MS_Mx_Heart_Rage_1 : response['MS_Mx_Heart_Rage_1'],
+                    MS_Mx_Heart_Rage_2 : response['MS_Mx_Heart_Rage_2'],
+                    MS_Mx_Weight_1 : response['MS_Mx_Weight_1'],
+                    MS_MX_Weight_2 : response['MS_MX_Weight_2'],
+                    MS_Blood_Pressure_1 : response['MS_Blood_Pressure_1'],
+                    MS_Blood_Pressure_2 : response['MS_Blood_Pressure_2'],
+                    MS_Resting_Heart_Rate : response['MS_Resting_Heart_Rate'],
+                    Rom_Neck1 : response['1Rom_Neck'],
+                    Rom_Thoracic1 : response['1Rom_Thoracic'],
+                    Rom_Lumbar1 : response['1Rom_Lumbar'],
+                    Rom_Shoulder1 : response['1Rom_Shoulder'],
+                    Rom_Elbow1 : response['1Rom_Elbow'],
+                    Rom_Wrist1 : response['1Rom_Wrist'],
+                    Rom_Fingers1 : response['1Rom_Fingers'],
+                    Rom_Hips1 : response['1Rom_Hips'],
+                    Rom_Knees1 : response['1Rom_Knees'],
+                    Rom_Ankles1 : response['1Rom_Ankles'],
+                    Rom_Comments1 : response['1Rom_Comments'],
+                    Rom_Total1 : response['1Rom_Total'],
+                    Heart_Rate_30S2 : response['2Heart_Rate_30S'],
+                    Heart_Rate_1M2 : response['2Heart_Rate_1M'],
+                    Heart_Rate_1M_30S2 : response['2Heart_Rate_1M_30S'],
+                    Heart_Rate_2M2 : response['2Heart_Rate_2M'],
+                    Heart_Rate_2M_30S2 : response['2Heart_Rate_2M_30S'],
+                    Heart_Rate_3M2 : response['2Heart_Rate_3M'],
+                    Heart_Rate_1M_Post2 : response['2Heart_Rate_1M_Post'],
+                    Step_Result2 : response['2Step_Result'],
+                    Step_Correct2 : response['2Step_Correct'],
+                    Comments2 : response['2Comments'],
+                    Total2 : response['2Total'],
+                    a_Right3 : response['3a_Right'],
+                    a_Left3 : response['3a_Left'],
+                    b_Right3 : response['3b_Right'],
+                    b_Left3: response['3b_Left'],
+                    c_Grip3 : response['3c_Grip'],
+                    c_Right3 : response['3c_Right'],
+                    c_Left3 : response['3c_Left'],
+                    c_Result3 : response['3c_Result'],
+                    d_Push_ups_total3 : response['3d_Push_ups_total'],
+                    d_Result3 : response['3d_Result'],
+                    e_total3 : response['3e_total'],
+                    e_Result3 : response['3e_Result'],
+                    Comments3 : response['3Comments'],
+                    Total3 : response['3Total'],
+                    aSec4 : response['4aSec'],//
+                    aResult4 : response['4aResult'],//
+                    bTotal4 : response['4bTotal'],
+                    bCrepitus4 : response['4bCrepitus'],
+                    bResult4 : response['4bResult'],//
+                    cKneeling4 : response['4cKneeling'],
+                    cResult4 : response['4cResult'], //
+                    Comments4 : response['4Comments'],
+                    Total4 : response['4Total'],
+                    aPosture5 : response['5aPosture'],
+                    bHoverResult5: response['5bHoverResult'],
+                    cStrenght5 : response['5cStrenght'],
+                    cResult5 : response['5cResult'],//
+                    dTotal5 : response['5dTotal'],
+                    dResult5 : response['5dResult'],//
+                    eWaitesBow5 : response['5eWaitesBow'],
+                    eResult5 : response['5eResult'],//
+                    fRight5 : response['5fRight'],
+                    fLeft5 : response['5fLeft'],
+                    gRight5 : response['5gRight'],
+                    gFloat5 : response['5gFloat'],
+                    Total5 : response['5Total'],
+                    aMax6 : response['6aMax'],
+                    aResult6 : response['6aResult'],
+                    bMax6 : response['6bMax'],
+                    bResult6 : response['6bResult'],
+                    c_16 : response['6c_1'],
+                    c_1Comment6 : response['6c_1Comment'],
+                    c_26 : response['6c_2'],
+                    c_2Comment6 : response['6c_2Comment'],
+                    c_36 : response['6c_3'],
+                    c_3Comment6 : response['6c_3Comment'],
+                    c_46 : response['6c_4'],
+                    c_4Comment6 : response['6c_4Comment'],
+                    c_56 :response['6c_5'],
+                    c_5Comment6 : response['6c_5Comment'],
+                    Comments6 : response['6Comments'],
+                    Total6 : response['6Total'],
+                    Score1Comment : response['Score1Comment'],
+                    Score2Comment : response['Score2Comment'],
+                    Score3Comment : response['Score3Comment'],
+                    Score4Comment : response['Score4Comment'],
+                    Score5Comment : response['Score5Comment'],
+                    Score6Comment : response['Score6Comment'],
+                    Score7Comment : response['Score7Comment'],
+                    Score8Comment : response['Score8Comment'],
+                    FCAToTal : response['FCAToTal'],
+                    FCAResult : response['FCAResult'],
+                    LEPDC : response['LEPDC'],
+                    LAPC : response['LAPC'],
+                    LComment : response['LComment'],
+                    Lsign : response['Lsign'],
+                    LDate : response['LDate'],
+                    LName : response['LName'],
+                    LPosition : response['LPosition'],
+                    Created_by : response['Created_by'],
+                    //Creation_date : response[''],
+                    Last_updated_by : response['Last_updated_by'],
+                    //Last_update_date : response[''],
+                    CalId : response['CalId'],
+                    DocId : response['DocId']
+
+                };
+                console.log(JSON.stringify($scope.info));
+            }
+        });
 
 
-        //============================================INSERT===============================
-        if(isEdit == false)
-        {
-            $scope.submitGorgonFA = function(gorgonFAForm){
-                $scope.showClickedValidation = true;
-                if(gorgonFAForm.$invalid){
-                    toastr.error("Please Input All Required Information!", "Error");
-                }else
+        $scope.submitGorgonFA = function(gorgonFAForm){
+            $scope.showClickedValidation = true;
+            if(gorgonFAForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else
+            {
+
+                if(insert == true)
                 {
                     var info = $scope.info;
-                    console.log(info);
                     DocumentService.insertGorgonFA(info).then(function(response){
                         if(response['status'] === 'success') {
                             alert("Insert Successfully!");
@@ -380,24 +530,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                             alert("Insert Failed!");
                         }
                     });
-                }
-
-            };
-        }
-        else
-        {
-            $scope.info.id = 14;
-
-            DocumentService.getGorgonFAInfo(14).then(function(data){
-                $scope.info = data;
-            })
-
-            $scope.submitGorgonFA = function(gorgonFAForm){
-                $scope.showClickedValidation = true;
-                if(gorgonFAForm.$invalid){
-                    toastr.error("Please Input All Required Information!", "Error");
-                }else
-                {
+                }else{
                     DocumentService.editGorgonFA($scope.info).then(function(response){
                         if(response['status'] === 'success') {
                             alert("Edit Successfully!");
@@ -408,13 +541,9 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                         }
                     });
                 }
+            }
 
-            };
-        }
-
-
-
-
+        };
 
 
 
