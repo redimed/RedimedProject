@@ -156,4 +156,13 @@ angular.module("app.loggedIn.doctor", [
             }
         }
     })
+	.state("loggedIn.doctor.patients.detail.appt.more", {
+                url: "/more",
+                views: {
+                    "main-content@loggedIn.doctor": {
+                        templateUrl: "modules/doctor/views/patients-detail-appt-more.html",
+                        controller: "DoctorPatientsDetailApptMoreController"
+                    }
+                }
+            })
 })

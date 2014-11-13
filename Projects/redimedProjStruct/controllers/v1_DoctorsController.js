@@ -9,8 +9,8 @@ var model_sql = {
 
         querybuilder.field('CAL_ID')
                 .field('SITE_ID')
-                .field('FROM_TIME')
-                .field('TO_TIME')
+                .field("DATE_FORMAT(FROM_TIME,'%d/%m/%Y %h:%i')", 'FROM_TIME')
+                .field("DATE_FORMAT(TO_TIME,'%d/%m/%Y %h:%i')", 'TO_TIME')
                 .field('APP_TYPE')
                 .field('cln_patients.patient_id', 'p_id')
                 .field('cln_patients.Title')

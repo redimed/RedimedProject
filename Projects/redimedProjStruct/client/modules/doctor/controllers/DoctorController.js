@@ -84,6 +84,10 @@ angular.module("app.loggedIn.doctor.controller", [
             return 'info';
     }
 	
+	$scope.views = {
+		patient_info: 'modules/doctor/views/patient-info.html',
+	};
+	
 	$scope.modeFormItem = {
 		reset: function(){
 			$scope.isSubmit = false;
