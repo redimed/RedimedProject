@@ -13,6 +13,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
         rlobService.getcountTotalBookings().then(function(data){
 
             $scope.bookingType
+
             var deferred=$q.defer();
             if(data.status=='success')
             {
