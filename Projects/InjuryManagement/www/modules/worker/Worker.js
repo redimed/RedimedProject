@@ -1,5 +1,8 @@
 angular.module('starter.worker',
-    ['starter.worker.add.controller'])
+    [
+        'starter.worker.add.controller',
+        'starter.worker.services',
+    ])
 
     .config (function ($stateProvider) {
     $stateProvider
@@ -8,7 +11,7 @@ angular.module('starter.worker',
             views: {
                 'menuContent':{
                     templateUrl: "modules/worker/views/structure.html",
-                    controller:""
+                    controller:"workerAddController"
                 }
             }
         })
@@ -16,8 +19,7 @@ angular.module('starter.worker',
             url:"/add",
             views: {
                 'content':{
-                    templateUrl: "modules/worker/views/add.html",
-                    controller:"workerAddController"
+                    templateUrl: "modules/worker/views/add.html"
                 }
             }
         })
@@ -25,8 +27,7 @@ angular.module('starter.worker',
             url:"/contact",
             views: {
                 'content':{
-                    templateUrl: "modules/worker/views/contact.html",
-                    controller: ""
+                    templateUrl: "modules/worker/views/contact.html"
                 }
             }
         })

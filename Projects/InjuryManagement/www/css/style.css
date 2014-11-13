@@ -1,1 +1,11 @@
-/* Empty. Add your own CSS if you like */
+
+.span-input-color{
+    color: rgba(149,165,166,1);
+}
+.has-error {
+    border-left: 3px solid #cc2511;
+    border-right: 3px solid #cc2511;
+}
+form i.icon.error {
+    color: #ef4e3a;
+}
