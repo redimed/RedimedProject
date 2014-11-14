@@ -2,8 +2,8 @@
  * Created by meditech on 06/10/2014.
  */
 var BookingController = require('./controllers/BookingController');
-//var multipart = require('connect-multiparty');
-//var multipartMiddleware = multipart();
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 app.post('/api/booking/packageList', BookingController.packageList);
 app.post('/api/booking/list/companyId',BookingController.bookingListByCompany);

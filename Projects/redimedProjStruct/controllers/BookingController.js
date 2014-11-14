@@ -2,6 +2,8 @@
  * Created by meditech on 22/09/2014.
  */
 var db = require('../models');
+var mkdirp = require('mkdirp');
+var fs = require('fs');//Read js file for import into
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
@@ -764,6 +766,7 @@ module.exports = {
                 console.log(err);
             })
     }
+
     
 };
 
