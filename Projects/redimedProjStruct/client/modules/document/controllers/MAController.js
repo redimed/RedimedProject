@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
-    .controller("MAController",function($scope,DocumentService,$http,$cookieStore,toastr) {
+    .controller("MAController",function($scope,DocumentService,$http,$cookieStore,toastr,$stateParams) {
 
         $scope.listMA = [];
         $scope.infoH = [];
@@ -11,6 +11,10 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             $scope.resetFlag = !$scope.resetFlag;
         }
         //end signature
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("MA: " + CalID + " patient: " + Patient_ID);
 
         //begin show-hidden img signature
         $scope.sig = false;

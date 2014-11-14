@@ -15,7 +15,9 @@ var UQController = require('./controllers/DocumentController/UQController');
 var gorgonMHController = require('./controllers/DocumentController/gorgonMHController');
 var form18Controller = require('./controllers/DocumentController/form18Controller');
 var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
-var gorgonMAController = require('./controllers/DocumentController/gorgonMAController')
+var gorgonMAController = require('./controllers/DocumentController/gorgonMAController');
+
+
 
 
 /**
@@ -46,8 +48,8 @@ app.post('/api/document/checkMA',MAController.checkMA);
 // End
 
 //Begin Instant Drug Screen
-app.get('/api/document/newIDS', IDSController.newIDS);
-app.get('/api/document/loadIDS', IDSController.loadIDS);
+app.post('/api/document/newIDS', IDSController.newIDS);
+app.post('/api/document/loadIDS', IDSController.loadIDS);
 app.post('/api/document/insertIDS',IDSController.insertIDS);
 app.post('/api/document/checkIDS',IDSController.checkIDS);
 // end
@@ -61,13 +63,13 @@ app.post('/api/document/checkUser',UQController.checkUser);
 //Begin gorgon FA
 app.post('/api/document/insertGorgonFA',gorgonFAController.insertFA);
 app.post('/api/document/editGorgonFA',gorgonFAController.editFA);
-app.post('/api/document/gorgonFAInfo',gorgonFAController.getFA);
+app.post('/api/document/checkGorgonFA',gorgonFAController.checkGorgonFA);
 //end
 
 //Begin gorgon MA
 app.post('/api/document/insertGorgonMA',gorgonMAController.insertMA);
 app.post('/api/document/editGorgonMA',gorgonMAController.editMA);
-app.post('/api/document/gorgonMAInfo',gorgonMAController.getMA);
+app.post('/api/document/checkGorgonMA',gorgonMAController.checkGorgonMA);
 //end
 
 /**

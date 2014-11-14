@@ -1,15 +1,9 @@
-<style>
-    #modalSign .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-</style>
 <form name="category3Form" method="post" novalidate>
 <div class="caption">
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <button type="button"
-                    ng-disabled="category3Form.$error.pattern || category3Form.$error.maxlength"
+                    ng-disabled="category3Form.$error.pattern || category3Form.$error.maxlength || !infoChanged()"
                     ng-click="submit(category3Form)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
             <button type="button"
@@ -479,47 +473,62 @@
                                 </p>
 
                                 <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="col-md-2 col-sm-2">
-                                            <a href="javascript:;" id="signBtn" class="btn green">Signature</a>
-                                            <script type="text/javascript">
-                                                $('#signBtn').click(function () {
-                                                    $('#modalSign').modal({
-                                                        show: true
-                                                    });
-                                                });
-
-                                            </script>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <img src="" id="signDisplay" ng-model="info.PATIENT_SIGNATURE"
-                                                 style="width:200px;height:30px;"/>
-                                        </div>
+                                    <div class="col-md-2 col-sm-2">
+                                        <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
+                                           class="btn green">Signature</a>
                                     </div>
-                                </div>
-                                <br/>
-
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="col-md-2 col-sm-3">
-                                            <label class="control-label">Date:</label>
-                                        </div>
-                                        <div class="col-md-4 col-sm-5">
-                                            <input type="text" class="form-control col-md-12" name="PATIENT_DATE"
-                                                   datepicker-popup="dd/MM/yyyy" ng-model="info.PATIENT_DATE"
-                                                   is-open="openDOB" ng-click="openDOB = true"
-                                                   datepicker-options="dateOptions" ng-required="true"
-                                                   close-text="Close"/>
-                                        </div>
+                                    <div class="col-md-10 col-sm-10"
+                                         ng-show="info.PATIENT_SIGNATURE!=null && info.PATIENT_SIGNATURE!='' && !isSignature">
+                                        <img src="" ng-src="{{info.PATIENT_SIGNATURE}}" alt=""
+                                             style="width: 200px;height: 40px;"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <br/>
+
+                        <div class="row" style="text-align: center;" ng-show="isSignature">
+                            <div class="col-md-12 col-sm-12">
+                                <canvas width="500" height="400" id="canvas"
+                                        signature ng-model="info.PATIENT_SIGNATURE" style="background-color: #8eece8">
+                                </canvas>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="break-row"></div>
+                                <div class="btn-group">
+                                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+                                        Cancel
+                                    </button>
+                                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+                                    </button>
+                                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6"></div>
+                        <div class="col-md-2 col-sm-3" style="width: auto;margin-top: 5px;">
+                            <label class="control-label">Date:</label>
+                        </div>
+                        <div class="col-md-3 col-sm-4">
+                            <input type="text" class="form-control" name="PATIENT_DATE"
+                                   datepicker-popup="dd/MM/yyyy" ng-model="info.PATIENT_DATE"
+                                   is-open="openDOB" ng-click="openDOB = true"
+                                   datepicker-options="dateOptions"
+                                   close-text="Close"/>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
+</div>
 </div>
 
 <div class="row">
@@ -600,10 +609,9 @@
         </div>
         <div ng-class="{'has-error':category3Form.s3_q1_1_1.$error.pattern}">
 
-            <div class="col-md-1 col-sm-2">
+            <div class="col-md-2 col-sm-2">
                 <input type="text" class="form-control" name="s3_q1_1_1" ng-model="info.s3_q1_1_1"
-                       ng-pattern="/^(0|[1-9][0-9]*)$/"
-                       style="width: 80px;"/>
+                       ng-pattern="/^(0|[1-9][0-9]*)$/"/>
             </div>
         </div>
         <div class="col-md-2 col-sm-2" style="margin-top: 5px;">
@@ -613,13 +621,13 @@
             <label class="control-label">Diastolic</label>
         </div>
         <div ng-class="{'has-error':category3Form.s3_q1_1_2.$error.pattern}">
-            <div class="col-md-1 col-sm-2">
+            <div class="col-md-2 col-sm-2">
                 <input type="text" class="form-control" name="s3_q1_1_2" ng-model="info.s3_q1_1_2"
                        ng-pattern="/^(0|[1-9][0-9]*)$/"
-                       style="width: 80px;"/>
+                        />
             </div>
         </div>
-        <div class="col-md-1 col-sm-2" style="margin-top: 5px;">
+        <div class="col-md-2 col-sm-2" style="margin-top: 5px;">
             <label class="control-label"> mm Hg</label>
         </div>
 
@@ -647,17 +655,16 @@
 </div>
 </br>
 <div class="row">
-    <div class="col-md-2 col-sm-3" style="margin-top: 5px;">
+    <div class="col-md-3 col-sm-3" style="margin-top: 5px;width: 150px;;">
         <label class="control-label bold" style="margin-left: 10px;">1.2 Pulse Rate:</label>
     </div>
     <div ng-class="{'has-error':category3Form.s3_q1_2_1.$error.pattern}">
-        <div class="col-md-1 col-sm-2">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q1_2_1" ng-model="info.s3_q1_2_1"
-                   ng-pattern="/^(0|[1-9][0-9]*)$/"
-                   style="width: 80px;"/>
+                   ng-pattern="/^(0|[1-9][0-9]*)$/"/>
         </div>
     </div>
-    <div class="col-md-3 col-sm-4">
+    <div class="col-md-4 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name="s3_q1_2_2" ng-model="info.s3_q1_2_2" value="1"/> Regular
@@ -681,10 +688,10 @@
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-5" style="margin-top: 5px;">
+    <div class="col-md-3 col-sm-5" style="margin-top: 5px;width: 200px;">
         <label class="control-label bold" style="margin-left: 10px">1.3 Heart Sounds:</label>
     </div>
-    <div class="col-md-3 col-sm-7">
+    <div class="col-md-4 col-sm-7">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name="s3_q1_3" ng-model="info.s3_q1_3" value="1"/> Normal
@@ -697,10 +704,10 @@
 </div>
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-5" style="margin-top: 5px;">
+    <div class="col-md-2 col-sm-5" style="margin-top: 5px;width: 200px;">
         <label class="control-label bold" style="margin-left: 10px;">1.4 Peripheral Pulses:</label>
     </div>
-    <div class="col-md-3 col-sm-7">
+    <div class="col-md-4 col-sm-7">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q1_4' ng-model="info.s3_q1_4" value="1"/> Normal
@@ -917,7 +924,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">3.1 Cervical spine rotation:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q3_1' ng-model="info.s3_q3_1" value="1"/> Normal
@@ -933,7 +940,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">3.2 Back movement:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q3_2' ng-model="info.s3_q3_2" value="1"/> Normal
@@ -954,7 +961,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label" style="margin-left: 30px;">a) Appearance:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q3_3_1' ng-model="info.s3_q3_3_1" value="1"/> Normal
@@ -969,7 +976,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label" style="margin-left: 30px">b) Joint movements:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q3_3_2' ng-model="info.s3_q3_3_2" value="1"/> Normal
@@ -990,7 +997,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label" style="margin-left: 30px;">a) Appearance:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q3_4_1' ng-model="info.s3_q3_4_1" value="1"/> Normal
@@ -1005,7 +1012,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label" style="margin-left: 30px">b) Joint movements:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q3_4_2' ng-model="info.s3_q3_4_2" value="1"/> Normal
@@ -1021,7 +1028,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">3.5 Gait:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q3_5' ng-model="info.s3_q3_5" value="1"/> Normal
@@ -1037,7 +1044,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">3.6 Romberg's Test:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q3_6' ng-model="info.s3_q3_6" value="1"/> Normal
@@ -1053,7 +1060,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label text-info bold text-info" style="margin-left: 10px;">4. Chest/Lungs:</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q4' ng-model="info.s3_q4" value="1"/> Normal
@@ -1090,7 +1097,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="col-md-2 col-sm-2">
+                <div class="col-md-2 col-sm-3">
                     <label class="control-label bold text-info"> Visual Acuity:</label>
                 </div>
             </div>
@@ -1115,66 +1122,46 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="col-md-3 col-sm-3">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-1 col-sm-1">
-                                <label class="control-label bold" style="margin-top: 10px;">6/</label>
-                            </div>
-                            <div class="col-md-9 col-sm-9">
-                                <div ng-class="{'has-error': category3Form.s3_q5_1_1_1.$error.pattern}">
-                                    <input type="text" class="form-control" name="s3_q5_1_1_1"
-                                           ng-model="info.s3_q5_1_1_1"
-                                           ng-pattern="/^0|[1-9]\d*$/"/>
-                                </div>
-                            </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">6/</span>
+
+                        <div ng-class="{'has-error': category3Form.s3_q5_1_1_1.$error.pattern}">
+                            <input type="text" class="form-control" name="s3_q5_1_1_1"
+                                   ng-model="info.s3_q5_1_1_1"
+                                   ng-pattern="/^0|[1-9]\d*$/"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-1 col-sm-1">
-                                <label class="control-label bold" style="margin-top: 10px;">6/</label>
-                            </div>
-                            <div class="col-md-9 col-sm-9">
-                                <div ng-class="{'has-error': category3Form.s3_q5_1_1_2.$error.pattern}">
-                                    <input type="text" class="form-control" name="s3_q5_1_1_2"
-                                           ng-model="info.s3_q5_1_1_2"
-                                           ng-pattern="/^0|[1-9]\d*$/"/>
-                                </div>
-                            </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">6/</span>
+
+                        <div ng-class="{'has-error': category3Form.s3_q5_1_1_2.$error.pattern}">
+                            <input type="text" class="form-control" name="s3_q5_1_1_2"
+                                   ng-model="info.s3_q5_1_1_2"
+                                   ng-pattern="/^0|[1-9]\d*$/"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-1 col-sm-1">
-                                <label class="control-label bold" style="margin-top: 10px;">6/</label>
-                            </div>
-                            <div class="col-md-9 col-sm-9">
-                                <div ng-class="{'has-error': category3Form.s3_q5_1_1_3.$error.pattern}">
-                                    <input type="text" class="form-control" name="s3_q5_1_1_3"
-                                           ng-model="info.s3_q5_1_1_3"
-                                           ng-pattern="/^0|[1-9]\d*$/"/>
-                                </div>
-                            </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">6/</span>
+
+                        <div ng-class="{'has-error': category3Form.s3_q5_1_1_3.$error.pattern}">
+                            <input type="text" class="form-control" name="s3_q5_1_1_3"
+                                   ng-model="info.s3_q5_1_1_3"
+                                   ng-pattern="/^0|[1-9]\d*$/"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-1 col-sm-1">
-                                <label class="control-label bold" style="margin-top: 10px;">6/</label>
-                            </div>
-                            <div class="col-md-9 col-sm-9">
-                                <div ng-class="{'has-error': category3Form.s3_q5_1_1_4.$error.pattern}">
-                                    <input type="text" class="form-control" name="s3_q5_1_1_4"
-                                           ng-model="info.s3_q5_1_1_4"
-                                           ng-pattern="/^0|[1-9]\d*$/"/>
-                                </div>
-                            </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">6/</span>
+
+                        <div ng-class="{'has-error': category3Form.s3_q5_1_1_4.$error.pattern}">
+                            <input type="text" class="form-control" name="s3_q5_1_1_4"
+                                   ng-model="info.s3_q5_1_1_4"
+                                   ng-pattern="/^0|[1-9]\d*$/"/>
                         </div>
                     </div>
                 </div>
@@ -1216,7 +1203,7 @@
                     <label class="control-label bold" style="margin-top: 5px;">Are contact lenses
                         worn?</label>
                 </div>
-                <div class="col-md-3 col-sm-4">
+                <div class="col-md-4 col-sm-4">
                     <div class="btn-group">
                         <label class="btn">
                             <input type="radio" ng-model="info.q4_2_13_2" value="1"/> Yes
@@ -1236,7 +1223,7 @@
         <label class="control-label " style="margin-left: 10px;"><span class="bold">5.2 Visual Fields:</span>
             (Confrontation to each eye)</label>
     </div>
-    <div class="col-md-3 col-sm-5">
+    <div class="col-md-4 col-sm-5">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q5_2' ng-model="info.s3_q5_2" value="1"/> Normal
@@ -1336,13 +1323,13 @@
 <!--end show error section 3, 6-->
 </br>
 <div class="row">
-    <div class="col-md-3 col-sm-5" style="margin-top: 5px;">
+    <div class="col-md-4 col-sm-6" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Creatinine:</label>
     </div>
     <div class="col-md-2 col-sm-2">
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_1.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_1" ng-model="info.s3_q6_1"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1360,7 +1347,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Sympathomimetic Amines:</label>
     </div>
-    <div class="col-md-2 col-sm-3">
+    <div class="col-md-3 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q6_2_1' ng-model="info.s3_q6_2_1" value="1"/> NEG
@@ -1371,7 +1358,7 @@
         </div>
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_2_2.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_2_2" ng-model="info.s3_q6_2_2"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1389,7 +1376,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Barbiturates (non-AS4308):</label>
     </div>
-    <div class="col-md-2 col-sm-3">
+    <div class="col-md-3 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q6_3_1' ng-model="info.s3_q6_3_1" value="1"/> NEG
@@ -1400,7 +1387,7 @@
         </div>
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_3_2.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_3_2" ng-model="info.s3_q6_3_2"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1418,7 +1405,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label  bold" style="margin-left: 10px;">Benzodiazepines:</label>
     </div>
-    <div class="col-md-2 col-sm-3">
+    <div class="col-md-3 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q6_4_1' ng-model="info.s3_q6_4_1" value="1"/> NEG
@@ -1429,7 +1416,7 @@
         </div>
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_4_2.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_4_2" ng-model="info.s3_q6_4_2"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1447,7 +1434,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Cocaine:</label>
     </div>
-    <div class="col-md-2 col-sm-3">
+    <div class="col-md-3 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q6_5_1' ng-model="info.s3_q6_5_1" value="1"/> NEG
@@ -1458,7 +1445,7 @@
         </div>
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_5_2.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_5_2" ng-model="info.s3_q6_5_2"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1476,7 +1463,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Methadone(non-AS308):</label>
     </div>
-    <div class="col-md-2 col-sm-3">
+    <div class="col-md-3 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q6_6_1' ng-model="info.s3_q6_6_1" value="1"/> NEG
@@ -1487,7 +1474,7 @@
         </div>
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_6_2.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_6_2" ng-model="info.s3_q6_6_2"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1505,7 +1492,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Cannabinoids:</label>
     </div>
-    <div class="col-md-2 col-sm-3">
+    <div class="col-md-3 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q6_7_1' ng-model="info.s3_q6_7_1" value="1"/> NEG
@@ -1516,7 +1503,7 @@
         </div>
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_7_2.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_7_2" ng-model="info.s3_q6_7_2"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1534,7 +1521,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Opiates:</label>
     </div>
-    <div class="col-md-2 col-sm-3">
+    <div class="col-md-3 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q6_8_1' ng-model="info.s3_q6_8_1" value="1"/> NEG
@@ -1545,7 +1532,7 @@
         </div>
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_8_2.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_8_2" ng-model="info.s3_q6_8_2"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1563,7 +1550,7 @@
     <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
         <label class="control-label bold" style="margin-left: 10px;">Alcohol:</label>
     </div>
-    <div class="col-md-2 col-sm-3">
+    <div class="col-md-3 col-sm-4">
         <div class="btn-group">
             <label class="btn">
                 <input type="radio" name='s3_q6_9_1' ng-model="info.s3_q6_9_1" value="1"/> NEG
@@ -1574,7 +1561,7 @@
         </div>
     </div>
     <div ng-class="{'has-error': category3Form.s3_q6_9_2.$error.pattern}">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <input type="text" class="form-control" name="s3_q6_9_2" ng-model="info.s3_q6_9_2"
                    ng-pattern="/^0|[1-9]\d*$/"/>
 
@@ -1597,7 +1584,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
-            <label class="control-label bold" style="margin-left: 10px">Weight</label>
+            <label class="control-label bold">Weight</label>
         </div>
         <div ng-class="{'has-error': category3Form.s3_q7_1.$error.pattern}">
             <div class="col-md-2 col-sm-3">
@@ -1612,8 +1599,8 @@
         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
             <label class="control-label"> cms</label>
         </div>
-        <div class="col-md-1 col-sm-1" style="font-weight: bold">
-            <label class="control-label" style="font-weight: bold; margin-top: 5px;">Height</label>
+        <div class="col-md-1 col-sm-1">
+            <label class="control-label bold" style="margin-top: 5px;">Height</label>
         </div>
         <div class="col-md-2 col-sm-3">
             <div ng-class="{'has-error': category3Form.s3_q7_2.$error.pattern}">
@@ -1693,13 +1680,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
+                        <div class="col-md-3 col-sm-4" style="margin-top: 5px;width: auto;">
                             <label class="control-label">Signature of Employee/Applicant:</label>
                         </div>
                         <div class="col-md-2 col-sm-3">
-                            <img src="" alt="" style="width: 100%; height: 30px;"/>
+                            <img src="" alt="" style="width: 100%; height: 40px;"/>
                         </div>
-                        <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
+                        <div class="col-md-1 col-sm-1" style="margin-top: 5px;width: auto;">
                             <label class="control-label">Date:</label>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1717,15 +1704,15 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <div class="col-md-5 col-sm-7">
+                        <div class="col-md-6 col-sm-7" style="width: auto;margin-top: 5px;">
                             <label class="control-label">Name of Examining Health Professional: Dr. Hanh
                                 Nguyen</label>
                         </div>
-                        <div class="col-md-1 col-sm-2" style="margin-top: 5px;">
+                        <div class="col-md-1 col-sm-2" style="margin-top: 5px;width: auto;">
                             <label class="control-label">Signature:</label>
                         </div>
                         <div class="col-md-2 col-sm-2">
-                            <img src="" alt="" style="width: 100%; height: 30px;"/>
+                            <img src="" alt="" style="width: 100%; height: 40px;"/>
                         </div>
                     </div>
                 </div>
@@ -1734,7 +1721,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-5 col-sm-7"></div>
-                        <div class="col-md-1 col-sm-2">
+                        <div class="col-md-1 col-sm-2" style="width: auto;">
                             <label class="control-label">Date:</label>
                         </div>
                         <div class="col-md-2 col-sm-2">
@@ -1754,8 +1741,8 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <div class="col-md-5 col-sm-7">
-                            <label class="control-label bold" style="margin-top: 10px;">I have sighted the employee
+                        <div class="col-md-5 col-sm-7" style="margin-top: 10px;width: auto;">
+                            <label class="control-label bold">I have sighted the employee
                                 / applicant's photo ID</label>
                         </div>
                         <div class="col-md-1 col-sm-1">
@@ -2150,11 +2137,11 @@
             <label class="control-label">Name of Examining Health Professional: Dr. Hanh
                 Nguyen</label>
         </div>
-        <div class="col-md-1 col-sm-2" style="margin-top: 5px;">
+        <div class="col-md-1 col-sm-2" style="margin-top: 5px;width: auto">
             <label class="control-label">Signature:</label>
         </div>
         <div class="col-md-2 col-sm-2">
-            <img src="" alt="" style="width: 100%; height: 30px;"/>
+            <img src="" alt="" style="width: 100%; height: 40px;"/>
         </div>
     </div>
 </div>
@@ -2163,7 +2150,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-5 col-sm-7"></div>
-        <div class="col-md-1 col-sm-2">
+        <div class="col-md-1 col-sm-2" style="width: auto;">
             <label class="control-label">Date:</label>
         </div>
         <div class="col-md-1 col-sm-2">
@@ -2177,51 +2164,3 @@
 </div>
 </div>
 </form>
-<!--=============================== Signature Form ============================================-->
-<div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 700, height: 500});
-
-            $('#resetSig').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay').attr("src", data);
-                    $('#signDisplay').show();
-                }
-
-                $('#modalSign').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>

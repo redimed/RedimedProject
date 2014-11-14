@@ -62,6 +62,10 @@ app.get('/api/patient/tesst', ClientController.test);
 
 /* END KHANH RESPONSIBILITY */
 
+app.post("/api/v1/skinapp/patient/image", ClientController.getSkinAppImage);
+app.post("/api/v1/skinapp/patient/add", ClientController.addSkinApp);
+app.post("/api/v1/skinapp/patient/getData", ClientController.getSkinAppData);
+
 /**
  *  KHANK CONVERTOR
  */

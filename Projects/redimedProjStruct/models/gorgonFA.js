@@ -124,15 +124,15 @@ module.exports = function(sequelize, DataTypes){
         "LName" : DataTypes.STRING(200),
         "LPosition" : DataTypes.STRING(200),
         "Created_by" : DataTypes.INTEGER(11),
-        "Creation_date" : DataTypes.DATE,
+        //"Creation_date" : DataTypes.DATE,
         "Last_updated_by" : DataTypes.INTEGER(11),
-        "Last_update_date" : DataTypes.DATE,
+        //"Last_update_date" : DataTypes.DATE,
         "CalId": DataTypes.INTEGER(20),
         "DocId" : DataTypes.INTEGER(11)
-
     },{
         tableName: 'gorgon_doc_fca', // đặt tên bảng
-        timestamps: false // đặt false để ko tự động tạo các cột timestamp
+        createdAt : "Creation_date",
+        updatedAt : "Last_update_date"
     });
     return gorgonFA;
 };

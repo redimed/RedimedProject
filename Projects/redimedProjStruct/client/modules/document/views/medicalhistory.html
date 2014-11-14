@@ -33,9 +33,16 @@
 <div class="caption">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <a href="javascript:;" ng-click="submit(mhForm)" class="btn green pull-right">Submit</a>
-            <a href="javascript:;" ng-click="print()" class="btn btn-primary blue pull-right">Print PDF</a>
-            <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
+            <button type="button"
+                    ng-disabled="mhForm.$error.pattern || mhForm.$error.maxlength|| mhForm.$error.required
+                    || !infoChanged()"
+                    ng-click="submit(mhForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+            </button>
+            <button type="button"
+                    ng-disabled="mhForm.$error.pattern || mhForm.$error.maxlength|| mhForm.$error.required"
+                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+            </button>
+            <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>
 </div>
@@ -64,10 +71,15 @@
 <div class="col-md-12 col-sm-12">
 <div class="portlet box grey-cascade">
 <div class="portlet-body form">
-<div style="background-color: lightgrey; vertical-align: middle; height: 35px">
-    <label class="control-label bold" style="margin-left: 10px">Personal Details</label>
-    <label class="control-label">(to be filled in by Patient)</label>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div style="background-color: lightgrey; vertical-align: middle;">
+            <label class="control-label bold" style="margin-left: 10px">Personal Details</label>
+            <label class="control-label">(to be filled in by Patient)</label>
+        </div>
+    </div>
 </div>
+
 <div class="form-body">
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -86,13 +98,13 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-3 col-sm-4">
                 <label class="control-label">Date of birth:</label>
-                <input type="text" class="form-control col-md-12" name="dob" required
+                <input type="text" class="form-control col-md-12" name="dob"
                        datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
                        is-open="openDOB" ng-click="openDOB = true"
-                       datepicker-options="dateOptions3" ng-required="true"
+                       datepicker-options="dateOptions3"
                        close-text="Close"/>
             </div>
-            <div class="col-md-4 col-sm-5">
+            <div class="col-md-5 col-sm-5">
                 <div class="btn-group" style="margin-left:25%;margin-top: 10%;">
                     <label class="btn">
                         <input type="radio" name='check' ng-model="info.check" ng-value="0"/> Male
@@ -148,10 +160,10 @@
 <hr/>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-2">
+        <div class="col-md-1 col-sm-2" style="margin-top: 10px;">
             <label class="control-label bold">Address: </label>
         </div>
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-2" style="margin-top: 10px;">
             <label class="control-label">As above</label>
         </div>
         <div class="col-md-1 col-sm-1">
@@ -168,9 +180,14 @@
 </div>
 <br/>
 
-<div style="background-color: lightgrey; vertical-align: middle; height: 35px">
-    <label class="control-label bold" style="margin-left: 10px">Declaration</label>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div style="background-color: lightgrey; vertical-align: middle;">
+            <label class="control-label bold" style="margin-left: 10px">Declaration</label>
+        </div>
+    </div>
 </div>
+
 <div class="form-group">
     <div class="col-md-12 col-sm-12">
         <p>I declare that the above information is true and correct, and that if any of this information changes, I will
@@ -185,25 +202,17 @@
             <label class="control-label">Name:</label>
             <input type="text" class="form-control"/>
         </div>
-        <div class="col-md-4 col-sm-4" style="margin-top: 25px;">
-            <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
-            <script type="text/javascript">
-                $('#signBtn').click(function () {
-                    $('#modalSign').modal({
-                        show: true
-                    });
-                });
-
-            </script>
-            <img src="" id="signDisplay" ng-model="info.consentSign"
-                 style="width:200px;height: 30px;"/>
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label">Sign:</label>
+            <img src="" id="signDisplay9" ng-model="info.consentSign"
+                 style="width:100%;height: 35px;"/>
         </div>
         <div class="col-md-3 col-sm-3">
             <label class="control-label">Date:</label>
-            <input type="text" class="form-control col-md-12" name="dob1" required
+            <input type="text" class="form-control col-md-12" name="dob1"
                    datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob1"
                    is-open="openDOB1" ng-click="openDOB1 = true"
-                   datepicker-options="dateOptions3" ng-required="true"
+                   datepicker-options="dateOptions3"
                    close-text="Close"/>
         </div>
     </div>
@@ -216,18 +225,9 @@
         <div class="col-md-1 col-sm-1" style="width: 5px;">
             <label class="control-label">I,</label>
         </div>
-        <div class="col-md-5 col-sm-5" style="margin-top: 10px;">
-            <input type="text" class="form-control"/>
-        </div>
         <div class="col-md-1 col-sm-1">
             <label class="control-label" style="width: 5px;margin-left: 10px;">DOB</label>
         </div>
-        <div class="col-md-5 col-sm-5" style="margin-top: 10px;">
-            <input type="text" class="form-control"/>
-        </div>
-    </div>
-    <div class="col-md-12 col-sm-12">
-        <label class="control-label" style="margin-left: 200px;">(Print Name)</label>
     </div>
     <div class="col-md-12 col-sm-12">
         <p>request to make available to the appropriate authorised management staff of my company, any details from my
@@ -242,7 +242,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-1 col-sm-1" style="width: 70px;">
                 <a href="javascript:;" id="signBtn1" class="btn green" style="margin-top: 5%;">Sign</a>
 
                 <script type="text/javascript">
@@ -264,7 +264,7 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
                 <label class="control-label">Witness:</label>
             </div>
             <div class="col-md-3 col-sm-3">
@@ -280,14 +280,14 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
                 <label class="control-label">Date:</label>
             </div>
             <div class="col-md-3 col-sm-4">
-                <input type="text" class="form-control col-md-12" name="dob2" required
+                <input type="text" class="form-control col-md-12" name="dob2"
                        datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob2"
                        is-open="openDOB2" ng-click="openDOB2 = true"
-                       datepicker-options="dateOptions3" ng-required="true"
+                       datepicker-options="dateOptions3"
                        close-text="Close"/>
             </div>
         </div>
@@ -300,18 +300,9 @@
         <div class="col-md-1 col-sm-1" style="width: 5px;">
             <label class="control-label">I,</label>
         </div>
-        <div class="col-md-5 col-sm-5" style="margin-top: 10px;">
-            <input type="text" class="form-control"/>
-        </div>
         <div class="col-md-1 col-sm-1">
             <label class="control-label" style="width: 5px;margin-left: 10px;">DOB</label>
         </div>
-        <div class="col-md-5 col-sm-5" style="margin-top: 10px;">
-            <input type="text" class="form-control"/>
-        </div>
-    </div>
-    <div class="col-md-12 col-sm-12">
-        <label class="control-label" style="margin-left: 200px;">(Print Name)</label>
     </div>
     <div class="col-md-12 col-sm-12">
         <p>Declare that to the best of my knowledge the answers in this application are correct and I understand that if
@@ -329,7 +320,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-1 col-sm-1" style="width: 70px;">
                 <a href="javascript:;" id="signBtn3" class="btn green" style="margin-top: 5%;">Sign</a>
                 <script type="text/javascript">
                     $('#signBtn3').click(function () {
@@ -350,7 +341,7 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
                 <label class="control-label">Witness:</label>
             </div>
             <div class="col-md-3 col-sm-3">
@@ -366,14 +357,14 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
                 <label class="control-label">Date:</label>
             </div>
             <div class="col-md-3 col-sm-3">
-                <input type="text" class="form-control col-md-12" name="dob3" required
+                <input type="text" class="form-control col-md-12" name="dob3"
                        datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob3"
                        is-open="openDOB3" ng-click="openDOB3 = true"
-                       datepicker-options="dateOptions3" ng-required="true"
+                       datepicker-options="dateOptions3"
                        close-text="Close"/>
             </div>
         </div>
@@ -452,7 +443,7 @@
 
         <div class="row">
             <div class="clo-md-12">
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-1 col-sm-2" style="margin-top: 5px;width: auto;">
                     <label class="control-label">Answer:</label>
                 </div>
                 <div class="col-md-4 col-sm-4">
@@ -473,9 +464,8 @@
                 </div>
             </div>
         </div>
-        <div class="row"
-             style="margin-top: 10px; text-align: left;">
-            <div class="col-md-1 col-sm-2">
+        <div class="row">
+            <div class="col-md-1 col-sm-2" style="width: auto;margin-top: 5px;">
                 <label class="control-label"><span
                         ng-show="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Comment:</label>
             </div>
@@ -600,7 +590,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-1 col-sm-2" style="width: auto;margin-top: 5px;">
                     <label class="control-label"><span
                             ng-show="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO">*</span>Comment:</label>
                 </div>
@@ -625,8 +615,8 @@
                 </div>
             </div>
         </div>
-        </ng-form>
-    </div>
+    </ng-form>
+</div>
 <!--</div>-->
 <!--end subquestion-->
 <div ng-if="line.line_id != group.line[group.line.length - 1].line_id">
@@ -671,7 +661,7 @@
 </div>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1">
+        <div class="col-md-1 col-sm-1" style="width: 70px; margin-top: 5px;">
             <label class="control-label">Name:</label>
         </div>
         <div class="col-md-3 col-sm-3">
@@ -683,7 +673,7 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1">
+        <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
             <a href="javascript:;" id="signBtn5" class="btn green">Sign</a>
             <script type="text/javascript">
                 $('#signBtn5').click(function () {
@@ -704,14 +694,14 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1">
+        <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
             <label class="control-label">Date:</label>
         </div>
         <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="dob4" required
+            <input type="text" class="form-control col-md-12" name="dob4"
                    datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob4"
                    is-open="openDOB4" ng-click="openDOB4 = true"
-                   datepicker-options="dateOptions3" ng-required="true"
+                   datepicker-options="dateOptions3"
                    close-text="Close"/>
         </div>
     </div>

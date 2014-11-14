@@ -21,8 +21,8 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <label class="control-label col-md-2 col-sm-3" style="margin-top: 7px">CANDIDATE NAME:</label>
-            <label class="control-label col-md-3 col-sm-5" style="margin-top: 7px"> John Smith</label>
+            <label class="control-label col-md-3 col-sm-3" style="margin-top: 7px">CANDIDATE NAME:</label>
+            <label class="control-label col-md-4 col-sm-5" style="margin-top: 7px"> John Smith</label>
             <label class="control-label col-md-1 col-sm-1" style="margin-top: 7px">D.O.B</label>
             <div class="col-md-3 col-sm-3">
                 <input type="text" ng-model="infoH.aa" class="form-control">
@@ -93,7 +93,7 @@
 
 
         <div class="row">
-            <label class="control-label col-md-3 col-sm-4">URINALYSIS:</label>
+            <label class="control-label col-md-4 col-lg-3 col-sm-4">URINALYSIS:</label>
             <div class="col-md-7 btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="infoH.IS_URINALYSIS" value="0"/>NORMAL
@@ -109,13 +109,13 @@
 
         <div ng-class="{'has-error':showClickedValidation && MAForm.URINALYSIS.$invalid && (infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2)}">
             <div class="row">
-                <label class="control-label col-md-3 col-sm-4">URINALYSIS COMMENT: <span ng-show="infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2" class="bold large">*</span></label>
+                <label class="control-label col-md-4 col-lg-3 col-sm-4">URINALYSIS COMMENT: <span ng-show="infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2" class="bold large">*</span></label>
                 <div class="col-md-5 col-sm-7">
                     <input type="text" ng-model="infoH.URINALYSIS" name="URINALYSIS" ng-required="infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2" class="form-control">
                 </div>
             </div>
             <div class="row" ng-show="showClickedValidation && MAForm.URINALYSIS.$invalid && (infoH.IS_URINALYSIS == 1  || infoH.IS_URINALYSIS == 2)">
-                <div class="col-md-3 col-sm-4"></div>
+                <div class="col-md-4 col-sm-4 col-lg-3"></div>
                 <div class="col-md-5 col-sm-7 help-block"  for="URINALYSIS">
                     <label>Must be enter if ABNORMAL / DISCUSSED</label>
                 </div>
@@ -124,7 +124,7 @@
         </br>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.BSL.$error.pattern}">
             <div class="row">
-                <label class="control-label col-md-3 col-sm-4">BSL(MMOL/L):</label>
+                <label class="control-label col-md-4 col-lg-3 col-sm-4">BSL(MMOL/L):</label>
                 <div class="col-md-2 col-sm-4">
                     <input type="text" ng-model="infoH.BSL" ng-pattern="/^[0-9]+$/" name="BSL" class="form-control">
                     <div ng-show="showClickedValidation && MAForm.BSL.$error.pattern">
@@ -138,13 +138,13 @@
         </br>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.WAIST_CIR.$error.pattern}">
             <div class="row">
-                <label class="control-label col-md-3 col-sm-4">WAIST CIRCUMFERENCE(cm):</label>
+                <label class="control-label col-md-4 col-lg-3 col-sm-4">WAIST CIRCUMFERENCE(cm):</label>
                 <div class="col-md-2 col-sm-4">
                     <input type="text" ng-model="infoH.WAIST_CIR" ng-pattern="/^[0-9]+$/" name="WAIST_CIR" ng-change="Ratio()" class="form-control">
                 </div>
             </div>
             <div class="row" ng-show="showClickedValidation && MAForm.WAIST_CIR.$error.pattern">
-                <div class="col-md-3 col-sm-4"></div>
+                <div class="col-md-4 col-lg-3 col-sm-4"></div>
                 <div class="col-md-4 col-sm-6 help-block" for="WAIST_CIR"  >
                     <label>WAIST CIRCUMFERENCE must be number</label>
                 </div>
@@ -153,20 +153,20 @@
         </br>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.HIP_CIR.$error.pattern}">
             <div class="row">
-                <label class="control-label col-md-3 col-sm-4">HIP CIRCUMFERENCE(cm):</label>
+                <label class="control-label col-md-4 col-lg-3 col-sm-4">HIP CIRCUMFERENCE(cm):</label>
                 <div class="col-md-2 col-sm-4">
                     <input type="text" ng-model="infoH.HIP_CIR" ng-pattern="/^[0-9]+$/" name="HIP_CIR" ng-change="Ratio()" class="form-control">
                 </div>
             </div>
             <div class="row" ng-show="showClickedValidation && MAForm.HIP_CIR.$error.pattern">
-                <div class="col-md-3 col-sm-4"></div>
+                <div class="col-md-4 col-lg-3 col-sm-4"></div>
                 <div class="col-md-4 col-sm-6 help-block" for="HIP_CIR"  >
                     <label>HIP CIRCUMFERENCE must be number</label>
                 </div>
             </div>
         </div></br>
         <div class="row">
-            <label class="control-label col-md-3 col-sm-4">WAIST TO HIP RATIO:</label>
+            <label class="control-label col-md-4 col-lg-3 col-sm-4">WAIST TO HIP RATIO:</label>
             <div class="col-md-2 col-sm-4">
                 <div class="form-control"  style="background-color: #f5f5f5">{{infoH.WAIST_TO_HIP_RATE | number : 1}}</div>
             </div>
@@ -368,8 +368,8 @@
             </div>
             </br>
             <div class="row">
-                <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">PERIPHERAL VISION NORMAL</label>
-                <div class="col-md-7 btn-group">
+                <label class="control-label bold col-md-5 col-lg-3 col-sm-5" style="margin-top: 10px">PERIPHERAL VISION NORMAL</label>
+                <div class="col-md-7  btn-group">
                     <label class="btn">
                         <input type="radio" ng-model="infoH.PERIPHERAL_VISION" value="0"/>Yes
                     </label>
@@ -379,8 +379,8 @@
                 </div>
             </div>
             <div class="row">
-                <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">VISUAL AIDS TO BE WORN AT WORK</label>
-                <div class="col-md-2 btn-group col-sm-3">
+                <label class="control-label bold col-md-5 col-lg-3 col-sm-5" style="margin-top: 10px">VISUAL AIDS TO BE WORN AT WORK</label>
+                <div class="col-md-3 col-lg-2 btn-group col-sm-3">
                     <label class="btn">
                         <input type="radio" ng-model="infoH.VISUAL_AIDS" value="0"/>Yes
                     </label>
@@ -388,7 +388,7 @@
                         <input type="radio" ng-model="infoH.VISUAL_AIDS" value="1"/> No
                     </label>
                 </div>
-                <div class="col-md-3 col-sm-4">
+                <div class="col-md-4 col-lg-3 col-sm-4">
                     <select class="form-control" ng-model="infoH.VISUAL_AIDS_TYPE">
                         <option value="">No Selection</option>
                         <option value="0">GLASSES</option>
@@ -398,8 +398,8 @@
                 </div>
             </div>
             <div class="row">
-                <label class="control-label bold col-md-4 col-sm-5" style="margin-top: 10px">COLOUR VISION NORMAL</label>
-                <div class="col-md-2 btn-group col-sm-3">
+                <label class="control-label bold col-md-5 col-lg-3 col-sm-5" style="margin-top: 10px">COLOUR VISION NORMAL</label>
+                <div class="col-md-3 col-lg-2 btn-group col-sm-3">
                     <label class="btn">
                         <input type="radio" ng-model="infoH.COLOR_VISUAL" value="0"/>Yes
                     </label>
@@ -407,9 +407,9 @@
                         <input type="radio" ng-model="infoH.COLOR_VISUAL" value="1"/> No
                     </label>
                 </div>
-                <div class="col-md-3 col-sm-4 ">
+                <div class="col-md-4 col-sm-4 ">
                     <label>Color Visual Score</label>
-                    <input type="text" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 70px;margin-top: 10px">/17
+                    <input type="text" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 40px;margin-top: 10px">/17
                 </div>
             </div>
 
@@ -430,8 +430,8 @@
         </div>
         <div class="portlet-body" ng-repeat="line in group.line">
             <label class="control-label bold">{{line.line_name}}</label>
-            <div class="row" >
-                <div class="col-md-2 col-sm-3 btn-group" ng-if="line.yesno == 2">
+            <div class="row" ng-if="line.yesno == 2">
+                <div class="col-md-3 col-sm-3 btn-group" >
                     <label class="btn">
                         <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="0"/>Yes
                     </label>
@@ -439,43 +439,55 @@
                         <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="1"/> No
                     </label>
                 </div>
-                <div ng-if="line.yesno == 3" >
-                    <div ng-if="line.value1 != null && line.value2 != null">
-                        <label class="col-md-1 col-sm-2" style="margin-top: 5px">{{line.value1}}</label>
-                        <div class="col-md-1 col-sm-2">
-                            <input type="text" ng-model="infoL.VAL1[line.line_id]" class="form-control">
-                        </div>
-                        <label class="col-md-1 col-sm-2" style="margin-top: 5px">{{line.value2}}</label>
-                        <div class="col-md-1 col-sm-2">
-                            <input type="text" ng-model="infoL.VAL2[line.line_id]" class="form-control">
-                        </div>
-                    </div>
-                    <div class="btn-group col-md-3 col-sm-4" >
-                        <label class="btn">
-                            <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="0"/>  Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="1"/>  Abnormal
-                        </label>
-                    </div>
+                <label class=" col-md-2 col-sm-2" style="margin-top: 10px">Comment</label>
+                <div class="col-md-6 col-sm-6">
+                    <textarea class="form-control" ng-model="infoL.COMMENTS[line.line_id]"></textarea>
                 </div>
-                <div ng-if="line.yesno == 1"  >
-                    <label class="col-md-1 col-sm-2" style="margin-top: 10px">{{line.value1}}</label>
-                    <div class="col-md-1 col-sm-2">
+            </div>
+            <div ng-if="line.yesno == 3" class="row">
+                <div ng-if="line.value1 != null && line.value2 != null">
+                    <label class="col-md-2 col-sm-2" style="margin-top: 5px">{{line.value1}}</label>
+                    <div class="col-md-2 col-sm-2">
                         <input type="text" ng-model="infoL.VAL1[line.line_id]" class="form-control">
                     </div>
-                    <label class="col-md-1 col-sm-2" style="margin-top: 10px">{{line.value2}}</label>
+                    <label class="col-md-2 col-sm-2" style="margin-top: 5px">{{line.value2}}</label>
                     <div class="col-md-2 col-sm-2">
                         <input type="text" ng-model="infoL.VAL2[line.line_id]" class="form-control">
                     </div>
-                    <label class="col-md-1 col-sm-2" style="margin-top: 10px"> PREDICTED (%)	</label>
+                </div>
+                <div class="btn-group col-md-4 col-sm-4" >
+                    <label class="btn">
+                        <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="0"/>  Normal
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="infoL.YES_NO_VAL[line.line_id]" value="1"/>  Abnormal
+                    </label>
+                </div>
+                <label class=" col-md-2 col-sm-2" style="margin-top: 10px">Comment</label>
+                <div class="col-md-6 col-sm-6">
+                    <textarea class="form-control" ng-model="infoL.COMMENTS[line.line_id]"></textarea>
+                </div>
+            </div>
+            <div ng-if="line.yesno == 1"  >
+                <div class="row">
+                    <label class="col-md-2 col-sm-2" style="margin-top: 10px">{{line.value1}}</label>
+                    <div class="col-md-2 col-sm-2">
+                        <input type="text" ng-model="infoL.VAL1[line.line_id]" class="form-control">
+                    </div>
+                    <label class="col-md-2 col-sm-2" style="margin-top: 10px">{{line.value2}}</label>
+                    <div class="col-md-2 col-sm-2">
+                        <input type="text" ng-model="infoL.VAL2[line.line_id]" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-2 col-sm-2" style="margin-top: 10px"> PREDICTED (%)	</label>
                     <div class="col-md-2 col-sm-2">
                         <input type="text" ng-model="infoL.VAL3[line.line_id]" class="form-control">
                     </div>
-                </div>
-                <label class=" col-md-1 col-sm-2" style="margin-top: 10px">Comment</label>
-                <div class="col-md-3 col-sm-6">
-                    <textarea class="form-control" ng-model="infoL.COMMENTS[line.line_id]"></textarea>
+                    <label class=" col-md-2 col-sm-2" style="margin-top: 10px">Comment</label>
+                    <div class="col-md-6 col-sm-6">
+                        <textarea class="form-control" ng-model="infoL.COMMENTS[line.line_id]"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -491,7 +503,7 @@
             Is candidate mentally and physically fit to undertake assignment now, and for the foreseeable future?
         </label>
         <div class="row">
-            <div class="col-md-2 btn-group">
+            <div class="col-md-3 col-lg-2 btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="infoH.IS_CANDIDATE_CAN_UNDERTAKE" value="0"/>Yes
                 </label>
@@ -502,13 +514,13 @@
             </div>
             <div ng-class="{'has-error':showClickedValidation && MAForm.CANDIDATE_CAN_UNDERTAKE_COMMENT.$invalid && infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1 }">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <textarea class="form-control"  name="CANDIDATE_CAN_UNDERTAKE_COMMENT" ng-required="infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1" ng-model="infoH.CANDIDATE_CAN_UNDERTAKE_COMMENT"></textarea>
                     </div>
                 </div>
                 <div class="row" ng-show="showClickedValidation && MAForm.CANDIDATE_CAN_UNDERTAKE_COMMENT.$invalid && infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 help-block"  for="CANDIDATE_CAN_UNDERTAKE_COMMENT">
+                    <div class="col-md-3 col-lg-2"></div>
+                    <div class="col-md-7 help-block"  for="CANDIDATE_CAN_UNDERTAKE_COMMENT">
                         <label>Must be enter if when no</label>
                     </div>
                 </div>
@@ -518,7 +530,7 @@
             Is candidate’s life expectancy or mobility likely to be adversely affected by anything revealed by your examination?
         </label>
         <div class="row">
-            <div class="col-md-2 btn-group">
+            <div class="col-md-3 col-lg-2 btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED" value="0"/>Yes
                 </label>
@@ -529,13 +541,13 @@
             </div>
             <div ng-class="{'has-error':showClickedValidation && MAForm.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT.$invalid && infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0 }">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <textarea class="form-control"  name="CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT" ng-required="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0" ng-model="infoH.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT"></textarea>
                     </div>
                 </div>
                 <div class="row" ng-show="showClickedValidation && MAForm.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT.$invalid && infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 help-block"  for="CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT">
+                    <div class="col-md-3 col-lg-2"></div>
+                    <div class="col-md-7 help-block"  for="CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT">
                         <label>Must be enter if when yes</label>
                     </div>
                 </div>
@@ -543,7 +555,7 @@
         </div>
         </br>
         <div class="row">
-            <label class="control-label col-md-2">
+            <label class="control-label col-md-3 col-lg-2">
                 I have examined:
             </label>
             <div class="col-md-7">
@@ -579,7 +591,7 @@
             </div>
         </div>
         <div class="row">
-            <label class="control-label col-md-2">Final Assessment</label>
+            <label class="control-label col-md-3 col-lg-2">Final Assessment</label>
             <div class="col-md-6 btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="infoH.FINAL_ASS" value="0"/>FIT

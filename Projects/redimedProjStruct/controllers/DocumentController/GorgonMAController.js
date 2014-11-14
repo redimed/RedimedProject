@@ -110,9 +110,9 @@ module.exports = {
                     GORGON_DATE: info.GORGON_DATE ,
                     SIGNATURE: info.SIGNATURE ,
                     Created_by : info.Created_by ,
-                    Creation_date: info.Creation_date ,
+                    //Creation_date: info.Creation_date ,
                     Last_updated_by : info.Last_updated_by ,
-                    Last_update_date: info.Last_update_date ,
+                    //Last_update_date: info.Last_update_date ,
                     CalId : info.CalId ,
                     DocId : info.DocId ,
                     EXAMINER_NAME: info.EXAMINER_NAME ,
@@ -268,9 +268,9 @@ module.exports = {
                     GORGON_DATE: info.GORGON_DATE ,
                     SIGNATURE: info.SIGNATURE ,
                     Created_by : info.Created_by ,
-                    Creation_date: info.Creation_date ,
+                    //Creation_date: info.Creation_date ,
                     Last_updated_by : info.Last_updated_by ,
-                    Last_update_date: info.Last_update_date ,
+                    //Last_update_date: info.Last_update_date ,
                     EXAMINER_NAME: info.EXAMINER_NAME ,
                     EXAMINER_ADDRESS: info.EXAMINER_ADDRESS ,
                     RIGHT_EAR_500 : info.RIGHT_EAR_500 ,
@@ -318,15 +318,23 @@ module.exports = {
 
 
     },
-    getMA: function(req,res){
-        var id = req.body.id;
 
-        db.gorgonMA.find({where:{GORGON_ID:id}},{raw:true})
+    checkGorgonMA: function(req,res){
+        var Patient_Id = req.body.PatientID;
+        var CalId = req.body.calID;
+
+        db.gorgonMA.find({where:{PATIENT_ID:Patient_Id,CalId : CalId}})
             .success(function(data){
-                res.json(data);
+                if(data == null)
+                {
+                    res.json({status:'fail'});
+                }else
+                {
+                    res.json(data);
+                }
             })
             .error(function(err){
-                res.json({status:'err'});
+                res.json({status:'error'});
                 console.log(err);
             })
     }

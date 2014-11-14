@@ -64,10 +64,12 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 						var doctors = data[i].doctor.split(",");
 						var statuses = data[i].status.split(",");
 						var cals = data[i].CAL_ID.split(",");
+						var patients = data[i].PATIENT.split(",");
 
 						$scope.overviewAppointment[i].statuses = [];
 						$scope.overviewAppointment[i].doctors = [];
 						$scope.overviewAppointment[i].cals = [];
+						$scope.overviewAppointment[i].patients = [];
 						for(var j = 0; j < $scope.options.doctors.length; j++){
 							var flag = false;
 							for(var k = 0; k < doctors.length; k++){
@@ -79,10 +81,12 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 								$scope.overviewAppointment[i].doctors.push(doctors[flag]);
 								$scope.overviewAppointment[i].statuses.push(statuses[flag]);
 								$scope.overviewAppointment[i].cals.push(cals[flag]);
+								$scope.overviewAppointment[i].patients.push(patients[flag]);
 							}else{
 								$scope.overviewAppointment[i].doctors.push("");
 								$scope.overviewAppointment[i].statuses.push("");
 								$scope.overviewAppointment[i].cals.push("");
+								$scope.overviewAppointment[i].patients.push("");
 							}
 						}
 					}// end for

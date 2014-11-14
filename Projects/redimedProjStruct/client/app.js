@@ -42,6 +42,8 @@ angular.module("app", [
 
     $urlRouterProvider.otherwise('/');
 
+	localStorageServiceProvider.setStorageType('sessionStorage');
+	
     $stateProvider
 
     /* System route initialization */

@@ -1,11 +1,16 @@
 angular.module('app.loggedIn.document.cat3.controllers', [])
-    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state) {
+    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore,$stateParams, toastr, $state) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
         //end date
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("caT 3: " + CalID + " patient: " + Patient_ID);
+
         $scope.today = new Date();
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
@@ -13,6 +18,26 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
             $state.go('loggedIn.home', null, {"reload": true});
         }
         else {
+            //begin signature
+            var tempSignature;
+            $scope.isSignature = false;
+            $scope.showSignature = function () {
+                $scope.isSignature = !$scope.isSignature;
+            }
+
+            $scope.cancelClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                $scope.info.PATIENT_SIGNATURE = tempSignature;
+            };
+            $scope.clearClick = function () {
+                $scope.info.PATIENT_SIGNATURE = '';
+            };
+            $scope.okClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                tempSignature = $scope.info.PATIENT_SIGNATURE;
+            }
+
+            //end signature
             //set value default
             $scope.info = {
                 cat_id: null,

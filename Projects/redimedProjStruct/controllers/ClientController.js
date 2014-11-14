@@ -1,5 +1,7 @@
 var squel = require("squel");
+var fs = require("fs");
 squel.useFlavour('mysql');
+var common_functions = require("../functions");
 
 var model_sql = {
     sql_patient_get_by_opt: function (limit, offset, search_data) {
@@ -86,6 +88,60 @@ var model_sql = {
 };
 
 module.exports = {
+    getSkinAppData: function(req, res){
+        var id = req.body.id;
+
+        var sql = "SELECT * FROM skinapp_patient_images WHERE id="+id;
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error'});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
+    addSkinApp: function(req, res){
+        var data = (req.body.data)?req.body.data:{};
+        var info = (req.body.info)?req.body.info:{};
+
+        var created = new Date();
+        created = common_functions.toDateDatabase(created);
+
+        var sql = "INSERT INTO skinapp_patient_images(data, info, created)"
+                    +" VALUES('"+JSON.stringify(data)+"', '"+JSON.stringify(info)+"', '"+created+"')";
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error'});
+                    return;
+                }
+                res.json({status: 'success'});
+            });
+        });        
+    },
+    getSkinAppImage: function(req, res){
+        var base64String = req.body.image.split(" ").join("+");
+        
+        base64String = base64String.replace(/^data:image\/png;base64,/, "");
+        base64String = base64String.replace(/^data:image\/jpeg;base64,/, "");
+
+        var random_str = new Date();
+        random_str = random_str.getTime();
+
+        var hostname = req.headers.host;
+
+        var filename = hostname+"/images/skinapp/"+random_str+".png";
+
+        fs.writeFile(filename, base64String, 'base64', function(err){
+            if(err) console.log(err);
+            else
+                res.json({"status":"OK", "image": filename});
+        });
+    },
     getQualificationList: function(req, res){
         var sql = model_sql.sql_qualification_list();
 
@@ -214,7 +270,6 @@ module.exports = {
         });
     },
     insert: function (req, res) {
-        console.log(req.body);
         var patient_data = req.body.patient;
 
         if(!patient_data){
@@ -289,9 +344,6 @@ module.exports = {
         ;
 
         var patient_data = req.body.patient;
-
-
-        console.log(patient_data)
 
         for (var key in patient_data) {
             if (patient_data[key] || patient_data[key] === 0 || patient_data[key] === '0')

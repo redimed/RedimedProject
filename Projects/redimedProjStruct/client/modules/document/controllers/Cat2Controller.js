@@ -1,22 +1,13 @@
 angular.module('app.loggedIn.document.cat2.controllers', [])
-    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter) {
-        //begin reset signature
-        $scope.resetFlag = false;
-        $scope.reset = function () {
-            $scope.resetFlag = !$scope.resetFlag;
-        }
-        //end signature
-
+    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state,$stateParams, $filter) {
         //begin show-hidden img signature
-        $scope.sig = false;
-        $scope.sigClick = function () {
-            $scope.sig = true;
+        console.log("aaaaaaaaaaaaa");
+        //clear signature
+        $scope.clearSignature = function () {
+            $scope.info.Signature = '';
         }
-        $scope.okClick = function () {
-            $scope.sig = false;
-        }
-        $scope.cancelClick = function () {
-            $scope.sig = false;
+        $scope.resetSignature = function () {
+            $scope.info.Signature = oriInfo.Signature;
         }
         //end show-hidden signature
 
@@ -27,12 +18,38 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
         };
         //end date
 
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("caT 2: " + CalID + " patient: " + Patient_ID);
+
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
             $state.go('loggedIn.home', null, {'reload': true});
         }
         else {
+
+            //begin signature
+            var tempSignature;
+            $scope.isSignature = false;
+            $scope.showSignature = function () {
+                $scope.isSignature = !$scope.isSignature;
+            }
+
+            $scope.cancelClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                $scope.info.Signature = tempSignature;
+            };
+            $scope.clearClick = function () {
+                $scope.info.Signature = '';
+            };
+            $scope.okClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                tempSignature = $scope.info.Signature;
+            }
+
+            //end signature
+
             $scope.today = new Date();
             //begin value default info
             $scope.info = {

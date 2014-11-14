@@ -31,6 +31,12 @@ a, a:active, a:focus{
     margin-top: 60px;
     padding: 15px;
 }
+#appt_tab .nav-tabs {margin-bottom: 0px;}
+#appt_tab .nav-tabs li.active a, .nav-tabs li.active a:hover{
+	border-left: 1px solid #b1bdbd;
+	border-right: 1px solid #b1bdbd;
+	border-top: 3px solid #f3565d;
+}
 /**
 * End Khank Style
 */

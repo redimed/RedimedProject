@@ -699,4 +699,16 @@ angular.module("app.loggedIn.controller",[
                 $state.go("loggedIn.home");
             }
         }
-    })
+    
+		$scope.navigator = {
+			next: function(){
+				window.history.forward();
+			},
+			prev: function(){
+				window.history.back();
+	
+			}
+		}
+		
+		
+	})

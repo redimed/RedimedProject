@@ -71,7 +71,7 @@
 							<tr ng-repeat="data in overviewAppointment track by $index" ng-init="overviewIndex=$index" 
 								id="overview{{overviewIndex}}">
 								<td><b>{{data.from_time_map}}</b></td>
-								<td ng-repeat="status in data.statuses track by $index" ng-init="doctorIndex=$index"
+								<td ng-repeat="status in data.patients track by $index" ng-init="doctorIndex=$index"
 									id="status{{overviewIndex}}{{doctorIndex}}"
 									ng-click="chooseBooking($event, {docId: doctorIndex, overId: overviewIndex, 
 										status: status, type: 'one'})">

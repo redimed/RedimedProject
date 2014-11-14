@@ -1,7 +1,7 @@
 
 angular.module('app.loggedIn.document.gorgonMA.controllers',[])
-    .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr) {
-        var isEdit = false;
+    .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$stateParams) {
+        var isEdit = true;
 
         $scope.resetFlag = false;
         $scope.reset = function () {
@@ -31,10 +31,35 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
 		 $scope.print = function(){
             $window.location.href = '/api/document/gorgonMA/print/5';
         }
-		
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("gorgon MA: " + CalID + " patient: " + Patient_ID);
+
+
+        $scope.checkAudiogram = function(value)
+        {
+            if(value == true)
+            {
+
+            }
+
+        };
+
+        $scope.checkSpirometry = function(value)
+        {
+            if(value == true)
+            {
+
+            }
+
+        };
+        var date = new Date();
+        var today = $filter('date')(date,'dd/MM/yyyy');
+        $scope.maxDate = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
         $scope.info={
             GORGON_ID : null,
-            PATIENT_ID : null,
+            PATIENT_ID : 4,
             PHOTO_ID : null,
             HAND_DOR : null,
             HEIGHT : null,
@@ -136,10 +161,10 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
             GORGON_DATE: null,
             SIGNATURE: null,
             Created_by : null,
-            Creation_date: null,
+            //Creation_date: null,
             Last_updated_by : null,
-            Last_update_date: null,
-            CalId : null,
+            //Last_update_date: null,
+            CalId : 12211,
             DocId : null,
             EXAMINER_NAME: null,
             EXAMINER_ADDRESS: null,
@@ -177,34 +202,28 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
             GLUCOSE_COMMENT : null,
             BLOOD_COMMENT : null
         };
+        //===================================insert and update===============================================
 
-        $scope.checkAudiogram = function(value)
-        {
-            if(value == true)
-            {
-
+        var insert = true;
+        DocumentService.checkGorgonMA("4","12211").then(function(response){
+            if(response['status'] === 'fail') {
+                insert = true;
             }
-
-        };
-
-        $scope.checkSpirometry = function(value)
-        {
-            if(value == true)
+            else
             {
-
+                insert = false;
+                $scope.info = response;
             }
+        });
 
-        };
-
-        if(isEdit == false){
-            $scope.submitGorgonMA = function(gorgonMAForm){
-                $scope.showClickedValidation = true;
-                if(gorgonMAForm.$invalid){
-                    toastr.error("Please Input All Required Information!", "Error");
-                }else
-                {
-                    var info = $scope.info;
-                    console.log(info);
+        $scope.submitGorgonMA = function(gorgonMAForm){
+            $scope.showClickedValidation = true;
+            if(gorgonMAForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else
+            {
+                var info = $scope.info;
+                if(insert == true){
                     DocumentService.insertGorgonMA(info).then(function(response){
                         if(response['status'] === 'success') {
                             alert("Insert Successfully!");
@@ -214,25 +233,9 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
                             alert("Insert Failed!");
                         }
                     });
-                }
-
-            };
-        }
-        else{
-            $scope.info.GORGON_ID = 14;
-
-            DocumentService.getGorgonMAInfo(14).then(function(data){
-                $scope.info = data;
-            })
-
-            $scope.submitGorgonMA = function(gorgonMAForm){
-                $scope.showClickedValidation = true;
-                if(gorgonMAForm.$invalid){
-                    toastr.error("Please Input All Required Information!", "Error");
                 }else
                 {
                     var info = $scope.info;
-                    console.log(info);
                     DocumentService.editGorgonMA(info).then(function(response){
                         if(response['status'] === 'success') {
                             alert("Edit Successfully!");
@@ -244,8 +247,8 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
                     });
                 }
 
-            };
-        }
+            }
 
+        };
 
     });

@@ -9,9 +9,15 @@
 <div class="caption">
     <div class="row">
         <div class="col-md-12 ">
-            <a href="javascript:;" ng-click="submit(SA2)" class="btn green pull-right">Submit</a>
-            <a href="javascript:;" class="btn btn-primary blue pull-right">Print PDF</a>
-            <a href="javascript:;" class="btn btn-danger pull-right">Reset</a>
+            <button type="button"
+                    ng-disabled="SA2.$error.pattern || SA2.$error.maxlength || SA2.$error.required"
+                    ng-click="submit(SA2)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+            </button>
+            <button type="button"
+                    ng-disabled="SA2.$error.pattern || SA2.$error.maxlength || SA2.$error.required"
+                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+            </button>
+            <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>
 </div>
@@ -77,17 +83,17 @@
 </div>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1">
+        <div class="col-md-1 col-sm-1" style="width: auto;">
             <label class="control-label">Name:</label>
         </div>
-        <div class="col-md-11 col-sm-11" style="text-align: left;">
+        <div class="col-md-11 col-sm-11" style="text-align: left;width: auto">
             <label class="control-label"></label>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-3 col-sm-2" style="width: auto;">
             <label class="control-label" style="text-align: left;">Worker ID number:</label>
         </div>
         <div class="col-md-10 col-sm-10">
@@ -115,8 +121,8 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label" style="text-align: left;">Name of
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
+            <label class="control-label">Name of
                 recipient:</label>
         </div>
         <div class="col-md-5 col-sm-7">
@@ -128,11 +134,11 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
             <label class="control-label" style="text-align: left;">Location
                 of test:</label>
         </div>
-        <div class="col-md-10 col-sm-9">
+        <div class="col-md-9 col-sm-9">
             <label class="control-label">Belmont - 1 Frederick Street Belmont
                 WA</label>
         </div>
@@ -142,14 +148,14 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
             <label class="control-label" style="text-align: left;">Date of tetst:</label>
         </div>
         <div class="col-md-3 col-sm-4">
-            <input type="text" class="form-control col-md-12" name="dob" required
+            <input type="text" class="form-control col-md-12" name="dob"
                    datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
                    is-open="openDOB" ng-click="openDOB = true"
-                   datepicker-options="dateOptions3" ng-required="true"
+                   datepicker-options="dateOptions3"
                    close-text="Close"/>
         </div>
     </div>
@@ -158,10 +164,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-5">
+        <div class="col-md-4 col-sm-5" style="text-align: left;width: auto;">
             <label class="control-label" style="text-align: left;">Name of person conducting test:</label>
         </div>
-        <div class="col-md-9 col-sm-7">
+        <div class="col-md-8 col-sm-7">
             <label class="control-label" style="text-align: left;">Pre-employment 1</label>
         </div>
     </div>
@@ -308,10 +314,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label" style="text-align: left;">Name:</label>
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
+            <label class="control-label">Name:</label>
         </div>
-        <div class="col-md-10 col-sm-9" style="text-align: left;">
+        <div class="col-md-9 col-sm-9" style="text-align: left;">
             <label class="control-label" style="text-align: left;">Minh Phuong</label>
         </div>
     </div>
@@ -319,10 +325,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-10">
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label" style="text-align: left;">Employer name:</label>
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
+            <label class="control-label">Employer name:</label>
         </div>
-        <div class="col-md-10 col-sm-9">
+        <div class="col-md-9 col-sm-9">
             <label class="control-label"></label>
         </div>
     </div>
@@ -330,10 +336,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
             <label class="control-label" style="text-align: left;">Tester name:</label>
         </div>
-        <div class="col-md-10 col-sm-9">
+        <div class="col-md-9 col-sm-9">
             <label class="control-label" style="text-align: left;">Pre-employment 1</label>
         </div>
     </div>
@@ -414,7 +420,7 @@
                                 <input type="text" class="form-control" name="left"
                                        ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].VALUE_LEFT"
                                        ng-pattern="/^(0|\-?[1-9][0-9]*)$/"
-                                        />
+                                       style="text-align: center;"/>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-3">
@@ -422,7 +428,7 @@
                                 <input type="text" class="form-control" name="right"
                                        ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].VALUE_RIGHT"
                                        ng-pattern="/^(0|\-?[1-9][0-9]*)$/"
-                                        />
+                                       style="text-align: center;"/>
                             </div>
                         </div>
                     </div>
@@ -450,14 +456,6 @@
             <br/>
         </div>
         <!--end lines-->
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-12 col-sm-12" style="float: right;">
-            <img src="/img/audio2.png" alt="" class="img-responsive"
-                 style="height: 600px;width: 60%;margin-left: 20%;"/>
-        </div>
     </div>
 </div>
 <br/>

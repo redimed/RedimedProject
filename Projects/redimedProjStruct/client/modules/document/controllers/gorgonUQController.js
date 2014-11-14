@@ -1,12 +1,16 @@
 
 angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 
-    .controller("gorgonUQController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window) {
+    .controller("gorgonUQController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window,$stateParams) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
         $scope.info = [];
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("gorgon UQ: " + CalID + " patient: " + Patient_ID);
 
         $scope.resetFlag = false;
         $scope.reset = function () {

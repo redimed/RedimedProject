@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.IDS.controllers',[])
-    .controller("IDSController",function($scope,DocumentService,$http,$cookieStore) {
+    .controller("IDSController",function($scope,DocumentService,$http,$cookieStore,$stateParams) {
 
         $scope.infoL = [];
         $scope.listIDS = [];
@@ -10,6 +10,10 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
             $scope.resetFlag = !$scope.resetFlag;
         }
         //end signature
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("IDS: " + CalID + " patient: " + Patient_ID);
 
         //begin show-hidden img signature
         $scope.sig = false;
@@ -59,6 +63,8 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         };
 
         $scope.infoL.YES_NO = [];
+        $scope.infoL.PATIENT_ID = 3;
+        $scope.infoL.CAL_ID = 11111;
 
 //        $scope.infoL ={
 //            IDAS_LINE_ID : null,
@@ -100,11 +106,11 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
 
         };
 
-        DocumentService.checkIDS("2","12211").then(function(response){
+        DocumentService.checkIDS($scope.infoL.PATIENT_ID,$scope.infoL.CAL_ID).then(function(response){
             if(response['status'] === 'fail') {
                 alert("aaaaaaaaaaaaaaaaaaaa");
-                DocumentService.newIDS().then(function(response){
-                    DocumentService.loadIDS().then(function(response){
+                DocumentService.newIDS($scope.infoL.PATIENT_ID,$scope.infoL.CAL_ID).then(function(response){
+                    DocumentService.loadIDS($scope.infoL.PATIENT_ID,$scope.infoL.CAL_ID).then(function(response){
                         if(response['status'] === 'fail') {
                             alert("load fail!");
                         }
@@ -133,7 +139,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
             }else
             {
                 alert("qqqqqqqqqqqqqqqqqqqqqqqqqqq");
-                DocumentService.loadIDS().then(function(response){
+                DocumentService.loadIDS($scope.infoL.PATIENT_ID,$scope.infoL.CAL_ID).then(function(response){
                     if(response['status'] === 'fail') {
                         alert("load fail!");
                     }

@@ -56,43 +56,47 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 		$scope.real_list = [];
 
 		DoctorService.getCasualCalendar($scope.modelObjectMap).then(function(data){
-			$scope.casual_list = data.data;
+			if(data){
+				$scope.casual_list = data.data;
 
-			for(var i = 0; i < $scope.casual_list.length; i++){
-				$scope.casual_list[i].from_time_map = ConfigService.convertToTimeString($scope.casual_list[i].FROM_TIME);
-				$scope.casual_list[i].to_time_map = ConfigService.convertToTimeString($scope.casual_list[i].TO_TIME);
+				for(var i = 0; i < $scope.casual_list.length; i++){
+					$scope.casual_list[i].from_time_map = ConfigService.convertToTimeString($scope.casual_list[i].FROM_TIME);
+					$scope.casual_list[i].to_time_map = ConfigService.convertToTimeString($scope.casual_list[i].TO_TIME);
 
-				$scope.casual_list[i].day_of_week = REAL_DAY_OF_WEEK[ConfigService.getDayFromTime($scope.casual_list[i].FROM_TIME)];
-				$scope.casual_list[i].week = ConfigService.getWeekFromDate($scope.casual_list[i].FROM_TIME);
-				$scope.casual_list[i].convert_date = ConfigService.convertToDate($scope.casual_list[i].FROM_TIME);
+					$scope.casual_list[i].day_of_week = REAL_DAY_OF_WEEK[ConfigService.getDayFromTime($scope.casual_list[i].FROM_TIME)];
+					$scope.casual_list[i].week = ConfigService.getWeekFromDate($scope.casual_list[i].FROM_TIME);
+					$scope.casual_list[i].convert_date = ConfigService.convertToDate($scope.casual_list[i].FROM_TIME);
 
-				var id = $scope.casual_list[i].day_of_week+"-"+$scope.casual_list[i].week+"-"+$scope.casual_list[i].convert_date;
+					var id = $scope.casual_list[i].day_of_week+"-"+$scope.casual_list[i].week+"-"+$scope.casual_list[i].convert_date;
 
-				$scope.real_list.push({'id': id, day_of_week: $scope.casual_list[i].day_of_week, week: $scope.casual_list[i].week, convert_date: $scope.casual_list[i].convert_date});
-			} // end for
+					$scope.real_list.push({'id': id, day_of_week: $scope.casual_list[i].day_of_week, week: $scope.casual_list[i].week, convert_date: $scope.casual_list[i].convert_date});
+				} // end for
 
-			$scope.real_list_map = [];
-			$scope.real_list_map.push($scope.real_list[0]);
-			$scope.real_list_map[0].items = [];
-			var index = 0;
-			for(var i = 0; i < $scope.real_list.length; i++){
-				if($scope.real_list_map[index].id !== $scope.real_list[i].id){
-					$scope.real_list_map.push($scope.real_list[i]);
-					index++;
-					$scope.real_list_map[index].items = [];
-				}
-			}// end for
+				if($scope.real_list.length > 0){
+					$scope.real_list_map = [];
+					$scope.real_list_map.push($scope.real_list[0]);
+					$scope.real_list_map[0].items = [];
+					var index = 0;
+					for(var i = 0; i < $scope.real_list.length; i++){
+						if($scope.real_list_map[index].id !== $scope.real_list[i].id){
+							$scope.real_list_map.push($scope.real_list[i]);
+							index++;
+							$scope.real_list_map[index].items = [];
+						}
+					}// end for
 
-			for(var i = 0; i < $scope.casual_list.length; i++){
-				for(var j = 0; j < $scope.real_list_map.length; j++){
-					if($scope.real_list_map[j].day_of_week === $scope.casual_list[i].day_of_week
-						&& $scope.real_list_map[j].week === $scope.casual_list[i].week
-						&& $scope.real_list_map[j].convert_date === $scope.casual_list[i].convert_date){
-						$scope.real_list_map[j].items.push($scope.casual_list[i]);
-						break;
-					}
-				}
-			}// end for
+					for(var i = 0; i < $scope.casual_list.length; i++){
+						for(var j = 0; j < $scope.real_list_map.length; j++){
+							if($scope.real_list_map[j].day_of_week === $scope.casual_list[i].day_of_week
+								&& $scope.real_list_map[j].week === $scope.casual_list[i].week
+								&& $scope.real_list_map[j].convert_date === $scope.casual_list[i].convert_date){
+								$scope.real_list_map[j].items.push($scope.casual_list[i]);
+								break;
+							}
+						}
+					}// end for
+				} // end if real_list
+			} // end if
 		})
 	}
 
