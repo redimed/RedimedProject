@@ -18,11 +18,26 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
             $state.go('loggedIn.home', null, {"reload": true});
         }
         else {
-            //function check show-hidden signature
+            //begin signature
+            var tempSignature;
             $scope.isSignature = false;
             $scope.showSignature = function () {
                 $scope.isSignature = !$scope.isSignature;
             }
+
+            $scope.cancelClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                $scope.info.PATIENT_SIGNATURE = tempSignature;
+            };
+            $scope.clearClick = function () {
+                $scope.info.PATIENT_SIGNATURE = '';
+            };
+            $scope.okClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                tempSignature = $scope.info.PATIENT_SIGNATURE;
+            }
+
+            //end signature
             //set value default
             $scope.info = {
                 cat_id: null,

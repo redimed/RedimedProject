@@ -123,10 +123,10 @@ module.exports = {
                 r4_2_c: info.r4_2_c,
                 r5_1: info.r5_1,
                 r5_2: info.r5_2,
-                DocId: info.DocId,                            //edit
-                q1_5_3_c: info.q1_5_3_c,                      //edit
-                PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,    //edit
-                PATIENT_DATE: info.PATIENT_DATE,              //edit
+                DocId: info.DocId,
+                q1_5_3_c: info.q1_5_3_c,
+                PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,
+                PATIENT_DATE: info.PATIENT_DATE,
                 DOCTOR_ID: info.DOCTOR_ID                     //edit
 
             }, {raw: true})
@@ -238,11 +238,11 @@ module.exports = {
             r4_2_c: info.r4_2_c,
             r5_1: info.r5_1,
             r5_2: info.r5_2,
-            DocId: info.DocId,                        //edit
-            q1_5_3_c: info.q1_5_3_c,                     //edit
-            PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,            //edit
-            PATIENT_DATE: info.PATIENT_DATE,                 //edit
-            DOCTOR_ID: info.DOCTOR_ID                     //edit
+            DocId: info.DocId,
+            q1_5_3_c: info.q1_5_3_c,
+            PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,
+            PATIENT_DATE: info.PATIENT_DATE,
+            DOCTOR_ID: info.DOCTOR_ID
         }, {cat_id: info.cat_id}).success(function () {
             res.json({status: 'success'});
         }).error(function (err) {

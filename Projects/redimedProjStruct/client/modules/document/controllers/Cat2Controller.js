@@ -28,6 +28,28 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             $state.go('loggedIn.home', null, {'reload': true});
         }
         else {
+
+            //begin signature
+            var tempSignature;
+            $scope.isSignature = false;
+            $scope.showSignature = function () {
+                $scope.isSignature = !$scope.isSignature;
+            }
+
+            $scope.cancelClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                $scope.info.Signature = tempSignature;
+            };
+            $scope.clearClick = function () {
+                $scope.info.Signature = '';
+            };
+            $scope.okClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                tempSignature = $scope.info.Signature;
+            }
+
+            //end signature
+
             $scope.today = new Date();
             //begin value default info
             $scope.info = {
