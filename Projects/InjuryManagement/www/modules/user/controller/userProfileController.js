@@ -1,5 +1,5 @@
 angular.module('starter.user.controller',[])
-.controller('userProfileController',function($scope,UserService,$http,localStorageService,$ionicModal){
+.controller('userProfileController',function($scope,UserService,$http,localStorageService,OnlineBookingService){
         var userInfo = null;
         var companyInfo = null;
 
@@ -91,6 +91,17 @@ angular.module('starter.user.controller',[])
                 }
             })
 
+        }
+        $scope.changePass = function(){
+            OnlineBookingService.changeUserPassword($scope.info).then(function(data){
+                if(data.status === 'success')
+                {
+                   alert("Change Password Successfully","Success");
+
+                }
+                else if(data.status === 'error')
+                    alert("Change Password Failed", "Error");
+            })
         }
 
     })
