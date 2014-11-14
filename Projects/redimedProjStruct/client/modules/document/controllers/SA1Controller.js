@@ -2,12 +2,16 @@
  * Created by HUYNHAN on 10/1/2014.
  */
 angular.module('app.loggedIn.document.SA1.controllers', [])
-    .controller("SA1Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr) {
+    .controller("SA1Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr,$stateParams) {
 
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("Audiogram 3: " + CalID + " patient: " + Patient_ID);
 
         $scope.info = [];
         var userInfo = $cookieStore.get('userInfo');

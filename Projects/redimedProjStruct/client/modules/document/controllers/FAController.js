@@ -1,8 +1,11 @@
 
 angular.module('app.loggedIn.document.FA.controllers',[])
 
-    .controller("FAController",function($scope,$filter,$timeout,DocumentService,$http,$cookieStore,toastr) {
+    .controller("FAController",function($scope,$filter,$timeout,DocumentService,$stateParams,$http,$cookieStore,toastr) {
 
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("FA: " + CalID + " patient: " + Patient_ID);
 
         $scope.listFA = [];
         $scope.infoH = [];

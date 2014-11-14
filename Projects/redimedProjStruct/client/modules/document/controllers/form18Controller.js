@@ -2,11 +2,16 @@
  * Created by HUYNHAN on 9/25/2014.
  */
 angular.module('app.loggedIn.document.form18.controllers', [])
-    .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state) {
+    .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state,$stateParams) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("Form 18: " + CalID + " patient: " + Patient_ID);
+
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist");

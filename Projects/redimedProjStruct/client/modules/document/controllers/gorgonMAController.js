@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.gorgonMA.controllers',[])
-    .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr) {
+    .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$stateParams) {
         var isEdit = true;
 
         $scope.resetFlag = false;
@@ -31,7 +31,10 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
 		 $scope.print = function(){
             $window.location.href = '/api/document/gorgonMA/print/5';
         }
-		
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("gorgon MA: " + CalID + " patient: " + Patient_ID);
 
 
         $scope.checkAudiogram = function(value)

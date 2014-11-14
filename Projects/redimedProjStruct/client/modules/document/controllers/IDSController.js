@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.IDS.controllers',[])
-    .controller("IDSController",function($scope,DocumentService,$http,$cookieStore) {
+    .controller("IDSController",function($scope,DocumentService,$http,$cookieStore,$stateParams) {
 
         $scope.infoL = [];
         $scope.listIDS = [];
@@ -10,6 +10,10 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
             $scope.resetFlag = !$scope.resetFlag;
         }
         //end signature
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("IDS: " + CalID + " patient: " + Patient_ID);
 
         //begin show-hidden img signature
         $scope.sig = false;

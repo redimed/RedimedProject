@@ -2,11 +2,16 @@
  * Created by HUYNHAN on 10/1/2014.
  */
 angular.module('app.loggedIn.document.MRS.controllers', [])
-    .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore, $state, toastr) {
+    .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore, $state, toastr,$stateParams) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("MRS: " + CalID + " patient: " + Patient_ID);
+
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");

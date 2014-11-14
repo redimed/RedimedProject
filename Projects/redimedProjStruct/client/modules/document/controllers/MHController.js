@@ -2,7 +2,12 @@
  * Created by thanh on 9/27/2014.
  */
 angular.module('app.loggedIn.document.MH.controllers', [])
-    .controller("MHController", function ($scope, DocumentService, $http, $cookieStore, toastr, $state) {
+    .controller("MHController", function ($scope, DocumentService, $http, $cookieStore, toastr, $state,$stateParams) {
+
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("MH: " + CalID + " patient: " + Patient_ID);
+
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");

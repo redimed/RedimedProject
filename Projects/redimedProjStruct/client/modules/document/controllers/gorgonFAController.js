@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.gorgonFA.controllers',[])
-    .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window) {
+    .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window,$stateParams) {
         var isEdit = false;
 
         $scope.resetFlag = false;
@@ -30,7 +30,9 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         var date = new Date();
         var today = $filter('date')(date,'dd/MM/yyyy');
 
-
+        var CalID = $stateParams.CalID;
+        var Patient_ID = $stateParams.PatientID;
+        console.log("gorgon FA: " + CalID + " patient: " + Patient_ID);
 
         var sex = "female";
         $scope.c_Left3 = function(){
