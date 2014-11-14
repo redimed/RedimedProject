@@ -55,16 +55,18 @@ app.get('/api/erm/patient/qualification', ClientController.getQualificationList)
 app.post('/api/patient/insert', ClientController.insert);
 app.post('/api/patient/update', ClientController.update);
 
-app.get('/api/patient/get_by_id', ClientController.getById);
+app.post('/api/patient/get_by_id', ClientController.getById);
 app.post('/api/patient/get_by_option', ClientController.getByOptions);
 app.get('/api/patient/tesst', ClientController.test);
 
 
 /* END KHANH RESPONSIBILITY */
 
+app.get("/api/v1/skinapp/patient/getAll", ClientController.getAll);
 app.post("/api/v1/skinapp/patient/image", ClientController.getSkinAppImage);
 app.post("/api/v1/skinapp/patient/add", ClientController.addSkinApp);
-app.post("/api/v1/skinapp/patient/getData", ClientController.getSkinAppData);
+app.post("/api/v1/skinapp/patient/getFields", ClientController.getFields);
+app.post("/api/v1/skinapp/patient/update", ClientController.updateSkinApp);
 
 /**
  *  KHANK CONVERTOR

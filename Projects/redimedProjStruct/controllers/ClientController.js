@@ -62,7 +62,10 @@ var model_sql = {
     sql_get_by_opt: function(search_opt){
         var limit = (search_opt.limit) ? search_opt.limit : 0;
         var offset = (search_opt.offset) ? search_opt.offset : 0;
-        var search_data = search_opt.data;
+        if(search_opt.data)
+            var search_data = search_opt.data;
+        else
+            var search_data = "";
         
         
         var query = squel.select()
@@ -71,15 +74,19 @@ var model_sql = {
                 .limit(limit)
                 .offset(offset);
 
-        if (search_data.sex) {
-            query.where('Sex = ?', search_data.sex);
-            console.log(query.toString());
-        }
-        delete search_data.sex;
+        //console.log(query);
 
-        for (var key in search_data) {
-            if (search_data[key]) {
-                query.where(key + " LIKE ?", search_data[key] + '%');
+        if(search_data !== ""){
+            if (search_data.sex) {
+                query.where('Sex = ?', search_data.sex);
+                //console.log(query.toString());
+            }
+            delete search_data.sex;
+
+            for (var key in search_data) {
+                if (search_data[key]) {
+                    query.where(key + " LIKE ?", search_data[key] + '%');
+                }
             }
         }
         
@@ -88,11 +95,10 @@ var model_sql = {
 };
 
 module.exports = {
-    getSkinAppData: function(req, res){
-        var id = req.body.id;
-
-        var sql = "SELECT * FROM skinapp_patient_images WHERE id="+id;
-
+    getAll: function(req, res){
+        var sql = "SELECT Patient_id, Title, First_name, Sur_name, Middle_name, Address1"
+                +" FROM cln_patients"
+                +" WHERE Type='skinapp'";
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {
                 if (err) {
@@ -103,15 +109,37 @@ module.exports = {
             });
         });
     },
-    addSkinApp: function(req, res){
-        var data = (req.body.data)?req.body.data:{};
-        var info = (req.body.info)?req.body.info:{};
+    getFields: function(req, res){
+        var email = req.body.Email;
 
-        var created = new Date();
-        created = common_functions.toDateDatabase(created);
+        var sql = "SELECT *"
+                    +" FROM cln_patients"
+                    +" WHERE Email LIKE '%"+email+"%'"
+                    +" AND Type='skinapp'";
 
-        var sql = "INSERT INTO skinapp_patient_images(data, info, created)"
-                    +" VALUES('"+JSON.stringify(data)+"', '"+JSON.stringify(info)+"', '"+created+"')";
+        console.log(sql);
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error'});
+                    return;
+                }
+                if(data.length > 0){
+                    res.json({status: 'success', data: data});
+                }else{
+                    res.json({status: 'failed'});
+                }
+            });
+        });
+    },
+    updateSkinApp: function(req, res){
+        var data = (req.body.data)?JSON.stringify(req.body.data):JSON.stringify({});
+        var id = (req.body.id)?req.body.id:0;
+
+        var sql = "UPDATE cln_patients"
+                +" SET data='"+data+"'"
+                +" WHERE Patient_id="+id;
 
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {
@@ -120,6 +148,45 @@ module.exports = {
                     return;
                 }
                 res.json({status: 'success'});
+            });
+        });
+    },
+    addSkinApp: function(req, res){
+        var data = (req.body.data)?req.body.data:{};
+        var info = (req.body.info)?req.body.info:{};
+        var doctor_id = (req.body.doctor_id)?req.body.doctor_id:0;
+
+        var sqlbuilder = squel.insert()
+                .into("cln_patients")
+                .set('Creation_date', 'NOW()', {dontQuote: true})
+                .set('Type', 'skinapp')
+                .set('Isenable', true);
+
+        for (var key in info) {
+            if (info[key] || info[key] === 0 || info[key] === '0')
+                sqlbuilder.set(key, info[key]);
+        }
+
+        var sql = sqlbuilder.toString();
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error', sql: sql});
+                    return;
+                }else{
+                    var sql_2 = "SELECT MAX(Patient_id) AS patient_id FROM cln_patients LIMIT 1";
+
+                    req.getConnection(function (err, connection) {
+                        var query = connection.query(sql_2, function (err, data) {
+                            if (err) {
+                                res.json({status: 'error', sql: sql});
+                                return;
+                            }
+                            res.json({status: 'success', 'patient_id': data[0].patient_id});
+                        });
+                    });
+                }
             });
         });        
     },
@@ -134,12 +201,13 @@ module.exports = {
 
         var hostname = req.headers.host;
 
-        var filename = hostname+"/images/skinapp/"+random_str+".png";
+        var filename = "client/images/skinapp/"+random_str+".png";
+        var return_filename = "images/skinapp/"+random_str+".png";
 
         fs.writeFile(filename, base64String, 'base64', function(err){
             if(err) console.log(err);
             else
-                res.json({"status":"OK", "image": filename});
+                res.json({"status":"OK", "image": "http://"+hostname+"/"+return_filename});
         });
     },
     getQualificationList: function(req, res){
@@ -215,7 +283,7 @@ module.exports = {
         });
     },
     getById: function (req, res) {
-        var patient_id = req.query.patient_id;
+        var patient_id = req.body.patient_id;
 
         if (!patient_id) {
             res.json({status: 'error', patient_id: patient_id});
@@ -232,7 +300,7 @@ module.exports = {
                     res.json({status: 'error2', err: err});
                     return;
                 }
-                res.json({status: 'success', data: data});
+                res.json({status: 'success', data: data[0]});
             });
         });
 
