@@ -55,6 +55,17 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			}
         }
 		
+		
+		// TRAVEL EXTRA ITEM 
+		for(var i = 0; i < $scope.extra_list.length; ++i) {
+			var extra_item = $scope.extra_list [i];
+			var t_item = arrGetBy($scope.list_dept_item, 'ITEM_ID', extra_item.ITEM_ID);
+			if(t_item) {
+				$scope.extra_list.splice(i, 1);
+			}
+		}
+		
+		
         $scope.item_list = item_cat($scope.list_dept_item);
 		delete $scope.list_dept_item;
 		delete $scope.list_appt_item;
@@ -106,55 +117,25 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			$scope.extra_list = [];
 		}
 		
-
-
 		/*
 		*	GET ITEMS OF DEPARTMENT
 		*/
         DoctorService.getItemByDept(doctorInfo.CLINICAL_DEPT_ID).then(function (data) {
+			 console.log('DEPT ITEMS ', data)
             $scope.list_dept_item = data;
-            $scope.isGetDeptItem = true;
-            if ($scope.isGetApptItem) {
-                active_item();
-            }
-        });
-		
-		/*
-		*	GET CHOSEN ITEMS 
-		*/
-        DoctorService.getItemAppt($scope.apptInfo.CAL_ID).then(function (data) {
+			return  DoctorService.getItemAppt($scope.apptInfo.CAL_ID);
+        }).then(function (data) {
             $scope.list_appt_item = data;
-             console.log('APPT ITEMS ', data)
-
-            $scope.isGetApptItem = true;
-            if ($scope.isGetDeptItem) {
-                active_item();
-            }
-        });
-		
+            console.log('APPT ITEMS ', data)
+			active_item();
+        }, function(err){
+			console.error(err);
+			toastr.error('Error, please Refresh Page !!!', "Error");
+		});
     };
     
 	
 	init();
-
-    /**
-     *  PROCESS CHOOSE ITEM + SUBMIT FUNCTION
-    
-	$scope.isShowPatient = false;
-	$scope.showPatientInfo = function(){
-		if($scope.isShowPatient)
-			return;
-		PatientService.getById ($scope.patient.Patient_id).then(function (data) {
-            $scope.patient = data;
-        });	
-		$scope.isShowPatient = true;
-	}
-	 */
-	 
-	 
-    $scope.chooseItem = function (item) {
-        item.checked = item.checked == '1' ? '0' : '1';
-    }
 
 	var reloadpage = function(){
 		$state.go($state.current, {}, {reload: true});
@@ -210,16 +191,13 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 					delete_list.push(t.CLN_ITEM_ID);
 				}
 			}
-			
-			
 		}
 		
 				
 		console.log('INSERT LIST ', insert_list);
-		
 		console.log('UPDATE LIST ', update_list);
-		
 		console.log('DELETE LIST ', delete_list);
+		
 		var cal_id = $scope.apptInfo.CAL_ID;
 		
 		var is_insert = false, is_delete = false;
