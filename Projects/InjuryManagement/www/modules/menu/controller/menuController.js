@@ -34,10 +34,6 @@ angular.module("starter.menu.controller",[])
         }
         loadMenu();
 
-
-
-
-
         $scope.logout = function(){
             localStorageService.remove('userInfo');
             localStorageService.remove('companyInfo');
