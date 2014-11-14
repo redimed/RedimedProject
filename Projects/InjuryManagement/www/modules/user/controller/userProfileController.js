@@ -79,11 +79,11 @@ angular.module('starter.user.controller',[])
 
 
         $scope.updateUserProfile  = function(userForm){
+
             UserService.updateProfile($scope.detail).then(function(data){
                 if(data.status === 'success')
                 {
                    alert("Edit Successfully!","Success");
-
                 }
                 else
                 {
@@ -92,15 +92,5 @@ angular.module('starter.user.controller',[])
             })
 
         }
-
-        $ionicModal.fromTemplateUrl('modules/user/views/changePassword.html', {
-            scope: $scope
-        }).then(function(modal) {
-            $scope.modal = modal;
-        });
-
-
-
-
 
     })
