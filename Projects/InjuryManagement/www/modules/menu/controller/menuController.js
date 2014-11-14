@@ -14,7 +14,6 @@ angular.module("starter.menu.controller",[])
 
 
             UserService.menu(userInfo.id).then(function(response){
-
                 var i = 0;
                 angular.forEach(response, function(menu){
                     if(menu.Parent_Id === -1)
@@ -23,7 +22,6 @@ angular.module("starter.menu.controller",[])
                         var j = 0;
                         angular.forEach($scope.Injurymenu, function(lmenu){
                             if(lmenu.parent.menu_id === menu.Parent_Id){
-
                                 $scope.Injurymenu[j].parent.childs.push({"name": menu.Description, "definition":menu.Definition, "id": menu.Menu_Id});
                             }
                             j++;

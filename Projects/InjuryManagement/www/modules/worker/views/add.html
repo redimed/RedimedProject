@@ -2,59 +2,61 @@
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
-    <div class="bar bar-subheader">
-        <h1 class="title">Information</h1>
-        <button class="button button-clear button-positive" ui-sref="app.worker.contact" >
-            Next
-        </button>
-
-    </div>
-
-    <!--information form-->
-    <ion-content class="padding has-header has-subheader">
-        <ion-list>
-
-                <label class="item item-input item-select">
-                    <span class="input-label">Title</span>
-                    <select>
+    <form name="infor" novalidate>
+        <div class="bar bar-subheader">
+            <h1 class="title">Information</h1>
+            <button class="button button-clear button-positive" ng-click="nextFormInfo(infor)">
+                Next
+            </button>
+        </div>
+        <ion-content class="padding has-header has-subheader">
+            <ion-list>
+                <label class="item item-input item-select" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
+                    <span class="input-label span-input-color">Title</span>
+                    <select ng-required="true" ng-model="worker.Title" name="Title">
                         <option>Mr</option>
                         <option>Mrs</option>
                         <option>Miss</option>
                     </select>
+                    <i ng-class="{'icon ion-alert-circled error':isSubmit && infor.Title.$invalid}"></i>
                 </label>
 
-                <label class="item item-input">
-                    <span class="input-label">First Name</span>
-                    <input type="text">
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.First_name.$invalid}">
+                    <span class="input-label span-input-color">First Name</span>
+                    <input ng-required="true" type="text" ng-model="worker.First_name" name="First_name" />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.First_name.$invalid}"></i>
                 </label>
 
-                <label class="item item-input">
-                    <span class="input-label">Middle Name</span>
-                    <input type="text">
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Middle_name.$invalid}">
+                    <span class="input-label span-input-color">Middle Name</span>
+                    <input ng-required="true" type="text" ng-model="worker.Middle_name" name="Middle_name" />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Middle_name.$invalid}"></i>
                 </label>
 
-                <label class="item item-input">
-                    <span class="input-label">Sur Name</span>
-                    <input type="text">
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Sur_name.$invalid}">
+                    <span class="input-label span-input-color">Sur Name</span>
+                    <input ng-required="true" type="text" ng-model="worker.Sur_name" name="Sur_name" />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Sur_name.$invalid}"></i>
                 </label>
 
-                <label class="item item-input">
-                    <span class="input-label">Birthday</span>
-                    <input type="text" onfocus="this.type='date';
-this.setAttribute('onfocus','');this.blur();this.focus();">
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.DOB.$invalid}">
+                    <span class="input-label span-input-color">Birthday</span>
+                    <input ng-required="true" type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="worker.DOB" name="DOB" />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.DOB.$invalid}"></i>
                 </label>
 
-                <label class="item item-input item-select">
-<span class="input-label">
-Sex
-</span>
-                    <select>
+                <label class="item item-input item-select" ng-class="{'has-error':isSubmit && infor.Sex.$invalid}">
+                    <span class="input-label span-input-color">Sex</span>
+                    <select ng-required="true" ng-model="worker.Sex" name="Sex">
                         <option>Female</option>
                         <option>Male</option>
                         <option>Other</option>
                     </select>
+                    <i ng-class="{'icon ion-alert-circled error':isSubmit && infor.Sex.$invalid}"></i>
                 </label>
-
-        </ion-list>
+    </form>
+    </ion-list>
     </ion-content>
 </ion-view>

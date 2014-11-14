@@ -1,28 +1,16 @@
 angular.module('starter.worker.add.controller',[])
 
-    .controller('workerAddController', function($scope, $state, $ionicSlideBoxDelegate, $templateCache) {
+    .controller('workerAddController', function($scope, WorkerServices, $state, localStorageService, $ionicPopup, $ionicLoading, $timeout) {
+        var userInfoLS = localStorageService.get("userInfo");
+        console.log(JSON.stringify(userInfoLS.company_id));
+        $scope.isSubmit = false;
+        $scope.isSubmit2 = false;
 
-        $scope.startApp = function() {
-            $state.go('');
-        };
-        $scope.next = function() {
-            $templateCache.get('contact.html')
-        };
-        $scope.previous = function() {
-            $ionicSlideBoxDelegate.previous();
-        };
-
-        $scope.slideChanged = function(index) {
-            $scope.slideIndex = index;
-        };
-
-
-        $scope.patientObj = {
+        $scope.workerObj = {
             Title: '',
             First_name: '',
             Sur_name: '',
             Middle_name: '',
-            Known_as: '',
             Address1: '',
             Address2: '',
             Post_code: '',
@@ -32,6 +20,11 @@ angular.module('starter.worker.add.controller',[])
             Home_phone: '',
             Work_phone: '',
             Mobile: '',
+            Suburb: '',
+            //chua lay duoc company id
+
+            //not set data form
+            Known_as: '',
             No_SMS: 1,
             Account_type: '',
             Account_holder: '',
@@ -48,26 +41,75 @@ angular.module('starter.worker.add.controller',[])
             Balance: '',
             Pays_Gap_Only: 1,
             Email: '',
-            Suburb: '',
             Alias_First_name: '',
             Alias_Sur_name: '',
             Phone_ext: ''
         }
 
-        //
-        //var reset = function () {
-        //    $scope.patient = angular.copy($scope.patientObj);
-        //    $scope.isSubmit = false;
-        //}
-        //
-        //$scope.reset = reset;
+        var reset = function() {
+            $scope.worker = angular.copy($scope.workerObj);
+            $scope.isSubmit = false;
+            $scope.isSubmit2 = false;
+        }
 
-        //show popup alert
-        //var alertPopup = $ionicPopup.alert({
-        //    title: 'Dont eat that!',
-        //    template: 'It might taste good'
-        //});
-        //alertPopup.then(function(res) {
-        //    console.log('Thank you for not eating my delicious ice cream cone');
-        //});
+        $scope.reset = reset;
+
+        var init = function () {
+            reset();
+        }
+
+        $scope.nextFormInfo = function(infor) {
+            $scope.isSubmit = true;
+            if (infor.$invalid){
+                var alertPopup = $ionicPopup.alert({
+                    title: "Can't next form",
+                    template: 'Please Check Your Information!'
+                });
+            }
+            else
+            {
+                $state.go("app.worker.contact");
+            }
+        }
+
+        $scope.submit = function (workerForm, contact) {
+            $scope.isSubmit2 = true;
+            if (contact.$invalid) {
+                var alertPopup = $ionicPopup.alert({
+                    title: "Can't insert worker",
+                    template: 'Please Check Your Information!'
+                });
+                return;
+            }
+
+            WorkerServices.insertWorker({patient: $scope.worker}).then(function (data) {
+                if (data.status != 'success') {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Cannot Insert',
+                        template: 'Please Check Your Information!'
+                    });
+                    return;
+                }
+
+                $ionicLoading.show({
+                    template: "<div class='icon ion-ios7-reloading'></div>"+
+                    "<br />"+
+                    "<span>Waiting...</span>",
+                    animation: 'fade-in',
+                    showBackdrop: true,
+                    maxWidth: 200,
+                    showDelay: 0
+                });
+
+                $timeout(function () {
+                    reset();
+                    $ionicLoading.hide();
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Insert Successfully',
+                        template: 'We have added worker to company!'
+                    });
+                }, 2000);
+            })
+        }
+        init();
     })

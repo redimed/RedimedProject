@@ -29,7 +29,7 @@
         <ion-list ng-repeat="menu in Injurymenu">
             <ion-item ng-repeat="submenu in menu.parent.childs">
             <!--{{menu.parent.name}}-->
-                <span  ui-sref="{{submenu.definition}}">
+                <span ui-sref="{{submenu.definition}}">
                 {{submenu.name}}
                 </span>
             </ion-item>

@@ -4,10 +4,7 @@ angular.module('starter.security.forgot.controller',[])
 
 
         $scope.forgotPass = function(){
-
-
             SecurityService.forgotPass($scope.email).then(function(data){
-
                 alert('success');
                 $state.go('security.login');
             })

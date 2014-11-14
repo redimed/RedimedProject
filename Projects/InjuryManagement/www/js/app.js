@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic',
-  "restangular",
+  'restangular',
   'starter.browse',
   'starter.menu',
   'starter.security',
@@ -13,30 +13,37 @@ angular.module('starter', ['ionic',
   'LocalStorageModule',
     'starter.worker',
 
-
 //
   //'starter.playlist'
 ])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
-})
+    .run(function($ionicPlatform) {
+      $ionicPlatform.ready(function() {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if(window.cordova && window.cordova.plugins.Keyboard) {
+          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        }
+        if(window.StatusBar) {
+          // org.apache.cordova.statusbar required
+          StatusBar.styleDefault();
+        }
+      });
+    })
 
-.config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
-  $stateProvider
+    .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
+      $stateProvider
 
-      RestangularProvider.setBaseUrl("http://192.168.1.106:3000");
+      //local
+      //RestangularProvider.setBaseUrl("http://localhost:3000");
 
+
+
+      //test ip local
+      RestangularProvider.setBaseUrl("http://192.168.135.47:3000");
+
+
+    
 
       $urlRouterProvider.otherwise('/');
       $stateProvider
@@ -58,9 +65,9 @@ angular.module('starter', ['ionic',
                 }
               }
             }
-    })
+          })
 
-})
+    })
     .run(function($state, $rootScope,localStorageService){
 
       $rootScope.$on("$stateChangeSuccess", function(e, toState){
