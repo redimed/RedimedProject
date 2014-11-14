@@ -31,7 +31,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.category2", {
-                url: "/category2",
+                url: "/category2/:CalID/:PatientID",
 
                 templateUrl: "modules/document/views/category2.html",
                 controller: 'Cat2Controller'

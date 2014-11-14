@@ -27,7 +27,9 @@
 			<div class="portlet-body">
 				<div ng-include="views.patient_info"></div>
 
-			</div>
+                <div ng-include="views.paperless"></div>
+
+            </div>
 		</div>
 	</tab>
 	<tab heading="Appointment Info">
@@ -96,75 +98,6 @@
 	</div>
 	</tab>
 </tabset>
-
-<!--
-<div class="portlet grey-cascade box">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-cogs"></i> Appointment Information
-        </div>
-		<div class="pull-right">
-            <button  ng-click="saveAppt()" class="btn blue"><i class="fa fa-save"></i> Save </button>
-        </div>
-    </div>
-    <div class="portlet-body">
-		<div class="row">
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Patient Name: </strong></div>
-				<div class="col-sm-8">{{patient.First_name}} {{patient.Middle_name}} {{patient.Sur_name}} 
-					<a ng-hide="isShowPatient" ng-click="showPatientInfo()"> <i class="fa fa-angle-double-right"></i> Detail </a>
-				</div>
-			</div>
-			
-		</div>
-		<div class="break-row"></div>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Site: </strong></div>
-				<div class="col-sm-8">{{apptInfo.SITE_NAME}}</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Department: </strong></div>
-				<div class="col-sm-8">{{apptInfo.CLINICAL_DEPT_NAME}}</div>
-			</div>
-		</div>
-		<div class="break-row"></div>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>From time: </strong></div>
-				<div class="col-sm-8">{{apptInfo.FROM_TIME}}</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>To time: </strong></div>
-				<div class="col-sm-8">{{apptInfo.TO_TIME}}</div>
-			</div>
-		</div>
-		<div class="break-row"></div>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Status: </strong></div>
-				<div class="col-sm-8">
-					<select class="form-control"
-						ng-model="apptChange.APP_TYPE"
-						ng-options="item.code as item.title for item in options.app_status">
-					</select>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-sm-4"><strong>Notes: </strong></div>
-				<div class="col-sm-8">
-					<textarea class="form-control" ng-model="apptChange.NOTES" placeholder="Appointment Notes"></textarea>
-				</div>
-			</div>
-		</div>
-		<div class="break-row"></div>
-		
-    </div>
-</div>
--->
 
 <div class="portlet box red">
     <div class="portlet-title">

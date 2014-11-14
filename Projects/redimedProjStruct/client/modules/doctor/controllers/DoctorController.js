@@ -86,6 +86,7 @@ angular.module("app.loggedIn.doctor.controller", [
 	
 	$scope.views = {
 		patient_info: 'modules/doctor/views/patient-info.html',
+        paperless: 'modules/doctor/views/paperless.html'
 	};
 	
 	$scope.modeFormItem = {
