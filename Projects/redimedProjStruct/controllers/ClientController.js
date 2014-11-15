@@ -153,7 +153,7 @@ module.exports = {
     },
     addSkinApp: function(req, res){
         var data = (req.body.data)?req.body.data:{};
-        var info = (req.body.info)?req.body.info:{};
+        var info = (req.body.patient)?req.body.patient:{};
         var doctor_id = (req.body.doctor_id)?req.body.doctor_id:0;
 
         var sqlbuilder = squel.insert()
@@ -339,13 +339,10 @@ module.exports = {
     },
     insert: function (req, res) {
         var patient_data = req.body.patient;
-
         if(!patient_data){
             res.json({status: 'error'});
             return;
         }
-
-
         var sql2 = squel.select().from('cln_patients').field("MAX(Patient_id) + 1", 'new_id').toString();
         req.getConnection(function (err, connection) {
             var query = connection.query(sql2, function (err, data) {
@@ -408,7 +405,7 @@ module.exports = {
         var sqlbuilder = squel.update()
                 .table("cln_patients")
                 .where('patient_id = ?', patient_id)
-                .set('Last_updated_by', 'NOW()', {dontQuote: true});
+                .set('Last_updated_date', 'NOW()', {dontQuote: true});
         ;
 
         var patient_data = req.body.patient;
