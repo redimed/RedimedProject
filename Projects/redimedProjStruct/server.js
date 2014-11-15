@@ -5,10 +5,12 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 var passport = require('passport');
 var session = require('express-session');
 var config = require('config');
 var oauthserver = require('oauth2-server');
+var compress = require('compression');
 var db = require('./models');
 
 
@@ -18,11 +20,12 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(compress());
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '100mb'}));
 app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
+app.use(methodOverride());
 app.use(cookieParser());
-// example get from config
 app.use(session({ secret: config.get('session.secret') }));
 app.use(passport.initialize());
 app.use(passport.session());
