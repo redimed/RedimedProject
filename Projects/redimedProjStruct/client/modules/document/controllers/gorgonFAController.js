@@ -11,14 +11,14 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
 
         $scope.cancelClick = function () {
             $scope.isSignature = !$scope.isSignature;
-            $scope.info.PATIENT_SIGNATURE = tempSignature;
+            $scope.info.fsign = tempSignature;
         };
         $scope.clearClick = function () {
-            $scope.info.PATIENT_SIGNATURE = '';
+            $scope.info.fsign = '';
         };
         $scope.okClick = function () {
             $scope.isSignature = !$scope.isSignature;
-            tempSignature = $scope.info.PATIENT_SIGNATURE;
+            tempSignature = $scope.info.fsign;
         }
         // End Signature
         //============================================================================
