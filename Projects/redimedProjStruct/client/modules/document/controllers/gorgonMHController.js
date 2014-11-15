@@ -21,7 +21,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             //set value default
             $scope.info = {
                 Gorgon_Id: null,
-                Patient_Id: null,
+                Patient_Id: Patient_ID,
                 JobNo: null,
                 Occupation: null,
                 JobLocation: null,
@@ -247,7 +247,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                 Creation_date: null,
                 Last_updated_by: null,
                 Last_update_date: null,
-                CalId: null,
+                CalId: CalID,
                 DocId: null,
                 Q21_IsComment: null,
                 Q21Other1Comment: null,

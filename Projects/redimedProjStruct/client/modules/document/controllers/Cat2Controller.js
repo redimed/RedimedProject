@@ -54,9 +54,9 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             //begin value default info
             $scope.info = {
                 cat_id: null,
-                cal_id: 999,
+                cal_id: CalID,
                 DocId: null,
-                patient_id: 999,
+                patient_id: Patient_ID,
                 Signature: null,
                 q1_4: null,
                 q1_4_c: null,

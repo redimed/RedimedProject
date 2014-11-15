@@ -39,8 +39,8 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 /**
                  * load data to input
                  */
-                var PATIENT_ID = 999;
-                var CAL_ID = 999;
+                var PATIENT_ID = Patient_ID;
+                var CAL_ID = CalID;
                 var data = response[0];
                 angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({

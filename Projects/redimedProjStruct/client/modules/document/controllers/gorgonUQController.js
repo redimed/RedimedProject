@@ -46,13 +46,13 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 
 
         var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
-        DocumentService.checkUser("3","11111").then(function(response){
+        DocumentService.checkUser(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
                 var date = new Date();
                 var today = $filter('date')(date,'dd/MM/yyyy');
                 $scope.info = {
                     name : userinfo.Booking_Person,
-                    Patient_Id : userinfo.id,
+                    Patient_Id : Patient_ID,
                     age : 15,
                     sex : "female",
                     TodayDate: today,
@@ -204,10 +204,10 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
             {
                 $scope.info = {
                     Quest_Id : response.Quest_Id,
-                    name : userinfo.Booking_Person,
-                    Patient_Id : userinfo.id,
-                    age : 15,
-                    sex : "aaaaaaaaaa",
+                    name : response.name,
+                    Patient_Id : response.Patient_Id,
+                    age : response.age,
+                    sex : response.sex,
                     TodayDate: response.TodayDate,
                     Height : response.Height,
                     Weight :   response.Weight,

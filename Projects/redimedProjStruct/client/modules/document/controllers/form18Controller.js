@@ -21,8 +21,8 @@ angular.module('app.loggedIn.document.form18.controllers', [])
             //set value default
             $scope.info = {
                 GORGON_ID: null,
-                PATIENT_ID: null,
-                CAL_ID: null,
+                PATIENT_ID: Patient_ID,
+                CAL_ID: CalID,
                 DocId: null,
                 TIME_TEST: new Date(),
                 WORK_COVER_NO: null,

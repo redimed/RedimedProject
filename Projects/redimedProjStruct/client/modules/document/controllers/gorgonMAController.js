@@ -59,7 +59,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
         $scope.maxDate = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
         $scope.info={
             GORGON_ID : null,
-            PATIENT_ID : 4,
+            PATIENT_ID : Patient_ID,
             PHOTO_ID : null,
             HAND_DOR : null,
             HEIGHT : null,
@@ -164,7 +164,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
             //Creation_date: null,
             Last_updated_by : null,
             //Last_update_date: null,
-            CalId : 12211,
+            CalId : CalID,
             DocId : null,
             EXAMINER_NAME: null,
             EXAMINER_ADDRESS: null,
@@ -205,7 +205,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
         //===================================insert and update===============================================
 
         var insert = true;
-        DocumentService.checkGorgonMA("4","12211").then(function(response){
+        DocumentService.checkGorgonMA(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
                 insert = true;
             }

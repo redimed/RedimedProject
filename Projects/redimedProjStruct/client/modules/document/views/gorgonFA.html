@@ -12,10 +12,12 @@
             <i class="icon-book-open font-blue-hoki"></i>
             <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 20px;">Work Fitness Assessment - FCA</span>
         </div>
-        <div class="col-md-6 ">
-            <button type="submit" class="btn green pull-right">Submit</button>
-            <a href="javascript:;" ng-click="print()" class="btn btn-primary blue pull-right">Print PDF</a>
-            <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
+        <div class="col-md-6 ">{{!infoChanged()}}
+            <button ng-disabled="!infoChanged()"
+                    type="submit" class="btn green pull-right">{{isNew?"Add new":"Update"}}</button>
+            <a href="javascript:;" ng-click="print()" ng-disabled="gorgonFAForm.$invalid" class="btn btn-primary blue pull-right">Print PDF</a>
+            <a href="javascript:;" ng-disabled="!infoChanged()"
+               ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
         </div>
     </div>
 </div>
@@ -90,8 +92,8 @@
             <div class="col-md-5 col-sm-5">
                 <div class="form-group">
                     <label class="control-label col-md-4" style="margin-top: 5px;">Signature</label>
-                    <a href="javascript:;" ng-click="sigClick()" id="signBtn" class="btn green">Sign</a>
-
+                    <img src="" ng-src="{{info.PATIENT_SIGNATURE}}" alt=""
+                         style="width: 200px;height: 150px;"/>
                 </div>
             </div>
 
