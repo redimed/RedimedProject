@@ -4,6 +4,24 @@ angular.module("app.loggedIn.patient.detail.controller", [])
 	$scope.mode = 'view';
 	$scope.label_update_view = "Update Appointment";
 
+	$scope.tab = [
+		{'name': 'Appointment Info', 'type': 'A', 'class': 'active'},
+		{'name': 'Patient Info', 'type': 'B', 'class':''}
+	]
+
+	$scope.tab_current = $scope.tab[0];
+
+	$scope.getClass = function(t){
+		for(var i = 0; i < $scope.tab.length; i++){
+			if(t.type === $scope.tab[i].type){
+				$scope.tab[i].class = 'active';
+				$scope.tab_current = $scope.tab[i];
+			}else{
+				$scope.tab[i].class = '';
+			}
+		}
+	}
+
 	// INIT
 	$scope.modelObjectBookingMap = {};
 	$scope.bookingPatientInfo = {};

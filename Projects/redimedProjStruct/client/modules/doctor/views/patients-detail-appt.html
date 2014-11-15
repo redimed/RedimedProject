@@ -22,80 +22,100 @@
 
 
 <tabset id="appt_tab">
-	<tab heading="Patient Profile">
+	<tab>
+		<tab-heading>
+			<span class="dropdown" on-toggle="toggled(open)">
+				<a href class="dropdown-toggle">
+					Patient Profile <i class="caret"></i>
+				</a>
+			    <ul class="dropdown-menu">
+					<li ng-class="{active: (patient_info_panel == 1)}"><a ng-click="patient_info_panel = 1">General Info</a></li>
+					<li ng-class="{active: (patient_info_panel == 2)}"><a ng-click="patient_info_panel = 2">General Info 2</a></li>
+					<li ng-class="{active: (patient_info_panel == 3)}"><a ng-click="patient_info_panel = 3">General Info 3</a></li>
+			    </ul>
+			</span>
+		</tab-heading>
 		<div class="portlet grey-cascade box">
 			<div class="portlet-body">
-				<div ng-include="views.patient_info"></div>
-
-                <div ng-include="views.paperless"></div>
-
+				<!-- <div ng-include="views.patient_info"></div> -->
+				<div ng-show="!patient_info_panel || patient_info_panel == 1" ng-include="'modules/patient/views/patient/step1.html'"></div> 
+				<div ng-show="patient_info_panel == 2" ng-include="'modules/patient/views/patient/step2.html'"></div>
+				<div ng-show="patient_info_panel == 3" ng-include="'modules/patient/views/patient/step3.html'"></div>
             </div>
 		</div>
 	</tab>
+	<tab heading="Documents">
+		<div class="portlet box grey-cascade" id="appt_paperless">
+			<div class="portlet-body">
+				<div ng-include="views.paperless"></div>	
+			</div>
+		</div>
+	</tab>
 	<tab heading="Appointment Info">
-	<div class="portlet grey-cascade box">
-		 <div class="portlet-body">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="col-sm-4"><strong>Patient Name: </strong></div>
-					<div class="col-sm-8">{{patient.First_name}} {{patient.Middle_name}} {{patient.Sur_name}} 
+		<div class="portlet grey-cascade box">
+			 <div class="portlet-body">
+				<div class="break-row"></div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Patient Name: </strong></div>
+						<div class="col-sm-8">{{patient.First_name}} {{patient.Middle_name}} {{patient.Sur_name}} 
+						</div>
 					</div>
+					
 				</div>
+				<div class="break-row"></div>
 				
-			</div>
-			<div class="break-row"></div>
-			
-			<div class="row">
-				<div class="col-md-6">
-					<div class="col-sm-4"><strong>Site: </strong></div>
-					<div class="col-sm-8">{{apptInfo.SITE_NAME}}</div>
-				</div>
-				<div class="col-md-6">
-					<div class="col-sm-4"><strong>Department: </strong></div>
-					<div class="col-sm-8">{{apptInfo.CLINICAL_DEPT_NAME}}</div>
-				</div>
-			</div>
-			<div class="break-row"></div>
-			
-			<div class="row">
-				<div class="col-md-6">
-					<div class="col-sm-4"><strong>From time: </strong></div>
-					<div class="col-sm-8">{{apptInfo.FROM_TIME}}</div>
-				</div>
-				<div class="col-md-6">
-					<div class="col-sm-4"><strong>To time: </strong></div>
-					<div class="col-sm-8">{{apptInfo.TO_TIME}}</div>
-				</div>
-			</div>
-			<div class="break-row"></div>
-			
-			<div class="row">
-				<div class="col-md-6">
-					<div class="col-sm-4"><strong>Status: </strong></div>
-					<div class="col-sm-8">
-						<select class="form-control"
-							ng-model="apptChange.APP_TYPE"
-							ng-options="item.code as item.title for item in options.app_status">
-						</select>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Site: </strong></div>
+						<div class="col-sm-8">{{apptInfo.SITE_NAME}}</div>
+					</div>
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Department: </strong></div>
+						<div class="col-sm-8">{{apptInfo.CLINICAL_DEPT_NAME}}</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="col-sm-4"><strong>Notes: </strong></div>
-					<div class="col-sm-8">
-						<textarea class="form-control" ng-model="apptChange.NOTES" placeholder="Appointment Notes"></textarea>
+				<div class="break-row"></div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>From time: </strong></div>
+						<div class="col-sm-8">{{apptInfo.FROM_TIME}}</div>
+					</div>
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>To time: </strong></div>
+						<div class="col-sm-8">{{apptInfo.TO_TIME}}</div>
 					</div>
 				</div>
-			</div>
-			<div class="break-row"></div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="pull-right">
-						<button  ng-click="saveAppt()" class="btn blue"><i class="fa fa-save"></i> Save </button>
+				<div class="break-row"></div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Status: </strong></div>
+						<div class="col-sm-8">
+							<select class="form-control"
+								ng-model="apptChange.APP_TYPE"
+								ng-options="item.code as item.title for item in options.app_status">
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Notes: </strong></div>
+						<div class="col-sm-8">
+							<textarea class="form-control" ng-model="apptChange.NOTES" placeholder="Appointment Notes"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="break-row"></div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="pull-right">
+							<button  ng-click="saveAppt()" class="btn blue"><i class="fa fa-save"></i> Save </button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</tab>
 </tabset>
 
