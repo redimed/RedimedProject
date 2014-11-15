@@ -20,7 +20,8 @@ module.exports = function (sequelize, DataTypes) {
         "isReview": DataTypes.INTEGER(11)
     }, {
         tableName: 'cln_mrs_headers',
-        timestamps: false
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_update_date'
     });
     return headersMRSCLN;
 };

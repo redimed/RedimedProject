@@ -84,7 +84,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
 //        console.log(today);
 
         $scope.infoH ={
-            Patient_id : "8",
+            Patient_id : Patient_ID,
             HEIGHT : null,
             WEIGHT: null,
             BMI: null,
@@ -119,7 +119,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             Created_by : null,
             //Creation_date : today,
             Last_updated_by : null,
-            CAL_ID : "11345",
+            CAL_ID : CalID,
             DF_CODE : null,
             ISENABLE : 1,
             IS_URINALYSIS : null,
@@ -155,17 +155,17 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             "Last_updated_by" : null,
             "Last_update_date" : null,
             "CAL_ID" : null,
-            "PATIENT_ID" : 3,
+            "PATIENT_ID" : Patient_ID,
             "YES_NO_VAL" : {},
             "ISENABLE" : 1
         };
 
 
-        DocumentService.checkMA($scope.infoH.Patient_id,$scope.infoH.CAL_ID).then(function(response){
+        DocumentService.checkMA(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
                 alert("aaaaaaaaaaaaaaaaaaaa");
-                DocumentService.newMA($scope.infoH.Patient_id,$scope.infoH.CAL_ID).then(function(response){
-                    DocumentService.loadMA($scope.infoH.Patient_id,$scope.infoH.CAL_ID).then(function(response){
+                DocumentService.newMA(Patient_ID,CalID).then(function(response){
+                    DocumentService.loadMA(Patient_ID,CalID).then(function(response){
                         if(response['status'] === 'fail') {
                             alert("load fail!");
                         }
@@ -245,7 +245,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT: response.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT,
                     DESCRIPTION : response.DESCRIPTION
                 };
-                DocumentService.loadMA($scope.infoH.Patient_id,$scope.infoH.CAL_ID).then(function(response){
+                DocumentService.loadMA(Patient_ID,CalID).then(function(response){
                     if(response['status'] === 'fail') {
                         alert("load fail!");
                     }
@@ -253,7 +253,6 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     {
                         var data = response[0];
                         var dataH = data.Header[0];
-                        console.log($scope.infoL);
                         $scope.listMA.push({ "header_name": dataH.DESCRIPTION,"header_id" : dataH.MA_ID, "group":[]});
                         var i = 0;
                         angular.forEach(data.Group, function(dataG){
@@ -261,11 +260,9 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                             {
                                 $scope.listMA[0].group.push({"group_id" : dataG.GROUP_ID, "group_name": dataG.GROUP_NAME, "line":[]});
                                 angular.forEach(data.Line, function(dataL){
-
                                     if(dataL.GROUP_ID ==  $scope.listMA[0].group[i].group_id )
                                     {
                                         $scope.listMA[0].group[i].line.push({ "line_id" : dataL.MA_LINE_ID,"line_name": dataL.QUESTION, "value1" : dataL.VAL1_NAME, "value2" : dataL.VAL2_NAME, "yesno" : dataL.YES_NO });
-
                                         $scope.infoL.YES_NO_VAL[dataL.MA_LINE_ID]= dataL.YES_NO_VAL;
                                         $scope.infoL.VAL1[dataL.MA_LINE_ID] = dataL.VAL1;
                                         $scope.infoL.VAL2[dataL.MA_LINE_ID] = dataL.VAL2;
@@ -276,7 +273,6 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                                 i++;
                             }
                         });
-                        console.log($scope.infoL.YES_NO_VAL);
                     }
                 });
 

@@ -1,40 +1,44 @@
 
 angular.module('app.loggedIn.document.gorgonFA.controllers',[])
     .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window,$stateParams) {
-        var isEdit = false;
+        // Start Signature
+        var tempSignature;
+        $scope.isSignature = false;
 
-        $scope.resetFlag = false;
-        $scope.reset = function () {
-            $scope.resetFlag = !$scope.resetFlag;
+        $scope.showSignature = function () {
+            $scope.isSignature = !$scope.isSignature;
         }
-        //end signature
 
-        //begin show-hidden img signature
-        $scope.sig = false;
-        $scope.sigClick = function () {
-            $scope.sig = true;
-        }
-        $scope.okClick = function () {
-            $scope.sig = false;
-        }
         $scope.cancelClick = function () {
-            $scope.sig = false;
+            $scope.isSignature = !$scope.isSignature;
+            $scope.info.fsign = tempSignature;
+        };
+        $scope.clearClick = function () {
+            $scope.info.fsign = '';
+        };
+        $scope.okClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            tempSignature = $scope.info.fsign;
         }
-
+        // End Signature
+        //============================================================================
+        //Set Date Start
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
-
-        var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
+        //Set Date End
+        //============================================================================
+        //var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
         var date = new Date();
         var today = $filter('date')(date,'dd/MM/yyyy');
 
+        // Get CalID & PatientID
         var CalID = $stateParams.CalID;
         var Patient_ID = $stateParams.PatientID;
         console.log("gorgon FA: " + CalID + " patient: " + Patient_ID);
-
-        var sex = "female";
+        //============================================================================
+        // Math on interface
         $scope.c_Left3 = function(){
             if($scope.info.c_Grip3 == 1)
             {
@@ -225,14 +229,12 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                 $scope.info.bResult6 = 4;
             }
         };
-//                var date = new Date();
-//                var today = $filter('date')(date,'dd/MM/yyyy');
+        //=============================================================================
         $scope.maxDateDOB = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
-        //$scope.maxDate = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
         $scope.maxDate = date;
         $scope.info = {
             id: null,
-            patientId : 4,
+            patientId : Patient_ID,
             fName : null,
             age : 20,
             JAF : null,
@@ -359,22 +361,37 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             //Creation_date : null,
             Last_updated_by : null,
             //Last_update_date : null,
-            CalId : 11111,
+            CalId : CalID,
             DocId : null
 
         };
-
+        //=============================================================================
+        //Set value
+        var oriInfo = angular.copy($scope.info);
+        //var info = $scope.info;
+        //Set value
+        //============================================================================
+        //Set button
+        $scope.resetForm = function () {
+            $scope.info = angular.copy(oriInfo);
+            $scope.gorgonFAForm.$setPristine();
+        }
+        $scope.infoChanged = function () {
+            return angular.equals(oriInfo, $scope.info);
+        }
         //============================================INSERT && UPDATE===============================
         var insert = true;
 
-        DocumentService.checkGorgonFA("4","11111").then(function(response){
+        DocumentService.checkGorgonFA(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail')
             {
                 insert = true;
+                $scope.isNew = true;
             }
             else
             {
                 insert = false;
+                $scope.isNew = false;
                 $scope.info = {
                     id: response['id'],
                     patientId :response['patientId'],
@@ -508,7 +525,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                     DocId : response['DocId']
 
                 };
-                console.log(JSON.stringify($scope.info));
+                oriInfo = angular.copy($scope.info);
             }
         });
 
@@ -525,21 +542,21 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                     var info = $scope.info;
                     DocumentService.insertGorgonFA(info).then(function(response){
                         if(response['status'] === 'success') {
-                            alert("Insert Successfully!");
+                            toastr.success("Successfully","Success");
                         }
                         else
                         {
-                            alert("Insert Failed!");
+                            toastr.error("Fail", "Error");
                         }
                     });
                 }else{
                     DocumentService.editGorgonFA($scope.info).then(function(response){
                         if(response['status'] === 'success') {
-                            alert("Edit Successfully!");
+                            toastr.success("Successfully","Success");
                         }
                         else
                         {
-                            alert("Edit Failed!");
+                            toastr.error("Fail", "Error");
                         }
                     });
                 }

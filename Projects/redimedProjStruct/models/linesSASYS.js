@@ -16,7 +16,8 @@ module.exports = function (sequelize, DataTypes) {
                 "LAST_UPDATE_DATE": DataTypes.DATE
             }, {
                 tableName: 'sys_sa_df_lines',
-                timestamps: false
+                createdAt: 'CREATION_DATE',
+                updatedAt: 'LAST_UPDATE_DATE'
             }
         )
         ;

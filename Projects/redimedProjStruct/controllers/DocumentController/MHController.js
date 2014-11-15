@@ -96,9 +96,7 @@ module.exports = {
                 DESCRIPTION: infoH.DESCRIPTION,
                 ISENABLE: infoH.ISENABLE,
                 CREATED_BY: infoH.CREATED_BY,
-                CREATION_DATE: new Date(),                                                      //edit
                 Last_updated_by: infoH.Last_updated_by,
-                Last_update_date: new Date(),                                                   //edit
                 Sign: infoH.Sign,
                 Date: new Date(),                                                               //edit
                 Release_of_medical_info_sign: infoH.Release_of_medical_info_sign,
@@ -123,9 +121,7 @@ module.exports = {
                             GROUP_NAME: infoG.GROUP_NAME,
                             ISENABLE: infoG.ISENABLE,
                             CREATED_BY: infoG.CREATED_BY,
-                            CREATION_DATE: infoG.CREATION_DATE,
                             Last_updated_by: infoG.Last_updated_by,
-                            Last_update_date: infoG.Last_update_date,
                             USER_TYPE: infoG.USER_TYPE
                         }, {raw: true})
                             .success(function () {
@@ -148,9 +144,7 @@ module.exports = {
                                         ISDETAILS_ANSWER_ONLY: infoL.ISDETAILS_ANSWER_ONLY,
                                         ISENABLE: infoL.ISENABLE,
                                         CREATED_BY: infoL.CREATED_BY,
-                                        CREATION_DATE: infoL.CREATION_DATE,
                                         Last_updated_by: infoL.Last_updated_by,
-                                        Last_update_date: infoL.Last_update_date,
                                         ISDetails_Answer_IfYes: infoL.ISDetails_Answer_IfYes
                                     }, {raw: true})
                                         .success(function () {
@@ -171,9 +165,7 @@ module.exports = {
                                                     Comments: infoS.Comments,
                                                     ISENABLE: infoS.ISENABLE,
                                                     CREATED_BY: infoS.CREATED_BY,
-                                                    CREATION_DATE: infoS.CREATION_DATE,
                                                     Last_updated_by: infoS.Last_updated_by,
-                                                    Last_update_date: infoS.Last_update_date
                                                 })
                                                     .success(function () {
                                                         //check finish insert
@@ -212,9 +204,7 @@ module.exports = {
                 DESCRIPTION: infoH.DESCRIPTION,
                 ISENABLE: infoH.ISENABLE,
                 CREATED_BY: infoH.CREATED_BY,
-                CREATION_DATE: new Date(),                                                      //edit
                 Last_updated_by: infoH.Last_updated_by,
-                Last_update_date: new Date(),                                                   //edit
                 Sign: infoH.Sign,
                 Date: new Date(),                                                               //edit
                 Release_of_medical_info_sign: infoH.Release_of_medical_info_sign,
@@ -234,9 +224,7 @@ module.exports = {
                             GROUP_NAME: infoG.GROUP_NAME,
                             ISENABLE: infoG.ISENABLE,
                             CREATED_BY: infoG.CREATED_BY,
-                            CREATION_DATE: infoG.CREATION_DATE,
                             Last_updated_by: infoG.Last_updated_by,
-                            Last_update_date: infoG.Last_update_date,
                             USER_TYPE: infoG.USER_TYPE
                         }, {PATIENT_ID: 999, CAL_ID: 999, GROUP_ID: infoG.GROUP_ID})
                             .success(function () {
@@ -254,9 +242,7 @@ module.exports = {
                                         ISDETAILS_ANSWER_ONLY: infoL.ISDETAILS_ANSWER_ONLY,
                                         ISENABLE: infoL.ISENABLE,
                                         CREATED_BY: infoL.CREATED_BY,
-                                        CREATION_DATE: infoL.CREATION_DATE,
                                         Last_updated_by: infoL.Last_updated_by,
-                                        Last_update_date: infoL.Last_update_date,
                                         ISDetails_Answer_IfYes: infoL.ISDetails_Answer_IfYes
                                     }, {PATIENT_ID: 999, CAL_ID: 999, MH_LINE_ID: infoL.MH_LINE_ID})
                                         .success(function () {
@@ -272,9 +258,7 @@ module.exports = {
                                                     Comments: infoS.Comments,
                                                     ISENABLE: infoS.ISENABLE,
                                                     CREATED_BY: infoS.CREATED_BY,
-                                                    CREATION_DATE: infoS.CREATION_DATE,
                                                     Last_updated_by: infoS.Last_updated_by,
-                                                    Last_update_date: infoS.Last_update_date
                                                 }, {PATIENT_ID: 999, CAL_ID: 999, MH_LINE_SUB_ID: infoS.MH_LINE_SUB_ID})
                                                     .success(function () {
                                                         //check finish insert

@@ -7,67 +7,59 @@
 <div class="break-row"></div>
 
 <ul class="nav nav-tabs">
-    <li class="active">
-        <a>Appointment Info</a>
-    </li>
-    <li>
-        <a>Patient Info</a>
+    <li ng-repeat="t in tab" ng-class="t.class">
+        <a ng-click="getClass(t)">{{t.name}}</a>
     </li>
 </ul>
 <div class="tab-content">
-    
-</div>
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div class="break-row"></div>
+            <span ng-show="tab_current.type === 'A'">
+                <!-- DOCTOR NAME -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Doctor
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <p class="form-control-static">{{modelObjectBookingMap.DOCTOR_NAME}}</p>
+                    </div>
+                </div>
+                <!-- END DOCTOR NAME -->
+                <!-- DATE BOOKING -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Date Booking
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <p class="form-control-static">{{bookingPatientInfo.datepicker}}</p>
+                    </div>
+                </div>
+                <!-- END DATE BOOKING -->
 
-<div class="panel panel-primary">
-	<div class="panel-heading">
-		<b>APPOINTMENT INFORMATION</b>
-	</div>
-	<div class="panel-body">
-		<div class="break-row"></div>
-		<!-- DOCTOR NAME -->
-        <div class="form-group">
-            <label class="control-label col-md-2 col-sm-3 col-xs-6">
-                Doctor
-            </label>
-            <div class="col-md-4 col-sm-3 col-xs-6">
-                <p class="form-control-static">{{modelObjectBookingMap.DOCTOR_NAME}}</p>
-            </div>
-        </div>
-        <!-- END DOCTOR NAME -->
-        <!-- DATE BOOKING -->
-        <div class="form-group">
-            <label class="control-label col-md-2 col-sm-3 col-xs-6">
-                Date Booking
-            </label>
-            <div class="col-md-4 col-sm-3 col-xs-6">
-                <p class="form-control-static">{{bookingPatientInfo.datepicker}}</p>
-            </div>
-        </div>
-        <!-- END DATE BOOKING -->
+                <div class="break-row"></div>
 
-		<div class="break-row"></div>
+                <!-- SITE -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Site Name
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <p class="form-control-static">{{modelObjectBookingMap.SITE_NAME}}</p>
+                    </div>
+                </div>
+                <!-- END SITE -->
 
-		<!-- SITE -->
-        <div class="form-group">
-            <label class="control-label col-md-2 col-sm-3 col-xs-6">
-                Site Name
-            </label>
-            <div class="col-md-4 col-sm-3 col-xs-6">
-                <p class="form-control-static">{{modelObjectBookingMap.SITE_NAME}}</p>
-            </div>
-        </div>
-        <!-- END SITE -->
-
-        <!-- CILINICAL DEPARTMENT -->
-        <div class="form-group">
-            <label class="control-label col-md-2 col-sm-3 col-xs-6">
-                Clinical Department
-            </label>
-            <div class="col-md-4 col-sm-3 col-xs-6">
-                <p class="form-control-static">{{modelObjectBookingMap.CLINICAL_DEPT_NAME}}</p>
-            </div>
-        </div>
-        <!-- END CLINICAL DEPARTMENT -->
+                <!-- CILINICAL DEPARTMENT -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Clinical Department
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <p class="form-control-static">{{modelObjectBookingMap.CLINICAL_DEPT_NAME}}</p>
+                    </div>
+                </div>
+                <!-- END CLINICAL DEPARTMENT -->
 
         <div class="break-row"></div>
 
@@ -187,24 +179,236 @@
             </div>
             <!-- END ATTEND TIME -->
 
-            <div class="break-row"></div>
+                <div class="break-row"></div>
 
-            <!-- NOTES -->
-            <div class="form-group">
-                <label class="control-label col-md-2 col-sm-3 col-xs-6">
-                    Notes
-                </label>
-                <div class="col-md-4 col-sm-3 col-xs-6">
-                    <input type="text" ng-model="modelObjectBookingMap.NOTES" ng-disabled="mode=='view'" 
-                        class="form-control">
+                <!-- NOTES -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Notes
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input type="text" ng-model="modelObjectBookingMap.NOTES" ng-disabled="mode=='view'" 
+                            class="form-control">
+                    </div>
                 </div>
-            </div>
-            <!-- END NOTES -->
-	</div> <!-- END PANEL BODY -->
-</div><!-- END PANEL PRIMARY -->
-
-<div class="row" ng-show="mode=='update'">
-    <div class="col-md-12">
-        <button class="btn btn-primary btn-sm" ng-click="updateBooking()">Update Info</button>
+                <!-- END NOTES -->
+            </span> <!-- END TAB 1 -->
+            <span ng-show="tab_current.type === 'B'"> <!-- TAB 2 -->
+                <div class="row">
+                </div>
+                <!-- TITLE -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Title <span class="required">*</span>
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <select required ng-options="title.code as title.name for title in options.titles" 
+                            name="title" ng-model="modelObjectMap.Title" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <!-- END TITLE -->
+                <!-- FIRST NAME -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        First Name <span class="required">*</span>
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input required placeholder="First Name" name="firstname" ng-model="modelObjectMap.First_name" 
+                            class="form-control">
+                    </div>
+                </div>
+                <!-- END FIRST NAME -->
+                <div class="break-row"></div>
+                <!-- MIDDLE NAME -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Middle Name
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input placeholder="Middle Name" name="middlename" ng-model="modelObjectMap.Middle_name" 
+                            class="form-control">
+                    </div>
+                </div>
+                <!-- END MIDDLE NAME -->
+                <!-- LAST NAME -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Last Name <span class="required">*</span>
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input required="" placeholder="Last Name" name="lastname" ng-model="modelObjectMap.Sur_name" 
+                            class="form-control">
+                    </div>
+                </div>
+                <!-- END LAST NAME -->
+                <div class="break-row"></div>
+                <!-- KNOWN AS -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Known As
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input placeholder="Known As" name="knownas" ng-model="modelObjectMap.Known_as" 
+                            class="form-control">
+                    </div>
+                </div>
+                <!-- END KNOWN AS -->
+                <!-- BIRTHDAY -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Birthday <span class="required">*</span>
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input type="birthday" readonly="" custom-date="" placeholder="Birthday" name="dob" required="" ng-model="modelObjectMap.DOB" class="form-control">
+                    </div>
+                </div>
+                <!-- END BIRTHDAY -->
+                <div class="break-row"></div>
+                <!-- SEX -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Sex <span class="required">*</span>
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <select required="" ng-options="sex.code as sex.name for sex in options.sexes" name="sex" 
+                            ng-model="modelObjectMap.Sex" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <!-- END SEX -->
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Email <span class="required">*</span>
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input type="email" required="" placeholder="Email" name="email" ng-model="modelObjectMap.Email"
+                            class="form-control ng-pristine ng-valid-email ng-invalid ng-invalid-required">
+                    </div>
+                </div>
+                <!-- END EMAIL -->
+                <div class="break-row"></div>
+                <!-- MOBILE -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Mobile
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input type="number" min="0" class="form-control"
+                            name="mobile" placeholder="Mobile Phone" ng-model="modelObjectMap.Mobile">
+                    </div>
+                </div>
+                <!-- END MOBILE -->
+                <!-- HOME PHONE -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Home Phone
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input type="number" class="form-control" min="0" name="homephone" placeholder="Home Phone" ng-model="modelObjectMap.Home_phone">
+                    </div>
+                </div>
+                <!-- END HOME PHONE -->
+                <div class="break-row"></div>
+                <!-- WORKPHONE -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Work Phone
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input type="number" class="form-control" min="0" name="workphone" placeholder="Work Phone" 
+                            ng-model="modelObjectMap.Work_phone">
+                    </div>
+                </div>
+                <!-- END WORKPHONE -->
+                <!-- SMS -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        SMS
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <select ng-options="s.code as s.name for s in options.sms" class="form-control" name="sms" 
+                            ng-model="modelObjectMap.No_SMS">
+                        </select>
+                    </div>
+                </div>
+                <!-- END SMS -->
+                <div class="break-row"></div>
+                <!-- ADDRESS 1 -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Address 1
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <textarea placeholder="Address 1" name="address1" ng-model="modelObjectMap.Address1" 
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+                <!-- END ADDRESS 1 -->
+                <!-- ADDRESS 2 -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Address 2
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <textarea placeholder="Address 2" name="address2" ng-model="modelObjectMap.Address2" 
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+                <!-- END ADDRESS 2 -->
+                <div class="break-row"></div>
+                <!-- COUNTRY -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Country
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <select class="form-control" ng-model="modelObjectMap.Country"
+                            ng-options="country.code as country.name for country in options.countries">
+                        </select>
+                    </div>
+                </div>
+                <!-- END COUNTRY -->
+                <!-- STATE -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        State
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <select ng-options="country.code as country.name for country in options.country" name="state" 
+                            ng-model="modelObjectMap.State" class="form-control"></select>
+                    </div>
+                </div>
+                <!-- END STATE -->
+                <div class="break-row"></div>
+                <!-- SUBURB -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Suburb
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input type="text" name="suburb" class="form-control" ng-model="modelObjectMap.Suburb">
+                    </div>
+                </div>
+                <!-- END SUBURB -->
+                <!-- POSTCODE -->
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                        Postcode
+                    </label>
+                    <div class="col-md-4 col-sm-3 col-xs-6">
+                        <input type="number" min="0" name="postcode" class="form-control" 
+                            ng-model="modelObjectMap.Post_code">
+                    </div>
+                </div>
+                <!-- END POSTCODE -->
+            </span> <!-- END TAB 2 -->
+        </div> <!-- END PANEL BODY --> 
+    </div><!-- END PANEL PRIMARY -->
+    <div class="row" ng-show="mode=='update'">
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-sm" ng-click="updateBooking()">Update Info</button>
+        </div>
     </div>
 </div>

@@ -13,7 +13,8 @@ module.exports = function (sequelize, DataTypes) {
         "Last_update_date": DataTypes.DATE
     }, {
         tableName: 'sys_mh_df_headers',
-        timestamps: false
+        createdAt: 'CREATION_DATE',
+        updatedAt: 'Last_update_date'
     });
     return headersMHSYS;
 };

@@ -22,7 +22,8 @@ module.exports = function (sequelize, DataTypes) {
         "Last_update_date": DataTypes.DATE
     }, {
         tableName: 'cln_mh_df_line_subquestions',
-        timestamps: false
+        createdAt: 'CREATION_DATE',
+        updatedAt: 'Last_update_date'
     });
     return subquestionsMHCLN;
 };

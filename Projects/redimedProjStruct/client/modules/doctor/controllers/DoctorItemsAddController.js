@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.doctor.items.add.controller",[
 ])
-.controller("DoctorItemsAddController", function($scope, $filter, $cookieStore, toastr, ConfigService, DoctorService){	
+.controller("DoctorItemsAddController", function($scope, $cookieStore, toastr, ConfigService, DoctorService){	
 
 	
 	var init = function(){

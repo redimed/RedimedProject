@@ -1,0 +1,199 @@
+<!-- ACCOUNT TYPE -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Acc Type</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select ng-model="modelObjectMap.Account_type" class="form-control" name="acc_type"
+                                    ng-options="acc.Account_id as acc.Account_name for acc in accTypeIndex">
+                                <option value="">--Select Type--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- END ACCOUNT TYPE -->
+                    <!-- ACCOUNT HOLDER -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Acc Holder</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input type="text" ng-model="modelObjectMap.Account_holder" class="form-control"
+                                name="acc_holder" placeholder="Account Holder">
+                        </div>
+                    </div>
+                    <!-- END ACCOUNT HOLDER -->
+
+                    <div class="break-row"></div>
+
+                    <!-- ACCOUNT SELF -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.acc_seft.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Acc Seft</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input type="number" ng-model="modelObjectMap.Account_Seft" class="form-control"
+                                placeholder="Account Seft" name="acc_seft" min="0">
+                            <span ng-show="patientForm.acc_seft.$invalid && isSubmit">
+                                <span class="help-block" ng-show="patientForm.acc_seft.$error.number">
+                                    Account Seft must be number
+                                </span> 
+                                <span class="help-block" ng-show="patientForm.acc_seft.$error.min">
+                                    Account Seft must be integer
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END ACCOUNT SELF -->
+                    <!-- MEDICARE NUMBER -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.medicare_no.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Medicare No</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input type="number" ng-model="modelObjectMap.Medicare_no" class="form-control"
+                                placeholder="Medicare Number" name="medicare_no" min="0">
+                            <span ng-show="patientForm.medicare_no.$invalid && isSubmit">
+                                <span class="help-block" ng-show="patientForm.medicare_no.$error.number">
+                                    Medicare No must be number
+                                </span>
+                                <span class="help-block" ng-show="patientForm.medicare_no.$error.min">
+                                    Medicare No must be integer
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END MEDICARE NUMBER -->
+
+                    <div class="break-row"></div>
+
+                    <!-- REF -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.ref.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Ref</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input type="number" ng-model="modelObjectMap.Ref" class="form-control"
+                                placeholder="Ref" name="ref" min="0">
+                            <span ng-show="patientForm.ref.$invalid && isSubmit">
+                                <span class="help-block" ng-show="patientForm.ref.$error.number">
+                                    Ref must be number
+                                </span>
+                                <span class="help-block" ng-show="patientForm.ref.$error.min">
+                                    Ref must be integer
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END REF -->
+                    <!-- HEALTH FUND -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Health Fund</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select ng-model="modelObjectMap.Private_fund_id" class="form-control"
+                                    ng-options="row.PF_id as row.Fund_name for row in fundIndex" name="healthFund">
+                                <option value="">--Select Fund--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- END HEALTH FUND -->
+
+                    <div class="break-row"></div>
+
+                    <!-- MEMBERSHIP NUMBER -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.member_no.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Mem No</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input type="number" ng-model="modelObjectMap.MemberShip_no" class="form-control"
+                                placeholder="Membership Number" name="member_no" min="0">
+                            <span ng-show="patientForm.member_no.$invalid && isSubmit">
+                                <span class="help-block" ng-show="patientForm.member_no.$error.number">
+                                    Membership No must be number
+                                </span>
+                                <span class="help-block" ng-show="patientForm.member_no.$error.min">
+                                    Membership No must be integer
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END MEMBERSHIP NUMBER -->
+                    <!-- UPI -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.upi.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>UPI</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input type="number" ng-model="modelObjectMap.UPI" class="form-control"
+                                placeholder="UPI" name="upi" min="0">
+                            <span ng-show="patientForm.upi.$invalid && isSubmit">
+                                <span class="help-block" ng-show="patientForm.upi.$error.number">
+                                    UPI must be number
+                                </span>
+                                <span class="help-block" ng-show="patientForm.upi.$error.min">
+                                    UPI must be integer
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END UPI -->
+
+                    <div class="break-row"></div>
+
+                    <!-- HCC PENSION NUMBER -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.hcc.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>HCC Pension No</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input type="number" ng-model="modelObjectMap.HCC_Pension_No" class="form-control"
+                                placeholder="HCC Pension Number" name="hcc" min="0">
+                            <span ng-show="patientForm.hcc.$invalid && isSubmit">
+                                <span class="help-block" ng-show="patientForm.hcc.$error.number">
+                                    HCC must be number
+                                </span>
+                                <span class="help-block" ng-show="patientForm.hcc.$error.min">
+                                    HCC must be integer
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END HCC PENSION NUMBER -->
+                    <!-- EXPIRE PENSION -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Expire Pension</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input custom-date ng-model="modelObjectMap.Exp_pension" class="form-control"
+                                placeholder="Expire Pension" readonly>
+                        </div>
+                    </div>
+                    <!-- END EXPIRE PENSION -->
+
+                    <div class="break-row"></div>
+                    
+                    <!-- EXPIRE MEDICARE -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Expire Medicare</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input custom-date ng-model="modelObjectMap.Exp_medicare" class="form-control"
+                                placeholder="Expire Medicare" readonly>
+                        </div>
+                    </div>
+                    <!-- END EXPIRE MEDICARE -->
+
+                    <!-- BALANCE -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.balance.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Balance</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input type="number" ng-model="modelObjectMap.Balance" class="form-control"
+                                placeholder="Balance" name="balance" min="0">
+                            <span ng-show="patientForm.balance.$invalid && isSubmit">
+                                <span class="help-block" ng-show="patientForm.balance.$error.number">
+                                    Balance must be number
+                                </span>
+                                <span class="help-block" ng-show="patientForm.balance.$error.min">
+                                    Balance must be integer
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END BALANCE -->
+
+                    <div class="break-row"></div>
+
+                    <!-- PAYGAP -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Pays Gap</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select ng-model="modelObjectMap.Pays_Gap_Only" class="form-control"
+                                ng-options="g.code as g.name for g in options.gaps">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- END PAYGAP -->
+
+                    <div class="break-row"></div>

@@ -16,7 +16,8 @@ module.exports = function (sequelize, DataTypes) {
         "LOCATION_ID": DataTypes.INTEGER(11)
     }, {
         tableName: 'sys_sa_df_headers',
-        timestamps: false
+        createdAt: 'CREATION_DATE',
+        updatedAt: 'LAST_UPDATED_BY'
     });
     return headersSASYS;
 }

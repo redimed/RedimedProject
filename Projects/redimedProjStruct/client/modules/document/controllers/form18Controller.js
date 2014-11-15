@@ -2,22 +2,59 @@
  * Created by HUYNHAN on 9/25/2014.
  */
 angular.module('app.loggedIn.document.form18.controllers', [])
-    .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state,$stateParams) {
+    .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
-
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("Form 18: " + CalID + " patient: " + Patient_ID);
-
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist");
             $state.go('loggedIn.home', null, {"reload": true});
         }
         else {
+            //begin signature
+            var tempSignature;
+            $scope.isSignature = false;
+            $scope.showSignature = function () {
+                $scope.isSignature = !$scope.isSignature;
+            }
+
+            $scope.cancelClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                $scope.info.PERSON_ARRANGING_SIGNATURE = tempSignature;
+            };
+            $scope.clearClick = function () {
+                $scope.info.PERSON_ARRANGING_SIGNATURE = '';
+            };
+            $scope.okClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                tempSignature = $scope.info.PERSON_ARRANGING_SIGNATURE;
+            }
+
+            //end signature
+
+            //begin signature 1
+            var tempSignature1;
+            $scope.isSignature1 = false;
+            $scope.showSignature1 = function () {
+                $scope.isSignature1 = !$scope.isSignature1;
+            }
+
+            $scope.cancelClick1 = function () {
+                $scope.isSignature1 = !$scope.isSignature1;
+                $scope.info.PERSON_ARRANGING_SIGNATURE = tempSignature1;
+            };
+            $scope.clearClick1 = function () {
+                $scope.info.PERSON_ARRANGING_SIGNATURE = '';
+            };
+            $scope.okClick1 = function () {
+                $scope.isSignature1 = !$scope.isSignature1;
+                tempSignature1 = $scope.info.PERSON_ARRANGING_SIGNATURE;
+            }
+
+            //end signature1
+
             //set value default
             $scope.info = {
                 GORGON_ID: null,
@@ -87,11 +124,11 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                          */
                         DocumentService.insertForm18(info).then(function (response) {
                             if (response['status'] === 'success') {
-                                toastr.success("Add success!", 'Success');
+                                toastr.success("Add new success!", 'Success');
                                 $state.go("loggedIn.Form18", null, {"reload": true});
                             }
                             else if (response['status'] === 'fail') {
-                                toastr.error("Add fail!", "Error");
+                                toastr.error("Add new fail!", "Error");
                             }
                             else {
                                 //throw exception
@@ -105,11 +142,11 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                          */
                         DocumentService.editForm18(info).then(function (response) {
                             if (response['status'] === 'success') {
-                                toastr.success("Edit success!", 'Success');
+                                toastr.success("Update success!", 'Success');
                                 $state.go("loggedIn.Form18", null, {"reload": true});
                             }
                             else if (response['status'] === 'fail') {
-                                toastr.error("Edit fail!", "Error");
+                                toastr.error("Update fail!", "Error");
                             }
                             else {
                                 //throw exception

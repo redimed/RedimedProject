@@ -227,8 +227,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         };
 
         $scope.infoH ={
-            PATIENT_ID: 4,
-            CAL_ID : 11221,
+            PATIENT_ID: Patient_ID,
+            CAL_ID : CalID,
             FA_ID: null,
             ENTITY_ID: null,
             FA_TYPE: null,

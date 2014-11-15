@@ -1,0 +1,130 @@
+<div class="break-row"></div>
+                    <!-- TITLE -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.title.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            <b>Title </b><span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select class="form-control" ng-model="modelObjectMap.Title" name="title"
+                                ng-options="title.code as title.name for title in options.titles" required>
+                            </select>
+                            <span ng-show="isSubmit && patientForm.title.$invalid">
+                                <span class="help-block help-block-error" ng-show="patientForm.title.$error.required">
+                                    Title is required
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END TITLE -->
+                    <!-- FIRST NAME -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.firstname.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            <b>First Name </b><span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" ng-model="modelObjectMap.First_name" name="firstname"
+                                        placeholder="First Name" required>
+
+                            <span ng-show="isSubmit && patientForm.firstname.$invalid">
+                                <span class="help-block help-block-error" ng-show="patientForm.firstname.$error.required">
+                                    First Name is required
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END FIRST NAME -->
+
+                    <div class="break-row"></div>
+
+                    <!-- MIDDLE NAME -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            <b>Middle Name</b>
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" ng-model="modelObjectMap.Middle_name" name="middlename"
+                                    placeholder="Middle Name">
+                        </div>
+                    </div>
+                    <!-- END MIDDLE NAME -->
+                    <!-- LAST NAME -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.lastname.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            <b>Last Name </b><span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" ng-model="modelObjectMap.Sur_name" name="lastname"
+                                        placeholder="Last Name" required>
+
+                            <span ng-show="isSubmit && patientForm.lastname.$invalid">
+                                <span class="help-block help-block-error" ng-show="patientForm.lastname.$error.required">
+                                    Last Name is required
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END LAST NAME -->
+
+                    <div class="break-row"></div>
+
+                    <!-- KNOWN AS -->
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6"><b>Known as</b></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" ng-model="modelObjectMap.Known_as" name="knownas"
+                                placeholder="Known As">
+                        </div>
+                    </div>
+                    <!-- END KNOWN AS -->
+                    <!-- BIRTHDAY -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.dob.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            <b>Birthday</b> <span class="required">*</span></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" ng-model="modelObjectMap.DOB" required
+                                name="dob" type="birthday"
+                                placeholder="Birthday" custom-date readonly>
+                            <span ng-show="patientForm.dob.$invalid && isSubmit">
+                                <span class="help-block">Date of Birth is required</span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END BIRTHDAY -->
+
+                    <div class="break-row"></div>
+
+                    <!-- SEX -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.sex.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            <b>Sex</b> <span class="required">*</span></label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <select class="form-control" ng-model="modelObjectMap.Sex" name="sex"
+                                ng-options="sex.code as sex.name for sex in options.sexes" required>
+                            </select>
+                            <span ng-show="patientForm.sex.$invalid && isSubmit">
+                                <span class="help-block">Sex is required</span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END SEX -->
+                    <!-- Email -->
+                    <div class="form-group" ng-class="{'has-error': isSubmit && patientForm.email.$invalid}">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                            <b>Email</b> <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-3 col-xs-6">
+                            <input class="form-control" type="email" ng-model="modelObjectMap.Email" name="email"
+                                placeholder="Email" required>
+                            <span ng-show="patientForm.email.$invalid && isSubmit">
+                                <span class="help-block" ng-show="patientForm.email.$error.required">
+                                    Email is required
+                                </span>
+                                <span class="help-block" ng-show="patientForm.email.$error.email">
+                                    Email is wrong !!!
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END EMAIL -->
+
+                    <div class="break-row"></div>

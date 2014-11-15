@@ -1,16 +1,11 @@
 angular.module('app.loggedIn.document.cat3.controllers', [])
-    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore,$stateParams, toastr, $state) {
+    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
         //end date
-
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("caT 3: " + CalID + " patient: " + Patient_ID);
-
         $scope.today = new Date();
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {

@@ -17,7 +17,8 @@ module.exports = function (sequelize, DataTypes) {
         "USER_TYPE": DataTypes.STRING(10)
     }, {
         tableName: 'sys_mh_df_groups',
-        timestamps: false
+        createdAt: 'CREATION_DATE',
+        updatedAt: 'Last_update_date'
     });
     return groupsMHSYS;
 };
