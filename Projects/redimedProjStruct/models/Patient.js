@@ -71,7 +71,8 @@ module.exports = function(sequelize, DataTypes){
         "Last_update_date": DataTypes.DATE
     },{
         tableName: 'cln_patients', // đặt tên bảng
-        timestamps: false // đặt false để ko tự động tạo các cột timestamp
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_update_date'
     });
     return Patient;
 };
