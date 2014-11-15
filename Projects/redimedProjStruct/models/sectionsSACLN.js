@@ -17,7 +17,8 @@ module.exports = function (sequelize, DataTypes) {
         "LAST_UPDATE_DATE": DataTypes.DATE
     }, {
         tableName: 'cln_sa_df_sections',
-        timestamps: false
+        createdAt: 'CREATION_DATE',
+        updatedAt: 'LAST_UPDATE_DATE'
     });
     return sectionsSACLN;
 }

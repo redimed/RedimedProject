@@ -25,7 +25,8 @@ module.exports = function (sequelize, DataTypes) {
         "ISDetails_Answer_IfYes": DataTypes.INTEGER(11)
     }, {
         tableName: 'cln_mh_df_lines',
-        timestamps: false
+        createdAt: 'CREATION_DATE',
+        updatedAt: 'Last_update_date'
     });
     return linesMHCLN;
 };

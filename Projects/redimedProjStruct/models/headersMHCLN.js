@@ -23,7 +23,8 @@ module.exports = function (sequelize, DataTypes) {
         "Statement_Date": DataTypes.DATE
     }, {
         tableName: 'cln_mh_df_headers',
-        timestamps: false
+        createdAt: 'CREATION_DATE',
+        updatedAt: 'Last_update_date'
     });
     return headersMHCLN;
 };

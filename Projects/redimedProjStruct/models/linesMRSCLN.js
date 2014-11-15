@@ -23,7 +23,8 @@ module.exports = function (sequelize, DataTypes) {
         "Last_update_date": DataTypes.DATE
     }, {
         tableName: 'cln_mrs_lines',
-        timestamps: false
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_update_date'
     });
     return linesMRSCLN;
 };

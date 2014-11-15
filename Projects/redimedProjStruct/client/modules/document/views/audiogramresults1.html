@@ -1,10 +1,3 @@
-<style>
-    #modalSign .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-</style>
-
 <form name="SA1" method="post" novalidate>
 <div class="caption">
     <div class="row">
@@ -31,9 +24,7 @@
 <input type="hidden" ng-model="info.headers[hIndex].ISENABLE"/>
 <input type="hidden" ng-model="info.headers[hIndex].SA_CODE"/>
 <input type="hidden" ng-model="info.headers[hIndex].Created_by"/>
-<input type="hidden" ng-model="info.headers[hIndex].Creation_date"/>
 <input type="hidden" ng-model="info.headers[hIndex].Last_updated_by"/>
-<input type="hidden" ng-model="info.headers[hIndex].Last_update_date"/>
 <input type="hidden" ng-model="info.headers[hIndex].test_date"/>
 <input type="hidden" ng-model="info.headers[hIndex].tester"/>
 <input type="hidden" ng-model="info.headers[hIndex].report_type"/>
@@ -55,9 +46,7 @@
 <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].USER_TYPE"/>
 <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].ISENABLE"/>
 <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].Created_by"/>
-<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].Creation_date"/>
 <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].Last_updated_by"/>
-<input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].Last_update_date"/>
 <!--end input save sections-->
 <div class="row">
     <div class="col-md-12 col-sm-12">
@@ -186,24 +175,35 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-md-2 col-sm-2">
-                <a href="javascript:;" id="signBtn" class="btn green">Sign</a>
-                <script type="text/javascript">
-                    $('#signBtn').click(function () {
-                        $('#modalSign').modal({
-                            show: true
-                        });
-                    });
-
-                </script>
+            <div class="col-md-2 col-sm-2" style="width: auto;">
+                <a href="javascript:;" class="btn green" ng-show="!isSignature" ng-click="showSignature()">Sign</a>
             </div>
-            <div class="col-md-6 col-sm-6" style="margin-left:15px;">
-                <img src="" id="signDisplay" ng-model="info.consentSign"
-                     style="width:200px;height: 30px;"/>
+            <div class="col-md-10 col-sm-10"
+                 ng-show="info.Signature!=null && info.Signature!='' && !isSignature">
+                <img src="" ng-src="{{info.Signature}}" alt=""
+                     style="width: 200px;height: 40px;margin-left: 10px;"/>
             </div>
         </div>
         <br/>
 
+        <div class="row" style="text-align: left;margin-left: 10px;" ng-show="isSignature">
+            <div class="col-md-12 col-sm-12">
+                <canvas width="500" height="400" id="canvas"
+                        signature ng-model="info.Signature" style="background-color: #8eece8">
+                </canvas>
+            </div>
+            <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
+                <div class="break-row"></div>
+                <div class="btn-group">
+                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+                        Cancel
+                    </button>
+                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+                    </button>
+                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <label class="control-label">Date:</label>
@@ -293,32 +293,31 @@
 <div class="panel-body">
 <div class="row">
 <div class="col-md-12 col-sm-12">
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="col-md-12 col-sm-12" style="text-align: center;">
-                <label class="control-label bold">Must be given to the worker within one
-                    month of the date of the test being completed</label>
-            </div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12 col-sm-12" style="text-align: center;">
+            <label class="control-label bold">Must be given to the worker within one
+                month of the date of the test being completed</label>
         </div>
     </div>
+</div>
 
-    <div class="row">
+<div class="row">
+    <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label" style="text-align: left;">
-                    Section A - Details
-                </label>
-            </div>
+            <label class="control-label" style="text-align: left;">
+                Section A - Details
+            </label>
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="col-md-2 col-sm-3" style="text-align: left;width: auto;">
-                <label class="control-label">Name:</label>
-            </div>
-            <div class="col-md-10 col-sm-9" style="text-align: left;width: auto;"
-            ">
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-2 col-sm-3" style="text-align: left;width: auto;">
+            <label class="control-label">Name:</label>
+        </div>
+        <div class="col-md-10 col-sm-9" style="text-align: left;width: auto;">
             <label class="control-label">Minh Phuong</label>
         </div>
     </div>
@@ -406,9 +405,7 @@
             <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].NAME"/>
             <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].ISENABLE"/>
             <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Created_by"/>
-            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Creation_date"/>
             <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Last_updated_by"/>
-            <input type="hidden" ng-model="info.headers[hIndex].sections[sIndex].lines[lIndex].Last_update_date"/>
             <!--end input save lines-->
             <ng-form name="lineForm">
                 <div class="row">
@@ -569,50 +566,3 @@
 
 <!--end header-->
 </form>
-
-<div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 700, height: 500});
-
-            $('#resetSig').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay').attr("src", data);
-                    $('#signDisplay').show();
-                }
-
-                $('#modalSign').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>

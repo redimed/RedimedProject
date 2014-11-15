@@ -4,7 +4,7 @@ module.exports = function (sequelize, DataTypes) {
         "cal_id": DataTypes.INTEGER(11),
         "DocId": DataTypes.INTEGER(11),
         "patient_id": DataTypes.INTEGER(11),
-        "Signature": DataTypes.BLOB,
+        "Signature": DataTypes.TEXT,
         "q1_4": DataTypes.INTEGER(11),
         "q1_4_c": DataTypes.STRING(200),
         "q1_5_1": DataTypes.INTEGER(11),
@@ -169,8 +169,8 @@ module.exports = function (sequelize, DataTypes) {
         "DOCTOR_ID": DataTypes.INTEGER(11)
 
     }, {
-        tableName: 'gorgon_category_2', // tabel name
-        timestamps: false // auto template
+        tableName: 'gorgon_category_2',
+        timestamps: false
     });
     return Category2;
 };

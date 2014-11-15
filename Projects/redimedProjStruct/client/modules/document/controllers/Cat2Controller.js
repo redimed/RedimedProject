@@ -1,7 +1,6 @@
 angular.module('app.loggedIn.document.cat2.controllers', [])
-    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state,$stateParams, $filter) {
+    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter) {
         //begin show-hidden img signature
-        console.log("aaaaaaaaaaaaa");
         //clear signature
         $scope.clearSignature = function () {
             $scope.info.Signature = '';
@@ -17,10 +16,6 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             startingDay: 1
         };
         //end date
-
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("caT 2: " + CalID + " patient: " + Patient_ID);
 
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
@@ -47,16 +42,14 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                 $scope.isSignature = !$scope.isSignature;
                 tempSignature = $scope.info.Signature;
             }
-
             //end signature
-
             $scope.today = new Date();
             //begin value default info
             $scope.info = {
                 cat_id: null,
-                cal_id: CalID,
+                cal_id: 999,
                 DocId: null,
-                patient_id: Patient_ID,
+                patient_id: 999,
                 Signature: null,
                 q1_4: null,
                 q1_4_c: null,

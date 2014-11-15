@@ -2,16 +2,12 @@
  * Created by HUYNHAN on 10/1/2014.
  */
 angular.module('app.loggedIn.document.SA2.controllers', [])
-    .controller("SA2Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr,$stateParams) {
+    .controller("SA2Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr) {
 
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
-
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("Audiogram 3: " + CalID + " patient: " + Patient_ID);
 
         $scope.info = [];
         var userInfo = $cookieStore.get('userInfo');
@@ -20,6 +16,25 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
             $state.go('loggedIn.SA1', null, {'reload': true});
         }
         else {
+            //begin signature
+            var tempSignature;
+            $scope.isSignature = false;
+            $scope.showSignature = function () {
+                $scope.isSignature = !$scope.isSignature;
+            }
+
+            $scope.cancelClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                $scope.info.Signature = tempSignature;
+            };
+            $scope.clearClick = function () {
+                $scope.info.Signature = '';
+            };
+            $scope.okClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                tempSignature = $scope.info.Signature;
+            }
+            //end signature
             var oriInfo;
             var info = $scope.info;
             DocumentService.loadSA2(info).then(function (response) {
@@ -48,9 +63,7 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                         "ISENABLE": dataH.ISENABLE,
                         "SA_CODE": dataH.SA_CODE,
                         "CREATED_BY": dataH.CREATED_BY,
-                        "CREATION_DATE": dataH.CREATION_DATE,
                         "LAST_UPDATED_BY": dataH.LAST_UPDATED_BY,
-                        "LAST_UPDATE_DATE": dataH.LAST_UPDATE_DATE,
                         "TEST_DATE": dataH.TEST_DATE,
                         "TESTER": dataH.TESTER,
                         "REPORT_TYPE": dataH.REPORT_TYPE,
@@ -73,9 +86,7 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                                 "USER_TYPE": dataS.USER_TYPE,
                                 "ISENABLE": dataS.ISENABLE,
                                 "CREATED_BY": dataS.CREATED_BY,
-                                "CREATION_DATE": dataS.CREATION_DATE,
                                 "LAST_UPDATED_BY": dataS.LAST_UPDATED_BY,
-                                "LAST_UPDATE_DATE": dataS.LAST_UPDATE_DATE,
                                 "lines": []
                             });
                             angular.forEach(data.lines, function (dataL) {
@@ -91,9 +102,7 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                                         "VALUE_LEFT": dataL.VALUE_LEFT,
                                         "ISENABLE": dataL.ISENABLE,
                                         "CREATED_BY": dataL.CREATED_BY,
-                                        "CREATION_DATE": dataL.CREATION_DATE,
-                                        "LAST_UPDATED_BY": dataL.LAST_UPDATED_BY,
-                                        "LAST_UPDATE_DATE": dataL.LAST_UPDATE_DATE
+                                        "LAST_UPDATED_BY": dataL.LAST_UPDATED_BY
                                     });
                                 }
                             });
@@ -124,11 +133,11 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                         DocumentService.insertSA2(info).then(function (response) {
                             if (response['status'] === 'fail') {
                                 //add new fail
-                                toastr.error("Add fail!", "Error");
+                                toastr.error("Add new fail!", "Error");
                             }
                             else if (response['status'] === 'success') {
                                 //edit success
-                                toastr.success("Add success!", "Success");
+                                toastr.success("Add new success!", "Success");
                                 $state.go('loggedIn.SA2', null, {"reload": true});
                             }
                             else {

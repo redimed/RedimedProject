@@ -1,34 +1,3 @@
-<style>
-    #modalSign .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-
-    #modalSign1 .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-
-    #modalSign2 .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-
-    #modalSign3 .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-
-    #modalSign4 .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-
-    #modalSign5 .modal-dialog {
-        width: 800px;
-        height: 800px;
-    }
-</style>
 <form name="mhForm" method="post" novalidate>
 <div class="caption">
     <div class="row">
@@ -48,24 +17,7 @@
 </div>
 <br/>
 
-<div ng-repeat="(hIndex,header) in info.headers">
-<div class="caption">
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <h1 style="font-weight: bolder; text-align: center">{{header.DESCRIPTION}}</h1>
-            <!--begin input store headers-->
-            <input type="hidden" ng-model="info.headers[hIndex].MH_DF_ID"/>
-            <input type="hidden" ng-model="info.headers[hIndex].DF_CODE"/>
-            <input type="hidden" ng-model="info.headers[hIndex].DESCRIPTION"/>
-            <input type="hidden" ng-model="info.headers[hIndex].ISENABLE"/>
-            <input type="hidden" ng-model="info.headers[hIndex].CREATED_BY"/>
-            <input type="hidden" ng-model="info.headers[hIndex].CREATION_DATE"/>
-            <input type="hidden" ng-model="info.headers[hIndex].Last_updated_by"/>
-            <input type="hidden" ng-model="info.headers[hIndex].Last_update_date"/>
-            <!--end input store headers-->
-        </div>
-    </div>
-</div>
+<h1 style="text-align: center; font-weight: bold;">MEDICAL HISTORY</h1>
 
 <div class="row">
 <div class="col-md-12 col-sm-12">
@@ -242,45 +194,52 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1" style="width: 70px;">
-                <a href="javascript:;" id="signBtn1" class="btn green" style="margin-top: 5%;">Sign</a>
-
-                <script type="text/javascript">
-                    $('#signBtn1').click(function () {
-                        $('#modalSign1').modal({
-                            show: true
-                        });
-                    });
-
-                </script>
+            <div class="col-md-1 col-sm-1" style="width: auto;">
+                <a href="javascript:;" class="btn green" style="margin-top: 10px;" ng-click="showSignature()">Sign</a>
             </div>
-            <div class="col-md-6 col-sm-6">
-                <img src="" id="signDisplay1" ng-model="info.consentSign"
-                     style="width:200px;height: 30px;"/>
+            <div class="col-md-10 col-sm-10"
+                 ng-show="info.Sign!=null && info.Sign!='' && !isSignature">
+                <img src="" ng-src="{{info.Sign}}" alt=""
+                     style="width: 200px;height: 40px;margin-top: 10px;"/>
             </div>
         </div>
     </div>
     <br/>
 
+    <div class="row" style="text-align: left;margin-left: 10px;" ng-show="isSignature">
+        <div class="col-md-12 col-sm-12">
+            <canvas width="500" height="400" id="canvas"
+                    signature ng-model="info.Sign" style="background-color: #8eece8">
+            </canvas>
+        </div>
+        <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
+            <div class="break-row"></div>
+            <div class="btn-group">
+                <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+                    Cancel
+                </button>
+                <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+                </button>
+                <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
+            <div class="col-md-1 col-sm-1" style="width: auto;">
                 <label class="control-label">Witness:</label>
             </div>
             <div class="col-md-3 col-sm-3">
                 <input type="text" class="form-control"/>
             </div>
         </div>
-        <div class="col-md-6 col-sm-6" style="margin-left:15px;">
-            <img src="" id="signDisplay2" ng-model="info.consentSign"
-                 style="width:300px;height: 150px;"/>
-        </div>
     </div>
     <br/>
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
+            <div class="col-md-1 col-sm-1" style="width: auto;">
                 <label class="control-label">Date:</label>
             </div>
             <div class="col-md-3 col-sm-4">
@@ -320,44 +279,51 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1" style="width: 70px;">
-                <a href="javascript:;" id="signBtn3" class="btn green" style="margin-top: 5%;">Sign</a>
-                <script type="text/javascript">
-                    $('#signBtn3').click(function () {
-                        $('#modalSign3').modal({
-                            show: true
-                        });
-                    });
-
-                </script>
+            <div class="col-md-1 col-sm-1" style="width: auto;">
+                <a href="javascript:;" class="btn green" ng-click="showSignature1()" ng-show="!isSignature1">Sign</a>
             </div>
-            <div class="col-md-6 col-sm-6" style="margin-left:15px;">
-                <img src="" id="signDisplay3" ng-model="info.consentSign"
-                     style="width:200px;height: 30px;"/>
+            <div class="col-md-10 col-sm-10"
+                 ng-show="info.Declaration_sign!=null && info.Declaration_sign!='' && !isSignature1">
+                <img src="" ng-src="{{info.Declaration_sign}}" alt=""
+                     style="width: 200px;height: 40px;"/>
             </div>
         </div>
     </div>
     <br/>
 
+    <div class="row" style="text-align: left;margin-left: 10px;" ng-show="isSignature1">
+        <div class="col-md-12 col-sm-12">
+            <canvas width="500" height="400" id="canvas1"
+                    signature ng-model="info.Declaration_sign" style="background-color: #8eece8">
+            </canvas>
+        </div>
+        <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
+            <div class="break-row"></div>
+            <div class="btn-group">
+                <button type="button" ng-click="cancelClick1()" class="btn btn-danger btn-sm">
+                    Cancel
+                </button>
+                <button type="button" ng-click="clearClick1()" class="btn btn-warning btn-sm">Clear
+                </button>
+                <button type="button" ng-click="okClick1()" class="btn green btn-sm">Ok</button>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
+            <div class="col-md-1 col-sm-1" style="width: auto;">
                 <label class="control-label">Witness:</label>
             </div>
             <div class="col-md-3 col-sm-3">
                 <input type="text" class="form-control"/>
             </div>
-            <div class="col-md-6 col-sm-6" style="margin-left:15px;">
-                <img src="" id="signDisplay4" ng-model="info.consentSign"
-                     style="width:200px;height: 30px;"/>
-            </div>
         </div>
     </div>
     <br/>
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
+            <div class="col-md-1 col-sm-1" style="width: auto;">
                 <label class="control-label">Date:</label>
             </div>
             <div class="col-md-3 col-sm-3">
@@ -388,6 +354,21 @@
         </div>
     </div>
 </div>
+<div ng-repeat="(hIndex, header) in info.headers">
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!--begin input store headers-->
+            <input type="hidden" ng-model="info.headers[hIndex].MH_DF_ID"/>
+            <input type="hidden" ng-model="info.headers[hIndex].DF_CODE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].DESCRIPTION"/>
+            <input type="hidden" ng-model="info.headers[hIndex].ISENABLE"/>
+            <input type="hidden" ng-model="info.headers[hIndex].CREATED_BY"/>
+            <input type="hidden" ng-model="info.headers[hIndex].Last_updated_by"/>
+            <!--end input store headers-->
+        </div>
+    </div>
+</div>
 
 <div class="row">
 <div class="col-md-12 col-sm-12">
@@ -408,9 +389,7 @@
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].GROUP_NAME"/>
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].ISENABLE"/>
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].CREATED_BY"/>
-<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].CREATION_DATE"/>
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Last_updated_by"/>
-<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Last_update_date"/>
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].USER_TYPE"/>
 <!--end input save group-->
 
@@ -428,9 +407,7 @@
        ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISDETAILS_ANSWER_ONLY"/>
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISENABLE"/>
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CREATED_BY"/>
-<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CREATION_DATE"/>
 <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_updated_by"/>
-<input type="hidden" ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_update_date"/>
 <input type="hidden"
        ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISDetails_Answer_IfYes"/>
 <!--end input save line-->
@@ -504,7 +481,7 @@
 
         <div class="row" ng-if="line.ISDetails_Answer_IfYes">
             <div class="col-md-12">
-                <div class="col-md-1 col-sm-2">
+                <div class="col-md-1 col-sm-2" style="margin-top: 5px;width: auto;">
                     <label class="control-label">Answer:</label>
                 </div>
                 <div class="col-md-4 col-sm-4">
@@ -530,467 +507,212 @@
 <!--end line has subquestion-->
 
 <!--begin input save subquestion-->
-<div ng-repeat="(sIndex,subquestion) in line.subquestion">
-    <ng-form name="subForm">
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_SUB_ID"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_ID"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ORD"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].QUESTION"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_YES"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISENABLE"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].CREATED_BY"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].CREATION_DATE"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Last_updated_by"/>
-        <input type="hidden"
-               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Last_update_date"/>
-        <!--end input save subquestion-->
+<div class="panel panel-default" style="width: 95%;margin-left: 20px;" ng-if="line.subquestion.length != 0">
+    <div class="panel-body">
+        <div ng-repeat="(sIndex,subquestion) in line.subquestion">
+            <ng-form name="subForm">
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_SUB_ID"/>
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_ID"/>
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ORD"/>
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].QUESTION"/>
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_YES"/>
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO"/>
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISENABLE"/>
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].CREATED_BY"/>
+                <input type="hidden"
+                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Last_updated_by"/>
+                <!--end input save subquestion-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <label class="control-label bold" style="margin-top: 10px;text-align: left;">{{line.ORD +
+                                ". " +
+                                subquestion.ORD + ". "
+                                + subquestion.QUESTION}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-1 col-sm-2" style="margin-top: 5px;width: auto;">
+                            <label class="control-label"><span
+                                    ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISDetails_Answer_IfYes &&
+                            info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Answer:</label>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="btn-group">
+                                <label class="btn">
+                                    <input type="radio"
+                                           ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
+                                           ng-value="1"/> Yes
+                                </label>
+                                <label class="btn">
+                                    <input type="radio"
+                                           ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
+                                           ng-value="0"/> No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-1 col-sm-2" style="width: auto;margin-top: 10px;">
+                            <label class="control-label"><span
+                                    ng-show="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO">*</span>Comment:</label>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <div ng-class="{'has-error': subForm.Comments.$error.required ||
+                    subForm.Comments.$error.maxlength}">
+                                <input type="text" class="form-control" name="Comments"
+                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Comments"
+                                       ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
+                               info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_YES) ||
+                               (!info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
+                               info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO)"
+                                       ng-maxlength="200"/>
+
+                                <div ng-show="subForm.Comments.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
+                                <div ng-show="subForm.Comments.$error.maxlength">
+                                    <label class="control-label">Comment too long!</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-form>
+        </div>
+    </div>
+</div>
+<!--end subquestion-->
+<div ng-if="line.line_id !==group.line[group.line.length - 1].line_id">
+    <hr/>
+</div>
+<div ng-if="line.line_id === group.line[group.line.length - 1].line_id">
+    <br/>
+</div>
+</ng-form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="portlet box grey-cascade">
+    <div class="portlet-body form">
+        <br/>
+
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-12">
-                    <label class="control-label bold" style="margin-top: 10px;text-align: left;">{{line.ORD +
-                        ". " +
-                        subquestion.ORD + ". "
-                        + subquestion.QUESTION}}</label>
+                <div class="col-md-12 col-sm-12">
+                    <p style="font-weight: bold; margin-left: 10px;"><u>Statement</u></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12 col-sm-12">
+                    <p style="font-weight: bold; text-align: left; margin-left: 10px;">Section 79 of the Western
+                        Australian
+                        Workers' Compensation and Injury Management Act 1981
+                        gives an arbitrator discretion to refuse to award compensation which would otherwise be payable
+                        where it is proved that the worker has, at the time of seeking or entering employment in respect
+                        of
+                        which he claims compensation for an injury, wilfully and falsely represented himself as not
+                        having
+                        previously suffered from the injury.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12 col-sm-12">
+                    <p style="text-align: left; margin-left: 10px;">I have read the above statements. The answers are
+                        correct,
+                        and no information concerning my present or
+                        past health has been withheld.</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="col-md-1 col-sm-2" style="margin-top: 15px">
-                    <label class="control-label"><span
-                            ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISDetails_Answer_IfYes &&
-                            info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Answer:</label>
+                <div class="col-md-1 col-sm-1" style="width: auto; margin-top: 5px;">
+                    <label class="control-label">Name:</label>
                 </div>
-                <div class="col-md-4 col-sm-4" style="margin-top: 10px;">
-                    <div class="btn-group">
-                        <label class="btn">
-                            <input type="radio"
-                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
-                                   ng-value="1"/> Yes
-                        </label>
-                        <label class="btn">
-                            <input type="radio"
-                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
-                                   ng-value="0"/> No
-                        </label>
-                    </div>
+                <div class="col-md-3 col-sm-3">
+                    <input type="text" class="form-control"/>
                 </div>
             </div>
         </div>
+        <br/>
+
         <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-1 col-sm-2" style="width: auto;margin-top: 5px;">
-                    <label class="control-label"><span
-                            ng-show="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO">*</span>Comment:</label>
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-1 col-sm-1" style="width: auto;">
+                    <a href="javascript:;" class="btn green" ng-click="showSignature2()"
+                       ng-show="!isSignature2">Sign</a>
                 </div>
-                <div class="col-md-5 col-sm-5">
-                    <div ng-class="{'has-error': subForm.Comments.$error.required ||
-                    subForm.Comments.$error.maxlength}">
-                        <input type="text" class="form-control" name="Comments"
-                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Comments"
-                               ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
-                               info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_YES) ||
-                               (!info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
-                               info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO)"
-                               ng-maxlength="200"/>
-
-                        <div ng-show="subForm.Comments.$error.required">
-                            <label class="control-label">Required!</label>
-                        </div>
-                        <div ng-show="subForm.Comments.$error.maxlength">
-                            <label class="control-label">Comment too long!</label>
-                        </div>
-                    </div>
+                <div class="col-md-10 col-sm-10"
+                     ng-show="info.Statement_sign!=null && info.Statement_sign!='' && !isSignature2">
+                    <img src="" ng-src="{{info.Statement_sign}}" alt=""
+                         style="width: 200px;height: 40px;"/>
                 </div>
             </div>
         </div>
-    </ng-form>
-</div>
-<!--</div>-->
-<!--end subquestion-->
-<div ng-if="line.line_id != group.line[group.line.length - 1].line_id">
-    <hr/>
-</div>
-</ng-form>
-</div>
-<!--</div>-->
-</div>
-</div>
+        <br/>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12 col-sm-12">
-            <p style="font-weight: bold; margin-left: 10px;"><u>Statement</u></p>
+        <div class="row" style="text-align: left;margin-left: 10px;" ng-show="isSignature2">
+            <div class="col-md-12 col-sm-12">
+                <canvas width="500" height="400" id="canvas2"
+                        signature ng-model="info.Statement_sign" style="background-color: #8eece8">
+                </canvas>
+            </div>
+            <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
+                <div class="break-row"></div>
+                <div class="btn-group">
+                    <button type="button" ng-click="cancelClick2()" class="btn btn-danger btn-sm">
+                        Cancel
+                    </button>
+                    <button type="button" ng-click="clearClick2()" class="btn btn-warning btn-sm">Clear
+                    </button>
+                    <button type="button" ng-click="okClick2()" class="btn green btn-sm">Ok</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12 col-sm-12">
-            <p style="font-weight: bold; text-align: left; margin-left: 10px;">Section 79 of the Western Australian
-                Workers' Compensation and Injury Management Act 1981
-                gives an arbitrator discretion to refuse to award compensation which would otherwise be payable
-                where it is proved that the worker has, at the time of seeking or entering employment in respect of
-                which he claims compensation for an injury, wilfully and falsely represented himself as not having
-                previously suffered from the injury.</p>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-1 col-sm-1" style="width: auto;margin-top: 5px;">
+                    <label class="control-label">Date:</label>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <input type="text" class="form-control col-md-12" name="dob4"
+                           datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob4"
+                           is-open="openDOB4" ng-click="openDOB4 = true"
+                           datepicker-options="dateOptions3"
+                           close-text="Close"/>
+                </div>
+            </div>
         </div>
+        <br/>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12 col-sm-12">
-            <p style="text-align: left; margin-left: 10px;">I have read the above statements. The answers are correct,
-                and no information concerning my present or
-                past health has been withheld.</p>
-        </div>
-    </div>
-</div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1" style="width: 70px; margin-top: 5px;">
-            <label class="control-label">Name:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control"/>
-        </div>
-    </div>
-</div>
-<br/>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
-            <a href="javascript:;" id="signBtn5" class="btn green">Sign</a>
-            <script type="text/javascript">
-                $('#signBtn5').click(function () {
-                    $('#modalSign5').modal({
-                        show: true
-                    });
-                });
-
-            </script>
-        </div>
-        <div class="col-md-6 col-sm-6" style="margin-left:15px;">
-            <img src="" id="signDisplay5" ng-model="info.consentSign"
-                 style="width:200px;height: 30px;"/>
-        </div>
-    </div>
-</div>
-<br/>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1" style="width: 70px;margin-top: 5px;">
-            <label class="control-label">Date:</label>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <input type="text" class="form-control col-md-12" name="dob4"
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob4"
-                   is-open="openDOB4" ng-click="openDOB4 = true"
-                   datepicker-options="dateOptions3"
-                   close-text="Close"/>
-        </div>
-    </div>
-</div>
-<hr/>
-</div>
-</div>
-</div>
-</div>
 </div>
 </form>
-<!--=============================== Signature Form ============================================-->
-<div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalSign1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature1"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig1" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig1" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalSign2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature2"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig2" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig2" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalSign3" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature3"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig3" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig3" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalSign4" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature4"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig4" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig4" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalSign5" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature5"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig5" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig5" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 700, height: 500});
-
-            $('#resetSig').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay').attr("src", data);
-                    $('#signDisplay').show();
-                }
-
-                $('#modalSign').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay1').hide();
-            var $sigdiv = $("#signature1").jSignature({lineWidth: 2, width: 700, height: 500});
-
-            $('#resetSig1').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig1').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay1').attr("src", data);
-                    $('#signDisplay1').show();
-                }
-
-                $('#modalSign1').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay2').hide();
-            var $sigdiv = $("#signature2").jSignature({lineWidth: 2, width: 700, height: 500});
-
-            $('#resetSig2').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig2').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay2').attr("src", data);
-                    $('#signDisplay2').show();
-                }
-
-                $('#modalSign2').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay3').hide();
-            var $sigdiv = $("#signature3").jSignature({lineWidth: 2, width: 700, height: 500});
-
-            $('#resetSig3').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig3').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay3').attr("src", data);
-                    $('#signDisplay3').show();
-                }
-
-                $('#modalSign3').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay4').hide();
-            var $sigdiv = $("#signature4").jSignature({lineWidth: 2, width: 700, height: 500});
-
-            $('#resetSig4').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig4').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay4').attr("src", data);
-                    $('#signDisplay4').show();
-                }
-
-                $('#modalSign4').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
-
-<script>
-    (function ($) {
-        $(document).ready(function () {
-
-            $('#signDisplay5').hide();
-            var $sigdiv = $("#signature5").jSignature({lineWidth: 2, width: 700, height: 500});
-
-            $('#resetSig5').on('click', function () {
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig5').on('click', function () {
-                var data = $sigdiv.jSignature('getData')
-                if (data != null) {
-                    $('#signDisplay5').attr("src", data);
-                    $('#signDisplay5').show();
-                }
-
-                $('#modalSign5').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>
 
 
 

@@ -1,16 +1,11 @@
 angular.module('app.loggedIn.document.cat3.controllers', [])
-    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore,$stateParams, toastr, $state) {
+    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
         //end date
-
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("caT 3: " + CalID + " patient: " + Patient_ID);
-
         $scope.today = new Date();
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
@@ -41,8 +36,8 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
             //set value default
             $scope.info = {
                 cat_id: null,
-                cal_id: CalID,
-                patient_id: Patient_ID,
+                cal_id: 999,
+                patient_id: 999,
                 q1_4: null,
                 q1_4_c: null,
                 q1_5_1: null,
@@ -278,12 +273,13 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
             }
 
             $scope.infoChanged = function () {
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 return !angular.equals(oriInfo, $scope.info);
             }
             $scope.submit = function (category3Form) {
                 if ($scope.isNew === true) {
-                     // add new cat3
+                    /**
+                     * add new cat3
+                     */
                     if (category3Form.$valid || category3Form.$error.pattern || category3Form.$error.maxlength) {
                         toastr.error("Please Input All Required Information!", "Error");
                     }
@@ -296,12 +292,16 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                             }
                             else if (response['status'] === 'fail')
                                 toastr.error("Add new fail!", "Error");
+
                         });
                     }
                 }
 
                 else {
-                        //edit cat 3
+                    /**
+                     * edit cat3
+                     */
+
                     if (category3Form.$valid || category3Form.$error.pattern || category3Form.$error.maxlength) {
                         toastr.error("Please Input All Required Information!", "Error");
                     }
@@ -317,7 +317,9 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                                 toastr.error("Update fail!", "Error");
                             }
                             else {
-                                //throw new exception
+                                /**
+                                 * throw new exception
+                                 */
                                 $state.go('loggedIn.home', null, {"reload": true});
                             }
                         })

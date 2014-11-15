@@ -108,7 +108,7 @@ module.exports = function (sequelize, DataTypes) {
         "r5_2": DataTypes.STRING(200),
         "DocId": DataTypes.INTEGER(11),
         "q1_5_3_c": DataTypes.STRING(200),
-        "PATIENT_SIGNATURE": DataTypes.BLOB,
+        "PATIENT_SIGNATURE": DataTypes.TEXT,
         "PATIENT_DATE": DataTypes.DATE,
         "DOCTOR_ID": DataTypes.INTEGER(11)
     }, {

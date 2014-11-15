@@ -1,15 +1,10 @@
 angular.module('app.loggedIn.document.gorgonMH.controllers', [])
-    .controller("gorgonMHController", function ($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state,$stateParams) {
+    .controller("gorgonMHController", function ($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
-
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("gorgon MH: " + CalID + " patient: " + Patient_ID);
-
         $scope.today = new Date();
         //end date
         var userInfo = $cookieStore.get('userInfo');
@@ -18,10 +13,30 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             $state.go('loggedIn.home', null, {"reload": true});
         }
         else {
+            //begin signature
+            var tempSignature;
+            $scope.isSignature = false;
+            $scope.showSignature = function () {
+                $scope.isSignature = !$scope.isSignature;
+            }
+
+            $scope.cancelClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                $scope.info.PATIENT_SIGNATURE = tempSignature;
+            };
+            $scope.clearClick = function () {
+                $scope.info.PATIENT_SIGNATURE = '';
+            };
+            $scope.okClick = function () {
+                $scope.isSignature = !$scope.isSignature;
+                tempSignature = $scope.info.PATIENT_SIGNATURE;
+            }
+
+            //end signature
             //set value default
             $scope.info = {
                 Gorgon_Id: null,
-                Patient_Id: Patient_ID,
+                Patient_Id: null,
                 JobNo: null,
                 Occupation: null,
                 JobLocation: null,
@@ -247,7 +262,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                 Creation_date: null,
                 Last_updated_by: null,
                 Last_update_date: null,
-                CalId: CalID,
+                CalId: null,
                 DocId: null,
                 Q21_IsComment: null,
                 Q21Other1Comment: null,
@@ -550,11 +565,11 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                         DocumentService.insertGGMH(info)
                             .then(function (response) {
                                 if (response['status'] === 'success') {
-                                    toastr.success("Add success!", "Success");
+                                    toastr.success("Add new success!", "Success");
                                     $state.go('loggedIn.gorgonMH', null, {"reload": true});
                                 }
                                 else if (response['status'] === 'fail')
-                                    toastr.error("Add fail!", "Error");
+                                    toastr.error("Add new fail!", "Error");
 
                             })
                     }
@@ -572,11 +587,11 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                             DocumentService.editGGMH(info)
                                 .then(function (response) {
                                     if (response['status'] === 'success') {
-                                        toastr.success("Edit success!", "Success");
+                                        toastr.success("Update success!", "Success");
                                         $state.go('loggedIn.gorgonMH', null, {"reload": true});
                                     }
                                     else if (response['status'] === 'fail')
-                                        toastr.error("Edit fail!", "Error");
+                                        toastr.error("Update fail!", "Error");
 
                                 });
                         }
