@@ -1194,6 +1194,10 @@ angular.module('app.config', [])
         return serviceApi.post({dept:clinical_dept_id});
     }
 
+	/*
+	*	START DATE TIME FUNCTION 
+	*/
+	
     configService.getCommonDateDefault = function(dateTime){
         if(typeof dateTime === 'string')
             dateTime = new Date(dateTime);
@@ -1293,6 +1297,10 @@ angular.module('app.config', [])
         return date+"/"+month+"/"+year;
     }
 
+	/*
+	*	END DATE TIME FUNCTION 
+	*/
+	
     configService.acc_type_option = function(){
         return ACC_TYPE;
     }

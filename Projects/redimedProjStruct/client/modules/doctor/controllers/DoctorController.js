@@ -70,7 +70,13 @@ angular.module("app.loggedIn.doctor.controller", [
     // END MODEL OBJECT DOCTOR DETAIL
 
     $scope.options = {
-        titles: ConfigService.title_option() 
+        titles: ConfigService.title_option(),
+		sexes: ConfigService.sex_option(),
+        sms: ConfigService.yes_no_option(),
+        countries: ConfigService.country_option(),
+        gaps: ConfigService.yes_no_option(),
+        acc_types: ConfigService.acc_type_option(),
+        app_types: ConfigService.app_type_option()
     }
 
 	$scope.setClassAppt = function (type) {
@@ -86,7 +92,8 @@ angular.module("app.loggedIn.doctor.controller", [
 	
 	$scope.views = {
 		patient_info: 'modules/doctor/views/patient-info.html',
-        paperless: 'modules/doctor/views/paperless.html'
+        paperless: 'modules/doctor/views/paperless.html',
+		patient_path: 'modules/patient/views/patient/',
 	};
 	
 	$scope.modeFormItem = {

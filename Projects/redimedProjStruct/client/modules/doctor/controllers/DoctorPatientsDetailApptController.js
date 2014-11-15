@@ -78,15 +78,20 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		}
 		
 		PatientService.getById ($scope.patient.Patient_id).then(function (data) {
-            $scope.patient = data;
+			console.log('PATIENT INFO ', data);
+            $scope.modelObjectMap = data;
+			
+			$scope.modelObjectMap.DOB = ConfigService.getCommonDateDefault($scope.modelObjectMap.DOB);
+			$scope.modelObjectMap.Exp_medicare = ConfigService.getCommonDateDefault($scope.modelObjectMap.Exp_medicare);
+			$scope.modelObjectMap.Exp_pension = ConfigService.getCommonDateDefault($scope.modelObjectMap.Exp_pension);
+
         });	
 		
-		$scope.options = {};
+		// $scope.options = {}; 
         var doctorInfo = $cookieStore.get('doctorInfo');
 		
 		$scope.apptInfo = localStorageService.get('apptTempInfo');
 
-			
 		/*
 		*	GET APPOINMENT INFO
 		*/
@@ -98,9 +103,6 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			$scope.apptChange.NOTES = data.NOTES;
 			$scope.apptChange.APP_TYPE = data.APP_TYPE;
 		});
-		
-        $scope.isGetDeptItem = false;
-        $scope.isGetApptItem = false;
 
 		$scope.options.app_status = ConfigService.appt_status_option();
 		
@@ -134,7 +136,6 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		});
     };
     
-	
 	init();
 
 	var reloadpage = function(){
@@ -193,7 +194,11 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			}
 		}
 		
-				
+		submitItemSheet(insert_list, update_list, delete_list);
+    }
+	
+	var submitItemSheet = function(insert_list, update_list, delete_list){
+					
 		console.log('INSERT LIST ', insert_list);
 		console.log('UPDATE LIST ', update_list);
 		console.log('DELETE LIST ', delete_list);
@@ -207,6 +212,7 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 				is_insert = true;
 				if(is_delete){
 					reloadpage();
+					toastr.success('Save Successfully!!!', "Success");
 				}
 			});
 		} else {
@@ -218,12 +224,13 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 				is_delete = true;
 				if(is_insert){
 					reloadpage();
+					toastr.success('Save Successfully!!!', "Success");
 				}
 			});	
 		} else {
 			is_delete = true;
 		}
-    }
+	}
 
 	$scope.saveAppt = function(){
 		console.log($scope.apptChange );

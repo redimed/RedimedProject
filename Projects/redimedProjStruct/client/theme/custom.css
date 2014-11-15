@@ -32,10 +32,21 @@ a, a:active, a:focus{
     padding: 15px;
 }
 #appt_tab .nav-tabs {margin-bottom: 0px;}
-#appt_tab .nav-tabs li.active a, .nav-tabs li.active a:hover{
+#appt_tab .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover{
 	border-left: 1px solid #b1bdbd;
 	border-right: 1px solid #b1bdbd;
 	border-top: 3px solid #f3565d;
+	color: black;
+	font-weight: bold;
+}
+#appt_paperless  .row{
+	margin-right: 0px;
+	margin-left: 0px;
+}
+#appt_paperless  .paperless a{
+	display: block;
+	padding: 7px;
+	border-bottom: 1px solid #ddd;
 }
 /**
 * End Khank Style
