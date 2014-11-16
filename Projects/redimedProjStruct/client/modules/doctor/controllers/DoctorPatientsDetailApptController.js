@@ -92,7 +92,6 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		
 		$scope.apptInfo = localStorageService.get('apptTempInfo');
 
-			
 		/*
 		*	GET APPOINMENT INFO
 		*/
@@ -137,7 +136,6 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		});
     };
     
-	
 	init();
 
 	var reloadpage = function(){
@@ -232,7 +230,7 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		} else {
 			is_delete = true;
 		}
-    }
+	}
 
 	$scope.saveAppt = function(){
 		console.log($scope.apptChange );

@@ -1221,6 +1221,7 @@ angular.module('app.config', [])
 
     configService.getCommonDate = function(dateTime){
         if(!dateTime) return '';
+
         if(typeof dateTime === 'string')
             dateTime = new Date(dateTime);
 

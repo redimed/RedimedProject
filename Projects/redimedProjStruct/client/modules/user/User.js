@@ -11,4 +11,3 @@ angular.module("app.loggedIn.user",[
             controller:'UserProfileController'
         })
 })
-
