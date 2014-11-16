@@ -3,6 +3,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
     .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window,$stateParams) {
         // Start Signature
         var tempSignature;
+        var oriInfo;
         $scope.isSignature = false;
 
         $scope.showSignature = function () {
@@ -367,7 +368,9 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         };
         //=============================================================================
         //Set value
-        var oriInfo = angular.copy($scope.info);
+         oriInfo = angular.copy($scope.info);
+        console.log(oriInfo);
+        console.log($scope.info);
         //var info = $scope.info;
         //Set value
         //============================================================================
@@ -377,7 +380,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             $scope.gorgonFAForm.$setPristine();
         }
         $scope.infoChanged = function () {
-            return angular.equals(oriInfo, $scope.info);
+            return !angular.equals(oriInfo, $scope.info);
         }
         //============================================INSERT && UPDATE===============================
         var insert = true;
