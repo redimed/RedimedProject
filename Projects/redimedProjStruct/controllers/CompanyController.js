@@ -3,6 +3,20 @@
  */
 var db = require('../models');
 module.exports = {
+    getDetail: function(req, res){
+        var company_id = req.body.company_id;
+
+        var sql = "SELECT * FROM companies WHERE id="+company_id;
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data[0]});
+            });
+        });
+    },
     companyList: function(req,res){
         db.Company.findAll()
             .success(function(data){

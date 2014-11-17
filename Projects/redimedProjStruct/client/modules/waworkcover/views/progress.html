@@ -1,0 +1,730 @@
+<h3 class="page-title">
+    Workcover WA - PROGRESS certificate of capacity</h3>
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">waworkcover</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+        <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-sm green-haze btn-dashboard-daterange" data-container="body" data-placement="left" data-original-title="Change dashboard date range">
+            <i class="icon-calendar"></i>
+            &nbsp;&nbsp; <i class="fa fa-angle-down"></i>
+            <!-- uncomment this to display selected daterange in the button
+&nbsp; <span class="thin uppercase visible-lg-inline-block"></span>&nbsp;
+<i class="fa fa-angle-down"></i>
+-->
+        </div>
+    </div>
+</div>
+
+<div>
+<form name="waprogressform" novalidate>
+<accordion close-others="oneAtATime">
+<accordion-group heading="WORKER'S DETAILS" is-open="isFirstOpen">
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-3 col-md-3">First name</label>
+            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.First_name" readonly/></div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-3 col-md-3">Last name</label>
+            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Sur_name" readonly/></div>
+        </div>
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-3 col-md-3">Date of birth</label>
+            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.DOB"  placeholder="dd/mm/yyyy" readonly/></div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-3 col-md-3">Claim no.</label>
+            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Medicare_no" readonly/></div>
+        </div>
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-3 col-md-3">Phone</label>
+            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Home_phone" readonly/></div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-3 col-md-3">Email</label>
+            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Email" readonly/></div>
+        </div>
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-3 col-md-3">Address</label>
+            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Address1" readonly/></div>
+        </div>
+    </div>
+
+</accordion-group>
+<accordion-group heading="EMPLOYER'S DETAILS">
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-4 col-md-4">Employer's name</label>
+            <div class="col-sm-7 col-md-7"><input class="form-control" ng-model="companyInfo.Company_name" readonly/></div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-4 col-md-4">Employer's phone</label>
+            <div class="col-sm-7 col-md-7"><input class="form-control" ng-model="companyInfo.Phone" readonly/></div>
+        </div>
+    </div>
+    <div class="break-row"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <label class="col-sm-2 col-md-2">Employer's address</label>
+            <div class="col-sm-10 col-md-10"><input class="form-control" ng-model="companyInfo.Addr" readonly/></div>
+        </div>
+
+    </div>
+    <div class="break-row"></div>
+
+</accordion-group>
+<accordion-group heading="MEDICAL ASSESSMENT">
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-5 col-md-5">Date of this assessment</label>
+            <div class="col-sm-7 col-md-7"><input class="form-control" readonly="readonly" ui-date="" placeholder="dd/mm/yyyyy" ui-date-format="yy-m-d" ng-model="waprogress.examDate"/></div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-5 col-md-5">Date of injury</label>
+            <div class="col-sm-7 col-md-7"><input readonly class="form-control" readonly="readonly" ui-date="" placeholder="dd/mm/yyyyy" ui-date-format="yy-m-d" ng-model="waprogress.injuryDate"/></div>
+        </div>
+    </div>
+    <div class="break-row"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && waprogressform.diagnosis.$invalid}">
+            <label class="col-sm-1 col-md-1 control-label">Diagnosis</label>
+            <div class="col-sm-11 col-md-11">
+                <input class="form-control" name="diagnosis" ng-model="waprogress.diagnosis" ng-required="true" />
+                <div class="error" ng-show="isSubmitted && waprogressform.diagnosis.$invalid">
+                    <label class="control-label">Diagnosis is required.</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="break-row"></div>
+
+</accordion-group>
+<accordion-group heading="PROGRESS REPORT">
+    <h3 class="form-section"></h3>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width:20% !important">
+                            Activities/interventions
+                        </th>
+                        <th scope="col">
+                            Actual outcome <i>(change in symptoms, function, activity and work participation)</i>
+                        </th>
+                        <th scope="col">
+                            Still required?*
+                        </th>
+                    </tr>
+                    </thead><tbody>
+                <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_1.$invalid || waprogressform.outcome_1.$invalid)}">
+                    <td><input class="form-control" name="activities_1" type="text" ng-model="waprogress.activities_1"></td>
+                    <td><input class="form-control" name="outcome_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ng-required="waprogress.activities_1 != undefined && waprogress.activities_1 != ''" type="text" ng-model="waprogress.outcome_1">
+                        <div class="error" ng-show="isSubmitted && waprogressform.outcome_1.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label class="control-label"><input name="isRequired_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ng-required="(waprogress.activities_1!= undefined && waprogress.activities_1!= '') || (waprogress.outcome_1!= undefined && waprogress.outcome_1!= '')" type="radio" value="1" ng-model="waprogress.isRequired_1"> Yes</label>
+                        <label class="control-label"><input name="isRequired_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ng-required="(waprogress.activities_1!= undefined && waprogress.activities_1!= '') || (waprogress.outcome_1!= undefined && waprogress.outcome_1!= '')" type="radio" value="0" ng-model="waprogress.isRequired_1"> No</label>
+                        <div class="error" ng-show="isSubmitted && waprogressform.isRequired_1.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_2.$invalid || waprogressform.outcome_2.$invalid)}">
+                    <td><input class="form-control" name="activities_2" type="text" ng-model="waprogress.activities_2"></td>
+                    <td><input class="form-control" name="outcome_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ng-required="waprogress.activities_2 != undefined && waprogress.activities_2 != ''" type="text" ng-model="waprogress.outcome_2">
+                        <div class="error" ng-show="isSubmitted && waprogressform.outcome_2.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label class="control-label"><input name="isRequired_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ng-required="(waprogress.activities_2!= undefined && waprogress.activities_2!= '') || (waprogress.outcome_2!= undefined && waprogress.outcome_2!= '')" type="radio" value="2" ng-model="waprogress.isRequired_2"> Yes</label>
+                        <label class="control-label"><input name="isRequired_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ng-required="(waprogress.activities_2!= undefined && waprogress.activities_2!= '') || (waprogress.outcome_2!= undefined && waprogress.outcome_2!= '')" type="radio" value="0" ng-model="waprogress.isRequired_2"> No</label>
+                        <div class="error" ng-show="isSubmitted && waprogressform.isRequired_2.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_3.$invalid || waprogressform.outcome_3.$invalid)}">
+                    <td><input class="form-control" name="activities_3" type="text" ng-model="waprogress.activities_3"></td>
+                    <td><input class="form-control" name="outcome_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ng-required="waprogress.activities_3 != undefined && waprogress.activities_3 != ''" type="text" ng-model="waprogress.outcome_3">
+                        <div class="error" ng-show="isSubmitted && waprogressform.outcome_3.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label class="control-label"><input name="isRequired_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ng-required="(waprogress.activities_3!= undefined && waprogress.activities_3!= '') || (waprogress.outcome_3!= undefined && waprogress.outcome_3!= '')" type="radio" value="3" ng-model="waprogress.isRequired_3"> Yes</label>
+                        <label class="control-label"><input name="isRequired_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ng-required="(waprogress.activities_3!= undefined && waprogress.activities_3!= '') || (waprogress.outcome_3!= undefined && waprogress.outcome_3!= '')" type="radio" value="0" ng-model="waprogress.isRequired_3"> No</label>
+                        <div class="error" ng-show="isSubmitted && waprogressform.isRequired_3.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_4.$invalid || waprogressform.outcome_4.$invalid)}">
+                    <td><input class="form-control" name="activities_4" type="text" ng-model="waprogress.activities_4"></td>
+                    <td><input class="form-control" name="outcome_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ng-required="waprogress.activities_4 != undefined && waprogress.activities_4 != ''" type="text" ng-model="waprogress.outcome_4">
+                        <div class="error" ng-show="isSubmitted && waprogressform.outcome_4.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label class="control-label"><input name="isRequired_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ng-required="(waprogress.activities_4!= undefined && waprogress.activities_4!= '') && (waprogress.outcome_4!= undefined && waprogress.outcome_4!= '')" type="radio" value="4" ng-model="waprogress.isRequired_4"> Yes</label>
+                        <label class="control-label"><input name="isRequired_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ng-required="(waprogress.activities_4!= undefined && waprogress.activities_4!= '') && (waprogress.outcome_4!= undefined && waprogress.outcome_4!= '')" type="radio" value="0" ng-model="waprogress.isRequired_4"> No</label>
+                        <div class="error" ng-show="isSubmitted && waprogressform.isRequired_4.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_5.$invalid || waprogressform.outcome_5.$invalid)}">
+                    <td><input class="form-control" name="activities_5" type="text" ng-model="waprogress.activities_5"></td>
+                    <td><input class="form-control" name="outcome_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ng-required="waprogress.activities_5 != undefined && waprogress.activities_5 != ''" type="text" ng-model="waprogress.outcome_5">
+                        <div class="error" ng-show="isSubmitted && waprogressform.outcome_5.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label class="control-label"><input name="isRequired_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ng-required="(waprogress.activities_5!= undefined && waprogress.activities_5!= '') || (waprogress.outcome_5!= undefined && waprogress.outcome_5!= '')" type="radio" value="5" ng-model="waprogress.isRequired_5"> Yes</label>
+                        <label class="control-label"><input name="isRequired_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ng-required="(waprogress.activities_5!= undefined && waprogress.activities_5!= '') || (waprogress.outcome_5!= undefined && waprogress.outcome_5!= '')" type="radio" value="0" ng-model="waprogress.isRequired_5"> No</label>
+                        <div class="error" ng-show="isSubmitted && waprogressform.isRequired_5.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_6.$invalid || waprogressform.outcome_6.$invalid)}">
+                    <td><input class="form-control" name="activities_6" type="text" ng-model="waprogress.activities_6"></td>
+                    <td><input class="form-control" name="outcome_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ng-required="waprogress.activities_6 != undefined && waprogress.activities_6 != ''" type="text" ng-model="waprogress.outcome_6">
+                        <div class="error" ng-show="isSubmitted && waprogressform.outcome_6.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label class="control-label"><input name="isRequired_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ng-required="(waprogress.activities_6!= undefined && waprogress.activities_6!= '') || (waprogress.outcome_6!= undefined && waprogress.outcome_6!= '')" type="radio" value="6" ng-model="waprogress.isRequired_6"> Yes</label>
+                        <label class="control-label"><input name="isRequired_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ng-required="(waprogress.activities_6!= undefined && waprogress.activities_6!= '') || (waprogress.outcome_6!= undefined && waprogress.outcome_6!= '')" type="radio" value="0" ng-model="waprogress.isRequired_6"> No</label>
+                        <div class="error" ng-show="isSubmitted && waprogressform.isRequired_6.$invalid">
+                            <label class="control-label">required</label>
+                        </div>
+                    </td>
+                </tr>
+
+
+                </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="break-row"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label col-md-12 col-sm-12"><i>*(If management activities/interventions are still required, please also list them is sector 6 'Injury Management Plan')</i></label>
+            </div>
+        </div>
+        <div class="break-row"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label col-md-12 col-sm-12"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isOtherFactor == 1" ng-model="waprogress.isOtherFactor"> Other factors apprear to be impacting recovery and return to work</label>
+            </div>
+        </div>
+        <div class="break-row"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="col-sm-1 col-md-1 control-label">Comment</label>
+                <div class="col-sm-11 col-md-11"><input class="form-control" ng-model="waprogress.progressCmt"/></div>
+            </div>
+        </div>
+    </div>
+</accordion-group>
+<accordion-group heading="WORK CAPACITY">
+        <div class="row">
+            <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && waprogressform.usualDuties.$invalid}">
+                <label class="col-sm-3 col-md-3 control-label">Worker's usual duties</label>
+                <div class="col-sm-9 col-md-9"><input class="form-control" name="usualDuties" ng-model="waprogress.usualDuties" ng-required="true"/>
+                    <div class="error" ng-show="isSubmitted && waprogressform.usualDuties.$invalid">
+                        <label class="control-label">Worker's usual duties is required.</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+        <!--START HERE-->
+        <div name="workCapacity" ng-class="{'has-error': isSubmitted && (waprogressform.isFullCapacity.$invalid || waprogressform.isNoCapacity.$invalid || waprogressform.isSomeCapacity.$invalid)}">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class="col-sm-12 col-md-12 control-label">Having considered the health benefits of work, I find this worker to have:</label>
+                </div>
+                <div class="col-md-12 col-sm-12 error" ng-show="isSubmitted && (waprogressform.isFullCapacity.$invalid || waprogressform.isNoCapacity.$invalid || waprogressform.isSomeCapacity.$invalid)">
+                    <label class="col-md-12 col-sm-12 control-label">This section must be valid. Please choose at least one choice and correct all the red field.</label>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row" >
+                <div class="col-md-12 col-sm-12">
+                    <label class="col-sm-3 col-md-3 control-label"><input name="isFullCapacity" type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isFullCapacity == 1" ng-model="waprogress.isFullCapacity"/> <b>full capacity for work</b> </label>
+                    <div class="col-sm-5 col-md-5" ng-class="{'has-error':isSubmitted && waprogressform.fullCapaFrom.$invalid}">
+                        <label class="col-md-2 col-sm-2 control-label">from:</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input class="form-control" type="text" name="fullCapaFrom" ng-required="waprogress.isFullCapacity == 1"  placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.fullCapaFrom"/>
+                            <div class="error" ng-show="isSubmitted && waprogressform.fullCapaFrom.$invalid">
+                                <label class="control-label">required</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="col-md-1 col-sm-1"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isRequireTreat" ng-checked="waprogress.isRequireTreat == 1"/></div>
+                        <label class="col-md-10 col-sm-10 control-label" >but requires further treatment</label>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row" >
+                <div class="col-md-12 col-sm-12">
+                    <label class="col-md-3 col-sm-3 control-label"><input name="isSomeCapacity" type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isSomeCapacity == 1" ng-model="waprogress.isSomeCapacity"/><b> some capacity for work </b> </label>
+                    <div class="col-md-6 col-sm-6" ng-class="{'has-error':isSubmitted && (waprogressform.someCapaFrom.$invalid || waprogressform.someCapaTo.$invalid)}">
+                        <label class="control-label col-md-1 col-sm-1 contriol-label">from:</label>
+                        <div class="col-md-4 col-sm-4">
+                            <input type="text" class="form-control" name="someCapaFrom" ng-required="waprogress.isSomeCapacity == 1" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.someCapaFrom"/>
+                            <div class="error" ng-show="isSubmitted && waprogressform.someCapaFrom.$invalid">
+                                <label class="control-label">required</label>
+                            </div>
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 control-label">to:</label>
+                        <div class="col-md-4 col-sm-4">
+                            <input type="text" class="form-control" name="someCapaTo" ng-required="waprogress.isSomeCapacity == 1" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.someCapaTo"/>
+                            <div class="error" ng-show="isSubmitted && waprogressform.someCapaTo.$invalid">
+                                <label class="control-label">required</label>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-3 col-sm-3 control-label">performing:</label>
+
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-1 col-sm-1">
+
+                    </div>
+                    <div class="col-md-11 col-sm-11">
+                        <label class="col-md-4 col-sm-4 control-label"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isPreDuties" ng-checked="waprogress.isPreDuties == 1">pre-injury duties</label>
+                        <label class="col-md-4 col-sm-4 control-label"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isModiDuties" ng-checked="waprogress.isModiDuties == 1">modified of alternative duties</label>
+                        <label class="col-md-4 col-sm-4 control-label"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isWorkModifi" ng-checked="waprogress.isWorkModifi == 1">workplace modifications</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-1 col-sm-1">
+
+                    </div>
+                    <div class="col-md-11 col-sm-11">
+                        <label class="col-md-4 col-sm-4 control-label"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isPreHours" ng-checked="waprogress.isPreHours==1">pre-injury hours</label>
+                        <div class="col-md-8 col-sm-8 control-label" ng-class="{'has-error':isSubmitted && (waprogressform.modiHrs.$invalid || waprogressform.modiDays.$invalid)}"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isModiHours" ng-checked="waprogress.isModiHours == 1"> <label class="control-label">modified hours of</label>
+                            <input type="number" min="0" max="24" class="input-small form-control inline" ng-required="waprogress.isModiHours==1" name="modiHrs" ng-model="waprogress.modiHrs"/> <label class="control-label">hrs/day</label> <input type="number" min="0" max="7" class="input-small form-control inline" ng-required="waprogress.isModiHours==1" name="modiDays" ng-model="waprogress.modiDays"/> <label class="control-label">days/wk</label>
+                            <div class="error" ng-show="isSubmitted && (waprogressform.modiHrs.$invalid || waprogressform.modiDays.$invalid)">
+                                <label class="control-label">Additional informations required and only allow numbers (max 24 hrs and 7 days).</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class="col-md-3 col-sm-3 control-label"><input name="isNoCapacity" type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isNoCapacity == 1" ng-model="waprogress.isNoCapacity"/><b> no capacity for any work </b> </label>
+                    <div class="col-md-6 col-sm-6" ng-class="{'has-error': isSubmitted && (waprogressform.noCapaFrom.$invald || waprogressform.noCapaTo.$invalid)}">
+                        <label class="control-label col-md-1 col-sm-1 control-label">from:</label>
+                        <div class="col-md-4 col-sm-4">
+                            <input type="text" name="noCapaFrom" ng-required="waprogress.isNoCapacity == 1" class="form-control" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.noCapaFrom"/>
+                            <div class="error" ng-show="isSubmitted && waprogressform.noCapaFrom.$invalid">
+                                <label class="control-label">required</label>
+                            </div>
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 control-label">to:</label>
+                        <div class="col-md-4 col-sm-4">
+                            <input type="text" name="noCapaTo" ng-required="waprogress.isNoCapacity == 1" class="form-control" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.noCapaTo"/>
+                            <div class="error" ng-show="isSubmitted && waprogressform.noCapaTo.$invalid">
+                                <label class="control-label">required</label>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-3 col-sm-3"><i>(outline clinical reason below)</i></label>
+
+                </div>
+            </div>
+        </div>
+        <!--END HERE-->
+        <div class="break-row"></div>
+        <div class="row">
+            <label class="col-md-12 col-sm-12 control-label"><b>Worker has capacity to:</b></label>
+            <label class="col-md-12 col-sm-12 control-label"><i>(Please outline the worker's physical and/or psychosocial capacity - refer to explanatory notes for example. Where there is no capacity for work, please provide clinical reasoning)</i></label>
+        </div>
+        <div class="break-row"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-5 col-sm-5">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && waprogressform.liftUpKg.$invalid}">
+                            <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isLiftUp" ng-checked="waprogress.isLiftUp==1"> lift up to</label>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control" ng-required="waprogress.isLiftUp == 1" name="liftUpKg" type="number" ng-model="waprogress.liftUpKg" min="0" max="999"/>
+                                </div>
+                                <label class="col-md-6 col-sm-6 control-label">kg</label>
+                                <div class="error" ng-show="isSubmitted && waprogressform.liftUpKg.$invalid">
+                                    <label class="control-label">required and allow only numbers from 0-999</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && waprogressform.siUpMins.$invalid}">
+                            <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isSitUp" ng-checked="waprogress.isSitUp==1"> sit up to</label>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control" type="number" min="0" max="999" ng-required="waprogress.isSitUp==1" name="siUpMins" ng-model="waprogress.sitUpMins"/>
+                                </div>
+                                <label class="col-md-6 col-sm-6 control-label">mins</label>
+                                <div class="error" ng-show="isSubmitted && waprogressform.siUpMins.$invalid">
+                                    <label class="control-label">required and allow only numbers from 0-999</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && waprogressform.standUpMins.$invalid}">
+                            <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isStandUp" ng-checked="waprogress.isStandUp==1"> stand up to</label>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control" type="number" min="0" max="999" ng-required="waprogress.isStandUp==1" name="standUpMins" ng-model="waprogress.standUpMins"/>
+                                </div>
+                                <label class="col-md-6 col-sm-6 control-label">mins</label>
+                                <div class="error" ng-show="isSubmitted && waprogressform.standUpMins.$invalid">
+                                    <label class="control-label">required and allow only numbers from 0-999</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && waprogressform.walkUpMeter.$invalid}">
+                            <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model=" waprogress.isWalkUp" ng-checked="waprogress.isWalkUp==1"> walk up to</label>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control" type="number" min="0" max="999" ng-required="waprogress.isWalkUp==1" name="walkUpMeter" ng-model="waprogress.walkUpMeter"/>
+                                </div>
+                                <label class="col-md-6 col-sm-6 control-label">m</label>
+                                <div class="error" ng-show="isSubmitted && waprogressform.walkUpMeter.$invalid">
+                                    <label class="control-label">required and allow only numbers from 0-999</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label col-md-12 col-sm-12"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isWorkBelow" ng-checked="waprogress.isWorkBelow==1"> work below shoulder height</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-7" ng-class="{'has-error':isSubmitted && waprogressform.capaCmt.$invalid}">
+                    <textarea class="text-area-custom-style form-control" name="capaCmt" rows="8" ng-model="waprogress.capaCmt" ng-required="true"></textarea>
+                    <div class="error" ng-show="isSubmitted && waprogressform.capaCmt.$invalid">
+                        <label class="control-label">Work capacity comment is required.</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </accordion-group>
+<accordion-group heading="INJURY MANAGEMENT PLAN">
+    <h3 class="form-section"></h3>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width:20% !important">
+                            Activities/interventions
+                        </th>
+                        <th scope="col">
+                            Purpose/goal <i>(likely change in symptoms, function, activity and work participation)</i>
+                        </th>
+                    </tr>
+                    </thead><tbody>
+                <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_1.$invalid}">
+                    <td><input class="form-control" type="text" ng-model="waprogress.activities_B1"></td>
+                    <td>
+                        <input class="form-control" name="goal_1" ng-required="waprogress.activities_B1 != undefiend && waprogress.activities_B1 != ''" ng-disabled="waprogress.activities_B1 == undefiend || waprogress.activities_B1 == ''" type="text" ng-model="waprogress.goal_1">
+                        <div class="error" ng-show="isSubmitted && waprogressform.goal_1.$invalid">
+                            <label class="control-label">
+                                required
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_2.$invalid}">
+                    <td><input class="form-control" type="text" ng-model="waprogress.activities_B2"></td>
+                    <td>
+                        <input class="form-control" name="goal_2" ng-required="waprogress.activities_B2 != undefiend && waprogress.activities_B2 != ''" ng-disabled="waprogress.activities_B2 == undefiend || waprogress.activities_B2 == ''" type="text" ng-model="waprogress.goal_2">
+                        <div class="error" ng-show="isSubmitted && waprogressform.goal_2.$invalid">
+                            <label class="control-label">
+                                required
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_3.$invalid}">
+                    <td><input class="form-control" type="text" ng-model="waprogress.activities_B3"></td>
+                    <td>
+                        <input class="form-control" name="goal_3" ng-required="waprogress.activities_B3 != undefiend && waprogress.activities_B3 != ''" ng-disabled="waprogress.activities_B3 == undefiend || waprogress.activities_B3 == ''" type="text" ng-model="waprogress.goal_3">
+                        <div class="error" ng-show="isSubmitted && waprogressform.goal_3.$invalid">
+                            <label class="control-label">
+                                required
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_4.$invalid}">
+                    <td><input class="form-control" type="text" ng-model="waprogress.activities_B4"></td>
+                    <td>
+                        <input class="form-control" name="goal_4" ng-required="waprogress.activities_B4 != undefiend && waprogress.activities_B4 != ''" ng-disabled="waprogress.activities_B4 == undefiend || waprogress.activities_B4 == ''" type="text" ng-model="waprogress.goal_4">
+                        <div class="error" ng-show="isSubmitted && waprogressform.goal_4.$invalid">
+                            <label class="control-label">
+                                required
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_5.$invalid}">
+                    <td><input class="form-control" type="text" ng-model="waprogress.activities_B5"></td>
+                    <td>
+                        <input class="form-control" name="goal_5" ng-required="waprogress.activities_B5 != undefiend && waprogress.activities_B5 != ''" ng-disabled="waprogress.activities_B5 == undefiend || waprogress.activities_B5 == ''" type="text" ng-model="waprogress.goal_5">
+                        <div class="error" ng-show="isSubmitted && waprogressform.goal_5.$invalid">
+                            <label class="control-label">
+                                required
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_6.$invalid}">
+                    <td><input class="form-control" type="text" ng-model="waprogress.activities_B6"></td>
+                    <td>
+                        <input class="form-control" name="goal_6" ng-required="waprogress.activities_B6 != undefiend && waprogress.activities_B6 != ''" ng-disabled="waprogress.activities_B6 == undefiend || waprogress.activities_B6 == ''" type="text" ng-model="waprogress.goal_6">
+                        <div class="error" ng-show="isSubmitted && waprogressform.goal_6.$invalid">
+                            <label class="control-label">
+                                required
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="break-row"></div>
+    <div class="row" ng-class="{'has-error': isSubmitted && waprogressform.supportDate.$invalid}">
+        <label class="control-label col-md-12 col-sm-12">
+            <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isSupportRTW ==1" ng-model="waprogress.isSupportRTW">
+            I support the RTW program establish by the employer/isurer/WRP dated
+                <input type="text" name="supportDate" readonly="readonly" ng-required="waprogress.isSupportRTW == 1" class="form-control inline input-small" ui-date="" placeholder="dd/mm/yyyy" ui-date-format="yy-m-d" ng-model="waprogress.supportDate">
+                <div class="error inline" ng-show="isSubmitted && waprogressform.supportDate.$invalid">
+                    <label class="control-label">required</label>
+                </div>
+
+        </label>
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <label class="control-label col-md-6 col-sm-6">
+            <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isMoreInfo ==1" ng-model="waprogress.isMoreInfo">
+            I would like more information about available duties
+        </label>
+        <label class="control-label col-md-6 col-sm-6">
+            <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isInvolved ==1" ng-model="waprogress.isInvolved">
+            I would like to be involved in developing the RTW program
+        </label>
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <label class="control-label col-md-12 col-sm-12">
+            <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isEngage ==1" ng-model="waprogress.isEngage">
+            Please engage a workplace rehabilation provider <i>(if you have made a referal, provide name and contact details below)</i>
+            <input type="text" class="form-control" ng-model="engageDetail">
+        </label>
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+                <i>
+                    <ul>Examples of injury management activities/interventions include:
+                        <li>further assessment - dianostic imaging, medical specialist consults, worksite assessment.</li>
+                        <li>intervention - physiotherapy, clinical psychology, exercise psychology, prescribed medications, workplace mediation</li>
+                        <li>return to work planning - identify suitable duties, establish return to work program</li>
+                    </ul>
+                </i>
+        </div>
+    </div>
+
+
+</accordion-group>
+<accordion-group heading="NEXT REVIEW DATE">
+    <div class="break-row"></div>
+    <div class="row" ng-class="{'has-error': isSubmitted && waprogressform.reviewOn.$invalid}">
+        <div class="col-md-12 col-sm-12" >
+            <label class="control-label col-md-3 col-sm-3"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isReview==1" name="reviewDate" value="1" ng-model="waprogress.isReview"/> I will review wroker again on</label>
+            <div class="col-md-3 col-sm-3">
+                <input class="form-control" ng-required="waprogress.isReview == 1" name="reviewOn" type="text" readonly="readonly"  placeholder="dd/mm/yyyy" ui-date="" ui-date-format="yy-m-d" ng-model="waprogress.reviewOn">
+                <div class="error" ng-show="isSubmitted && waprogressform.reviewOn.$invalid">
+                    <label class="control-label">required</label>
+                </div>
+            </div>
+            <label class="control-label col-md-6 col-sm-6"> <i>(if greater than 28 days, please provide clinical reasoning)</i></label>
+        </div>
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <label class="control-label col-md-2 col-sm-2"> Comments</label>
+            <div class="col-md-10 col-sm-10">
+                <input class="form-control" type="text" ng-model="waprogress.reviewCmt">
+            </div>
+        </div>
+    </div>
+</accordion-group>
+    <accordion-group heading="MEDICAL PRACTITIONER'S DETAILS">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-6 col-sm-6">
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Name</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" class="form-control" readonly="readonly" ng-model="doctorInfo.NAME"/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Address</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" class="form-control" readonly="readonly" ng-model="doctorInfo.Address"/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2"></label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" readonly="readonly" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Phone</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" readonly="readonly" class="form-control" ng-model="doctorInfo.Phone"/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Fax</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3">AHPRA no. MED</label>
+                        <div class="col-md-9 col-sm-9">
+                            <input type="text" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="break-row has-error"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Email</label>
+                        <div class="col-md-10 col-sm-10" >
+                            <input type="text" name="waprogressemail" readonly="readonly" class="form-control" ng-model="doctorInfo.Email" />
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Signature</label>
+                        <div class="col-md-10 col-sm-10">
+                            <img src='{{doctorInfo.Signature}}'/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Date</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" class="form-control" readonly="readonly" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.examDate" />
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                </div>
+
+            </div>
+        </div>
+    </accordion-group>
+</accordion>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-10 col-sm-10"></div>
+        <div class="col-md-2 col-sm-2">
+            <button type="button" class="btn default blue btn-lg glyphicon glyphicon-ok" ng-click="editData()"> Submit</button>
+            <button type="submit" class="btn default blue btn-lg glyphicon glyphicon-ok" ng-click="insertData()"> Insert</button>
+        </div>
+    </div>
+</div>
+
+
+
+</form>
+
+    <button type="button" class="btn default blue btn-lg" ng-click="getData()"> Get details test</button>
+</div>

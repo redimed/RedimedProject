@@ -414,6 +414,7 @@ angular.module("app.loggedIn.controller",[
             .success(function(data) {
                 if(data.status=='success')
                 {
+
                     $scope.totalItems=data.data.count_total_notification;
                     $scope.itemsPerPage=10;
                     $scope.maxSize=10;

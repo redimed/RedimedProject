@@ -25,15 +25,21 @@ var model_sql = {
         query_builder.setFields(row);
         return query_builder.toString();
     },
-    sql_get_appt_by_patient: function (patient_id) {
+    sql_get_appt_by_patient: function (patient_id, doctor_id) {
         var appt_builder = squel.select()
-                .from('cln_appointment_calendar').where('patient_id = ?', patient_id)
-                .field('CAL_ID')
+                .from('cln_appointment_calendar')
+                .where('patient_id = ?', patient_id);
+                
+        if(doctor_id)
+            appt_builder.where('doctor_id = ?', doctor_id);         
+
+            appt_builder.field('CAL_ID')
                 .field('SITE_ID')
                 .field('APP_TYPE')
                 .field("DATE_FORMAT(FROM_TIME,'%d/%m/%Y %h:%i')", 'FROM_TIME')
                 .field("DATE_FORMAT(TO_TIME,'%d/%m/%Y %h:%i')", 'TO_TIME')
                 .field('NOTES');
+                
         var query_builder = squel.select().from('redimedsites');
         query_builder.join(appt_builder, 'appt', 'redimedsites.id = appt.SITE_ID')
         query_builder.field('CAL_ID')
@@ -206,8 +212,9 @@ module.exports = {
     */
     getGetByPatient: function (req, res) {
         var patient_id = req.query.patient_id;
+        var doctor_id = req.query.doctor_id;
 
-        var sql = model_sql.sql_get_appt_by_patient(patient_id);
+        var sql = model_sql.sql_get_appt_by_patient(patient_id, doctor_id);
         var k_sql = res.locals.k_sql;
 
         k_sql.exec(sql, function (data) {
