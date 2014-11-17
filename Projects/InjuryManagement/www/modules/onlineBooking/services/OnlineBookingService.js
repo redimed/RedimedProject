@@ -195,6 +195,24 @@ angular.module('starter.booking.services',[])
             var ex = api.one('booking/export');
             return ex.get();
         }
+        bookingService.getLocationsFilter = function(){
+            var getLF = api.one('rlob/redimedsites/list');
+            return getLF.get();
+        }
+        bookingService.getRlSpecialtiesFilter = function(){
+            var getTF = api.one('rlob/cln_specialties/list');
+            return  getTF.get();
+        }
+        bookingService.getDoctorsFilter =  function(){
+            var getDF = api.one('rlob/doctors/get-doctors-for-source-type');
+            return getDF.get();
+        }
+        bookingService.getApointmentCalendar = function(specialityId,doctorId,locationId,fromTime){
+            var getAC = api.one('rlob/appointment-calendar/get-appointment-calendar');
+            return getAC.get({Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime})
+
+        }
+
 
 
         return bookingService;

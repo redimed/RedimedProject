@@ -41,7 +41,7 @@ angular.module('starter', ['ionic',
 
 
       //test ip local
-      RestangularProvider.setBaseUrl("http://192.168.135.47:3000");
+      RestangularProvider.setBaseUrl("http://192.168.135.8:3000");
 
 
     
