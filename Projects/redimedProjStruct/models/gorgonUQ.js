@@ -118,14 +118,15 @@ module.exports = function(sequelize, DataTypes){
         "Created_by" : DataTypes.INTEGER(11),
         "Creation_date" : DataTypes.DATE,
         "Last_updated_by" : DataTypes.INTEGER(11),
-        //"Last_update_date" : DataTypes.DATE,
+        "Last_update_date" : DataTypes.DATE,
         "CalId" : DataTypes.INTEGER(20),
         "DocId" : DataTypes.INTEGER(11),
         "SIGNATURE" : DataTypes.TEXT,
         "isUseRespirator" : DataTypes.INTEGER(11)
     },{
         tableName: 'userquestionnaire', // đặt tên bảng
-        updatedAt : "Last_update_date"
+        updatedAt : "Last_update_date",
+        createdAt: "Creation_date"
     });
     return gorgonUQ;
 };

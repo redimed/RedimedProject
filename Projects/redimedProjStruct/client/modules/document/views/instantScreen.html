@@ -1,15 +1,14 @@
-<style>
-    #modalSign .modal-dialog{
-        width: 900px;
-        height: 800px;
-    }
-</style>
 <form name="IDSForm" ng-submit="submitIDS(IDSForm)" method="post" novalidate>
     <div class="row">
-        <div class="col-md-12 ">
-            <button type="submit" class="btn green pull-right">Submit</button>
-            <a href="javascript:;"  class="btn btn-primary blue pull-right">Print PDF</a>
-            <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
+        <div class="col-md-12 col-sm-12">
+            <button type="submit"
+                    class="btn green pull-right">{{isNew?"Add New":"Update"}}
+            </button>
+            <a href="javascript:;" type="button"
+               ng-disabled="isNew == true"
+               ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+            </a>
+            <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
         </div>
     </div>
     <div class="caption">
@@ -49,56 +48,51 @@
                 </div>
             </div>
             </br>
+
             <div class="row">
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-7 col-sm-7">
+                    <div class="col-md-2 col-sm-2">
+                        <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
+                           class="btn green">Signature</a>
+                    </div>
+                    <div class="col-md-10 col-sm-10"
+                         ng-show="infoH.SIGNATURE!=null && infoH.SIGNATURE!='' && !isSignature">
+                        <img src="" ng-src="{{infoH.SIGNATURE}}" alt=""
+                             style="width: 200px;height: 150px;"/>
+                    </div>
+
+                </div>
+                <div class="col-md-5 col-sm-5">
                     <div class="form-group">
-                        <label class="control-label col-md-6" >Signature</label>
-                        <a href="javascript:" ng-click="sigClick()" id="signBtn" class="btn green">Sign</a>
-
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-2" >Date</label>
-                        <input type="text" class="" ng-model="infoH.IDAS_DATE" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
-
-                    </div>
-                </div>
-
-                <div ng-show="sig" style="border: none; width: 900px; margin-left: 10px;background-color:#74e4b5;">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-12 col-sm-12">
-                                <div signature ng-model="infoH.SIGNATURE" reset="resetFlag"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="col-md-8 col-sm-8"></div>
-                            <div class="col-md-4 col-sm-4">
-                                <a href="javascript:;" class="btn red" ng-click="cancelClick()">Cancel</a>
-                                <a href="javascript:;" class="btn blue" ng-click="reset()">Reset</a>
-                                <a href="javascript:;" class="btn green" ng-click="okClick()">Ok</a>
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-                </div>
-                <div ng-show="infoH.SIGNATURE!==''&& !sig">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-6 col-sm-6">
-                                <img src="" ng-src="{{infoH.SIGNATURE}}" style="width:200px;height: 100px;"/>
-                            </div>
+                        <label class="control-label col-md-2 col-sm-3" style="margin-top: 5px">Date</label>
+                        <div class="col-md-3 col-sm-7">
+                            <input type="text" class="" ng-model="infoH.IDAS_DATE" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
                         </div>
                     </div>
                 </div>
 
             </div>
+            <div class="row" style="text-align: center;" ng-show="isSignature">
+                <div class="col-md-12 col-sm-12">
+                    <canvas width="500" height="400" id="canvas"
+                            signature ng-model="infoH.SIGNATURE" style="background-color: #8eece8">
+                    </canvas>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="break-row"></div>
+                    <div class="btn-group">
+                        <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+                            Cancel
+                        </button>
+                        <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+                        </button>
+                        <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 

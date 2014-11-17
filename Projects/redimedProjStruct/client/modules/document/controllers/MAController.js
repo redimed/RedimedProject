@@ -1,32 +1,36 @@
 
 angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
     .controller("MAController",function($scope,DocumentService,$http,$cookieStore,toastr,$stateParams) {
+        // Start Signature
+        var tempSignature;
+        $scope.isSignature = false;
+        $scope.showSignature = function () {
+            $scope.isSignature = !$scope.isSignature;
+        }
+
+        $scope.cancelClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            $scope.infoH.SIGN = tempSignature;
+        };
+        $scope.clearClick = function () {
+            $scope.infoH.SIGN = '';
+        };
+        $scope.okClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            tempSignature = $scope.infoH.SIGN;
+        }
+        // End Signature
 
         $scope.listMA = [];
         $scope.infoH = [];
         $scope.infoL = [];
 
-        $scope.resetFlag = false;
-        $scope.reset = function () {
-            $scope.resetFlag = !$scope.resetFlag;
-        }
-        //end signature
+
 
         var CalID = $stateParams.CalID;
         var Patient_ID = $stateParams.PatientID;
         console.log("MA: " + CalID + " patient: " + Patient_ID);
 
-        //begin show-hidden img signature
-        $scope.sig = false;
-        $scope.sigClick = function () {
-            $scope.sig = true;
-        }
-        $scope.okClick = function () {
-            $scope.sig = false;
-        }
-        $scope.cancelClick = function () {
-            $scope.sig = false;
-        }
 
         var sex = "male";
         $scope.Ratio = function(){
