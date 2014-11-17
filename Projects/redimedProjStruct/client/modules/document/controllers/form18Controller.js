@@ -2,7 +2,7 @@
  * Created by HUYNHAN on 9/25/2014.
  */
 angular.module('app.loggedIn.document.form18.controllers', [])
-    .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state) {
+    .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -43,14 +43,14 @@ angular.module('app.loggedIn.document.form18.controllers', [])
 
             $scope.cancelClick1 = function () {
                 $scope.isSignature1 = !$scope.isSignature1;
-                $scope.info.PERSON_ARRANGING_SIGNATURE = tempSignature1;
+                $scope.info.WORKER_SIGNATURE = tempSignature1;
             };
             $scope.clearClick1 = function () {
-                $scope.info.PERSON_ARRANGING_SIGNATURE = '';
+                $scope.info.WORKER_SIGNATURE = '';
             };
             $scope.okClick1 = function () {
                 $scope.isSignature1 = !$scope.isSignature1;
-                tempSignature1 = $scope.info.PERSON_ARRANGING_SIGNATURE;
+                tempSignature1 = $scope.info.WORKER_SIGNATURE;
             }
 
             //end signature1
@@ -58,31 +58,36 @@ angular.module('app.loggedIn.document.form18.controllers', [])
             //set value default
             $scope.info = {
                 GORGON_ID: null,
-                PATIENT_ID: null,
-                CAL_ID: null,
+                PATIENT_ID: $stateParams.PatientID,
+                CAL_ID: $stateParams.CalID,
                 DocId: null,
                 TIME_TEST: new Date(),
                 WORK_COVER_NO: null,
                 PERSON_ARRANGING_SIGNATURE: null,
                 PERSON_ARRANGING_NAME: null,
                 PERSON_ARRANGING_POSITION: null,
-                DOCTOR_ID: null,
+                DOCTOR_ID: $cookieStore.get('doctorInfo').doctor_id,
                 WORKER_SIGNATURE: null
             };
-            var oriInfo = angular.copy($scope.info);
+            var oriInfo;
             var info = $scope.info;
             DocumentService.loadForm18(info).then(function (response) {
                 if ('fail' === response['status']) {
                     $state.go("loggedIn.home", null, {"reload": true});
                 }
-                else if ('findNull' === response['status']) {
+                else if ('findNull' === response[0].status) {
                     $scope.isNew = true;
+                    $scope.info.patient = response[0].patient[0];
+                    $scope.info.NAME = $cookieStore.get('doctorInfo').NAME;
+                    oriInfo = angular.copy($scope.info);
                 }
-                else if ('success' === response[0].status) {
+                else if ('findFound' === response[0].status) {
                     $scope.isNew = false;
                     var data = response[0].dataF18;
                     $scope.info = [];
                     $scope.info = {
+                        NAME: $cookieStore.get('doctorInfo').NAME,
+                        patient: response[0].patient[0],
                         GORGON_ID: data[0].GORGON_ID,
                         PATIENT_ID: data[0].PATIENT_ID,
                         CAL_ID: data[0].CAL_ID,

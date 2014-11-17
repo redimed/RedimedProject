@@ -6,19 +6,28 @@ var db = require('../../models');
 module.exports = {
     loadCat3: function (req, res) {
         var info = req.body.info; //get cal_id, patient_id
-        db.Category3.findAll({where: {cal_id: 999, patient_id: 999}}, {raw: true})
+        db.Category3.findAll({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
             .success(function (data) {
-                if (data.length === 0) {
-                    res.json({status: "findNull"});
-                }
-                else {
-                    var response = [
-                        {"status": "success", "data": data} //set status and response data
-                    ];
-                    res.json(response);
-                }
+                db.Patient.findAll({where: {patient_id: info.patient_id}}, {raw: true})
+                    .success(function (patient) {
+                        if (data.length === 0) {
+                            var response = [
+                                {"status": "findNull", "patient": patient}
+                            ];
+                            res.json(response);
+                        }
+                        else {
+                            var response = [
+                                {"status": "findFound", "data": data, "patient": patient}
+                            ];
+                            res.json(response);
+                        }
+                    }).error(function (err) {
+                        console.log("ERROR:" + err);
+                    })
             })
             .error(function (err) {
+                console.log("ERROR:" + err);
                 res.json({status: "fail"});
             });
     },
@@ -28,8 +37,8 @@ module.exports = {
             var cat_id = maxId + 1;
             db.Category3.create({
                 cat_id: cat_id,
-                cal_id: 999,              //edit set calendar id
-                patient_id: 999,          //edit patient_id
+                cal_id: info.cal_id,
+                patient_id: info.patient_id,
                 q1_4: info.q1_4,
                 q1_4_c: info.q1_4_c,
                 q1_5_1: info.q1_5_1,
@@ -127,7 +136,7 @@ module.exports = {
                 q1_5_3_c: info.q1_5_3_c,
                 PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,
                 PATIENT_DATE: info.PATIENT_DATE,
-                DOCTOR_ID: info.DOCTOR_ID                     //edit
+                DOCTOR_ID: info.DOCTOR_ID
 
             }, {raw: true})
                 .success(function () {
@@ -145,6 +154,8 @@ module.exports = {
     editCat3: function (req, res) {
         var info = req.body.info;
         db.Category3.update({
+            cal_id: info.cal_id,
+            patient_id: info.patient_id,
             q1_4: info.q1_4,
             q1_4_c: info.q1_4_c,
             q1_5_1: info.q1_5_1,

@@ -5,19 +5,31 @@ var db = require('../../models');
 module.exports = {
     loadCat2: function (req, res) {
         var info = req.body.info;
-        db.Category2.findAll({where: {cal_id: 999, patient_id: 999}}, {raw: true})
+        db.Category2.findAll({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
             .success(function (dataCat2) {
-                if (dataCat2.length === 0) {
-                    res.json({status: 'findNull'});
-                }
-                else {
-                    var response = [
-                        {
-                            "dataCat2": dataCat2, "status": "findFound"
+                db.Patient.findAll({where: {patient_id: info.patient_id}}, {raw: true})
+                    .success(function (patient) {
+                        if (dataCat2.length === 0) {
+                            response = [
+                                {
+                                    "patient": patient, "status": "findNull"
+                                }
+                            ];
+                            res.json(response);
                         }
-                    ];
-                    res.json(response);
-                }
+                        else {
+                            var response = [
+                                {
+                                    "dataCat2": dataCat2, "patient": patient, "status": "findFound"
+                                }
+                            ];
+                            res.json(response);
+                        }
+                    })
+                    .error(function (err) {
+                        console.log("ERROR:" + err);
+                        res.json({status: 'fail'});
+                    })
             })
             .error(function () {
                 res.json({status: 'fail'});
@@ -31,9 +43,9 @@ module.exports = {
                 var cat_id = maxId + 1;
                 db.Category2.create({
                     cat_id: cat_id,
-                    cal_id: 999,
+                    cal_id: info.cal_id,
                     DocId: info.DocId,
-                    patient_id: 999,
+                    patient_id: info.patient_id,
                     Signature: info.Signature,
                     q1_4: info.q1_4,
                     q1_4_c: info.q1_4_c,
@@ -214,9 +226,9 @@ module.exports = {
     editCat2: function (req, res) {
         var info = req.body.info;
         db.Category2.update({
-            cal_id: 999,
+            cal_id: info.cal_id,
             DocId: info.DocId,
-            patient_id: 999,
+            patient_id: info.patient_id,
             Signature: info.Signature,
             q1_4: info.q1_4,
             q1_4_c: info.q1_4_c,
@@ -385,6 +397,7 @@ module.exports = {
                 res.json({status: 'success'});
             })
             .error(function (err) {
+                console.log("ERROR:" + err);
                 res.json({status: 'fail'});
             })
     }

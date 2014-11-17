@@ -5,17 +5,26 @@ var db = require('../../models');
 module.exports = {
     loadGGMH: function (req, res) {
         var info = req.body.info;
-        db.gorgonMH.findAll({where: {patient_id: 999}}, {raw: true})
+        db.gorgonMH.findAll({where: {Patient_Id: info.Patient_Id, CalId: info.CalId}}, {raw: true})
             .success(function (data) {
-                if (data.length === 0) {
-                    res.json({status: 'findNull'});
-                }
-                else {
-                    var response = [
-                        {"status": 'success', "data": data} //set status and response data
-                    ];
-                    res.json(response);
-                }
+                db.Patient.findAll({where: {Patient_Id: info.Patient_Id}})
+                    .success(function (patient) {
+                        if (data.length === 0) {
+                            var response = [
+                                {"status": "findNull", "patient": patient}
+                            ];
+                            res.json(response);
+                        }
+                        else {
+                            var response = [
+                                {"status": 'findFound', "data": data, "patient": patient}
+                            ];
+                            res.json(response);
+                        }
+                    })
+                    .error(function (err) {
+                        console.log("ERROR:" + err);
+                    })
             })
             .error(function (err) {
                 console.log("ERROR:" + err);
@@ -29,7 +38,7 @@ module.exports = {
                 var gorgon_id = maxId + 1;
                 db.gorgonMH.create({
                     Gorgon_Id: gorgon_id,
-                    Patient_Id: 999,
+                    Patient_Id: info.Patient_Id,
                     JobNo: info.JobNo,
                     Occupation: info.Occupation,
                     JobLocation: info.JobLocation,

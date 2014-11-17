@@ -4,18 +4,28 @@
 var db = require('../../models');
 module.exports = {
     loadForm18: function (req, res) {
-        var info = req.body.info; //get param
-        db.Form18.findAll({where: {PATIENT_ID: 999, CAL_ID: 999}}, {raw: true})
+        var info = req.body.info;
+        db.Form18.findAll({where: {PATIENT_ID: info.PATIENT_ID, CAL_ID: info.CAL_ID}}, {raw: true})
             .success(function (dataF18) {
-                if (dataF18.length === 0) {
-                    res.json({status: 'findNull'});
-                }
-                else {
-                    var response = [
-                        {"dataF18": dataF18, "status": 'success'}
-                    ];
-                    res.json(response);
-                }
+                db.Patient.findAll({where: {patient_id: info.PATIENT_ID}}, {raw: true})
+                    .success(function (patient) {
+                        if (dataF18.length === 0) {
+                            var response = [
+                                {"status": "findNull", "patient": patient}
+                            ];
+                            res.json(response);
+                        }
+                        else {
+                            var response = [
+                                {"dataF18": dataF18, "status": 'findFound', "patient": patient}
+                            ];
+                            res.json(response);
+                        }
+                    })
+                    .error(function (err) {
+                        console.log("ERROR:" + err);
+                        res.json({status: 'fail'});
+                    })
             })
             .error(function (err) {
                 console.log("ERROR:" + err);
@@ -29,8 +39,8 @@ module.exports = {
                 var GORGON_ID = max_id + 1;
                 db.Form18.create({
                     GORGON_ID: GORGON_ID,
-                    PATIENT_ID: 999,
-                    CAL_ID: 999,
+                    PATIENT_ID: info.PATIENT_ID,
+                    CAL_ID: info.CAL_ID,
                     DocId: info.DocId,
                     TIME_TEST: info.TIME_TEST,
                     WORK_COVER_NO: info.WORK_COVER_NO,
@@ -56,6 +66,8 @@ module.exports = {
     editForm18: function (req, res) {
         var info = req.body.info;
         db.Form18.update({
+            CAL_ID: info.CAL_ID,
+            PATIENT_ID: info.PATIENT_ID,
             DocId: info.DocId,
             TIME_TEST: info.TIME_TEST,
             WORK_COVER_NO: info.WORK_COVER_NO,
@@ -64,8 +76,7 @@ module.exports = {
             PERSON_ARRANGING_POSITION: info.PERSON_ARRANGING_POSITION,
             DOCTOR_ID: info.DOCTOR_ID,
             WORKER_SIGNATURE: info.WORKER_SIGNATURE
-        }, {PATIENT_ID: 999,
-            CAL_ID: 999, GORGON_ID: 1})
+        }, {GORGON_ID: 1})
             .success(function () {
                 res.json({status: 'success'});
             })

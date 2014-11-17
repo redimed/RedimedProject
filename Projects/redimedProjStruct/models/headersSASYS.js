@@ -7,17 +7,17 @@ module.exports = function (sequelize, DataTypes) {
         "SA_NAME": DataTypes.STRING(50),
         "ISENABLE": DataTypes.INTEGER(11),
         "SA_CODE": DataTypes.STRING(10),
-        "CREATED_BY": DataTypes.INTEGER(11),
-        "CREATION_DATE": DataTypes.DATE,
-        "LAST_UPDATED_BY": DataTypes.INTEGER(11),
-        "LAST_UPDATE DATE": DataTypes.DATE,
-        "REPORT_TYPE": DataTypes.STRING(20),
+        "Created_by": DataTypes.INTEGER(11),
+        "Creation_date": DataTypes.DATE,
+        "Last_updated_by": DataTypes.INTEGER(11),
+        "Last_update_date": DataTypes.DATE,
+        "report_type": DataTypes.STRING(20),
         "RECIPIENT_NAME": DataTypes.STRING(200),
         "LOCATION_ID": DataTypes.INTEGER(11)
     }, {
         tableName: 'sys_sa_df_headers',
-        createdAt: 'CREATION_DATE',
-        updatedAt: 'LAST_UPDATED_BY'
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_update_date'
     });
     return headersSASYS;
 }

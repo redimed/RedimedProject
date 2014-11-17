@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.cat3.controllers', [])
-    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state) {
+    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -36,8 +36,8 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
             //set value default
             $scope.info = {
                 cat_id: null,
-                cal_id: 999,
-                patient_id: 999,
+                cal_id: $stateParams.CalID,
+                patient_id: $stateParams.PatientID,
                 q1_4: null,
                 q1_4_c: null,
                 q1_5_1: null,
@@ -135,9 +135,9 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                 q1_5_3_c: null,
                 PATIENT_SIGNATURE: null,
                 PATIENT_DATE: new Date(),
-                DOCTOR_ID: null
+                DOCTOR_ID: $cookieStore.get('doctorInfo').doctor_id
             };
-            var oriInfo = angular.copy($scope.info);
+            var oriInfo;
             var info = $scope.info;
             DocumentService.loadCat3(info).then(function (response) {
                 // throw exception
@@ -145,16 +145,19 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     $state.go('loggedIn.home', null, {"reload": true});
                 }
                 else {
-                    if (response['status'] === 'findNull') {
+                    if (response[0].status === 'findNull') {
                         // Add new category 3
                         $scope.isNew = true;
+                        $scope.info.patient = response[0].patient[0];
+                        oriInfo = angular.copy($scope.info);
                     }
-                    else if (response[0].status === 'success') {
+                    else if (response[0].status === 'findFound') {
                         var data = response[0].data;
                         $scope.isNew = false;
 
                         // Update category 3
                         $scope.info = {
+                            patient: response[0].patient[0],
                             cat_id: data[0].cat_id,
                             cal_id: data[0].cal_id,
                             patient_id: data[0].patient_id,
@@ -280,7 +283,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     /**
                      * add new cat3
                      */
-                    if (category3Form.$valid || category3Form.$error.pattern || category3Form.$error.maxlength) {
+                    if (category3Form.$error.pattern || category3Form.$error.maxlength) {
                         toastr.error("Please Input All Required Information!", "Error");
                     }
                     else {
@@ -302,7 +305,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                      * edit cat3
                      */
 
-                    if (category3Form.$valid || category3Form.$error.pattern || category3Form.$error.maxlength) {
+                    if (category3Form.$error.pattern || category3Form.$error.maxlength || category3Form.$error.required) {
                         toastr.error("Please Input All Required Information!", "Error");
                     }
                     else {

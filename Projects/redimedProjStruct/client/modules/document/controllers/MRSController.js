@@ -2,7 +2,7 @@
  * Created by HUYNHAN on 10/1/2014.
  */
 angular.module('app.loggedIn.document.MRS.controllers', [])
-    .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore, $state, toastr) {
+    .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore, $state, toastr, $stateParams) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -32,7 +32,10 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 tempSignature = $scope.info.practitionSign;
             }
             //end signature
-            $scope.info = [];
+            $scope.info = {
+                PATIENT_ID: $stateParams.PatientID,
+                CAL_ID: $stateParams.CalID
+            };
             $scope.info.headers = [];
             /**
              * exist cookies
@@ -53,13 +56,14 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 /**
                  * load data to input
                  */
-                var PATIENT_ID = 999;
-                var CAL_ID = 999;
+                var PATIENT_ID = $stateParams.PatientID;
+                var CAL_ID = $stateParams.CalID;
                 var data = response[0];
                 angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({
                         "MRS_DF_ID": dataH.MRS_DF_ID,
-                        "PATIENT_ID": PATIENT_ID, "CAL_ID": CAL_ID,
+                        "PATIENT_ID": PATIENT_ID,
+                        "CAL_ID": CAL_ID,
                         "DF_CODE": dataH.DF_CODE,
                         "ITEM_ID": dataH.ITEM_ID,
                         "DESCRIPTION": dataH.DESCRIPTION,
@@ -71,6 +75,12 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         "practitionDate": dataH.practitionDate || new Date(),
                         "isReview": dataH.isReview, "group": []
                     })
+
+                    $scope.info.practitionSign = $scope.info.headers[hIndex].practitionSign;
+                    $scope.info.practitionDate = $scope.info.headers[hIndex].practitionDate;
+                    $scope.info.isReview = $scope.info.headers[hIndex].isReview;
+                    $scope.info.practitioner = $scope.info.headers[hIndex].practitioner;
+
                     angular.forEach(data.groups, function (dataG, gIndex) {
                         if (dataG.MRS_DF_ID === $scope.info.headers[hIndex].MRS_DF_ID) {
                             $scope.info.headers[hIndex].group.push({
@@ -111,7 +121,7 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         });
                     });
                 });
-                oriInfo = angular.copy($scope.info.headers);
+                oriInfo = angular.copy($scope.info);
             });
             $scope.checkChange = function (hIndex, gIndex, lIndex) {
                 if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 1) {
@@ -123,19 +133,20 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 }
             }
             $scope.resetForm = function () {
-                $scope.info.headers = angular.copy(oriInfo);
+                $scope.info = angular.copy(oriInfo);
                 $scope.mrsForm.$setPristine();
             }
 
             $scope.infoChanged = function () {
-                return !angular.equals(oriInfo, $scope.info.headers);
+                return !angular.equals(oriInfo, $scope.info);
             }
             $scope.submit = function (mrsForm) {
-                if (mrsForm.$valid || mrsForm.$error.pattern || mrsForm.$error.maxlength) {
+                if (mrsForm.$error.pattern || mrsForm.$error.maxlength) {
                     toastr.error("Please Input All Required Information!", "Error");
                 }
                 else {
-                    var info = $scope.info.headers;
+                    var info = $scope.info;
+                    console.log(info);
                     if ($scope.isNew == true) {
                         //add new mrs
                         DocumentService.insertMRS(info).then(function (response) {
