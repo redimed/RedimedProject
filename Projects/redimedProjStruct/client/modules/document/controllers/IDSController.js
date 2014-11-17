@@ -66,12 +66,13 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
             TesterDate : null
         };
 
+        console.log(oriInfoH);
         $scope.infoL.YES_NO = [];
         $scope.infoL.PATIENT_ID = Patient_ID;
         $scope.infoL.CAL_ID = CalID;
 
-        var oriInfoH = angular.copy($scope.infoH);
-        var oriInfoL = angular.copy($scope.infoL.YES_NO);
+        var oriInfoH
+        var oriInfoL
 
         $scope.resetForm = function () {
             $scope.infoH = angular.copy(oriInfoH);
@@ -80,12 +81,8 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         }
 
         $scope.infoChanged = function () {
-
-            return !angular.equals(oriInfoL, $scope.infoH.YES_NO);
+            return !angular.equals(oriInfoH, $scope.infoH);
         }
-
-
-
 
         $scope.submitIDS = function(IDSForm){
             $scope.showClickedValidation = true;
@@ -111,7 +108,6 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
 
         DocumentService.checkIDS(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
-                alert("aaaaaaaaaaaaaaaaaaaa");
                 DocumentService.newIDS(Patient_ID,CalID).then(function(response){
                     DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
                         if(response['status'] === 'fail') {
@@ -136,19 +132,18 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                                     i++;
                                 }
                             });
+                            oriInfoL = $scope.infoL.YES_NO;
                         }
                     });
                 });
             }else
             {
-                alert("qqqqqqqqqqqqqqqqqqqqqqqqqqq");
                 DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
                     if(response['status'] === 'fail') {
                         alert("load fail!");
                     }
                     else
                     {
-
                         var data = response[0];
                         var dataH = data.Header[0];
                         $scope.listIDS.push({"header_id" : dataH.IDAS_ID, "group":[]});
@@ -206,6 +201,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                 };
 
                 oriInfoH = $scope.infoH;
+                console.log(oriInfoH);
             }
         });
 

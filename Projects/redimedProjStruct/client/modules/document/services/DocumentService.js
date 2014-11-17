@@ -11,6 +11,28 @@ angular.module('app.loggedIn.document.services', [])
             return loadPatient.get();
         }
 
+        /* Gorgon COE
+         Begin
+         */
+        documentService.insertCOE = function(info){
+            var insertCOE = api.all("document/insertCOE");
+            return insertCOE.post({info:info});
+        }
+
+        documentService.updateCOE = function(info){
+            var updateCOE = api.all("document/updateCOE");
+            return updateCOE.post({info:info});
+        }
+
+        documentService.checkCOE = function(PatientID, calID){
+            var checkCOE = api.all("document/checkCOE");
+            return checkCOE.post({PatientID:PatientID, calID:calID});
+        }
+        /*  Gorgon COE
+         End
+         */
+
+
         /* functional Assessment
             Begin
          */
