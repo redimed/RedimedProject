@@ -3,7 +3,8 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <button type="button"
-                    ng-disabled="gorgonMHForm.$error.pattern || gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required"
+                    ng-disabled="gorgonMHForm.$error.pattern || gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required ||
+                    !infoChanged()"
                     ng-click="submit(gorgonMHForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
             <button type="button"
@@ -50,30 +51,28 @@
     <div class="row">
         <div class="col-md-6 col-sm-6">
             <div class="form-group">
-                <label class="control-label">Family Name: </label>
-                <label class="control-label text-info">nguyen minh</label>
+                <label class="control-label">Family Name: &nbsp;<span
+                        class="text-info">{{info.patient.Partner_name}}</span></label>
             </div>
         </div>
 
         <div class="col-md-6 col-sm-6">
             <div class="form-group">
-                <label class="control-label">Givent Name:</label>
-                <label class="control-label text-info">phuong self</label>
+                <label class="control-label">Givent Name:&nbsp;<span class="text-info">{{info.patient.Sur_name}}</span>
+                </label>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6">
             <div class="form-group">
-                <label class="control-label">Date of Birth: </label>
-                <label class="control-label text-info">01/05/1982</label>
+                <label class="control-label">Date of Birth: &nbsp;<span class="text-info">{{info.patient.DOB | date: 'dd/MM/yyyy'}}</span></label>
             </div>
         </div>
 
         <div class="col-md-6 col-sm-6">
             <div class="form-group">
-                <label class="control-label">Gender:</label>
-                <label class="control-label text-info">Male</label>
+                <label class="control-label">Gender:&nbsp;<span class="text-info">{{info.patient.Sex}}</span> </label>
             </div>
         </div>
     </div>
@@ -151,6 +150,7 @@
         </div>
     </div>
     <br/>
+
     <div class="row" style="text-align: left;" ng-show="isSignature">
         <div class="col-md-12 col-sm-12">
             <canvas width="500" height="400" id="canvas"

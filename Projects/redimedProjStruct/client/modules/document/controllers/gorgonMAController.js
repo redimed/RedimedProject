@@ -2,31 +2,34 @@
 angular.module('app.loggedIn.document.gorgonMA.controllers',[])
     .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$stateParams) {
         var isEdit = true;
+        var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
 
-        $scope.resetFlag = false;
-        $scope.reset = function () {
-            $scope.resetFlag = !$scope.resetFlag;
-        }
-        //end signature
 
-        //begin show-hidden img signature
-        $scope.sig = false;
-        $scope.sigClick = function () {
-            $scope.sig = true;
+        // Start Signature
+        var tempSignature;
+        $scope.isSignature = false;
+        $scope.showSignature = function () {
+            $scope.isSignature = !$scope.isSignature;
         }
-        $scope.okClick = function () {
-            $scope.sig = false;
-        }
+
         $scope.cancelClick = function () {
-            $scope.sig = false;
+            $scope.isSignature = !$scope.isSignature;
+            $scope.info.SIGNATURE = tempSignature;
+        };
+        $scope.clearClick = function () {
+            $scope.info.SIGNATURE = '';
+        };
+        $scope.okClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            tempSignature = $scope.info.SIGNATURE;
         }
+        // End Signature
 
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
 
-        var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
 
 		 $scope.print = function(){
             $window.location.href = '/api/document/gorgonMA/print/5';
@@ -202,17 +205,33 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
             GLUCOSE_COMMENT : null,
             BLOOD_COMMENT : null
         };
+        var oriInfo = angular.copy($scope.info);
+
+        $scope.resetForm = function () {
+            $scope.info = angular.copy(oriInfo);
+            $scope.gorgonMAForm.$setPristine();
+        }
+
+        $scope.infoChanged = function () {
+            return !angular.equals(oriInfo, $scope.info);
+        }
+
+
+
         //===================================insert and update===============================================
 
         var insert = true;
         DocumentService.checkGorgonMA(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
                 insert = true;
+                $scope.isNew = true;
             }
             else
             {
                 insert = false;
+                $scope.isNew = false;
                 $scope.info = response;
+                oriInfo = angular.copy($scope.info);
             }
         });
 

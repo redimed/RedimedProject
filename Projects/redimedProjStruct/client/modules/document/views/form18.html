@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <button type="button"
-                    ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required"
+                    ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || !infoChanged()"
                     ng-click="submit(form18)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
             <button type="button"
@@ -33,7 +33,9 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">To: (Full legal name of worker):</label>
+                <label class="control-label">To: (Full legal name of worker):&nbsp;<span
+                        class="text-info">{{info.NAME}}</span>
+                </label>
             </div>
         </div>
         <br/>

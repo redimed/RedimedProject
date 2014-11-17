@@ -39,6 +39,15 @@ angular.module('app.loggedIn.rlob.services',[])
         var rlobService = {};
         var api = Restangular.all('api');
 
+        //RL_TYPE
+        //--------------------------------------------------------------------
+        rlobService.getRlTypeList=function(sourceType)
+        {
+            var result = api.one('rlob/rl_types/list');
+            return result.get({sourceType:sourceType});
+        }
+        //--------------------------------------------------------------------
+
 
         //BOOKING
         //-------------------------------------------------------------------
@@ -54,16 +63,25 @@ angular.module('app.loggedIn.rlob.services',[])
             return result.post({bookingId:bookingId,status:status});
         }
 	
-	    //chien bookingsList
-        rlobService.getbookingsList=function(doctorId){
-            var bookingsList=api.one('rlob/rl_bookings/admin/report');
-            return bookingsList.get({doctorId:doctorId});
+	    //chien Upcomming booking
+        rlobService.getCountReportUpcommingBookings=function(bookingType,doctorId,filterInfo){
+            var TotalBookings=api.all('rlob/rl_bookings/count-report-upcomming-bookings');
+            return TotalBookings.post({bookingType:bookingType,doctorId:doctorId,filterInfo:filterInfo});
         }
-
-	    //chien
-        rlobService.getbookingsListStatus=function(doctorId){
-            var bookingsListStaus=api.one('rlob/rl_bookings/admin/status');
-            return bookingsListStaus.get({doctorId:doctorId});
+        //chien Upcomming booking
+        rlobService.getItemsOfPageReportUpcommingBookings=function(info){
+            var getItemsBookings=api.all('rlob/rl_bookings/get-items-of-paging-report-upcomming-bookings');
+            return getItemsBookings.post({currentPage:info.currentPage,itemsPerPage:info.itemsPerPage,bookingType:info.bookingType,doctorId:info.doctorId,filterInfo:info.filterInfo});
+        }
+        //chien Status
+        rlobService.getCountReportStatusBookings=function(bookingType,doctorId,filterInfo){
+            var TotalBookings=api.all('rlob/rl_bookings/count-report-status-bookings');
+            return TotalBookings.post({bookingType:bookingType,doctorId:doctorId,filterInfo:filterInfo});
+        }
+        //chien Status
+        rlobService.getItemsOfPageReportStatusBookings=function(info){
+            var getItemsBookings=api.all('rlob/rl_bookings/get-items-of-paging-report-status-bookings');
+            return getItemsBookings.post({currentPage:info.currentPage,itemsPerPage:info.itemsPerPage,bookingType:info.bookingType,doctorId:info.doctorId,filterInfo:info.filterInfo});
         }
 
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
@@ -83,10 +101,21 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.one('rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document');
             return result.get({bookingType:bookingType,doctorId:doctorId});
         }
+
         rlobService.getPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/get-pass-booking-have-not-result');
             return result.get({bookingType:bookingType,doctorId:doctorId});
+        }
+
+        rlobService.getCountReportPassBookingHaveNotResult=function(bookingType,doctorId,searchKeys){
+            var result=api.all('rlob/rl_bookings/admin/report/get-count-pass-booking-have-not-result');
+            return result.post({bookingType:bookingType,doctorId:doctorId,searchKeys:searchKeys});
+        }
+
+        rlobService.getItemsOfPageReportPassBookingHaveNotResult=function(info){
+            var result=api.all('rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have-not-result');
+            return result.post({bookingType:info.bookingType,doctorId:info.doctorId,pageIndex:info.pageIndex,itemsPerPage:info.itemsPerPage,searchKeys:info.searchKeys});
         }
 
 
@@ -175,7 +204,9 @@ angular.module('app.loggedIn.rlob.services',[])
                 type:notifyColor
             }).show();
         }
-        //--------------------------------------------------------------------
+
+
+
         return rlobService;
 });
 

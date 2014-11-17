@@ -156,13 +156,13 @@
         </div>
         <div class="col-md-4 col-sm-4">
             <label class="control-label">Sign:</label>
-            <img src="" id="signDisplay9" ng-model="info.consentSign"
+            <img src="" id="signDisplay9" ng-model="info.Sign"
                  style="width:100%;height: 35px;"/>
         </div>
         <div class="col-md-3 col-sm-3">
             <label class="control-label">Date:</label>
             <input type="text" class="form-control col-md-12" name="dob1"
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob1"
+                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.Date"
                    is-open="openDOB1" ng-click="openDOB1 = true"
                    datepicker-options="dateOptions3"
                    close-text="Close"/>
@@ -198,8 +198,8 @@
                 <a href="javascript:;" class="btn green" style="margin-top: 10px;" ng-click="showSignature()">Sign</a>
             </div>
             <div class="col-md-10 col-sm-10"
-                 ng-show="info.Sign!=null && info.Sign!='' && !isSignature">
-                <img src="" ng-src="{{info.Sign}}" alt=""
+                 ng-show="info.Declaration_sign!=null && info.Declaration_sign!='' && !isSignature">
+                <img src="" ng-src="{{info.Declaration_sign}}" alt=""
                      style="width: 200px;height: 40px;margin-top: 10px;"/>
             </div>
         </div>
@@ -209,7 +209,7 @@
     <div class="row" style="text-align: left;margin-left: 10px;" ng-show="isSignature">
         <div class="col-md-12 col-sm-12">
             <canvas width="500" height="400" id="canvas"
-                    signature ng-model="info.Sign" style="background-color: #8eece8">
+                    signature ng-model="info.Declaration_sign" style="background-color: #8eece8">
             </canvas>
         </div>
         <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
@@ -230,8 +230,15 @@
             <div class="col-md-1 col-sm-1" style="width: auto;">
                 <label class="control-label">Witness:</label>
             </div>
-            <div class="col-md-3 col-sm-3">
-                <input type="text" class="form-control"/>
+            <div ng-class="{'has-error': mhForm.Declaration_witness_sign.$error.maxlength}">
+                <div class="col-md-3 col-sm-3">
+                    <input type="text" class="form-control" name="Declaration_witness_sign"
+                           ng-model="info.Declaration_witness_sign" ng-maxlength="100"/>
+
+                    <div ng-class="help-block" ng-show="mhForm.Declaration_witness_sign.$error.maxlength">
+                        <label class="control-label">Too long!</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

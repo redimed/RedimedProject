@@ -6,30 +6,173 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
             formatYear: 'yy',
             startingDay: 1
         };
-        $scope.info = [];
+        var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
+
+
 
         var CalID = $stateParams.CalID;
         var Patient_ID = $stateParams.PatientID;
         console.log("gorgon UQ: " + CalID + " patient: " + Patient_ID);
 
-        $scope.resetFlag = false;
-        $scope.reset = function () {
-            $scope.resetFlag = !$scope.resetFlag;
+        // Start Signature
+        var tempSignature;
+        $scope.isSignature = false;
+        $scope.showSignature = function () {
+            $scope.isSignature = !$scope.isSignature;
         }
-        //end signature
 
-        //begin show-hidden img signature
-        $scope.sig = false;
-        $scope.sigClick = function () {
-            $scope.sig = true;
-        }
-        $scope.okClick = function () {
-            $scope.sig = false;
-        }
         $scope.cancelClick = function () {
-            $scope.sig = false;
+            $scope.isSignature = !$scope.isSignature;
+            $scope.info.SIGNATURE = tempSignature;
+        };
+        $scope.clearClick = function () {
+            $scope.info.SIGNATURE = '';
+        };
+        $scope.okClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            tempSignature = $scope.info.SIGNATURE;
+        }
+        // End Signature
+
+
+        $scope.info = {
+            name : userinfo.Booking_Person,
+            Patient_Id : Patient_ID,
+            age : 15,
+            sex : null,
+            TodayDate: new Date(),
+            Height : null,
+            Weight : null,
+            JobTitle : null,
+            PhoneNumber : null,
+            BestTime : null,
+            isReviewQuest : null,
+            isNRP : 0,
+            isOtherType : 0,
+            isRespirator : null,
+            RespiratorType : null,
+            isSmoke : null,
+            isSeizuresCondition : null,
+            isDiabetes : null,
+            isAllergicReactions : null,
+            isClaustrophobia : null,
+            isTrouble : null,
+            isAsbestosis : null,
+            isAsthma : null,
+            isBronchitis : null,
+            isEmphysema : null,
+            isPneumonia : null,
+            isTuberculosis : null,
+            isSilicosis : null,
+            isPneumothorax : null,
+            isLungCancer : null,
+            isBrokenRibs : null,
+            isInjuries : null,
+            isOtherLung : null,
+            OtherLungComment : null,
+            isSOB : null,
+            isSOBWalkingFast : null,
+            isSOBWalkingOther : null,
+            isStopForBreath : null,
+            isSOBWashing : null,
+            isSOBInterferes : null,
+            isCoughingPhlegm : null,
+            isCoughingMorning : null,
+            isCoughingLyingDown : null,
+            isCoughingUpBlood : null,
+            isWheezing : null,
+            isWheezingInterferes : null,
+            isChestPain : null,
+            isOtherSymptomsPulmonary : null,
+            isHeartAttack : null,
+            isStroke : null,
+            isAngina : null,
+            isHeartFailure : null,
+            isSwelling : null,
+            isHeartArrhythmia : null,
+            isBloodPressureHeart : null,
+            isOtherHeart : null,
+            OtherHeartComment : null,
+            isFrequentPain : null,
+            isPOTPhysical : null,
+            isPOTInterferes : null,
+            isMissingBeat : null,
+            isHeartburn : null,
+            isOtherSymptomsHeart : null,
+            isBreathing : null,
+            isHeartTrouble : null,
+            isBloodPressureMedication : null,
+            isSeizuresMedication : null,
+            isEyeIrritation : null,
+            isSkinAllergies : null,
+            isAnxiety : null,
+            isGeneralWeakness : null,
+            isOtherProblem : null,
+            isTalk : null,
+            isLostVision : null,
+            isContactLenses : null,
+            isWearGlasses : null,
+            isColourBlind : null,
+            isOtherEye : null,
+            isInjuryEars : null,
+            isHearingProblems : null,
+            isDifficultyHearing : null,
+            isHearingAid : null,
+            isOtherHearing : null,
+            isBackInjury : null,
+            isWeaknessAny : null,
+            isBackPain : null,
+            isDFMArmsLegs : null,
+            isDFMHead : null,
+            isPOSLeanForward : null,
+            isPODHead : null,
+            isDifficultyBending : null,
+            isDifficultySquatting : null,
+            isClimbing : null,
+            isOtherMuscle : null,
+            Employee : null,
+            DOB : null,
+            Department : null,
+            SocialSecurity : null,
+            Supervisor : null,
+            isAtmosphere : 0,
+            isContinuous : 0,
+            isOpen : 0,
+            isClose : 0,
+            isSupplied : 0,
+            isCombination : 0,
+            isAir_NonPow : 0,
+            isAir_Pow : 0,
+            LevelOfWE : null,
+            ExtentUsage : null,
+            LengthOfTime : null,
+            WorkCons : null,
+            Safety : null,
+            HealthCare : null,
+            Class : null,
+            Restrictions : null,
+            HealthCarePro : null,
+            UQDate : new Date(),
+            Created_by : null,
+            Creation_date : null,
+            Last_updated_by : null,
+            Last_update_date : null,
+            CalId: CalID,
+            DocId : null,
+            SIGNATURE : null,
+            isUseRespirator : 0
+        };
+
+        var oriInfo = angular.copy($scope.info);
+
+        $scope.resetForm = function () {
+            $scope.info = angular.copy(oriInfo);
+            $scope.gorgonUQForm.$setPristine();
         }
 
+        $scope.infoChanged = function () {
+            return !angular.equals(oriInfo, $scope.info);
+        }
 
         $scope.checkUseRespirator = function(value)
         {
@@ -45,139 +188,11 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
         };
 
 
-        var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
         DocumentService.checkUser(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
                 var date = new Date();
-                var today = $filter('date')(date,'dd/MM/yyyy');
-                $scope.info = {
-                    name : userinfo.Booking_Person,
-                    Patient_Id : Patient_ID,
-                    age : 15,
-                    sex : "female",
-                    TodayDate: today,
-                    Height : null,
-                    Weight : null,
-                    JobTitle : null,
-                    PhoneNumber : null,
-                    BestTime : null,
-                    isReviewQuest : null,
-                    isNRP : 0,
-                    isOtherType : 0,
-                    isRespirator : null,
-                    RespiratorType : null,
-                    isSmoke : null,
-                    isSeizuresCondition : null,
-                    isDiabetes : null,
-                    isAllergicReactions : null,
-                    isClaustrophobia : null,
-                    isTrouble : null,
-                    isAsbestosis : null,
-                    isAsthma : null,
-                    isBronchitis : null,
-                    isEmphysema : null,
-                    isPneumonia : null,
-                    isTuberculosis : null,
-                    isSilicosis : null,
-                    isPneumothorax : null,
-                    isLungCancer : null,
-                    isBrokenRibs : null,
-                    isInjuries : null,
-                    isOtherLung : null,
-                    OtherLungComment : null,
-                    isSOB : null,
-                    isSOBWalkingFast : null,
-                    isSOBWalkingOther : null,
-                    isStopForBreath : null,
-                    isSOBWashing : null,
-                    isSOBInterferes : null,
-                    isCoughingPhlegm : null,
-                    isCoughingMorning : null,
-                    isCoughingLyingDown : null,
-                    isCoughingUpBlood : null,
-                    isWheezing : null,
-                    isWheezingInterferes : null,
-                    isChestPain : null,
-                    isOtherSymptomsPulmonary : null,
-                    isHeartAttack : null,
-                    isStroke : null,
-                    isAngina : null,
-                    isHeartFailure : null,
-                    isSwelling : null,
-                    isHeartArrhythmia : null,
-                    isBloodPressureHeart : null,
-                    isOtherHeart : null,
-                    OtherHeartComment : null,
-                    isFrequentPain : null,
-                    isPOTPhysical : null,
-                    isPOTInterferes : null,
-                    isMissingBeat : null,
-                    isHeartburn : null,
-                    isOtherSymptomsHeart : null,
-                    isBreathing : null,
-                    isHeartTrouble : null,
-                    isBloodPressureMedication : null,
-                    isSeizuresMedication : null,
-                    isEyeIrritation : null,
-                    isSkinAllergies : null,
-                    isAnxiety : null,
-                    isGeneralWeakness : null,
-                    isOtherProblem : null,
-                    isTalk : null,
-                    isLostVision : null,
-                    isContactLenses : null,
-                    isWearGlasses : null,
-                    isColourBlind : null,
-                    isOtherEye : null,
-                    isInjuryEars : null,
-                    isHearingProblems : null,
-                    isDifficultyHearing : null,
-                    isHearingAid : null,
-                    isOtherHearing : null,
-                    isBackInjury : null,
-                    isWeaknessAny : null,
-                    isBackPain : null,
-                    isDFMArmsLegs : null,
-                    isDFMHead : null,
-                    isPOSLeanForward : null,
-                    isPODHead : null,
-                    isDifficultyBending : null,
-                    isDifficultySquatting : null,
-                    isClimbing : null,
-                    isOtherMuscle : null,
-                    Employee : null,
-                    DOB : null,
-                    Department : null,
-                    SocialSecurity : null,
-                    Supervisor : null,
-                    isAtmosphere : 0,
-                    isContinuous : 0,
-                    isOpen : 0,
-                    isClose : 0,
-                    isSupplied : 0,
-                    isCombination : 0,
-                    isAir_NonPow : 0,
-                    isAir_Pow : 0,
-                    LevelOfWE : null,
-                    ExtentUsage : null,
-                    LengthOfTime : null,
-                    WorkCons : null,
-                    Safety : null,
-                    HealthCare : null,
-                    Class : null,
-                    Restrictions : null,
-                    HealthCarePro : null,
-                    UQDate : today,
-                    Created_by : null,
-                    Creation_date : null,
-                    Last_updated_by : null,
-                    Last_update_date : null,
-                    CalId: null,
-                    DocId : null,
-                    SIGNATURE : null,
-                    isUseRespirator : 0
+                $scope.isNew = true;
 
-                };
                 $scope.maxDate = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
                 $scope.submitGorgonUQ = function(gorgonUQForm){
                     $scope.showClickedValidation = true;
@@ -185,8 +200,7 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
                         toastr.error("Please Input All Required Information!", "Error");
                     }else
                     {
-                        var info = $scope.info;
-                        DocumentService.insertUQ(info).then(function(response){
+                        DocumentService.insertUQ($scope.info).then(function(response){
                             if(response['status'] === 'success') {
                                 alert("Insert Successfully!");
                                 //$state.go('loggedIn.home');
@@ -202,6 +216,7 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
             }
             else
             {
+                $scope.isNew = false;
                 $scope.info = {
                     Quest_Id : response.Quest_Id,
                     name : response.name,
@@ -330,6 +345,7 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
                     SIGNATURE : response.SIGNATURE,
                     isUseRespirator : response.isUseRespirator
                 };
+                oriInfo = angular.copy($scope.info);
                 $scope.submitGorgonUQ = function(gorgonUQForm){
                     $scope.showClickedValidation = true;
                     if(gorgonUQForm.$invalid){

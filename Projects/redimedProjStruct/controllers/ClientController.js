@@ -96,7 +96,7 @@ var model_sql = {
 
 module.exports = {
     getAll: function(req, res){
-        var sql = "SELECT Patient_id, Title, First_name, Sur_name, Middle_name, Address1"
+        var sql = "SELECT *"
                 +" FROM cln_patients"
                 +" WHERE Type='skinapp'";
         req.getConnection(function (err, connection) {
@@ -116,8 +116,6 @@ module.exports = {
                     +" FROM cln_patients"
                     +" WHERE Email LIKE '%"+email+"%'"
                     +" AND Type='skinapp'";
-
-        console.log(sql);
 
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {

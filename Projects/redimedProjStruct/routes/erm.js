@@ -3,6 +3,7 @@ var DoctorController = require('./controllers/doctorsController');
 var AppointmentController = require('./controllers/clnAppointmentCalendarController');
 var ClinicalController = require('./controllers/clnClinicalDeptController');
 var SystemController = require('./controllers/SystemController');
+var CompanyController = require('./controllers/CompanyController');
 
 //KHANH
 var ClientController = require('./controllers/ClientController');
@@ -62,6 +63,10 @@ app.get('/api/patient/tesst', ClientController.test);
 
 /* END KHANH RESPONSIBILITY */
 
+// COMPANY
+ app.post('/api/erm/company/getDetail', CompanyController.getDetail);
+ // END COMPANY
+
 app.get("/api/v1/skinapp/patient/getAll", ClientController.getAll);
 app.post("/api/v1/skinapp/patient/image", ClientController.getSkinAppImage);
 app.post("/api/v1/skinapp/patient/add", ClientController.addSkinApp);
@@ -72,8 +77,7 @@ app.post("/api/v1/skinapp/patient/update", ClientController.updateSkinApp);
  *  KHANK CONVERTOR
  */
 
-
-//app.get('/api/erm/clinicals/list', ClinicalController.list);
+ //app.get('/api/erm/clinicals/list', ClinicalController.list);
 
 k_route.setRoute(app, ClinicalController, '/api/erm/clinicals/');
 //k_route.setRoute(app, ClientController, '/api/erm/patient/');

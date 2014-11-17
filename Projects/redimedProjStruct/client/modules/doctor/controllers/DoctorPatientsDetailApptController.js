@@ -80,6 +80,11 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		PatientService.getById ($scope.patient.Patient_id).then(function (data) {
 			console.log('PATIENT INFO ', data);
             $scope.modelObjectMap = data;
+
+            ///
+            ///quynh chiu trach nhiem ve phan nay
+            ///
+            localStorageService.set('tempPatient', data);
 			
 			$scope.modelObjectMap.DOB = ConfigService.getCommonDateDefault($scope.modelObjectMap.DOB);
 			$scope.modelObjectMap.Exp_medicare = ConfigService.getCommonDateDefault($scope.modelObjectMap.Exp_medicare);
@@ -98,7 +103,12 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		DoctorService.getApptById($scope.apptInfo.CAL_ID).then(function(data){
 			console.log('APPOINTMENT INFO ', data);
 			$scope.apptInfo = data;
-			
+
+            ///
+            ///quynh chiu trach nhiem ve phan nay
+            ///
+            localStorageService.set('tempAppt', data);
+
 			$scope.apptChange = {};
 			$scope.apptChange.NOTES = data.NOTES;
 			$scope.apptChange.APP_TYPE = data.APP_TYPE;

@@ -1,0 +1,374 @@
+<h3 class="page-title">
+    Workcover WA - FINAL certificate of capacity</h3>
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">waworkcover</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+        <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-sm green-haze btn-dashboard-daterange" data-container="body" data-placement="left" data-original-title="Change dashboard date range">
+            <i class="icon-calendar"></i>
+            &nbsp;&nbsp; <i class="fa fa-angle-down"></i>
+            <!-- uncomment this to display selected daterange in the button
+&nbsp; <span class="thin uppercase visible-lg-inline-block"></span>&nbsp;
+<i class="fa fa-angle-down"></i>
+-->
+        </div>
+    </div>
+</div>
+
+<div>
+<form name="wafinalform" novalidate>
+<accordion close-others="oneAtATime">
+    <accordion-group heading="WORKER'S DETAILS" is-open="isFirstOpen">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-3 col-md-3">First name</label>
+                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.First_name" readonly/></div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-3 col-md-3">Last name</label>
+                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Sur_name" readonly/></div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-3 col-md-3">Date of birth</label>
+                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.DOB"  placeholder="dd/mm/yyyy" readonly/></div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-3 col-md-3">Claim no.</label>
+                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Medicare_no" readonly/></div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-3 col-md-3">Phone</label>
+                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Home_phone" readonly/></div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-3 col-md-3">Email</label>
+                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Email" readonly/></div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-3 col-md-3">Address</label>
+                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.Address1" readonly/></div>
+            </div>
+        </div>
+
+    </accordion-group>
+    <accordion-group heading="EMPLOYER'S DETAILS">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-4 col-md-4">Employer's name</label>
+                <div class="col-sm-7 col-md-7"><input class="form-control" ng-model="companyInfo.Company_name" readonly/></div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <label class="col-sm-4 col-md-4">Employer's phone</label>
+                <div class="col-sm-7 col-md-7"><input class="form-control" ng-model="companyInfo.Phone" readonly/></div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="col-sm-2 col-md-2">Employer's address</label>
+                <div class="col-sm-10 col-md-10"><input class="form-control" ng-model="companyInfo.Addr" readonly/></div>
+            </div>
+
+        </div>
+        <div class="break-row"></div>
+
+    </accordion-group>
+<accordion-group heading="MEDICAL ASSESSMENT">
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-5 col-md-5">Date of this assessment</label>
+            <div class="col-sm-7 col-md-7"><input class="form-control" ui-date="" readonly ui-date-format="yy-m-d" placeholder="dd/mm/yyyyy" ng-model="wafinal.examDate"/></div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <label class="col-sm-5 col-md-5">Date of injury</label>
+            <div class="col-sm-7 col-md-7"><input class="form-control" ui-date="" readonly ui-date-format="yy-m-d" placeholder="dd/mm/yyyyy" ng-model="wafinal.injuryDate"/></div>
+        </div>
+    </div>
+    <div class="break-row"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <label class="col-sm-12 col-md-12"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="wafinal.isCondition == 1" ng-model="wafinal.isCondition"/> The worker's condition is unlikely to change substantially in the next 12 months</label>
+
+        </div>
+
+    </div>
+    <div class="break-row"></div>
+
+</accordion-group>
+
+<accordion-group heading="WORK CAPACITY">
+        <!--START HERE-->
+<div name="workCapacity" ng-class="{'has-error': isSubmitted && (wafinalform.isFullCapacity.$invalid || wafinalform.isCapacityForWork.$invalid)}">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <label class="col-em-12 col-md-12 control-label">Having considered the health benefits of work, I find this worker to have</label>
+        </div>
+        <div class="col-md-12 col-sm-12" class="error" ng-show="isSubmitted && (wafinalform.isFullCapacity.$invalid || wafinalform.isCapacityForWork.$invalid)">
+            <label class="col-em-12 col-md-12 control-label">This section must be valid. Please choose at least one choice and correct all the red field.</label>
+        </div>
+    </div>
+
+    <div class="break-row"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <label class="col-sm-3 col-md-3 control-label"><b><input type="checkbox" name="isFullCapacity" ng-true-value="1" ng-false-value="0" ng-checked="wafinal.isFullCapacity==1" ng-model="wafinal.isFullCapacity"/> full capacity for work</b> </label>
+            <div class="col-sm-4 col-md-4" ng-class="{'has-error': isSubmitted && wafinalform.fullCapaFrom.$invalid}">
+                <label class="col-md-2 col-sm-2 control-label">from:</label>
+                <div class="col-md-10 col-sm-10">
+                    <input class="form-control" name="fullCapaFrom" ng-required="wafinal.isFullCapacity == 1" type="text" readonly placeholder="dd/mm/yyyy" ui-date="" ui-date-format="yy-m-d" ng-model="wafinal.fullCapaFrom"/>
+                    <div class="error" ng-show="isSubmitted && wafinalform.fullCapaFrom.$invalid">
+                        <label class="control-label">required</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="col-md-1 col-sm-1"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="wafinal.isRequireTreat == 1" ng-model="wafinal.isRequireTreat"/></div>
+                <label class="col-md-10 col-sm-10 control-label">but requires further treatment <i>(outline specifics below)</i></label>
+            </div>
+        </div>
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && (wafinalform.capaHours.$invalid || wafinalform.capaDays.$invalid || wafinalform.capaFrom.$invalid)}">
+            <label class="control-label col-md-12 col-sm-12">
+                <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isCapacityForWork" ng-checked="wafinal.isCapacityForWork == 1" ng-model="wafinal.isCapacityForWork">
+                <b>capacity for work</b> performing
+                <input type="number" min="0" max="24" name="capaHours" ng-required="wafinal.isCapacityForWork==1" class="form-control inline input-small"  ng-model="wafinal.capaHours">
+                hours per day and
+                <input type="number" min="0" max="7" name="capaDays" ng-required="wafinal.isCapacityForWork==1" class="form-control inline input-small" ng-model="wafinal.capaDays">
+                days per week from
+                <input type="text" name="capaFrom" readonly class="form-control inline input-small" ng-required="wafinal.isCapacityForWork==1" ui-date="" placeholder="dd/mm/yyyy" ui-date-format="yy-m-d" ng-model="wafinal.capaFrom">
+            </label>
+            <div class="col-md-12 col-sm-12" ng-show="isSubmitted && (wafinalform.capaHours.$invalid || wafinalform.capaDays.$invalid || wafinalform.capaFrom.$invalid)">
+                <div class="col-md-12 col-sm-12 error">
+                    <label class="control-label">Additional infomation required here. Allow only number (max 24 hours and 7 days) and date </label>
+            </div>
+        </div>
+     </div>
+
+
+    </div>
+    <div class="break-row"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <label class="coltrol-label col-md-12 col-sm-12">as outlined below :<i>(Please outline the worker's physical and/or psychosocial capacity of work, functional limits, ongoing need for workplace modifications, and/or further treatment needs)</i>
+            </label>
+        </div>
+    </div>
+    </div>
+    <!--END HERE-->
+
+    <div class="break-row"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-5 col-sm-5">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && wafinalform.liftUpKg.$invalid}">
+                            <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="wafinal.isLiftUp" ng-checked="wafinal.isLiftUp==1"> lift up to</label>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control" ng-required="wafinal.isLiftUp == 1" name="liftUpKg" type="number" ng-model="wafinal.liftUpKg" min="0" max="999"/>
+                                </div>
+                                <label class="col-md-6 col-sm-6 control-label">kg</label>
+                                <div class="error" ng-show="isSubmitted && wafinalform.liftUpKg.$invalid">
+                                    <label class="control-label">required and allow only numbers from 0-999</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && wafinalform.siUpMins.$invalid}">
+                            <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="wafinal.isSitUp" ng-checked="wafinal.isSitUp==1"> sit up to</label>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control" type="number" min="0" max="999" ng-required="wafinal.isSitUp==1" name="siUpMins" ng-model="wafinal.sitUpMins"/>
+                                </div>
+                                <label class="col-md-6 col-sm-6 control-label">mins</label>
+                                <div class="error" ng-show="isSubmitted && wafinalform.siUpMins.$invalid">
+                                    <label class="control-label">required and allow only numbers from 0-999</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && wafinalform.standUpMins.$invalid}">
+                            <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="wafinal.isStandUp" ng-checked="wafinal.isStandUp==1"> stand up to</label>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control" type="number" min="0" max="999" ng-required="wafinal.isStandUp==1" name="standUpMins" ng-model="wafinal.standUpMins"/>
+                                </div>
+                                <label class="col-md-6 col-sm-6 control-label">mins</label>
+                                <div class="error" ng-show="isSubmitted && wafinalform.standUpMins.$invalid">
+                                    <label class="control-label">required and allow only numbers from 0-999</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && wafinalform.walkUpMeter.$invalid}">
+                            <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model=" wafinal.isWalkUp" ng-checked="wafinal.isWalkUp==1"> walk up to</label>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control" type="number" min="0" max="999" ng-required="wafinal.isWalkUp==1" name="walkUpMeter" ng-model="wafinal.walkUpMeter"/>
+                                </div>
+                                <label class="col-md-6 col-sm-6 control-label">m</label>
+                                <div class="error" ng-show="isSubmitted && wafinalform.walkUpMeter.$invalid">
+                                    <label class="control-label">required and allow only numbers from 0-999</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label col-md-12 col-sm-12"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="wafinal.isWorkBelow" ng-checked="wafinal.isWorkBelow==1"> work below shoulder height</label>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-7 col-sm-7" ng-class="{'has-error':isSubmitted && wafinalform.capaCmt.$invalid}">
+                <textarea class="text-area-custom-style form-control" rows="8" name="capaCmt" ng-required="true" ng-model="wafinal.capaCmt"></textarea>
+                <div class="error" ng-show="isSubmitted && wafinalform.capaCmt.$invalid">
+                    <label class="control-label">Work capacity comment is required</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="break-row">
+        <div class="col-md-12 col-sm-12">
+            <label class="col-sm-12 col-md-12 control-label"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="wafinal.isIncapacity" ng-checked="wafinal.isIncapacity==1"> <b>The worker's in capacity is no longer a result of the injury</b></label>
+        </div>
+    </div>
+
+
+</accordion-group>
+<accordion-group heading="REASON FOR CAPACITY/INCAPACITY">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <label class="control-label col-md-12 col-sm-12"><b>Please outline your clinical reason for the worker's capacity/incapacity</b></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && wafinalform.reasonCmt.$invalid}">
+            <textarea class="text-area-custom-style form-control" rows="8" name="reasonCmt" ng-required="true" ng-model="wafinal.reasonCmt"></textarea>
+            <div class="error" ng-show="isSubmitted && wafinalform.reasonCmt.$invalid">
+                <label class="control-label">Reason for the capacity/incapacity required</label>
+            </div>
+        </div>
+    </div>
+</accordion-group>
+    <accordion-group heading="MEDICAL PRACTITIONER'S DETAILS">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-6 col-sm-6">
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Name</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" class="form-control" readonly="readonly" ng-model="doctorInfo.NAME"/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Address</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" class="form-control" readonly="readonly" ng-model="doctorInfo.Address"/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2"></label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" readonly="readonly" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Phone</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" readonly="readonly" class="form-control" ng-model="doctorInfo.Phone"/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Fax</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3">AHPRA no. MED</label>
+                        <div class="col-md-9 col-sm-9">
+                            <input type="text" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="break-row has-error"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Email</label>
+                        <div class="col-md-10 col-sm-10" >
+                            <input type="text" name="waprogressemail" readonly="readonly" class="form-control" ng-model="doctorInfo.Email" />
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Signature</label>
+                        <div class="col-md-10 col-sm-10">
+                            <img src='{{doctorInfo.Signature}}'/>
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                    <div class="row">
+                        <label class="control-label col-md-2 col-sm-2">Date</label>
+                        <div class="col-md-10 col-sm-10">
+                            <input type="text" class="form-control" readonly="readonly" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.examDate" />
+                        </div>
+                    </div>
+                    <div class="break-row"></div>
+                </div>
+
+            </div>
+        </div>
+    </accordion-group>
+</accordion>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-10 col-sm-10"></div>
+        <div class="col-md-2 col-sm-2">
+            <button type="button" class="btn default blue btn-lg glyphicon glyphicon-ok" ng-click="editData()"> Submit</button>
+            <button type="submit" class="btn default blue btn-lg glyphicon glyphicon-ok" ng-click="insertData()"> Insert</button>
+        </div>
+    </div>
+</div>
+
+</form>
+    <button type="button" class="btn default blue btn-lg" ng-click="getData()"> Get details test</button>
+</div>

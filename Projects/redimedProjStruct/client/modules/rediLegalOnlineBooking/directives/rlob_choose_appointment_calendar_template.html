@@ -75,11 +75,11 @@
                                                 <div class="col-md-2">
                                                     {{spec.Specialties_name}}
                                                 </div>
-                                                <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
+                                                <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px;padding-bottom: 20px">
                                                     <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
                                                        class="btn btn-sm yellow filter-submit margin-bottom"
                                                        style="margin-left: 10px;margin-bottom: 10px; width: 70px"
-                                                       ng-click="selectAppointmentCalendar(appointment,spec.Specialties_id)">
+                                                       ng-click="selectAppointmentCalendar(appointment,type.RL_TYPE_ID,spec.Specialties_id)">
                                                         {{ appointment.APPOINTMENT_TIME }}
                                                     </a>
                                                 </div>

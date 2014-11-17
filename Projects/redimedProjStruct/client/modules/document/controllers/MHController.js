@@ -206,11 +206,11 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         var info = $scope.info;
                         DocumentService.editMH(info.headers).then(function (response) {
                             if (response['status'] === 'success') {
-                                toastr.success("Edit success!", "Success");
+                                toastr.success("Update success!", "Success");
                                 $state.go('loggedIn.MH', null, {"reload": true});
                             }
                             else if (response['status'] === 'fail') {
-                                toastr.error("Edit fail!", "Error");
+                                toastr.error("Update fail!", "Error");
                             }
                         });
                     }

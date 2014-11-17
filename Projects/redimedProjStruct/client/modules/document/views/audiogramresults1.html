@@ -30,7 +30,7 @@
 <input type="hidden" ng-model="info.headers[hIndex].report_type"/>
 <input type="hidden" ng-model="info.headers[hIndex].RECIPIENT_NAME"/>
 <input type="hidden" ng-model="info.headers[hIndex].DOCTOR_ID"/>
-<input type="hidden" ng-model="info.headers[hIndex].Signature"/>
+<!--<input type="hidden" ng-model="info.headers[hIndex].Signature"/>-->
 <input type="hidden" ng-model="info.headers[hIndex].LOCATION_ID"/>
 <!--end input save headers-->
 
@@ -137,12 +137,12 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
-            <label class="control-label">Date of tetst:</label>
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;margin-top: 10px;">
+            <label class="control-label">Date of test:</label>
         </div>
         <div class="col-md-3 col-sm-4">
-            <input type="text" class="form-control col-md-12" name="dob"
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+            <input type="text" class="form-control col-md-12" name="dob" ng-model="info.test_date"
+                   datepicker-popup="dd/MM/yyyy"
                    is-open="openDOB" ng-click="openDOB = true"
                    datepicker-options="dateOptions3"
                    close-text="Close"/>
@@ -195,18 +195,22 @@
             <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
                 <div class="break-row"></div>
                 <div class="btn-group">
-                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+                    <button type="button" ng-click="cancelClick()"
+                            class="btn btn-danger btn-sm">
                         Cancel
                     </button>
-                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+                    <button type="button" ng-click="clearClick()"
+                            class="btn btn-warning btn-sm">Clear
                     </button>
-                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+                    <button type="button" ng-click="okClick()" class="btn green btn-sm">
+                        Ok
+                    </button>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Date:</label>
+                <label class="control-label">Date:&nbsp;{{today|date:'dd/MM/yyyy'}}</label>
             </div>
         </div>
     </div>

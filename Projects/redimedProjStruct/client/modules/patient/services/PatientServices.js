@@ -13,9 +13,9 @@ angular.module("app.loggedIn.patient.services", [])
 	 * KHANK API
 	 */
 
-	instanceService.getAppointment = function (patient_id) {
+	instanceService.getAppointment = function (patient_id, doctor_id) {
 		var detailApi = appApi.one("erm/v1/appointment/get_by_patient");
-		return detailApi.get({patient_id: patient_id});
+		return detailApi.get({patient_id: patient_id, doctor_id: doctor_id});
 	}
 	
 	instanceService.getById = function (patient_id) {

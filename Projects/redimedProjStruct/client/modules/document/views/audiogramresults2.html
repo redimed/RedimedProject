@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-12 ">
             <button type="button"
-                    ng-disabled="SA2.$error.pattern || SA2.$error.maxlength || SA2.$error.required"
+                    ng-disabled="SA2.$error.pattern || SA2.$error.maxlength || SA2.$error.required || !infoChanged()"
                     ng-click="submit(SA2)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
             <button type="button"
@@ -114,7 +114,7 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;margin-top: 10px;">
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;margin-top: 5px;">
             <label class="control-label">Name of
                 recipient:</label>
         </div>
@@ -141,12 +141,12 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
-            <label class="control-label" style="text-align: left;">Date of tetst:</label>
+        <div class="col-md-3 col-sm-3" style="text-align: left;width: auto; margin-top: 5px;">
+            <label class="control-label">Date of tetst:</label>
         </div>
         <div class="col-md-3 col-sm-4">
             <input type="text" class="form-control col-md-12" name="dob"
-                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.dob"
+                   datepicker-popup="dd/MM/yyyy" ng-model="info.test_date"
                    is-open="openDOB" ng-click="openDOB = true"
                    datepicker-options="dateOptions3"
                    close-text="Close"/>
@@ -158,7 +158,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-4 col-sm-5" style="text-align: left;width: auto;">
-            <label class="control-label" style="text-align: left;margin-top: 10px;">Name of person conducting
+            <label class="control-label" style="text-align: left;">Name of person conducting
                 test:</label>
         </div>
         <div class="col-md-8 col-sm-7">
@@ -216,7 +216,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Date:</label>
+                <label class="control-label">Date:&nbsp;{{today|date:'dd/MM/yyyy'}}</label>
             </div>
         </div>
     </div>
