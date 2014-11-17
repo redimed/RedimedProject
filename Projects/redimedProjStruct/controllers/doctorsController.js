@@ -737,28 +737,28 @@ module.exports =
     //tannv.dts@gmail.com
     getDoctorForSourceType:function(req,res)
     {
-        var sourceType=req.query.sourceType;
+        var sourceType=req.query.sourceType?req.query.sourceType:'%' ;
         var sql=
             " SELECT DISTINCT doctor.*                                                                                      "+
-            " FROM 	doctors doctor INNER JOIN doctor_specialities doctorSpec ON doctor.`doctor_id`=doctorSpec.`doctor_id`   "+
-            " 	INNER JOIN `cln_specialties` spec ON spec.`Specialties_id`=doctorSpec.`Specialties_id`                      "+
-            " 	INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                       "+
-            " WHERE 	rltype.`SOURCE_TYPE`=?                                                                              ";
+            " FROM  doctors doctor INNER JOIN doctor_specialities doctorSpec ON doctor.`doctor_id`=doctorSpec.`doctor_id`   "+
+            "  INNER JOIN `cln_specialties` spec ON spec.`Specialties_id`=doctorSpec.`Specialties_id`                      "+
+            "  INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                       "+
+            " WHERE  rltype.`SOURCE_TYPE` like ?                                                                             ";
         req.getConnection(function(err,connection)
         {
 
             var query = connection.query(sql,[sourceType],function(err,rows)
+            {
+                if(err)
                 {
-                    if(err)
-                    {
-                        res.json({status:'fail'})
-                    }
-                    else
-                    {
-                        res.json({status:'success',data:rows})
-                    }
+                    res.json({status:'fail'})
+                }
+                else
+                {
+                    res.json({status:'success',data:rows})
+                }
 
-                });
+            });
         });
     },
 

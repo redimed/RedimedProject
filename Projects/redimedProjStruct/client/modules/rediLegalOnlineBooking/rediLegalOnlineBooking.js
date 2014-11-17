@@ -10,7 +10,10 @@ angular.module('app.loggedIn.rlob',
     ,'app.loggedIn.rlob.bookingDetail.controller'
     ,'app.loggedIn.rlob.services'
     ,'app.loggedIn.rlob.directive'
-    ,'app.loggedIn.rlob.adminBookingReport.controller'])
+    ,'app.loggedIn.rlob.adminBookingReport.controller'
+    ,'app.loggedIn.rlob.adminBookingReport.type3.controller'
+    ,'app.loggedIn.rlob.adminBookingReport.type1.controller'
+    ,'app.loggedIn.rlob.adminBookingReport.type2.controller'])
     .config(function($stateProvider){
         $stateProvider
 
@@ -50,6 +53,24 @@ angular.module('app.loggedIn.rlob',
                 url:'/booking/report',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/admin-booking-report.html',
                 controller: 'rlob_admin_bookingReportController'
+            })
+
+            .state('loggedIn.rlob.rlob_booking_report.type3',{
+                url:'/type3',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/admin-booking-report-type3.html',
+                controller: 'rlob_admin_bookingReport_type3Controller'
+            })
+
+            .state('loggedIn.rlob.rlob_booking_report.type1',{
+                url:'/type1',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/admin-booking-report-type1.html',
+                controller: 'rlob_admin_bookingReport_type1Controller'
+            })
+
+            .state('loggedIn.rlob.rlob_booking_report.type2',{
+                url:'/type2',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/admin-booking-report-type2.html',
+                controller: 'rlob_admin_bookingReport_type2Controller'
             })
 //            .state('loggedIn.rlob.rlob_booking_detail', {
 //                url: '/booking/booking-detail/:bookingId',
