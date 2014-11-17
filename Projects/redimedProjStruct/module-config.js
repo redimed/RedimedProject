@@ -27,3 +27,4 @@ eval(fs.readFileSync('./routes/erm.js')+'');
 //
 eval(fs.readFileSync('./routes/v1_erm.js')+'');
 //
+eval(fs.readFileSync('./routes/injury_management_route.js')+'');

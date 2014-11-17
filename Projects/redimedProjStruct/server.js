@@ -57,7 +57,6 @@ var multipartMiddleware = multipart();
 //-------------------------------------------
 
 app.use(function (req, res, next) {
-    console.log("\n\n ******************* NEW REQUEST **************** ");
     res.locals.k_sql = k_sql(req, res);
     next();
 });
@@ -69,24 +68,16 @@ app.use(function (req, res, next) {
 eval(fs.readFileSync('module-config.js')+'');
 
 app.post('/api/booking/upload',multipartMiddleware, function(req,resp){
-    console.log(__dirname);
+
     var targetFolder='.\\download\\online_booking\\'+'BookingID-'+req.body.Booking_id+"\\"+'CandidateID-'+req.body.Candidate_id;
-    console.log('----------------------------------------'+targetFolder);
     mkdirp(targetFolder, function(err) {
 
         var tmp_path = req.files.file.path;
-        console.log('temp_path:'+tmp_path);
-        // set where the file should actually exists - in this case it is in the "images" directory
         var target_path =targetFolder+"\\" + req.files.file.name;
-        console.log('target_path:'+target_path);
-        // move the file from the temporary location to the intended location
         fs.rename(tmp_path, target_path, function(err) {
             if (err) throw err;
-            // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
             fs.unlink(tmp_path, function() {
                 if (err) throw err;
-                console.log('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes')
-                //res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
             });
         });
 
@@ -110,7 +101,6 @@ app.get('/api/booking/download/:bookingId/:candidateId', function(req, res, next
 
     db.BookingCandidate.find({where:{Booking_id: bookingId, Candidate_id: candidateId}},{raw:true})
         .success(function(data){
-            console.log("success");
             var path=data.resultFilePath;
             res.download(path);
         })

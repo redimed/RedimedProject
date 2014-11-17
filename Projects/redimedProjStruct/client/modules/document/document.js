@@ -3,7 +3,6 @@
  */
 
 angular.module("app.loggedIn.document", [
-    "app.loggedIn.document.demo.controllers",
     "app.loggedIn.document.cat2.controllers",
     "app.loggedIn.document.cat3.controllers",
     "app.loggedIn.document.FA.controllers",
@@ -22,13 +21,6 @@ angular.module("app.loggedIn.document", [
 ])
     .config(function ($stateProvider) {
         $stateProvider
-
-            .state("loggedIn.demo", {
-                url: "/demo",
-
-                templateUrl: "modules/document/views/DemoDocument.html",
-                controller: 'demoController'
-            })
 
             .state("loggedIn.category2", {
                 url: "/category2/:CalID/:PatientID",

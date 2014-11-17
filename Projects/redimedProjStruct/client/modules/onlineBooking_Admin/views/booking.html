@@ -244,13 +244,11 @@
                 <div class="col-md-4">
                     <label class="control-label bold">Result File</label>
                 </div>
-                <div class="col-md-4" ng-if="isSelected === true && info.resultFileName != null">
-                    <label class="bold">{{info.resultFileName}}</label>
+                <div class="col-md-8" ng-if="isSelected === true && info.resultFileName != null">
+                    <a href="/api/booking/download/{{info.Booking_id}}/{{info.Candidate_id}}">
+                        <label class="bold">{{info.resultFileName}}</label>
+                    </a>
                 </div>
-                <div class="col-md-4" ng-if="info.resultFileName != null">
-                    <a href="/api/booking/download/{{info.Booking_id}}/{{info.Candidate_id}}" class="btn btn-success">Download</a>
-                </div>
-
             </div>
         </div>
         <br/>
@@ -262,8 +260,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6"></div>
-            <div class="col-md-6" ng-class="{hide: isSelected === false}">
+            <div class="col-md-12" ng-class="{hide: isSelected === false}">
                 <div class="col-md-12">
                     <h3>Upload File</h3>
                     <table class="table">

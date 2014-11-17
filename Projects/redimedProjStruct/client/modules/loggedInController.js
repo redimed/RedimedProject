@@ -78,7 +78,7 @@ angular.module("app.loggedIn.controller",[
 
 
         $scope.$on('$idleTimeout', function() {
-            $state.go('lockscreen');
+            $state.go('lockscreen',{reload:true});
         })
 
         /****

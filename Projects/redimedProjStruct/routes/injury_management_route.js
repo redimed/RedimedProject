@@ -4,3 +4,4 @@
 var injuryController =  require('./controllers/InjuryManagementController');
 
 app.post('/api/im/patients/search',injuryController.search);
+app.post('/api/im/patients/getById',injuryController.getById);
