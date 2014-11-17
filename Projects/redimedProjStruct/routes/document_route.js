@@ -16,6 +16,7 @@ var gorgonMHController = require('./controllers/DocumentController/gorgonMHContr
 var form18Controller = require('./controllers/DocumentController/form18Controller');
 var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
 var gorgonMAController = require('./controllers/DocumentController/gorgonMAController');
+var COEController = require('./controllers/DocumentController/COEController');
 
 
 
@@ -58,6 +59,12 @@ app.post('/api/document/checkIDS',IDSController.checkIDS);
 app.post('/api/document/insertUQ',UQController.insertUQ);
 app.post('/api/document/updateUQ',UQController.updateUQ);
 app.post('/api/document/checkUser',UQController.checkUser);
+// end
+
+// Begin COE
+app.post('/api/document/insertCOE',COEController.insertCOE);
+app.post('/api/document/updateCOE',COEController.updateCOE);
+app.post('/api/document/checkCOE',COEController.checkCOE);
 // end
 
 //Begin gorgon FA

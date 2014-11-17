@@ -16,7 +16,11 @@ module.exports =
                 {
                     console.log("Error Selecting : %s ",err );
                 }
-                res.json(rows);
+                else
+                {
+                    res.json(rows);
+                }
+
             });
         });
     },
