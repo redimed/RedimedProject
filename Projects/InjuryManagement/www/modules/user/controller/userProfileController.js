@@ -1,5 +1,5 @@
 angular.module('starter.user.controller',[])
-.controller('userProfileController',function($scope,UserService,$http,localStorageService,OnlineBookingService){
+.controller('userProfileController',function($scope,UserService,$http,localStorageService,OnlineBookingService,$state){
         var userInfo = null;
         var companyInfo = null;
 
@@ -54,6 +54,7 @@ angular.module('starter.user.controller',[])
         {
             $scope.isCompany = true;
             $scope.info = {
+                id:userInfo.id,
                 name:userInfo.Booking_Person,
                 username:userInfo.user_name,
                 phone:userInfo.Contact_number,
@@ -93,11 +94,12 @@ angular.module('starter.user.controller',[])
 
         }
         $scope.changePass = function(){
+                console.log($scope.info);
             OnlineBookingService.changeUserPassword($scope.info).then(function(data){
                 if(data.status === 'success')
                 {
                    alert("Change Password Successfully","Success");
-
+                    $state.go("app.profile");
                 }
                 else if(data.status === 'error')
                     alert("Change Password Failed", "Error");

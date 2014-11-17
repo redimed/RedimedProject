@@ -12,6 +12,7 @@ angular.module('starter', ['ionic',
   'starter.user',
   'LocalStorageModule',
     'starter.worker',
+    'starter.booking'
 
 //
   //'starter.playlist'
