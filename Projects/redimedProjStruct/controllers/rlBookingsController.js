@@ -66,9 +66,10 @@ module.exports =
                     for(var key2 in data[key]){
                         if(data[key][key2].from_map !== null && data[key][key2].to_map !== null){
                             str_date += "b."+key2;
-                            str_date += " BETWEEN '"+data[key][key2].from_map+"' AND '"+data[key][key2].to_map+"' AND ";
+                            str_date += " BETWEEN '"+data[key][key2].from_map+"' AND DATE_ADD('"+data[key][key2].to_map+"',INTERVAL 1 DAY) AND ";
                         }
                     }
+//                    DATE_ADD(?,INTERVAL 1 DAY)
                     params += str_date;
                 }
             }

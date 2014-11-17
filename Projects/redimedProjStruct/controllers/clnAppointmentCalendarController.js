@@ -214,9 +214,9 @@ module.exports =
         var DOCTOR_ID=req.query.DOCTOR_ID;
         var SITE_ID=req.query.SITE_ID;
         var FROM_TIME=req.query.FROM_TIME;
-        var Specialties_id=req.query.Specialties_id;
-        var RL_TYPE_ID=req.query.RL_TYPE_ID;
-        var sourceType=req.query.sourceType;
+        var Specialties_id=req.query.Specialties_id?req.query.Specialties_id:'%';
+        var RL_TYPE_ID=req.query.RL_TYPE_ID?req.query.RL_TYPE_ID:'%';
+        var sourceType=req.query.sourceType?req.query.sourceType:'%';
         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^>"+JSON.stringify(req.query));
         var sql =
             " SELECT  DISTINCT h.*,CONCAT(HOUR(h.`FROM_TIME`),':',MINUTE(h.`FROM_TIME`)) AS appointment_time,  "+
@@ -230,7 +230,7 @@ module.exports =
             "	 INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                               "+
             "  WHERE	 h.`NOTES` IS NULL                                                                     "+
             "	 AND                                                                                           "+
-            "	 rltype.`SOURCE_TYPE`=? and spec.`RL_TYPE_ID` LIKE ?  AND d.`Specialties_id` LIKE ?                "+
+            "	 rltype.`SOURCE_TYPE` like ? and spec.`RL_TYPE_ID` LIKE ?  AND d.`Specialties_id` LIKE ?                "+
             "	 AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?                     ";
         req.getConnection(function(err,connection)
         {
