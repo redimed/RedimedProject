@@ -3,7 +3,7 @@
     <div class="caption">
        <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="submit"
+                <button type="submit" ng-disabled="!infoChanged()"
                         class="btn green pull-right">{{isNew?"Add New":"Update"}}
                 </button>
                 <a href="javascript:;" type="button"
@@ -41,14 +41,14 @@
             <div class="col-md-5 col-sm-6" style="margin-left: 14px">
                 <div class="form-group">
                     <label class="control-label">Family Name: </label>
-                    <label class="control-label text-info" >{{info.EXAMINER_NAME}}</label>
+                    <label class="control-label font-blue text-info" >{{patientInfo.Sur_name}}</label>
                 </div>
             </div>
 
             <div class="col-md-5 col-sm-6" style="margin-left: 14px">
                 <div class="form-group">
                     <label class="control-label">Given Name:</label>
-                    <label class="control-label text-info"></label>
+                    <label class="control-label font-blue text-info">{{patientInfo.First_name}}</label>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.gorgonFA.controllers',[])
-    .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window,$stateParams) {
+    .controller("gorgonFAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window,$stateParams,localStorageService) {
         // Start Signature
         var tempSignature;
         $scope.isSignature = false;
@@ -32,10 +32,34 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         var date = new Date();
         var today = $filter('date')(date,'dd/MM/yyyy');
 
+        function getAge(dateString)
+        {
+            var now = new Date();
+            var birthDate = new Date(dateString);
+            var age = now.getFullYear() - birthDate.getFullYear();
+            var m = now.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate()))
+            {
+                age--;
+            }
+            return age;
+        }
+
+
         // Get CalID & PatientID
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("gorgon FA: " + CalID + " patient: " + Patient_ID);
+//        var CalID = $stateParams.CalID;
+//        var Patient_ID = $stateParams.PatientID;
+//        console.log("gorgon FA: " + CalID + " patient: " + Patient_ID);
+
+        $scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        var doctorInfo = $cookieStore.get('doctorInfo');
+        console.log(doctorInfo);
+        console.log($scope.apptInfo);
+        console.log($scope.patientInfo);
+        var Patient_ID = $scope.patientInfo.Patient_id;
+        var CalID = $scope.apptInfo.CAL_ID;
+        var sex = $scope.patientInfo.Sex;
         //============================================================================
         // Math on interface
         $scope.c_Left3 = function(){
@@ -234,10 +258,10 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         $scope.info = {
             id: null,
             patientId : Patient_ID,
-            fName : null,
-            age : 20,
+            fName : $scope.patientInfo.First_name + " " + $scope.patientInfo.Sur_name + " " + $scope.patientInfo.Middle_name,
+            age : getAge($scope.patientInfo.DOB),
             JAF : null,
-            DOB : null,
+            DOB : $scope.patientInfo.DOB,
             DOA : date,
             IsConsentReason : null,
             fsign : null,
@@ -275,7 +299,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             Rom_Knees1 : null,
             Rom_Ankles1 : null,
             Rom_Comments1 : null,
-            Rom_Total1 : null,
+            Rom_Total1 : 0,
             Heart_Rate_30S2 : null,
             Heart_Rate_1M2 : null,
             Heart_Rate_1M_30S2 : null,
@@ -286,7 +310,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             Step_Result2 : null,
             Step_Correct2 : null,
             Comments2 : null,
-            Total2 : null,
+            Total2 : 0,
             a_Right3 : null,
             a_Left3 : null,
             b_Right3 : null,
@@ -300,7 +324,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             e_total3 : null,
             e_Result3 : 0,//
             Comments3 : null,
-            Total3 : null,
+            Total3 : 0,
             aSec4 : null,//
             aResult4 : null,//
             bTotal4 : null,
@@ -309,7 +333,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             cKneeling4 : null,
             cResult4 : null, //
             Comments4 : null,
-            Total4 : null,
+            Total4 : 0,
             aPosture5 : null,
             bHoverResult5: null,
             cStrenght5 : null,
@@ -322,7 +346,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             fLeft5 : null,
             gRight5 : null,
             gFloat5 : null,
-            Total5 : null,
+            Total5 : 0,
             aMax6 : null,
             aResult6 : null,
             bMax6 : null,
@@ -393,7 +417,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                     id: response['id'],
                     patientId :response['patientId'],
                     fName : response['fName'],
-                    age : response['age'],
+                    age : getAge($scope.patientInfo.DOB),
                     JAF : response['JAF'],
                     DOB : response['DOB'],
                     DOA : response['DOA'],

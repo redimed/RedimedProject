@@ -36,7 +36,7 @@
                     <label class="control-label">1. Today's date:</label>
             </div>
             <div class="col-md-5 col-sm-7">
-                <label class="control-label">{{info.TodayDate | date:'dd/MM/yyyy'}} </label>
+                <label class="control-label">{{info.TodayDate | date:'dd / MM / yyyy'}} </label>
             </div>
         </div>
         <div class="row">
@@ -1481,25 +1481,20 @@
 
 
 
-        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.LengthOfTime.$invalid}">
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.LengthOfTime.$error.pattern}">
             <div class="row">
                 <div class="col-md-5 col-lg-4">
                     <label class="control-label text-info" style="font-weight: bold">Length of Time anticipated Effort in Hours:</label>
                 </div>
                 <div class="col-md-5" style="margin-left: 10px">
-                    <input type="text"  ng-model="info.LengthOfTime"  class="form-control">
+                    <input type="text" name="LengthOfTime"  ng-model="info.LengthOfTime" ng-pattern="/^[0-9]+$/"  class="form-control">
                 </div>
             </div>
-
-            <div class="row" ng-show="showClickedValidation && gorgonUQForm.LengthOfTime.$invalid">
-                <div class="col-md-3 col-sm-5"></div>
-                <div class="col-md-5 col-sm-7 help-block"  for="LengthOfTime">
-                    <label>Your height is required</label>
-                    <div for="LengthOfTime" class="help-block" ng-show="showClickedValidation && gorgonUQForm.LengthOfTime.$error.pattern">
-                        <label>Length of time must be number</label>
-                    </div>
+            <div class="row" ng-show="showClickedValidation && gorgonUQForm.LengthOfTime.$error.pattern">
+                <div class="col-md-5 col-lg-4"></div>
+                <div class="col-md-5 help-block"  for="LengthOfTime">
+                    <label>Length of time must be number</label>
                 </div>
-
             </div>
         </div>
         </br>

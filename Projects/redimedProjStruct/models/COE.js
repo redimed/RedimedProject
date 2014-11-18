@@ -11,11 +11,11 @@ module.exports = function (sequelize, DataTypes) {
         "isEmployed": DataTypes.INTEGER(11),
         "dateEmployed": DataTypes.DATE,
         "inPosition": DataTypes.STRING(100),
-        "signature1": DataTypes.TEXT,
+        "Signature1": DataTypes.TEXT,
         "coeName": DataTypes.STRING(100),
         "coeTitle": DataTypes.STRING(100),
         "coeDate": DataTypes.DATE,
-        "signature2": DataTypes.TEXT
+        "Signature2": DataTypes.TEXT
     }, {
         tableName: 'gorgon_doc_coe',
         timestamps: false

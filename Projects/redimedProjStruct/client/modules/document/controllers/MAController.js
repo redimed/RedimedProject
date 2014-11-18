@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
-    .controller("MAController",function($scope,DocumentService,$http,$cookieStore,toastr,$stateParams) {
+    .controller("MAController",function($scope,DocumentService,$http,$cookieStore,toastr,$stateParams,localStorageService) {
         // Start Signature
         var tempSignature;
         $scope.isSignature = false;
@@ -27,12 +27,23 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
 
 
 
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("MA: " + CalID + " patient: " + Patient_ID);
+//        var CalID = $stateParams.CalID;
+//        var Patient_ID = $stateParams.PatientID;
+//        console.log("MA: " + CalID + " patient: " + Patient_ID);
 
 
-        var sex = "male";
+        $scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        var doctorInfo = $cookieStore.get('doctorInfo');
+        console.log(doctorInfo);
+        console.log($scope.apptInfo);
+        console.log($scope.patientInfo);
+        var Patient_ID = $scope.patientInfo.Patient_id;
+        var CalID = $scope.apptInfo.CAL_ID;
+
+
+        var sex = $scope.patientInfo.Sex;
+        console.log(sex);
         $scope.Ratio = function(){
             $scope.infoH.WAIST_TO_HIP_RATE = $scope.infoH.WAIST_CIR / $scope.infoH.HIP_CIR;
             if(sex == "female")
@@ -167,7 +178,6 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
 
         DocumentService.checkMA(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
-                alert("aaaaaaaaaaaaaaaaaaaa");
                 DocumentService.newMA(Patient_ID,CalID).then(function(response){
                     DocumentService.loadMA(Patient_ID,CalID).then(function(response){
                         if(response['status'] === 'fail') {
@@ -202,7 +212,6 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                 });
             }else
             {
-                alert("qqqqqqqqqqqqqqqqqqqqqqqqqqq");
                 $scope.infoH = {
                     Patient_id : response.Patient_id,
                     HEIGHT : response.HEIGHT,

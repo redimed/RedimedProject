@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.gorgonMA.controllers',[])
-    .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$stateParams) {
+    .controller("gorgonMAController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,localStorageService,$stateParams) {
         var isEdit = true;
         var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
 
@@ -35,9 +35,18 @@ angular.module('app.loggedIn.document.gorgonMA.controllers',[])
             $window.location.href = '/api/document/gorgonMA/print/5';
         }
 
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("gorgon MA: " + CalID + " patient: " + Patient_ID);
+//        var CalID = $stateParams.CalID;
+//        var Patient_ID = $stateParams.PatientID;
+//        console.log("gorgon MA: " + CalID + " patient: " + Patient_ID);
+
+
+        var doctorInfo = $cookieStore.get('doctorInfo');
+        $scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        console.log($scope.apptInfo);
+        console.log($scope.patientInfo);
+        var Patient_ID =$scope.patientInfo.Patient_id;
+        var CalID = $scope.apptInfo.CAL_ID;
 
 
         $scope.checkAudiogram = function(value)

@@ -1,7 +1,7 @@
 
 angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 
-    .controller("gorgonUQController",function($scope,$filter,DocumentService,$http,$cookieStore,$state,toastr,$window,$stateParams) {
+    .controller("gorgonUQController",function($scope,$filter,DocumentService,$http,$cookieStore,localStorageService,$state,toastr,$window,$stateParams) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -10,9 +10,34 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 
 
 
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("gorgon UQ: " + CalID + " patient: " + Patient_ID);
+//        var CalID = $stateParams.CalID;
+//        var Patient_ID = $stateParams.PatientID;
+//        console.log("gorgon UQ: " + CalID + " patient: " + Patient_ID);
+
+
+        $scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        var doctorInfo = $cookieStore.get('doctorInfo');
+        console.log(doctorInfo);
+        console.log($scope.apptInfo);
+        console.log($scope.patientInfo);
+        var Patient_ID = $scope.patientInfo.Patient_id;
+        var CalID = $scope.apptInfo.CAL_ID;
+
+
+        function getAge(dateString)
+        {
+            var now = new Date();
+            var birthDate = new Date(dateString);
+            var age = now.getFullYear() - birthDate.getFullYear();
+            var m = now.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate()))
+            {
+                age--;
+            }
+            return age;
+        }
+
 
         // Start Signature
         var tempSignature;
@@ -36,10 +61,10 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 
 
         $scope.info = {
-            name : userinfo.Booking_Person,
+            name : $scope.patientInfo.First_name + " " + $scope.patientInfo.Sur_name + " " + $scope.patientInfo.Middle_name,
             Patient_Id : Patient_ID,
-            age : 15,
-            sex : null,
+            age : getAge($scope.patientInfo.DOB),
+            sex : $scope.patientInfo.Sex,
             TodayDate: new Date(),
             Height : null,
             Weight : null,
@@ -219,11 +244,11 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
                 $scope.isNew = false;
                 $scope.info = {
                     Quest_Id : response.Quest_Id,
-                    name : response.name,
+                    name :  $scope.patientInfo.First_name + " " + $scope.patientInfo.Sur_name + " " + $scope.patientInfo.Middle_name,
                     Patient_Id : response.Patient_Id,
-                    age : response.age,
-                    sex : response.sex,
-                    TodayDate: response.TodayDate,
+                    age : getAge($scope.patientInfo.DOB),
+                    sex : $scope.patientInfo.Sex,
+                    TodayDate: new Date(),
                     Height : response.Height,
                     Weight :   response.Weight,
                     JobTitle : response.JobTitle,
