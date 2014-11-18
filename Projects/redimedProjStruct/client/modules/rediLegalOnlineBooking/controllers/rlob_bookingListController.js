@@ -41,7 +41,6 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             //GO TO BOOKING DETAIL
 
             $scope.goToBookingDetail = function (l) {
-                //alert(JSON.stringify(l));
                 //        $state.go("loggedIn.rlob_booking_list.detail", {'bookingId':l.BOOKING_ID});
 
                 if($scope.isClickActionMenu)
@@ -51,7 +50,6 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                 }            //END GO TO BOOKING DETAIL
 
                 //OPEN MODAL
-
                 $http({
                     method: "POST",
                     url: "/api/rlob/rl_bookings/get-booking-by-id",
