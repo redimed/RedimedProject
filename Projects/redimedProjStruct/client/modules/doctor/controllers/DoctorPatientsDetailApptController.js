@@ -76,7 +76,7 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		if(!$scope.patient) {
 			$state.go('loggedIn.doctor.home');
 		}
-		
+
 		PatientService.getById ($scope.patient.Patient_id).then(function (data) {
 			console.log('PATIENT INFO ', data);
             $scope.modelObjectMap = data;

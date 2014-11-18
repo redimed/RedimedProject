@@ -1,7 +1,18 @@
 
 angular.module("app.loggedIn.waworkcover.progress.controller", [])
 
-    .controller("waworkcoverProgressController", function ($scope, toastr, waworkcoverService) {
+    .controller("waworkcoverProgressController", function ($scope, $cookieStore, toastr, waworkcoverService, PatientService, DoctorService, ConfigService, localStorageService) {
+        // VARIABLES
+        var Patient = localStorageService.get("patientTempInfo");
+        Patient.CAL_ID = localStorageService.get("apptTempInfo").CAL_ID;
+        // END VARIABLES
+
+        // LIST OF PATIENTS
+        $scope.patientInfo = {};
+        $scope.companyInfo = {};
+        $scope.doctorInfo = {};
+        // END LIST OF PATIENTS
+
         var init = function(){
             $scope.oneAtATime = false;
             $scope.isFirstOpen = true;
@@ -12,6 +23,20 @@ angular.module("app.loggedIn.waworkcover.progress.controller", [])
                 //final: 14
 
             };
+
+            PatientService.getById(Patient.Patient_id).then(function(list){
+                $scope.patientInfo = list;
+                $scope.patientInfo.DOB = ConfigService.getCommonDateDefault($scope.patientInfo.DOB);
+                if($scope.patientInfo.company_id){
+                    waworkcoverService.getCompanyFromPatient($scope.patientInfo.company_id).then(function(list){
+                        $scope.companyInfo = list.data;
+                    })
+                }
+            })
+
+            DoctorService.getById($cookieStore.get("doctorInfo").doctor_id).then(function(list){
+                $scope.doctorInfo = list;
+            })
         };
         init();
 
@@ -26,13 +51,16 @@ angular.module("app.loggedIn.waworkcover.progress.controller", [])
                 toastr.error("Your form is invalid!", "Error");
             }
             else{
-                for(var key in $scope.waprogress){
-                    if($scope.waprogress[key] instanceof Date){
+                $scope.waprogress_map = angular.copy($scope.waprogress);
+                for(var key in $scope.waprogress_map){
+                    if($scope.waprogress_map[key] instanceof Date){
                         console.log('Changing');
-                        $scope.waprogress[key] = parseDate($scope.waprogress[key]);
+                        $scope.waprogress_map[key] = ConfigService.getCommonDate($scope.waprogress_map[key]);
                     }
                 }
-                waworkcoverService.insertProgress($scope.waprogress);
+
+                $scope.waprogress_map.cal_id = Patient.CAL_ID;
+                waworkcoverService.insertProgress($scope.waprogress_map);
             }
 
         };

@@ -2,7 +2,7 @@
  * Created by HUYNHAN on 10/1/2014.
  */
 angular.module('app.loggedIn.document.MRS.controllers', [])
-    .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore, $state, toastr, $stateParams) {
+    .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -121,6 +121,11 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         });
                     });
                 });
+                $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
+                $scope.info.apptInfo = localStorageService.get('tempAppt');
+                $scope.info.patient = localStorageService.get('tempPatient');
+
+
                 oriInfo = angular.copy($scope.info);
             });
             $scope.checkChange = function (hIndex, gIndex, lIndex) {

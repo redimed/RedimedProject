@@ -66,6 +66,16 @@ app.get('/api/patient/tesst', ClientController.test);
 // COMPANY
  app.post('/api/erm/company/getDetail', CompanyController.getDetail);
  // END COMPANY
+ 
+ //dqt
+app.post('/api/patient/getReferral', ClientController.getReferral);
+app.post('/api/patient/insertReferral', ClientController.insertReferral);
+app.post('/api/patient/updateReferral', ClientController.updateReferral);
+
+app.post('/api/patient/getScript', ClientController.getScript);
+app.post('/api/patient/updateScript', ClientController.updateScript);
+app.post('/api/patient/insertScript', ClientController.insertScript);
+//end dqt
 
 app.get("/api/v1/skinapp/patient/getAll", ClientController.getAll);
 app.post("/api/v1/skinapp/patient/image", ClientController.getSkinAppImage);

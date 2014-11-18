@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
-.controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, ConfigService, DoctorService, ReceptionistService, PatientService) {
+.controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService) {
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
 
@@ -124,7 +124,8 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			if(data.Patient_id === null){
 				$state.go("loggedIn.patient.booking");
 			}else{
-				$state.go("loggedIn.patient.detail");
+				localStorageService.set("patientTempInfo", data);
+				$state.go("loggedIn.doctor.patients.detail.appt");
 			}
 		})
 

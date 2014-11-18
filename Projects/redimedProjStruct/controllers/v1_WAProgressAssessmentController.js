@@ -63,10 +63,8 @@ module.exports = {
         var k_sql = res.locals.k_sql;
 
         k_sql.exec(sql,function(data){
-            console.log(data[0].progress_id + 1);
             var query = squel.insert()
                 .into('th_progress_assessment')
-                .set('progress_id',data[0].progress_id + 1)
                 .set('AssessmentName','Progress Assessment')
                 .set('reportlocal','WA');
 

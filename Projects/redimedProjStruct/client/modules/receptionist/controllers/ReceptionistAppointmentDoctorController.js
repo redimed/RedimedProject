@@ -61,7 +61,8 @@ angular.module("app.loggedIn.receptionist.appointment.doctor.controller", [])
 			if(data.Patient_id === null){
 				$state.go("loggedIn.patient.booking");
 			}else{
-				$state.go("loggedIn.patient.detail");
+				localStorageService.set("patientTempInfo", data);
+				$state.go("loggedIn.doctor.patients.detail.appt");
 			}
 		})
 	}

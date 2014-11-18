@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.cat3.controllers', [])
-    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams) {
+    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -149,6 +149,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                         // Add new category 3
                         $scope.isNew = true;
                         $scope.info.patient = response[0].patient[0];
+                        $scope.info.apptInfo = localStorageService.get('tempAppt');
                         oriInfo = angular.copy($scope.info);
                     }
                     else if (response[0].status === 'findFound') {
@@ -157,6 +158,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
 
                         // Update category 3
                         $scope.info = {
+                            apptInfo: localStorageService.get('tempAppt'),
                             patient: response[0].patient[0],
                             cat_id: data[0].cat_id,
                             cal_id: data[0].cal_id,

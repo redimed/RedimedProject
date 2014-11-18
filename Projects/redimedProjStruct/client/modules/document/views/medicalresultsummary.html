@@ -57,26 +57,16 @@
 
 <div class="row" style="text-align: left;">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="width: auto;">
-            <label class="control-label">Applicant Name:</label>
-        </div>
-        <div class="col-md-10 col-sm-9">
-            <label class="control-label">
-                {{header.patient_name}}
-            </label>
+        <div class="col-md-12 col-sm-12" style="width: auto;">
+            <label class="control-label">Applicant Name:&nbsp;<span class="text-info">{{info.patient.First_name + ' ' + info.patient.Sur_name}}</span></label>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="width: auto;">
-            <label class="control-label">Date of Birth:</label>
-        </div>
-        <div class="col-md-10 col-sm-9">
-            <label class="control-label">
-                {{header.patient_birth_day | date:'dd/MM/yyyy'}}
-            </label>
+        <div class="col-md-12 col-sm-12" style="width: auto;">
+            <label class="control-label">Date of Birth:&nbsp;<span class="text-info">{{info.patient.DOB|date:'dd/MM/yyyy'}}</span></label>
         </div>
     </div>
 </div>
@@ -84,7 +74,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-2 col-sm-3">
-            <label class="control-label">Gender:</label>
+            <label class="control-label">Gender:&nbsp;<span class="text-info">{{info.patient.Sex}}</span></label>
         </div>
         <div class="col-md-10 col-sm-9">
 
@@ -95,29 +85,15 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-2 col-sm-3">
-            <label class="control-label">Address:</label>
-        </div>
-        <div class="col-md-10 col-sm-9">
-            <label class="control-label">
-                {{header.patient_address}}
-            </label>
+            <label class="control-label">Address:&nbsp;<span class="text-info">{{info.patient.Address1 || info.patient.Address2}}</span></label>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="width: auto;">
-            <label class="control-label">Suburb / State / PC:</label>
-        </div>
-        <div class="col-md-1 col-sm-2">
-            <label class="control-label">{{header.patient_suburb}}</label>
-        </div>
-        <div class="col-md-1 col-sm-2">
-            <label class="control-label">{{header.patient_state}}</label>
-        </div>
-        <div class="col-md-1 col-sm-2">
-            <label class="control-label">{{header.patient_post_code}}</label>
+        <div class="col-md-12 col-sm-12" style="width: auto;">
+            <label class="control-label">Suburb / State / PC:&nbsp;<span class="text-info">{{info.patient.Surburb + '/'+ info.patient.State + '/' + info.patient.Post_code}}</span></label>
         </div>
     </div>
 </div>
@@ -125,7 +101,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-2 col-sm-3">
-            <label class="control-label">Contact No:</label>
+            <label class="control-label">Contact No:&nbsp;<span class="text-info">{{info.patient.Phone_ext || info.patient.Home_phone || info.patient.Work_phone}}</span></label>
         </div>
         <div class="col-md-10 col-sm-9">
             <label class="control-label">
@@ -138,7 +114,8 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-3 col-sm-3" style="width: auto;">
-            <label class="control-label">Proposed Position:</label>
+            <label class="control-label">Proposed Position:&nbsp;<span
+                    class="text-info">{{info.patient.State}}</span></label>
         </div>
         <div class="col-md-10 col-sm-9">
 

@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.cat2.controllers', [])
-    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter, $stateParams) {
+    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter, $stateParams, localStorageService) {
         //begin show-hidden img signature
         //clear signature
         $scope.clearSignature = function () {
@@ -16,7 +16,6 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             startingDay: 1
         };
         //end date
-
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
@@ -226,6 +225,7 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                     $scope.isNew = true;
                     //get information patient
                     $scope.info.patient = response[0].patient[0];
+                    $scope.info.apptInfo = localStorageService.get('tempAppt');
                     oriInfo = angular.copy($scope.info);
                 }
                 else if (response[0].status === 'findFound') {
@@ -234,6 +234,7 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                     //load old cat2
                     var data = response[0].dataCat2;
                     $scope.info = {
+                        apptInfo: localStorageService.get('tempAppt'),
                         patient: response[0].patient[0],
                         cat_id: data[0].cat_id,
                         cal_id: data[0].cal_id,

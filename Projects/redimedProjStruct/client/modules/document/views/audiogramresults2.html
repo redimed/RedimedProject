@@ -73,22 +73,16 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-1 col-sm-1" style="width: auto;">
-            <label class="control-label">Name:</label>
-        </div>
-        <div class="col-md-11 col-sm-11" style="text-align: left;width: auto">
-            <label class="control-label"></label>
+        <div class="col-md-12 col-sm-12" style="width: auto;">
+            <label class="control-label">Name:&nbsp;<span class="text-info">{{info.patient.First_name + ' ' + info.patient.Sur_name}}</span></label>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-2" style="width: auto;">
-            <label class="control-label" style="text-align: left;">Worker ID number:</label>
-        </div>
-        <div class="col-md-10 col-sm-10">
-            <label class="control-label" style="text-align: left;"></label>
+        <div class="col-md-12 col-sm-12" style="width: auto;">
+            <label class="control-label" style="text-align: left;">Worker ID number:&nbsp;<span class="text-info">{{info.apptInfo.SERVICE_ID}}</span></label>
         </div>
     </div>
 </div>
@@ -116,7 +110,8 @@
     <div class="col-md-12 col-sm-12">
         <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;margin-top: 5px;">
             <label class="control-label">Name of
-                recipient:</label>
+                recipient:&nbsp;<span
+                        class="text-info"> {{info.apptInfo.NOTES}}</span></label>
         </div>
         <div class="col-md-5 col-sm-7">
             <input type="text" class="form-control"/>
@@ -157,12 +152,10 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div class="col-md-4 col-sm-5" style="text-align: left;width: auto;">
+        <div class="col-md-12 col-sm-12" style="text-align: left;width: auto;">
             <label class="control-label" style="text-align: left;">Name of person conducting
-                test:</label>
-        </div>
-        <div class="col-md-8 col-sm-7">
-            <label class="control-label" style="text-align: left;">Pre-employment 1</label>
+                test:&nbsp;<span
+                        class="text-info"> {{info.apptInfo.NOTES}}</span></label>
         </div>
     </div>
 </div>
@@ -216,7 +209,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Date:&nbsp;{{today|date:'dd/MM/yyyy'}}</label>
+                <label class="control-label">Date:<span>&nbsp;{{today|date:'dd/MM/yyyy'}}</span></label>
             </div>
         </div>
     </div>
@@ -332,10 +325,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
-            <label class="control-label">Name:</label>
-        </div>
-        <div class="col-md-9 col-sm-9" style="text-align: left;">
-            <label class="control-label" style="text-align: left;">Minh Phuong</label>
+            <label class="control-label">Name:&nbsp;<span class="text-info">{{info.patient.First_name + ' ' + info.patient.Sur_name}}</span></label>
         </div>
     </div>
 </div>
@@ -354,10 +344,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-3 col-sm-3" style="text-align: left;width: auto;">
-            <label class="control-label" style="text-align: left;">Tester name:</label>
-        </div>
-        <div class="col-md-9 col-sm-9">
-            <label class="control-label" style="text-align: left;">Pre-employment 1</label>
+            <label class="control-label" style="text-align: left;">Tester name:&nbsp;<span class="text-info">{{info.doctorInfo.NAME}}</span></label>
         </div>
     </div>
 </div>
@@ -366,7 +353,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">Date:</label>
+            <label class="control-label">Date:&nbsp;<span>{{today|date:'dd/MM/yyyy'}}</span></label>
         </div>
     </div>
 </div>

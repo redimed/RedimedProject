@@ -145,7 +145,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">Prospective/Current Position:</label>
+            <label class="control-label">Prospective/Current Position:&nbsp;<span class="text-info">{{info.patient.Known_as}}</span></label>
         </div>
     </div>
 </div>
@@ -163,7 +163,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">Supervisor/Contact:&nbsp;<span class="text-info">{{info.patient.NOK_Emerg_Contact}}</label>
+            <label class="control-label">Supervisor/Contact:&nbsp;<span class="text-info">{{info.patient.NOK_Emerg_Contact}}</span></label>
         </div>
     </div>
 </div>
@@ -171,14 +171,13 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-4 col-sm-4">
-            <label class="control-label">Date of Request:</label>
+            <label class="control-label">Date of Request:&nbsp;<span class="text-info">{{info.apptInfo.ARR_TIME|date:'dd/MM/yyyy'}}</span></label>
         </div>
         <div class="col-md-4 col-sm-4">
-            <label class="control-label">Phone:&nbsp;<span class="text-info"> {{
-                info.patient.Home_phone || info.patient.Work_phone || info.patient.Mobile}}</span></label>
+            <label class="control-label">Phone:&nbsp;<span class="text-info"> {{info.apptInfo.PHONE}}</span></label>
         </div>
         <div class="col-md-4 col-sm-4">
-            <label class="control-label">Fax:&nbsp;<span class="text-info">{{info.patient.Phone_ext}}</span></label>
+            <label class="control-label">Fax:&nbsp;<span class="text-info"> {{info.apptInfo.PHONE}}</span></label>
         </div>
     </div>
 </div>
@@ -186,7 +185,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">Account to be sent to:</label>
+            <label class="control-label">Account to be sent to:&nbsp;<span class="text-info">{{info.apptInfo.bill_to}}</span></label>
         </div>
     </div>
 </div>
@@ -221,10 +220,10 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Phone:</label>
+            <label class="control-label">Phone:&nbsp;<span class="text-info">{{info.apptInfo.PHONE}}</span></label>
         </div>
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Fax</label>
+            <label class="control-label">Fax:&nbsp;<span class="text-info">{{info.apptInfo.PHONE}}</span></label>
         </div>
     </div>
 </div>
@@ -232,10 +231,10 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Appointment date:</label>
+            <label class="control-label">Appointment date:&nbsp;<span class="text-info">{{info.apptInfo.FROM_TIME|date:'dd/MM/yyyy'}}</span></label>
         </div>
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Appointment time:</label>
+            <label class="control-label">Appointment time:&nbsp;<span class="text-info">{{info.apptInfo.FROM_TIME|date:'dd/MM/yyyy'}}</span></label>
         </div>
     </div>
 </div>
