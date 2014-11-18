@@ -78,7 +78,7 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		}
 
 		PatientService.getById ($scope.patient.Patient_id).then(function (data) {
-			console.log('PATIENT INFO ', data);
+			//console.log('PATIENT INFO ', data);
             $scope.modelObjectMap = data;
 
             ///
@@ -101,7 +101,6 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		*	GET APPOINMENT INFO
 		*/
 		DoctorService.getApptById($scope.apptInfo.CAL_ID).then(function(data){
-			console.log('APPOINTMENT INFO ', data);
 			$scope.apptInfo = data;
 
             ///
@@ -133,12 +132,12 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		*	GET ITEMS OF DEPARTMENT
 		*/
         DoctorService.getItemByDept(doctorInfo.CLINICAL_DEPT_ID).then(function (data) {
-			 console.log('DEPT ITEMS ', data)
+			 //console.log('DEPT ITEMS ', data)
             $scope.list_dept_item = data;
 			return  DoctorService.getItemAppt($scope.apptInfo.CAL_ID);
         }).then(function (data) {
             $scope.list_appt_item = data;
-            console.log('APPT ITEMS ', data)
+            //console.log('APPT ITEMS ', data)
 			active_item();
         }, function(err){
 			console.error(err);
@@ -209,9 +208,9 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 	
 	var submitItemSheet = function(insert_list, update_list, delete_list){
 					
-		console.log('INSERT LIST ', insert_list);
+		/*console.log('INSERT LIST ', insert_list);
 		console.log('UPDATE LIST ', update_list);
-		console.log('DELETE LIST ', delete_list);
+		console.log('DELETE LIST ', delete_list);*/
 		
 		var cal_id = $scope.apptInfo.CAL_ID;
 		
