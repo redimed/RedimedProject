@@ -209,8 +209,17 @@ angular.module('starter.booking.services',[])
         }
         bookingService.getApointmentCalendar = function(specialityId,doctorId,locationId,fromTime){
             var getAC = api.one('rlob/appointment-calendar/get-appointment-calendar');
-            return getAC.get({Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime})
+            return getAC.get({Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime});
 
+        }
+        bookingService.getInfoLocation = function(locationId){
+            var getIL = api.all('redimedsite/info');
+            return getIL.post({id:locationId});
+
+        }
+        bookingService.submitBooking = function(infoBooking){
+            var postSB = api.all('im/submit');
+            return postSB.post({info:infoBooking});
         }
 
 

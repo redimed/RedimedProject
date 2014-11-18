@@ -1,0 +1,94 @@
+<ion-view title="Add Worker">
+    <ion-nav-buttons>
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader">
+        <button class="button button-clear button-positive" ui-sref="app.chooseAppointmentCalendar" >
+            Back
+        </button>
+        <h1 class="title">Detail Booking</h1>
+    </div>
+    <ion-content class="padding has-header has-subheader">
+        <ion-list>
+            <div class="portlet yellow-crusta box">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i>
+                        Summary of Booking
+                    </div>
+
+                </div>
+                <div class="portlet-body">
+                    <div class="row static-info">
+                        <div class="col-md-5 name">
+                            Date:
+                        </div>
+                        <div class="col-md-7 value">
+                            {{selectedBooking.FROM_TIME|date:'dd/MM/yyyy'}}
+                            <!--{{getShortDateString(selectedBooking.APPOINTMENT_DATE)}}-->
+                        </div>
+                    </div>
+                    <div class="row static-info">
+                        <div class="col-md-5 name">
+                            Time:
+                        </div>
+                        <div class="col-md-7 value">
+                            {{selectedBooking.APPOINTMENT_TIME|date:'HH:mm'}}
+                            <!--{{getTimeString(selectedBooking.APPOINTMENT_DATE)}}-->
+                        </div>
+                    </div>
+                    <div class="row static-info">
+                        <div class="col-md-5 name">
+                            Doctor:
+                        </div>
+                        <div class="col-md-7 value">
+                            {{selectedBooking.DOCTOR_NAME}}
+                            <!--{{getDoctorName(selectedBooking.DOCTOR_ID)}}-->
+                        </div>
+                    </div>
+                    <div class="row static-info">
+                        <div class="col-md-5 name">
+                            Address:
+                        </div>
+                        <div class="col-md-7 value">
+                            {{selectedBooking.Address}}
+                            <!--{{getLocationAddress(selectedBooking.SITE_ID)}}-->
+                        </div>
+                    </div>
+
+                    <div class="row static-info">
+                        <div class="col-md-5 name">
+                            Description:
+                        </div>
+                        <div class="col-md-7 value">
+                                <textarea class="form-control ng-pristine ng-valid ng-valid-maxlength" ng-model="infoBooking.description"></textarea>
+                        </div>
+                    </div>
+
+                    <!--<div class="portlet light">-->
+                        <!--<div class="portlet-title">-->
+                            <!--<div class="tools">-->
+                                <!--<label style="font-weight: bolder; color: #585858">Show on map</label>-->
+                                <!--<a class="collapse">-->
+                                <!--</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row  portlet-body">-->
+                            <!--<div id="map-canvas" class="col-md-10" style="height: 200px;"></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                </div>
+            </div>
+            <button class="button button-full button-energized" ng-click="addbooking(infoBooking.description)">
+                Add Booking
+            </button>
+
+
+
+
+        </ion-list>
+    </ion-content>
+
+
+</ion-view>

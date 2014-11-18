@@ -1,31 +1,26 @@
 angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 
 ])
-.controller('rlobChooseAppointmentCalendarController',function($scope,$http,$stateParams,localStorageService,$window,OnlineBookingService){
+.controller('rlobChooseAppointmentCalendarController',function($scope,$http,$stateParams,localStorageService,$window,OnlineBookingService,$state){
         $scope.loginInfo = localStorageService.get('userInfo');
         console.log($scope.loginInfo);
-        console.log(localStorageService.get('companyInfo'));
-
-
         $scope.selectedFilter={
             locationSelected:{},
             rltypeSelected:{},
             clnSpecialitySelected:{},
             doctorSelected:{},
             date:''
-        }
+        };
+        $scope.selectedBooking=localStorageService.get("selectedBooking");
+        console.log( $scope.selectedBooking)
 
         $scope.getLocationsFilter=function()
         {
-
             OnlineBookingService.getLocationsFilter().then(function(data){
                 $scope.locationsFilter=data;
             },function(data){
                 console.log(data);
             })
-
-
-
         }
         $scope.getLocationsFilter();
         $scope.getSpecialitiesFilter=function()
@@ -33,8 +28,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
             OnlineBookingService.getRlSpecialtiesFilter().then(function(data){
                 if(data.status=='success')
                     $scope.specialitiesFilter=data.data;
-
-
             },function(err){
                 console.log('error');
             })
@@ -44,22 +37,14 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
         $scope.getDoctorsFilter=function()
         {
             OnlineBookingService.getDoctorsFilter().then(function(data){
-
                 if(data.status=='success')
                     $scope.doctorsFilter=data.data;
-
-
             },function(err){
                 console.log('error');
             })
-        }
-
+        };
         $scope.getDoctorsFilter();
-
-
-
         //Show LIst
-
         $scope.updateAppoinmentsList=function()
         {
             var specialityId=$scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_id?$scope.selectedFilter.clnSpecialitySelected.Specialties_id:'%';
@@ -68,9 +53,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
             var fromTime=$scope.selectedFilter.date;
 
             console.log('spe:'+specialityId+'-----doctor:'+ doctorId+"-------location:"+locationId+'------fromTime:'+fromTime);
-
-
-
             OnlineBookingService.getApointmentCalendar(specialityId,doctorId,locationId,fromTime).then(function(data){
                 var temp={LOCATION_ITEMS:[]};
                 for(var i=0;i<data.length;i++)
@@ -84,8 +66,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                         });
 
                     }
-
-
 //                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID])
 //                                {
 //                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID]={SPEC_ITEMS:[]};
@@ -94,7 +74,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 //                                        DOCTOR_NAME:data[i].NAME
 //                                    });
 //                                }
-
                     if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID])
                     {
                         temp[data[i].SITE_ID][data[i].DOCTOR_ID]={TYPE_ITEMS:[]};
@@ -103,7 +82,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                             DOCTOR_NAME:data[i].NAME
                         });
                     }
-
                     if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID])
                     {
                         temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID]={SPEC_ITEMS:[]};
@@ -112,8 +90,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                             Rl_TYPE_NAME:data[i].Rl_TYPE_NAME
                         });
                     }
-
-
                     if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id])
                     {
                         temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id]={APPOINTMENT_ITEMS:[]};
@@ -122,8 +98,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                             Specialties_name:data[i].Specialties_name
                         });
                     }
-
-
                     if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].CAL_ID])
                     {
                         temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].CAL_ID]={};
@@ -135,7 +109,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                             SITE_ID:data[i].SITE_ID
                         });
                     }
-
                 }
                 var arr=[];
                 for (var i=0;i<temp.LOCATION_ITEMS.length;i++)
@@ -147,13 +120,11 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                         var doctor_item=temp[location_item.SITE_ID].DOCTOR_ITEMS[j];
                         doctor_item.TYPE_ITEMS=[];
                         location_item.DOCTOR_ITEMS.push(doctor_item);
-
                         for(var q=0;q<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].TYPE_ITEMS.length;q++)
                         {
                             var type_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].TYPE_ITEMS[q];
                             type_item.SPEC_ITEMS=[];
                             doctor_item.TYPE_ITEMS.push(type_item);
-
                             for(var k=0;k<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID][type_item.RL_TYPE_ID].SPEC_ITEMS.length;k++)
                             {
                                 var spec_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID][type_item.RL_TYPE_ID].SPEC_ITEMS[k];
@@ -167,10 +138,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                                 }
                             }
                         }
-
-
                     }
-
                     arr.push(location_item);
                 }
                 console.log(arr);
@@ -179,20 +147,78 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
             },function(data){
                 console.log("error");
             })
-
-
-
-        }
-
-
-        $scope.selectAppointmentCalendar=function(appointmentCalendar,Specialties_id)
+        };
+        $scope.selectAppointmentCalendar=function(appointmentCalendar,DID,LID)
         {
-            console.log('aa---'+JSON.stringify(appointmentCalendar)+'bbbb----'+Specialties_id);
+            console.log('aa---'+JSON.stringify(appointmentCalendar));
+            var info = {
+                CAL_ID: appointmentCalendar.CAL_ID,
+                APPOINTMENT_TIME: appointmentCalendar.APPOINTMENT_TIME,
+                FROM_TIME: appointmentCalendar.FROM_TIME,
+                DOCTOR_ID: appointmentCalendar.DOCTOR_ID,
+                SITE_ID: appointmentCalendar.SITE_ID,
+                DOCTOR_NAME: DID,
+                LOCATION_NAME: LID
+            };
+            OnlineBookingService.getInfoLocation(appointmentCalendar.SITE_ID).then(function(data){
+                info.Address = data.Site_addr;
+                localStorageService.set("selectedBooking", info);
+            });
+            $state.go('app.detailBooking');
+        };
 
-            //appointmentCalendar.RL_TYPE_ID=$scope.selectedFilter.rltypeSelected.RL_TYPE_ID;
-            ////appointmentCalendar.Specialties_id=$scope.selectedFilter.clnSpecialitySelected.Specialties_id;
-            //appointmentCalendar.Specialties_id=Specialties_id;
-            //$scope.selectedAppointmentCalendar=appointmentCalendar;
+
+
+
+
+
+        ////Google map
+        //var geocoder;
+        //var map;
+        //geocoder = new google.maps.Geocoder();
+        //var latlng = new google.maps.LatLng(-34.397, 150.644);
+        //var mapOptions = {
+        //    zoom: 16,
+        //    center: latlng
+        //}
+        //map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        //function codeAddress() {
+        //    var address=$scope.selectedBooking.Site_addr;
+        //    geocoder.geocode( { 'address': address}, function(results, status) {
+        //        if (status == google.maps.GeocoderStatus.OK) {
+        //            map.setCenter(results[0].geometry.location);
+        //            var marker = new google.maps.Marker({
+        //                map: map,
+        //                position: results[0].geometry.location
+        //            });
+        //        } else {
+        //            alert('Geocode was not successful for the following reason: ' + status);
+        //        }
+        //    });
+        //}
+
+        //$scope.$watch("selectedBooking", function(newValue, oldValue){
+        //    if($scope.selectedBooking)
+        //        codeAddress();
+        //});
+
+
+        $scope.addbooking = function(des){
+            console.log( $scope.selectedBooking)
+            var infoBooking = {
+                patient_id:1,
+                doctor_id:$scope.selectedBooking.DOCTOR_ID,
+                cal_id:$scope.selectedBooking.CAL_ID,
+                injury_description:des,
+                STATUS:null,
+                driver_id :null,
+                injury_date:null
+
+            }
+            OnlineBookingService.submitBooking(infoBooking).then(function(data){
+                console.log(data.status);
+            })
+
 
         }
 

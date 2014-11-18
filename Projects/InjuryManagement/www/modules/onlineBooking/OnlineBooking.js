@@ -5,13 +5,22 @@ angular.module('starter.booking',[
 .config(function($stateProvider){
             $stateProvider
                 .state('app.chooseAppointmentCalendar',{
-                        url:"/chooseAppointmentCalendar",
-                        views:{
-                                'menuContent':{
-                                        templateUrl:"modules/onlineBooking/views/rlob_choose_appointment_calendar_template.html",
-                                        controller:'rlobChooseAppointmentCalendarController'
-                                }
+                    url:"/chooseAppointmentCalendar",
+                    views:{
+                        'menuContent':{
+                            templateUrl:"modules/onlineBooking/views/rlob_choose_appointment_calendar_template.html",
+                            controller:'rlobChooseAppointmentCalendarController'
                         }
+                    }
+                })
+                .state('app.detailBooking',{
+                    url:"/DetailBooking",
+                    views:{
+                        'menuContent':{
+                            templateUrl:"modules/onlineBooking/views/rlob_info_booking.html",
+                            controller:'rlobChooseAppointmentCalendarController'
+                        }
+                    }
                 })
     })
 
