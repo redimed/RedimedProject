@@ -1,40 +1,33 @@
 <style>
     .selected {
-        background-color: rgba(69, 51, 36, 0.36);
+        background-color: #ffca87;
     }
-
 </style>
 
-<h3 class="page-title">Companies</h3>
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.home">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a href="javascript:;">Office Site</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a>Companies</a>
-        </li>
-    </ul>
-</div>
-<div class="portlet grey-cascade box">
-    <div class="portlet-title">
-        <div class="caption ">
-            <i class="icon-list"></i>
-            <span class="caption-subject uppercase">Company List</span>
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12">
+            <i class="font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 25px;">Office Site</span>
         </div>
-        <div class="actions">
-            <a href="javascript:;" ng-click="addNewCompany()" class="btn green-jungle btn-sm">
-                <i class="fa fa-plus"></i> Add New</a>
-        </div>
-
     </div>
-    <div class="portlet-body">
+</div>
+<br/>
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon icon-clock font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Companies</span>
+        </div>
+        <div>
+            <div class="btn-group pull-right">
+                <a ng-click="addNewCompany()" href="javascript:;" class="btn green" >
+                    Add New Company &nbsp;&nbsp;<i class="fa fa-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body form">
         <div class="table-scrollable">
             <table ng-table="tableParams"  class="table table-bordered table-condensed  table-responsive">
                 <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showSubCompany(b)" ng-class="{selected : b.id === selectedId}">

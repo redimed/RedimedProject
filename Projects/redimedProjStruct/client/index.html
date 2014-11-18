@@ -425,6 +425,10 @@
         <!-- MODULE PATIENT -->
         <script type="text/javascript" src="modules/patient/Patient.js"></script>
         <script type="text/javascript" src="modules/patient/services/PatientServices.js"></script>
+        
+        <script type="text/javascript" src="modules/patient/directives/PatientDirectives.js"></script>
+        <script type="text/javascript" src="modules/patient/directives/PatientDetail.js"></script>
+        
         <script type="text/javascript" src="modules/patient/controllers/PatientController.js"></script>
         <script type="text/javascript" src="modules/patient/controllers/PatientListController.js"></script>
 
@@ -499,11 +503,13 @@
             Index.init();
         });
     </script>
-</head>
 
+</head>
 <body class="page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-footer-fixed1">
-	<!-- ROOT -->
-	<div ui-view="root"></div>
-	<!-- END ROOT VIEW -->
+<!-- ROOT -->
+<div ui-view="root"></div>
+<!-- END ROOT VIEW -->
+
+
 </body>
 </html>

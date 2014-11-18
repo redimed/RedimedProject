@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.patient", [
     "app.loggedIn.patient.controller",
     "app.loggedIn.patient.services",
+    "app.loggedIn.patient.directives"
 ])
 
 .config(function ($stateProvider) {

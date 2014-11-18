@@ -1,48 +1,40 @@
 <style>
     .selected {
-        background-color: rgba(69, 51, 36, 0.36);
+        background-color: #ffca87;
     }
-
 </style>
-
-<h3 class="page-title">Booking</h3>
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.home">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a href="javascript:;">Office Site</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a>Booking</a>
-        </li>
-    </ul>
-</div>
-<div class="portlet grey-cascade box">
-    <div class="portlet-title">
-        <div class="caption ">
-            <i class="icon-list"></i>
-            <span class="caption-subject uppercase">Booking List</span>
+<div class="caption">
+    <div class="row">
+        <div class="col-md-12">
+            <i class="font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase" style="font-size: 25px;">Office Site</span>
         </div>
-        <div class="actions">
-            <a href="javascript:;" ng-click="searchModal()" class="btn green-jungle btn-sm">
-                <i class="glyphicon glyphicon-search"></i> Search</a>
-        </div>
-
     </div>
-    <div class="portlet-body">
+</div>
+<br/>
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon icon-clock font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Bookings</span>
+        </div>
+        <div>
+            <div class="btn-group pull-right">
+                <a href="javascript:;" ng-click="searchModal()"  class="btn grey" >
+                    Search &nbsp;&nbsp; <i class="glyphicon glyphicon-search"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body form">
         <div class="table-scrollable">
-            <table ng-table="tableParams" show-filter="true"  class="table table-hover table-bordered table-responsive">
-                <tr style="white-space: nowrap; cursor: pointer;" align="center" ng-repeat="b in $data" ng-click="showDetail(b)" ng-class="{selected : b.Candidate_id === selectedCanId && b.Booking_id === selectedBookId}">
+            <table ng-table="tableParams" show-filter="true"  class="table table-bordered table-responsive">
+                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showDetail(b)" ng-class="{selected : b.Candidate_id === selectedCanId && b.Booking_id === selectedBookId}">
                     <td data-title="'Company'" filter="{'company_name':'text'}">
                         <label>{{b.sub_company_id == null ? b.company_name : b.sub_company_name}}</label>
                     </td>
                     <td data-title="'Candidate Name'" filter="{'Candidates_name':'text'}">
-                        <label>{{b.Candidates_name}}</label>
+                        <a href="javascript:;" ng-click="openDetail(b)">{{b.Candidates_name}}</a>
                     </td>
                     <td data-title="'DOB'"  >
                         <label>{{b.DoB | date:'dd/MM/yyyy'}}</label>
@@ -52,6 +44,15 @@
                     </td>
                     <td data-title="'Email'" filter="{'Email':'text'}">
                         <label>{{b.Email}}</label>
+                    </td>
+                    <td data-title="'Position'"  >
+                        <label>{{b.Position}}</label>
+                    </td>
+                    <td data-title="'Project Identification'" >
+                        <label>{{b.Project_Identofication}}</label>
+                    </td>
+                    <td data-title="'Comments'"  >
+                        <label>{{b.Comments}}</label>
                     </td>
                     <td data-title="'Site Name'" filter="{'site_name':'text'}">
                         <label>{{b.site_name}}</label>
@@ -63,16 +64,10 @@
                         <label>{{b.Appointment_notes}}</label>
                     </td>
                     <td data-title="'Appointment Status'"  >
-                        <span ng-if="b.Appointment_status == 'Pending'" class="label label-sm label-warning">
-													Pending </span>
-                            <span ng-if="b.Appointment_status == 'Confirmed'" class="label label-sm label-success">
-													Confirmed </span>
-                            <span ng-if="b.Appointment_status == 'Cancelled'" class="label label-sm label-danger">
-													Cancelled </span>
+                        <label>{{b.Appointment_status}}</label>
                     </td>
-                    <td align="center" data-title="'Actions'">
-                        <a style="width: 75px" href="javascript:;" ng-click="openDetail(b)" class="btn btn-circle green-jungle btn-sm">
-                            <i class="fa fa-list"></i> Details </a>
+                    <td data-title="'RediMed Notes'"  >
+                        <label>{{b.RediMed_note}}</label>
                     </td>
                 </tr>
 
@@ -81,22 +76,32 @@
 
     </div>
 </div>
-<div class="portlet grey-cascade box" ng-if="isSelected == true">
+<div class="portlet light bordered">
     <div class="portlet-title">
+        <div class="caption col-md-6">
+            <i class="icon icon-clock font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Booking Details</span>
+        </div>
 
-        <div class="caption ">
-            <i class="fa fa-info-circle"></i>
-            <span class="caption-subject uppercase">Booking Details</span>
+        <div>
+            <div class="btn-group pull-right">
+                <a ng-class="{disabled: isSelected === false}" ng-click="sendEmail()" href="javascript:;" class="btn btn-success" >
+                    Send Confirm Email &nbsp;&nbsp; <i class="fa fa-mail-forward"></i>
+                </a>
+            </div>
         </div>
-        <div class="actions">
-            <a href="javascript:;" ng-click="sendEmail()" class="btn green-jungle btn-sm">
-                <i class="glyphicon glyphicon-envelope "></i> Send Confirm Email</a>
-            <a href="javascript:;" ng-click="saveInfo()" class="btn blue-steel btn-sm">
-                <i class="glyphicon glyphicon-save "></i> Save</a>
+
+        <div>
+            <div class="btn-group pull-right">
+                <a ng-class="{disabled: isSelected === false}" ng-click="saveInfo()" href="javascript:;" class="btn blue" >
+                    Save &nbsp;&nbsp; <i class="glyphicon glyphicon-save"></i>
+                </a>
+            </div>
         </div>
+
+
     </div>
     <div class="portlet-body form">
-        <br/>
         <div class="row">
             <div class="col-md-6">
                 <div class="col-md-4">
@@ -244,11 +249,13 @@
                 <div class="col-md-4">
                     <label class="control-label bold">Result File</label>
                 </div>
-                <div class="col-md-8" ng-if="isSelected === true && info.resultFileName != null">
-                    <a href="/api/booking/download/{{info.Booking_id}}/{{info.Candidate_id}}">
-                        <label class="bold">{{info.resultFileName}}</label>
-                    </a>
+                <div class="col-md-4" ng-if="isSelected === true && info.resultFileName != null">
+                    <label class="bold">{{info.resultFileName}}</label>
                 </div>
+                <div class="col-md-4" ng-if="info.resultFileName != null">
+                    <a href="/api/booking/download/{{info.Booking_id}}/{{info.Candidate_id}}" class="btn btn-success">Download</a>
+                </div>
+
             </div>
         </div>
         <br/>
@@ -260,7 +267,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12" ng-class="{hide: isSelected === false}">
+            <div class="col-md-6"></div>
+            <div class="col-md-6" ng-class="{hide: isSelected === false}">
                 <div class="col-md-12">
                     <h3>Upload File</h3>
                     <table class="table">
@@ -312,14 +320,14 @@
         </div>
     </div>
 </div>
-<div class="portlet grey-cascade box" ng-if="isSelected == true">
+<div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-info-circle"></i>
-            <span class="caption-subject ">Assessment</span>
+            <i class="icon icon-clock font-blue-hoki"></i>
+            <span class="caption-subject font-blue-hoki bold uppercase">Assessment Details</span>
         </div>
     </div>
-    <div class="portlet-body">
+    <div class="portlet-body form">
         <div class="form-group row" ng-repeat="(head,ass) in packAss ">
             <div class="col-md-8">
                 <b>{{head}}</b>
