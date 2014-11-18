@@ -15,11 +15,11 @@ module.exports = {
                     isEmployed: info.isEmployed,
                     dateEmployed: info.dateEmployed,
                     inPosition: info.inPosition,
-                    Signature1: info.Signature1,
+                    signature1: info.signature1,
                     coeName: info.coeName,
                     coeTitle: info.coeTitle,
                     coeDate: info.coeDate,
-                    Signature2: info.Signature2
+                    signature2: info.signature2
                 },{raw:true})
                     .success(function(data){
                         res.json({status:'success'});
@@ -42,11 +42,11 @@ module.exports = {
             isEmployed: info.isEmployed,
             dateEmployed: info.dateEmployed,
             inPosition: info.inPosition,
-            Signature1: info.Signature1,
+            signature1: info.signature1,
             coeName: info.coeName,
             coeTitle: info.coeTitle,
             coeDate: info.coeDate,
-            Signature2: info.Signature2
+            signature2: info.signature2
         },{PatientId:info.PatientId,CalId : info.CalId})
             .success(function(data){
                 res.json({status:'success'});
@@ -67,7 +67,6 @@ module.exports = {
                     res.json({status:'fail'});
                 }else
                 {
-                    console.log(data);
                     res.json(data);
                 }
             })

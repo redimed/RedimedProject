@@ -8,17 +8,16 @@ module.exports = {
         /**
          * load cln table
          */
-        var info = req.body.info;
-        var PATIENT_ID = info.PATIENT_ID;
-        var CAL_ID = info.CAL_ID;
+        var cal_id = 1;
 //        var patient_id = req.body.id.patient_id;
-        db.headersMHCLN.findAll({where: { PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
+        var patient_id = 999;
+        db.headersMHCLN.findAll({where: { patient_id: patient_id }}, {raw: true})
             .success(function (dataH) {
-                db.groupsMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
+                db.groupsMHCLN.findAll({where: {patient_id: patient_id}}, {raw: true})
                     .success(function (dataG) {
-                        db.linesMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
+                        db.linesMHCLN.findAll({where: {patient_id: patient_id}}, {raw: true})
                             .success(function (dataL) {
-                                db.subquestionsMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
+                                db.subquestionsMHCLN.findAll({where: {patient_id: patient_id}}, {raw: true})
                                     .success(function (dataS) {
                                         if (dataH.length == 0 || dataG.length == 0 || dataL.length == 0 || dataS.length == 0) {
                                             // find null
@@ -87,39 +86,33 @@ module.exports = {
     },
     insertMH: function (req, res) {
         var info = req.body.info;
-        var Sign = info.Sign;
-        var Date = info.Date;
-        var Declaration_sign = info.Declaration_sign;
-        var Declaration_witness_sign = info.Declaration_witness_sign;
-        var Statement_sign = info.Statement_sign;
-        var Statement_Date = info.Statement_Date;
-        info.headers.forEach(function (infoH, hIndex) {
+        info.forEach(function (infoH, hIndex) {
             //insert headers
             db.headersMHCLN.create({
-                PATIENT_ID: infoH.PATIENT_ID,
-                CAL_ID: infoH.CAL_ID,
+                PATIENT_ID: 999,
+                CAL_ID: 999,
                 MH_DF_ID: infoH.MH_DF_ID,
                 DF_CODE: infoH.DF_CODE,
                 DESCRIPTION: infoH.DESCRIPTION,
                 ISENABLE: infoH.ISENABLE,
                 CREATED_BY: infoH.CREATED_BY,
                 Last_updated_by: infoH.Last_updated_by,
-                Sign: Sign,
-                Date: Date,                                                               //edit
+                Sign: infoH.Sign,
+                Date: new Date(),                                                               //edit
                 Release_of_medical_info_sign: infoH.Release_of_medical_info_sign,
                 Release_of_medical_info_witness_sign: infoH.Release_of_medical_info_witness_sign,
-                Declaration_sign: Declaration_sign,
-                Declaration_witness_sign: Declaration_witness_sign,
-                Statement_sign: Statement_sign,
-                Statement_Date: Statement_Date                                                   //edit
+                Declaration_sign: infoH.Declaration_sign,
+                Declaration_witness_sign: infoH.Declaration_witness_sign,
+                Statement_sign: infoH.Statement_sign,
+                Statement_Date: new Date()                                                      //edit
 
             }, {raw: true})
                 .success(function () {
-                    info.headers[hIndex].group.forEach(function (infoG, gIndex) {
+                    info[hIndex].group.forEach(function (infoG, gIndex) {
                         //insert groups
                         db.groupsMHCLN.create({
-                            PATIENT_ID: infoG.PATIENT_ID,
-                            CAL_ID: infoG.CAL_ID,
+                            PATIENT_ID: 999,
+                            CAL_ID: 999,
 
                             GROUP_ID: infoG.GROUP_ID,
 
@@ -133,10 +126,10 @@ module.exports = {
                         }, {raw: true})
                             .success(function () {
                                 //insert lines
-                                info.headers[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
+                                info[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
                                     db.linesMHCLN.create({
-                                        PATIENT_ID: infoL.PATIENT_ID,
-                                        CAL_ID: infoL.CAL_ID,
+                                        PATIENT_ID: 999,
+                                        CAL_ID: 999,
 
                                         MH_LINE_ID: infoL.MH_LINE_ID,
 
@@ -156,10 +149,10 @@ module.exports = {
                                     }, {raw: true})
                                         .success(function () {
                                             //insert subquestions
-                                            info.headers[hIndex].group[gIndex].line[lIndex].subquestion.forEach(function (infoS, sIndex) {
+                                            info[hIndex].group[gIndex].line[lIndex].subquestion.forEach(function (infoS, sIndex) {
                                                 db.subquestionsMHCLN.create({
-                                                    PATIENT_ID: infoS.PATIENT_ID,
-                                                    CAL_ID: infoS.CAL_ID,
+                                                    PATIENT_ID: 999,
+                                                    CAL_ID: 999,
 
                                                     MH_LINE_SUB_ID: infoS.MH_LINE_SUB_ID,
 
@@ -204,13 +197,7 @@ module.exports = {
     },
     editMH: function (req, res) {
         var info = req.body.info;
-        var Sign = info.Sign;
-        var Date = info.Date;
-        var Declaration_sign = info.Declaration_sign;
-        var Declaration_witness_sign = info.Declaration_witness_sign;
-        var Statement_sign = info.Statement_sign;
-        var Statement_Date = info.Statement_Date;
-        info.headers.forEach(function (infoH, hIndex) {
+        info.forEach(function (infoH, hIndex) {
             //insert headers
             db.headersMHCLN.update({
                 DF_CODE: infoH.DF_CODE,
@@ -218,18 +205,18 @@ module.exports = {
                 ISENABLE: infoH.ISENABLE,
                 CREATED_BY: infoH.CREATED_BY,
                 Last_updated_by: infoH.Last_updated_by,
-                Sign: Sign,
-                Date: Date,                                                               //edit
+                Sign: infoH.Sign,
+                Date: new Date(),                                                               //edit
                 Release_of_medical_info_sign: infoH.Release_of_medical_info_sign,
                 Release_of_medical_info_witness_sign: infoH.Release_of_medical_info_witness_sign,
-                Declaration_sign: Declaration_sign,
-                Declaration_witness_sign: Declaration_witness_sign,
-                Statement_sign: Statement_sign,
-                Statement_Date: Statement_Date                                                      //edit
+                Declaration_sign: infoH.Declaration_sign,
+                Declaration_witness_sign: infoH.Declaration_witness_sign,
+                Statement_sign: infoH.Statement_sign,
+                Statement_Date: new Date()                                                      //edit
 
-            }, {PATIENT_ID: infoH.PATIENT_ID, CAL_ID: infoH.CAL_ID, MH_DF_ID: infoH.MH_DF_ID})
+            }, {PATIENT_ID: 999, CAL_ID: 999, MH_DF_ID: infoH.MH_DF_ID})
                 .success(function () {
-                    info.headers[hIndex].group.forEach(function (infoG, gIndex) {
+                    info[hIndex].group.forEach(function (infoG, gIndex) {
                         //update groups
                         db.groupsMHCLN.update({
                             MH_DF_ID: infoG.MH_DF_ID,
@@ -239,10 +226,10 @@ module.exports = {
                             CREATED_BY: infoG.CREATED_BY,
                             Last_updated_by: infoG.Last_updated_by,
                             USER_TYPE: infoG.USER_TYPE
-                        }, {PATIENT_ID: infoG.PATIENT_ID, CAL_ID: infoG.CAL_ID, GROUP_ID: infoG.GROUP_ID})
+                        }, {PATIENT_ID: 999, CAL_ID: 999, GROUP_ID: infoG.GROUP_ID})
                             .success(function () {
                                 //update lines
-                                info.headers[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
+                                info[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
                                     db.linesMHCLN.update({
                                         GROUP_ID: infoL.GROUP_ID,
                                         MH_DF_ID: infoL.MH_DF_ID,
@@ -257,10 +244,10 @@ module.exports = {
                                         CREATED_BY: infoL.CREATED_BY,
                                         Last_updated_by: infoL.Last_updated_by,
                                         ISDetails_Answer_IfYes: infoL.ISDetails_Answer_IfYes
-                                    }, {PATIENT_ID: infoL.PATIENT_ID, CAL_ID: infoL.CAL_ID, MH_LINE_ID: infoL.MH_LINE_ID})
+                                    }, {PATIENT_ID: 999, CAL_ID: 999, MH_LINE_ID: infoL.MH_LINE_ID})
                                         .success(function () {
                                             //update subquestions
-                                            info.headers[hIndex].group[gIndex].line[lIndex].subquestion.forEach(function (infoS, sIndex) {
+                                            info[hIndex].group[gIndex].line[lIndex].subquestion.forEach(function (infoS, sIndex) {
                                                 db.subquestionsMHCLN.update({
                                                     MH_LINE_ID: infoS.MH_LINE_ID,
                                                     ORD: infoS.ORD,
@@ -273,11 +260,10 @@ module.exports = {
                                                     CREATED_BY: infoS.CREATED_BY,
                                                     Last_updated_by: infoS.Last_updated_by
                                                 }, {
-                                                    PATIENT_ID: infoS.PATIENT_ID, CAL_ID: infoS.CAL_ID,
+                                                    PATIENT_ID: 999, CAL_ID: 999,
                                                     MH_LINE_SUB_ID: infoS.MH_LINE_SUB_ID
                                                 })
-                                                    .success(function (r) {
-                                                        console.log("sasa" + r);
+                                                    .success(function () {
                                                         //check finish insert
                                                         res.json({status: 'success'});
                                                     })

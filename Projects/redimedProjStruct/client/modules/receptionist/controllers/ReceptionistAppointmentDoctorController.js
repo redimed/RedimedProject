@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.appointment.doctor.controller", [])
 
-.controller("ReceptionistAppointmentDoctorController", function($scope, $state, $cookieStore, localStorageService, DoctorService, PatientService, ReceptionistService, ConfigService){
+.controller("ReceptionistAppointmentDoctorController", function($scope, $state, $cookieStore, DoctorService, PatientService, ReceptionistService, ConfigService){
 	$scope.modelObjectMap = {};
 	$scope.doctor = {};
 	$scope.appointmentList = [];
@@ -57,12 +57,11 @@ angular.module("app.loggedIn.receptionist.appointment.doctor.controller", [])
 			data: $cookieStore.get("appointmentDoctor")
 		});
 
-		ReceptionistService.getById(data.CAL_ID).then(function(response){
-			if(response.Patient_id === null){
+		ReceptionistService.getById(data.CAL_ID).then(function(data){
+			if(data.Patient_id === null){
 				$state.go("loggedIn.patient.booking");
 			}else{
-				localStorageService.set("apptTempInfo", {'CAL_ID': data.CAL_ID});
-				localStorageService.set("patientTempInfo", response);
+				localStorageService.set("patientTempInfo", data);
 				$state.go("loggedIn.doctor.patients.detail.appt");
 			}
 		})
