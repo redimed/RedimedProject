@@ -4,6 +4,8 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 .controller('rlobChooseAppointmentCalendarController',function($scope,$stateParams,localStorageService,OnlineBookingService,$state){
         $scope.loginInfo = localStorageService.get('userInfo');
 
+        $scope.patientID = $stateParams.patient_id;
+        console.log($scope.patientID);
 
         $scope.selectedFilter={
             locationSelected:{},
@@ -150,6 +152,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
         };
         $scope.selectAppointmentCalendar=function(appointmentCalendar,DID,LID)
         {
+
             console.log('aa---'+JSON.stringify(appointmentCalendar));
             var info = {
                 CAL_ID: appointmentCalendar.CAL_ID,
@@ -165,7 +168,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 
                 localStorageService.set("selectedBooking", info);
             });
-            $state.go('app.detailBooking');
+            $state.go('app.detailBooking',{patientID: $scope.patientID});
         };
 
 

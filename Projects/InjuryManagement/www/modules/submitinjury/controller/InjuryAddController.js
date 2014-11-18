@@ -3,6 +3,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
     .controller('InjuryAddController', function($scope, $state, InjuryServices, $cordovaCamera, $ionicPopup, $ionicSideMenuDelegate, localStorageService, $cordovaFile){
         $scope.isSubmit = false;
         $scope.isShow = false;
+        //$scope.isShowBlur = false;
         $scope.imgURI = [];
         var i = 0;
         $scope.list = [];
@@ -27,6 +28,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }
 
         $scope.worker = {
+            Patient_id: -1,
             Title: '',
             First_name: '',
             Sur_name: '',
@@ -40,7 +42,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }
 
         $scope.selectWorker = function (id) {
-            $scope.isShow = !$scope.isShow;
+            //$scope.isShow = !$scope.isShow;
+            //$scope.isShowBlur = true;
+
             InjuryServices.getPatientID(id).then(function (data){
                 $scope.worker = data;
             })
@@ -146,6 +150,17 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     }
 
                 })
+            }
+        }
+
+        $scope.NonEmergency = function () {
+            if($scope.worker.Patient_id == -1)
+            {
+                $state.go('app.worker.add');
+            }
+            else
+            {
+                $state.go('app.chooseAppointmentCalendar',{patient_id: $scope.worker.Patient_id});
             }
         }
     })

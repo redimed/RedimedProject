@@ -3,6 +3,8 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
 ])
     .controller('rlobDetailBookingController',function($scope,$stateParams,$timeout,localStorageService,OnlineBookingService,$state){
 
+        $scope.patientID = $stateParams.patientID;
+
         $timeout(function(){
             $scope.selectedBooking=localStorageService.get("selectedBooking");
         }, 500);
@@ -12,7 +14,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
         $scope.addbooking = function(des){
             console.log( $scope.selectedBooking)
             var infoBooking = {
-                patient_id:1,
+                patient_id: $scope.patientID,
                 doctor_id:$scope.selectedBooking.DOCTOR_ID,
                 cal_id:$scope.selectedBooking.CAL_ID,
                 injury_description:des,
