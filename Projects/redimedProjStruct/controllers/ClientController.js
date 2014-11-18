@@ -402,7 +402,7 @@ module.exports = {
 
         var sqlbuilder = squel.update()
                 .table("cln_patients")
- 
+                .where('patient_id = ?', patient_id)
                 .set('Last_update_date', 'NOW()', {dontQuote: true});
 
         ;
