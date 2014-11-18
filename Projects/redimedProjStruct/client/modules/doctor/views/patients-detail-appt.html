@@ -37,10 +37,10 @@
 		</tab-heading>
 		<div class="portlet grey-cascade box">
 			<div class="portlet-body">
-				<!-- <div ng-include="views.patient_info"></div> -->
 				<div ng-show="!patient_info_panel || patient_info_panel == 1" ng-include="'modules/patient/views/patient/step1.html'"></div> 
 				<div ng-show="patient_info_panel == 2" ng-include="'modules/patient/views/patient/step2.html'"></div>
 				<div ng-show="patient_info_panel == 3" ng-include="'modules/patient/views/patient/step3.html'"></div>
+				<!--<patient-detail data="{'Patient_id': {{patient.Patient_id}} }"></patient-detail>-->
             </div>
 		</div>
 	</tab>

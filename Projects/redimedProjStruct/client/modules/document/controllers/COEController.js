@@ -15,14 +15,14 @@ angular.module('app.loggedIn.document.COE.controllers', [])
 
         $scope.cancelClick = function () {
             $scope.isSignature = !$scope.isSignature;
-            $scope.info.signature1 = tempSignature;
+            $scope.info.Signature1 = tempSignature;
         };
         $scope.clearClick = function () {
-            $scope.info.signature1 = '';
+            $scope.info.Signature1 = '';
         };
         $scope.okClick = function () {
             $scope.isSignature = !$scope.isSignature;
-            tempSignature = $scope.info.signature1;
+            tempSignature = $scope.info.Signature1;
         }
         // End Signature
         // Start Signature1
@@ -34,14 +34,14 @@ angular.module('app.loggedIn.document.COE.controllers', [])
 
         $scope.cancelClick1 = function () {
             $scope.isSignature1 = !$scope.isSignature1;
-            $scope.info.signature2 = tempSignature1;
+            $scope.info.Signature2 = tempSignature1;
         };
         $scope.clearClick1 = function () {
-            $scope.info.signature2 = '';
+            $scope.info.Signature2 = '';
         };
         $scope.okClick1 = function () {
             $scope.isSignature1 = !$scope.isSignature1;
-            tempSignature1 = $scope.info.signature2;
+            tempSignature1 = $scope.info.Signature2;
         }
         // End Signature1
         //============================================================================
@@ -71,13 +71,13 @@ angular.module('app.loggedIn.document.COE.controllers', [])
              CalId: CalID,
              PatientId: Patient_ID,
              isEmployed: null,
-             dateEmployed: today,
+             dateEmployed: date,
              inPosition: null,
-             signature1: null,
+             Signature1: null,
              coeName: null,
              coeTitle: null,
-             coeDate: today,
-             signature2: null
+             coeDate: date,
+             Signature2: null
          };
         var oriInfo = angular.copy($scope.info);
         $scope.resetForm = function () {
@@ -99,6 +99,7 @@ angular.module('app.loggedIn.document.COE.controllers', [])
                 insert = false;
                 $scope.isNew = false;
                 $scope.info = response;
+                console.log($scope.info);
                 oriInfo = angular.copy($scope.info);
             }
         });

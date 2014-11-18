@@ -362,7 +362,6 @@ angular.module('app.loggedIn.document.FA.controllers',[])
 
         DocumentService.checkFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
             if(response['status'] === 'fail') {
-                alert("New");
                 DocumentService.newFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
                     DocumentService.loadFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
                         if(response['status'] === 'fail') {
@@ -422,7 +421,6 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                 });
             }else
             {
-                alert("Edit");
                 $scope.infoH = {
                     PATIENT_ID: response.PATIENT_ID ,
                     CAL_ID : response.CAL_ID ,

@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.IDS.controllers',[])
-    .controller("IDSController",function($scope,DocumentService,$http,$cookieStore,$stateParams) {
+    .controller("IDSController",function($scope,DocumentService,$http,$cookieStore,$stateParams,localStorageService) {
 
         $scope.infoL = [];
         $scope.listIDS = [];
@@ -25,11 +25,18 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         }
         // End Signature
 
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("IDS: " + CalID + " patient: " + Patient_ID);
+//        var CalID = $stateParams.CalID;
+//        var Patient_ID = $stateParams.PatientID;
+//        console.log("IDS: " + CalID + " patient: " + Patient_ID);
 
-
+        var doctorInfo = $cookieStore.get('doctorInfo');
+        console.log(doctorInfo.doctor_id);
+        $scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        console.log($scope.apptInfo);
+        console.log($scope.patientInfo);
+        var Patient_ID =$scope.patientInfo.Patient_id;
+        var CalID = $scope.apptInfo.CAL_ID;
 
         $scope.dateOptions = {
             formatYear: 'yy',

@@ -120,34 +120,16 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 		});
 
-		ReceptionistService.getById(data.cals[index]).then(function(data){
-			if(data.Patient_id === null){
+		ReceptionistService.getById(data.cals[index]).then(function(response){
+			if(response.Patient_id === null){
 				$state.go("loggedIn.patient.booking");
 			}else{
-				localStorageService.set("patientTempInfo", data);
+				localStorageService.set("apptTempInfo", {'CAL_ID': data.cals[index]});
+				localStorageService.set("patientTempInfo", response);
 				$state.go("loggedIn.doctor.patients.detail.appt");
 			}
 		})
 
-		/*var modalTemp = {
-			templateUrl: "modules/patient/views/popup/action.html",
-			controller: "PatientActionController",
-		}
-
-		var modalInstance = $modal.open({
-			templateUrl: modalTemp.templateUrl,
-			size: "lg",
-			controller: modalTemp.controller,
-			resolve: {
-		        items: function () {
-		        	return {cal_id: data.cals[index], bookingObject: $scope.modelObjectBooking, data: data, options: $scope.options};
-		        }
-		    }
-		});
-
-		modalInstance.result.then(function(data){
-			$scope.refreshAppointment();
-		});*/
 	}
 	/* END BOOKING */
 

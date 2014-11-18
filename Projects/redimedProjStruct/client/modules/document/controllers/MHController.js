@@ -2,12 +2,15 @@
  * Created by thanh on 9/27/2014.
  */
 angular.module('app.loggedIn.document.MH.controllers', [])
-    .controller("MHController", function ($scope, DocumentService, $http, $cookieStore, toastr, $state, localStorageService) {
+    .controller("MHController", function ($scope, DocumentService, $http, $cookieStore, toastr, $state, localStorageService, $stateParams) {
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
         }
         else {
+            //set value default
+            $scope.today = new Date();
+            $scope.info = [];
             //begin signature
             var tempSignature;
             $scope.isSignature = false;
@@ -17,14 +20,14 @@ angular.module('app.loggedIn.document.MH.controllers', [])
 
             $scope.cancelClick = function () {
                 $scope.isSignature = !$scope.isSignature;
-                $scope.info.Signature = tempSignature;
+                $scope.info.Sign = tempSignature;
             };
             $scope.clearClick = function () {
-                $scope.info.Signature = '';
+                $scope.info.Sign = '';
             };
             $scope.okClick = function () {
                 $scope.isSignature = !$scope.isSignature;
-                tempSignature = $scope.info.Signature;
+                tempSignature = $scope.info.Sign;
             }
             //end signature
 
@@ -37,14 +40,14 @@ angular.module('app.loggedIn.document.MH.controllers', [])
 
             $scope.cancelClick1 = function () {
                 $scope.isSignature1 = !$scope.isSignature1;
-                $scope.info.Signature1 = tempSignature1;
+                $scope.info.Declaration_sign = tempSignature1;
             };
             $scope.clearClick1 = function () {
-                $scope.info.Signature1 = '';
+                $scope.info.Declaration_sign = '';
             };
             $scope.okClick1 = function () {
                 $scope.isSignature1 = !$scope.isSignature1;
-                tempSignature1 = $scope.info.Signature1;
+                tempSignature1 = $scope.info.Declaration_sign;
             }
             //end signature 1
 
@@ -68,7 +71,14 @@ angular.module('app.loggedIn.document.MH.controllers', [])
             }
             //end signature 2
 
-            $scope.info = [];
+            $scope.info.Date = new Date();
+            $scope.info.Statement_Date = new Date();
+            var PATIENT_ID = $stateParams.PatientID;
+            var CAL_ID = $stateParams.CalID;
+            $scope.info = {
+                PATIENT_ID: PATIENT_ID,
+                CAL_ID: CAL_ID
+            };
             $scope.info.headers = [];
             var oriInfo;
             var info = $scope.info;
@@ -92,21 +102,40 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                  * load data normal input
                  */
                 var data = response[0];
-                var i = 0;
-                angular.forEach(data.headers, function (dataH) {
+                angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({
+                        "PATIENT_ID": PATIENT_ID,
+                        "CAL_ID": CAL_ID,
                         "MH_DF_ID": dataH.MH_DF_ID,
                         "DF_CODE": dataH.DF_CODE,
                         "DESCRIPTION": dataH.DESCRIPTION,
                         "ISENABLE": dataH.ISENABLE,
                         "CREATED_BY": dataH.CREATED_BY,
                         "Last_updated_by": dataH.Last_updated_by,
+                        "Sign": dataH.Sign,
+                        "Date": dataH.Date,
+                        "Release_of_medical_info_sign": dataH.Release_of_medical_info_sign,
+                        "Release_of_medical_info_witness_sign": dataH.Release_of_medical_info_witness_sign,
+                        "Declaration_sign": dataH.Declaration_sign,
+                        "Declaration_witness_sign": dataH.Declaration_witness_sign,
+                        "Statement_sign": dataH.Statement_sign,
+                        "Statement_Date": dataH.Statement_Date,
                         "group": []
                     });
-                    var j = 0;
-                    angular.forEach(data.groups, function (dataG) {
-                        if (dataG.MH_DF_ID === $scope.info.headers[i].MH_DF_ID) {
-                            $scope.info.headers[i].group.push({
+                    $scope.info.Sign = dataH.Sign;
+                    $scope.info.Date = dataH.Date || new Date();
+                    $scope.info.Declaration_sign = dataH.Declaration_sign;
+                    $scope.info.Declaration_witness_sign = dataH.Declaration_witness_sign;
+                    $scope.info.Statement_sign = dataH.Statement_sign;
+                    $scope.info.Statement_Date = dataH.Statement_Date || new Date();
+
+
+                    var g = 0;
+                    angular.forEach(data.groups, function (dataG, gIndex) {
+                        if (dataG.MH_DF_ID === $scope.info.headers[hIndex].MH_DF_ID) {
+                            $scope.info.headers[hIndex].group.push({
+                                "PATIENT_ID": PATIENT_ID,
+                                "CAL_ID": CAL_ID,
                                 "GROUP_ID": dataG.GROUP_ID,
                                 "MH_DF_ID": dataG.MH_DF_ID,
                                 "ORD": dataG.ORD,
@@ -117,10 +146,12 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                                 "USER_TYPE": dataG.USER_TYPE,
                                 "line": []
                             });
-                            var k = 0;
-                            angular.forEach(data.lines, function (dataL) {
-                                if (dataL.GROUP_ID === $scope.info.headers[i].group[j].GROUP_ID) {
-                                    $scope.info.headers[i].group[j].line.push({
+                            var l = 0;
+                            angular.forEach(data.lines, function (dataL, lIndex) {
+                                if ($scope.info.headers[hIndex].group[g].GROUP_ID === dataL.GROUP_ID) {
+                                    $scope.info.headers[hIndex].group[g].line.push({
+                                        "PATIENT_ID": PATIENT_ID,
+                                        "CAL_ID": CAL_ID,
                                         "MH_LINE_ID": dataL.MH_LINE_ID,
                                         "GROUP_ID": dataL.GROUP_ID,
                                         "MH_DF_ID": dataL.MH_DF_ID,
@@ -133,15 +164,15 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                                         "ISDETAILS_ANSWER_ONLY": dataL.ISDETAILS_ANSWER_ONLY,
                                         "ISENABLE": dataL.ISENABLE,
                                         "CREATED_BY": dataL.CREATED_BY,
-                                        "CREATION_DATE": dataL.CREATION_DATE,
                                         "Last_updated_by": dataL.Last_updated_by,
-                                        "Last_update_date": dataL.Last_update_date,
                                         "ISDetails_Answer_IfYes": dataL.ISDetails_Answer_IfYes,
                                         "subquestion": []
                                     });
                                     angular.forEach(data.subquestions, function (dataS) {
-                                        if (dataS.MH_LINE_ID === $scope.info.headers[i].group[j].line[k].MH_LINE_ID) {
-                                            $scope.info.headers[i].group[j].line[k].subquestion.push({
+                                        if (dataS.MH_LINE_ID === $scope.info.headers[hIndex].group[g].line[l].MH_LINE_ID) {
+                                            $scope.info.headers[hIndex].group[g].line[l].subquestion.push({
+                                                "PATIENT_ID": PATIENT_ID,
+                                                "CAL_ID": CAL_ID,
                                                 "MH_LINE_SUB_ID": dataS.MH_LINE_SUB_ID,
                                                 "MH_LINE_ID": dataS.MH_LINE_ID,
                                                 "ORD": dataS.ORD,
@@ -152,33 +183,30 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                                                 "Comments": dataS.Comments,
                                                 "ISENABLE": dataS.ISENABLE,
                                                 "CREATED_BY": dataS.CREATED_BY,
-                                                "CREATION_DATE": dataS.CREATION_DATE,
-                                                "Last_updated_by": dataS.Last_updated_by,
-                                                "Last_update_date": dataS.Last_update_date
+                                                "Last_updated_by": dataS.Last_updated_by
                                             });
                                         }
                                     });
-                                    k++;
+                                    l++;
                                 }
                             });
-                            j++;
+                            g++;
                         }
                     });
-                    i++;
                 });
                 $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
                 $scope.info.apptInfo = localStorageService.get('tempAppt');
                 $scope.info.patient = localStorageService.get('tempPatient');
-                oriInfo = angular.copy($scope.info.headers);
+                oriInfo = angular.copy($scope.info);
             });
 
             $scope.resetForm = function () {
-                $scope.info.headers = angular.copy(oriInfo);
+                $scope.info = angular.copy(oriInfo);
                 $scope.mhForm.$setPristine();
             }
 
             $scope.checkAbove = function () {
-                if ($scope.info.asAbove==1) {
+                if ($scope.info.asAbove == 1) {
                     $scope.info.Above = $scope.info.patient.Address1 || $scope.info.patient.Address2;
                 }
                 else {
@@ -187,7 +215,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
             }
 
             $scope.infoChanged = function () {
-                return !angular.equals(oriInfo, $scope.info.headers);
+                return !angular.equals(oriInfo, $scope.info);
             }
             $scope.submit = function (mhForm) {
                 //check validate
@@ -195,18 +223,18 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                     toastr.error("Please Input All Required Information!", "Error");
                 }
                 else {
+                    var info = angular.copy($scope.info);
                     if ($scope.isNew) {
                         /**
                          * new document
                          */
-                        var info = $scope.info;
-                        DocumentService.insertMH(info.headers).then(function (response) {
+                        DocumentService.insertMH(info).then(function (response) {
                             if (response['status'] === 'success') {
-                                toastr.success("Add success!", "Success");
+                                toastr.success("Add new success!", "Success");
                                 $state.go('loggedIn.MH', null, {"reload": true});
                             }
                             else if (response['status'] === 'fail') {
-                                toastr.error("Add fail!", "Error");
+                                toastr.error("Add new fail!", "Error");
                             }
                         })
                     }
@@ -215,8 +243,8 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         /**
                          * edit document
                          */
-                        var info = $scope.info;
-                        DocumentService.editMH(info.headers).then(function (response) {
+                        console.log(info);
+                        DocumentService.editMH(info).then(function (response) {
                             if (response['status'] === 'success') {
                                 toastr.success("Update success!", "Success");
                                 $state.go('loggedIn.MH', null, {"reload": true});
