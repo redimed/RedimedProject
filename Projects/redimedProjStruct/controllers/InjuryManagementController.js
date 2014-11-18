@@ -97,27 +97,20 @@ module.exports = {
                 });
             });
 
+            db.IMInjuryImage.create({
+                injury_id: req.body.injury_id,
+                image: target_path_for_save,
+                description: req.body.description
+            })
+                .success(function(data){
+                    res.json({status:'success'});
+                })
+                .error(function(err){
+                    res.json({status:'error'});
+                    console.log(err);
+                })
+
         });
 
-        console.log(req.files.file);
     }
 };
-
-function submitInjury(imInfo){
-    db.IMInjury.create({
-        patient_id: imInfo.patient_id,
-        driver_id: imInfo.driver_id,
-        doctor_id: imInfo.doctor_id,
-        cal_id: imInfo.cal_id,
-        injury_date: imInfo.injury_date,
-        injury_description: imInfo.injury_description,
-        STATUS: imInfo.STATUS
-    },{raw:true})
-        .success(function(data){
-            res.json({status:'success'});
-        })
-        .error(function(err){
-            res.json({status:'error'});
-            console.log(err);
-        })
-}
