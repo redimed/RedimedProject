@@ -4,7 +4,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         // Start Signature
         var tempSignature;
         $scope.isSignature = false;
-
         $scope.showSignature = function () {
             $scope.isSignature = !$scope.isSignature;
         }
@@ -365,20 +364,18 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             DocId : null
 
         };
-        //=============================================================================
-        //Set value
+
         var oriInfo = angular.copy($scope.info);
-        //var info = $scope.info;
-        //Set value
-        //============================================================================
-        //Set button
+
         $scope.resetForm = function () {
             $scope.info = angular.copy(oriInfo);
             $scope.gorgonFAForm.$setPristine();
         }
+
         $scope.infoChanged = function () {
-            return angular.equals(oriInfo, $scope.info);
+            return !angular.equals(oriInfo, $scope.info);
         }
+
         //============================================INSERT && UPDATE===============================
         var insert = true;
 

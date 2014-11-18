@@ -268,7 +268,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                     console.info('onProgressAll', progress);
                 };
                 uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                    if($scope.filesUpdateFlag)
+
+                    if($scope.filesUpdateFlag!=undefined || $scope.filesUpdateFlag==null)
                         $scope.filesUpdateFlag=$scope.filesUpdateFlag+1;
                     console.info('onSuccessItem', fileItem, response, status, headers);
                 };
@@ -771,6 +772,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                                             }
                                         }
                                     }
+
+
                                 }
                                 arr.push(location_item);
                             }
@@ -819,10 +822,11 @@ angular.module("app.loggedIn.rlob.directive", [])
                     }
                     var datePaginator=new MyDatePaginator('#rlob-datepaginator-choice',$scope.selectedFilter.var1,datePaginatorChanged);
                 }
-
-                $scope.selectAppointmentCalendar=function(appointmentCalendar,Specialties_id)
+                $scope.updateAppoinmentsList();
+                $scope.selectAppointmentCalendar=function(appointmentCalendar,RL_TYPE_ID,Specialties_id)
                 {
-                    appointmentCalendar.RL_TYPE_ID=$scope.selectedFilter.rltypeSelected.RL_TYPE_ID;
+//                    appointmentCalendar.RL_TYPE_ID=$scope.selectedFilter.rltypeSelected.RL_TYPE_ID;
+                    appointmentCalendar.RL_TYPE_ID=RL_TYPE_ID;
                     //appointmentCalendar.Specialties_id=$scope.selectedFilter.clnSpecialitySelected.Specialties_id;
                     appointmentCalendar.Specialties_id=Specialties_id;
                     $scope.selectedAppointmentCalendar=appointmentCalendar;
@@ -927,6 +931,125 @@ angular.module("app.loggedIn.rlob.directive", [])
         };
     })
 
+    .directive('rlobChoosePeriod', function(rlobService) {
+        return {
+            restrict: 'E',
+            transclude:true,
+            required:['^ngModel'],
+            scope: {
+                fromDate:'=',//Return string: YYYY/MM/DD
+                toDate:'='//Return string: YYYY/MM/DD
+            },
+            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_choose_period.html',
+            controller: function ($scope)
+            {
+                /**
+                 * angular bootstrap datepicker handle
+                 */
+                // Disable weekend selection
+
+                $scope.disabled = function(date, mode) {
+                    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+                };
+                $scope.toggleMin = function() {
+                    $scope.minDate = $scope.minDate ? null : new Date();
+                };
+                $scope.toggleMin();
+
+                $scope.open1  = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened1 = true;
+                };
+                $scope.open2 = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened2 = true;
+                };
+
+                $scope.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                //    $scope.initDate = new Date('1980-1-1');
+                $scope.formats = ['d/M/yyyy','dd/MM/yyyy','dd/MMMM/yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                $scope.format = $scope.formats[0];
+
+                //--------------------------------------------------------------------------------------
+
+                $scope.showDialogChoose=function(){
+                    if($scope.fromDate && $scope.toDate)
+                    {
+                        $scope.FROM_DATE_TEMP=moment($scope.fromDate,'YYYY/MM/DD').format("DD/MM/YYYY");
+                        $scope.TO_DATE_TEMP=moment($scope.toDate,'YYYY/MM/DD').format("DD/MM/YYYY");
+                    }
+                    $("#choose-period-dialog").modal({show:true,backdrop:'static'});
+                }
+
+                $scope.$watch('[FROM_DATE_TEMP,TO_DATE_TEMP]',function(newValue,oldValue){
+                    if($scope.FROM_DATE_TEMP && $scope.TO_DATE_TEMP)
+                    {
+                        if($scope.FROM_DATE_TEMP>$scope.TO_DATE_TEMP)
+                        {
+                            $scope.localError=true;
+                            $scope.hadForcused=true;
+                        }
+                        else
+                        {
+                            $scope.localError=false;
+                        }
+                    }
+                },true);
+
+                $scope.FROM_DATE_TEMP='';
+                $scope.TO_DATE_TEMP='';
+
+                $scope.localError=false;
+                $scope.periodDisplay='ALL';
+                $scope.getPeriod=function()
+                {
+                    $scope.hadForcused=true;
+                    if($scope.choosePeriodForm.$invalid)
+                    {
+                        return;
+                    }
+
+                    if($scope.FROM_DATE_TEMP!=null && $scope.TO_DATE_TEMP!=null)
+                    {
+                        if($scope.FROM_DATE_TEMP>$scope.TO_DATE_TEMP)
+                        {
+                            $scope.localError=true;
+                            return;
+                        }
+                        else
+                        {
+                            $scope.localError=false;
+                            $scope.fromDate=moment($scope.FROM_DATE_TEMP).format("YYYY/MM/DD");
+                            $scope.toDate=moment($scope.TO_DATE_TEMP).format("YYYY/MM/DD");
+                            $scope.periodDisplay=moment($scope.FROM_DATE_TEMP).format("DD/MM/YY")+"-"+moment($scope.TO_DATE_TEMP).format("DD/MM/YY");
+                            $("#choose-period-dialog").modal('hide');
+                        }
+                    }
+                }
+                $scope.resetDate=function()
+                {
+                    $scope.FROM_DATE_TEMP='';
+                    $scope.TO_DATE_TEMP='';
+                    $scope.fromDate='';
+                    $scope.toDate='';
+                    $scope.localError=false;
+                    $scope.hadForcused=false;
+                    $scope.periodDisplay='ALL';
+                }
+                $scope.reset=function()
+                {
+                    $scope.resetDate();
+                    $("#choose-period-dialog").modal('hide');
+                }
+            }
+        };
+    })
 
 
 

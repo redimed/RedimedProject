@@ -5,27 +5,31 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         $scope.infoL = [];
         $scope.listIDS = [];
 
-        $scope.resetFlag = false;
-        $scope.reset = function () {
-            $scope.resetFlag = !$scope.resetFlag;
+        // Start Signature
+        var tempSignature;
+        $scope.isSignature = false;
+        $scope.showSignature = function () {
+            $scope.isSignature = !$scope.isSignature;
         }
-        //end signature
+
+        $scope.cancelClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            $scope.infoH.SIGNATURE = tempSignature;
+        };
+        $scope.clearClick = function () {
+            $scope.infoH.SIGNATURE = '';
+        };
+        $scope.okClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            tempSignature = $scope.infoH.SIGNATURE;
+        }
+        // End Signature
 
         var CalID = $stateParams.CalID;
         var Patient_ID = $stateParams.PatientID;
         console.log("IDS: " + CalID + " patient: " + Patient_ID);
 
-        //begin show-hidden img signature
-        $scope.sig = false;
-        $scope.sigClick = function () {
-            $scope.sig = true;
-        }
-        $scope.okClick = function () {
-            $scope.sig = false;
-        }
-        $scope.cancelClick = function () {
-            $scope.sig = false;
-        }
+
 
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -62,27 +66,23 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
             TesterDate : null
         };
 
+        console.log(oriInfoH);
         $scope.infoL.YES_NO = [];
         $scope.infoL.PATIENT_ID = Patient_ID;
         $scope.infoL.CAL_ID = CalID;
 
-//        $scope.infoL ={
-//            IDAS_LINE_ID : null,
-//            IDAS_GROUP_ID: null,
-//            IDAS_ID: null,
-//            PATIENT_ID : null,
-//            CAL_ID : null,
-//            ORD: null,
-//            QUESTION : null,
-//            YES_NO: null,
-//            Created_by: null,
-//            Creation_date: null,
-//            Last_updated_by: null,
-//            Last_update_date: null,
-//            ISENABLE : null
-//        };
+        var oriInfoH
+        var oriInfoL
 
+        $scope.resetForm = function () {
+            $scope.infoH = angular.copy(oriInfoH);
+            $scope.infoL.YES_NO = angular.copy(oriInfoL);
+            $scope.IDSForm.$setPristine();
+        }
 
+        $scope.infoChanged = function () {
+            return !angular.equals(oriInfoH, $scope.infoH);
+        }
 
         $scope.submitIDS = function(IDSForm){
             $scope.showClickedValidation = true;
@@ -108,7 +108,6 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
 
         DocumentService.checkIDS(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
-                alert("aaaaaaaaaaaaaaaaaaaa");
                 DocumentService.newIDS(Patient_ID,CalID).then(function(response){
                     DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
                         if(response['status'] === 'fail') {
@@ -133,19 +132,18 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                                     i++;
                                 }
                             });
+                            oriInfoL = $scope.infoL.YES_NO;
                         }
                     });
                 });
             }else
             {
-                alert("qqqqqqqqqqqqqqqqqqqqqqqqqqq");
                 DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
                     if(response['status'] === 'fail') {
                         alert("load fail!");
                     }
                     else
                     {
-
                         var data = response[0];
                         var dataH = data.Header[0];
                         $scope.listIDS.push({"header_id" : dataH.IDAS_ID, "group":[]});
@@ -164,6 +162,9 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                                 i++;
                             }
                         });
+
+                        oriInfoL = $scope.infoL.YES_NO;
+
                     }
 
 
@@ -198,6 +199,9 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                     TesterSign: response.data.TesterSign,
                     TesterDate : response.data.TesterDate
                 };
+
+                oriInfoH = $scope.infoH;
+                console.log(oriInfoH);
             }
         });
 

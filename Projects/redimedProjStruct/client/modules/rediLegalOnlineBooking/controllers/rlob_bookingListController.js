@@ -47,8 +47,9 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                 {
                     $scope.isClickActionMenu=false;
                     return;
-                }
+                }            //END GO TO BOOKING DETAIL
 
+                //OPEN MODAL
                 $http({
                     method: "POST",
                     url: "/api/rlob/rl_bookings/get-booking-by-id",
@@ -68,9 +69,6 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                     console.log("error");
                 });
             }
-            //END GO TO BOOKING DETAIL
-
-            //OPEN MODAL
             $scope.openModal = function (id) {
                 angular.element("#" + id).fadeIn();
             }
@@ -134,18 +132,23 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             }
 
             $scope.loadList = function () {
-                if ($scope.search.data.DATE.BOOKING_DATE.from !== null && $scope.search.data.DATE.BOOKING_DATE.to !== null) {
-                    $scope.search.data.DATE.BOOKING_DATE.from_map = getDate($scope.search.data.DATE.BOOKING_DATE.from);
-                    $scope.search.data.DATE.BOOKING_DATE.to_map = getDate($scope.search.data.DATE.BOOKING_DATE.to);
-                }
 
-                if ($scope.search.data.DATE.APPOINTMENT_DATE.from !== null && $scope.search.data.DATE.APPOINTMENT_DATE.to !== null) {
-                    $scope.search.data.DATE.APPOINTMENT_DATE.from_map = getDate($scope.search.data.DATE.APPOINTMENT_DATE.from);
-                    $scope.search.data.DATE.APPOINTMENT_DATE.to_map = getDate($scope.search.data.DATE.APPOINTMENT_DATE.to);
-                }
+//                if ($scope.search.data.DATE.BOOKING_DATE.from !== null && $scope.search.data.DATE.BOOKING_DATE.to !== null) {
+//                    $scope.search.data.DATE.BOOKING_DATE.from_map = getDate($scope.search.data.DATE.BOOKING_DATE.from);
+//                    $scope.search.data.DATE.BOOKING_DATE.to_map = getDate($scope.search.data.DATE.BOOKING_DATE.to);
+//                }
+//
+//                if ($scope.search.data.DATE.APPOINTMENT_DATE.from !== null && $scope.search.data.DATE.APPOINTMENT_DATE.to !== null) {
+//                    $scope.search.data.DATE.APPOINTMENT_DATE.from_map = getDate($scope.search.data.DATE.APPOINTMENT_DATE.from);
+//                    $scope.search.data.DATE.APPOINTMENT_DATE.to_map = getDate($scope.search.data.DATE.APPOINTMENT_DATE.to);
+//                }
+                //alert($scope.search.data.DATE.APPOINTMENT_DATE.from_map)
+                //alert($scope.search.data.DATE.APPOINTMENT_DATE.to_map)
 
-
-
+                if(!$scope.search.data.DATE.APPOINTMENT_DATE.from_map)
+                    $scope.search.data.DATE.APPOINTMENT_DATE.from_map=null;
+                if(!$scope.search.data.DATE.APPOINTMENT_DATE.to_map)
+                    $scope.search.data.DATE.APPOINTMENT_DATE.to_map=null;
                 $http.post("/api/rlob/rl_bookings/list", {search: $scope.search}).then(function (response) {
                     $scope.list = response.data;
                     var i = 0;
@@ -184,6 +187,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             $scope.isClickActionMenu=false;
             $scope.clickActionMenu=function(bookingId)
             {
+
                 $scope.isClickActionMenu=true;
                 rlobService.getBookingById(bookingId)
                     .then(function(data){
@@ -202,6 +206,11 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             {
                 $window.location.href = '/api/download/structure/attach-file/'+$scope.bookingType+'/'+bookingId;
             }
+
+            $scope.$watch("[search.data.DATE.APPOINTMENT_DATE.from_map,search.data.DATE.APPOINTMENT_DATE.to_map]",function(newValue,oldValue){
+                $scope.loadList();
+            },true);
+
 
         });
 

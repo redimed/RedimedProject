@@ -13,7 +13,8 @@ angular.module("app.loggedIn",[
     "app.loggedIn.company", // COMPANY MODULE
     "app.loggedIn.doctor",   // DOCTOR MODULE
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
-    "app.loggedIn.patient"       // MODULE PATIENT
+    "app.loggedIn.patient",
+    "app.loggedIn.waworkcover"
 ])
 
 .config(function($stateProvider) {

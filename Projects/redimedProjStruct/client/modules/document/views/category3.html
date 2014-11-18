@@ -3,7 +3,8 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <button type="button"
-                    ng-disabled="category3Form.$error.pattern || category3Form.$error.maxlength || !infoChanged()"
+                    ng-disabled="category3Form.$error.pattern || category3Form.$error.maxlength || !infoChanged() ||
+                    category3Form.$error.required"
                     ng-click="submit(category3Form)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
             <button type="button"
@@ -113,10 +114,11 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Surname:</label>
+            <label class="control-label">Surname:&nbsp;<span
+                    class="text-info">{{info.patient.Sur_name}}</span></label>
         </div>
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">First name:</label>
+            <label class="control-label">First name:&nbsp;<span class="text-info"> {{info.patient.First_name}}</span></label>
         </div>
     </div>
 </div>
@@ -124,7 +126,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">Location:</label>
+            <label class="control-label">Location:&nbsp;<span class="text-info">{{info.patient.Address1||info.patient.Address2}}</span></label>
         </div>
     </div>
 </div>
@@ -132,10 +134,10 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Company Employment Number:</label>
+            <label class="control-label">Company Employment Number:&nbsp;<span class="text-info">{{info.patient.Work_phone}}</span></label>
         </div>
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Date Of Birth:</label>
+            <label class="control-label">Date Of Birth:&nbsp;<span class="text-info">{{info.patient.DOB | date: 'dd/MM/yyyy'}}</span></label>
         </div>
     </div>
 </div>
@@ -143,7 +145,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">Prospective/Current Position:</label>
+            <label class="control-label">Prospective/Current Position:&nbsp;<span class="text-info">{{info.patient.Known_as}}</span></label>
         </div>
     </div>
 </div>
@@ -161,7 +163,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">Supervisor/Contact:</label>
+            <label class="control-label">Supervisor/Contact:&nbsp;<span class="text-info">{{info.patient.NOK_Emerg_Contact}}</span></label>
         </div>
     </div>
 </div>
@@ -169,13 +171,13 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-4 col-sm-4">
-            <label class="control-label">Date of Request:</label>
+            <label class="control-label">Date of Request:&nbsp;<span class="text-info">{{info.apptInfo.ARR_TIME|date:'dd/MM/yyyy'}}</span></label>
         </div>
         <div class="col-md-4 col-sm-4">
-            <label class="control-label">Phone:</label>
+            <label class="control-label">Phone:&nbsp;<span class="text-info"> {{info.apptInfo.PHONE}}</span></label>
         </div>
         <div class="col-md-4 col-sm-4">
-            <label class="control-label">Fax:</label>
+            <label class="control-label">Fax:&nbsp;<span class="text-info"> {{info.apptInfo.PHONE}}</span></label>
         </div>
     </div>
 </div>
@@ -183,7 +185,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-12 col-sm-12">
-            <label class="control-label">Account to be sent to:</label>
+            <label class="control-label">Account to be sent to:&nbsp;<span class="text-info">{{info.apptInfo.bill_to}}</span></label>
         </div>
     </div>
 </div>
@@ -218,10 +220,10 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Phone:</label>
+            <label class="control-label">Phone:&nbsp;<span class="text-info">{{info.apptInfo.PHONE}}</span></label>
         </div>
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Fax</label>
+            <label class="control-label">Fax:&nbsp;<span class="text-info">{{info.apptInfo.PHONE}}</span></label>
         </div>
     </div>
 </div>
@@ -229,10 +231,10 @@
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Appointment date:</label>
+            <label class="control-label">Appointment date:&nbsp;<span class="text-info">{{info.apptInfo.FROM_TIME|date:'dd/MM/yyyy'}}</span></label>
         </div>
         <div class="col-md-6 col-sm-6">
-            <label class="control-label">Appointment time:</label>
+            <label class="control-label">Appointment time:&nbsp;<span class="text-info">{{info.apptInfo.FROM_TIME|date:'dd/MM/yyyy'}}</span></label>
         </div>
     </div>
 </div>
@@ -1643,7 +1645,7 @@
                 <div ng-class="{'has-error': category3Form.s4_c.$error.maxlength}">
                     <div class="row">
                         <div class="col-md-11 col-sm-11" style="margin-left: 40px">
-                            <textarea class="form-control" style="height: 350px" required name="s4_c"
+                            <textarea class="form-control" style="height: 350px" name="s4_c"
                                       ng-model="info.s4_c"
                                       ng-maxlength="500"></textarea>
 

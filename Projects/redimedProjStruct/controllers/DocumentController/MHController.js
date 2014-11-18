@@ -165,7 +165,7 @@ module.exports = {
                                                     Comments: infoS.Comments,
                                                     ISENABLE: infoS.ISENABLE,
                                                     CREATED_BY: infoS.CREATED_BY,
-                                                    Last_updated_by: infoS.Last_updated_by,
+                                                    Last_updated_by: infoS.Last_updated_by
                                                 })
                                                     .success(function () {
                                                         //check finish insert
@@ -258,8 +258,11 @@ module.exports = {
                                                     Comments: infoS.Comments,
                                                     ISENABLE: infoS.ISENABLE,
                                                     CREATED_BY: infoS.CREATED_BY,
-                                                    Last_updated_by: infoS.Last_updated_by,
-                                                }, {PATIENT_ID: 999, CAL_ID: 999, MH_LINE_SUB_ID: infoS.MH_LINE_SUB_ID})
+                                                    Last_updated_by: infoS.Last_updated_by
+                                                }, {
+                                                    PATIENT_ID: 999, CAL_ID: 999,
+                                                    MH_LINE_SUB_ID: infoS.MH_LINE_SUB_ID
+                                                })
                                                     .success(function () {
                                                         //check finish insert
                                                         res.json({status: 'success'});

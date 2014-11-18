@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.cat2.controllers', [])
-    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter) {
+    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter, $stateParams, localStorageService) {
         //begin show-hidden img signature
         //clear signature
         $scope.clearSignature = function () {
@@ -16,7 +16,6 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             startingDay: 1
         };
         //end date
-
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
@@ -47,9 +46,9 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             //begin value default info
             $scope.info = {
                 cat_id: null,
-                cal_id: 999,
+                cal_id: $stateParams.CalID,
                 DocId: null,
-                patient_id: 999,
+                patient_id: $stateParams.PatientID,
                 Signature: null,
                 q1_4: null,
                 q1_4_c: null,
@@ -212,18 +211,22 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                 r5_1: null,
                 r5_2: null,
                 DATE: new Date(),
-                DOCTOR_ID: null
+                DOCTOR_ID: $cookieStore.get('doctorInfo').doctor_id
             };
-            var oriInfo = angular.copy($scope.info);
+            var oriInfo;
             var info = $scope.info;
             DocumentService.loadCat2(info).then(function (response) {
                 if (response['status'] === 'fail') {
                     toastr.error("Load fail!", 'Error');
                     $state.go('logged.home', null, {'reload': true});
                 }
-                else if (response['status'] === 'findNull') {
+                else if (response[0].status === 'findNull') {
                     //add new
                     $scope.isNew = true;
+                    //get information patient
+                    $scope.info.patient = response[0].patient[0];
+                    $scope.info.apptInfo = localStorageService.get('tempAppt');
+                    oriInfo = angular.copy($scope.info);
                 }
                 else if (response[0].status === 'findFound') {
                     //edit
@@ -231,6 +234,8 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                     //load old cat2
                     var data = response[0].dataCat2;
                     $scope.info = {
+                        apptInfo: localStorageService.get('tempAppt'),
+                        patient: response[0].patient[0],
                         cat_id: data[0].cat_id,
                         cal_id: data[0].cal_id,
                         DocId: data[0].DocId,

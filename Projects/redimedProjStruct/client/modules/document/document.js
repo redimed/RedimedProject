@@ -18,6 +18,7 @@ angular.module("app.loggedIn.document", [
     "app.loggedIn.document.MRS.controllers",
     "app.loggedIn.document.SA1.controllers",
     "app.loggedIn.document.SA2.controllers",
+    "app.loggedIn.document.COE.controllers",
     "app.loggedIn.document.form18.controllers"
 ])
     .config(function ($stateProvider) {
@@ -28,6 +29,12 @@ angular.module("app.loggedIn.document", [
 
                 templateUrl: "modules/document/views/DemoDocument.html",
                 controller: 'demoController'
+            })
+
+            .state("loggedIn.COE", {
+                url: "/COE/:CalID/:PatientID",
+                templateUrl: "modules/document/views/COE.html",
+                controller: 'COEController'
             })
 
             .state("loggedIn.category2", {

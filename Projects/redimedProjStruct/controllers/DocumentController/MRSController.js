@@ -5,8 +5,8 @@ var db = require('../../models');
 module.exports = {
     loadMRS: function (req, res) {
         var info = req.body.info;
-        var PATIENT_ID = 999;
-        var CAL_ID = 999;
+        var PATIENT_ID = info.PATIENT_ID;
+        var CAL_ID = info.CAL_ID;
         /**
          * search in cln table
          */
@@ -71,7 +71,12 @@ module.exports = {
     },
     insertMRS: function (req, res) {
         var info = req.body.info;
-        info.forEach(function (infoH, hIndex) {
+        var practitionSign = info.practitionSign;
+        var practitionDate = info.practitionDate;
+        var isReview = info.isReview;
+        var practitioner = info.practitioner;
+
+        info.headers.forEach(function (infoH, hIndex) {
             db.headersMRSCLN.create({
                 MRS_DF_ID: infoH.MRS_DF_ID,
                 PATIENT_ID: infoH.PATIENT_ID,
@@ -81,16 +86,14 @@ module.exports = {
                 DESCRIPTION: infoH.DESCRIPTION,
                 ISENABLE: infoH.ISENABLE,
                 Created_by: infoH.Created_by,
-                Creation_date: infoH.Creation_date,
                 Last_updated_by: infoH.Last_updated_by,
-                Last_update_date: infoH.Last_update_date,
-                practitioner: infoH.practitioner,
-                practitionSign: infoH.practitionSign,
-                practitionDate: infoH.practitionDate,
-                isReview: infoH.isReview
+                practitioner: practitioner,
+                practitionSign: practitionSign,
+                practitionDate: practitionDate,
+                isReview: isReview
             }, {raw: true})
                 .success(function () {
-                    info[hIndex].group.forEach(function (infoG, gIndex) {
+                    info.headers[hIndex].group.forEach(function (infoG, gIndex) {
                         db.groupsMRSCLN.create({
                             MRS_GROUP_ID: infoG.MRS_GROUP_ID,
                             MRS_DF_ID: infoG.MRS_DF_ID,
@@ -101,12 +104,10 @@ module.exports = {
                             USER_TYPE: infoG.USER_TYPE,
                             ISENABLE: infoG.ISENABLE,
                             Created_by: infoG.Created_by,
-                            Creation_date: infoG.Creation_date,
-                            Last_updated_by: infoG.Last_updated_by,
-                            Last_update_date: infoG.Last_update_date
+                            Last_updated_by: infoG.Last_updated_by
                         }, {raw: true})
                             .success(function () {
-                                info[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
+                                info.headers[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
                                     db.linesMRSCLN.create({
                                         MRS_LINE_ID: infoL.MRS_LINE_ID,
                                         MRS_GROUP_ID: infoL.MRS_GROUP_ID,
@@ -123,9 +124,7 @@ module.exports = {
                                         ISREQ_COMMENT: infoL.ISREQ_COMMENT,
                                         ISENABLE: infoL.ISENABLE,
                                         Created_by: infoL.Created_by,
-                                        Creation_date: infoL.Creation_date,
-                                        Last_updated_by: infoL.Last_updated_by,
-                                        Last_update_date: infoL.Last_update_date
+                                        Last_updated_by: infoL.Last_updated_by
                                     }, {raw: true})
                                         .success(function () {
                                             res.json({status: 'success'});
@@ -150,23 +149,25 @@ module.exports = {
     },
     editMRS: function (req, res) {
         var info = req.body.info;
-        info.forEach(function (infoH, hIndex) {
+        var practitionSign = info.practitionSign;
+        var practitionDate = info.practitionDate;
+        var practitioner = info.practitioner;
+        var isReview = info.isReview;
+        info.headers.forEach(function (infoH, hIndex) {
             db.headersMRSCLN.update({
                 DF_CODE: infoH.DF_CODE,
                 ITEM_ID: infoH.ITEM_ID,
                 DESCRIPTION: infoH.DESCRIPTION,
                 ISENABLE: infoH.ISENABLE,
                 Created_by: infoH.Created_by,
-                Creation_date: infoH.Creation_date,
                 Last_updated_by: infoH.Last_updated_by,
-                Last_update_date: infoH.Last_update_date,
-                practitioner: infoH.practitioner,
-                practitionSign: infoH.practitionSign,
-                practitionDate: infoH.practitionDate,
-                isReview: infoH.isReview
+                practitioner: practitioner,
+                practitionSign: practitionSign,
+                practitionDate: practitionDate,
+                isReview: isReview
             }, { MRS_DF_ID: infoH.MRS_DF_ID, PATIENT_ID: infoH.PATIENT_ID, CAL_ID: infoH.CAL_ID})
                 .success(function () {
-                    info[hIndex].group.forEach(function (infoG, gIndex) {
+                    info.headers[hIndex].group.forEach(function (infoG, gIndex) {
                         db.groupsMRSCLN.update({
                             MRS_DF_ID: infoG.MRS_DF_ID,
                             ORD: infoG.ORD,
@@ -174,12 +175,10 @@ module.exports = {
                             USER_TYPE: infoG.USER_TYPE,
                             ISENABLE: infoG.ISENABLE,
                             Created_by: infoG.Created_by,
-                            Creation_date: infoG.Creation_date,
-                            Last_updated_by: infoG.Last_updated_by,
-                            Last_update_date: infoG.Last_update_date
+                            Last_updated_by: infoG.Last_updated_by
                         }, {MRS_GROUP_ID: infoG.MRS_GROUP_ID, PATIENT_ID: infoG.PATIENT_ID, CAL_ID: infoG.CAL_ID})
                             .success(function () {
-                                info[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
+                                info.headers[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
                                     db.linesMRSCLN.update({
                                         MRS_GROUP_ID: infoL.MRS_GROUP_ID,
                                         MRS_DF_ID: infoL.MRS_DF_ID,
@@ -193,9 +192,7 @@ module.exports = {
                                         ISREQ_COMMENT: infoL.ISREQ_COMMENT,
                                         ISENABLE: infoL.ISENABLE,
                                         Created_by: infoL.Created_by,
-                                        Creation_date: infoL.Creation_date,
-                                        Last_updated_by: infoL.Last_updated_by,
-                                        Last_update_date: infoL.Last_update_date
+                                        Last_updated_by: infoL.Last_updated_by
                                     }, {MRS_LINE_ID: infoL.MRS_LINE_ID, PATIENT_ID: infoL.PATIENT_ID,
                                         CAL_ID: infoL.CAL_ID})
                                         .success(function () {

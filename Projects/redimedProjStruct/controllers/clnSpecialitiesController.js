@@ -5,11 +5,11 @@ var db = require('../models');
 module.exports =
 {
     list:function(req,res){
-        var sourceType=req.query.sourceType;
+        var sourceType=req.query.sourceType?req.query.sourceType:'%';
         var sql=
             " SELECT spec.*                                                                                     "+
             " FROM `cln_specialties` spec INNER JOIN `rl_types` rltype ON spec.`RL_TYPE_ID`=rltype.`RL_TYPE_ID` "+
-            " WHERE rltype.`SOURCE_TYPE`=?                                                                      ";
+            " WHERE rltype.`SOURCE_TYPE` like ?                                                                      ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[sourceType],function(err,rows)

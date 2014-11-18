@@ -32,6 +32,7 @@
     "passport": "^0.2.1",
     "passport-http": "^0.2.2",
     "passport-local": "^1.0.0",
+    "q": "^1.1.1",
     "randomstring": "^1.0.3",
     "sequelize": "^1.7.10",
     "sequelize-transactions": "^1.0.1",

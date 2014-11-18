@@ -12,7 +12,7 @@
                             <input class="form-control" ng-model="search.data.DATE.BOOKING_DATE.from" input-date="{type:'from', id:'booking_to'}" id="booking_from">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <input class="form-control" ng-model="search.data.DATE.BOOKING_DATE.to" 
+                            <input class="form-control" ng-model="search.data.DATE.BOOKING_DATE.to"
                                 input-date="{type:'to', id:'booking_from'}" id="booking_to">
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             <input class="form-control" ng-model="search.data.DATE.APPOINTMENT_DATE.from" input-date="{type:'from', id:'appointment_to'}" id="appointment_from">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <input class="form-control" ng-model="search.data.DATE.APPOINTMENT_DATE.to" 
+                            <input class="form-control" ng-model="search.data.DATE.APPOINTMENT_DATE.to"
                                 input-date="{type:'to', id:'appointment_from'}" id="appointment_to">
                         </div>
                     </div>
@@ -130,8 +130,9 @@
                     </td>
 
                     <td>
-                        <button class="btn btn-block btn-primary btn-sm" ng-click="openModal('appointment_date_search')">Search
-                        </button>
+                        <!--<button class="btn btn-block btn-primary btn-sm" ng-click="openModal('appointment_date_search')">Search-->
+                        <!--</button>-->
+                        <rlob-choose-period from-date="search.data.DATE.APPOINTMENT_DATE.from_map" to-date="search.data.DATE.APPOINTMENT_DATE.to_map"></rlob-choose-period>
                     </td>
                     <td>
 
@@ -210,7 +211,7 @@
                                         </rlob-file-download>
                                     </div>
                                     <div class="row form-group" ng-show="uploadPanel" id="file-upload-panel">
-                                        <rlob-upload selected-booking="selectedBooking">
+                                        <rlob-upload selected-booking="selectedBooking" files-update-flag="filesUpdateFlag">
 
                                         </rlob-upload>
                                     </div>
@@ -252,3 +253,4 @@
     .file-control{ border-right: 1px solid white; padding: 0 10px;}
     .file-control:hover{cursor: pointer}
 </style>
+

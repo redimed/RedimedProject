@@ -2,6 +2,26 @@
 angular.module('app.loggedIn.document.FA.controllers',[])
 
     .controller("FAController",function($scope,$filter,$timeout,DocumentService,$stateParams,$http,$cookieStore,toastr) {
+        // Start Signature
+        var tempSignature;
+        $scope.isSignature = false;
+        $scope.showSignature = function () {
+            $scope.isSignature = !$scope.isSignature;
+        }
+
+        $scope.cancelClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            $scope.infoH.ASSESSED_SIGN = tempSignature;
+        };
+        $scope.clearClick = function () {
+            $scope.infoH.ASSESSED_SIGN = '';
+        };
+        $scope.okClick = function () {
+            $scope.isSignature = !$scope.isSignature;
+            tempSignature = $scope.infoH.ASSESSED_SIGN;
+        }
+        // End Signature
+
 
         var CalID = $stateParams.CalID;
         var Patient_ID = $stateParams.PatientID;
@@ -17,23 +37,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         $scope.a = {};
         $scope.total = {};
 
-        $scope.resetFlag = false;
-        $scope.reset = function () {
-            $scope.resetFlag = !$scope.resetFlag;
-        }
-        //end signature
 
-        //begin show-hidden img signature
-        $scope.sig = false;
-        $scope.sigClick = function () {
-            $scope.sig = true;
-        }
-        $scope.okClick = function () {
-            $scope.sig = false;
-        }
-        $scope.cancelClick = function () {
-            $scope.sig = false;
-        }
 
 
 
@@ -358,7 +362,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
 
         DocumentService.checkFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
             if(response['status'] === 'fail') {
-                alert("aaaaaaaaaaaaaaaaaaaa");
+                alert("New");
                 DocumentService.newFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
                     DocumentService.loadFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
                         if(response['status'] === 'fail') {
@@ -418,7 +422,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                 });
             }else
             {
-                alert("qqqqqqqqqqqqqqqqqqqqqqqqqqq");
+                alert("Edit");
                 $scope.infoH = {
                     PATIENT_ID: response.PATIENT_ID ,
                     CAL_ID : response.CAL_ID ,

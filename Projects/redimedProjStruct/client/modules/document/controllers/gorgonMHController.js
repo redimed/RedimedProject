@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.gorgonMH.controllers', [])
-    .controller("gorgonMHController", function ($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state) {
+    .controller("gorgonMHController", function ($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state, $stateParams) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -36,7 +36,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             //set value default
             $scope.info = {
                 Gorgon_Id: null,
-                Patient_Id: null,
+                Patient_Id: $stateParams.PatientID,
                 JobNo: null,
                 Occupation: null,
                 JobLocation: null,
@@ -262,13 +262,13 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                 Creation_date: null,
                 Last_updated_by: null,
                 Last_update_date: null,
-                CalId: null,
-                DocId: null,
+                CalId: $stateParams.CalID,
+                DocId: $cookieStore.get('doctorInfo').doctor_id,
                 Q21_IsComment: null,
                 Q21Other1Comment: null,
                 PATIENT_SIGNATURE: null
             }
-            var oriInfo = angular.copy($scope.info);
+            var oriInfo;
             $scope.totals = [
                 {id: 0},
                 {id: 1},
@@ -292,14 +292,18 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                     if (response['status'] === 'fail') {
                         $state.go('loggedIn.home', null, {reload: true});
                     }
-                    else if (response['status'] === 'findNull') {
+                    else if (response[0].status === 'findNull') {
                         $scope.isNew = true;
+                        $scope.info.patient = response[0].patient[0];
+                        $scope.info.Occupation = response[0].patient[0].Occupation;
+                        oriInfo = angular.copy($scope.info);
                     }
-                    else if (response[0].status === 'success') {
+                    else if (response[0].status === 'findFound') {
                         $scope.isNew = false;
                         //find found
                         var data = response[0].data;
                         $scope.info = {
+                            patient: response[0].patient[0],
                             Gorgon_Id: data[0].Gorgon_Id,
                             Patient_Id: data[0].Patient_Id,
                             JobNo: data[0].JobNo,
