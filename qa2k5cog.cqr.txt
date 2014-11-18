@@ -1,0 +1,15 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: redimed <pnguyen@REDIBEL-D02.redimed.local>
+#
+# On branch master-v1.0
+# Your branch is behind 'origin/master-v1.0' by 11 commits, and can be fast-forwarded.
+#   (use "git pull" to update your local branch)
+#
+# Changes to be committed:
+#	new file:   Projects/redimedProjStruct/controllers/ClientController - backup.js
+#	modified:   Projects/redimedProjStruct/controllers/ClientController.js
+#
+
