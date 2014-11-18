@@ -14,7 +14,8 @@ angular.module("app.loggedIn",[
     "app.loggedIn.doctor",   // DOCTOR MODULE
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
     "app.loggedIn.patient",
-    "app.loggedIn.waworkcover"
+    "app.loggedIn.waworkcover",
+	"app.loggedIn.certificate"
 ])
 
 .config(function($stateProvider) {

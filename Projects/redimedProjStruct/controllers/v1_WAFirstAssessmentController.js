@@ -63,10 +63,9 @@ module.exports = {
         var k_sql = res.locals.k_sql;
 
         k_sql.exec(sql,function(data){
-            console.log(data[0].Ass_id + 1);
+            
             var query = squel.insert()
                 .into('th_first_assessment')
-                .set('Ass_id',data[0].Ass_id + 1)
                 .set('AssessmentName','First Assessment')
                 .set('reportlocal','WA');
 

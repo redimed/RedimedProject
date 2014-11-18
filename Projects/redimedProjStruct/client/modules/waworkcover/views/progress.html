@@ -42,7 +42,7 @@
     <div class="row">
         <div class="col-md-6 col-sm-6">
             <label class="col-sm-3 col-md-3">Date of birth</label>
-            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.DOB"  placeholder="dd/mm/yyyy" readonly/></div>
+            <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.DOB"   readonly/></div>
         </div>
         <div class="col-md-6 col-sm-6">
             <label class="col-sm-3 col-md-3">Claim no.</label>
@@ -96,11 +96,11 @@
     <div class="row">
         <div class="col-md-6 col-sm-6">
             <label class="col-sm-5 col-md-5">Date of this assessment</label>
-            <div class="col-sm-7 col-md-7"><input class="form-control" readonly="readonly" ui-date="" placeholder="dd/mm/yyyyy" ui-date-format="yy-m-d" ng-model="waprogress.examDate"/></div>
+            <div class="col-sm-7 col-md-7"><input class="form-control" readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}" ng-model="waprogress.examDate"/></div>
         </div>
         <div class="col-md-6 col-sm-6">
             <label class="col-sm-5 col-md-5">Date of injury</label>
-            <div class="col-sm-7 col-md-7"><input readonly class="form-control" readonly="readonly" ui-date="" placeholder="dd/mm/yyyyy" ui-date-format="yy-m-d" ng-model="waprogress.injuryDate"/></div>
+            <div class="col-sm-7 col-md-7"><input readonly class="form-control" readonly="readonly"  placeholder="dd/mm/yyyyy" ui-date="{dateFormat: 'dd/mm/yy'}" ng-model="waprogress.injuryDate"/></div>
         </div>
     </div>
     <div class="break-row"></div>
@@ -109,7 +109,7 @@
         <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && waprogressform.diagnosis.$invalid}">
             <label class="col-sm-1 col-md-1 control-label">Diagnosis</label>
             <div class="col-sm-11 col-md-11">
-                <input class="form-control" name="diagnosis" ng-model="waprogress.diagnosis" ng-required="true" />
+                <input class="form-control" name="diagnosis" ng-model="waprogress.diagnosis" ="true" />
                 <div class="error" ng-show="isSubmitted && waprogressform.diagnosis.$invalid">
                     <label class="control-label">Diagnosis is required.</label>
                 </div>
@@ -141,14 +141,14 @@
                     </thead><tbody>
                 <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_1.$invalid || waprogressform.outcome_1.$invalid)}">
                     <td><input class="form-control" name="activities_1" type="text" ng-model="waprogress.activities_1"></td>
-                    <td><input class="form-control" name="outcome_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ng-required="waprogress.activities_1 != undefined && waprogress.activities_1 != ''" type="text" ng-model="waprogress.outcome_1">
+                    <td><input class="form-control" name="outcome_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ="waprogress.activities_1 != undefined && waprogress.activities_1 != ''" type="text" ng-model="waprogress.outcome_1">
                         <div class="error" ng-show="isSubmitted && waprogressform.outcome_1.$invalid">
                             <label class="control-label">required</label>
                         </div>
                     </td>
                     <td>
-                        <label class="control-label"><input name="isRequired_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ng-required="(waprogress.activities_1!= undefined && waprogress.activities_1!= '') || (waprogress.outcome_1!= undefined && waprogress.outcome_1!= '')" type="radio" value="1" ng-model="waprogress.isRequired_1"> Yes</label>
-                        <label class="control-label"><input name="isRequired_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ng-required="(waprogress.activities_1!= undefined && waprogress.activities_1!= '') || (waprogress.outcome_1!= undefined && waprogress.outcome_1!= '')" type="radio" value="0" ng-model="waprogress.isRequired_1"> No</label>
+                        <label class="control-label"><input name="isRequired_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ="(waprogress.activities_1!= undefined && waprogress.activities_1!= '') || (waprogress.outcome_1!= undefined && waprogress.outcome_1!= '')" type="radio" value="1" ng-model="waprogress.isRequired_1"> Yes</label>
+                        <label class="control-label"><input name="isRequired_1" ng-disabled="waprogress.activities_1 == undefined || waprogress.activities_1 == ''" ="(waprogress.activities_1!= undefined && waprogress.activities_1!= '') || (waprogress.outcome_1!= undefined && waprogress.outcome_1!= '')" type="radio" value="0" ng-model="waprogress.isRequired_1"> No</label>
                         <div class="error" ng-show="isSubmitted && waprogressform.isRequired_1.$invalid">
                             <label class="control-label">required</label>
                         </div>
@@ -157,14 +157,14 @@
 
                 <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_2.$invalid || waprogressform.outcome_2.$invalid)}">
                     <td><input class="form-control" name="activities_2" type="text" ng-model="waprogress.activities_2"></td>
-                    <td><input class="form-control" name="outcome_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ng-required="waprogress.activities_2 != undefined && waprogress.activities_2 != ''" type="text" ng-model="waprogress.outcome_2">
+                    <td><input class="form-control" name="outcome_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ="waprogress.activities_2 != undefined && waprogress.activities_2 != ''" type="text" ng-model="waprogress.outcome_2">
                         <div class="error" ng-show="isSubmitted && waprogressform.outcome_2.$invalid">
                             <label class="control-label">required</label>
                         </div>
                     </td>
                     <td>
-                        <label class="control-label"><input name="isRequired_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ng-required="(waprogress.activities_2!= undefined && waprogress.activities_2!= '') || (waprogress.outcome_2!= undefined && waprogress.outcome_2!= '')" type="radio" value="2" ng-model="waprogress.isRequired_2"> Yes</label>
-                        <label class="control-label"><input name="isRequired_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ng-required="(waprogress.activities_2!= undefined && waprogress.activities_2!= '') || (waprogress.outcome_2!= undefined && waprogress.outcome_2!= '')" type="radio" value="0" ng-model="waprogress.isRequired_2"> No</label>
+                        <label class="control-label"><input name="isRequired_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ="(waprogress.activities_2!= undefined && waprogress.activities_2!= '') || (waprogress.outcome_2!= undefined && waprogress.outcome_2!= '')" type="radio" value="2" ng-model="waprogress.isRequired_2"> Yes</label>
+                        <label class="control-label"><input name="isRequired_2" ng-disabled="waprogress.activities_2 == undefined || waprogress.activities_2 == ''" ="(waprogress.activities_2!= undefined && waprogress.activities_2!= '') || (waprogress.outcome_2!= undefined && waprogress.outcome_2!= '')" type="radio" value="0" ng-model="waprogress.isRequired_2"> No</label>
                         <div class="error" ng-show="isSubmitted && waprogressform.isRequired_2.$invalid">
                             <label class="control-label">required</label>
                         </div>
@@ -173,14 +173,14 @@
 
                 <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_3.$invalid || waprogressform.outcome_3.$invalid)}">
                     <td><input class="form-control" name="activities_3" type="text" ng-model="waprogress.activities_3"></td>
-                    <td><input class="form-control" name="outcome_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ng-required="waprogress.activities_3 != undefined && waprogress.activities_3 != ''" type="text" ng-model="waprogress.outcome_3">
+                    <td><input class="form-control" name="outcome_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ="waprogress.activities_3 != undefined && waprogress.activities_3 != ''" type="text" ng-model="waprogress.outcome_3">
                         <div class="error" ng-show="isSubmitted && waprogressform.outcome_3.$invalid">
                             <label class="control-label">required</label>
                         </div>
                     </td>
                     <td>
-                        <label class="control-label"><input name="isRequired_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ng-required="(waprogress.activities_3!= undefined && waprogress.activities_3!= '') || (waprogress.outcome_3!= undefined && waprogress.outcome_3!= '')" type="radio" value="3" ng-model="waprogress.isRequired_3"> Yes</label>
-                        <label class="control-label"><input name="isRequired_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ng-required="(waprogress.activities_3!= undefined && waprogress.activities_3!= '') || (waprogress.outcome_3!= undefined && waprogress.outcome_3!= '')" type="radio" value="0" ng-model="waprogress.isRequired_3"> No</label>
+                        <label class="control-label"><input name="isRequired_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ="(waprogress.activities_3!= undefined && waprogress.activities_3!= '') || (waprogress.outcome_3!= undefined && waprogress.outcome_3!= '')" type="radio" value="3" ng-model="waprogress.isRequired_3"> Yes</label>
+                        <label class="control-label"><input name="isRequired_3" ng-disabled="waprogress.activities_3 == undefined || waprogress.activities_3 == ''" ="(waprogress.activities_3!= undefined && waprogress.activities_3!= '') || (waprogress.outcome_3!= undefined && waprogress.outcome_3!= '')" type="radio" value="0" ng-model="waprogress.isRequired_3"> No</label>
                         <div class="error" ng-show="isSubmitted && waprogressform.isRequired_3.$invalid">
                             <label class="control-label">required</label>
                         </div>
@@ -189,14 +189,14 @@
 
                 <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_4.$invalid || waprogressform.outcome_4.$invalid)}">
                     <td><input class="form-control" name="activities_4" type="text" ng-model="waprogress.activities_4"></td>
-                    <td><input class="form-control" name="outcome_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ng-required="waprogress.activities_4 != undefined && waprogress.activities_4 != ''" type="text" ng-model="waprogress.outcome_4">
+                    <td><input class="form-control" name="outcome_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ="waprogress.activities_4 != undefined && waprogress.activities_4 != ''" type="text" ng-model="waprogress.outcome_4">
                         <div class="error" ng-show="isSubmitted && waprogressform.outcome_4.$invalid">
                             <label class="control-label">required</label>
                         </div>
                     </td>
                     <td>
-                        <label class="control-label"><input name="isRequired_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ng-required="(waprogress.activities_4!= undefined && waprogress.activities_4!= '') && (waprogress.outcome_4!= undefined && waprogress.outcome_4!= '')" type="radio" value="4" ng-model="waprogress.isRequired_4"> Yes</label>
-                        <label class="control-label"><input name="isRequired_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ng-required="(waprogress.activities_4!= undefined && waprogress.activities_4!= '') && (waprogress.outcome_4!= undefined && waprogress.outcome_4!= '')" type="radio" value="0" ng-model="waprogress.isRequired_4"> No</label>
+                        <label class="control-label"><input name="isRequired_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ="(waprogress.activities_4!= undefined && waprogress.activities_4!= '') && (waprogress.outcome_4!= undefined && waprogress.outcome_4!= '')" type="radio" value="4" ng-model="waprogress.isRequired_4"> Yes</label>
+                        <label class="control-label"><input name="isRequired_4" ng-disabled="waprogress.activities_4 == undefined || waprogress.activities_4 == ''" ="(waprogress.activities_4!= undefined && waprogress.activities_4!= '') && (waprogress.outcome_4!= undefined && waprogress.outcome_4!= '')" type="radio" value="0" ng-model="waprogress.isRequired_4"> No</label>
                         <div class="error" ng-show="isSubmitted && waprogressform.isRequired_4.$invalid">
                             <label class="control-label">required</label>
                         </div>
@@ -205,14 +205,14 @@
 
                 <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_5.$invalid || waprogressform.outcome_5.$invalid)}">
                     <td><input class="form-control" name="activities_5" type="text" ng-model="waprogress.activities_5"></td>
-                    <td><input class="form-control" name="outcome_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ng-required="waprogress.activities_5 != undefined && waprogress.activities_5 != ''" type="text" ng-model="waprogress.outcome_5">
+                    <td><input class="form-control" name="outcome_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ="waprogress.activities_5 != undefined && waprogress.activities_5 != ''" type="text" ng-model="waprogress.outcome_5">
                         <div class="error" ng-show="isSubmitted && waprogressform.outcome_5.$invalid">
                             <label class="control-label">required</label>
                         </div>
                     </td>
                     <td>
-                        <label class="control-label"><input name="isRequired_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ng-required="(waprogress.activities_5!= undefined && waprogress.activities_5!= '') || (waprogress.outcome_5!= undefined && waprogress.outcome_5!= '')" type="radio" value="5" ng-model="waprogress.isRequired_5"> Yes</label>
-                        <label class="control-label"><input name="isRequired_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ng-required="(waprogress.activities_5!= undefined && waprogress.activities_5!= '') || (waprogress.outcome_5!= undefined && waprogress.outcome_5!= '')" type="radio" value="0" ng-model="waprogress.isRequired_5"> No</label>
+                        <label class="control-label"><input name="isRequired_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ="(waprogress.activities_5!= undefined && waprogress.activities_5!= '') || (waprogress.outcome_5!= undefined && waprogress.outcome_5!= '')" type="radio" value="5" ng-model="waprogress.isRequired_5"> Yes</label>
+                        <label class="control-label"><input name="isRequired_5" ng-disabled="waprogress.activities_5 == undefined || waprogress.activities_5 == ''" ="(waprogress.activities_5!= undefined && waprogress.activities_5!= '') || (waprogress.outcome_5!= undefined && waprogress.outcome_5!= '')" type="radio" value="0" ng-model="waprogress.isRequired_5"> No</label>
                         <div class="error" ng-show="isSubmitted && waprogressform.isRequired_5.$invalid">
                             <label class="control-label">required</label>
                         </div>
@@ -221,14 +221,14 @@
 
                 <tr ng-class="{'has-error': isSubmitted && (waprogressform.isRequired_6.$invalid || waprogressform.outcome_6.$invalid)}">
                     <td><input class="form-control" name="activities_6" type="text" ng-model="waprogress.activities_6"></td>
-                    <td><input class="form-control" name="outcome_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ng-required="waprogress.activities_6 != undefined && waprogress.activities_6 != ''" type="text" ng-model="waprogress.outcome_6">
+                    <td><input class="form-control" name="outcome_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ="waprogress.activities_6 != undefined && waprogress.activities_6 != ''" type="text" ng-model="waprogress.outcome_6">
                         <div class="error" ng-show="isSubmitted && waprogressform.outcome_6.$invalid">
                             <label class="control-label">required</label>
                         </div>
                     </td>
                     <td>
-                        <label class="control-label"><input name="isRequired_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ng-required="(waprogress.activities_6!= undefined && waprogress.activities_6!= '') || (waprogress.outcome_6!= undefined && waprogress.outcome_6!= '')" type="radio" value="6" ng-model="waprogress.isRequired_6"> Yes</label>
-                        <label class="control-label"><input name="isRequired_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ng-required="(waprogress.activities_6!= undefined && waprogress.activities_6!= '') || (waprogress.outcome_6!= undefined && waprogress.outcome_6!= '')" type="radio" value="0" ng-model="waprogress.isRequired_6"> No</label>
+                        <label class="control-label"><input name="isRequired_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ="(waprogress.activities_6!= undefined && waprogress.activities_6!= '') || (waprogress.outcome_6!= undefined && waprogress.outcome_6!= '')" type="radio" value="6" ng-model="waprogress.isRequired_6"> Yes</label>
+                        <label class="control-label"><input name="isRequired_6" ng-disabled="waprogress.activities_6 == undefined || waprogress.activities_6 == ''" ="(waprogress.activities_6!= undefined && waprogress.activities_6!= '') || (waprogress.outcome_6!= undefined && waprogress.outcome_6!= '')" type="radio" value="0" ng-model="waprogress.isRequired_6"> No</label>
                         <div class="error" ng-show="isSubmitted && waprogressform.isRequired_6.$invalid">
                             <label class="control-label">required</label>
                         </div>
@@ -265,7 +265,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && waprogressform.usualDuties.$invalid}">
                 <label class="col-sm-3 col-md-3 control-label">Worker's usual duties</label>
-                <div class="col-sm-9 col-md-9"><input class="form-control" name="usualDuties" ng-model="waprogress.usualDuties" ng-required="true"/>
+                <div class="col-sm-9 col-md-9"><input class="form-control" name="usualDuties" ng-model="waprogress.usualDuties" ="true"/>
                     <div class="error" ng-show="isSubmitted && waprogressform.usualDuties.$invalid">
                         <label class="control-label">Worker's usual duties is required.</label>
                     </div>
@@ -290,7 +290,7 @@
                     <div class="col-sm-5 col-md-5" ng-class="{'has-error':isSubmitted && waprogressform.fullCapaFrom.$invalid}">
                         <label class="col-md-2 col-sm-2 control-label">from:</label>
                         <div class="col-md-10 col-sm-10">
-                            <input class="form-control" type="text" name="fullCapaFrom" ng-required="waprogress.isFullCapacity == 1"  placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.fullCapaFrom"/>
+                            <input class="form-control" type="text" name="fullCapaFrom" ="waprogress.isFullCapacity == 1"   readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}"  ng-model="waprogress.fullCapaFrom"/>
                             <div class="error" ng-show="isSubmitted && waprogressform.fullCapaFrom.$invalid">
                                 <label class="control-label">required</label>
                             </div>
@@ -311,14 +311,14 @@
                     <div class="col-md-6 col-sm-6" ng-class="{'has-error':isSubmitted && (waprogressform.someCapaFrom.$invalid || waprogressform.someCapaTo.$invalid)}">
                         <label class="control-label col-md-1 col-sm-1 contriol-label">from:</label>
                         <div class="col-md-4 col-sm-4">
-                            <input type="text" class="form-control" name="someCapaFrom" ng-required="waprogress.isSomeCapacity == 1" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.someCapaFrom"/>
+                            <input type="text" class="form-control" name="someCapaFrom" ="waprogress.isSomeCapacity == 1"  readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}"  ng-model="waprogress.someCapaFrom"/>
                             <div class="error" ng-show="isSubmitted && waprogressform.someCapaFrom.$invalid">
                                 <label class="control-label">required</label>
                             </div>
                         </div>
                         <label class="control-label col-md-1 col-sm-1 control-label">to:</label>
                         <div class="col-md-4 col-sm-4">
-                            <input type="text" class="form-control" name="someCapaTo" ng-required="waprogress.isSomeCapacity == 1" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.someCapaTo"/>
+                            <input type="text" class="form-control" name="someCapaTo" ="waprogress.isSomeCapacity == 1"  readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}"  ng-model="waprogress.someCapaTo"/>
                             <div class="error" ng-show="isSubmitted && waprogressform.someCapaTo.$invalid">
                                 <label class="control-label">required</label>
                             </div>
@@ -349,7 +349,7 @@
                     <div class="col-md-11 col-sm-11">
                         <label class="col-md-4 col-sm-4 control-label"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isPreHours" ng-checked="waprogress.isPreHours==1">pre-injury hours</label>
                         <div class="col-md-8 col-sm-8 control-label" ng-class="{'has-error':isSubmitted && (waprogressform.modiHrs.$invalid || waprogressform.modiDays.$invalid)}"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isModiHours" ng-checked="waprogress.isModiHours == 1"> <label class="control-label">modified hours of</label>
-                            <input type="number" min="0" max="24" class="input-small form-control inline" ng-required="waprogress.isModiHours==1" name="modiHrs" ng-model="waprogress.modiHrs"/> <label class="control-label">hrs/day</label> <input type="number" min="0" max="7" class="input-small form-control inline" ng-required="waprogress.isModiHours==1" name="modiDays" ng-model="waprogress.modiDays"/> <label class="control-label">days/wk</label>
+                            <input type="number" min="0" max="24" class="input-small form-control inline" ="waprogress.isModiHours==1" name="modiHrs" ng-model="waprogress.modiHrs"/> <label class="control-label">hrs/day</label> <input type="number" min="0" max="7" class="input-small form-control inline" ="waprogress.isModiHours==1" name="modiDays" ng-model="waprogress.modiDays"/> <label class="control-label">days/wk</label>
                             <div class="error" ng-show="isSubmitted && (waprogressform.modiHrs.$invalid || waprogressform.modiDays.$invalid)">
                                 <label class="control-label">Additional informations required and only allow numbers (max 24 hrs and 7 days).</label>
                             </div>
@@ -366,14 +366,14 @@
                     <div class="col-md-6 col-sm-6" ng-class="{'has-error': isSubmitted && (waprogressform.noCapaFrom.$invald || waprogressform.noCapaTo.$invalid)}">
                         <label class="control-label col-md-1 col-sm-1 control-label">from:</label>
                         <div class="col-md-4 col-sm-4">
-                            <input type="text" name="noCapaFrom" ng-required="waprogress.isNoCapacity == 1" class="form-control" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.noCapaFrom"/>
+                            <input type="text" name="noCapaFrom" ="waprogress.isNoCapacity == 1" class="form-control"  readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}"  ng-model="waprogress.noCapaFrom"/>
                             <div class="error" ng-show="isSubmitted && waprogressform.noCapaFrom.$invalid">
                                 <label class="control-label">required</label>
                             </div>
                         </div>
                         <label class="control-label col-md-1 col-sm-1 control-label">to:</label>
                         <div class="col-md-4 col-sm-4">
-                            <input type="text" name="noCapaTo" ng-required="waprogress.isNoCapacity == 1" class="form-control" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.noCapaTo"/>
+                            <input type="text" name="noCapaTo" ="waprogress.isNoCapacity == 1" class="form-control"  readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}"  ng-model="waprogress.noCapaTo"/>
                             <div class="error" ng-show="isSubmitted && waprogressform.noCapaTo.$invalid">
                                 <label class="control-label">required</label>
                             </div>
@@ -399,7 +399,7 @@
                             <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isLiftUp" ng-checked="waprogress.isLiftUp==1"> lift up to</label>
                             <div class="col-md-8 col-sm-8">
                                 <div class="col-md-6 col-sm-6">
-                                    <input class="form-control" ng-required="waprogress.isLiftUp == 1" name="liftUpKg" type="number" ng-model="waprogress.liftUpKg" min="0" max="999"/>
+                                    <input class="form-control" ="waprogress.isLiftUp == 1" name="liftUpKg" type="number" ng-model="waprogress.liftUpKg" min="0" max="999"/>
                                 </div>
                                 <label class="col-md-6 col-sm-6 control-label">kg</label>
                                 <div class="error" ng-show="isSubmitted && waprogressform.liftUpKg.$invalid">
@@ -414,7 +414,7 @@
                             <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isSitUp" ng-checked="waprogress.isSitUp==1"> sit up to</label>
                             <div class="col-md-8 col-sm-8">
                                 <div class="col-md-6 col-sm-6">
-                                    <input class="form-control" type="number" min="0" max="999" ng-required="waprogress.isSitUp==1" name="siUpMins" ng-model="waprogress.sitUpMins"/>
+                                    <input class="form-control" type="number" min="0" max="999" ="waprogress.isSitUp==1" name="siUpMins" ng-model="waprogress.sitUpMins"/>
                                 </div>
                                 <label class="col-md-6 col-sm-6 control-label">mins</label>
                                 <div class="error" ng-show="isSubmitted && waprogressform.siUpMins.$invalid">
@@ -429,7 +429,7 @@
                             <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="waprogress.isStandUp" ng-checked="waprogress.isStandUp==1"> stand up to</label>
                             <div class="col-md-8 col-sm-8">
                                 <div class="col-md-6 col-sm-6">
-                                    <input class="form-control" type="number" min="0" max="999" ng-required="waprogress.isStandUp==1" name="standUpMins" ng-model="waprogress.standUpMins"/>
+                                    <input class="form-control" type="number" min="0" max="999" ="waprogress.isStandUp==1" name="standUpMins" ng-model="waprogress.standUpMins"/>
                                 </div>
                                 <label class="col-md-6 col-sm-6 control-label">mins</label>
                                 <div class="error" ng-show="isSubmitted && waprogressform.standUpMins.$invalid">
@@ -444,7 +444,7 @@
                             <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model=" waprogress.isWalkUp" ng-checked="waprogress.isWalkUp==1"> walk up to</label>
                             <div class="col-md-8 col-sm-8">
                                 <div class="col-md-6 col-sm-6">
-                                    <input class="form-control" type="number" min="0" max="999" ng-required="waprogress.isWalkUp==1" name="walkUpMeter" ng-model="waprogress.walkUpMeter"/>
+                                    <input class="form-control" type="number" min="0" max="999" ="waprogress.isWalkUp==1" name="walkUpMeter" ng-model="waprogress.walkUpMeter"/>
                                 </div>
                                 <label class="col-md-6 col-sm-6 control-label">m</label>
                                 <div class="error" ng-show="isSubmitted && waprogressform.walkUpMeter.$invalid">
@@ -461,7 +461,7 @@
                     </div>
                 </div>
                 <div class="col-md-7 col-sm-7" ng-class="{'has-error':isSubmitted && waprogressform.capaCmt.$invalid}">
-                    <textarea class="text-area-custom-style form-control" name="capaCmt" rows="8" ng-model="waprogress.capaCmt" ng-required="true"></textarea>
+                    <textarea class="text-area-custom-style form-control" name="capaCmt" rows="8" ng-model="waprogress.capaCmt" ="true"></textarea>
                     <div class="error" ng-show="isSubmitted && waprogressform.capaCmt.$invalid">
                         <label class="control-label">Work capacity comment is required.</label>
                     </div>
@@ -491,7 +491,7 @@
                 <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_1.$invalid}">
                     <td><input class="form-control" type="text" ng-model="waprogress.activities_B1"></td>
                     <td>
-                        <input class="form-control" name="goal_1" ng-required="waprogress.activities_B1 != undefiend && waprogress.activities_B1 != ''" ng-disabled="waprogress.activities_B1 == undefiend || waprogress.activities_B1 == ''" type="text" ng-model="waprogress.goal_1">
+                        <input class="form-control" name="goal_1" ="waprogress.activities_B1 != undefiend && waprogress.activities_B1 != ''" ng-disabled="waprogress.activities_B1 == undefiend || waprogress.activities_B1 == ''" type="text" ng-model="waprogress.goal_1">
                         <div class="error" ng-show="isSubmitted && waprogressform.goal_1.$invalid">
                             <label class="control-label">
                                 required
@@ -503,7 +503,7 @@
                 <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_2.$invalid}">
                     <td><input class="form-control" type="text" ng-model="waprogress.activities_B2"></td>
                     <td>
-                        <input class="form-control" name="goal_2" ng-required="waprogress.activities_B2 != undefiend && waprogress.activities_B2 != ''" ng-disabled="waprogress.activities_B2 == undefiend || waprogress.activities_B2 == ''" type="text" ng-model="waprogress.goal_2">
+                        <input class="form-control" name="goal_2" ="waprogress.activities_B2 != undefiend && waprogress.activities_B2 != ''" ng-disabled="waprogress.activities_B2 == undefiend || waprogress.activities_B2 == ''" type="text" ng-model="waprogress.goal_2">
                         <div class="error" ng-show="isSubmitted && waprogressform.goal_2.$invalid">
                             <label class="control-label">
                                 required
@@ -515,7 +515,7 @@
                 <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_3.$invalid}">
                     <td><input class="form-control" type="text" ng-model="waprogress.activities_B3"></td>
                     <td>
-                        <input class="form-control" name="goal_3" ng-required="waprogress.activities_B3 != undefiend && waprogress.activities_B3 != ''" ng-disabled="waprogress.activities_B3 == undefiend || waprogress.activities_B3 == ''" type="text" ng-model="waprogress.goal_3">
+                        <input class="form-control" name="goal_3" ="waprogress.activities_B3 != undefiend && waprogress.activities_B3 != ''" ng-disabled="waprogress.activities_B3 == undefiend || waprogress.activities_B3 == ''" type="text" ng-model="waprogress.goal_3">
                         <div class="error" ng-show="isSubmitted && waprogressform.goal_3.$invalid">
                             <label class="control-label">
                                 required
@@ -527,7 +527,7 @@
                 <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_4.$invalid}">
                     <td><input class="form-control" type="text" ng-model="waprogress.activities_B4"></td>
                     <td>
-                        <input class="form-control" name="goal_4" ng-required="waprogress.activities_B4 != undefiend && waprogress.activities_B4 != ''" ng-disabled="waprogress.activities_B4 == undefiend || waprogress.activities_B4 == ''" type="text" ng-model="waprogress.goal_4">
+                        <input class="form-control" name="goal_4" ="waprogress.activities_B4 != undefiend && waprogress.activities_B4 != ''" ng-disabled="waprogress.activities_B4 == undefiend || waprogress.activities_B4 == ''" type="text" ng-model="waprogress.goal_4">
                         <div class="error" ng-show="isSubmitted && waprogressform.goal_4.$invalid">
                             <label class="control-label">
                                 required
@@ -539,7 +539,7 @@
                 <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_5.$invalid}">
                     <td><input class="form-control" type="text" ng-model="waprogress.activities_B5"></td>
                     <td>
-                        <input class="form-control" name="goal_5" ng-required="waprogress.activities_B5 != undefiend && waprogress.activities_B5 != ''" ng-disabled="waprogress.activities_B5 == undefiend || waprogress.activities_B5 == ''" type="text" ng-model="waprogress.goal_5">
+                        <input class="form-control" name="goal_5" ="waprogress.activities_B5 != undefiend && waprogress.activities_B5 != ''" ng-disabled="waprogress.activities_B5 == undefiend || waprogress.activities_B5 == ''" type="text" ng-model="waprogress.goal_5">
                         <div class="error" ng-show="isSubmitted && waprogressform.goal_5.$invalid">
                             <label class="control-label">
                                 required
@@ -551,7 +551,7 @@
                 <tr ng-class="{'has-error':isSubmitted && waprogressform.goal_6.$invalid}">
                     <td><input class="form-control" type="text" ng-model="waprogress.activities_B6"></td>
                     <td>
-                        <input class="form-control" name="goal_6" ng-required="waprogress.activities_B6 != undefiend && waprogress.activities_B6 != ''" ng-disabled="waprogress.activities_B6 == undefiend || waprogress.activities_B6 == ''" type="text" ng-model="waprogress.goal_6">
+                        <input class="form-control" name="goal_6" ="waprogress.activities_B6 != undefiend && waprogress.activities_B6 != ''" ng-disabled="waprogress.activities_B6 == undefiend || waprogress.activities_B6 == ''" type="text" ng-model="waprogress.goal_6">
                         <div class="error" ng-show="isSubmitted && waprogressform.goal_6.$invalid">
                             <label class="control-label">
                                 required
@@ -570,7 +570,7 @@
         <label class="control-label col-md-12 col-sm-12">
             <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isSupportRTW ==1" ng-model="waprogress.isSupportRTW">
             I support the RTW program establish by the employer/isurer/WRP dated
-                <input type="text" name="supportDate" readonly="readonly" ng-required="waprogress.isSupportRTW == 1" class="form-control inline input-small" ui-date="" placeholder="dd/mm/yyyy" ui-date-format="yy-m-d" ng-model="waprogress.supportDate">
+                <input type="text" name="supportDate" readonly="readonly" ="waprogress.isSupportRTW == 1" class="form-control inline input-small"   ui-date="{dateFormat: 'dd/mm/yy'}" ng-model="waprogress.supportDate">
                 <div class="error inline" ng-show="isSubmitted && waprogressform.supportDate.$invalid">
                     <label class="control-label">required</label>
                 </div>
@@ -618,7 +618,7 @@
         <div class="col-md-12 col-sm-12" >
             <label class="control-label col-md-3 col-sm-3"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="waprogress.isReview==1" name="reviewDate" value="1" ng-model="waprogress.isReview"/> I will review wroker again on</label>
             <div class="col-md-3 col-sm-3">
-                <input class="form-control" ng-required="waprogress.isReview == 1" name="reviewOn" type="text" readonly="readonly"  placeholder="dd/mm/yyyy" ui-date="" ui-date-format="yy-m-d" ng-model="waprogress.reviewOn">
+                <input class="form-control" ="waprogress.isReview == 1" name="reviewOn" type="text" readonly="readonly"    ui-date="{dateFormat: 'dd/mm/yy'}" ng-model="waprogress.reviewOn">
                 <div class="error" ng-show="isSubmitted && waprogressform.reviewOn.$invalid">
                     <label class="control-label">required</label>
                 </div>
@@ -702,7 +702,7 @@
                     <div class="row">
                         <label class="control-label col-md-2 col-sm-2">Date</label>
                         <div class="col-md-10 col-sm-10">
-                            <input type="text" class="form-control" readonly="readonly" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.examDate" />
+                            <input type="text" class="form-control" readonly="readonly"  readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}"  ng-model="waprogress.examDate" />
                         </div>
                     </div>
                     <div class="break-row"></div>

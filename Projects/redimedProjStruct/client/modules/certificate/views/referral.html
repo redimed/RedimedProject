@@ -1,0 +1,120 @@
+<style type="text/css">
+	.labelSpace { padding-right: 2em; }
+</style>
+<h3 class="page-title"><b>REFERRAL</b></h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="loggedIn.doctor.home">Home</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li><a ui-sref="loggedIn.doctor.patients">Patient <i class="fa fa-angle-right"></i></a></li>
+		<li><a ui-sref="loggedIn.patient.detail">
+			{{patient.First_name}}
+			{{patient.Sur_name}}
+			<i class="fa fa-angle-right"></i>
+		</a></li>
+		<li><b>Referral</b></li>
+	</ul>
+</div>
+
+<form name="myForm" novalidate>
+<accordion close-others="accordion.oneAtATime">
+	<!--PATIENT DETAILS-->
+	<accordion-group class="panel-primary" is-open="accordion.patientDetails">
+		<accordion-heading><b>PATIENT DETAILS</b></accordion-heading>
+		<div class="row">
+			<label class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><b>Sur name :</b></label>
+			<label class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{patient.Sur_name | undefined}}</label>
+			<label class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><b>First name :</b></label>
+			<label class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{patient.First_name | undefined}}</label>
+			<label class="col-lg-1 col-md-1 col-sm-2 col-xs-2"><b>DOB :</b></label>
+			<label class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{patient.DOB | date:'dd/MM/yyyy'}}</label>
+		</div>
+		<div class="row">
+			<label class="col-sm-2 col-xs-2"><b>Address :</b></label>
+			<label class="col-sm-2 col-xs-4">{{patient.Address1 | undefined}}</label>
+			<label class="col-sm-2 col-xs-2"><b>Postcode :</b></label>
+			<label class="col-sm-2 col-xs-4">{{patient.Post_code | undefined}}</label>
+		</div>
+		<div class="row">
+			<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><b><i>Telephone :</i></b></label>
+			<label class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><b>(H)</b> {{patient.Home_phone}}</label>
+			<label class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><b>(B)</b> {{patient.Work_phone}}</label>
+			<label class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><b>(M)</b> {{patient.Mobile}}</label>
+		</div>
+	</accordion-group>
+	<!--END PATIENT DETAILS-->
+	<!--PATIENT DETAILS-->
+	<accordion-group class="panel-primary" is-open="accordion.referral">
+		<accordion-heading><b>REFERRALS</b></accordion-heading>
+		<!--form referral-->
+		
+			<!--Examination-->
+			<div class="row" ng-class="{'has-error': Examination && isSubmited}">
+				<h4 class="control-label col-sm-12 col-xs-12">Examination</h4>
+				<div class="col-sm-12 col-xs-12">
+					<label class="labelSpace control-label">CT SCAN 	<input ng-change="change_Checkbox()" require name="Examination" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.CT_SCAN" ng-checked="referralObjectMap.CT_SCAN == 1"></label>
+					<label class="labelSpace control-label">X-RAY 		<input ng-change="change_Checkbox()" require name="Examination" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.X_RAY" ng-checked="referralObjectMap.X-RAY == 1"></label>
+					<label class="labelSpace control-label">MRI 		<input ng-change="change_Checkbox()" require name="Examination" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.MRI" ng-checked="referralObjectMap.MRI == 1"></label>
+					<label class="labelSpace control-label">ULTRASOUND  <input ng-change="change_Checkbox()" require name="Examination" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.ULTRASOUND" ng-checked="referralObjectMap.ULTRASOUND == 1"></label>
+					<label class="labelSpace control-label">PATHOLOGY 	<input ng-change="change_Checkbox()" require name="Examination" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.PATHOLOGY" ng-checked="referralObjectMap.PATHOLOGY == 1"></label>
+				</div>
+				<span class="control-label col-sm-12" ng-show="Examination && isSubmited">Required!</span>
+			</div>
+			<!--Examination-->
+			<hr>
+			<!--Clinical Details-->
+			<div class="row">
+				<div ng-class="{'has-error': myForm.CLINICAL_DETAILS.$invalid && isSubmited}">
+					<h4 class="control-label col-sm-12 col-xs-12">Clinical Details:</h4>
+					<div class="col-sm-12 col-xs-12"><textarea required name="CLINICAL_DETAILS" class="form-control" ng-model="referralObjectMap.CLINICAL_DETAILS"></textarea></div>
+					<span class="control-label col-sm-12" ng-show="myForm.CLINICAL_DETAILS.$invalid && isSubmited">Required!</span>
+				</div>
+				<label class="control-label col-sm-12 col-xs-12">Allergies <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.ALLERGIES" ng-checked="referralObjectMap.ALLERGIES == 1"></label>
+			</div>
+			<!--End Clinical Details-->
+			<hr>
+			<!--Requesting Practitioner-->
+			<div class="row">
+				<div ng-class="{'has-error': myForm.REQUESTING_PRACTITIONER.$invalid && isSubmited}">
+					<h4 class="control-label col-sm-12 col-xs-12">Requesting Practitioner:</h4>
+					<div class="col-sm-12 col-xs-12"><textarea required name="REQUESTING_PRACTITIONER" class="form-control" ng-model="referralObjectMap.REQUESTING_PRACTITIONER"></textarea></div>
+					<span class="control-label col-sm-12" ng-show="myForm.REQUESTING_PRACTITIONER.$invalid && isSubmited">Required!</span>
+				</div>
+				<label class="control-label col-sm-12 col-xs-12">Report Urgent: <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.REPORT_URGENT" ng-checked="referralObjectMap.REPORT_URGENT == 1"></label>
+			</div>
+			<!--End Requesting Practitioner-->
+			<hr>
+			<!--REPORT-->
+			<div class="row" ng-class="{'has-error': report && isSubmited}">
+				<h4 class="control-label col-sm-12 col-xs-12">REPORT:</h4>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<label class="labelSpace control-label">Electronic 			<input ng-change="change_Checkbox()" require name="report" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.ELECTRONIC" ng-checked="referralObjectMap.ELECTRONIC == 1"></label>
+					<label class="labelSpace control-label">Fax 				<input ng-change="change_Checkbox()" require name="report" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.FAX" ng-checked="referralObjectMap.FAX == 1"></label>
+					<label class="labelSpace control-label">Email 				<input ng-change="change_Checkbox()" require name="report" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.MAIL" ng-checked="referralObjectMap.MAIL == 1"></label>
+					<label class="labelSpace control-label">Phone 				<input ng-change="change_Checkbox()" require name="report" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.PHONE" ng-checked="referralObjectMap.PHONE == 1"></label>
+					<label class="labelSpace control-label">ReturnWithPatient 	<input ng-change="change_Checkbox()" require name="report" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="referralObjectMap.RETURN_WITH_PATIENT" ng-checked="referralObjectMap.RETURN_WITH_PATIENT == 1"></label>
+				</div>
+				<span class="control-label col-sm-12" ng-show="report && isSubmited">Required!</span>
+			</div>
+			<!--END REPORT-->
+
+		<!--end form referral-->
+	</accordion-group>
+</accordion>
+		</form>
+
+
+
+<!-- BUTTON -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+			<button style="float:right" class="btn btn-primary" ng-click="submitReferral()" class="form-control"><span>Submit</span>&nbsp<i class="m-icon-swapright m-icon-white"></i></button>
+			<button style="float:right" class="btn btn-info"><span>Cancel</span>&nbsp<i class="m-icon-swapright m-icon-white"></i></button>
+		</div>
+	</div>
+</div>
+<!-- END BUTTON -->

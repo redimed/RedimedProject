@@ -63,13 +63,39 @@ angular.module("app.loggedIn.patient.services", [])
 
 
     instanceService.getPatient = function (patient_id) {
-        var detailApi = appApi.one("patient/get_by_id?patient_id=" + patient_id);
-        return detailApi.get();
+        var detailApi = appApi.all("patient/get_by_id");
+        return detailApi.post({'patient_id': patient_id});
     }
 
     instanceService.post = function (data) {
         var detailApi = appApi.all("patient/post");
         return detailApi.post(data);
     }
+
+    instanceService.getReferral = function (option) {
+        var detailApi = appApi.all("patient/getReferral");
+        return detailApi.post(option);
+    }
+    instanceService.insertReferral = function (data) {
+        var detailApi = appApi.all("patient/insertReferral");
+        return detailApi.post({'data':data});
+    }
+    instanceService.updateReferral = function (data) {
+        var detailApi = appApi.all("patient/updateReferral");
+        return detailApi.post({'data':data});
+    }
+    instanceService.getScript = function (option) {
+        var detailApi = appApi.all("patient/getScript");
+        return detailApi.post(option);
+    }
+    instanceService.updateScript = function (data) {
+        var detailApi = appApi.all("patient/updateScript");
+        return detailApi.post({'data':data});
+    }
+    instanceService.insertScript = function (data) {
+        var detailApi = appApi.all("patient/insertScript");
+        return detailApi.post({'data':data});
+    }    
+
     return instanceService;
 })

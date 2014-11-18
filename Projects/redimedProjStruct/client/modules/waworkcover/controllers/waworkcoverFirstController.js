@@ -1,7 +1,7 @@
 
 angular.module("app.loggedIn.waworkcover.first.controller", [])
 
-    .controller("waworkcoverFirstController", function ($scope, $cookieStore, toastr, localStorageService, waworkcoverService, PatientService, DoctorService, ConfigService) {
+    .controller("waworkcoverFirstController", function ($scope, $cookieStore, $state, toastr, localStorageService, waworkcoverService, PatientService, DoctorService, ConfigService) {
 
         // SIGNATURE
         $scope.clearSignature = function(){
@@ -63,14 +63,17 @@ angular.module("app.loggedIn.waworkcover.first.controller", [])
                 toastr.error("Your form is invalid!", "Error");
             }
             else{
-                for(var key in $scope.wafirst){
-                    if($scope.wafirst[key] instanceof Date){
-                        $scope.wafirst[key] = ConfigService.getCommonDate($scope.wafirst[key]);
+                $scope.wafirst_map = angular.copy($scope.wafirst);
+
+                for(var key in $scope.wafirst_map){
+                    if($scope.wafirst_map[key] instanceof Date){
+                        $scope.wafirst_map[key] = ConfigService.getCommonDate($scope.wafirst_map[key]);
                     }
                 }
-                waworkcoverService.insertFirst($scope.wafirst).then(function(response){
-                    if(response.status === 'OK'){
+                $scope.wafirst_map.cal_id = Patient.CAL_ID;
 
+                waworkcoverService.insertFirst($scope.wafirst_map).then(function(response){
+                    if(response.status === 'OK'){
                     }
                 });
             }

@@ -56,24 +56,49 @@
 			<div class="portlet-body">
 				<div class="break-row"></div>
 				<div class="row">
-					<div class="col-md-2">
-						<a class="btn btn-block btn-sm purple">Certificate Functions</a>
-					</div>
-					<div class="col-md-2">
-						<a class="btn btn-block btn-sm yellow">General Assessment</a>
-					</div>
-					<div class="col-md-2">
-						<a class="btn btn-block btn-sm blue" 
-							ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.first">First Assessment</a>
-					</div>
-					<div class="col-md-2">
-						<a class="btn btn-block btn-sm blue" 
-							ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.progress">Process Assessment</a>
-					</div>
-					<div class="col-md-2">
-						<a class="btn btn-block btn-sm blue" 
-							ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.final">Final Assessment</a>
-					</div>
+					<!-- NO CERTIFICATE -->
+					<span ng-show="!isCertificate">
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm purple" ng-click="isCertificate=!isCertificate">
+								Certificate Functions
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm yellow">General Assessment</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm blue" 
+								ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.first">First Assessment</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm blue" 
+								ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.progress">Process Assessment</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm blue" 
+								ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.final">Final Assessment</a>
+						</div>
+					</span>
+					<!-- END NO CERTIFICATE -->
+					<!-- CERTIFICATE -->
+					<span ng-show="isCertificate">
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm purple" ui-sref="loggedIn.certificate.scripts">
+								Write Script
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm yellow" ui-sref="loggedIn.certificate.referral">
+								Referral
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm red" ng-click="isCertificate=!isCertificate">
+								Back
+							</a>
+						</div>
+					</span>
+					<!-- END CERTIFICATE -->
 				</div>
 				<div class="break-row"></div>
 			</div>
