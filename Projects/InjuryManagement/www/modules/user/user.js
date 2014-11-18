@@ -13,9 +13,19 @@ angular.module("starter.user",[
                     }
                 }
             })
+
             //.state('home', {
             //    url: "/home",
             //    templateUrl: "home.html",
             //    controller: 'HomeTabCtrl'
             //})
+            .state('app.changePass', {
+                url: "/changePass",
+                views:{
+                    'menuContent':{
+                        templateUrl:"modules/user/views/changePassword.html",
+                        controller:'userProfileController'
+                    }
+                }
+            })
     })

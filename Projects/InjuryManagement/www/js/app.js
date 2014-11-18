@@ -14,6 +14,12 @@ angular.module('starter', ['ionic',
   'starter.worker',
   'starter.injury',
   'app.config',
+    'starter.worker',
+    'starter.booking'
+
+//
+  //'starter.playlist'
+
 ])
 
     .run(function($ionicPlatform) {
@@ -36,10 +42,14 @@ angular.module('starter', ['ionic',
 
 
       //test ip local
+
       //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
 
-      //ip Luan
       RestangularProvider.setBaseUrl("http://192.168.133.190:3000");
+
+
+      //ip Luan
+      //RestangularProvider.setBaseUrl("http://192.168.133.190:3000");
 
       //ip nha
       //RestangularProvider.setBaseUrl("http://192.168.1.106:3000");

@@ -10,8 +10,9 @@
             <form class="login-form" novalidate name="loginForm" ng-submit="login()">
                 <h3 class="form-title">Login to your account</h3>
 
-                <div class="form-group" ng-class="{'has-error':showClickedValidation && loginForm.username.$invalid}">
+                <div class="list" ng-class="{'has-error':showClickedValidation && loginForm.username.$invalid}">
                     <!-- USERNAME -->
+
                     <div class="item item-input">
 
                         <input type="text" name="username" ng-model="modelUser.username" required
@@ -43,15 +44,24 @@
                         <!-- ERROR -->
                     </div>
                     <!-- END PASSWORD -->
+
+                    <label class="item item-input item-floating-label">
+                             <span class="input-label">Username</span>
+                            <input type="text" name="username" ng-model="modelUser.username" required
+                                   placeholder="Username" autocomplete="off" >
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Password</span>
+                        <input type="password" name="password" ng-model="modelUser.password" required
+                               placeholder="Password" autocomplete="off" >
+                    </label>
+
                 </div>
-
                 <div class="form-actions">
-
                     <button class="button button-block button-positive" type="submit" >
                         Login
                     </button>
                 </div>
-
                 <div class="forget-password">
                     <h4>Forgot your password ?</h4>
                     <p>
@@ -65,5 +75,4 @@
         2014 &copy; REDIMED Dashboard
     </div>
     </ion-content>
-
 </ion-view>
