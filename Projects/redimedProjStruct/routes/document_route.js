@@ -149,7 +149,19 @@ app.post('/api/document/editGGMH', gorgonMHController.editGGMH);
  * end gorgon medical history
  */
 
-//app.get('/api/document/gorgonFA/print/:id',GorgonFAController.printReport);
-//app.get('/api/document/gorgonMA/print/:id',GorgonMAController.printReport);
-//app.get('/api/document/gorgonMH/print/:id',GorgonMHController.printReport);
-//app.get('/api/document/gorgonUQ/print/:id',GorgonUQController.printReport);
+//app.get('/api/document/gorgonFA/print/:id',gorgonFAController.printReport);
+//app.get('/api/document/gorgonMA/print/:id',gorgonMAController.printReport);
+//app.get('/api/document/gorgonMH/print/:id',gorgonMHController.printReport);
+//app.get('/api/document/gorgonUQ/print/:id',UQController.printReport);
+//app.get('/api/document/MA/print/:id',MAController.printReport);
+//app.get('/api/document/FA/print/:id',FAController.printReport);
+//app.get('/api/document/IDS/print/:id',IDSController.printReport);
+//app.get('/api/document/MH/print/:id',MHController.printReport);
+//app.get('/api/document/MRS/print/:id',MRSController.printReport);
+//app.get('/api/document/COE/print/:id',COEController.printReport);
+//app.get('/api/document/SA1/print/:id',SA1Controller.printReport);
+//app.get('/api/document/SA2/print/:id',SA2Controller.printReport);
+//app.get('/api/document/CAT2/print/:id',Cat2Controller.printReport);
+//app.get('/api/document/CAT3/print/:id',Cat3Controller.printReport);
+//app.get('/api/document/Form18/print/:id',form18Controller.printReport);
+

@@ -64,14 +64,60 @@ module.exports = {
               STATUS: imInfo.STATUS
           },{raw:true})
               .success(function(data){
-                  res.json({status:'success'});
+                  db.IMInjury.max('injury_id')
+                      .success(function(max){
+                          res.json({status:'success',injury_id:max});
+                      })
+                      .error(function(err){
+                          res.json({status:'error'});
+                          console.log(err);
+                      })
               })
               .error(function(err){
                   res.json({status:'error'});
                   console.log(err);
               })
+
       },
     uploadInjuryPic: function(req,res){
+
+        var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+        var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'pID'+req.body.patient_id+'\\iID'+req.body.injury_id;
+        var targetFolderForSave='uploadFile\\'+'InjuryManagement\\'+'pID'+req.body.patient_id+'\\iID'+req.body.injury_id;
+
+        mkdirp(targetFolder, function(err) {
+            var tmp_path = req.files.file.path;
+
+            var target_path =targetFolder+ "\\" + req.files.file.name;
+            var target_path_for_save=targetFolderForSave+ "\\" + req.files.file.name
+            fs.rename(tmp_path, target_path, function(err) {
+                if (err) throw err;
+                fs.unlink(tmp_path, function() {
+                    if (err) throw err;
+                });
+            });
+
+        });
+
         console.log(req.files.file);
     }
 };
+
+function submitInjury(imInfo){
+    db.IMInjury.create({
+        patient_id: imInfo.patient_id,
+        driver_id: imInfo.driver_id,
+        doctor_id: imInfo.doctor_id,
+        cal_id: imInfo.cal_id,
+        injury_date: imInfo.injury_date,
+        injury_description: imInfo.injury_description,
+        STATUS: imInfo.STATUS
+    },{raw:true})
+        .success(function(data){
+            res.json({status:'success'});
+        })
+        .error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        })
+}

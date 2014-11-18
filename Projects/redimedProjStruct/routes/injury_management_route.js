@@ -7,7 +7,7 @@ var multipartMiddleware = multipart();
 
 app.post('/api/im/patients/search',injuryController.search);
 app.post('/api/im/patients/getById',injuryController.getById);
-app.post('/api/im/submit',injuryController.submitInjury);
 app.post('/api/im/patients/checkMobile',injuryController.checkMobile);
 app.post('/api/im/patients/checkEmail',injuryController.checkEmail);
+app.post('/api/im/submit',injuryController.submitInjury);
 app.post('/api/im/upload',multipartMiddleware,injuryController.uploadInjuryPic);
