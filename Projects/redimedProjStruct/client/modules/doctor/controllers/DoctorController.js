@@ -164,9 +164,7 @@ angular.module("app.loggedIn.doctor.controller", [
 			$scope.modelObjectMap.Prefix = obj.PREFIX;
 
 			callback();
-			
-			$scope.modelObjectMap.ITEM_START_DATE = t_start;
-			$scope.modelObjectMap.ITEM_END_DATE = t_end;
+
 		}
 	}
 	

@@ -18,6 +18,9 @@ angular.module("app.loggedIn.doctor.items.add.controller",[
 				toastr.success('Insert Successfully!!!', "Success");
 				$scope.modeFormItem.reset();
 				$scope.isSubmit = false;
+			} else {
+				$scope.modelObjectMap.ITEM_START_DATE = '';
+				$scope.modelObjectMap.ITEM_END_DATE = '';
 			}
 		});
 	}
