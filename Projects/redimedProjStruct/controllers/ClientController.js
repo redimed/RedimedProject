@@ -356,7 +356,8 @@ module.exports = {
                 var sqlbuilder = squel.insert()
                         .into("cln_patients")
                         .set('Isenable', 1)
-                        .set('Patient_id', new_id);
+                        .set('Patient_id', new_id)
+						.set('Type', '');
                 ;
                 sqlbuilder.set('Creation_date', 'NOW()', {dontQuote: true});
                 var patient_data = req.body.patient;
