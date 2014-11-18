@@ -1,0 +1,91 @@
+<h3 class="page-title">SCRIPT</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="loggedIn.doctor.home">Home</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li><a ui-sref="loggedIn.doctor.patients">Patient <i class="fa fa-angle-right"></i></a></li>
+		<li><a ui-sref="loggedIn.patient.detail">
+			{{patient.First_name}}
+			{{patient.Sur_name}}
+			<i class="fa fa-angle-right"></i>
+		</a></li>
+		<li><b>Scripts</b></li>
+	</ul>
+</div>
+
+
+<accordion close-others="accordion.oneAtATime">
+	<!--PATIENT DETAILS-->
+	<accordion-group class="panel-primary" is-open="accordion.script">
+		<accordion-heading><b>SCRIPTS</b></accordion-heading>
+		<div class="row">
+			<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><b>Patient's Ref no.</b> <input type="checkbox" ng-model="scriptObjectMap.isRefNo" ng-true-value="1" ng-false-value="0" ng-checked="scriptObjectMap.isRefNo == 1"></label>
+
+			<label class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><b>Family name :</b></label>
+			<label class="col-lg-4 col-md-4 col-sm-4 col-xs-4">{{patient.Sur_name | undefined}}</label>
+
+			<label class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><b>Given name :</b></label>
+			<label class="col-lg-4 col-md-4 col-sm-4 col-xs-4">{{patient.First_name | undefined}}</label>
+
+			<label class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><b>Address :</b></label>
+			<label class="col-lg-4 col-md-4 col-sm-4 col-xs-4">{{patient.Address1 | undefined}}</label>
+
+			<label class="col-sm-2 col-xs-2"><b>Postcode :</b></label>
+			<label class="col-lg-4 col-md-4 col-sm-4 col-xs-4">{{patient.Post_code | undefined}}</label>
+		</div>
+		<div class="row">
+			<div class="form-inline">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<label class="control-label"><b>Entitlement No. :</b></label>
+					<input type="text" class="form-control" ng-model="scriptObjectMap.EntitlementNo">
+				</div>
+			</div>
+		</div>
+		<div class="break-row"></div>
+		<div class="row">
+			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+				<label class="control-label "><b>Safety Net entitlement cardholder</b> <input type="checkbox" ng-model="scriptObjectMap.isSafety" ng-true-value="1" ng-false-value="0" ng-checked="scriptObjectMap.isSafety == 1"></label></div>
+			<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+				<label class="control-label "><b>Concessional or dependent, PRBS beneficiary Or Safety Net concession cardholder</b> <input type="checkbox" ng-model="scriptObjectMap.isConcessional" ng-true-value="1" ng-false-value="0" ng-checked="scriptObjectMap.isConcessional == 1"></label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3"><label class="control-label "><b>PBS</b> <input type="checkbox" ng-model="scriptObjectMap.isPBS" ng-true-value="1" ng-false-value="0" ng-checked="scriptObjectMap.isPBS == 1"></label></div>
+			<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3"><label class="control-label "><b>RPBS</b> <input type="checkbox" ng-model="scriptObjectMap.isRPBS" ng-true-value="1" ng-false-value="0" ng-checked="scriptObjectMap.isRPBS == 1"></label></div>
+			<div class="col-lg-10 col-md-10 col-sm-8 col-xs-6"><label class="control-label "><b>Brand substitution not permitted</b> <input type="checkbox" ng-model="scriptObjectMap.isBrand" ng-true-value="1" ng-false-value="0" ng-checked="scriptObjectMap.isBrand == 1"></label></div>	
+		</div>
+		<div class="row">
+			<label class="control-label col-lg-12"><b>Pharmacist/patient copy:</b></label>
+			<div class="col-lg-12"><textarea class="form-control col-lg-12" rows="3" ng-model="scriptObjectMap.pharmacist"></textarea></div>
+			<div class="col-lg-12"><p>I declare that I have received this/these medicine(s) and the information relating to any entitlement to a pharmaceutical benefit is correct</p></div>
+		</div>
+		<div class="row">
+			<label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-4"><b>Agent's address :</b></label>
+			<div class="col-lg-6 col-md-6 col-sm-5 col-xs-4"><input type="text" class="form-control" ng-model="scriptObjectMap.agentAddress"></div>
+		</div>
+		<div class="break-row"></div>
+		<div class="row">
+			<div class="form-inline">
+				<label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-4"><b>Date :</b></label>
+				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-4"><input custom-date type="birthday" class="form-control" ng-model="scriptObjectMap.doctordate" value="{{ scriptObjectMap.doctordate | date:'yyyy-MM-dd' }}"></div>
+			</div>
+		</div>
+	</accordion-group>
+	<!--END PATIENT DETAILS-->
+</accordion>
+
+
+
+<!-- BUTTON -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+			<button style="float:right" class="btn btn-primary" ng-click="submitScript()" class="form-control"><span>Submit</span>&nbsp<i class="m-icon-swapright m-icon-white"></i></button>
+			<button style="float:right" class="btn btn-info"><span>Cancel</span>&nbsp<i class="m-icon-swapright m-icon-white"></i></button>
+		</div>
+	</div>
+</div>
+<!-- END BUTTON -->

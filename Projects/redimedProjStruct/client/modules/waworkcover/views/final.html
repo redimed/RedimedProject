@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <label class="col-sm-3 col-md-3">Date of birth</label>
-                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.DOB"  placeholder="dd/mm/yyyy" readonly/></div>
+                <div class="col-sm-9 col-md-9"><input class="form-control" ng-model="patientInfo.DOB"   readonly/></div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <label class="col-sm-3 col-md-3">Claim no.</label>
@@ -96,11 +96,11 @@
     <div class="row">
         <div class="col-md-6 col-sm-6">
             <label class="col-sm-5 col-md-5">Date of this assessment</label>
-            <div class="col-sm-7 col-md-7"><input class="form-control" ui-date="" readonly ui-date-format="yy-m-d" placeholder="dd/mm/yyyyy" ng-model="wafinal.examDate"/></div>
+            <div class="col-sm-7 col-md-7"><input class="form-control"  readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="dd/mm/yyyyy" ng-model="wafinal.examDate"/></div>
         </div>
         <div class="col-md-6 col-sm-6">
             <label class="col-sm-5 col-md-5">Date of injury</label>
-            <div class="col-sm-7 col-md-7"><input class="form-control" ui-date="" readonly ui-date-format="yy-m-d" placeholder="dd/mm/yyyyy" ng-model="wafinal.injuryDate"/></div>
+            <div class="col-sm-7 col-md-7"><input class="form-control"  readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="dd/mm/yyyyy" ng-model="wafinal.injuryDate"/></div>
         </div>
     </div>
     <div class="break-row"></div>
@@ -136,7 +136,7 @@
             <div class="col-sm-4 col-md-4" ng-class="{'has-error': isSubmitted && wafinalform.fullCapaFrom.$invalid}">
                 <label class="col-md-2 col-sm-2 control-label">from:</label>
                 <div class="col-md-10 col-sm-10">
-                    <input class="form-control" name="fullCapaFrom" ng-required="wafinal.isFullCapacity == 1" type="text" readonly placeholder="dd/mm/yyyy" ui-date="" ui-date-format="yy-m-d" ng-model="wafinal.fullCapaFrom"/>
+                    <input class="form-control" name="fullCapaFrom" ="wafinal.isFullCapacity == 1" type="text" readonly   ui-date="{dateFormat: 'dd/mm/yy'}" ng-model="wafinal.fullCapaFrom"/>
                     <div class="error" ng-show="isSubmitted && wafinalform.fullCapaFrom.$invalid">
                         <label class="control-label">required</label>
                     </div>
@@ -155,11 +155,11 @@
             <label class="control-label col-md-12 col-sm-12">
                 <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isCapacityForWork" ng-checked="wafinal.isCapacityForWork == 1" ng-model="wafinal.isCapacityForWork">
                 <b>capacity for work</b> performing
-                <input type="number" min="0" max="24" name="capaHours" ng-required="wafinal.isCapacityForWork==1" class="form-control inline input-small"  ng-model="wafinal.capaHours">
+                <input type="number" min="0" max="24" name="capaHours" ="wafinal.isCapacityForWork==1" class="form-control inline input-small"  ng-model="wafinal.capaHours">
                 hours per day and
-                <input type="number" min="0" max="7" name="capaDays" ng-required="wafinal.isCapacityForWork==1" class="form-control inline input-small" ng-model="wafinal.capaDays">
+                <input type="number" min="0" max="7" name="capaDays" ="wafinal.isCapacityForWork==1" class="form-control inline input-small" ng-model="wafinal.capaDays">
                 days per week from
-                <input type="text" name="capaFrom" readonly class="form-control inline input-small" ng-required="wafinal.isCapacityForWork==1" ui-date="" placeholder="dd/mm/yyyy" ui-date-format="yy-m-d" ng-model="wafinal.capaFrom">
+                <input type="text" name="capaFrom" readonly class="form-control inline input-small" ="wafinal.isCapacityForWork==1"   ui-date="{dateFormat: 'dd/mm/yy'}" ng-model="wafinal.capaFrom">
             </label>
             <div class="col-md-12 col-sm-12" ng-show="isSubmitted && (wafinalform.capaHours.$invalid || wafinalform.capaDays.$invalid || wafinalform.capaFrom.$invalid)">
                 <div class="col-md-12 col-sm-12 error">
@@ -190,7 +190,7 @@
                             <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="wafinal.isLiftUp" ng-checked="wafinal.isLiftUp==1"> lift up to</label>
                             <div class="col-md-8 col-sm-8">
                                 <div class="col-md-6 col-sm-6">
-                                    <input class="form-control" ng-required="wafinal.isLiftUp == 1" name="liftUpKg" type="number" ng-model="wafinal.liftUpKg" min="0" max="999"/>
+                                    <input class="form-control" ="wafinal.isLiftUp == 1" name="liftUpKg" type="number" ng-model="wafinal.liftUpKg" min="0" max="999"/>
                                 </div>
                                 <label class="col-md-6 col-sm-6 control-label">kg</label>
                                 <div class="error" ng-show="isSubmitted && wafinalform.liftUpKg.$invalid">
@@ -205,7 +205,7 @@
                             <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="wafinal.isSitUp" ng-checked="wafinal.isSitUp==1"> sit up to</label>
                             <div class="col-md-8 col-sm-8">
                                 <div class="col-md-6 col-sm-6">
-                                    <input class="form-control" type="number" min="0" max="999" ng-required="wafinal.isSitUp==1" name="siUpMins" ng-model="wafinal.sitUpMins"/>
+                                    <input class="form-control" type="number" min="0" max="999" ="wafinal.isSitUp==1" name="siUpMins" ng-model="wafinal.sitUpMins"/>
                                 </div>
                                 <label class="col-md-6 col-sm-6 control-label">mins</label>
                                 <div class="error" ng-show="isSubmitted && wafinalform.siUpMins.$invalid">
@@ -220,7 +220,7 @@
                             <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="wafinal.isStandUp" ng-checked="wafinal.isStandUp==1"> stand up to</label>
                             <div class="col-md-8 col-sm-8">
                                 <div class="col-md-6 col-sm-6">
-                                    <input class="form-control" type="number" min="0" max="999" ng-required="wafinal.isStandUp==1" name="standUpMins" ng-model="wafinal.standUpMins"/>
+                                    <input class="form-control" type="number" min="0" max="999" ="wafinal.isStandUp==1" name="standUpMins" ng-model="wafinal.standUpMins"/>
                                 </div>
                                 <label class="col-md-6 col-sm-6 control-label">mins</label>
                                 <div class="error" ng-show="isSubmitted && wafinalform.standUpMins.$invalid">
@@ -235,7 +235,7 @@
                             <label class="control-label col-md-4 col-sm-4"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model=" wafinal.isWalkUp" ng-checked="wafinal.isWalkUp==1"> walk up to</label>
                             <div class="col-md-8 col-sm-8">
                                 <div class="col-md-6 col-sm-6">
-                                    <input class="form-control" type="number" min="0" max="999" ng-required="wafinal.isWalkUp==1" name="walkUpMeter" ng-model="wafinal.walkUpMeter"/>
+                                    <input class="form-control" type="number" min="0" max="999" ="wafinal.isWalkUp==1" name="walkUpMeter" ng-model="wafinal.walkUpMeter"/>
                                 </div>
                                 <label class="col-md-6 col-sm-6 control-label">m</label>
                                 <div class="error" ng-show="isSubmitted && wafinalform.walkUpMeter.$invalid">
@@ -252,7 +252,7 @@
                     </div>
                 </div>
             <div class="col-md-7 col-sm-7" ng-class="{'has-error':isSubmitted && wafinalform.capaCmt.$invalid}">
-                <textarea class="text-area-custom-style form-control" rows="8" name="capaCmt" ng-required="true" ng-model="wafinal.capaCmt"></textarea>
+                <textarea class="text-area-custom-style form-control" rows="8" name="capaCmt" ="true" ng-model="wafinal.capaCmt"></textarea>
                 <div class="error" ng-show="isSubmitted && wafinalform.capaCmt.$invalid">
                     <label class="control-label">Work capacity comment is required</label>
                 </div>
@@ -276,7 +276,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12" ng-class="{'has-error': isSubmitted && wafinalform.reasonCmt.$invalid}">
-            <textarea class="text-area-custom-style form-control" rows="8" name="reasonCmt" ng-required="true" ng-model="wafinal.reasonCmt"></textarea>
+            <textarea class="text-area-custom-style form-control" rows="8" name="reasonCmt" ="true" ng-model="wafinal.reasonCmt"></textarea>
             <div class="error" ng-show="isSubmitted && wafinalform.reasonCmt.$invalid">
                 <label class="control-label">Reason for the capacity/incapacity required</label>
             </div>
@@ -349,7 +349,7 @@
                     <div class="row">
                         <label class="control-label col-md-2 col-sm-2">Date</label>
                         <div class="col-md-10 col-sm-10">
-                            <input type="text" class="form-control" readonly="readonly" placeholder="dd/mm/yyyy" readonly="readonly" ui-date="" ui-date-format="yy-m-d"  ng-model="waprogress.examDate" />
+                            <input type="text" class="form-control" readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}"  ng-model="waprogress.examDate" />
                         </div>
                     </div>
                     <div class="break-row"></div>

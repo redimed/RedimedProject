@@ -116,5 +116,25 @@ module.exports = {
 		}
 
 		return year+"-"+month+"-"+dates;
-	}
+	},
+	getCommonDateDatabase : function(dateTime){
+        if(dateTime === '' || typeof dateTime === 'undefined')
+            return '';
+
+        var split = dateTime.split("/");
+
+        var year = split[2];
+        var month = split[1];
+        var date = split[0];
+
+        if(month < 10){
+            month = "0"+month;
+        }
+
+        if(date < 10){
+            date = "0"+date;
+        }
+
+        return year+"-"+month+"-"+date;
+    }
 };

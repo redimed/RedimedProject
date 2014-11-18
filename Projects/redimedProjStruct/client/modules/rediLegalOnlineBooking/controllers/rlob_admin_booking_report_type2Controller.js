@@ -13,6 +13,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
          * tannv.dts@gmail.com
          */
         $scope.doctorInfo=undefined;
+        $scope.doctorId='';
         $scope.getDoctorInfoByUserId=function()
         {
             var deferred=$q.defer();
@@ -127,10 +128,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
         }
 
         $scope.$watch('[filterInfo1.FromAppointmentDate,filterInfo1.ToAppointmentDate]',function(newValue,oldValue){
-            if($scope.doctorId)
-            {
-                $scope.initPagingReportStatusBookingHaveNotResult();
-            }
+            $scope.initPagingReportStatusBookingHaveNotResult();
         },true);
 
         $scope.getDoctorInfoByUserId()

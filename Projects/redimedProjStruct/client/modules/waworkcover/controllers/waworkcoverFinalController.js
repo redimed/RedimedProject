@@ -1,7 +1,18 @@
 
 angular.module("app.loggedIn.waworkcover.final.controller", [])
 
-    .controller("waworkcoverFinalController", function ($scope, toastr, waworkcoverService) {
+    .controller("waworkcoverFinalController", function ($scope, $cookieStore, toastr, waworkcoverService, PatientService, DoctorService, ConfigService, localStorageService) {
+        // VARIABLES
+        var Patient = localStorageService.get("patientTempInfo");
+        Patient.CAL_ID = localStorageService.get("apptTempInfo").CAL_ID;
+        // END VARIABLES
+
+        // LIST OF PATIENTS
+        $scope.patientInfo = {};
+        $scope.companyInfo = {};
+        $scope.doctorInfo = {};
+        // END LIST OF PATIENTS
+
         var init = function(){
             $scope.oneAtATime = false;
             $scope.isFirstOpen = true;
@@ -14,6 +25,20 @@ angular.module("app.loggedIn.waworkcover.final.controller", [])
                 //final: 14
 
             };
+
+            PatientService.getById(Patient.Patient_id).then(function(list){
+                $scope.patientInfo = list;
+                $scope.patientInfo.DOB = ConfigService.getCommonDateDefault($scope.patientInfo.DOB);
+                if($scope.patientInfo.company_id){
+                    waworkcoverService.getCompanyFromPatient($scope.patientInfo.company_id).then(function(list){
+                        $scope.companyInfo = list.data;
+                    })
+                }
+            })
+
+            DoctorService.getById($cookieStore.get("doctorInfo").doctor_id).then(function(list){
+                $scope.doctorInfo = list;
+            })
 
         };
         init();
@@ -29,13 +54,17 @@ angular.module("app.loggedIn.waworkcover.final.controller", [])
                 toastr.error("Your form is invalid!", "Error");
             }
             else{
-                for(var key in $scope.wafinal){
-                    if($scope.wafinal[key] instanceof Date){
+                $scope.wafinal_map = angular.copy($scope.wafinal);
+
+                for(var key in $scope.wafinal_map){
+                    if($scope.wafinal_map[key] instanceof Date){
                         console.log('Changing');
-                        $scope.wafinal[key] = parseDate($scope.wafinal[key]);
+                        $scope.wafinal_map[key] = ConfigService.getCommonDate($scope.wafinal_map[key]);
                     }
                 }
-                waworkcoverService.insertFinal($scope.wafinal);
+
+                $scope.wafinal_map.cal_id = Patient.CAL_ID;
+                waworkcoverService.insertFinal($scope.wafinal_map);
             }
 
         };
