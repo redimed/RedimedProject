@@ -127,29 +127,4 @@ module.exports = {
             res.json(err);
         });
     },
-
-    getTest: function (req, res) {
-        var k_sql = res.locals.k_sql;
-        var sql = 'SELECT user_name from users LIMIT 10';
-
-        var users = [], patients = [];
-
-        k_sql.exec(sql)
-        .then(function(data){
-        	users = data;
-        	return k_sql.exec('SELECT patient_id from cln_patients LIMIT 10')
-        })
-        .then(function(data){
-        	patients = data;
-        	return k_sql.exec_row('SELECT * from users where user_name =\'drhanh\'');
-        })
-         .then(function(data){
-
-        	res.json({patients: patients, user: users, dr: data});
-        })
-        .catch(
-        	function(err){res.json(err);
-        })
-    },
-
 }

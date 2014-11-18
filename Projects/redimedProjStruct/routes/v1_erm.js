@@ -9,7 +9,7 @@ var v1_WAProgressAssessmentController = require('./controllers/v1_WAProgressAsse
 var v1_WAFinalAssessmentController = require('./controllers/v1_WAFinalAssessmentController');
 
 var v1_InventoryController = require('./controllers/v1_InventoryController');
-
+var v1_Test = require('./controllers/v1_Test');
 
 k_route.setRoute(app, v1_DoctorController, '/api/erm/v1/doctors/');
 k_route.setRoute(app, v1_AppointmentController, '/api/erm/v1/appointment/');
@@ -23,3 +23,4 @@ k_route.setRoute(app, v1_InventoryController, '/api/erm/v1/inv/');
 k_route.setRoute(app, v1_WAFirstAssessmentController,'/api/erm/v1/wa/workcover/first/');
 k_route.setRoute(app, v1_WAProgressAssessmentController,'/api/erm/v1/wa/workcover/progress/');
 k_route.setRoute(app, v1_WAFinalAssessmentController,'/api/erm/v1/wa/workcover/final/');
+k_route.setRoute(app, v1_Test, '/api/erm/v1/test/');
