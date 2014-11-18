@@ -1,8 +1,7 @@
-angular.module('starter.worker',
-    [
-        'starter.worker.add.controller',
-        'starter.worker.services',
-    ])
+angular.module('starter.worker', [
+    'starter.worker.add.controller',
+    'starter.worker.services',
+])
 
     .config (function ($stateProvider) {
     $stateProvider
@@ -23,11 +22,19 @@ angular.module('starter.worker',
                 }
             }
         })
-        .state('app.worker.contact', {
-            url:"/contact",
+        .state('app.worker.main', {
+            url:"/main",
             views: {
                 'content':{
-                    templateUrl: "modules/worker/views/contact.html"
+                    templateUrl: "modules/worker/views/main.html"
+                }
+            }
+        })
+        .state('app.worker.second', {
+            url:"/second",
+            views: {
+                'content':{
+                    templateUrl: "modules/worker/views/second.html"
                 }
             }
         })
