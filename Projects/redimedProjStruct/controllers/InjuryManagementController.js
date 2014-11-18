@@ -72,30 +72,6 @@ module.exports = {
               })
       },
     uploadInjuryPic: function(req,res){
-        var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-        var targetFolder=prefix+'upload-file\\'+'InjuryManagement\\'+'pID'+req.body.patient_id+'\\iID'+injury_id;
-        var targetFolderForSave='upload-file\\'+'InjuryManagement\\'+'pID'+req.body.patient_id+'\\iID'+injury_id;
-
-        //Params
-        console.log(req.body.a);
-
-        mkdirp(targetFolder, function(err) {
-            var tmp_path = req.files.file.path;
-
-            var target_path =targetFolder+ "\\" + req.files.file.name;
-            var target_path_for_save=targetFolderForSave+ "\\" + req.files.file.name
-            // move the file from the temporary location to the intended location
-            fs.rename(tmp_path, target_path, function(err) {
-                if (err) throw err;
-                // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-                fs.unlink(tmp_path, function() {
-                    if (err) throw err;
-                    console.log('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes')
-                    //res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
-                });
-            });
-
-        });
-
+        console.log(req.files.file);
     }
 };
