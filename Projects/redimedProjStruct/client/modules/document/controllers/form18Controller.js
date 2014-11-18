@@ -2,7 +2,7 @@
  * Created by HUYNHAN on 9/25/2014.
  */
 angular.module('app.loggedIn.document.form18.controllers', [])
-    .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams) {
+    .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -13,6 +13,7 @@ angular.module('app.loggedIn.document.form18.controllers', [])
             $state.go('loggedIn.home', null, {"reload": true});
         }
         else {
+            $scope.today = new Date();
             //begin signature
             var tempSignature;
             $scope.isSignature = false;
@@ -61,7 +62,7 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                 PATIENT_ID: $stateParams.PatientID,
                 CAL_ID: $stateParams.CalID,
                 DocId: null,
-                TIME_TEST: new Date(),
+                TIME_TEST: localStorageService.get('tempAppt').FROM_TIME,
                 WORK_COVER_NO: null,
                 PERSON_ARRANGING_SIGNATURE: null,
                 PERSON_ARRANGING_NAME: null,
@@ -78,7 +79,8 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                 else if ('findNull' === response[0].status) {
                     $scope.isNew = true;
                     $scope.info.patient = response[0].patient[0];
-                    $scope.info.NAME = $cookieStore.get('doctorInfo').NAME;
+                    $scope.info.apptInfo = localStorageService.get('tempAppt');
+                    $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
                     oriInfo = angular.copy($scope.info);
                 }
                 else if ('findFound' === response[0].status) {
@@ -86,7 +88,8 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                     var data = response[0].dataF18;
                     $scope.info = [];
                     $scope.info = {
-                        NAME: $cookieStore.get('doctorInfo').NAME,
+                        doctorInfo: $cookieStore.get('doctorInfo'),
+                        apptInfo: localStorageService.get('tempAppt'),
                         patient: response[0].patient[0],
                         GORGON_ID: data[0].GORGON_ID,
                         PATIENT_ID: data[0].PATIENT_ID,

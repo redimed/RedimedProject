@@ -2,7 +2,7 @@
  * Created by thanh on 9/27/2014.
  */
 angular.module('app.loggedIn.document.MH.controllers', [])
-    .controller("MHController", function ($scope, DocumentService, $http, $cookieStore, toastr, $state) {
+    .controller("MHController", function ($scope, DocumentService, $http, $cookieStore, toastr, $state, localStorageService) {
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
@@ -166,12 +166,24 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                     });
                     i++;
                 });
+                $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
+                $scope.info.apptInfo = localStorageService.get('tempAppt');
+                $scope.info.patient = localStorageService.get('tempPatient');
                 oriInfo = angular.copy($scope.info.headers);
             });
 
             $scope.resetForm = function () {
                 $scope.info.headers = angular.copy(oriInfo);
                 $scope.mhForm.$setPristine();
+            }
+
+            $scope.checkAbove = function () {
+                if ($scope.info.asAbove==1) {
+                    $scope.info.Above = $scope.info.patient.Address1 || $scope.info.patient.Address2;
+                }
+                else {
+                    $scope.info.Above = '';
+                }
             }
 
             $scope.infoChanged = function () {

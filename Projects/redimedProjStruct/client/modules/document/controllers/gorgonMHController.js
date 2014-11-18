@@ -303,6 +303,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                         //find found
                         var data = response[0].data;
                         $scope.info = {
+                            patient: response[0].patient[0],
                             Gorgon_Id: data[0].Gorgon_Id,
                             Patient_Id: data[0].Patient_Id,
                             JobNo: data[0].JobNo,

@@ -2,7 +2,7 @@
  * Created by HUYNHAN on 10/1/2014.
  */
 angular.module('app.loggedIn.document.SA1.controllers', [])
-    .controller("SA1Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr, $stateParams) {
+    .controller("SA1Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr, $stateParams, localStorageService) {
 
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -48,6 +48,7 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                 else if (response[0].status === 'findNull') {
                     //add new
                     $scope.isNew = true;
+
                 }
                 else if (response[0].status === 'findFound') {
                     //edit
@@ -61,6 +62,9 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                 $scope.info.patient = data.patient[0];
                 angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({
+                        patient: response[0].patient[0],
+                        apptInfo: localStorageService.get('tempAppt'),
+                        doctorInfo: $cookieStore.get('doctorInfo'),
                         "patient_id": $stateParams.PatientID,
                         "CAL_ID": $stateParams.CalID,
                         "SA_ID": dataH.SA_ID,

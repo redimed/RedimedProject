@@ -33,8 +33,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">To: (Full legal name of worker):&nbsp;<span
-                        class="text-info">{{info.NAME}}</span>
+                <label class="control-label">To: (Full legal name of worker):&nbsp;<span class="text-info">{{info.doctorInfo.NAME}}</span>
                 </label>
             </div>
         </div>
@@ -42,7 +41,8 @@
 
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Address of worker:</label>
+                <label class="control-label">Address of worker:&nbsp;<span
+                        class="text-info">{{info.doctorInfo.Address}}</span></label>
             </div>
         </div>
     </div>
@@ -60,17 +60,18 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Name of person approved under regulation 19B:</label>
+                <label class="control-label">Name of person approved under regulation 19B:&nbsp;<span class="text-info">Emyly Orgel</span></label>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Name of clinic:</label>
+                <label class="control-label">Name of clinic:&nbsp;<span class="text-info">Redimed</span> </label>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Address of clinic:</label>
+                <label class="control-label">Address of clinic:&nbsp;<span
+                        class="text-info">I Frederick St. Belment</span> </label>
             </div>
         </div>
         <div class="row">
@@ -97,12 +98,14 @@
 
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Name of employer:</label>
+                <label class="control-label">Name of employer::&nbsp;<span
+                        class="text-info">{{info.patient.First_name + ' ' + info.patient.Sur_name}}</span></label>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">Location/worksite:</label>
+                <label class="control-label">Location/worksite::&nbsp;<span
+                        class="text-info">{{info.patient.Address1 || info.patient.Address2}}</span></label>
             </div>
         </div>
         <div class="row">
@@ -136,7 +139,7 @@
                 </div>
             </div>
             <div class="col-md-2 col-sm-2">
-                <label class="control-label" style="margin-left: 10px;">Date:</label>
+                <label class="control-label" style="margin-left: 10px;">Date: &nbsp;<span>{{today|date:'dd/MM/yyyy'}}</span> </label>
             </div>
             <div class="col-md-5 col-sm-5">
                 <div class="col-md-12 col-sm-12">
