@@ -44,14 +44,15 @@
 
                 <div ng-repeat="location in appointmentsFilter">
                     <div class="row">
-                        <div class="col-md-2" >
+                        <div class="col-md-2" style="width: 800px">
                             {{location.SITE_NAME}}
                         </div>
                         <div class="col-md-10" >
                             <div ng-repeat="doctor in location.DOCTOR_ITEMS">
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        {{doctor.DOCTOR_NAME}}
+                                    <div class="col-md-2" style="width: 1050px">
+                                        <span>{{doctor.DOCTOR_NAME}}</span>
+
                                     </div>
                                     <div class="col-md-10">
                                         <div ng-repeat="type in doctor.TYPE_ITEMS">

@@ -1,6 +1,7 @@
 angular.module('starter.booking',[
         'starter.booking.services',
-    'starter.booking.rlobChooseAppointmentCalendar.controller'
+    'starter.booking.rlobChooseAppointmentCalendar.controller',
+    'starter.booking.rlobDetailBooking.controller'
 ])
 .config(function($stateProvider){
             $stateProvider
@@ -18,7 +19,7 @@ angular.module('starter.booking',[
                     views:{
                         'menuContent':{
                             templateUrl:"modules/onlineBooking/views/rlob_info_booking.html",
-                            controller:'rlobChooseAppointmentCalendarController'
+                            controller:'rlobDetailBookingController'
                         }
                     }
                 })

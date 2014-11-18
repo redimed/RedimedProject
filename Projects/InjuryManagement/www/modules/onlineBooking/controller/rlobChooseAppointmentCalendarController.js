@@ -1,9 +1,10 @@
 angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 
 ])
-.controller('rlobChooseAppointmentCalendarController',function($scope,$http,$stateParams,localStorageService,$window,OnlineBookingService,$state){
+.controller('rlobChooseAppointmentCalendarController',function($scope,$stateParams,localStorageService,OnlineBookingService,$state){
         $scope.loginInfo = localStorageService.get('userInfo');
-        console.log($scope.loginInfo);
+
+
         $scope.selectedFilter={
             locationSelected:{},
             rltypeSelected:{},
@@ -11,8 +12,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
             doctorSelected:{},
             date:''
         };
-        $scope.selectedBooking=localStorageService.get("selectedBooking");
-        console.log( $scope.selectedBooking)
+
 
         $scope.getLocationsFilter=function()
         {
@@ -162,6 +162,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
             };
             OnlineBookingService.getInfoLocation(appointmentCalendar.SITE_ID).then(function(data){
                 info.Address = data.Site_addr;
+
                 localStorageService.set("selectedBooking", info);
             });
             $state.go('app.detailBooking');
@@ -203,23 +204,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
         //});
 
 
-        $scope.addbooking = function(des){
-            console.log( $scope.selectedBooking)
-            var infoBooking = {
-                patient_id:1,
-                doctor_id:$scope.selectedBooking.DOCTOR_ID,
-                cal_id:$scope.selectedBooking.CAL_ID,
-                injury_description:des,
-                STATUS:null,
-                driver_id :null,
-                injury_date:null
 
-            }
-            OnlineBookingService.submitBooking(infoBooking).then(function(data){
-                console.log(data.status);
-            })
-
-
-        }
 
 })
