@@ -92,6 +92,10 @@ var model_sql = {
         var query_builder = squel.insert().into('inv_items');
         
         query_builder.set('ISENABLE', 1);
+		
+		if(data.ITEM_END_DATE) delete data.ITEM_END_DATE;
+		if(data.ITEM_START_DATE) delete data.ITEM_START_DATE;
+		
         for (var key in data) {
             query_builder.set(key, data[key]);
         }
