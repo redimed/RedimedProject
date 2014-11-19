@@ -39,8 +39,7 @@ angular.module("app.loggedIn.patient.add.controller", [
         Suburb: '',
         Alias_First_name: '',
         Alias_Sur_name: '',
-        Phone_ext: '',
-		Type: ''
+        Phone_ext: ''
     }
 
 

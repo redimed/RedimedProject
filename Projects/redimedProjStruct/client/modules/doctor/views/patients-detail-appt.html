@@ -206,7 +206,7 @@
                     <tr ng-repeat-end ng-repeat="item in cat.list" 
 						ng-class="{success: (item.inserted && item.checked =='1'), warning: (item.inserted && item.checked =='0')} ">
                         <td style="width: 5%">
-                            <input class="form-control" type="checkbox" value="None" name="check" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                            <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
                         </td>
                         <td>{{item.ITEM_CODE}}</td>
                         <td style="width: 85%">{{item.ITEM_NAME}}</td>
@@ -219,7 +219,7 @@
 					<tr ng-repeat="item in extra_list" 
 						ng-class="{success: (!item.chosen && item.checked =='1'), warning: (!item.chosen && item.checked =='0')}">
                         <td style="width: 5%">
-                            <input class="form-control" type="checkbox" value="None" name="check" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                            <input class="form-control" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
                         </td>
                         <td>{{item.ITEM_CODE}}</td>
                         <td style="width: 85%">{{item.ITEM_NAME}}</td>

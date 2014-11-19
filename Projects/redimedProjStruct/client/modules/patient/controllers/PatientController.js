@@ -64,8 +64,7 @@ angular.module("app.loggedIn.patient.controller", [
         Suburb: '',
         Alias_First_name: '',
         Alias_Sur_name: '',
-        Phone_ext: null,
-		Type: ''
+        Phone_ext: null
     }
 
     $scope.options = {
