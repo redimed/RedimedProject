@@ -24,7 +24,9 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 					ITEM_ID: item.ITEM_ID,
 					ITEM_CODE: item.ITEM_CODE,
 					ITEM_NAME: item.ITEM_NAME,
+					QUANTITY: item.QUANTITY ? item.QUANTITY  :  1, 
 					inserted: (item.inserted) ? true : false,
+					appt_item_id: item.appt_item_id,
 					checked: (item.checked) ? '1' : '0'//Math.round(Math.random()) + ''
 				}
 				newlist[newlist.length - 1].list.push(t);
@@ -40,13 +42,17 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			if(t_item){
 				t_item.checked = '1';
 				t_item.inserted = true;
+				t_item.appt_item_id = appt_item.appt_item_id;
+				t_item.QUANTITY = appt_item.QUANTITY ? appt_item.QUANTITY : 1;
 				continue;
 			} 
 			
 			// CHECK EXISTS IN EXTRA ITEMS (just insert) 
 			t_item = arrGetBy($scope.extra_list, 'ITEM_ID', appt_item.ITEM_ID);
 			if(t_item) {
-				t_item.chosen = false;
+				t_item.chosen = false;	
+				t_item.appt_item_id = appt_item.appt_item_id;
+				t_item.QUANTITY = appt_item.QUANTITY ? appt_item.QUANTITY : 1;
 			} else {
 				// INSERT APP appt_item INTO extra list 
 				appt_item.checked = '1';
@@ -101,6 +107,7 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		*	GET APPOINMENT INFO
 		*/
 		DoctorService.getApptById($scope.apptInfo.CAL_ID).then(function(data){
+			//console.log('APPOINTMENT INFO ', data);
 			$scope.apptInfo = data;
 
             ///
@@ -164,19 +171,20 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			// TRAVEL ITEM IN CAT
             for (var key2 in cat.list) {
                 var item = cat.list[key2];
-				
-				var t  = {
-					CLN_ITEM_ID: item.ITEM_ID,
-					QUANTITY: 1,
-				};
 				if ( item.inserted ) { // item insert
 					if (item.checked == '1'){
-						update_list.push(t);
+						update_list.push({
+							appt_item_id: item.appt_item_id,
+							QUANTITY: item.QUANTITY,
+						});
 					} else {
-						delete_list.push(t.CLN_ITEM_ID); // just push item_id for API
+						delete_list.push(item.ITEM_ID); // just push item_id for API
 					}
 				} else if (item.checked == '1'){
-					insert_list.push(t);
+					insert_list.push({
+						CLN_ITEM_ID: item.ITEM_ID,
+						QUANTITY: item.QUANTITY,
+					});
 				} 
                 
             }
@@ -187,19 +195,21 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			var item = $scope.extra_list[i];
 			var t  = {
 				CLN_ITEM_ID: item.ITEM_ID,
-				QUANTITY: 1,
+				QUANTITY: item.QUANTITY,
 			};
 			
-			if( item.chosen ) { // item just add 
-				if (item.checked == '1'){
-					insert_list.push(t);
-				} 
+			if( item.chosen && item.checked == '1') { // item just add 
+				insert_list.push({
+					CLN_ITEM_ID: item.ITEM_ID,
+					QUANTITY: item.QUANTITY,
+				});
+			} else if (item.checked == '1'){
+				update_list.push({
+					appt_item_id: item.appt_item_id,
+					QUANTITY: item.QUANTITY
+				});
 			} else {
-				if (item.checked == '1'){
-					update_list.push(t);
-				} else {
-					delete_list.push(t.CLN_ITEM_ID);
-				}
+				delete_list.push(item.ITEM_ID);
 			}
 		}
 		
@@ -213,34 +223,46 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		console.log('DELETE LIST ', delete_list);*/
 		
 		var cal_id = $scope.apptInfo.CAL_ID;
-		
-		var is_insert = false, is_delete = false;
-        if (insert_list.length > 0){
+		var is_insert = (insert_list.length == 0), 
+			is_delete = (delete_list.length == 0), 
+			is_update = (update_list.length == 0);
+        if (!is_insert){
 			DoctorService.insertItemAppt(cal_id, insert_list).then(function(data){
 				//console.log('INSERT ITEMS RESULT :', data);
 				is_insert = true;
-				if(is_delete){
+				if(is_delete && is_update){
 					reloadpage();
 					toastr.success('Save Successfully!!!', "Success");
 				}
 			});
-		} else {
-			is_insert = true;
-		}
-		if (delete_list.length > 0){
+		} 
+		if (!is_delete){
 			DoctorService.deleteItemAppt(cal_id, delete_list).then(function(data){
 				//console.log('INSERT ITEMS RESULT :', data);
 				is_delete = true;
-				if(is_insert){
+				if(is_insert && is_update){
 					reloadpage();
 					toastr.success('Save Successfully!!!', "Success");
 				}
 			});	
-		} else {
-			is_delete = true;
-		}
+		} 
+		if (!is_update){
+			DoctorService.updateItemAppt(cal_id, update_list).then(function(data){
+				//console.log('INSERT ITEMS RESULT :', data);
+				is_update = true;
+				if(is_delete && is_insert){
+					reloadpage();
+					toastr.success('Save Successfully!!!', "Success");
+				}
+			});	
+		} 
+		
 	}
 
+	/**
+	*	CHANGE STATUS APPT & UPDATE NOTES
+	*/
+	
 	$scope.saveAppt = function(){
 		console.log($scope.apptChange );
 		var obj = arrGetBy($scope.options.app_status, 'code', $scope.apptChange.APP_TYPE);

@@ -1,7 +1,9 @@
-var squel = require("squel");
-squel.useFlavour('mysql');
+// var squel = require("squel");
+// squel.useFlavour('mysql');
 
 var k_time = require('../helper/k_time');
+var ApptItemModel = require('../v1_models/Cln_appt_items');
+var squel =  ApptItemModel._squel;
 
 var model_sql = {
     data_update_calendar: function (data) {
@@ -73,7 +75,7 @@ var model_sql = {
     sql_get_items_calendar: function (appt_id) {
         var query_builder = squel.select().from('inv_items').where('cal_id = ?', appt_id);
         query_builder.join('cln_appt_items', 'appt_items', 'appt_items.CLN_ITEM_ID = inv_items.ITEM_ID');
-        query_builder.field('ITEM_ID').field('ITEM_NAME').field('ITEM_CODE').field('QUANTITY');
+        query_builder.field('appt_item_id').field('ITEM_ID').field('ITEM_NAME').field('ITEM_CODE').field('QUANTITY');
         return query_builder.toString();
     },
     sql_insert_items_calendar: function (cal_id, items) {
@@ -184,8 +186,20 @@ module.exports = {
             return;
         }
 
+        
+        var sql = ApptItemModel.sql_update_batch(items);
+
         var k_sql = res.locals.k_sql;
 
+        k_sql.exec(sql, function (data) {
+            res.json(data);
+        }, function (err) {
+            res.json(err);
+        });
+        
+
+
+        /*
         var index = 0;
 
         var checksum = function(){
@@ -204,7 +218,9 @@ module.exports = {
             var sql = model_sql.sql_update_items_calendar(cal_id, items);  
             updateF(sql);
         };
-        
+        */
+
+
     },
 
     /*

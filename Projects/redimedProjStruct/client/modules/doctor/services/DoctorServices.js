@@ -12,6 +12,10 @@ angular.module("app.loggedIn.doctor.services", [])
                 var instanceApi = doctorApi.all("v1/appointment/insert_items");
                 return instanceApi.post({'cal_id':appt_id, items: items});
             }
+			doctorService.updateItemAppt = function (appt_id, items) {
+                var instanceApi = doctorApi.all("v1/appointment/update_items");
+                return instanceApi.post({'cal_id':appt_id, items: items});
+            }
 			doctorService.deleteItemAppt = function (appt_id, items) {
                 var instanceApi = doctorApi.all("v1/appointment/delete_items");
                 return instanceApi.post({'cal_id':appt_id, items: items});

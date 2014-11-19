@@ -204,16 +204,15 @@ module.exports = {
         //INSERT ITEM FIRST 
         var sql = model_sql.sql_insert_item(data);
         var k_sql = res.locals.k_sql;
-        k_sql.exec(sql, function (result) {
-            console.log('JUST INSERT ITEM ID', result.insertId)
-            var item_id = result.insertId;
-            // INSERT ITEM HEADER
 
+        k_sql.exec(sql).then(function(result){
+            console.log('JUST INSERT ITEM ID', result.insertId);
+            var item_id = result.insertId;
             var sql = model_sql.sql_insert_item_line(h_item, item_id);
-            k_sql.exec(sql, function(data2){
-                res.json({status: 'success'});       
-            }, errHandler);
-        }, errHandler);
+            return k_sql.exec(sql);
+        }).then(function(data2){
+            res.json({status: 'success'});  
+        }).catch(errHandler);
     },
     /*
     *   HEADER OPERATION 

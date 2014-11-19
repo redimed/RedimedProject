@@ -33,6 +33,7 @@ module.exports = {
         var data_insert = {
             field1: 'value1',
             field2: 'value2',
+            is_enable: '0'
         };
 
         var data_insert_batch = [
