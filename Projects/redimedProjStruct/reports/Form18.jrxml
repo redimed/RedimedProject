@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="from18" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="40e22dbc-5d64-4c12-8822-2963494dc432">
-	<property name="ireport.zoom" value="1.0000000000000009"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Form18" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="40e22dbc-5d64-4c12-8822-2963494dc432">
+	<property name="ireport.zoom" value="0.9090909090909098"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -77,7 +77,7 @@ WHERE	af.`GORGON_ID`=$P{key}]]>
 		<band height="802" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="785" uuid="4704a83a-2ea8-4851-9aff-de0449794326"/>
-				<imageExpression><![CDATA[$P{real_path}+"af18-background.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"Form18-background.jpg"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="58" y="92" width="454" height="20" uuid="82f1df54-2c17-49ed-a52d-f8cf2fd00a6c"/>

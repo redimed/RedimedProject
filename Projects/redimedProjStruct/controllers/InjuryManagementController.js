@@ -82,8 +82,8 @@ module.exports = {
     uploadInjuryPic: function(req,res){
 
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-        var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'pID'+req.body.patient_id+'\\iID'+req.body.injury_id;
-        var targetFolderForSave='uploadFile\\'+'InjuryManagement\\'+'pID'+req.body.patient_id+'\\iID'+req.body.injury_id;
+        var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID'+req.body.injury_id;
+        var targetFolderForSave='uploadFile\\'+'InjuryManagement\\'+'injuryID'+req.body.injury_id;
 
         mkdirp(targetFolder, function(err) {
             var tmp_path = req.files.file.path;
