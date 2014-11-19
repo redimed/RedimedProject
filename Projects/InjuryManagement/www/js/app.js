@@ -21,7 +21,6 @@ angular.module('starter', ['ionic',
   //'starter.playlist'
 
 ])
-
     .run(function($ionicPlatform) {
       $ionicPlatform.ready(function() {
         if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -43,9 +42,9 @@ angular.module('starter', ['ionic',
 
       //test ip local
 
-      //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
+      RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
 
-      RestangularProvider.setBaseUrl("http://192.168.133.190:3000");
+      //RestangularProvider.setBaseUrl("http://192.168.133.190:3000");
 
 
       //ip Luan

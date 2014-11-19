@@ -32,4 +32,12 @@ angular.module('starter.injury', [
                     }
                 }
             })
+            .state('app.injury.desinjurySuccess', {
+                url: "/successINjury",
+                views: {
+                    'main': {
+                        templateUrl: "modules/submitinjury/views/successinjury.html"
+                    }
+                }
+            })
     })

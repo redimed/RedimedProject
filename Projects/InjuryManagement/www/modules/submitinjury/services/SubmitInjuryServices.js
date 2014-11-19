@@ -19,6 +19,16 @@ angular.module('starter.injury.services',[])
             return detailApi.post();
         }
 
+        injuryServices.checkMobile = function (data) {
+            var detailApi = injuryApi.all("im/patients/checkMobile")
+            return detailApi.post({mobile:data});
+        }
+
+        injuryServices.checkEmail = function (data) {
+            var detailApi = injuryApi.all("im/patients/checkEmail")
+            return detailApi.post({email:data});
+        }
+
         injuryServices.getPicture = function(options) {
             var q = $q.defer();
             navigator.camera.getPicture(function(result) {

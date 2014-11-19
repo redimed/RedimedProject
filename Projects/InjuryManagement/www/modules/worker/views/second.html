@@ -2,98 +2,98 @@
     <ion-nav-buttons>
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
-    <form name="second" novalidate>
-        <div class="bar bar-subheader">
-            <button class="button button-clear button-positive" ui-sref="app.worker.main">
-                Back
-            </button>
-            <h1 class="title">Second</h1>
-        </div>
 
-        <ion-content class="padding has-subheader has-header">
-            <ion-list>
+    <div class="bar bar-subheader">
+        <button class="button button-clear button-positive" ui-sref="app.worker.main">
+            Back
+        </button>
+        <h1 class="title">Second</h1>
+    </div>
 
-                <label class="row item item-input border-none">
-                    <span class="input-label span-input-color">Indigenous Status</span>
-                    <div class="col-md-5">
-                        <ion-checkbox class="border-none" ng-model="isAboriginal">Aboriginal origin</ion-checkbox>
-                        <ion-checkbox class="border-none" ng-model="isNeither">Neither</ion-checkbox>
-                    </div>
-                    <div class="col-md-5">
-                        <ion-checkbox class="border-none" ng-model="isTSI">TSI origin</ion-checkbox>
-                        <ion-checkbox class="border-none" ng-model="isRegistered">Registered for CTG PBS Co-payment Relief</ion-checkbox>
-                    </div>
-                </label>
+    <ion-content class="padding has-subheader has-header">
+        <ion-list>
+            <form name="second" novalidate>
+                <!--<label class="row item item-input border-none">-->
+                <!--<span class="input-label span-input-color">Indigenous Status</span>-->
+                <!--<div class="col-md-5">-->
+                <!--<ion-checkbox class="border-none" ng-model="isAboriginal">Aboriginal origin</ion-checkbox>-->
+                <!--<ion-checkbox class="border-none" ng-model="isNeither">Neither</ion-checkbox>-->
+                <!--</div>-->
+                <!--<div class="col-md-5">-->
+                <!--<ion-checkbox class="border-none" ng-model="isTSI">TSI origin</ion-checkbox>-->
+                <!--<ion-checkbox class="border-none" ng-model="isRegistered">Registered for CTG PBS Co-payment Relief</ion-checkbox>-->
+                <!--</div>-->
+                <!--</label>-->
 
-                <label class="item item-input">
-                    <span class="input-label span-input-color">Country of Birth</span>
-                    <input type="text" ng-model="worker.countryOfbirth" name="worker.countryOfbirth" />
-                </label>
+                <!--<label class="item item-input">-->
+                <!--<span class="input-label span-input-color">Country of Birth</span>-->
+                <!--<input type="text" ng-model="worker.countryOfbirth" name="worker.countryOfbirth" />-->
+                <!--</label>-->
 
-                <label class="item item-input">
-                    <span class="input-label span-input-color">Primary Language</span>
-                    <input type="text" ng-model="worker.Pr_lang" name="Pr_lang">
-                </label>
+                <!--<label class="item item-input">-->
+                <!--<span class="input-label span-input-color">Primary Language</span>-->
+                <!--<input type="text" ng-model="worker.Pr_lang" name="Pr_lang">-->
+                <!--</label>-->
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Occupation</span>
-                    <input type="text" ng-model="worker.occupation" name="occupation">
+                    <input type="text" ng-model="worker.Occupation" name="Occupation">
                 </label>
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Partner's Name</span>
-                    <input type="text" ng-model="worker.part_name" name="part_name">
+                    <input type="text" ng-model="worker.Partner_name" name="Partner_name">
                 </label>
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Partner's DOB</span>
-                    <input type="text" ng-model="worker.part_DOB" name="part_DOB">
+                    <input ng-required="true" type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="worker.Partner_DOB" name="Partner_DOB" />
                 </label>
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Partner's Occupation</span>
-                    <input type="text" ng-model="worker.part_occupation" name="part_occupation">
+                    <input type="text" ng-model="worker.Partner_Occupation" name="Partner_Occupation">
                 </label>
 
                 <!--<label class="item item-input" ng-class="{'has-error':isSubmit3 && second.NOK_emerg_contact.$invalid}">-->
-                    <!--<span class="input-label span-input-color">NOK/Emerg.Contact</span>-->
-                    <!--<input type="text" ng-model="worker.NOK_emerg_contact" name="NOK_emerg_contact">-->
-                    <!--<i ng-class="{'icon ion-alert-circled error':isSubmit3 && second.NOK_emerg_contact.$invalid}"></i>-->
+                <!--<span class="input-label span-input-color">NOK/Emerg.Contact</span>-->
+                <!--<input type="text" ng-model="worker.NOK_emerg_contact" name="NOK_emerg_contact">-->
+                <!--<i ng-class="{'icon ion-alert-circled error':isSubmit3 && second.NOK_emerg_contact.$invalid}"></i>-->
                 <!--</label>-->
 
                 <!--<label class="item item-input" ng-class="{'has-error':isSubmit3 && second.NOK_Phone.$invalid}">-->
-                    <!--<span class="input-label span-input-color">NOK Phone</span>-->
-                    <!--<input type="tel" ng-model="worker.NOK_Phone" name="NOK_Phone">-->
-                    <!--<i ng-class="{'icon ion-alert-circled error':isSubmit3 && second.NOK_Phone.$invalid}"></i>-->
+                <!--<span class="input-label span-input-color">NOK Phone</span>-->
+                <!--<input type="tel" ng-model="worker.NOK_Phone" name="NOK_Phone">-->
+                <!--<i ng-class="{'icon ion-alert-circled error':isSubmit3 && second.NOK_Phone.$invalid}"></i>-->
                 <!--</label>-->
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Alias First Name</span>
-                    <input type="text" ng-model="worker.alias_firstname" name="alias_firstname">
+                    <input type="text" ng-model="worker.Alias_First_name" name="Alias_First_name">
                 </label>
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Alias Sur Name</span>
-                    <input type="text" ng-model="worker.aliass_surname" name="aliass_surname">
+                    <input type="text" ng-model="worker.Alias_Sur_name" name="Alias_Sur_name">
                 </label>
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">UR No</span>
-                    <input type="text" ng-model="worker.ur_no" name="ur_no">
+                    <input type="tel" ng-model="worker.UR_no" name="UR_no">
                 </label>
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Custom</span>
-                    <input type="text" ng-model="worker.custom" name="custom">
+                    <input type="text" ng-model="worker.Custom" name="Custom">
                 </label>
-
-            </ion-list>
-
+            </form>
             <div class="padding-right padding-left">
                 <button type="submit" class="button button-block button-positive" ng-click="submit(workerForm, second)">
                     Add Worker
                 </button>
             </div>
-        </ion-content>
-    </form>
+        </ion-list>
+    </ion-content>
 </ion-view>

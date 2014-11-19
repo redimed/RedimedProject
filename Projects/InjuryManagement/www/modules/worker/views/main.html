@@ -15,7 +15,6 @@
 
         <ion-content class="padding has-subheader has-header">
             <ion-list>
-
                 <label class="item item-input">
                     <span class="input-label span-input-color">Post Code</span>
                     <input type="number" ng-model="worker.Post_code" name="Post_code">
@@ -34,39 +33,18 @@
                     <textarea type="text" ng-model="worker.Account_holder" name="worker.Account_holder"></textarea>
                 </label>
 
-                <label class="item item-input">
-                    <span class="input-label span-input-color">IHI No</span>
-                    <input type="tel" ng-model="worker.IHINo" name="IHINo" >
+                <label class="item item-input" ng-class="{'has-error':isSubmit2 && main.Medicare_no.$invalid}">
+                    <span class="input-label span-input-color">Medicare No</span>
+                    <input ng-required="true" type="tel" ng-model="worker.Medicare_no" name="Medicare_no" >
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit2 && main.Medicare_no.$invalid}"></i>
                 </label>
-
-                <!--<label class="item item-input" ng-class="{'has-error':isSubmit2 && main.Medicare_no.$invalid}">-->
-                    <!--<span class="input-label span-input-color">Medicare No</span>-->
-                    <!--<input ng-required="true" type="tel" ng-model="worker.Medicare_no" name="Medicare_no" >-->
-                    <!--<i ng-class="{'icon ion-alert-circled error col col-10':isSubmit2 && main.Medicare_no.$invalid}"></i>-->
-                <!--</label>-->
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Expire Medicare</span>
-                    <input type="text" ng-model="worker.Exp_medicare" name="Exp_medicare" >
+                    <input type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="worker.Exp_medicare" name="Exp_medicare" />
                 </label>
-
-                <div class="row">
-                    <div class="col">
-                        <label class="item item-input">
-                            <span class="input-label span-input-color">Health Fund</span>
-                            <select ng-model="worker.Private_fund_id"
-                                    ng-options="row.PF_id as row.Fund_name for row in fundIndex">
-                                <option value="">--Select Fund--</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="col col-20 col-offset-15">
-                        <label class="item item-input">
-                            <span class="input-label span-input-color">UPI</span>
-                            <input type="tel" ng-model="worker.UPI" name="UPI">
-                        </label>
-                    </div>
-                </div>
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">MemberShip No</span>
@@ -78,15 +56,15 @@
                     <input ng-model="worker.DVA_No" type="number" name="DVA_No">
                 </label>
 
-                <label class="item item-input">
-                    <span class="input-label span-input-color">DVA Disability</span>
-                    <input ng-model="worker.DVA_disability" type="number" name="DVA_disability">
-                </label>
+                <!--<label class="item item-input">-->
+                    <!--<span class="input-label span-input-color">DVA Disability</span>-->
+                    <!--<input ng-model="worker.DVA_disability" type="number" name="DVA_disability">-->
+                <!--</label>-->
 
-                <label class="item item-input">
-                    <span class="input-label span-input-color">DVA Card Colour</span>
-                    <input ng-model="worker.DVA_card_colour" type="number" name="DVA_card_colour">
-                </label>
+                <!--<label class="item item-input">-->
+                    <!--<span class="input-label span-input-color">DVA Card Colour</span>-->
+                    <!--<input ng-model="worker.DVA_card_colour" type="number" name="DVA_card_colour">-->
+                <!--</label>-->
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">HCC/Pension No</span>
@@ -99,6 +77,23 @@
                     this.setAttribute('onfocus','');this.blur();
                     this.focus();" ng-model="worker.Exp_pension" name="Exp_pension" />
                 </label>
+
+                <div class="row" style="padding-left: 9px; padding-top: 0px; padding-right: 8px; width: 103%;">
+                    <div class="col col-75" style="padding-top: 1px">
+                        <label class="item item-input">
+                            <span class="input-label span-input-color">Health Fund</span>
+                            <select ng-model="worker.Private_fund_id"
+                                    ng-options="row.PF_id as row.Fund_name for row in fundIndex">
+                                <option value="">--Select Fund--</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col" style="padding-top: 1px">
+                        <label class="item item-input" style="padding-bottom: 8px;">
+                            <input type="tel" ng-model="worker.UPI" name="UPI" placeholder="UPI">
+                        </label>
+                    </div>
+                </div>
 
             </ion-list>
         </ion-content>

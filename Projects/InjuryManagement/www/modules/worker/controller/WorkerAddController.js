@@ -8,15 +8,17 @@ angular.module('starter.worker.add.controller',[])
         $scope.isSubmit3 = false;
         $scope.isFailMobile = false;
         $scope.isFailEmail = false;
+        $scope.isMobile = null;
 
         $scope.workerObj = {
+            company_id: userInfoLS.company_id,
             Title: '',
             First_name: '',
             Sur_name: '',
             Middle_name: '',
             Address1: '',
             Address2: '',
-            Post_code: '',
+            State: '',
             Country: 'Australia',
             DOB: '',
             Sex: '',
@@ -25,29 +27,59 @@ angular.module('starter.worker.add.controller',[])
             Mobile: '',
             Suburb: '',
             Known_as: '',
+            Email: '',
+
+            //Phone_ext: '',
+            //No_SMS: 1,
+            //Pays_Gap_Only: 1,
+            //Account_Seft: '',
+            //NOK_Emerg_Contact:'',
+            //NOK_Phone:'',
+
+            //MAIN
+            Post_code: '',
             Account_type: '',
             Account_holder: '',
             Medicare_no: '',
-            Email: '',
-            IHINo: '',
+            Exp_medicare: '',
             Private_fund_id: '',
             UPI: '',
-            Exp_medicare: '',
             MemberShip_no: '',
-            HCC_Pension_No: '',
             DVA_No: '',
-            DVA_card_colour: '',
+            HCC_Pension_No: '',
             Exp_pension: '',
-            company_id: userInfoLS.company_id,
 
-            //No_SMS: 1,
-            //Account_Seft: '',
-            //Ref: '',
+            //SECOND
+            Occupation:'',
+            Partner_name: '',
+            Partner_DOB: '',
+            Partner_Occupation: '',
+            Alias_First_name: '',
+            Alias_Sur_name: '',
+            UR_no:'',
+            Custom:''
+
+            //not set field
             //Balance: '',
-            //Pays_Gap_Only: 1,
-            //Alias_First_name: '',
-            //Alias_Sur_name: '',
-            //Phone_ext: ''
+            //GP_Sur_name:'',
+            //GP_First_name:'',
+            //Clinic:'',
+            //Usual_provider:'',
+            //Specialty:'',
+            //Referral_source:'',
+            //Marial_Status:'',
+            //Diabetic:'',
+            //Inactive:'',
+            //Deceased:'',
+            //Memo:'',
+            //Culture_id:'',
+            //Language_id:'',
+            //Student_id:'',
+            //Faculty_id:'',
+            //Free_type:'',
+            //Gradudate_status:'',
+            //Patient_node:'',
+            //Isenable:''
         }
 
         var reset = function() {
@@ -60,11 +92,8 @@ angular.module('starter.worker.add.controller',[])
 
         var init = function () {
             reset();
-
             $scope.titleIndex = ConfigService.title_option();
             $scope.sexIndex = ConfigService.sex_option();
-            //$scope.countryIndex = ConfigService.country_option();
-            //$scope.smsIndex = $scope.payGapIndex = ConfigService.get_yes_no_opt();
 
             WorkerServices.listAccType().then(function (data) {
                 if (data.status != 'success') {
@@ -83,38 +112,38 @@ angular.module('starter.worker.add.controller',[])
             });
         }
 
-        $scope.Checkfield = function (valueMobile, valueEmail) {
-            if(valueMobile != '')
+        $scope.Checkfield = function (isMobile) {
+            if(isMobile)
             {
-                WorkerServices.checkMobile($scope.worker.Mobile).then(function(data){
-                    if(data.status == 'success')
-                    {
-                        if(data.count == 0)
-                        {
-                            $scope.isFailMobile = false;
-                        }
-                        else
-                        {
-                            $scope.isFailMobile = true;
-                        }
-                    }
-
-                })
+                //WorkerServices.checkMobile($scope.worker.Mobile).then(function(data){
+                //    if(data.status == 'success')
+                //    {
+                //        if(data.count == 0)
+                //        {
+                //            $scope.isFailMobile = false;
+                //        }
+                //        else
+                //        {
+                //            $scope.isFailMobile = true;
+                //        }
+                //    }
+                //
+                //})
             }
-            if(valueEmail != '')
+            else
             {
-                WorkerServices.checkEmail($scope.worker.Email).then(function (data) {
-                    if (data.status == 'success') {
-                        if (data.count == 0) {
-                            console.log("pass")
-                            $scope.isFailEmail = false;
-                        }
-                        else {
-                            $scope.isFailEmail = true;
-                        }
-                    }
-
-                })
+                //WorkerServices.checkEmail($scope.worker.Email).then(function (data) {
+                //    if (data.status == 'success') {
+                //        if (data.count == 0) {
+                //            console.log("pass")
+                //            $scope.isFailEmail = false;
+                //        }
+                //        else {
+                //            $scope.isFailEmail = true;
+                //        }
+                //    }
+                //
+                //})
             }
         }
 
@@ -147,14 +176,14 @@ angular.module('starter.worker.add.controller',[])
         }
 
         $scope.submit = function (workerForm, second) {
-            $scope.isSubmit3 = true;
-            if (second.$invalid) {
-                var alertPopup = $ionicPopup.alert({
-                    title: "Can't insert worker",
-                    template: 'Please Check Your Information!'
-                });
-                return;
-            }
+            //$scope.isSubmit3 = true;
+            //if (second.$invalid) {
+            //    var alertPopup = $ionicPopup.alert({
+            //        title: "Can't insert worker",
+            //        template: 'Please Check Your Information!'
+            //    });
+            //    return;
+            //}
 
             WorkerServices.insertWorker({patient: $scope.worker}).then(function (data) {
                 if (data.status != 'success') {
@@ -176,6 +205,7 @@ angular.module('starter.worker.add.controller',[])
                 });
 
                 $timeout(function () {
+                    alert(JSON.stringify($scope.worker));
                     reset();
                     $ionicLoading.hide();
                     var alertPopup = $ionicPopup.alert({
