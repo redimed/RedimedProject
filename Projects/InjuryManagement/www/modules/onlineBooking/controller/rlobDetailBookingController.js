@@ -5,6 +5,11 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
 
         $scope.patientID = $stateParams.patientID;
 
+
+        $scope.injuryInfo = localStorageService.get('injuryInfo');
+        //$scope.infoBooking.description = $scope.injuryInfo.info.description;
+        //$scope.imgURI = $scope.injuryInfo.dataImage;
+        //console.log(JSON.stringify($scope.injuryInfo));
         $timeout(function(){
             $scope.selectedBooking=localStorageService.get("selectedBooking");
         }, 500);
@@ -13,8 +18,11 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
 
         $scope.addbooking = function(des){
             console.log( $scope.selectedBooking)
+
+
+
             var infoBooking = {
-                patient_id: $scope.patientID,
+                Patient_id: 1,
                 doctor_id:$scope.selectedBooking.DOCTOR_ID,
                 cal_id:$scope.selectedBooking.CAL_ID,
                 injury_description:des,

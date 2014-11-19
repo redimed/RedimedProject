@@ -33,7 +33,7 @@
                 <div class="footer_injury">
                     <ion-scroll direction="x">
                         <a class="button button-clear button-positive"
-                           ng-repeat="imgDetail in imgURI" ng-click="openModal($event)" style="width: 100px; height: 50px;">
+                           ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail.image, imgDetail.desc)"  style="width: 80px; height: 50px;">
                             <img ng-src="{{imgDetail.image}}" class="img-responsive"/>
                         </a>
                     </ion-scroll>
@@ -47,7 +47,7 @@
                     </button>
                 </div>
                 <div class="col col-md-3">
-                    <button class="button button-block button-positive" ng-click="modal.show()">
+                    <button class="button button-block button-positive" ng-click="showConfirm(descinjury,isClick=false)">
                         Non-Emergency
                     </button>
                 </div>

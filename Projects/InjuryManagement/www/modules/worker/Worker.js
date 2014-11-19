@@ -6,7 +6,7 @@ angular.module('starter.worker', [
     .config (function ($stateProvider) {
     $stateProvider
         .state('app.worker',{
-            url:"/worker",
+            url:"/worker/:nonEmerg",
             views: {
                 'menuContent':{
                     templateUrl: "modules/worker/views/structure.html",

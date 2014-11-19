@@ -42,9 +42,9 @@ angular.module('starter', ['ionic',
 
       //test ip local
 
-      RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
+      //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
 
-      //RestangularProvider.setBaseUrl("http://192.168.133.190:3000");
+      RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
 
       //ip Luan

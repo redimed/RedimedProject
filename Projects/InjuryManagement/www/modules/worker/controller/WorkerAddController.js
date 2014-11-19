@@ -1,8 +1,9 @@
 angular.module('starter.worker.add.controller',[])
 
-    .controller('workerAddController', function($scope, WorkerServices, $state, localStorageService, $ionicPopup, $ionicLoading, $timeout, ConfigService) {
+    .controller('workerAddController', function($scope, WorkerServices, $state, $stateParams, localStorageService, $ionicPopup, $ionicLoading, $timeout, ConfigService) {
         var userInfoLS = localStorageService.get("userInfo");
-        console.log(JSON.stringify(userInfoLS.company_id));
+
+        $scope.checkNonemerg = $stateParams.nonEmerg;
         $scope.isSubmit = false;
         $scope.isSubmit2 = false;
         $scope.isSubmit3 = false;
@@ -115,35 +116,35 @@ angular.module('starter.worker.add.controller',[])
         $scope.Checkfield = function (isMobile) {
             if(isMobile)
             {
-                //WorkerServices.checkMobile($scope.worker.Mobile).then(function(data){
-                //    if(data.status == 'success')
-                //    {
-                //        if(data.count == 0)
-                //        {
-                //            $scope.isFailMobile = false;
-                //        }
-                //        else
-                //        {
-                //            $scope.isFailMobile = true;
-                //        }
-                //    }
-                //
-                //})
+                WorkerServices.checkMobile($scope.worker.Mobile).then(function(data){
+                    if(data.status == 'success')
+                    {
+                        if(data.count == 0)
+                        {
+                            $scope.isFailMobile = false;
+                        }
+                        else
+                        {
+                            $scope.isFailMobile = true;
+                        }
+                    }
+
+                })
             }
             else
             {
-                //WorkerServices.checkEmail($scope.worker.Email).then(function (data) {
-                //    if (data.status == 'success') {
-                //        if (data.count == 0) {
-                //            console.log("pass")
-                //            $scope.isFailEmail = false;
-                //        }
-                //        else {
-                //            $scope.isFailEmail = true;
-                //        }
-                //    }
-                //
-                //})
+                WorkerServices.checkEmail($scope.worker.Email).then(function (data) {
+                    if (data.status == 'success') {
+                        if (data.count == 0) {
+                            console.log("pass")
+                            $scope.isFailEmail = false;
+                        }
+                        else {
+                            $scope.isFailEmail = true;
+                        }
+                    }
+
+                })
             }
         }
 
@@ -174,7 +175,12 @@ angular.module('starter.worker.add.controller',[])
                 $state.go("app.worker.second");
             }
         }
+        //back injuryDesc
+        $scope.backdescInjury = function() {
+            $state.go('app.injury.desinjury');
+        }
 
+        //submit worker check true false
         $scope.submit = function (workerForm, second) {
             //$scope.isSubmit3 = true;
             //if (second.$invalid) {
@@ -184,36 +190,43 @@ angular.module('starter.worker.add.controller',[])
             //    });
             //    return;
             //}
+            if($scope.checkNonemerg)
+            {
+                //have id worker submit booking
+                $state.go('app.chooseAppointmentCalendar');
+            }
+            else
+            {
+                WorkerServices.insertWorker({patient: $scope.worker}).then(function (data) {
+                    if (data.status != 'success') {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Cannot Insert',
+                            template: 'Please Check Your Information!'
+                        });
+                        return;
+                    }
 
-            WorkerServices.insertWorker({patient: $scope.worker}).then(function (data) {
-                if (data.status != 'success') {
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Cannot Insert',
-                        template: 'Please Check Your Information!'
+                    $ionicLoading.show({
+                        template: "<div class='icon ion-ios7-reloading'></div>"+
+                        "<br />"+
+                        "<span>Waiting...</span>",
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
                     });
-                    return;
-                }
 
-                $ionicLoading.show({
-                    template: "<div class='icon ion-ios7-reloading'></div>"+
-                    "<br />"+
-                    "<span>Waiting...</span>",
-                    animation: 'fade-in',
-                    showBackdrop: true,
-                    maxWidth: 200,
-                    showDelay: 0
-                });
-
-                $timeout(function () {
-                    alert(JSON.stringify($scope.worker));
-                    reset();
-                    $ionicLoading.hide();
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Insert Successfully',
-                        template: 'We have added worker to company!'
-                    });
-                }, 2000);
-            })
+                    $timeout(function () {
+                        alert(JSON.stringify($scope.worker));
+                        reset();
+                        $ionicLoading.hide();
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Insert Successfully',
+                            template: 'We have added worker to company!'
+                        });
+                    }, 2000);
+                })
+            }
         }
         init();
     })

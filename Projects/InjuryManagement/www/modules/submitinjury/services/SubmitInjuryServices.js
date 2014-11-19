@@ -14,7 +14,7 @@ angular.module('starter.injury.services',[])
             return detailWorker.post({id: id})
         }
 
-        injuryServices.uploadImg = function (data){
+        injuryServices.uploadImg = function (){
             var detailApi = injuryApi.all("im/upload");
             return detailApi.post();
         }
@@ -27,6 +27,11 @@ angular.module('starter.injury.services',[])
         injuryServices.checkEmail = function (data) {
             var detailApi = injuryApi.all("im/patients/checkEmail")
             return detailApi.post({email:data});
+        }
+
+        injuryServices.insertInjury = function(data) {
+            var detailApi = injuryApi.all("im/submit");
+            return detailApi.post({info: data});
         }
 
         injuryServices.getPicture = function(options) {
