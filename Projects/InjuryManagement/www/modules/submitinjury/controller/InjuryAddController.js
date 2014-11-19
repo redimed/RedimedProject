@@ -37,7 +37,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }
 
         $scope.worker = {
-            patient_id: -1,
+            Patient_id: -1,
             Title: '',
             First_name: '',
             Sur_name: '',
@@ -61,7 +61,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
         $scope.selectWorker = function (id) {
             $scope.isShow = !$scope.isShow;
-            InjuryServices.getPatientID(id).then(function (data){
+            InjuryServices.getPatientID(id).then(function (data) {
                 $scope.worker = data;
                 $scope.worker.DOB = $filter('date')(new Date($scope.worker.DOB),'dd/MM/yyyy');
                 $scope.temp1 = angular.copy($scope.worker);
@@ -77,6 +77,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 }
                 else{
                     $scope.list = data.rs;
+                    console.log(JSON.stringify($scope.list));
                 }
             });
         }
@@ -264,8 +265,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         };
 
         function NonEmergency() {
-            console.log($scope.worker.patient_id);
-            if($scope.worker.patient_id == -1)
+            console.log($scope.worker.Patient_id);
+            if($scope.worker.Patient_id == -1)
             {
                 localStorageService.set("injuryInfo", $scope.infoInjury);
                 $state.go('app.worker.add',{nonEmerg: $scope.goAddworker});
@@ -277,7 +278,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     dataImage: $scope.imgURI
                 };
                 localStorageService.set("injuryInfo", $scope.infoInjury);
-                $state.go('app.chooseAppointmentCalendar',{patient_id: $scope.worker.patient_id});
+                $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
             }
         }
         initFormWorker();
