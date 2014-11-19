@@ -199,11 +199,12 @@ module.exports = {
 
         var hostname = req.headers.host;
 
-        var filename = "client/images/skinapp/"+random_str+".png";
-        var return_filename = "images/skinapp/"+random_str+".png";
+        var filename = "client/img/skinapp/"+random_str+".png";
+        var return_filename = "img/skinapp/"+random_str+".png";
+
 
         fs.writeFile(filename, base64String, 'base64', function(err){
-            if(err) console.log(err);
+            if(err) res.json({"status": "FAILED", "image": "none"});
             else
                 res.json({"status":"OK", "image": "http://"+hostname+"/"+return_filename});
         });
