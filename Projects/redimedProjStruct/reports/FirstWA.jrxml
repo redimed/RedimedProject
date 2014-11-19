@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FirstWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c1bde60-6e00-4470-a6cb-d8f3a613e87f">
+	<property name="ireport.zoom" value="1.2722928551174548"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1513"/>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="teleid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select t.id,t.`Family_name` , t.`Given_name`, concat( ifnull(t.`Family_name`,'') , ' ', ifnull(t.`Given_name`,'' )) as fullname  , t.`DOB` , t.`Address` , t.`Home_phone` , t.`Mobile_phone` , t.`signature` ,t.`Occupation` , t.`Workplace` , t.`Creation_date` , t.`Accident_Date` ,  t.`Cause` , t.`isInjury` , t.`email` as pEmai, t.`jobTitle`,
+concat(
+if(t.`isHeadache` = 1 , concat('Headache ', case  ifnull(t.`symtom_value_1` ,'0') when '0' then ' ' else  concat(' - ',  t.`symtom_value_1` ) end ), '')
+,if(t.`isNausea` = 1 , concat(', Nausea ', case  ifnull( t.`symtom_value_2`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_2` ) end ), '')
+,if(t.`isFatigue` = 1 , concat(', Fatigue ', case  ifnull(t.`symtom_value_3` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_3` ) end ), '')
+,if(t.`isFever` = 1 , concat(', Fever ', case  ifnull(t.`symtom_value_4` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_4` ) end ), '')
+,if(t.`isSoreThroat` = 1 , concat(', SoreThroat ', case  ifnull(t.`symtom_value_5` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_5` ) end ), '')
+,if(t.`isCough` = 1 , concat(', Cough ', case  ifnull(t.`symtom_value_6` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_6` ) end ), '')
+,if(t.`isSinusCongestion` = 1 , concat(', Sinus Congestion ', case  ifnull(t.`symtom_value_7` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_7` ) end ), '')
+,if(t.`isBodyAches` = 1 , concat(', Body Aches ', case  ifnull(t.`symtom_value_8` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_8` ) end ), '')
+,if(t.`isVomiting` = 1 , concat(', Vomiting ', case  ifnull(t.`symtom_value_9` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_9` ) end ), '')
+,if(t.`isLightHeadedness` = 1 , concat('Light Headedness ', case  ifnull(t.`symtom_value_10`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_10` ) end ), '')
+,if(t.`isDiarrhea` = 1 , concat(', Diarrhea ', case  ifnull( t.`symtom_value_11`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_11` ) end ), '')
+,if(t.`isShortnessOfBreath` = 1 , concat(', Shortness Of Breath ', case  ifnull(t.`symtom_value_12`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_12` ) end ), '')
+,if(t.`isChestPain` = 1 , concat(', Chest Pain ', case  ifnull(t.`symtom_value_13`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_13` ) end ), '')
+,if(t.`isAbdomenPain` = 1 , concat(', Abdomen Pain ', case  ifnull(t.`symtom_value_14`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_14` ) end ), '')
+,if(t.`isBackPain` = 1 , concat(', Back Pain ', case  ifnull(t.`symtom_value_15`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_15` ) end ), '')
+,if(t.`isEarPain` = 1 , concat(', Ear Pain ', case  ifnull(t.`symtom_value_16`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_16` ) end ), '')
+,if(t.`isLowMood` = 1 , concat(', Low Mood ', case  ifnull(t.`symtom_value_17`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_17` ) end ), '')
+,if(t.`isDecreasedAppetite` = 1 , concat(', Decreased Appetite ', case  ifnull( t.`symtom_value_18`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_18` ) end ), '')
+,if(t.`isFeelingDepressed` = 1 , concat(', Feeling Depressed ', case  ifnull(t.`symtom_value_19`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_19` ) end ), '')
+,if(t.`isToothPain` = 1 , concat(', Tooth Pain ', case ifnull(t.`symtom_value_20` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_20`,' ' ) end ),'')
+) as worker_symptoms  , f.`Creation_date` , f.`clinicFind` , f.`diagnosis` , f.`isConsistent` , f.`isCondition` , f.`usualDuties` , f.`isFullCapacity` , f.`fullCapaFrom` , f.`isRequireTreat` ,
+f.`isSomeCapacity` , f.`someCapaFrom` , f.`someCapaTo` , f.`isPreDuties`, f.`isModiDuties` , f.`isWorkModifi` , f.`isPreHours` , f.`isModiHours` , f.`modiHrs` , f.`modiDays`, f.`isNoCapacity` ,
+f.`noCapaFrom` , f.`noCapaTo` , f.`isLiftUp` , f.`liftUpKg` , f.`isSitUp` , f.`sitUpMins` , f.`isStandUp`, f.`standUpMins` , f.`sitUpMins` , f.`isWalkUp` , f.`walkUpMeter`, f.`isWorkBelow`, f.`capaCmt` , f.`activities_1` , f.`activities_2`, f.`activities_3` , f.`activities_4` , f.`activities_5` , f.`activities_6` , f.`goal_1`, f.`goal_2` , f.`goal_3` , f.`goal_4` , f.`goal_5` , f.`goal_6` ,
+f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` , f.`Name` , f.`Address` as docAddress , f.`Phone` , f.`faxNumber` , f.`Email` , f.`signature` as docSign , f.`Creation_date` as injuryDate, f.`examDate`,
+c.`Company_name`, c.`Addr`, c.`Phone` as cPhone
+from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`telehealth_id` inner join `companies` c on c.`id` = t.`company_id` where f.`Ass_id` = $P{teleid}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Family_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Given_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="DOB" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Home_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Mobile_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="signature" class="java.awt.Image">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Occupation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Workplace" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Accident_Date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cause" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isInjury" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pEmai" class="java.lang.String"/>
+	<field name="jobTitle" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="worker_symptoms" class="java.lang.String"/>
+	<field name="clinicFind" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diagnosis" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isConsistent" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isCondition" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="usualDuties" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isFullCapacity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fullCapaFrom" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isRequireTreat" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isSomeCapacity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="someCapaFrom" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="someCapaTo" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isPreDuties" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isModiDuties" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isWorkModifi" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isPreHours" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isModiHours" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="modiHrs" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="modiDays" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isNoCapacity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="noCapaFrom" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="noCapaTo" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isLiftUp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="liftUpKg" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isSitUp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sitUpMins" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isStandUp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="standUpMins" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isWalkUp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="walkUpMeter" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isWorkBelow" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="capaCmt" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="activities_1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="activities_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="activities_3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="activities_4" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="activities_5" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="activities_6" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="goal_1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="goal_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="goal_3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="goal_4" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="goal_5" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="goal_6" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isMoreInfo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isRTW" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isInvolved" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isNotReview" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isReview" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="reviewOn" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="reviewCmt" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="docAddress" class="java.lang.String"/>
+	<field name="Phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="faxNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="docSign" class="java.awt.Image"/>
+	<field name="injuryDate" class="java.sql.Timestamp"/>
+	<field name="examDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Addr" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cPhone" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="22" y="0" width="509" height="802" uuid="69fa6284-3d99-4b0d-b3d9-ff8c9b59b537"/>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/f1.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="104" y="169" width="140" height="18" uuid="900a79bc-d74d-45e6-b337-6763c7c32774"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Family_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="330" y="169" width="190" height="18" uuid="bce79b91-357d-491b-b0df-b4d64d523068"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Given_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="104" y="193" width="140" height="19" uuid="41c142dd-4f82-43e2-8c43-2f72b27d6f71"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="103" y="218" width="141" height="20" uuid="d966f9f2-1448-4b33-8f29-61f82cecdb6d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Home_phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="330" y="218" width="190" height="20" uuid="a3266004-9276-4590-8ec8-e188e091e500"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Mobile_phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="313" width="141" height="20" uuid="c84f003f-5766-48e6-9e44-101c0e327b42"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Occupation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="104" y="241" width="416" height="20" uuid="61c5da4d-dd5e-4a22-9d34-9cf0e90a705f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="337" width="390" height="20" uuid="ef5292ab-099f-48d0-b9f1-f545c07b5359"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Addr}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="130" y="449" width="137" height="39" uuid="4a442dd0-5596-45f0-b920-47b65974e439"/>
+				<imageExpression><![CDATA[$F{signature}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="347" y="470" width="173" height="18" uuid="636448de-5632-43d4-9e13-1403a76dbbe2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Creation_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="130" y="518" width="137" height="20" uuid="de81b638-996f-402a-a78b-1f98193b4267"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Accident_Date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="541" width="390" height="20" uuid="d8e2efd8-97c6-40d3-b8ce-b6bd69abe28c"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cause}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="563" width="390" height="24" uuid="5e2181e5-c445-4306-a3be-bcc8827f3c8b"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{worker_symptoms}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="152" y="641" width="115" height="20" uuid="c4043dc1-01b3-409c-ad4a-1a3e063ad315"/>
+				<textFieldExpression><![CDATA[$F{examDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="152" y="664" width="368" height="32" uuid="937105b2-292d-454a-b104-bc1cb4ccd1f5"/>
+				<textFieldExpression><![CDATA[$F{clinicFind}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="152" y="699" width="368" height="20" uuid="5a4e8d8e-4d81-4606-9429-8c78285c5fce"/>
+				<textElement>
+					<font size="9"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diagnosis}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="365" y="725" width="11" height="11" uuid="0c7a6950-800c-497c-bfaa-2242ee63de25">
+					<printWhenExpression><![CDATA[$F{isConsistent}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="403" y="725" width="11" height="11" uuid="f2a235c4-f91b-477f-b305-7cd97bce34b3">
+					<printWhenExpression><![CDATA[$F{isConsistent}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="434" y="726" width="11" height="11" uuid="49c69b37-283d-4508-a382-113642ee48bb">
+					<printWhenExpression><![CDATA[$F{isConsistent}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="137" y="748" width="11" height="11" uuid="df1159ac-9b48-4882-ae47-86167a24783d">
+					<printWhenExpression><![CDATA[$F{isCondition}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="260" y="748" width="11" height="11" uuid="2e6b87a9-b2a2-4474-acf3-3872a5aa8733">
+					<printWhenExpression><![CDATA[$F{isCondition}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="376" y="313" width="143" height="20" uuid="f03014f8-7a52-45a6-b09c-36e8f3aa1de5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Company_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="448" width="167" height="20" uuid="c87de640-d303-4a2b-bfa3-e2e97c732d19"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="330" y="194" width="190" height="18" uuid="4534b5dc-b383-4809-abc5-fbe6f7b74838"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pEmai}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="22" y="0" width="509" height="802" uuid="69fa6284-3d99-4b0d-b3d9-ff8c9b59b537"/>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/f2.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="137" y="29" width="383" height="20" uuid="28182e6f-1c19-4261-b6aa-bb2b876bfaf5"/>
+				<textFieldExpression><![CDATA[$F{usualDuties}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="35" y="79" width="11" height="11" uuid="90d87f9c-c063-4946-bcc7-378401718468">
+					<printWhenExpression><![CDATA[$F{isFullCapacity}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="35" y="100" width="11" height="11" uuid="2aeb1437-b412-4002-9e6a-17f376567c02">
+					<printWhenExpression><![CDATA[$F{isSomeCapacity}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="359" y="79" width="11" height="11" uuid="693be929-bc82-417c-890a-82b93f9425a7">
+					<printWhenExpression><![CDATA[$F{isRequireTreat}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="198" y="75" width="135" height="20" uuid="9c4f237c-8c70-4901-af53-2dc7e427ba42"/>
+				<textFieldExpression><![CDATA[$F{fullCapaFrom}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="198" y="100" width="135" height="15" uuid="86af6a3a-f0b4-431b-b26b-aa14693b5d88"/>
+				<textFieldExpression><![CDATA[$F{someCapaFrom}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="359" y="100" width="100" height="15" uuid="f09433dc-3d0c-4596-82ee-d63bf041ce0d"/>
+				<textFieldExpression><![CDATA[$F{someCapaTo}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="58" y="122" width="11" height="11" uuid="c4d8ef1b-e1ee-422d-b2d5-4631963193c6">
+					<printWhenExpression><![CDATA[$F{isPreDuties}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="58" y="143" width="11" height="11" uuid="07e42fda-9f01-49ad-96dc-0f2512e4d0f2">
+					<printWhenExpression><![CDATA[$F{isPreHours}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="178" y="122" width="11" height="11" uuid="bf43dc67-4a3a-4cec-be86-c87fc2d40a54">
+					<printWhenExpression><![CDATA[$F{isModiDuties}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="178" y="143" width="11" height="11" uuid="229e3501-9d98-4f93-8669-ee4a27d9fbb7">
+					<printWhenExpression><![CDATA[$F{isModiHours}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="381" y="122" width="11" height="11" uuid="891b4a03-1dcf-4bd6-babd-3e8ec6b0d141">
+					<printWhenExpression><![CDATA[$F{isWorkModifi}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="285" y="140" width="35" height="15" uuid="eb35649d-e5c8-488d-9b18-47fb96ac6c22"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{modiHrs}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="381" y="140" width="35" height="15" uuid="e9aeb84d-c578-4636-a6ff-373d01b82fe1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{modiDays}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="35" y="166" width="11" height="11" uuid="016d571f-3309-4be3-9199-0310c9e6fb0e">
+					<printWhenExpression><![CDATA[$F{isNoCapacity}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="198" y="162" width="73" height="15" uuid="ecd81190-54f3-4f02-b49b-c5561b8cb7a7"/>
+				<textFieldExpression><![CDATA[$F{noCapaFrom}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="299" y="162" width="73" height="15" uuid="ebf5d93c-37a5-44d3-bbca-dd4347b45b98"/>
+				<textFieldExpression><![CDATA[$F{noCapaTo}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="34" y="233" width="11" height="11" uuid="da3e5d29-af8e-4bce-ae52-f924c8dac8f2">
+					<printWhenExpression><![CDATA[$F{isLiftUp}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="35" y="255" width="11" height="11" uuid="52aec32c-65fe-4cee-aee9-11c122f9fb3a">
+					<printWhenExpression><![CDATA[$F{isSitUp}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="35" y="275" width="11" height="11" uuid="308a2882-732f-4748-86a6-264bfe38b6c2">
+					<printWhenExpression><![CDATA[$F{isStandUp}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="34" y="297" width="11" height="11" uuid="cf9844a0-b7f7-43bc-a40d-8b8dc0887a93">
+					<printWhenExpression><![CDATA[$F{isWalkUp}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="35" y="319" width="11" height="11" uuid="983a4dab-6c2c-4984-aac8-81559c9bf058">
+					<printWhenExpression><![CDATA[$F{isWorkBelow}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="235" width="35" height="15" uuid="a99370a2-2753-4e2c-b20d-89135bba25bb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{liftUpKg}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="255" width="35" height="15" uuid="25d8b2a5-d86a-4d75-b9fb-29bb59775597"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sitUpMins}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="277" width="35" height="15" uuid="861188dd-48f3-4616-8d90-f43ca3f24124"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{standUpMins}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="299" width="35" height="15" uuid="f203603f-50b9-4ab4-a43d-e7f182b47dfc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{walkUpMeter}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="199" y="241" width="320" height="67" uuid="c95dea69-82f3-4d1c-8cc0-76b23ec873a0"/>
+				<textFieldExpression><![CDATA[$F{capaCmt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="373" width="130" height="16" uuid="15aec4ce-7f00-4b8f-845d-03a7dac8188b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{activities_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="389" width="130" height="16" uuid="116a9cdb-1e98-426a-afbd-a46410a79f35"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{activities_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="407" width="130" height="16" uuid="d63ab900-f1ed-4724-b7e5-35e87153e41b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{activities_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="422" width="130" height="16" uuid="a5224b60-45df-41fc-8b78-dc483f0b5bcf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{activities_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="438" width="130" height="16" uuid="d2e55370-a04d-4efd-8315-b1a5fe2a0794"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{activities_5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="455" width="130" height="16" uuid="a610b958-6fc4-4f14-ae6a-91c0b1c87637"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{activities_6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="173" y="373" width="345" height="16" uuid="2c5f5659-655a-45f5-9500-349a7653f23b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{goal_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="173" y="391" width="345" height="16" uuid="97d8a3b8-7a00-46ae-af81-ab8c40b86966"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{goal_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="173" y="407" width="345" height="16" uuid="d9c1adc7-736f-4c94-bbc9-bd8925c4683e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{goal_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="173" y="423" width="345" height="16" uuid="092d9d5a-36c3-4ebe-af93-18392e00ac4b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{goal_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="173" y="439" width="345" height="16" uuid="b2cc6458-4c7b-4b7b-93af-cef3b8e42031"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{goal_5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="173" y="455" width="345" height="16" uuid="6eed8525-e734-44c6-9ab2-5c05ed6bd645"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{goal_6}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="129" y="474" width="11" height="11" uuid="ae51f005-56ae-4a7a-a57e-bdd65920259a">
+					<printWhenExpression><![CDATA[$F{isMoreInfo}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="129" y="488" width="11" height="11" uuid="04954c0d-5421-44ab-b8ac-b7f980b276c0">
+					<printWhenExpression><![CDATA[$F{isInvolved}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="34" y="586" width="11" height="11" uuid="f6cf156a-a271-4758-80b9-697b09666828">
+					<printWhenExpression><![CDATA[$F{isNotReview}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="34" y="607" width="11" height="11" uuid="45354d94-63e6-492e-a611-81c97a95aa62">
+					<printWhenExpression><![CDATA[$F{isReview}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="192" y="605" width="110" height="15" uuid="2a18edea-f696-4b67-b86b-d8c7b8c93f8b"/>
+				<textFieldExpression><![CDATA[$F{reviewOn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="92" y="624" width="426" height="15" uuid="770eb397-e890-4d82-bf98-ea705cc18752"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{reviewCmt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="78" y="669" width="198" height="15" uuid="e4a29764-a881-4fcb-9bf1-904cd2a3968e"/>
+				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="73" y="691" width="203" height="36" uuid="d454fca9-b200-49b6-8f65-a10af5acbdf3"/>
+				<textFieldExpression><![CDATA[$F{docAddress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="340" y="691" width="179" height="16" uuid="4f21bc45-bcf5-45c2-a923-3ad5d30637fa"/>
+				<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="340" y="756" width="178" height="17" uuid="8b2969dd-e6d0-49b4-966f-9c7547337dc5"/>
+				<textFieldExpression><![CDATA[$F{examDate}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="381" y="714" width="100" height="38" uuid="8175263c-f74d-4ed1-9bc2-c04671b3601e"/>
+				<imageExpression><![CDATA[$F{docSign}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="78" y="732" width="198" height="20" uuid="2673e543-f68b-4fbd-8818-8de1f7ec8f0a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="78" y="756" width="198" height="17" uuid="8b91f1b3-cda7-4b17-be9c-fa8c743f8be9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{faxNumber}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="340" y="474" width="11" height="11" uuid="b9ac90d9-1b13-445a-b600-55b2035771ca">
+					<printWhenExpression><![CDATA[$F{isRTW}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images_FirstWA/check.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

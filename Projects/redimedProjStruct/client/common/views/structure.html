@@ -324,7 +324,7 @@
 
     <li ng-repeat="menu in loggedInMenus">
         <a ui-sref="{{menu.parent.definition}}">
-            <i class="icon-star"></i>
+            <i class="{{menu.parent.icon}}"></i>
             <span class="title">{{menu.parent.name}}</span>
 
         </a>

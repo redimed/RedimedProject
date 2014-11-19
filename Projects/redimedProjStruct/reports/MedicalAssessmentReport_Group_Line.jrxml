@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport_Group_Line" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7716cdcc-3097-4a8f-8108-b4a8111130ec">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="363"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="group_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cln_ma_lines.`MA_LINE_ID` AS cln_ma_lines_MA_LINE_ID,
+     cln_ma_lines.`QUESTION` AS cln_ma_lines_QUESTION,
+     cln_ma_lines.`VAL1_NAME` AS cln_ma_lines_VAL1_NAME,
+     cln_ma_lines.`VAL1` AS cln_ma_lines_VAL1,
+     cln_ma_lines.`VAL2_NAME` AS cln_ma_lines_VAL2_NAME,
+     cln_ma_lines.`VAL2` AS cln_ma_lines_VAL2,
+     cln_ma_lines.`VAL3_NAME` AS cln_ma_lines_VAL3_NAME,
+     cln_ma_lines.`VAL3` AS cln_ma_lines_VAL3,
+     cln_ma_lines.`VAL4_NAME` AS cln_ma_lines_VAL4_NAME,
+     cln_ma_lines.`VAL4` AS cln_ma_lines_VAL4,
+     cln_ma_lines.`VAL5_NAME` AS cln_ma_lines_VAL5_NAME,
+     cln_ma_lines.`VAL5` AS cln_ma_lines_VAL5,
+     cln_ma_lines.`VAL6_NAME` AS cln_ma_lines_VAL6_NAME,
+     cln_ma_lines.`VAL6` AS cln_ma_lines_VAL6,
+     cln_ma_lines.`YES_NO` AS cln_ma_lines_YES_NO,
+     cln_ma_lines.`COMMENTS` AS cln_ma_lines_COMMENTS,
+     cln_ma_lines.`ORD` AS cln_ma_lines_ORD,
+     cln_ma_lines.`GROUP_ID` AS cln_ma_lines_GROUP_ID,
+     cln_ma_lines.`Created_by` AS cln_ma_lines_Created_by,
+     cln_ma_lines.`Creation_date` AS cln_ma_lines_Creation_date,
+     cln_ma_lines.`Last_updated_by` AS cln_ma_lines_Last_updated_by,
+     cln_ma_lines.`Last_update_date` AS cln_ma_lines_Last_update_date,
+     cln_ma_lines.`CAL_ID` AS cln_ma_lines_CAL_ID,
+     cln_ma_lines.`PATIENT_ID` AS cln_ma_lines_PATIENT_ID,
+     cln_ma_lines.`YES_NO_VAL` AS cln_ma_lines_YES_NO_VAL,
+     cln_ma_lines.`ISENABLE` AS cln_ma_lines_ISENABLE
+FROM
+     `cln_ma_lines` cln_ma_lines   where cln_ma_lines.`GROUP_ID` = $P{group_id} and  cln_ma_lines.patient_id = $P{patient_id} and  cln_ma_lines.`CAL_ID` = $P{cal_id}]]>
+	</queryString>
+	<field name="cln_ma_lines_MA_LINE_ID" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_QUESTION" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL1_NAME" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL1" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL2_NAME" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL2" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL3_NAME" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL3" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL4_NAME" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL4" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL5_NAME" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL5" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL6_NAME" class="java.lang.String"/>
+	<field name="cln_ma_lines_VAL6" class="java.lang.String"/>
+	<field name="cln_ma_lines_YES_NO" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_COMMENTS" class="java.lang.String"/>
+	<field name="cln_ma_lines_ORD" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_GROUP_ID" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_Created_by" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_Creation_date" class="java.sql.Timestamp"/>
+	<field name="cln_ma_lines_Last_updated_by" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_Last_update_date" class="java.sql.Timestamp"/>
+	<field name="cln_ma_lines_CAL_ID" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_PATIENT_ID" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_YES_NO_VAL" class="java.lang.Integer"/>
+	<field name="cln_ma_lines_ISENABLE" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="52">
+			<printWhenExpression><![CDATA[$F{cln_ma_lines_VAL1_NAME}!=null && $F{cln_ma_lines_VAL2_NAME}!=null && $F{cln_ma_lines_VAL3_NAME}!=null]]></printWhenExpression>
+			<frame>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="52" isRemoveLineWhenBlank="true" uuid="7e6a765e-fd12-4432-b4ea-8d0ad41ae9d4">
+					<printWhenExpression><![CDATA[$F{cln_ma_lines_VAL1_NAME}!=null && $F{cln_ma_lines_VAL2_NAME}!=null && $F{cln_ma_lines_VAL3_NAME}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<frame>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="555" height="26" isRemoveLineWhenBlank="true" backcolor="#EEECE1" uuid="ec94ad75-d125-4398-b84e-7cef1642eae5"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement positionType="Float" x="81" y="0" width="69" height="26" isRemoveLineWhenBlank="true" uuid="b794540f-1232-427a-80e5-1084a7f57e3f"/>
+						<box>
+							<pen lineWidth="1.0"/>
+							<topPen lineWidth="1.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="1.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL1_NAME}]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement positionType="Float" x="230" y="0" width="135" height="26" isRemoveLineWhenBlank="true" uuid="24b9db54-8770-49a7-96e8-65fa03a12e0a"/>
+						<box>
+							<pen lineWidth="1.0"/>
+							<topPen lineWidth="1.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="1.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL3_NAME}]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement positionType="Float" x="150" y="0" width="80" height="26" isRemoveLineWhenBlank="true" uuid="ac8d9e25-0051-4b62-a16d-8282d11d3126"/>
+						<box>
+							<pen lineWidth="1.0"/>
+							<topPen lineWidth="1.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="1.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL2_NAME}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="365" y="0" width="190" height="26" uuid="ebade7fa-f524-4af1-a93f-cf3c62e98721"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[COMMENTS]]></text>
+					</staticText>
+				</frame>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="26" width="82" height="26" isRemoveLineWhenBlank="true" uuid="f41e7f61-8290-46d2-8d7c-2672be20e2e7"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_QUESTION}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="365" y="26" width="190" height="26" isRemoveLineWhenBlank="true" uuid="05d225ec-fad4-454a-ac3c-83d971a189a7"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_COMMENTS}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="81" y="26" width="69" height="26" isRemoveLineWhenBlank="true" uuid="b794540f-1232-427a-80e5-1084a7f57e3f"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="230" y="26" width="135" height="26" isRemoveLineWhenBlank="true" uuid="24b9db54-8770-49a7-96e8-65fa03a12e0a"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="150" y="26" width="80" height="26" isRemoveLineWhenBlank="true" uuid="ac8d9e25-0051-4b62-a16d-8282d11d3126"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL2}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="81" y="0" width="1" height="52" uuid="fb3e95f6-87ec-4be0-863a-fff1b6942c77"/>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="150" y="0" width="1" height="52" uuid="354214ac-5394-4ea1-9c3f-9c9ed9033b6e"/>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="230" y="0" width="1" height="52" uuid="7fd06b82-31d5-47b8-a4c0-dc643154ac3f"/>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="365" y="0" width="1" height="52" uuid="34dc8010-4694-416f-8d63-c8abdb8f3b25"/>
+				</line>
+			</frame>
+		</band>
+		<band height="64">
+			<printWhenExpression><![CDATA[$F{cln_ma_lines_VAL1_NAME}!=null && $F{cln_ma_lines_VAL2_NAME}!=null && $F{cln_ma_lines_YES_NO}==3]]></printWhenExpression>
+			<frame>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="64" isRemoveLineWhenBlank="true" uuid="5d99aeb9-d096-4763-8911-4f13a85f7242">
+					<printWhenExpression><![CDATA[$F{cln_ma_lines_VAL1_NAME}!=null && $F{cln_ma_lines_VAL2_NAME}!=null && $F{cln_ma_lines_YES_NO}==3]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="0" width="81" height="64" isRemoveLineWhenBlank="true" uuid="9e0dfce9-f31f-45eb-bf7a-6f95fc1e8e34"/>
+					<box leftPadding="10">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_QUESTION}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement positionType="Float" x="325" y="26" width="14" height="12" isRemoveLineWhenBlank="true" uuid="d3afc523-1793-4627-995c-d85833bdb5ff">
+						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MA/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="325" y="26" width="14" height="12" isRemoveLineWhenBlank="true" uuid="7607ba27-b036-4959-92e3-6615f9b68b4a">
+						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MA/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="259" y="26" width="14" height="12" isRemoveLineWhenBlank="true" uuid="42900417-826e-46c1-9fdb-2baad4f428f8">
+						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MA/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="259" y="26" width="14" height="12" isRemoveLineWhenBlank="true" uuid="c9d6e6df-d542-4a5c-b458-71747bc2116f">
+						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MA/uncheck.png"]]></imageExpression>
+				</image>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="365" y="0" width="190" height="64" isRemoveLineWhenBlank="true" uuid="9b87ba8e-e19b-45d9-8117-44a1d5d8f0e6"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_COMMENTS}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement positionType="Float" x="81" y="0" width="149" height="30" uuid="2f7398c3-fc10-4ba5-b5f5-9ee9b3cb1e03"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" x="0" y="0" width="82" height="30" isRemoveLineWhenBlank="true" uuid="e59e5ea0-a732-4807-b64e-99bd74e9bca7"/>
+						<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+						<textElement textAlignment="Left" verticalAlignment="Top">
+							<font size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL1_NAME}]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" x="81" y="0" width="68" height="30" isRemoveLineWhenBlank="true" uuid="b84594d2-21e0-48da-9ec4-9660d4e283a8"/>
+						<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+						<textElement textAlignment="Left" verticalAlignment="Top">
+							<font size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL1}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement positionType="Float" x="81" y="30" width="149" height="34" uuid="487dad0e-0081-4765-8627-ee83924281d3"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" x="0" y="0" width="82" height="34" isRemoveLineWhenBlank="true" uuid="7762d9ec-ff6f-4ebe-839f-bd3a43d5c60e"/>
+						<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+						<textElement textAlignment="Left" verticalAlignment="Top">
+							<font size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL2_NAME}]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" x="81" y="0" width="67" height="34" isRemoveLineWhenBlank="true" uuid="59c87533-bf5e-4094-902f-e9ab11164c14"/>
+						<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+						<textElement textAlignment="Left" verticalAlignment="Top">
+							<font size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{cln_ma_lines_VAL2}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="230" y="0" width="1" height="64" uuid="94cf9ade-a3bd-410d-bbf8-97f758bfe7db"/>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="365" y="0" width="1" height="64" uuid="54887c2d-f169-4986-99c5-af2d6a8ca068"/>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="298" y="0" width="1" height="64" uuid="acde4646-888d-4940-8e93-967a0ba08d52"/>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="81" y="0" width="1" height="64" uuid="6d903a31-9e10-4aaf-b1fb-b4176e2b3703"/>
+				</line>
+			</frame>
+		</band>
+		<band height="26">
+			<printWhenExpression><![CDATA[$F{cln_ma_lines_VAL1_NAME}==null && $F{cln_ma_lines_VAL2_NAME} == null &&  $F{cln_ma_lines_VAL3_NAME} == null]]></printWhenExpression>
+			<frame>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="26" isRemoveLineWhenBlank="true" uuid="7173aac2-eaa2-4a98-86c3-3baed6bd155b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="230" y="0" width="1" height="26" uuid="c2846c71-a8ba-42e6-85ab-dc68f124b767"/>
+				</line>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="0" width="230" height="26" isRemoveLineWhenBlank="true" uuid="0f91786a-33f4-476b-8501-6e2071e3c719"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_QUESTION}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement positionType="Float" x="325" y="7" width="14" height="12" isRemoveLineWhenBlank="true" uuid="04637005-c860-4a0e-9da8-daadf8374de1">
+						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MA/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="325" y="7" width="14" height="12" isRemoveLineWhenBlank="true" uuid="d57faed1-0101-46eb-8fb3-a7a04f7e020a">
+						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MA/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="259" y="7" width="14" height="12" isRemoveLineWhenBlank="true" uuid="865fef85-8578-446f-9d20-8409f543250f">
+						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MA/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="259" y="7" width="14" height="12" isRemoveLineWhenBlank="true" uuid="66e6072c-ef2a-4d86-b561-63dfc5f3f646">
+						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MA/uncheck.png"]]></imageExpression>
+				</image>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="365" y="0" width="190" height="26" isRemoveLineWhenBlank="true" uuid="8fb168f3-0b47-468c-a08d-95175b4a9083"/>
+					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_lines_COMMENTS}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="298" y="0" width="1" height="26" uuid="9f510448-b778-4e2b-9fe1-4b99c871ea05"/>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="365" y="0" width="1" height="26" uuid="333870a8-0cf1-43f0-b087-a498a2e740b3"/>
+				</line>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

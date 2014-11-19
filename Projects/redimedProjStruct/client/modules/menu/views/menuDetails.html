@@ -1,14 +1,17 @@
 <div class="modal-header">
     <h3>Menu Details</h3>
 </div>
+<form name="menuForm" ng-submit="submitMenu(menuForm)" novalidate method="post">
 <div class="modal-body">
     <div class="row">
-        <div class="form-group">
-            <div class="col-md-3">
-                <label class="control-label">Description</label>
-            </div>
-            <div class="col-md-9">
-                <input type="text" class="form-control" placeholder="Enter Description" ng-model="info.MenuDescription" />
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && menuForm.desc.$invalid}">
+
+            <label class="control-label col-md-3 col-sm-3">Description<span class="required">
+                                            * </span></label>
+
+            <div class="col-md-9 col-sm-9">
+                <input type="text" name="desc" class="form-control" required placeholder="Enter Description" ng-model="info.MenuDescription" />
+                <span ng-show="showClickedValidation && menuForm.desc.$invalid" for="desc" class="help-block">Desciption is required.</span>
             </div>
         </div>
     </div>
@@ -23,14 +26,16 @@
             </div>
         </div>
     </div>
-    <br/>
-    <div class="row">
+    <br ng-if="isSub == false"/>
+    <div class="row" ng-if="isSub == false">
         <div class="form-group">
             <div class="col-md-3">
-                <label class="control-label">Type</label>
+                <label class="control-label">Icon</label>
             </div>
             <div class="col-md-9">
-                <input type="text" class="form-control" placeholder="Enter Type" ng-model="info.MenuType" />
+                <ui-iconpicker groups="bootstrap font-awesome" class="brand-default" value="glyphicon glyphicon-star" ng-model="info.MenuType"></ui-iconpicker>
+
+                <!--<input type="text" class="form-control" placeholder="Enter Type" ng-model="info.MenuType" />-->
             </div>
         </div>
     </div>
@@ -68,5 +73,6 @@
 </div>
 <div class="modal-footer">
     <a href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
-    <a href="javascript:;" class="btn green" ng-click="submitMenu()"  >Submit</a>
+    <button type="submit" class="btn green"  >Submit</button>
 </div>
+</form>

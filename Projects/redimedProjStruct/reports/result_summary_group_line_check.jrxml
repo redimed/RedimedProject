@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="result_summary_group_line_check" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cf3746fc-0fb1-484f-be63-47cfac97ed04">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="group_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select  `QUEST_LABEL` , `QUEST_VALUE` , `COMMENT_LABEL` , `comments`  from `cln_mrs_lines` where `COMP_TYPE` = 2 and cal_id = $P{cal_id}
+and mrs_group_id = $P{group_id} and patient_id = $P{patient_id}  order by ORD]]>
+	</queryString>
+	<field name="QUEST_LABEL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUEST_VALUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMMENT_LABEL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="comments" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="31" uuid="ea131e1d-d417-4beb-9976-123c2c5ffb3b"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rating]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="43" height="31" uuid="3843b714-ddc3-46a6-abf1-417290e88ae1"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Please Tick]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="0" width="412" height="31" uuid="b4876d61-b48e-497e-8c00-8821a384103f"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comments]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="0" width="1" height="31" uuid="98ef3862-eb61-40cc-9ebb-1c787d7adb31"/>
+			</line>
+			<line>
+				<reportElement x="143" y="0" width="1" height="31" uuid="92b3478a-a75b-42a2-a990-c26485c922ec"/>
+			</line>
+			<frame>
+				<reportElement x="1" y="0" width="554" height="31" uuid="05a6ce72-9558-4a02-b5c7-ece9a38a7b1e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<line>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="100" y="0" width="1" height="44" uuid="2912edcd-a38e-4a48-9980-69b8a5c75fc0"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="143" y="0" width="1" height="44" uuid="cd71172a-6d79-48dd-8dec-1414dd3b6ddd"/>
+			</line>
+			<frame>
+				<reportElement x="1" y="0" width="554" height="44" uuid="c8536bf8-9a10-425e-b1b0-57b44f9601dc"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<frame>
+					<reportElement x="143" y="0" width="411" height="43" uuid="48bb8831-126c-49c8-a6b7-8bde589de5dc"/>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement x="0" y="0" width="411" height="20" uuid="fef9489a-8ac5-4b95-9166-03ac353bbd15"/>
+						<textElement>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{COMMENT_LABEL}]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement x="0" y="20" width="411" height="23" uuid="724b7051-6249-4130-9481-685ad4f0e06f"/>
+						<textElement>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{comments}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<image>
+					<reportElement x="112" y="12" width="18" height="18" uuid="47b0d6b9-0f40-4ef3-a852-b8390fa8772f">
+						<printWhenExpression><![CDATA[$F{QUEST_VALUE}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MRS/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="112" y="12" width="18" height="18" uuid="d254fa97-4164-40ac-bd6f-13cf40be9a56">
+						<printWhenExpression><![CDATA[!$F{QUEST_VALUE}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images_MRS/uncheck.png"]]></imageExpression>
+				</image>
+			</frame>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="100" height="44" uuid="35adbf9a-1eaa-4ae4-ade4-c70ddca3311c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{QUEST_LABEL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

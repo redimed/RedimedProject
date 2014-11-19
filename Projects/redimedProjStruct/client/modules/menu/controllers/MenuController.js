@@ -244,8 +244,8 @@ angular.module('app.loggedIn.menu.controller',[])
             MenuDescription: null,
             MenuDefinition: null,
             MenuType: null,
-            MenuEnable: null,
-            MenuWeb: null,
+            MenuEnable: '1',
+            MenuWeb: '1',
             MenuMobile: null,
             FunctionID: null,
             ParentID: parentId
@@ -262,17 +262,21 @@ angular.module('app.loggedIn.menu.controller',[])
         }
 
 
-        $scope.submitMenu = function(){
-            MenuService.insertMenu($scope.info).then(function(data){
-                if(data['status'] === 'success') {
-                    toastr.success("Insert New Menu Successfully!","Success");
-                    $modalInstance.close();
-                }
-                else
-                {
-                    toastr.error("Insert New Menu Failed!","Error");
-                }
-            })
+        $scope.submitMenu = function(menuForm){
+            $scope.showClickedValidation = true;
+            if(menuForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else {
+                MenuService.insertMenu($scope.info).then(function (data) {
+                    if (data['status'] === 'success') {
+                        toastr.success("Insert New Menu Successfully!", "Success");
+                        $modalInstance.close();
+                    }
+                    else {
+                        toastr.error("Insert New Menu Failed!", "Error");
+                    }
+                })
+            }
         }
     })
 
@@ -314,17 +318,20 @@ angular.module('app.loggedIn.menu.controller',[])
         })
 
 
-        $scope.submitMenu = function(){
-
-            MenuService.editMenu($scope.info).then(function(data){
-                if(data['status'] === 'success') {
-                    toastr.success("Edit Menu Successfully!","Success");
-                    $modalInstance.close();
-                }
-                else
-                {
-                    toastr.error("Edit Menu Failed!","Error");
-                }
-            })
+        $scope.submitMenu = function(menuForm){
+            $scope.showClickedValidation = true;
+            if(menuForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else {
+                MenuService.editMenu($scope.info).then(function (data) {
+                    if (data['status'] === 'success') {
+                        toastr.success("Edit Menu Successfully!", "Success");
+                        $modalInstance.close();
+                    }
+                    else {
+                        toastr.error("Edit Menu Failed!", "Error");
+                    }
+                })
+            }
         }
     })

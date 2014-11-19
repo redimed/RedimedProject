@@ -3,6 +3,10 @@ angular.module("app.loggedIn.doctor.patients.controller", [
 ])
         .controller("DoctorPatientsController", function ($scope, $state, $cookieStore, DoctorService, localStorageService) {
 			var userInfo = $cookieStore.get("userInfo");
+
+            var doctorInfo = $cookieStore.get("doctorInfo");
+
+            if(!doctorInfo) $state.go('loggedIn.home') ;
             // LOAD DOCTOR DETAIL
             var loadDoctorDetail = function () {
                 DoctorService.getByUserId(userInfo.id).then(function (data) {

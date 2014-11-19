@@ -45,8 +45,10 @@
                     <td width="200px" data-title="'Definition'" sortable="'definition'" ng-click="showChild(m)"  filter="{ 'definition': 'text' }">
                         <label >{{m.definition}}</label>
                     </td>
-                    <td width="100px" data-title="'Type'" sortable="'type'" ng-click="showChild(m)"  filter="{ 'type': 'text' }">
-                        <label >{{m.type}}</label>
+                    <td width="100px" align="center" data-title="'Icon'" sortable="'type'" ng-click="showChild(m)"  filter="{ 'type': 'text' }">
+                        <label >
+                            <i class="{{m.type}}"></i>
+                        </label>
                     </td>
                     <td align="center" width="100px" data-title="'Enable'" ng-click="showChild(m)"  >
                         <label ng-if="m.isEnable===1" ><input  type="checkbox" disabled   checked /></label>
@@ -97,11 +99,8 @@
                     <td width="200px" data-title="'Description'" sortable="'description'" filter="{ 'description': 'text' }">
                         <label>{{m.description}}</label>
                     </td>
-                    <td width="200px" data-title="'Function'" sortable="'decription'" filter="{ 'decription': 'text' }">
+                    <td width="300px" data-title="'Function'" sortable="'decription'" filter="{ 'decription': 'text' }">
                         <label >{{m.decription}}</label>
-                    </td>
-                    <td width="100px" data-title="'Type'" sortable="'type'" filter="{ 'type': 'text' }">
-                        <label >{{m.type}}</label>
                     </td>
                     <td align="center" width="100px" data-title="'Enable'" >
                         <label ng-if="m.isEnable===1" ><input  type="checkbox" disabled   checked /></label>

@@ -55,7 +55,7 @@ module.exports = {
           var imInfo = req.body.info;
 
           db.IMInjury.create({
-              patient_id: imInfo.patient_id,
+              patient_id: imInfo.Patient_id,
               driver_id: imInfo.driver_id,
               doctor_id: imInfo.doctor_id,
               cal_id: imInfo.cal_id,
@@ -82,8 +82,8 @@ module.exports = {
     uploadInjuryPic: function(req,res){
 
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-        var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID'+req.body.injury_id;
-        var targetFolderForSave='uploadFile\\'+'InjuryManagement\\'+'injuryID'+req.body.injury_id;
+        var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+req.body.injury_id;
+        var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+req.body.injury_id;
 
         mkdirp(targetFolder, function(err) {
             var tmp_path = req.files.file.path;
