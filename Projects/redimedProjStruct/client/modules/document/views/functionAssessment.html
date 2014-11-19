@@ -127,7 +127,9 @@
                                                         </label>
                                                         <div class="col-md-8 col-lg-10 col-sm-9" style="margin-top: 5px">
                                                             <input name="comment"
-                                                                   ng-required="((infoD.VAL1_CHECKBOX[detail.detail_id]==false || infoD.VAL1_CHECKBOX[detail.detail_id] == null) && detail.val1_no ==1)||((infoD.VAL2_CHECKBOX[detail.detail_id]==false || infoD.VAL2_CHECKBOX[detail.detail_id] == null) && detail.val2_no ==1) || (infoD.VAL2_CHECKBOX[detail.detail_id] == true && detail.val2_yes == 1) || (infoD.VAL1_CHECKBOX[detail.detail_id] == true && detail.val1_yes == 1)"
+                                                                   ng-required="((infoD.VAL1_CHECKBOX[detail.detail_id]==false || infoD.VAL1_CHECKBOX[detail.detail_id] == null) && detail.val1_no ==1))||
+                                                                   ((infoD.VAL2_CHECKBOX[detail.detail_id]==false || infoD.VAL2_CHECKBOX[detail.detail_id] == null) && detail.val2_no ==1)) ||
+                                                                   (infoD.VAL2_CHECKBOX[detail.detail_id] == true && detail.val2_yes == 1) || (infoD.VAL1_CHECKBOX[detail.detail_id] == true && detail.val1_yes == 1)"
                                                                    type="text" ng-model="infoD.COMMENTS[detail.detail_id]" class="form-control">
                                                         </div>
                                                     </div>
