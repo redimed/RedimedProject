@@ -216,19 +216,6 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 		}
 	}
 
-	angular.element("body").bind("click", function($event){
-		if(angular.element($event.target).closest("#main-table").length === 0){
-			if(angular.element($event.target).closest("#popupMenu").length === 0){
-				angular.element("#popupMenu").css("display", "none");
-				//CLEAR COLOR
-				clearColorBooking();
-				//END CLEAR COLOR
-				clearSelectedBooking();
-				$event.preventDefault();
-			}
-		}
-	})
-
 	// ACTION RIGHT MENU
 	$scope.showUnavailable = function(){
 		if($scope.list_of_booking.length > 0){
