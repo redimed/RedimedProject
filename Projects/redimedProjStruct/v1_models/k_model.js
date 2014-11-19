@@ -1,22 +1,6 @@
 var squel = require("squel");
 squel.useFlavour('mysql');
 
-function squelSetFields(builder, fields) {
-    if (!fields)
-        return;
-
-    if (typeof fields == 'string') {
-        var fields = fields.split(',');
-    }
-    // ARRAY 
-    if (Array.isArray(fields) && fields.length > 0) {
-        for (var i = 0, len = fields.length; i < len; ++i)
-            builder.field(fields[i]);
-    } else { // OBJECT
-        builder.fields(fields);
-    }
-}
-
 function travelArr(data, callback) {
     for (var i = data.length - 1; i >= 0; --i) {
         callback(data[i]);
@@ -35,6 +19,8 @@ function K_MODEL(table, primary_key) {
     this._primary_key = primary_key;
     this._squel = squel;
     this._callback = {search: null};
+
+    this._default_values = {Is_enable : 1};
 
     /*
      *  ADD ON FOR SQUEL
@@ -152,6 +138,7 @@ function K_MODEL(table, primary_key) {
 
     this.query_insert = function (data) {
         var querybuilder = squel.insert().into(this._table);
+        querybuilder.setFields(this._default_values)
         querybuilder.setFields(data);
         return querybuilder;
     };
