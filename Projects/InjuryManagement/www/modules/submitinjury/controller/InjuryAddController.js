@@ -17,6 +17,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.isMobile = null;
         $scope.goAddworker = true;
 
+        //init sex field
+        $scope.sexIndex = ConfigService.sex_option();
+
         var serverUpload = "http://testapp.redimed.com.au:3000/api/im/upload"
         var userInfoLS = localStorageService.get("userInfo");
         $scope.titleIndex = ConfigService.title_option();
@@ -82,11 +85,13 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }
 
         //get localstorage
-        var initFormLocalStorage = function () {
-
+        function initFormLocalStorage () {
+            var injuryinfoLS = localStorageService.get("injuryInfo");
+            $scope.worker = injuryinfoLS.info;
+            $scope.imgURI = injuryinfoLS.dataImage;
         }
 
-        //PROCESS MODAL
+        //CONFIG MODAL
         $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/imageDetail.html', function(modal) {
             $scope.InjuryImgControllerModal = modal;
         },{
@@ -100,11 +105,6 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             $scope.InjuryImgControllerModal.show();
         }
 
-        //PROCESS MODAL
-        //$scope.selectImage = function (image) {
-        //    $scope.imageDetail = image;
-        //}
-
         $scope.takePicture = function() {
             var options = {
                 quality : 50,
@@ -112,9 +112,26 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 targetWidth: 300,
                 targetHeight: 300,
                 popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false
+                sourceType: navigator.camera.PictureSourceType.CAMERA,
+                saveToPhotoAlbum: true
             };
+            //select multiple photo
+            //phonegap plugin add https://github.com/wymsee/cordova-imagePicker.git
+            //cordova plugin add https://github.com/wymsee/cordova-imagePicker.git
+            //window.imagePicker.getPictures(
+            //    function(results) {
+            //        for (var i = 0; i < results.length; i++) {
+            //            console.log('Image URI: ' + results[i]);
+            //        }
+            //    }, function (error) {
+            //        console.log('Error: ' + error);
+            //    }, {
+            //        maximumImagesCount: 10,
+            //        width: 80
+            //    }
+            //);
             $cordovaCamera.getPicture(options).then(function(imageData) {
+
                 var myPopup = $ionicPopup.show({
                     template: '<input type="text" ng-model="worker.description">',
                     title: 'Enter Description',
@@ -153,10 +170,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         //    $scope.isShowImg = !$scope.isShowImg;
         //}
 
-
-
         function uploadFile(img, server, params) {
-            
+
             console.log(img);
             var options = new FileUploadOptions();
             options.fileKey = "file";
@@ -186,6 +201,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         if(data.count == 0)
                         {
                             $scope.isFailMobile = true;
+                            console.log($scope.isFailMobile);
                         }
                         else
                         {
@@ -257,6 +273,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     if (res) {
                         $scope.takePicture();
                     } else {
+                        //de function o day de test neu khong chup anh thi qua add worker.
                         NonEmergency();
                         //console.log("cancel");
                     }
@@ -265,6 +282,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         };
 
         function NonEmergency() {
+            $scope.infoInjury = {
+                info: $scope.worker,
+                dataImage: $scope.imgURI
+            };
             if($scope.worker.Patient_id == -1)
             {
                 localStorageService.set("injuryInfo", $scope.infoInjury);
@@ -272,10 +293,6 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             }
             else
             {
-                $scope.infoInjury = {
-                    info: $scope.worker,
-                    dataImage: $scope.imgURI
-                };
                 localStorageService.set("injuryInfo", $scope.infoInjury);
                 $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
             }

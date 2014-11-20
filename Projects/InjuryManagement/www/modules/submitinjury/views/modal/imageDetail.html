@@ -1,24 +1,13 @@
 <!--process modal detailImg-->
-<div class="modal" ng-controller="InjuryImgControllerModal">
+<div class="modal image-modal transparent" ng-controller="InjuryImgControllerModal">
     <div class="bar bar-header bar-light text-right" style="display: block;">
         <a class="button button-clear" ng-click="hideModal()">
             Done
         </a>
     </div>
-    <div class="content has-header">
-        <div class="text-center full" style="z-index: 1; position:relative; width: 100%;">
-            <img class="img-responsive" ng-src="{{imageDetail}}" width="100%" height="100%"/>
-            <!--<img src="../img/ionic.png"/>-->
-        </div>
-        <div class="bg-descImg padding padding-top">
-                <span class="text-left">
-                    Description: {{imageDesc}}
-                </span>
-                <!--<span class="text-right">-->
-                    <!--<a class="button button-clear">-->
-                        <!--Edit-->
-                    <!--</a>-->
-                <!--</span>-->
-        </div>
-    </div>
+
+    <ion-pane>
+        <img ng-src="{{imageSrc}}" class="fullscreen-image"/>
+    </ion-pane>
+
 </div>

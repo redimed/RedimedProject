@@ -5,7 +5,6 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
 
         $scope.patientID = $stateParams.PatientID;
 
-
         $scope.injuryInfo = localStorageService.get('injuryInfo');
         //$scope.infoBooking.description = $scope.injuryInfo.info.description;
         //$scope.imgURI = $scope.injuryInfo.dataImage;
