@@ -72,7 +72,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                 codeAddress();
         });
 
-
+        $scope.isCollapsed = false;
 
 
 
