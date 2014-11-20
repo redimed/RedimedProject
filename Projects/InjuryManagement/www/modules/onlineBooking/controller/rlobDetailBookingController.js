@@ -4,28 +4,18 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
     .controller('rlobDetailBookingController',function($scope,$stateParams,$timeout,localStorageService,OnlineBookingService,$state){
 
 
-        $scope.patientID = $stateParams.patientID;
-        console.log( $scope.patientID);
-
-   
-
-
-
+        $scope.patientID = $stateParams.PatientID;
         $scope.injuryInfo = localStorageService.get('injuryInfo');
-        //$scope.infoBooking.description = $scope.injuryInfo.info.description;
-        //$scope.imgURI = $scope.injuryInfo.dataImage;
+        console.log( $scope.injuryInfo);
+        $scope.description = $scope.injuryInfo.info.injury_description;
+
+        $scope.imgURI = $scope.injuryInfo.dataImage.image;
         //console.log(JSON.stringify($scope.injuryInfo));
         $timeout(function(){
             $scope.selectedBooking=localStorageService.get("selectedBooking");
         }, 500);
-
-        console.log( $scope.selectedBooking)
-
         $scope.addbooking = function(des){
             console.log( $scope.selectedBooking)
-
-
-
             var infoBooking = {
                 Patient_id:  $scope.patientID,
                 doctor_id:$scope.selectedBooking.DOCTOR_ID,
@@ -47,7 +37,5 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                     alert('Error');
                 }
             })
-
-
         }
     })

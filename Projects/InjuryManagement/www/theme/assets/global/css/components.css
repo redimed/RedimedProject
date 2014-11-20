@@ -1197,7 +1197,7 @@ Customized Bootstrap Buttons
 .btn-xs {
   padding: 4px 10px 5px 10px;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 2.5;
 }
 .btn-sm > i,
 .btn-xs > i {

@@ -56,13 +56,14 @@
                                     </div>
                             </br>
                                     <div class="col-md-10">
+                                        Time:
                                         <div ng-repeat="type in doctor.TYPE_ITEMS">
 
                                             <div class="col-md-10">
                                                 <div ng-repeat="spec in type.SPEC_ITEMS">
 
                                                     <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
-                                                        <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
+                                                       <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
                                                            class="btn btn-sm yellow filter-submit margin-bottom"
                                                            style="margin-left: 10px;margin-bottom: 10px; width: 70px"
                                                            ng-click="selectAppointmentCalendar(appointment,doctor.DOCTOR_NAME,location.SITE_NAME)">
