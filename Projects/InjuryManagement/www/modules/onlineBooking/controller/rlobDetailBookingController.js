@@ -6,22 +6,20 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
         $scope.patientID = $stateParams.PatientID;
 
         $scope.injuryInfo = localStorageService.get('injuryInfo');
-        //$scope.infoBooking.description = $scope.injuryInfo.info.description;
-        //$scope.imgURI = $scope.injuryInfo.dataImage;
+        console.log( $scope.injuryInfo);
+        $scope.description = $scope.injuryInfo.info.injury_description;
+
+        $scope.imgURI = $scope.injuryInfo.dataImage.image;
         //console.log(JSON.stringify($scope.injuryInfo));
         $timeout(function(){
             $scope.selectedBooking=localStorageService.get("selectedBooking");
         }, 500);
 
-        console.log( $scope.selectedBooking)
 
         $scope.addbooking = function(des){
             console.log( $scope.selectedBooking)
-
-
-
             var infoBooking = {
-                Patient_id: 1,
+                Patient_id:  $scope.patientID,
                 doctor_id:$scope.selectedBooking.DOCTOR_ID,
                 cal_id:$scope.selectedBooking.CAL_ID,
                 injury_description:des,
@@ -41,7 +39,41 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                     alert('Error');
                 }
             })
-
-
         }
+
+        //maps
+        //Google map
+        var geocoder;
+        var map;
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 16,
+            center: latlng
+        }
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        function codeAddress() {
+            var address=$scope.selectedBooking.Address;
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        $scope.$watch("selectedBooking", function(newValue, oldValue){
+            if($scope.selectedBooking)
+                codeAddress();
+        });
+
+        $scope.isCollapsed = false;
+
+
+
     })

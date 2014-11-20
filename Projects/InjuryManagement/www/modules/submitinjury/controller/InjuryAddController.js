@@ -275,7 +275,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     } else {
                         //de function o day de test neu khong chup anh thi qua add worker.
                         NonEmergency();
-                        //console.log("cancel");
+
                     }
                 });
             }

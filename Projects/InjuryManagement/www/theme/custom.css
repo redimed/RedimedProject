@@ -82,3 +82,10 @@ div.chart{
     fill: FireBrick;
 }
 /* END CHART */
+
+
+/*----*/
+.nav-color{
+    background-color: #DBDDDE !important;
+    color:#FF5E3A !important;
+}

@@ -20,7 +20,7 @@
                 </div>
                 <div class="portlet-body">
                     <div class="row static-info">
-                        <div class="col-md-5 name">
+                        <div class="col-md-5 name" style="width: 100px">
                             Date:
                         </div>
                         <div class="col-md-7 value">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="row static-info">
-                        <div class="col-md-5 name">
+                        <div class="col-md-5 name" style="width: 100px">
                             Time:
                         </div>
                         <div class="col-md-7 value">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="row static-info">
-                        <div class="col-md-5 name">
+                        <div class="col-md-5 name" style="width: 100px">
                             Doctor:
                         </div>
                         <div class="col-md-7 value">
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="row static-info">
-                        <div class="col-md-5 name">
+                        <div class="col-md-5 name" style="width: 145px">
                             Address:
                         </div>
                         <div class="col-md-7 value">
@@ -57,27 +57,25 @@
                     </div>
 
                     <div class="row static-info">
-                        <div class="col-md-5 name">
+                        <div class="col-md-5 name" style="width: 115px">
                             Description:
                         </div>
                         <div class="col-md-7 value">
-                                <textarea class="form-control ng-pristine ng-valid ng-valid-maxlength" ng-model="infoBooking.description"></textarea>
+                                <textarea class="form-control ng-pristine ng-valid ng-valid-maxlength" ng-model="description" ></textarea>
                         </div>
                     </div>
+                    <div class="portlet light">
+                        <div class="portlet-title">
+                            <div class="tools" style="float:left;" >
+                                <i class="fa fa-map-marker fa-2x text-danger" ng-click="isCollapsed = !isCollapsed">Show maps</i>
+                            </div>
+                        </div>
 
-                    <!--<div class="portlet light">-->
-                        <!--<div class="portlet-title">-->
-                            <!--<div class="tools">-->
-                                <!--<label style="font-weight: bolder; color: #585858">Show on map</label>-->
-                                <!--<a class="collapse">-->
-                                <!--</a>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row  portlet-body">-->
-                            <!--<div id="map-canvas" class="col-md-10" style="height: 200px;"></div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
+                        <div class="row portlet-body " collapse="!isCollapsed" style="height: 0px;overflow: auto;margin: 0px;padding: 0px;">
+                            <div id="map-canvas" class="col-md-12" style="height: 200px; width: 100%"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                     <div class="footer_injury">
                         <ion-scroll direction="x">
                             <a class="button button-clear button-positive"
@@ -86,18 +84,11 @@
                             </a>
                         </ion-scroll>
                     </div>
-
                 </div>
             </div>
-
-
-            <button class="button button-full button-energized" ng-click="addbooking(infoBooking.description)">
+            <button class="button button-full button-energized" ng-click="addbooking(description)">
                 Add Booking
             </button>
-
-
-
-
         </ion-list>
     </ion-content>
 

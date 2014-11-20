@@ -1,8 +1,10 @@
 angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 
 ])
-.controller('rlobChooseAppointmentCalendarController',function($scope,$stateParams,localStorageService,OnlineBookingService,$state){
+.controller('rlobChooseAppointmentCalendarController',function($filter,$scope,$stateParams,localStorageService,OnlineBookingService,$state){
         $scope.loginInfo = localStorageService.get('userInfo');
+
+
 
         $scope.patientID = $stateParams.Patient_id;
 
@@ -13,6 +15,13 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
             doctorSelected:{},
             date:''
         };
+
+        $scope.selectedFilter.date =$filter('date')(new Date(), "yyyy-MM-dd");
+
+        $scope.$watch("selectedFilter.date", function(newDate, oldDate){
+            $scope.updateAppoinmentsList();
+        })
+        console.log($scope.selectedFilter.date);
 
 
         $scope.getLocationsFilter=function()
@@ -167,43 +176,5 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
             });
             $state.go('app.detailBooking',{PatientID: $scope.patientID});
         };
-
-
-
-
-
-
-        ////Google map
-        //var geocoder;
-        //var map;
-        //geocoder = new google.maps.Geocoder();
-        //var latlng = new google.maps.LatLng(-34.397, 150.644);
-        //var mapOptions = {
-        //    zoom: 16,
-        //    center: latlng
-        //}
-        //map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        //function codeAddress() {
-        //    var address=$scope.selectedBooking.Site_addr;
-        //    geocoder.geocode( { 'address': address}, function(results, status) {
-        //        if (status == google.maps.GeocoderStatus.OK) {
-        //            map.setCenter(results[0].geometry.location);
-        //            var marker = new google.maps.Marker({
-        //                map: map,
-        //                position: results[0].geometry.location
-        //            });
-        //        } else {
-        //            alert('Geocode was not successful for the following reason: ' + status);
-        //        }
-        //    });
-        //}
-
-        //$scope.$watch("selectedBooking", function(newValue, oldValue){
-        //    if($scope.selectedBooking)
-        //        codeAddress();
-        //});
-
-
-
 
 })

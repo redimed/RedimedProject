@@ -26,20 +26,19 @@ angular.module('starter.security.login.controller',[])
                                     {
 
                                         alert(JSON.stringify(rs[0]));
-                                       // $state.go(rs[0],{reload:true});
-                                        $state.go('app.browse');
+                                       $state.go(rs[0],{reload:true});
+                                       // $state.go('app.browse');
                                     }
                                 }
                             })
                         }
                         else
                         {
-                            $state.go('app.browse');
+                            $state.go('app.injury.info');
                         }
                     });
                 }, function(error){
                     alert('Error','error');
                 });
             }
-
-    })
+    });
