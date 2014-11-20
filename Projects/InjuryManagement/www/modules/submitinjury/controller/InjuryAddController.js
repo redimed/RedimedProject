@@ -258,7 +258,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     if (res) {
                         $scope.takePicture();
                     } else {
-                        console.log("cancel");
+                        $state.go('app.chooseAppointmentCalendar');
                     }
                 });
             }
