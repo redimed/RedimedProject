@@ -1,9 +1,15 @@
 <form name="FAForm" ng-submit="submitFA(FAForm)" method="post" novalidate>
 <div class="row">
     <div class="col-md-12 ">
-        <button type="submit" class="btn green pull-right">Submit</button>
-        <a href="javascript:;"  class="btn btn-primary blue pull-right">Print PDF</a>
-        <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
+        <button type="submit"
+                ng-disabled="!infoChanged()"
+                class="btn green pull-right">{{isNew?"Add New":"Update"}}
+        </button>
+        <a href="javascript:;" type="button"
+           ng-disabled="isNew == true"
+           ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+        </a>
+        <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
     </div>
 </div>
     <div ng-repeat="header in listFA">
@@ -127,8 +133,8 @@
                                                         </label>
                                                         <div class="col-md-8 col-lg-10 col-sm-9" style="margin-top: 5px">
                                                             <input name="comment"
-                                                                   ng-required="((infoD.VAL1_CHECKBOX[detail.detail_id]==false || infoD.VAL1_CHECKBOX[detail.detail_id] == null) && detail.val1_no ==1))||
-                                                                   ((infoD.VAL2_CHECKBOX[detail.detail_id]==false || infoD.VAL2_CHECKBOX[detail.detail_id] == null) && detail.val2_no ==1)) ||
+                                                                   ng-required="((infoD.VAL1_CHECKBOX[detail.detail_id]==false || infoD.VAL1_CHECKBOX[detail.detail_id] == null) && detail.val1_no ==1)||
+                                                                   ((infoD.VAL2_CHECKBOX[detail.detail_id]==false || infoD.VAL2_CHECKBOX[detail.detail_id] == null) && detail.val2_no ==1) ||
                                                                    (infoD.VAL2_CHECKBOX[detail.detail_id] == true && detail.val2_yes == 1) || (infoD.VAL1_CHECKBOX[detail.detail_id] == true && detail.val1_yes == 1)"
                                                                    type="text" ng-model="infoD.COMMENTS[detail.detail_id]" class="form-control">
                                                         </div>
@@ -354,7 +360,7 @@
                                                     </div>
                                                 </div>
                                                 <div ng-if="nameC.comment_type == 6" ng-class="{'col-md-8 col-lg-8' : nameC.comment_type == 6}">
-                                                    <textarea class="form-control" ng-model="infoC.VALUE[nameC.comment_id]" placeholder="aaaaaaaa"></textarea>
+                                                    <textarea class="form-control" ng-model="infoC.VALUE[nameC.comment_id]"></textarea>
                                                 </div>
                                             </div>
 
