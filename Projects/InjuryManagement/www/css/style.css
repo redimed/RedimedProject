@@ -95,3 +95,7 @@ form i.icon.error {
     right: 0;
     top: 0;
 }
+.bg-menu-left{
+    background: url("../img/bg-menu-left.jpg");
+    background-size: cover;
+}

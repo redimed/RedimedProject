@@ -109,8 +109,6 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             var options = {
                 quality : 50,
                 destinationType : Camera.DestinationType.FILE_URI,
-                targetWidth: 300,
-                targetHeight: 300,
                 popoverOptions: CameraPopoverOptions,
                 sourceType: navigator.camera.PictureSourceType.CAMERA,
                 saveToPhotoAlbum: true
@@ -274,8 +272,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         $scope.takePicture();
                     } else {
                         //de function o day de test neu khong chup anh thi qua add worker.
-                        NonEmergency();
-
+                        //NonEmergency();
+                        console.log("cancel");
                     }
                 });
             }

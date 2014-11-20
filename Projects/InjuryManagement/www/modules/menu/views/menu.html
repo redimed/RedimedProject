@@ -5,31 +5,22 @@
         <button class="button button-clear button-positive" ng-click="openPopover($event)">Setting</button>
       </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-nav-view name="menuContent" animation="slide-left-right">
-
-    </ion-nav-view>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-pane>
-  <ion-side-menu side="left">
-
-
-
-      <div id="profile-bg"></div>
-      <div id="content">
-        <div id="profile-info">
-
-
-          <img class="img-circle" width="100" height="100" src="http://www.mrwallpaper.com/wallpapers/nice-girl-1920x1080.jpg" title="Profile" ui-sref="app.profile">
-          <h3 id="profile-name">{{userName}}</h3>
-          <span id="profile-description" ng-click="logout()">Logout</span>
-        </div>
-
-        <ion-list ng-repeat="menu in Injurymenu">
-          <ion-item ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}">
-            {{submenu.name}}
-            <i class="fa fa-angle-right" style="float: right"></i>
-          </ion-item>
-        </ion-list>
+  <ion-side-menu side="left" class="bg-menu-left">
+    <div id="content">
+      <div id="profile-info">
+        <img class="img-circle" width="100" height="100" src="http://www.mrwallpaper.com/wallpapers/nice-girl-1920x1080.jpg" title="Profile" ui-sref="app.profile">
+        <h3 id="profile-name">{{userName}}</h3>
+        <span id="profile-description" ng-click="logout()">Logout</span>
       </div>
+      <ion-list ng-repeat="menu in Injurymenu">
+        <ion-item ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}">
+          {{submenu.name}}
+          <i class="fa fa-angle-right" style="float: right"></i>
+        </ion-item>
+      </ion-list>
+    </div>
   </ion-side-menu>
 </ion-side-menus>
 
