@@ -1,6 +1,6 @@
 <ion-side-menus>
   <ion-pane ion-side-menu-content>
-    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7 ">
       <ion-nav-buttons side="right">
         <button class="button button-clear button-positive" ng-click="openPopover($event)">Setting</button>
       </ion-nav-buttons>
@@ -8,13 +8,10 @@
     <ion-nav-view name="menuContent" animation="slide-left-right">
 
     </ion-nav-view>
-
   </ion-pane>
   <ion-side-menu side="left">
-    <header class="bar bar-header bar-stable">
-      <h1 class="title">Menu</h1>
-    </header>
-    <ion-content class="has-header">
+
+
 
       <div id="profile-bg"></div>
       <div id="content">
@@ -29,10 +26,10 @@
         <ion-list ng-repeat="menu in Injurymenu">
           <ion-item ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}">
             {{submenu.name}}
+            <i class="fa fa-angle-right" style="float: right"></i>
           </ion-item>
         </ion-list>
       </div>
-    </ion-content>
   </ion-side-menu>
 </ion-side-menus>
 

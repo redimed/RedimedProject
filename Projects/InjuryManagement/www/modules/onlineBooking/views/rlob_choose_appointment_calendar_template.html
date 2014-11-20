@@ -43,16 +43,18 @@
                 <div ng-repeat="location in appointmentsFilter">
 
                         <div class="col-md-2" style="width: 800px">
-                            Location: {{location.SITE_NAME}}
+                            <i class="fa fa-location-arrow fa-2x text-danger"></i>
+                            <span class="text-primary" style="margin: 12px">{{location.SITE_NAME}}</span>
                         </div></br>
                         <div ng-repeat="doctor in location.DOCTOR_ITEMS">
 
                                     <div class="col-md-2" style="width: 1050px">
-                                       Doctor:<span>{{doctor.DOCTOR_NAME}}</span>
+                                        <i class="fa fa-user-md fa-2x text-danger"></i>
+                                        <span class="text-primary" style="margin: 12px">{{doctor.DOCTOR_NAME}}</span>
                                     </div>
                             </br>
                                     <div class="col-md-10">
-                                        Time:
+                                        <i class="fa fa-clock-o fa-2x text-danger" style="float: left;" ></i>
                                         <div ng-repeat="type in doctor.TYPE_ITEMS">
 
                                             <div class="col-md-10">
@@ -60,7 +62,7 @@
 
                                                     <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
                                                        <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
-                                                           class="btn btn-sm yellow filter-submit margin-bottom"
+                                                           class="btn btn-sm blue filter-submit margin-bottom"
                                                            style="margin-left: 10px;margin-bottom: 10px; width: 70px"
                                                            ng-click="selectAppointmentCalendar(appointment,doctor.DOCTOR_NAME,location.SITE_NAME)">
                                                             {{ appointment.APPOINTMENT_TIME }}
