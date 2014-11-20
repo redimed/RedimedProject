@@ -13,10 +13,10 @@
 
             <label class="item item-input" >
                 <span class="input-label span-input-color">Day</span>
-                <input ng-required="true" type="text" onfocus="this.type='date';
-                    this.setAttribute('onfocus','');this.blur();
-                        this.focus();" ng-model="selectedFilter.date" name="Date" ng-change="updateAppoinmentsList();" />
+                <input ng-required="true" type="date"
 
+                       ng-model="selectedFilter.date" name="Date"  />
+                {{selectedFilter.date}}
             </label>
 
 
@@ -34,10 +34,6 @@
                 </select>
                 <i ng-class="{'icon ion-alert-circled error':isSubmit && infor.Title.$invalid}"></i>
             </label>
-
-
-
-
             <div class="table-responsive" style="margin-top: 20px">
                 <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
                     <h4>No Results</h4>
@@ -77,11 +73,6 @@
                         </div>
                 </div>
             </div>
-
-
-
-
-
         </ion-list>
     </ion-content>
 

@@ -72,7 +72,7 @@ angular.module('starter', ['ionic',
                 }else{
 
                   $timeout(function(){
-                    $state.go("app.browse");
+                    $state.go("app.injury.info");
                   }, 100);
                 }
               }
