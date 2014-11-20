@@ -158,7 +158,18 @@ angular.module("app.loggedIn.doctor.controller", [
 			
 			$scope.modelObjectMap.ITEM_START_DATE = ConfigService.getCommonDateDatabase(t_start);
 			$scope.modelObjectMap.ITEM_END_DATE = ConfigService.getCommonDateDatabase(t_end);
-			
+
+			if(!$scope.modelObjectMap.ITEM_START_DATE){
+                delete $scope.modelObjectMap.ITEM_START_DATE;
+            }
+            if(!$scope.modelObjectMap.ITEM_END_DATE){
+                delete $scope.modelObjectMap.ITEM_END_DATE;
+            }
+
+
+
+            
+
 			var arrFilter =  $filter('arrGetBy');
 			var obj = arrFilter($scope.options.prefix_headers, 'PREFIX_NAME', $scope.modelObjectMap.ITEM_TYPE);
 			$scope.modelObjectMap.Prefix = obj.PREFIX;

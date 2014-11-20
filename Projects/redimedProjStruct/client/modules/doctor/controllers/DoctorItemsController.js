@@ -3,11 +3,21 @@ angular.module("app.loggedIn.doctor.items.controller",[
 	"app.loggedIn.doctor.items.add.controller",
 	"app.loggedIn.doctor.items.edit.controller",
 ])
-.controller("DoctorItemsController", function($scope,  $cookieStore, DoctorService){
+.controller("DoctorItemsController", function($scope, $state,  $cookieStore, DoctorService, localStorageService){
 	console.log('ITEMS PAGE ' );
 	
 	$scope.objectMap = {};
-	
+
+		$scope.navigateEdit = function(item){
+			var updateMode = {
+				isUpdateMode :true,
+				item_id: item.ITEM_ID,
+				header_code: item.POPULAR_HEADER_ID
+			};
+			localStorageService.set("updateData",updateMode);
+			$state.go("loggedIn.doctor.items.edit");
+		};
+
 	var init = function(){
 	
 		$scope.doctorInfo = $cookieStore.get('doctorInfo');

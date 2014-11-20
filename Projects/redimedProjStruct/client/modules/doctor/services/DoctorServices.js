@@ -54,6 +54,25 @@ angular.module("app.loggedIn.doctor.services", [])
 				var instanceApi = doctorApi.all("v1/items/insert");
                 return instanceApi.post({h_item: header_id, 'data': data});
 			}
+			//MINH HIKARI API
+			doctorService.getItemByCode = function (item_id){
+				var instanceApi = doctorApi.all("v1/items/get_item_by_id");
+				var postData = {
+					item_id:item_id
+				};
+				return instanceApi.post(postData);
+			}
+
+			doctorService.editItem = function (editItem,old_header_id,new_header_id){
+				var instanceApi = doctorApi.all("v1/items/edit_item");
+				var postData = {
+					editItem: editItem,
+					old_header_id: old_header_id,
+					new_header_id: new_header_id
+				};
+				return instanceApi.post(postData);
+			}
+            //END MINH HIKARI API
 			
 			doctorService.getApptById = function (appt_id){
 				var instanceApi = doctorApi.one("v1/appointment/get_by_id");

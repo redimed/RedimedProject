@@ -112,6 +112,23 @@ var model_sql = {
         return query_builder.toString();
     },
 
+    sql_edit_item: function (data) {
+        var query_builder = squel.update().table('inv_items');
+        for (var key in data) {
+            query_builder.set(key, data[key]);
+        }
+        query_builder.where("ITEM_ID=?",data.ITEM_ID);
+        return query_builder.toString();
+    },
+
+    sql_edit_item_line: function(header_id,old_header_id,item_id){
+        var querybuilder = squel.update().table('cln_popular_item_lines');
+        querybuilder.set('POPULAR_HEADER_ID', header_id);
+        querybuilder.where('ITEM_ID =? AND POPULAR_HEADER_ID =?',item_id,old_header_id);
+
+        return querybuilder.toString();
+    },
+
     squel_search_item: function(code, name, type){
         var querybuilder = squel.select().from('inv_items');
         if(code)
@@ -132,6 +149,12 @@ var model_sql = {
     sql_search_item_count: function(code, name, type) {
         var querybuilder = this.squel_search_item(code, name, type);
         querybuilder.field('COUNT(1)', 'count');
+        return querybuilder.toString();
+    },
+    sql_get_item_by_id: function(item_id){
+        var querybuilder = squel.select()
+            .from('inv_items')
+            .where('ITEM_ID = ?',item_id);
         return querybuilder.toString();
     }
 
@@ -311,4 +334,56 @@ module.exports = {
             res.json({header_id: header_id, status: 'success'});       
         }, errHandler);
     },
+
+    postGetItemById : function(req,res){
+        console.log(req.body);
+        var itemID = req.body.item_id;
+        if(!itemID){
+            res.end();
+            return;
+        }
+
+        var sql = model_sql.sql_get_item_by_id(itemID);
+        var k_sql = res.locals.k_sql;
+        var k_time = res.locals.k_time;
+        var errHandler = function (err) {
+            res.json(err);
+        };
+
+        k_sql.exec(sql,function(result){
+            if(result.length>0 && result[0] != null && result[0] != undefined){
+                res.json({result:result, status: 'success'});
+            }
+            else{
+                res.end({status: 'failed'});
+            }
+        },errHandler);
+
+    },
+
+    postEditItem : function(req,res){
+        console.log(req.body);
+        var data = req.body.editItem;
+
+        var errHandler = function (err) {
+            res.json(err);
+        };
+        //FIRST EDIT ITEM
+        var sql = model_sql.sql_edit_item(data);
+        var k_sql = res.locals.k_sql;
+        k_sql.exec(sql,function(result) {
+            //THEN EDIT ITEM LINES
+            var item_id = data.ITEM_ID;
+            var header_id = req.body.new_header_id;
+            var old_header_id = req.body.old_header_id;
+
+            var sql2 = model_sql.sql_edit_item_line(header_id,old_header_id,item_id);
+            console.log(sql2);
+            k_sql.exec(sql2,function(result){
+                console.log("Edit success!");
+                res.json({status: 'success'});
+            }, errHandler);
+
+        }, errHandler);
+    }
 }
