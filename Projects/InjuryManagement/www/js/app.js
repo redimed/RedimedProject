@@ -47,6 +47,11 @@ angular.module('starter', ['ionic',
      // RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
 
+
+      //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
+
+
+  
       RestangularProvider.setBaseUrl("http://192.168.132.137:3000");
 
       //ip nha

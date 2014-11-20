@@ -77,7 +77,6 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 }
                 else{
                     $scope.list = data.rs;
-                    console.log(JSON.stringify($scope.list));
                 }
             });
         }
@@ -258,14 +257,14 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     if (res) {
                         $scope.takePicture();
                     } else {
-                        $state.go('app.chooseAppointmentCalendar');
+                        NonEmergency();
+
                     }
                 });
             }
         };
 
         function NonEmergency() {
-            console.log($scope.worker.Patient_id);
             if($scope.worker.Patient_id == -1)
             {
                 localStorageService.set("injuryInfo", $scope.infoInjury);

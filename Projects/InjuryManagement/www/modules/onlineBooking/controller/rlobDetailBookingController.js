@@ -3,8 +3,13 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
 ])
     .controller('rlobDetailBookingController',function($scope,$stateParams,$timeout,localStorageService,OnlineBookingService,$state){
 
+
         $scope.patientID = $stateParams.patientID;
         console.log( $scope.patientID);
+
+   
+
+
 
         $scope.injuryInfo = localStorageService.get('injuryInfo');
         //$scope.infoBooking.description = $scope.injuryInfo.info.description;

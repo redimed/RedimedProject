@@ -6,7 +6,7 @@ angular.module('starter.booking',[
 .config(function($stateProvider){
             $stateProvider
                 .state('app.chooseAppointmentCalendar',{
-                    url:"/chooseAppointmentCalendar/:patient_id",
+                    url:"/chooseAppointmentCalendar/:Patient_id",
                     views:{
                         'menuContent':{
                             templateUrl:"modules/onlineBooking/views/rlob_choose_appointment_calendar_template.html",
@@ -14,8 +14,8 @@ angular.module('starter.booking',[
                         }
                     }
                 })
-                .state('app.detailBooking',{
-                    url:"/DetailBooking/:patientID",
+                .state('app.detailBooking', {
+                    url:"/DetailBooking/:PatientID",
                     views:{
                         'menuContent':{
                             templateUrl:"modules/onlineBooking/views/rlob_info_booking.html",
