@@ -241,25 +241,25 @@ FROM
 					<reportElement positionType="Float" x="325" y="26" width="14" height="12" isRemoveLineWhenBlank="true" uuid="d3afc523-1793-4627-995c-d85833bdb5ff">
 						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==1]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 				</image>
 				<image>
 					<reportElement positionType="Float" x="325" y="26" width="14" height="12" isRemoveLineWhenBlank="true" uuid="7607ba27-b036-4959-92e3-6615f9b68b4a">
 						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==0]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/uncheck.png"]]></imageExpression>
 				</image>
 				<image>
 					<reportElement positionType="Float" x="259" y="26" width="14" height="12" isRemoveLineWhenBlank="true" uuid="42900417-826e-46c1-9fdb-2baad4f428f8">
 						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==0]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 				</image>
 				<image>
 					<reportElement positionType="Float" x="259" y="26" width="14" height="12" isRemoveLineWhenBlank="true" uuid="c9d6e6df-d542-4a5c-b458-71747bc2116f">
 						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==1]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/uncheck.png"]]></imageExpression>
 				</image>
 				<textField isBlankWhenNull="true">
 					<reportElement positionType="Float" x="365" y="0" width="190" height="64" isRemoveLineWhenBlank="true" uuid="9b87ba8e-e19b-45d9-8117-44a1d5d8f0e6"/>
@@ -343,25 +343,25 @@ FROM
 					<reportElement positionType="Float" x="325" y="7" width="14" height="12" isRemoveLineWhenBlank="true" uuid="04637005-c860-4a0e-9da8-daadf8374de1">
 						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==1]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 				</image>
 				<image>
 					<reportElement positionType="Float" x="325" y="7" width="14" height="12" isRemoveLineWhenBlank="true" uuid="d57faed1-0101-46eb-8fb3-a7a04f7e020a">
 						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==0]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/uncheck.png"]]></imageExpression>
 				</image>
 				<image>
 					<reportElement positionType="Float" x="259" y="7" width="14" height="12" isRemoveLineWhenBlank="true" uuid="865fef85-8578-446f-9d20-8409f543250f">
 						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==0]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 				</image>
 				<image>
 					<reportElement positionType="Float" x="259" y="7" width="14" height="12" isRemoveLineWhenBlank="true" uuid="66e6072c-ef2a-4d86-b561-63dfc5f3f646">
 						<printWhenExpression><![CDATA[$F{cln_ma_lines_YES_NO_VAL}.intValue()==1]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/uncheck.png"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement positionType="Float" x="365" y="0" width="190" height="26" isRemoveLineWhenBlank="true" uuid="8fb168f3-0b47-468c-a08d-95175b4a9083"/>

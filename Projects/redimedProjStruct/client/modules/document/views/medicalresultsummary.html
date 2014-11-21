@@ -6,9 +6,10 @@
                     ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required || !infoChanged()"
                     ng-click="submit(mrsForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
-            <button type="button"
+            <button href="/api/document/printMRS/{{dataH.PATIENT_ID}}/{{dataH.CAL_ID}}/{{dataH.MRS_DF_ID}}"
+                    type="button"
                     ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required"
-                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+                     class="btn btn-primary blue pull-right">Print PDF
             </button>
             <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
@@ -46,82 +47,84 @@
 <form class="form-horizontal form-bordered">
 <div class="form-body">
 <div class="portlet-body form">
-<div class="row" style="text-align: left;">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-12 col-sm-12">
-            <label class="control-label bold">Applicant Details</label>
+    <div class="portlet box yellow">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>Applicant Details
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row" style="text-align: left;">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12" style="width: auto;">
+                        <label class="control-label">Applicant Name:&nbsp;<span class="text-info">{{info.patient.First_name + ' ' + info.patient.Sur_name}}</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12" style="width: auto;">
+                        <label class="control-label">Date of Birth:&nbsp;<span class="text-info">{{info.patient.DOB|date:'dd/MM/yyyy'}}</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-2 col-sm-3">
+                        <label class="control-label">Gender:&nbsp;<span class="text-info">{{info.patient.Sex}}</span></label>
+                    </div>
+                    <div class="col-md-10 col-sm-9">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-2 col-sm-3">
+                        <label class="control-label">Address:&nbsp;<span class="text-info">{{info.patient.Address1 || info.patient.Address2}}</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12" style="width: auto;">
+                        <label class="control-label">Suburb / State / PC:&nbsp;<span class="text-info">{{info.patient.Surburb + '/'+ info.patient.State + '/' + info.patient.Post_code}}</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-2 col-sm-3">
+                        <label class="control-label">Contact No:&nbsp;<span class="text-info">{{info.patient.Phone_ext || info.patient.Home_phone || info.patient.Work_phone}}</span></label>
+                    </div>
+                    <div class="col-md-10 col-sm-9">
+                        <label class="control-label">
+                            {{header.patient_contact_no}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-3 col-sm-3" style="width: auto;">
+                        <label class="control-label">Proposed Position:&nbsp;<span
+                                class="text-info">{{info.patient.State}}</span></label>
+                    </div>
+                    <div class="col-md-10 col-sm-9">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<hr/>
 
-<div class="row" style="text-align: left;">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-12 col-sm-12" style="width: auto;">
-            <label class="control-label">Applicant Name:&nbsp;<span class="text-info">{{info.patient.First_name + ' ' + info.patient.Sur_name}}</span></label>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-12 col-sm-12" style="width: auto;">
-            <label class="control-label">Date of Birth:&nbsp;<span class="text-info">{{info.patient.DOB|date:'dd/MM/yyyy'}}</span></label>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label">Gender:&nbsp;<span class="text-info">{{info.patient.Sex}}</span></label>
-        </div>
-        <div class="col-md-10 col-sm-9">
-
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label">Address:&nbsp;<span class="text-info">{{info.patient.Address1 || info.patient.Address2}}</span></label>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-12 col-sm-12" style="width: auto;">
-            <label class="control-label">Suburb / State / PC:&nbsp;<span class="text-info">{{info.patient.Surburb + '/'+ info.patient.State + '/' + info.patient.Post_code}}</span></label>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-2 col-sm-3">
-            <label class="control-label">Contact No:&nbsp;<span class="text-info">{{info.patient.Phone_ext || info.patient.Home_phone || info.patient.Work_phone}}</span></label>
-        </div>
-        <div class="col-md-10 col-sm-9">
-            <label class="control-label">
-                {{header.patient_contact_no}}
-            </label>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="width: auto;">
-            <label class="control-label">Proposed Position:&nbsp;<span
-                    class="text-info">{{info.patient.State}}</span></label>
-        </div>
-        <div class="col-md-10 col-sm-9">
-
-        </div>
-    </div>
-</div>
 <br/>
 
 <div class="row">

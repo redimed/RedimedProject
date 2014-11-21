@@ -47,6 +47,7 @@ app.post('/api/document/newMA', MAController.newMA);
 app.post('/api/document/loadMA', MAController.loadMA);
 app.post('/api/document/insertMA',MAController.insertMA);
 app.post('/api/document/checkMA',MAController.checkMA);
+app.get('/api/document/printMA/:patientId/:calId/:MA_ID', MAController.printReport);
 // End
 
 //Begin Instant Drug Screen
@@ -60,6 +61,7 @@ app.post('/api/document/checkIDS',IDSController.checkIDS);
 app.post('/api/document/insertUQ',UQController.insertUQ);
 app.post('/api/document/updateUQ',UQController.updateUQ);
 app.post('/api/document/checkUser',UQController.checkUser);
+app.get('/api/document/printUQ/:patientId/:calId/:id', UQController.printReport);
 // end
 
 // Begin COE
@@ -116,6 +118,7 @@ app.post('/api/document/editMH', MHController.editMH);
 app.post('/api/document/loadMRS', MRSController.loadMRS);
 app.post('/api/document/insertMRS', MRSController.insertMRS);
 app.post('/api/document/editMRS', MRSController.editMRS);
+app.get('/api/document/printMRS/:patientId/:calId/:id', MRSController.printReport);
 /**
  * end medical results summary
  */
