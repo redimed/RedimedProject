@@ -6,7 +6,6 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic',
   'restangular',
-  'starter.browse',
   'starter.menu',
   'starter.security',
   'starter.user',
@@ -18,8 +17,6 @@ angular.module('starter', ['ionic',
   'starter.booking',
     'ui.bootstrap'
 
-//
-  //'starter.playlist'
 
 ])
     .run(function($ionicPlatform) {
@@ -34,7 +31,7 @@ angular.module('starter', ['ionic',
     })
 
     .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
-      $stateProvider
+
 
       //local
       //RestangularProvider.setBaseUrl("http://localhost:3000");
@@ -69,7 +66,7 @@ angular.module('starter', ['ionic',
                 }else{
 
                   $timeout(function(){
-                    $state.go("app.browse");
+                    $state.go("app.injury.info");
                   }, 100);
                 }
               }

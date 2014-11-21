@@ -1,19 +1,41 @@
 angular.module('starter.booking.rlobDetailBooking.controller',[
 
 ])
-    .controller('rlobDetailBookingController',function($scope,$stateParams,$timeout,localStorageService,OnlineBookingService,$state){
+    .controller('rlobDetailBookingController',function($scope,$stateParams,$timeout,localStorageService,OnlineBookingService,$state,$ionicPopup){
 
         $scope.patientID = $stateParams.PatientID;
 
         $scope.injuryInfo = localStorageService.get('injuryInfo');
-        console.log( $scope.injuryInfo);
+
         $scope.description = $scope.injuryInfo.info.injury_description;
 
-        $scope.imgURI = $scope.injuryInfo.dataImage.image;
-        //console.log(JSON.stringify($scope.injuryInfo));
+        $scope.imgURI = $scope.injuryInfo.dataImage;
+
         $timeout(function(){
             $scope.selectedBooking=localStorageService.get("selectedBooking");
         }, 500);
+
+        var serverUpload = "http://testapp.redimed.com.au:3000/api/im/upload";
+        function uploadFile(img, server, params) {
+
+            console.log(img);
+            var options = new FileUploadOptions();
+            options.fileKey = "file";
+            options.fileName = img.substr(img.lastIndexOf('/') + 1);
+            options.mimeType = "image/jpeg";
+            options.chunkedMode = false;
+            options.params = params;
+
+            var ft = new FileTransfer();
+            ft.upload(img, server, function(r) {
+                var alertPopup = $ionicPopup.alert({
+                    title: "Success",
+                    template: 'Added Injury!'
+                });
+            }, function(error) {
+                console.log(error);
+            }, options);
+        }
 
 
         $scope.addbooking = function(des){
@@ -32,8 +54,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                 console.log(data.status);
                 if(data.status == 'success'){
                     alert('Add Booking Success','Success');
-
-                    $state.go('app.browse');
+                    $state.go('app.injury.info');
                 }
                 else{
                     alert('Error');
