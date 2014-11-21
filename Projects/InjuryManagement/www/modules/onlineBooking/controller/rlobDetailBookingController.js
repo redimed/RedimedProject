@@ -6,18 +6,35 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
         $scope.patientID = $stateParams.PatientID;
 
         $scope.injuryInfo = localStorageService.get('injuryInfo');
-        console.log( $scope.injuryInfo);
+
         $scope.description = $scope.injuryInfo.info.injury_description;
 
-        $scope.imgURI = $scope.injuryInfo.dataImage.image;
-        //console.log(JSON.stringify($scope.injuryInfo));
+        $scope.imgURI = $scope.injuryInfo.dataImage;
+
         $timeout(function(){
             $scope.selectedBooking=localStorageService.get("selectedBooking");
         }, 500);
 
+        var serverUpload = "http://testapp.redimed.com.au:3000/api/im/upload";
+        function uploadFile(img, server, params) {
 
+
+            var options = new FileUploadOptions();
+            options.fileKey = "file";
+            options.fileName = img.substr(img.lastIndexOf('/') + 1);
+            options.mimeType = "image/jpeg";
+            options.chunkedMode = false;
+            options.params = params;
+
+            var ft = new FileTransfer();
+            ft.upload(img, server, function(r) {
+
+            }, function(error) {
+                console.log(error);
+            }, options);
+        }
         $scope.addbooking = function(des){
-            console.log( $scope.selectedBooking)
+
             var infoBooking = {
                 Patient_id:  $scope.patientID,
                 doctor_id:$scope.selectedBooking.DOCTOR_ID,
@@ -27,19 +44,28 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                 driver_id :null,
                 injury_date:null
 
-            }
-            OnlineBookingService.submitBooking(infoBooking).then(function(data){
-                console.log(data.status);
-                if(data.status == 'success'){
-                    alert('Add Booking Success','Success');
+            };
 
-                    $state.go('app.browse');
+            OnlineBookingService.submitBooking(infoBooking).then(function(data){
+
+                if(data.status == 'success'){
+
+                    for(var i = 0 ; i < $scope.imgURI.length; i++)
+                    {
+                        var params = {
+                            injury_id: data.injury_id,
+                            description: $scope.imgURI[i].desc
+                        };
+                        uploadFile($scope.imgURI[i].image,serverUpload,params);
+                    }
+                    alert('Add Booking Success');
+                    $state.go('app.injury.info');
                 }
                 else{
                     alert('Error');
                 }
             })
-        }
+        };
 
         //maps
         //Google map
@@ -50,7 +76,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
         var mapOptions = {
             zoom: 16,
             center: latlng
-        }
+        };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         function codeAddress() {
             var address=$scope.selectedBooking.Address;

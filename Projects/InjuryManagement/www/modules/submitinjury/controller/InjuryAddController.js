@@ -3,7 +3,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
     .controller('InjuryAddController', function($scope, $state, $filter, $stateParams,
                                                 InjuryServices, $cordovaCamera, $ionicPopup,
                                                 $ionicSideMenuDelegate, localStorageService,
-                                                $cordovaFile, $ionicModal, ConfigService,$ionicSlideBoxDelegate){
+                                                $cordovaFile, $ionicModal, ConfigService,$ionicSlideBoxDelegate,$cordovaGeolocation){
+
 
         $scope.isSubmit = false;
         $scope.isShow = true;
@@ -53,17 +54,17 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             injury_description: '',
             injury_date: '',
             description:''
-        }
+        };
 
         var scopeReset = angular.copy($scope.worker);
 
         //FUNCTION FOR
         $scope.reset = function() {
-            var popUpconfirm = $ionicPopup.confirm({
+            var popUpconfirm = $ionicPopup.confirm ({
                 title: 'Reset',
                 template: 'You will try again input all field !'
             });
-            popUpconfirm.then(function(res){
+            popUpconfirm.then(function(res) {
                 if(res)
                 {
                     $scope.worker = angular.copy(scopeReset);
@@ -80,7 +81,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 $scope.worker.DOB = $filter('date')(new Date($scope.worker.DOB),'dd/MM/yyyy');
                 $scope.temp1 = angular.copy($scope.worker);
             })
-        }
+        };
 
         //INIT FORM
         function initForm() {
@@ -108,7 +109,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             else{
                 //alert('checkNonemerg equal false');
             }
-        }
+        };
 
         //CONFIG MODAL
         $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/imageDetail.html', function(modal) {
@@ -123,7 +124,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             $scope.temp = a;
             $scope.imageObj = $scope.imgURI;
             $scope.InjuryImgControllerModal.show();
-        }
+        };
 
         //TAKE PHOTO WITH CAMERA
         $scope.takePicture = function() {
@@ -197,10 +198,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
             var ft = new FileTransfer();
             ft.upload(img, server, function(r) {
-                var alertPopup = $ionicPopup.alert({
-                    title: "Success",
-                    template: 'Added Injury!'
-                });
+
             }, function(error) {
                 console.log(error);
             }, options);
@@ -261,15 +259,16 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         InjuryServices.insertInjury($scope.worker).then(function(data){
                             if(data.status == 'success')
                             {
-                                for(var i = 0 ; i <= $scope.imgURI.length; i++)
+                                for(var i = 0 ; i < $scope.imgURI.length; i++)
                                 {
                                     var params = {
                                         injury_id: data.injury_id,
                                         description: $scope.imgURI[i].desc
                                     };
-                                    console.log($scope.imgURI[i].image);
                                     uploadFile($scope.imgURI[i].image,serverUpload,params);
                                 }
+                                alert('Add Injury Success');
+                                $state.go('app.injury.info');
                             }
                         })
                     }
@@ -316,6 +315,41 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             }
         }
         initForm();
+
+        /// get location google maps
+        ////Google map
+        //var geocoder;
+        //var map;
+        //geocoder = new google.maps.Geocoder();
+        //var latlng = new google.maps.LatLng(-34.397, 150.644);
+        //var mapOptions = {
+        //    zoom: 16,
+        //    center: latlng
+        //};
+        //alert(latlng);
+        //map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        //function codeAddress() {
+        //    var address="222";
+        //    alert(address);
+        //    geocoder.geocode( { 'address': address}, function(results, status) {
+        //        if (status == google.maps.GeocoderStatus.OK) {
+        //            map.setCenter(results[0].geometry.location);
+        //            var marker = new google.maps.Marker({
+        //                map: map,
+        //                position: results[0].geometry.location
+        //            });
+        //        } else {
+        //            alert('Geocode was not successful for the following reason: ' + status);
+        //        }
+        //    });
+        //}
+        ////
+        //$scope.$watch("worker.Address1", function(newValue, oldValue){
+        //    if($scope.worker.Address1)
+        //        codeAddress();
+        //});
+
+        $scope.isCollapsed = false;
     })
 
     //.directive('noDragRight', ['$ionicGesture', function($ionicGesture) {

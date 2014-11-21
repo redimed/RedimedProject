@@ -24,10 +24,7 @@ angular.module('starter.security.login.controller',[])
                                     }
                                     else
                                     {
-
-                                        alert(JSON.stringify(rs[0]));
                                        $state.go(rs[0],{reload:true});
-                                       // $state.go('app.browse');
                                     }
                                 }
                             })
