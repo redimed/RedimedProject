@@ -3,7 +3,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
     .controller('InjuryAddController', function($scope, $state, $filter,
                                                 InjuryServices, $cordovaCamera, $ionicPopup,
                                                 $ionicSideMenuDelegate, localStorageService,
-                                                $cordovaFile, $ionicModal, ConfigService){
+                                                $cordovaFile, $ionicModal, ConfigService,$cordovaGeolocation){
         $scope.isSubmit = false;
         $scope.isShow = true;
         $scope.imgURI = [];
@@ -20,10 +20,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         //init sex field
         $scope.sexIndex = ConfigService.sex_option();
 
-        var serverUpload = "http://testapp.redimed.com.au:3000/api/im/upload"
+        var serverUpload = "http://testapp.redimed.com.au:3000/api/im/upload";
         var userInfoLS = localStorageService.get("userInfo");
         $scope.titleIndex = ConfigService.title_option();
-        $ionicSideMenuDelegate.canDragContent(false)
+        $ionicSideMenuDelegate.canDragContent(false);
 
         $scope.nextform = function(info) {
             $state.go('app.injury.desinjury');
@@ -53,14 +53,14 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             injury_description: '',
             injury_date: '',
             description:''
-        }
+        };
 
         var scopeReset = angular.copy($scope.worker);
 
         $scope.reset = function() {
             $scope.worker = angular.copy(scopeReset);
             $scope.isShow = !$scope.isShow;
-        }
+        };
 
         $scope.selectWorker = function (id) {
             $scope.isShow = !$scope.isShow;
@@ -69,7 +69,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 $scope.worker.DOB = $filter('date')(new Date($scope.worker.DOB),'dd/MM/yyyy');
                 $scope.temp1 = angular.copy($scope.worker);
             })
-        }
+        };
 
         //init Form Search Worker
         var initFormWorker = function() {
@@ -82,7 +82,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     $scope.list = data.rs;
                 }
             });
-        }
+        };
 
         //get localstorage
         function initFormLocalStorage () {
@@ -103,7 +103,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             $scope.imageDetail = imgData;
             $scope.imageDesc = desc;
             $scope.InjuryImgControllerModal.show();
-        }
+        };
 
         $scope.takePicture = function() {
             var options = {
@@ -180,10 +180,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
             var ft = new FileTransfer();
             ft.upload(img, server, function(r) {
-                var alertPopup = $ionicPopup.alert({
-                    title: "Success",
-                    template: 'Added Injury!'
-                });
+
             }, function(error) {
                 console.log(error);
             }, options);
@@ -213,7 +210,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 InjuryServices.checkEmail($scope.worker.Email).then(function (data) {
                     if (data.status == 'success') {
                         if (data.count == 0) {
-                            console.log("pass")
+                            console.log("pass");
                             $scope.isFailEmail = true;
                         }
                         else {
@@ -243,15 +240,16 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         InjuryServices.insertInjury($scope.worker).then(function(data){
                             if(data.status == 'success')
                             {
-                                for(var i = 0 ; i <= $scope.imgURI.length; i++)
+                                for(var i = 0 ; i < $scope.imgURI.length; i++)
                                 {
                                     var params = {
                                         injury_id: data.injury_id,
                                         description: $scope.imgURI[i].desc
                                     };
-                                    console.log($scope.imgURI[i].image);
                                     uploadFile($scope.imgURI[i].image,serverUpload,params);
                                 }
+                                alert('Add Injury Success');
+                                $state.go('app.injury.info');
                             }
                         })
                     }
@@ -296,6 +294,45 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             }
         }
         initFormWorker();
+        /// get location google maps
+
+        ////Google map
+        //var geocoder;
+        //var map;
+        //geocoder = new google.maps.Geocoder();
+        //var latlng = new google.maps.LatLng(-34.397, 150.644);
+        //var mapOptions = {
+        //    zoom: 16,
+        //    center: latlng
+        //};
+        //alert(latlng);
+        //map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        //function codeAddress() {
+        //    var address="222";
+        //    alert(address);
+        //    geocoder.geocode( { 'address': address}, function(results, status) {
+        //        if (status == google.maps.GeocoderStatus.OK) {
+        //            map.setCenter(results[0].geometry.location);
+        //            var marker = new google.maps.Marker({
+        //                map: map,
+        //                position: results[0].geometry.location
+        //            });
+        //        } else {
+        //            alert('Geocode was not successful for the following reason: ' + status);
+        //        }
+        //    });
+        //}
+        ////
+        //$scope.$watch("worker.Address1", function(newValue, oldValue){
+        //    if($scope.worker.Address1)
+        //        codeAddress();
+        //});
+
+        $scope.isCollapsed = false;
+
+
+
+
     })
 
     .controller('InjuryImgControllerModal', function($scope){
