@@ -1,0 +1,9 @@
+Exec SQL (Fri Nov 21 2014 08:55:59 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
+Exec SQL (Fri Nov 21 2014 08:57:15 GMT+0700 (SE Asia Standard Time)): SELECT * FROM companies LIMIT 10
+Exec SQL (Fri Nov 21 2014 08:57:15 GMT+0700 (SE Asia Standard Time)): SELECT COUNT(1) AS "count" FROM companies
+Exec SQL (Fri Nov 21 2014 08:57:26 GMT+0700 (SE Asia Standard Time)): SELECT * FROM companies LIMIT 20
+Exec SQL (Fri Nov 21 2014 08:57:26 GMT+0700 (SE Asia Standard Time)): SELECT COUNT(1) AS "count" FROM companies
+Exec SQL (Fri Nov 21 2014 08:57:28 GMT+0700 (SE Asia Standard Time)): SELECT * FROM companies LIMIT 50
+Exec SQL (Fri Nov 21 2014 08:57:28 GMT+0700 (SE Asia Standard Time)): SELECT COUNT(1) AS "count" FROM companies
+Exec SQL (Fri Nov 21 2014 08:57:33 GMT+0700 (SE Asia Standard Time)): SELECT * FROM companies LIMIT 5
+Exec SQL (Fri Nov 21 2014 08:57:33 GMT+0700 (SE Asia Standard Time)): SELECT COUNT(1) AS "count" FROM companies

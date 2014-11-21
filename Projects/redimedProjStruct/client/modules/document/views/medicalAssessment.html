@@ -1,9 +1,15 @@
 <form name="MAForm" ng-submit="submitMA(MAForm)" method="post" novalidate>
 <div class="row">
     <div class="col-md-12 ">
-        <button type="submit" class="btn green pull-right">Submit</button>
-        <a href="javascript:;"  class="btn btn-primary blue pull-right">Print PDF</a>
-        <a href="javascript:;"  class="btn btn-danger pull-right">Reset</a>
+        <button type="submit"
+                ng-disabled="!infoChanged()"
+                class="btn green pull-right">{{isNew?"Add New":"Update"}}
+        </button>
+        <a href="javascript:;" type="button"
+           ng-disabled="isNew == true"
+           ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+        </a>
+        <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
     </div>
 </div>
 <div ng-repeat="header in listMA">

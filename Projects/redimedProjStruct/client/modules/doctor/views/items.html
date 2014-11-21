@@ -56,7 +56,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in item_list | filter:searchObj"  style="cursor: pointer;">
+                <tr ng-repeat="item in item_list | filter:searchObj"  style="cursor: pointer;" ng-click="navigateEdit(item)">
                     <td>{{item.ITEM_CODE}}</td>
                     <td>{{item.ITEM_NAME}}</td>
                     <td>{{item.POPULAR_NAME}}</td>

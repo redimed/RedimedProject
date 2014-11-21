@@ -1,0 +1,6 @@
+Exec SQL: SELECT doctor_i,  first_name FROM doctors LIMIT 3 OFFSET 2
+Error at Thu Nov 20 2014 22:57:13 GMT+0700 (SE Asia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: SELECT doctor_id,  first_nae FROM doctors LIMIT 3 OFFSET 2
+Error at Thu Nov 20 2014 22:57:53 GMT+0700 (SE Asia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+

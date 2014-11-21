@@ -1,12 +1,62 @@
 var $q = require('q');
+var fs = require('fs');
+
 
 function K_SQL(req, res) {
     var _this = this;
+	
+	this.isLog = 0; // 0 is off, 1 is console, 2 write file
+	
+	var getFileNameLog = function(){
+		var d = new Date();
+		return './log/' + d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate() + '.log';
+	}
+	
+	var logFile = function(filename, content) {
+		fs.exists(filename,  function (exists) {
+			if(!exists) {
+				fs.writeFile(filename, content, function(err) {
+					if(err) {
+						console.log(err);
+					} 
+				}); 
+			} else {
+				fs.appendFile(filename, content, function (err) {
+					if(err) {
+						console.log(err);
+					} 
+				});
+			}
+		});
+	}
+	
+	var logSql = function(sql){
+		if(0 == _this.isLog)
+			return;
+		var d = new Date();	
+		if(1 == _this.isLog) {
+			console.log('Exec SQL (' + d.toString() + '): ' + sql + "\n"); 
+			return;
+		}
+
+		var filename = getFileNameLog();
+		var content = 'Exec SQL (' + d.toString() + '): ' + sql + "\n"; 
+		logFile(filename, content);
+	}
+  
+	var logErr = function(sql, err) {
+		console.error('DB SQL: ', err);
+		var filename = './log/error.log';
+		var d = new Date();
+	
+		var content = 'Exec SQL: ' + sql + "\nError at " +  d.toString() + ' : ' +  JSON.stringify(err) + "\n\n";
+		logFile(filename, content);
+	}
   
     this.execQuery = function(sql, fnSuc, fnErr){
     	this.connection.query(sql, function (err, data) {
             if (err) {
-                console.error('DB SQL: ', err)
+				logErr(sql, err);
                 if (fnErr)
                     fnErr(err);
                 return;
@@ -17,10 +67,10 @@ function K_SQL(req, res) {
         });
     }
 
-     this.execQuery2 = function(sql, deferred){
+    this.execQuery2 = function(sql, deferred){
         _this.connection.query(sql, function (err, data) {
             if (err) {
-                console.error('DB SQL: ', err)
+				logErr(sql, err);
                 deferred.reject(err);
                 return;
             } 
@@ -31,7 +81,7 @@ function K_SQL(req, res) {
      this.execQueryRow = function(sql, fnSuc, fnErr){
         this.connection.query(sql, function (err, data) {
             if (err) {
-                console.error('DB SQL: ', err)
+                logErr(sql, err);
                 if (fnErr)
                     fnErr(err);
                 return;
@@ -48,7 +98,7 @@ function K_SQL(req, res) {
      this.execQueryRow2 = function(sql, deferred){
         this.connection.query(sql, function (err, data) {
             if (err) {
-                console.error('DB SQL: ', err)
+                logErr(sql, err);
                 deferred.reject(err);
                 return;
             }
@@ -59,6 +109,9 @@ function K_SQL(req, res) {
         });
     }
 
+	/***
+	*	PUBLIC FUNCTION
+	**/
 
     this.exec2 = function(sql) {
         var deferred = $q.defer();
@@ -76,7 +129,7 @@ function K_SQL(req, res) {
 
 
     this.exec = function (sql, fnSuc, fnErr) {
-        console.log("\n Exec SQL: " + sql);
+		logSql(sql);
         if(fnSuc) {
             if (!this.connection) {
                 req.getConnection(function (error, connection) {
@@ -113,7 +166,7 @@ function K_SQL(req, res) {
     }
 
     this.exec_row = function (sql, fnSuc, fnErr) {
-        console.log("\n Exec SQL Row: " + sql);
+		logSql(sql);
         if(fnSuc) {
             if (!this.connection) {
                 req.getConnection(function (error, connection) {

@@ -1,7 +1,12 @@
 
 angular.module('app.loggedIn.document.FA.controllers',[])
 
-    .controller("FAController",function($scope,$filter,$timeout,DocumentService,$stateParams,$http,$cookieStore,toastr) {
+    .controller("FAController",function($scope,$filter,$timeout,DocumentService,$stateParams,localStorageService,$http,$cookieStore,toastr) {
+        var oriInfoH,
+            oriInfoL,
+            oriInfoD,
+            oriInfoC;
+
         // Start Signature
         var tempSignature;
         $scope.isSignature = false;
@@ -23,9 +28,30 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         // End Signature
 
 
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
-        console.log("FA: " + CalID + " patient: " + Patient_ID);
+        function getAge(dateString)
+        {
+            var now = new Date();
+            var birthDate = new Date(dateString);
+            var age = now.getFullYear() - birthDate.getFullYear();
+            var m = now.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate()))
+            {
+                age--;
+            }
+            return age;
+        }
+
+
+//        var CalID = $stateParams.CalID;
+//        var Patient_ID = $stateParams.PatientID;
+//        console.log("FA: " + CalID + " patient: " + Patient_ID);
+
+
+        $scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        var doctorInfo = $cookieStore.get('doctorInfo');
+        var Patient_ID = $scope.patientInfo.Patient_id;
+        var CalID = $scope.apptInfo.CAL_ID;
 
         $scope.listFA = [];
         $scope.infoH = [];
@@ -37,19 +63,16 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         $scope.a = {};
         $scope.total = {};
 
-
-
-
-
         var value={},
-            age = 24,
-            gender = 'male',
+            age = getAge($scope.patientInfo.DOB),
+            gender = $scope.patientInfo.Sex,
             val = 0,
             sum = 0,
             avg = 0,
             total = 0,
             rateTotal,
             dem = 0;
+        var oriInfo;
         $scope.age = age;
 
         var date = new Date();
@@ -255,113 +278,48 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             ASSESSED_NAME : null,
             ITEM_ID: null
         };
-
+        oriInfoH  = angular.copy($scope.infoH);
         $scope.infoL = {
-//            PATIENT_ID : null,
-//            CAL_ID : null,
-//            LINE_ID: null,
-//            SECTION_ID : null,
-//            FA_ID : null,
-//            QUESTION: null,
-//            PICTURE: null,
-//            ISSCORE1 : null,
-//            SCORE_TYPE1 : null,
             SCORE1 : {},
-//            ISRATING1 : null,
-//            RATING_ID1 : null,
             RATING_VALUE1 : {},
             COMMENTS: {},
-//            ORD : null,
-//            ISSCORE2 : null,
-//            SCORE_TYPE2 : null,
             SCORE2 : {},
-//            ISRATING2 : null,
-//            RATING_ID2 : null,
             RATING_VALUE2 : {},
-//            ISENABLE : null,
-//            Created_by : null,
-//            Creation_date : null,
-//            Last_updated_by : null,
-//            Last_update_date : null,
-//            IsCommentsText : null,
-//            LineType : null,
             RATE1 : {},
-            RATE2 : {}//,
-//            VAL1_NAME_HEADER: null,
-//            VAL1_VALUE_HEADER: null,
-//            VAL2_NAME_HEADER: null,
-//            VAL2_VALUE_HEADER: null,
-//            IS_SHOW_RANKING_TABLE : null
+            RATE2 : {}
         };
-
-//        $scope.infoS ={
-//            "PATIENT_ID" : null,
-//            "CAL_ID" : null,
-//            "SECTION_ID" : null,
-//            "FA_ID" : null,
-//            "SECTION_NAME" : null,
-//            "ISENABLE" : null,
-//            "ORD" : null,
-//            "USER_TYPE" : null,
-//            "Created_by" : null,
-//            "Creation_date" : null,
-//            "Last_updated_by" : null,
-//            "Last_update_date" : null,
-//            "SECTION_TYPE" : null
-//        };
 
         $scope.infoD = {
-//            PATIENT_ID : null,
-//            CAL_ID : null,
-//            DETAIL_ID : null,
-//            LINE_ID : null,
-//            QUESTION : null,
-//            VAL1_NAME : null,
-//            VAL1_ISVALUE : null,
             VAL1_VALUE : {},
-//            VAL1_ISCHECKBOX : null,
             VAL1_CHECKBOX : {},
-//            VAL2_NAME : null,
-//            VAL2_ISVALUE : null,
             VAL2_VALUE : {},
-//            VAL2_ISCHECKBOX : null,
             VAL2_CHECKBOX : {},
-            COMMENTS : {}//,
-//            PICTURE : null,
-//            ORD : null,
-//            ISENABLE : null,
-//            Created_by : null,
-//            Creation_date: null,
-//            Last_updated_by : null,
-//            Last_update_date: null,
-//            VAL1_ISCOMMENT_WHEN_YES : null,
-//            VAL1_ISCOMMENT_WHEN_NO : null,
-//            VAL2_ISCOMMENT_WHEN_YES : null,
-//            VAL2_ISCOMMENT_WHEN_NO : null,
-//            IsCommentText : null,
-//            LineTestRefer : null,
-//            VAL1_VALUE_IS_NUMBER : null,
-//            VAL2_VALUE_IS_NUMBER : null
+            COMMENTS : {}
         };
 
-        $scope.infoC ={
-//            "PATIENT_ID" : null,
-//            "CAL_ID" : null,
-//            "FA_COMMENT_ID" : null,
-//            "LINE_ID" : null,
-//            "NAME" : null,
-            "VALUE": {}//,
-//            "ISENABLE" : null,
-//            "Created_by" : null,
-//            "Creation_date" : null,
-//            "Last_updated_by" : null,
-//            "Last_update_date" : null,
-//            "Comment_Type" : null
-        };
+        $scope.infoC.VALUE = {};
 
+
+        $scope.resetForm = function () {
+            $scope.infoH = angular.copy(oriInfoH);
+            $scope.infoL = angular.copy(oriInfoL);
+            $scope.infoD = angular.copy(oriInfoD);
+            $scope.infoC.VALUE = angular.copy(oriInfoC);
+            $scope.FAForm.$setPristine();
+        }
+
+        $scope.infoChanged = function () {
+            if(!angular.equals(oriInfoH, $scope.infoH) == false && !angular.equals(oriInfoL,$scope.infoL) == false && !angular.equals(oriInfoD, $scope.infoD) == false && !angular.equals(oriInfoC,$scope.infoC.VALUE) == false)
+            {
+                return  false;
+            }else{
+                return true;
+            }
+        }
 
         DocumentService.checkFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
             if(response['status'] === 'fail') {
+                $scope.isNew = true;
                 DocumentService.newFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
                     DocumentService.loadFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
                         if(response['status'] === 'fail') {
@@ -417,11 +375,15 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                 i++;
                             });
 
+                            oriInfoL  = angular.copy($scope.infoL);
+                            oriInfoD  = angular.copy($scope.infoD);
+                            oriInfoC  = angular.copy($scope.infoC.VALUE);
                         }
                     });
                 });
             }else
             {
+                $scope.isNew = false;
                 $scope.infoH = {
                     PATIENT_ID: response.PATIENT_ID ,
                     CAL_ID : response.CAL_ID ,
@@ -449,6 +411,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     ASSESSED_NAME : response.ASSESSED_NAME ,
                     ITEM_ID: response.ITEM_ID
                 };
+                oriInfoH  = angular.copy($scope.infoH);
                 DocumentService.loadFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
                     if(response['status'] === 'fail') {
                         alert("load fail!");
@@ -502,7 +465,9 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                             });
                             i++;
                         });
-
+                        oriInfoL  = angular.copy($scope.infoL);
+                        oriInfoD  = angular.copy($scope.infoD);
+                        oriInfoC  = angular.copy($scope.infoC.VALUE);
                     }
                 });
 

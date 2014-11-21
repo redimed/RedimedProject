@@ -23,7 +23,8 @@
             <i class="fa fa-cogs"></i>{{info.action}} Item
         </div>
 		<div class="pull-right">
-			<button class="btn green" ng-click="save()"><i class="fa fa-save"></i> Save </button>
+			<button class="btn green" ng-show="inUpdateMode != true" ng-click="save()"><i class="fa fa-save"></i> Save </button>
+			<button class="btn green" ng-show="inUpdateMode == true" ng-click="editItem()"><i class="fa fa-save"></i> Update </button>
         </div>
     </div>
     <div class="portlet-body">

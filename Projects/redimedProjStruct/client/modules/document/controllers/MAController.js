@@ -1,6 +1,8 @@
 
 angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
     .controller("MAController",function($scope,DocumentService,$http,$cookieStore,toastr,$stateParams,localStorageService) {
+        var oriInfoH,
+            oriInfoL;
         // Start Signature
         var tempSignature;
         $scope.isSignature = false;
@@ -25,25 +27,12 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         $scope.infoH = [];
         $scope.infoL = [];
 
-
-
-//        var CalID = $stateParams.CalID;
-//        var Patient_ID = $stateParams.PatientID;
-//        console.log("MA: " + CalID + " patient: " + Patient_ID);
-
-
         $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
         var doctorInfo = $cookieStore.get('doctorInfo');
-        console.log(doctorInfo);
-        console.log($scope.apptInfo);
-        console.log($scope.patientInfo);
         var Patient_ID = $scope.patientInfo.Patient_id;
         var CalID = $scope.apptInfo.CAL_ID;
-
-
         var sex = $scope.patientInfo.Sex;
-        console.log(sex);
         $scope.Ratio = function(){
             $scope.infoH.WAIST_TO_HIP_RATE = $scope.infoH.WAIST_CIR / $scope.infoH.HIP_CIR;
             if(sex == "female")
@@ -74,9 +63,6 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         };
 
         $scope.submitMA = function(MAForm){
-//            var imageSign = document.getElementById('signDisplay').src;
-//            $scope.infoH.SIGNATURE = imageSign;
-
             $scope.showClickedValidation = true;
             if(MAForm.$invalid){
                 toastr.error("Please Input All Required Information!", "Error");
@@ -95,14 +81,11 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             }
         };
 
-//        var today = new Date();
-//        console.log(today);
-
         $scope.infoH ={
             Patient_id : Patient_ID,
             HEIGHT : null,
             WEIGHT: null,
-            BMI: null,
+            BMI: NaN,
             URINALYSIS: null,
             BSL : null,
             WAIST_CIR : null,
@@ -145,7 +128,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT: null,
             DESCRIPTION : null
         };
-
+        oriInfoH  = angular.copy($scope.infoH);
         $scope.infoL = {
             "MA_LINE_ID"  : null,
             "QUESTION" : null,
@@ -174,10 +157,26 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             "YES_NO_VAL" : {},
             "ISENABLE" : 1
         };
+        oriInfoL  = angular.copy($scope.infoL);
 
+        $scope.resetForm = function () {
+            $scope.infoH = angular.copy(oriInfoH);
+            $scope.infoL = angular.copy(oriInfoL);
+            $scope.MAForm.$setPristine();
+        }
+
+        $scope.infoChanged = function () {
+            if(!angular.equals(oriInfoH, $scope.infoH) == false && !angular.equals(oriInfoL,$scope.infoL) == false)
+            {
+                return  false;
+            }else{
+                return true;
+            }
+        }
 
         DocumentService.checkMA(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
+                $scope.isNew = true;
                 DocumentService.newMA(Patient_ID,CalID).then(function(response){
                     DocumentService.loadMA(Patient_ID,CalID).then(function(response){
                         if(response['status'] === 'fail') {
@@ -207,16 +206,18 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                                     i++;
                                 }
                             });
+                            oriInfoL  = angular.copy($scope.infoL);
                         }
                     });
                 });
             }else
             {
+                $scope.isNew = false;
                 $scope.infoH = {
                     Patient_id : response.Patient_id,
                     HEIGHT : response.HEIGHT,
                     WEIGHT: response.WEIGHT,
-                    BMI: response.BMI,
+                    BMI: response.BMI * 1,
                     URINALYSIS: response.URINALYSIS,
                     BSL : response.BSL,
                     WAIST_CIR : response.WAIST_CIR,
@@ -258,6 +259,8 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT: response.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT,
                     DESCRIPTION : response.DESCRIPTION
                 };
+
+                oriInfoH  = angular.copy($scope.infoH);
                 DocumentService.loadMA(Patient_ID,CalID).then(function(response){
                     if(response['status'] === 'fail') {
                         alert("load fail!");
@@ -286,6 +289,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                                 i++;
                             }
                         });
+                        oriInfoL  = angular.copy($scope.infoL);
                     }
                 });
 

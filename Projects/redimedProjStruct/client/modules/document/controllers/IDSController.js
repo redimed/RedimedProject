@@ -1,7 +1,8 @@
 
 angular.module('app.loggedIn.document.IDS.controllers',[])
     .controller("IDSController",function($scope,DocumentService,$http,$cookieStore,$stateParams,localStorageService) {
-
+        var oriInfoH;
+        var oriInfoL;
         $scope.infoL = [];
         $scope.listIDS = [];
 
@@ -72,14 +73,11 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
             TesterSign: null,
             TesterDate : null
         };
-
-        console.log(oriInfoH);
+        oriInfoH  = angular.copy($scope.infoH);
         $scope.infoL.YES_NO = [];
         $scope.infoL.PATIENT_ID = Patient_ID;
         $scope.infoL.CAL_ID = CalID;
-
-        var oriInfoH
-        var oriInfoL
+        oriInfoL  = angular.copy($scope.infoL.YES_NO);
 
         $scope.resetForm = function () {
             $scope.infoH = angular.copy(oriInfoH);
@@ -88,7 +86,12 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         }
 
         $scope.infoChanged = function () {
-            return !angular.equals(oriInfoH, $scope.infoH);
+            if(!angular.equals(oriInfoH, $scope.infoH) == false && !angular.equals(oriInfoL,$scope.infoL.YES_NO) == false)
+            {
+                return  false;
+            }else{
+                return true;
+            }
         }
 
         $scope.submitIDS = function(IDSForm){
@@ -115,6 +118,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
 
         DocumentService.checkIDS(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'fail') {
+                $scope.isNew = true;
                 DocumentService.newIDS(Patient_ID,CalID).then(function(response){
                     DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
                         if(response['status'] === 'fail') {
@@ -139,12 +143,14 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                                     i++;
                                 }
                             });
-                            oriInfoL = $scope.infoL.YES_NO;
+                            oriInfoH  = angular.copy($scope.infoH);
+                            oriInfoL  = angular.copy($scope.infoL.YES_NO);
                         }
                     });
                 });
             }else
             {
+                $scope.isNew = false;
                 DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
                     if(response['status'] === 'fail') {
                         alert("load fail!");
@@ -170,7 +176,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                             }
                         });
 
-                        oriInfoL = $scope.infoL.YES_NO;
+                        oriInfoL  = angular.copy($scope.infoL.YES_NO);
 
                     }
 
@@ -206,9 +212,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                     TesterSign: response.data.TesterSign,
                     TesterDate : response.data.TesterDate
                 };
-
-                oriInfoH = $scope.infoH;
-                console.log(oriInfoH);
+                oriInfoH  = angular.copy($scope.infoH);
             }
         });
 

@@ -2,13 +2,14 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <button type="submit"
+                    ng-disabled="!infoChanged()"
                     class="btn green pull-right">{{isNew?"Add New":"Update"}}
             </button>
             <a href="javascript:;" type="button"
                ng-disabled="isNew == true"
                ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
             </a>
-            <a href="javascript:;"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
+            <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
         </div>
     </div>
     <div class="caption">
