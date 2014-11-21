@@ -1,0 +1,2722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="category_3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="96cc77b9-d078-41e3-ba89-9854d46780bc">
+	<property name="ireport.zoom" value="1.1269722013523664"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2455"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.`First_name` , p.`Sur_name` ,
+CONCAT(IFNULL(p.`First_name` ,''), IFNULL(p.`Sur_name`,'')) AS 'full_name' ,
+    p.`DOB` , IFNULL(p.`Address1`,p.`Address2`)  AS address ,
+    p.`Occupation` ,
+e.`Company_name` AS 'e_name' ,
+    e.`Email` AS 'e_email' ,
+    e.`Addr` AS 'e_address' ,
+    e.`Phone` AS 'e_phone',
+    d.`NAME` AS 'd_name' ,
+    d.`Address` AS 'd_address' , d.`Phone` AS 'd_phone', l.`FROM_TIME`  ,
+SUBSTRING_INDEX(d.`Signature`, ',', -1) AS 'd_sign' , c.*, SUBSTRING_INDEX(c.`Signature`, ',', -1) AS 'Signature1' FROM `gorgon_category_2` c
+INNER JOIN `cln_patients` p ON p.`Patient_id` = c.`patient_id`
+INNER JOIN `cln_appointment_calendar`  l ON l.`CAL_ID` = c.`cal_id`
+LEFT JOIN `doctors` d ON d.`doctor_id` = c.`DOCTOR_ID`
+LEFT JOIN `companies` e ON p.`company_id` = e.`id`
+WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{patient_id}]]>
+	</queryString>
+	<field name="First_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sur_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="DOB" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Occupation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="e_name" class="java.lang.String"/>
+	<field name="e_email" class="java.lang.String"/>
+	<field name="e_address" class="java.lang.String"/>
+	<field name="e_phone" class="java.lang.String"/>
+	<field name="d_name" class="java.lang.String"/>
+	<field name="d_address" class="java.lang.String"/>
+	<field name="d_phone" class="java.lang.String"/>
+	<field name="FROM_TIME" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="d_sign" class="java.lang.String"/>
+	<field name="cat_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cal_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DocId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="patient_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Signature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q1_4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q1_4_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q1_5_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q1_5_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q1_5_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q1_5_3_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_1_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_2_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_6" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_7" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_8" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_9" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_10" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_11" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_12" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_13" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_14" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_15" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_16" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_17" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_18" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_19" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_20" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_21" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_22" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_3_23" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_3_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_3_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_3_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_3_4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_3_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_3_6" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_3_7" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_4_3_8" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_6" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_7" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_8" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_9" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_5_10" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_6" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_7" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_8" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_9" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_10" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_1_6_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q3_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_1_1_1" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_1_1_2" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_1_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_1_2_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_1_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_1_4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_4_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_5_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_5_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_5_3_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_5_3_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_5_4_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_5_4_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_5_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_5_6" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_6_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_6_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_L_1" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_L_2" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_L_3" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_L_4" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_L_5" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_L_6" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_L_7" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_L_8" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_R_1" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_R_2" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_R_3" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_R_4" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_R_5" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_R_6" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_R_7" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7_R_8" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_7" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_1_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_2_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_2_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_3_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_3_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_4_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_4_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_5_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_5_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_6_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_6_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_7_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_7_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_8_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_8_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_9_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_8_9_c" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_9" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_10_1" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_10_2" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_11" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_12_1" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_12_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_1_1" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_1_2" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_1_3" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_1_4" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_1_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="q4_2_13_6" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rel_cmt" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rel_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_4_y" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_6" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_7" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_8" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r1_8_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r2_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r2_2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r2_2_y" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r2_3" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r2_4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r2_5" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r2_6" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r2_7_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r3_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r3_2_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r4_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r4_2_c" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r5_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r5_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOCTOR_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Signature1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="d_sign" class="java.awt.Image">
+		<variableExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{d_sign}.getBytes("UTF-8"))))]]></variableExpression>
+	</variable>
+	<variable name="Signature1" class="java.awt.Image">
+		<variableExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature1}.getBytes("UTF-8"))))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="114" width="555" height="510" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c1.png"]]></imageExpression>
+			</image>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="0" width="555" height="75" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c2.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="9" y="100" width="536" height="690" uuid="d74d58d5-71ab-42d6-92b0-1ee3873f3e12"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/p2.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="589" width="13" height="13" uuid="5a366ecf-414e-4c5b-9b71-385ccd70af55">
+					<printWhenExpression><![CDATA[$F{q1_4}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="713" width="13" height="13" uuid="4fb94199-5145-41d9-8a61-5c5996ae6a5a">
+					<printWhenExpression><![CDATA[$F{q1_5_1}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="738" width="13" height="13" uuid="fde86395-6ad9-446e-a357-b312121e6872">
+					<printWhenExpression><![CDATA[$F{q1_5_2}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="764" width="13" height="13" uuid="49ca1d58-4877-45b7-837b-7cdf68deffe8">
+					<printWhenExpression><![CDATA[$F{q1_5_3}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="352" y="171" width="185" height="18" uuid="b4a0d964-6b65-4393-81e4-997215f5a0c1"/>
+				<textFieldExpression><![CDATA[$F{First_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="68" y="171" width="207" height="18" uuid="462696a6-dff0-4fae-b71c-3a53f541753f"/>
+				<textFieldExpression><![CDATA[$F{Sur_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="357" y="221" width="198" height="16" uuid="86e22433-aaaa-4dc8-9e72-935c6675654b"/>
+				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="169" y="246" width="371" height="16" uuid="a6225f4b-ddec-4b23-8a60-eb5d1415ec78"/>
+				<textFieldExpression><![CDATA[$F{Occupation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="68" y="199" width="477" height="16" uuid="15439fae-710d-4e90-ba54-9128c76f57fd"/>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="289" width="420" height="16" uuid="8eb52f32-d222-423e-b270-3d7ba8727957"/>
+				<textFieldExpression><![CDATA[$F{e_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="268" y="314" width="119" height="16" uuid="9d6f6c96-d77e-4be2-be09-e5ca42362e85"/>
+				<textFieldExpression><![CDATA[$F{e_phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="116" y="390" width="424" height="17" uuid="dbae9ded-5956-4c73-8f31-6547280f5671"/>
+				<textFieldExpression><![CDATA[$F{d_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="66" y="414" width="474" height="16" uuid="56859589-c6e2-4171-b959-e95f4eaacf6a"/>
+				<textFieldExpression><![CDATA[$F{d_address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="59" y="439" width="216" height="17" uuid="d1af4c7e-0dd1-47ba-84ce-a8b778c82937"/>
+				<textFieldExpression><![CDATA[$F{d_phone}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="115" y="463" width="160" height="17" uuid="63a24bec-bd68-4717-b45e-e25c124333d7"/>
+				<textFieldExpression><![CDATA[$F{FROM_TIME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="hh:mm" isBlankWhenNull="true">
+				<reportElement x="390" y="463" width="100" height="17" uuid="3ff7ca2d-32f4-4e5f-82b9-2df759f001cc"/>
+				<textFieldExpression><![CDATA[$F{FROM_TIME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="15" y="612" width="525" height="69" uuid="cb52c8ca-f74f-4691-8168-add80a157d9c"/>
+				<textElement>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="1.8" firstLineIndent="70"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{q1_4_c}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="761" width="263" height="15" uuid="dcda93fa-215d-4c12-a28e-a25c45bd8ec1"/>
+				<textFieldExpression><![CDATA[$F{q1_5_3_c}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="71" width="555" height="659" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c3.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="301" y="599" width="186" height="20" uuid="51d0135b-f07a-40f2-ae21-e938f8ebafb7"/>
+				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="359" y="655" width="104" height="37" uuid="59b4d775-dca2-484e-a229-7c103637573d"/>
+				<imageExpression><![CDATA[$V{Signature1}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="352" y="697" width="100" height="20" uuid="d41a5e68-76a3-4ab8-8a35-f6c1e76b07e2"/>
+				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="114" width="555" height="688" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c4.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="507" y="293" width="13" height="13" uuid="5a366ecf-414e-4c5b-9b71-385ccd70af55">
+					<printWhenExpression><![CDATA[$F{q3_1_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="531" y="294" width="13" height="13" uuid="c6eeb39b-3fd1-47e6-b107-30f257ce3f1f">
+					<printWhenExpression><![CDATA[$F{q3_1_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="11" y="287" width="483" height="64" uuid="be0b33a8-3fd7-4ac1-81c3-d4d0397ed6fa"/>
+				<textFieldExpression><![CDATA[$F{q3_1_1_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="35" y="405" width="485" height="46" uuid="0026397f-b42b-4799-837c-bb0c397e5a00"/>
+				<textFieldExpression><![CDATA[$F{q3_1_2_c}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="507" y="377" width="13" height="13" uuid="31f8bd3c-6ac0-4096-941e-faa86dce3ab3">
+					<printWhenExpression><![CDATA[$F{q3_1_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="531" y="377" width="13" height="13" uuid="0326ce43-77fe-4614-8463-a8c0bef30c3e">
+					<printWhenExpression><![CDATA[$F{q3_1_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="507" width="9" height="9" uuid="9940c3bb-cc35-41a8-8c8f-051631fd1e2c">
+					<printWhenExpression><![CDATA[$F{q3_1_3_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="524" width="9" height="9" uuid="4eef264b-5b7a-46a6-8251-a514f59a8446">
+					<printWhenExpression><![CDATA[$F{q3_1_3_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="541" width="9" height="9" uuid="2b98b057-c1b0-4589-ab09-d896fdc19755">
+					<printWhenExpression><![CDATA[$F{q3_1_3_3}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="557" width="9" height="9" uuid="c78f2a2e-8da7-4304-b369-d7d47f0390f4">
+					<printWhenExpression><![CDATA[$F{q3_1_3_4}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="573" width="9" height="9" uuid="4e691b0c-e69c-4396-a940-2182e60e8e10">
+					<printWhenExpression><![CDATA[$F{q3_1_3_5}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="588" width="9" height="9" uuid="5d59328c-9632-4024-8d83-6cbddbb2f6b3">
+					<printWhenExpression><![CDATA[$F{q3_1_3_6}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="606" width="9" height="9" uuid="363169ff-3f61-44d1-981b-5905f9ed9a7e">
+					<printWhenExpression><![CDATA[$F{q3_1_3_7}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="622" width="9" height="9" uuid="63c59586-3728-4fb5-9e9f-fb8fc425f9bd">
+					<printWhenExpression><![CDATA[$F{q3_1_3_8}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="638" width="9" height="9" uuid="683690b0-daf5-4aae-af5b-9172c1f05594">
+					<printWhenExpression><![CDATA[$F{q3_1_3_9}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="654" width="9" height="9" uuid="c76bf24d-d389-44d7-ad98-ceb0d9b7dd73">
+					<printWhenExpression><![CDATA[$F{q3_1_3_10}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="672" width="9" height="9" uuid="65448d45-c9c3-404f-bbb0-0b36c17a9304">
+					<printWhenExpression><![CDATA[$F{q3_1_3_11}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="687" width="9" height="9" uuid="3978026b-a83a-492b-8203-f982ad7ef6fd">
+					<printWhenExpression><![CDATA[$F{q3_1_3_12}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="704" width="9" height="9" uuid="a687333e-95db-42bb-afac-b94d5f748281">
+					<printWhenExpression><![CDATA[$F{q3_1_3_13}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="720" width="9" height="9" uuid="186efc41-746f-4357-83f5-7bd24a8b0afb">
+					<printWhenExpression><![CDATA[$F{q3_1_3_14}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="509" width="9" height="9" uuid="b9e35b23-383f-451d-ae1e-951bae99364a">
+					<printWhenExpression><![CDATA[$F{q3_1_3_15}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="526" width="9" height="9" uuid="025a8090-7f13-42b9-a4de-7b9074e18950">
+					<printWhenExpression><![CDATA[$F{q3_1_3_16}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="542" width="9" height="9" uuid="3601105a-0305-42e7-83f7-61d3397ffd54">
+					<printWhenExpression><![CDATA[$F{q3_1_3_17}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="561" width="9" height="9" uuid="56b39390-b1f7-4a9a-b485-99dcda172496">
+					<printWhenExpression><![CDATA[$F{q3_1_3_18}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="577" width="9" height="9" uuid="08bb50b3-45b5-4c9f-b108-9a6078b82a60">
+					<printWhenExpression><![CDATA[$F{q3_1_3_19}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="605" width="9" height="9" uuid="a5e12bb1-f0d1-4f61-937b-d7364839c8ea">
+					<printWhenExpression><![CDATA[$F{q3_1_3_20}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="646" width="9" height="9" uuid="b9c02e2d-3816-4fa9-a5df-3b51b17e7155">
+					<printWhenExpression><![CDATA[$F{q3_1_3_21}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="686" width="9" height="9" uuid="b5398835-863e-4fcc-9f89-6f3f5f74e02e">
+					<printWhenExpression><![CDATA[$F{q3_1_3_22}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="504" y="720" width="9" height="9" uuid="1701497d-8979-45d8-a20e-77dc1f45bff7">
+					<printWhenExpression><![CDATA[$F{q3_1_3_23}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="507" width="9" height="9" uuid="475985d4-d7aa-4991-b883-2a86d4e6cc01">
+					<printWhenExpression><![CDATA[$F{q3_1_3_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="524" width="9" height="9" uuid="26225256-2c78-41ba-ac8e-4e9389e0f692">
+					<printWhenExpression><![CDATA[$F{q3_1_3_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="541" width="9" height="9" uuid="f3c0fc86-6b9f-45dd-b7dd-e5c55a8a1f79">
+					<printWhenExpression><![CDATA[$F{q3_1_3_3}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="557" width="9" height="9" uuid="7d10f889-4a41-47c5-9f05-c62da2f2d221">
+					<printWhenExpression><![CDATA[$F{q3_1_3_4}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="573" width="9" height="9" uuid="426c7480-52eb-467c-8e7c-c9c45de4c3d3">
+					<printWhenExpression><![CDATA[$F{q3_1_3_5}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="588" width="9" height="9" uuid="d29f831e-f0ba-45b6-a17c-eb17763b8a85">
+					<printWhenExpression><![CDATA[$F{q3_1_3_6}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="606" width="9" height="9" uuid="19075a7f-6ca8-4217-89e8-dcd8cb2c4c20">
+					<printWhenExpression><![CDATA[$F{q3_1_3_7}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="622" width="9" height="9" uuid="4fdafc07-d5f8-46ef-910d-59027c202c46">
+					<printWhenExpression><![CDATA[$F{q3_1_3_8}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="638" width="9" height="9" uuid="52bb13f8-5796-406d-88a4-84191bb601e5">
+					<printWhenExpression><![CDATA[$F{q3_1_3_9}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="653" width="9" height="9" uuid="4ebb86ea-37e5-47ed-a9c7-bd7b02892a85">
+					<printWhenExpression><![CDATA[$F{q3_1_3_10}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="672" width="9" height="9" uuid="e72f70af-8d8c-4a2f-a975-6fc8c95fef98">
+					<printWhenExpression><![CDATA[$F{q3_1_3_11}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="687" width="9" height="9" uuid="a76eb84a-9a3c-48cd-a936-28dc579e722c">
+					<printWhenExpression><![CDATA[$F{q3_1_3_12}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="704" width="9" height="9" uuid="5381ee8c-2ef7-49f3-b8cf-ebd70c05b058">
+					<printWhenExpression><![CDATA[$F{q3_1_3_13}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="720" width="9" height="9" uuid="d6e2a173-d5e5-4ab5-9f48-71af37f1d7e6">
+					<printWhenExpression><![CDATA[$F{q3_1_3_14}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="720" width="9" height="9" uuid="acde8d10-0fc6-4804-a5d0-62e9cee04399">
+					<printWhenExpression><![CDATA[$F{q3_1_3_23}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="686" width="9" height="9" uuid="bd4d0b04-be89-459a-8ba5-cd0317727e9a">
+					<printWhenExpression><![CDATA[$F{q3_1_3_22}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="646" width="9" height="9" uuid="e04e908c-9e7d-4092-86b8-64ffedff7f1e">
+					<printWhenExpression><![CDATA[$F{q3_1_3_21}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="605" width="9" height="9" uuid="df9cdf9d-cfc1-45ce-814a-9d6b24bfb963">
+					<printWhenExpression><![CDATA[$F{q3_1_3_20}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="577" width="9" height="9" uuid="0a488ea2-2db1-4af3-a3ee-1e12cf51dc06">
+					<printWhenExpression><![CDATA[$F{q3_1_3_19}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="561" width="9" height="9" uuid="fc75ec52-1327-44b1-ae39-e3de23eab769">
+					<printWhenExpression><![CDATA[$F{q3_1_3_18}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="542" width="9" height="9" uuid="70851687-c48d-405b-bbb1-27bce8971af3">
+					<printWhenExpression><![CDATA[$F{q3_1_3_17}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="526" width="9" height="9" uuid="38a36588-9f87-4bbe-a8af-5d96cc34f79b">
+					<printWhenExpression><![CDATA[$F{q3_1_3_16}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="533" y="509" width="9" height="9" uuid="9ca0aaa6-f87b-4d0f-893a-f048db1ecd54">
+					<printWhenExpression><![CDATA[$F{q3_1_3_15}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="499" y="755" width="9" height="9" uuid="eb2b0a52-eb64-499a-8ec2-6af3b624c09f">
+					<printWhenExpression><![CDATA[$F{q3_1_4_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="528" y="755" width="9" height="9" uuid="2f4976f0-1f5d-49b8-a4fe-0eebb7f3bde8">
+					<printWhenExpression><![CDATA[$F{q3_1_4_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="499" y="773" width="9" height="9" uuid="54869025-448e-4abc-aad6-1b04fe47985c">
+					<printWhenExpression><![CDATA[$F{q3_1_4_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="528" y="773" width="9" height="9" uuid="a3de6a74-f846-4f54-ac91-334f874c7984">
+					<printWhenExpression><![CDATA[$F{q3_1_4_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="25" width="555" height="739" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c5.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="368" y="213" width="9" height="9" uuid="36555a91-ee19-4303-b5d0-3c76a66bf63d">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="420" y="213" width="9" height="9" uuid="5071b998-1eec-420a-afe0-2e0953e17cc0">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="213" width="9" height="9" uuid="09f9c7e1-b4e1-45a5-a6c1-12786153e324">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_1}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="213" width="9" height="9" uuid="d3ff63f4-f65a-481a-80d8-d2640e71ad71">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_1}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="368" y="230" width="9" height="9" uuid="36555a91-ee19-4303-b5d0-3c76a66bf63d">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="420" y="230" width="9" height="9" uuid="5071b998-1eec-420a-afe0-2e0953e17cc0">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="230" width="9" height="9" uuid="09f9c7e1-b4e1-45a5-a6c1-12786153e324">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_2}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="230" width="9" height="9" uuid="d3ff63f4-f65a-481a-80d8-d2640e71ad71">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_2}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="368" y="248" width="9" height="9" uuid="36555a91-ee19-4303-b5d0-3c76a66bf63d">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_3}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="420" y="248" width="9" height="9" uuid="5071b998-1eec-420a-afe0-2e0953e17cc0">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_3}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="248" width="9" height="9" uuid="09f9c7e1-b4e1-45a5-a6c1-12786153e324">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_3}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="248" width="9" height="9" uuid="d3ff63f4-f65a-481a-80d8-d2640e71ad71">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_3}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="368" y="267" width="9" height="9" uuid="36555a91-ee19-4303-b5d0-3c76a66bf63d">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_4}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="420" y="267" width="9" height="9" uuid="5071b998-1eec-420a-afe0-2e0953e17cc0">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_4}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="267" width="9" height="9" uuid="09f9c7e1-b4e1-45a5-a6c1-12786153e324">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_4}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="266" width="9" height="9" uuid="d3ff63f4-f65a-481a-80d8-d2640e71ad71">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_4}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="368" y="285" width="9" height="9" uuid="36555a91-ee19-4303-b5d0-3c76a66bf63d">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_5}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="420" y="285" width="9" height="9" uuid="5071b998-1eec-420a-afe0-2e0953e17cc0">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_5}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="285" width="9" height="9" uuid="09f9c7e1-b4e1-45a5-a6c1-12786153e324">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_5}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="284" width="9" height="9" uuid="d3ff63f4-f65a-481a-80d8-d2640e71ad71">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_5}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="368" y="302" width="9" height="9" uuid="36555a91-ee19-4303-b5d0-3c76a66bf63d">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_6}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="420" y="302" width="9" height="9" uuid="5071b998-1eec-420a-afe0-2e0953e17cc0">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_6}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="302" width="9" height="9" uuid="09f9c7e1-b4e1-45a5-a6c1-12786153e324">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_6}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="300" width="9" height="9" uuid="d3ff63f4-f65a-481a-80d8-d2640e71ad71">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_6}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="368" y="319" width="9" height="9" uuid="36555a91-ee19-4303-b5d0-3c76a66bf63d">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_7}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="420" y="319" width="9" height="9" uuid="5071b998-1eec-420a-afe0-2e0953e17cc0">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_7}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="319" width="9" height="9" uuid="09f9c7e1-b4e1-45a5-a6c1-12786153e324">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_7}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="316" width="9" height="9" uuid="d3ff63f4-f65a-481a-80d8-d2640e71ad71">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_7}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="368" y="338" width="9" height="9" uuid="36555a91-ee19-4303-b5d0-3c76a66bf63d">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_8}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="420" y="338" width="9" height="9" uuid="5071b998-1eec-420a-afe0-2e0953e17cc0">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_8}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="339" width="9" height="9" uuid="09f9c7e1-b4e1-45a5-a6c1-12786153e324">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_8}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="336" width="9" height="9" uuid="d3ff63f4-f65a-481a-80d8-d2640e71ad71">
+					<printWhenExpression><![CDATA[$F{q3_1_4_3_8}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="391" width="27" height="20" uuid="a37ae346-c3ae-47d1-ad1f-963f3df8cc23">
+					<printWhenExpression><![CDATA[$F{q3_1_5_1}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="425" width="27" height="20" uuid="7fd381d0-ae36-409c-9b12-cff7416709a4">
+					<printWhenExpression><![CDATA[$F{q3_1_5_2}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="461" width="27" height="20" uuid="ae358b97-6f16-42d6-a885-d25d65960a97">
+					<printWhenExpression><![CDATA[$F{q3_1_5_3}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="496" width="27" height="20" uuid="e677cb6f-ed95-4dda-bcb3-55a62996380b">
+					<printWhenExpression><![CDATA[$F{q3_1_5_4}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="533" width="27" height="20" uuid="c8af8f25-50e4-4d30-b538-1a5e7708dbc8">
+					<printWhenExpression><![CDATA[$F{q3_1_5_5}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="578" width="27" height="20" uuid="b4278e0f-108f-4ee2-8a5f-f2311154594d">
+					<printWhenExpression><![CDATA[$F{q3_1_5_6}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="623" width="27" height="20" uuid="12190566-46a3-4ff8-88f8-c46dbb73de40">
+					<printWhenExpression><![CDATA[$F{q3_1_5_7}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="659" width="27" height="20" uuid="be2767c2-28f5-4d68-bcd2-c23cbaf8c290">
+					<printWhenExpression><![CDATA[$F{q3_1_5_8}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="701" width="27" height="20" uuid="ff6ee139-1d09-4add-a36b-07825cb56e37">
+					<printWhenExpression><![CDATA[$F{q3_1_5_9}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="312" y="391" width="43" height="25" uuid="413dd151-cfc9-4540-bf1b-8f83a93a7668">
+					<printWhenExpression><![CDATA[$F{q3_1_5_1}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="312" y="425" width="43" height="25" uuid="9c248d5f-77ff-40e8-a36c-8627a0387a39">
+					<printWhenExpression><![CDATA[$F{q3_1_5_2}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="312" y="461" width="43" height="25" uuid="d59dbfc6-c0e9-4d0d-a7bc-3bb17bdd6b39">
+					<printWhenExpression><![CDATA[$F{q3_1_5_3}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="312" y="496" width="43" height="25" uuid="e821c4d1-a8ac-4075-b557-337995f8226d">
+					<printWhenExpression><![CDATA[$F{q3_1_5_4}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="312" y="533" width="43" height="25" uuid="c4d81970-9768-4c21-9e79-16d363d9ee77">
+					<printWhenExpression><![CDATA[$F{q3_1_5_5}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="312" y="578" width="43" height="25" uuid="021f3517-a0c3-4bb8-807d-0d6fe3d637ad">
+					<printWhenExpression><![CDATA[$F{q3_1_5_6}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="312" y="623" width="43" height="25" uuid="2efdce1f-aa60-43f0-9131-d49a99457a69">
+					<printWhenExpression><![CDATA[$F{q3_1_5_7}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="312" y="659" width="43" height="25" uuid="b995c402-912e-4dda-ab88-f5da654a23c2">
+					<printWhenExpression><![CDATA[$F{q3_1_5_8}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="365" y="390" width="47" height="30" uuid="d581b2ad-a49f-43b7-82a4-70d3fefff778">
+					<printWhenExpression><![CDATA[$F{q3_1_5_1}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="365" y="425" width="47" height="30" uuid="2d04a054-601d-475b-a2a6-ab8327845fd6">
+					<printWhenExpression><![CDATA[$F{q3_1_5_2}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="365" y="461" width="47" height="30" uuid="35cf35fc-d4be-45ef-b870-af0813d6fd0f">
+					<printWhenExpression><![CDATA[$F{q3_1_5_3}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="368" y="496" width="47" height="30" uuid="de1a11e6-4d1a-4d46-aed8-7c6cb1e8540d">
+					<printWhenExpression><![CDATA[$F{q3_1_5_4}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="368" y="533" width="47" height="30" uuid="d5d7347e-cfd9-4c58-a0e8-42156168a2e9">
+					<printWhenExpression><![CDATA[$F{q3_1_5_5}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="368" y="578" width="47" height="30" uuid="2082b34c-5398-4ed6-945c-fa5a2eca463d">
+					<printWhenExpression><![CDATA[$F{q3_1_5_6}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="368" y="623" width="47" height="30" uuid="f7b8bfb0-ad30-434f-86a9-0d5304b498ec">
+					<printWhenExpression><![CDATA[$F{q3_1_5_7}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="368" y="659" width="47" height="30" uuid="eea134e7-a211-4579-ab48-5311e759acf4">
+					<printWhenExpression><![CDATA[$F{q3_1_5_8}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="365" y="701" width="47" height="30" uuid="1275981b-c661-47b5-9e98-544155b1321e">
+					<printWhenExpression><![CDATA[$F{q3_1_5_9}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="494" y="701" width="47" height="30" uuid="6bc954f9-3a56-4594-bea6-12118be311b2">
+					<printWhenExpression><![CDATA[$F{q3_1_5_9}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="494" y="659" width="47" height="30" uuid="ef670a3e-89b2-474e-9e82-baaba81b23ab">
+					<printWhenExpression><![CDATA[$F{q3_1_5_8}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="494" y="623" width="47" height="30" uuid="d7adf8ee-7545-4235-a846-5ed479a495de">
+					<printWhenExpression><![CDATA[$F{q3_1_5_7}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="494" y="578" width="47" height="30" uuid="447b3155-1c20-4900-bb4c-3c908cb8966f">
+					<printWhenExpression><![CDATA[$F{q3_1_5_6}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="494" y="533" width="47" height="30" uuid="73c8cb99-996a-4c4c-96af-1514fb17aaca">
+					<printWhenExpression><![CDATA[$F{q3_1_5_5}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="494" y="496" width="47" height="30" uuid="a5ee5ce1-9111-496e-a733-acb989617756">
+					<printWhenExpression><![CDATA[$F{q3_1_5_4}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="494" y="461" width="47" height="30" uuid="eb292296-f271-4ff1-9da3-acc7dee4adec">
+					<printWhenExpression><![CDATA[$F{q3_1_5_3}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="494" y="425" width="47" height="30" uuid="d45e391f-113c-4fb7-8c27-ae20e21ac4da">
+					<printWhenExpression><![CDATA[$F{q3_1_5_2}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="499" y="391" width="47" height="30" uuid="f97b2e8d-dd37-4014-b9ab-d4bd20e586ae">
+					<printWhenExpression><![CDATA[$F{q3_1_5_1}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="429" y="391" width="47" height="30" uuid="56b124bf-c4e1-411a-bd8c-7bed36a44e4e">
+					<printWhenExpression><![CDATA[$F{q3_1_5_1}.intValue()==3]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="429" y="425" width="47" height="30" uuid="8d562bde-fbe2-41d9-8df6-715b14d12478">
+					<printWhenExpression><![CDATA[$F{q3_1_5_2}.intValue()==3]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="429" y="461" width="47" height="30" uuid="15c07134-2bcf-4404-a690-42b2868a5a7c">
+					<printWhenExpression><![CDATA[$F{q3_1_5_3}.intValue()==3]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="429" y="496" width="47" height="30" uuid="5cec08a5-0807-49f2-b0b8-1971effbb878">
+					<printWhenExpression><![CDATA[$F{q3_1_5_4}.intValue()==3]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="429" y="533" width="47" height="30" uuid="2fcb8ea1-4116-4e6f-aae3-966fad1c1fec">
+					<printWhenExpression><![CDATA[$F{q3_1_5_5}.intValue()==3]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="429" y="578" width="47" height="30" uuid="b59d960b-0b2c-4b10-acad-2984af66d35b">
+					<printWhenExpression><![CDATA[$F{q3_1_5_6}.intValue()==3]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="429" y="623" width="47" height="30" uuid="f51ac33a-7948-449d-8624-75bab65b8d2c">
+					<printWhenExpression><![CDATA[$F{q3_1_5_7}.intValue()==3]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="429" y="659" width="47" height="30" uuid="88f46ae4-f8a5-43f2-b8bb-822165b0ecdb">
+					<printWhenExpression><![CDATA[$F{q3_1_5_8}.intValue()==3]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+		</band>
+		<band height="802">
+			<image isUsingCache="false">
+				<reportElement x="0" y="27" width="555" height="729" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c6.png"]]></imageExpression>
+			</image>
+			<ellipse>
+				<reportElement mode="Transparent" x="271" y="42" width="27" height="20" uuid="9ad4f1cb-6180-4638-8caf-43a4871e9bbb">
+					<printWhenExpression><![CDATA[$F{q3_1_5_10}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="365" y="42" width="47" height="30" uuid="30bc0fb9-2f8e-4fb9-bf51-749840ae874a">
+					<printWhenExpression><![CDATA[$F{q3_1_5_10}.intValue()==2]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="491" y="40" width="47" height="30" uuid="ebe95cd5-6fd2-4263-afda-a713e1e5f922">
+					<printWhenExpression><![CDATA[$F{q3_1_5_10}.intValue()==4]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<textField isBlankWhenNull="true">
+				<reportElement x="47" y="445" width="499" height="31" uuid="f591d6b3-6721-48af-ad19-f0cbf6febd08"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{q3_1_6_c}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="282" y="150" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_1}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="150" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_1}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="150" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_1}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="150" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_1}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="150" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="180" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_2}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="180" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_2}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="180" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_2}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="180" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_2}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="180" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="207" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_3}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="207" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_3}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="207" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_3}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="207" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_3}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="207" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_3}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="234" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_4}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="234" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_4}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="234" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_4}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="234" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_4}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="234" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_4}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="260" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_5}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="260" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_5}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="260" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_5}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="260" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_5}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="260" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_5}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="286" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_6}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="286" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_6}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="286" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_6}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="286" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_6}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="286" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_6}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="312" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_7}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="312" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_7}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="312" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_7}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="312" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_7}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="312" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_7}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="337" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_8}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="337" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_8}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="337" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_8}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="337" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_8}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="337" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_8}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="363" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_9}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="363" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_9}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="363" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_9}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="363" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_9}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="363" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_9}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="387" width="9" height="9" uuid="34607805-78b3-4e85-9f6e-7c09c10d6e29">
+					<printWhenExpression><![CDATA[$F{q3_1_6_10}.intValue() == 5]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="332" y="387" width="9" height="9" uuid="8c8173fb-0a4a-4cd0-9c08-7909cc6e57fa">
+					<printWhenExpression><![CDATA[$F{q3_1_6_10}.intValue() == 4]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="387" y="387" width="9" height="9" uuid="b2000d74-7a97-4505-9d39-cb0f8573b33b">
+					<printWhenExpression><![CDATA[$F{q3_1_6_10}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="445" y="387" width="9" height="9" uuid="5e2f0a92-f213-4d2f-8036-fecdd51c611e">
+					<printWhenExpression><![CDATA[$F{q3_1_6_10}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="387" width="9" height="9" uuid="5b615c92-fd41-49ff-a32b-17e115baba4a">
+					<printWhenExpression><![CDATA[$F{q3_1_6_10}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="32" y="578" width="9" height="9" uuid="5b19544a-ef87-4023-9053-d297edccee6a">
+					<printWhenExpression><![CDATA[$F{q3_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="66" y="578" width="9" height="9" uuid="809c2ee5-c7c1-44ee-b2e4-3bfc112c77e5">
+					<printWhenExpression><![CDATA[$F{q3_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="542" width="230" height="15" uuid="9c49be2b-d4d2-4470-a67c-7d01c46e14b6"/>
+				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="47" y="665" width="265" height="15" uuid="f899f5aa-832c-4762-9eca-00b4177c4b4a"/>
+				<textFieldExpression><![CDATA[$F{d_name}]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="false">
+				<reportElement x="108" y="680" width="117" height="38" uuid="25693b98-4ff1-4c54-bde3-caddb0d1f906"/>
+				<imageExpression><![CDATA[$V{d_sign}]]></imageExpression>
+			</image>
+			<image isUsingCache="false">
+				<reportElement x="182" y="597" width="100" height="36" uuid="c3aa85f6-17e8-4b4c-b0b2-34059ee71664"/>
+				<imageExpression><![CDATA[$V{Signature1}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="374" y="607" width="121" height="20" uuid="073156bb-d5c9-48e0-9825-ff30dedd8480"/>
+				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="372" y="692" width="127" height="20" uuid="fc893165-e9c3-440b-92a1-5f11cdd9bb9e"/>
+				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="31" width="555" height="694" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c7.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="78" y="375" width="57" height="13" uuid="3df7c9f1-28e2-46c9-9ff1-70bb9a8ef693"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_1_1_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="79" y="394" width="57" height="14" uuid="015d8f34-c586-438e-a73a-6354b921f049"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_1_1_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="90" y="424" width="45" height="15" uuid="0c0697ab-46ef-4885-9db5-8f899996aa26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_1_2_c}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="178" y="431" width="9" height="9" uuid="3c4c3de3-cdbf-48ec-8d45-1712f281123a">
+					<printWhenExpression><![CDATA[$F{q4_2_1_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="242" y="431" width="9" height="9" uuid="af51b20b-5cb9-4301-a698-e2fe205974a9">
+					<printWhenExpression><![CDATA[$F{q4_2_1_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="178" y="455" width="9" height="9" uuid="dbd29be5-b671-4fed-871d-a96df5402e29">
+					<printWhenExpression><![CDATA[$F{q4_2_1_3}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="178" y="480" width="9" height="9" uuid="428e1634-e678-42c8-a452-26fc6f71b4d7">
+					<printWhenExpression><![CDATA[$F{q4_2_1_4}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="243" y="455" width="9" height="9" uuid="e988a634-e4ef-4f3d-8fb8-c89d4681eb93">
+					<printWhenExpression><![CDATA[$F{q4_2_1_3}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="242" y="480" width="9" height="9" uuid="3215437e-1cc8-4907-aa45-1281c7f1c061">
+					<printWhenExpression><![CDATA[$F{q4_2_1_4}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="149" y="520" width="9" height="9" uuid="e8624cfc-6391-45f6-a228-84a26dbee505">
+					<printWhenExpression><![CDATA[$F{q4_2_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="215" y="520" width="9" height="9" uuid="c74475ea-c610-4a41-8624-f0c3fc64d2f8">
+					<printWhenExpression><![CDATA[$F{q4_2_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="215" y="557" width="9" height="9" uuid="843da089-157a-4759-865c-51e51f0e6b19">
+					<printWhenExpression><![CDATA[$F{q4_2_3}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="152" y="557" width="9" height="9" uuid="529b3e86-d762-449d-bdad-108ebbda1cb4">
+					<printWhenExpression><![CDATA[$F{q4_2_3}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="52" y="622" width="209" height="66" uuid="2562cc9d-229e-488d-9cfe-c05a29056f54"/>
+				<textFieldExpression><![CDATA[$F{q4_2_4_c}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="449" y="358" width="9" height="9" uuid="d050eb52-550d-4a94-87e1-480369f599cb">
+					<printWhenExpression><![CDATA[$F{q4_2_5_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="448" y="380" width="9" height="9" uuid="cb8da0ef-b6a7-4386-8fff-d4dc5acdbd0a">
+					<printWhenExpression><![CDATA[$F{q4_2_5_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="447" y="421" width="9" height="9" uuid="02fc271f-d015-43e2-984c-fd795fdcc5c0">
+					<printWhenExpression><![CDATA[$F{q4_2_5_3_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="447" y="441" width="9" height="9" uuid="bbcac545-886d-465d-b55f-933cd5bb7965">
+					<printWhenExpression><![CDATA[$F{q4_2_5_3_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="447" y="479" width="9" height="9" uuid="f2dc4359-47f3-4e2e-baf9-bc7da79fae4d">
+					<printWhenExpression><![CDATA[$F{q4_2_5_4_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="447" y="499" width="9" height="9" uuid="22d25293-6ccf-4f86-b881-cc5eafbbf5c0">
+					<printWhenExpression><![CDATA[$F{q4_2_5_4_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="447" y="521" width="9" height="9" uuid="1ebc0151-3e07-4bf6-84eb-c7414ae53087">
+					<printWhenExpression><![CDATA[$F{q4_2_5_5}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="520" width="9" height="9" uuid="ec158a96-0eb1-42ea-9d7c-3e6d784dedc4">
+					<printWhenExpression><![CDATA[$F{q4_2_5_5}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="499" width="9" height="9" uuid="d5927b07-2f91-43c3-ae2a-530ea7e71aa8">
+					<printWhenExpression><![CDATA[$F{q4_2_5_4_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="479" width="9" height="9" uuid="5a011c3d-e36f-4b4e-9138-2b3a70fd13ad">
+					<printWhenExpression><![CDATA[$F{q4_2_5_4_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="440" width="9" height="9" uuid="d938dbd0-4b3b-450a-b1f9-6d11f6330c48">
+					<printWhenExpression><![CDATA[$F{q4_2_5_3_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="421" width="9" height="9" uuid="dfbc27e2-4ff8-47d7-8c0e-0f9ae897f8f7">
+					<printWhenExpression><![CDATA[$F{q4_2_5_3_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="379" width="9" height="9" uuid="f6e6b13e-6a84-4448-8913-517dc14fafe4">
+					<printWhenExpression><![CDATA[$F{q4_2_5_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="358" width="9" height="9" uuid="f662e06b-61a1-4601-b632-481de31acf63">
+					<printWhenExpression><![CDATA[$F{q4_2_5_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="419" y="631" width="9" height="9" uuid="c4a54963-afc1-4c33-b95b-777fe3953a1a">
+					<printWhenExpression><![CDATA[$F{q4_2_6_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="419" y="652" width="9" height="9" uuid="ef9b3a47-b615-4c62-94e0-f00de5ef07f0">
+					<printWhenExpression><![CDATA[$F{q4_2_6_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="487" y="631" width="9" height="9" uuid="732d63eb-f83e-4180-9186-d77ca910899b">
+					<printWhenExpression><![CDATA[$F{q4_2_6_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="487" y="652" width="9" height="9" uuid="20318943-00f0-43a6-9f3f-b56b443e93f3">
+					<printWhenExpression><![CDATA[$F{q4_2_6_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="446" y="582" width="9" height="9" uuid="1f2bfe8a-9b5a-4a91-89c6-cf6e005b5d04">
+					<printWhenExpression><![CDATA[$F{q4_2_5_6}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="520" y="582" width="9" height="9" uuid="f5b4c734-8892-40c2-a34f-3effda132cc9">
+					<printWhenExpression><![CDATA[$F{q4_2_5_6}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="15" width="555" height="728" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c8.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="87" y="681" width="78" height="17" uuid="7969e49f-bd7d-4c66-ab8f-628fbbbf9a86"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{q4_2_10_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="82" y="709" width="83" height="16" uuid="6b59e7ed-8af6-4705-b95a-874dbf36c979"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{q4_2_10_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="108" y="627" width="141" height="20" uuid="1edf2ee1-c6c2-4f1f-903f-69aa11ea8a9e"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{q4_2_9}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="182" width="141" height="14" uuid="240f94d6-6df7-4395-83b0-ec7cc1f0aff3"/>
+				<textFieldExpression><![CDATA[$F{q4_2_11}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="383" y="385" width="145" height="14" uuid="1a120ea4-c101-4b1d-8db7-d8a7ae4f0097"/>
+				<textFieldExpression><![CDATA[$F{q4_2_12_1}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="190" y="141" width="9" height="9" uuid="c46c46cc-dcbc-4230-b2e5-131c2160893a">
+					<printWhenExpression><![CDATA[$F{q4_2_6_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="247" y="141" width="9" height="9" uuid="ba6c2b2d-36e7-45ba-8043-d737af6d8e5b">
+					<printWhenExpression><![CDATA[$F{q4_2_6_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="49" y="84" width="29" height="20" uuid="524d3882-ad9a-48fa-a398-a0b0a3905f2e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="78" y="84" width="29" height="20" uuid="c55e5fb6-afed-4846-ac13-9e045d900e13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="107" y="84" width="26" height="20" uuid="a1b4ec91-5f8b-4cab-9298-e3ce11e290fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="135" y="84" width="26" height="20" uuid="00a2bb73-7890-4bfe-8305-6606ea1ea998"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="161" y="84" width="26" height="20" uuid="e86a127d-4f0f-4ba9-aaf1-92498b5b0bf7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="190" y="84" width="26" height="20" uuid="88ba0f5f-57c4-40d8-b79c-7fd0d9adf3a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="217" y="84" width="26" height="20" uuid="c3a9229c-cedb-4128-b8bc-9cac4bbb6c54"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="245" y="84" width="26" height="20" uuid="d323ba71-1226-436d-9349-62ef8685b94d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_8}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="50" y="113" width="29" height="20" uuid="524d3882-ad9a-48fa-a398-a0b0a3905f2e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="79" y="113" width="29" height="20" uuid="c55e5fb6-afed-4846-ac13-9e045d900e13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="108" y="113" width="26" height="20" uuid="a1b4ec91-5f8b-4cab-9298-e3ce11e290fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="136" y="113" width="26" height="20" uuid="00a2bb73-7890-4bfe-8305-6606ea1ea998"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="162" y="113" width="26" height="20" uuid="e86a127d-4f0f-4ba9-aaf1-92498b5b0bf7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="191" y="113" width="26" height="20" uuid="88ba0f5f-57c4-40d8-b79c-7fd0d9adf3a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="218" y="113" width="26" height="20" uuid="c3a9229c-cedb-4128-b8bc-9cac4bbb6c54"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="246" y="113" width="26" height="20" uuid="d323ba71-1226-436d-9349-62ef8685b94d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_8}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="186" width="229" height="46" uuid="339a58b2-85fc-406c-804e-754f247f5de3"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_c}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="393" y="432" width="9" height="9" uuid="9fbfe67d-f1d9-44bc-b04b-0ac6960a85dc">
+					<printWhenExpression><![CDATA[$F{q4_2_12_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="339" y="432" width="9" height="9" uuid="7642f462-986a-4711-aa0f-4bfd6fe0e762">
+					<printWhenExpression><![CDATA[$F{q4_2_12_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="187" y="251" width="37" height="15" uuid="80e39007-e7aa-41ce-960e-74bd4e03473a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_1_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="187" y="268" width="37" height="15" uuid="5d6875b3-6428-4f7f-a64e-7e497edb89b9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_2_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="187" y="288" width="37" height="15" uuid="7527e705-99ab-4b91-af19-e29e178b4762"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_3_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="188" y="307" width="37" height="15" uuid="68c8a3d3-2943-433b-854d-0b3392fcb410"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_4_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="188" y="325" width="37" height="15" uuid="68c74774-27e6-47f3-a6ed-2101d881f782"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_5_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="188" y="343" width="37" height="15" uuid="36f704fd-c2f3-4fcb-9cea-b287e417475d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_6_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="187" y="362" width="37" height="15" uuid="bf7cc9ba-ada0-4755-bf4f-0fcf1fcda528"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_7_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="187" y="381" width="37" height="15" uuid="5039fea2-b3a0-4b26-8e53-7b0e7b948811"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_8_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="187" y="399" width="37" height="15" uuid="3b04e60f-4003-4ccb-a8ec-56300b20abba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_8_9_c}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="131" y="273" width="9" height="9" uuid="1dd5ecae-6e1b-4525-bc5e-af5ba694d252">
+					<printWhenExpression><![CDATA[$F{q4_2_8_2_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="130" y="292" width="9" height="9" uuid="b8e7afe9-eb81-445e-b73c-de0805a5b3c3">
+					<printWhenExpression><![CDATA[$F{q4_2_8_3_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="131" y="310" width="9" height="9" uuid="3d2c491e-fbe2-4eb4-bcb6-438b6474ca19">
+					<printWhenExpression><![CDATA[$F{q4_2_8_4_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="130" y="328" width="9" height="9" uuid="9ba71e1f-6d8e-410b-b4a2-eb66d0e73e55">
+					<printWhenExpression><![CDATA[$F{q4_2_8_5_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="129" y="347" width="9" height="9" uuid="32976f6c-3cd8-42bd-bc5d-9263071a24d3">
+					<printWhenExpression><![CDATA[$F{q4_2_8_6_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="129" y="365" width="9" height="9" uuid="9956fa92-a2f1-417f-9b9e-0fecc2fff841">
+					<printWhenExpression><![CDATA[$F{q4_2_8_7_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="129" y="383" width="9" height="9" uuid="a6e1a1ad-15c9-4b50-9b3c-84c3eb61cffd">
+					<printWhenExpression><![CDATA[$F{q4_2_8_8_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="130" y="401" width="9" height="9" uuid="34004014-2fb9-4fdb-a297-738cfa8e3197">
+					<printWhenExpression><![CDATA[$F{q4_2_8_9_1}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="166" y="273" width="9" height="9" uuid="b73e9629-c498-4375-8515-3f4a0ca9f9ab">
+					<printWhenExpression><![CDATA[$F{q4_2_8_2_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="167" y="291" width="9" height="9" uuid="0112da5c-93c1-4f28-8e02-e63edc902efe">
+					<printWhenExpression><![CDATA[$F{q4_2_8_3_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="166" y="310" width="9" height="9" uuid="d01d83d9-0a76-4934-8303-8e4e6287346e">
+					<printWhenExpression><![CDATA[$F{q4_2_8_4_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="166" y="328" width="9" height="9" uuid="3c8e2942-53d5-4718-aef1-8b99e772895e">
+					<printWhenExpression><![CDATA[$F{q4_2_8_5_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="166" y="347" width="9" height="9" uuid="81740a0a-f4c1-45c1-908f-d20717188028">
+					<printWhenExpression><![CDATA[$F{q4_2_8_6_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="167" y="365" width="9" height="9" uuid="c116c93c-9a35-4781-abf8-d64c48b661f3">
+					<printWhenExpression><![CDATA[$F{q4_2_8_7_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="166" y="383" width="9" height="9" uuid="9e226811-698b-4c3d-b3b2-9706714a0cf3">
+					<printWhenExpression><![CDATA[$F{q4_2_8_8_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="167" y="401" width="9" height="9" uuid="ee1c570f-c01a-45b7-9672-eb029d6a534b">
+					<printWhenExpression><![CDATA[$F{q4_2_8_9_1}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="438" y="559" width="9" height="9" uuid="e643f1ca-a6f6-4ced-98bb-7253e6aecc41">
+					<printWhenExpression><![CDATA[$F{q4_2_13_5}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="495" y="593" width="9" height="9" uuid="990dc2f2-466d-4416-a091-1bd57cbc006a">
+					<printWhenExpression><![CDATA[$F{q4_2_13_2}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="434" y="639" width="9" height="9" uuid="de30fa63-0b82-48b9-bd46-d205b7e650c4">
+					<printWhenExpression><![CDATA[$F{q4_2_13_3}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="658" width="9" height="9" uuid="5f4af681-ee4d-4103-afd5-fab7d1de5bbc">
+					<printWhenExpression><![CDATA[$F{q4_2_13_4}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="474" y="678" width="9" height="9" uuid="3d168129-f724-4182-8fb6-caefb9df179f">
+					<printWhenExpression><![CDATA[$F{q4_2_13_5}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="512" y="697" width="9" height="9" uuid="ec6904ab-8bba-4538-9f77-b2150210cc2f">
+					<printWhenExpression><![CDATA[$F{q4_2_13_6}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="481" y="559" width="9" height="9" uuid="f28e53de-da66-40a8-8f07-8506b9614375">
+					<printWhenExpression><![CDATA[$F{q4_2_13_5}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="462" y="697" width="9" height="9" uuid="9527487e-3748-492f-9796-78b32b0435b5">
+					<printWhenExpression><![CDATA[$F{q4_2_13_6}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="424" y="678" width="9" height="9" uuid="8bd9bec8-34db-499f-bb13-a4faca013cdb">
+					<printWhenExpression><![CDATA[$F{q4_2_13_5}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="421" y="658" width="9" height="9" uuid="8098b212-ebde-4e9c-ad3b-0b07a9b3692d">
+					<printWhenExpression><![CDATA[$F{q4_2_13_4}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="384" y="638" width="9" height="9" uuid="902e2193-a564-4f81-b68b-7859168c07c0">
+					<printWhenExpression><![CDATA[$F{q4_2_13_3}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="422" y="593" width="9" height="9" uuid="29bfb890-a3c7-49e1-8576-c1b3f674331d">
+					<printWhenExpression><![CDATA[$F{q4_2_13_2}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="333" y="528" width="32" height="17" uuid="116ba7e3-0967-449d-b50b-df6838f722f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="383" y="528" width="32" height="17" uuid="350fa485-c703-4809-af52-cde324eca8a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="430" y="528" width="32" height="17" uuid="b01b6926-9f0e-454b-90fa-779657d28502"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="480" y="528" width="32" height="17" uuid="a5fd66ec-cf25-464c-8c99-4862f1da7ea6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="82" y="539" width="58" height="17" uuid="a7eeaea3-d1de-4fc6-9112-864e5b12f64d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="82" y="563" width="58" height="17" uuid="d8173d14-fdeb-4f00-8cc8-79386792e4f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="81" y="584" width="58" height="17" uuid="088e841b-d2cc-4ffb-a6bd-a1a248d6c6de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="81" y="604" width="58" height="17" uuid="7527d0e5-4355-452c-9166-8ef97b30cc76"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="203" y="604" width="58" height="17" uuid="70f962c1-d89c-4f7d-a208-0369575bf11f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_8}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="203" y="583" width="58" height="17" uuid="660ede74-9f44-47d8-9ed2-16b4d09beb1d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="204" y="562" width="58" height="17" uuid="6ecac697-42b7-410e-a089-5acdac1c82c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="203" y="539" width="58" height="17" uuid="eecd59b8-f63f-42f3-8596-704061fa282b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="358" y="303" width="57" height="16" uuid="a1509b41-7865-4c6c-b9f5-39f6b9740728"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="358" y="319" width="57" height="16" uuid="7cdce83a-172b-4c10-87c6-af7579163feb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="358" y="337" width="57" height="16" uuid="9033e064-44cd-4d4f-82cb-257b6c0a8ac1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="359" y="352" width="57" height="16" uuid="9398cc33-6129-4b57-b6d5-5f1701c9036d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="359" y="368" width="57" height="16" uuid="5967d273-b8f8-4f3b-85cb-1ca353a41e3e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="478" y="368" width="60" height="16" uuid="2f447c3b-a5d9-4421-ac04-c4ace253dfb2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_10}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="478" y="352" width="60" height="16" uuid="108d24ba-518d-47bd-8192-cb6f5c84e403"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_9}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="478" y="335" width="60" height="16" uuid="92fc2f85-4c8b-4565-ac60-42574747d685"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_8}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="480" y="319" width="60" height="16" uuid="ea830979-dfcc-4b8a-985b-64806f124a13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="478" y="303" width="60" height="16" uuid="7ba47c80-2ef9-4316-9757-b404e5e9b157"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_6_6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="478" y="165" width="59" height="16" uuid="24a18d35-6bc4-492f-8a30-cf20cfbd37d2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_10}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="358" y="98" width="59" height="16" uuid="b3b3234f-8365-4729-ae33-ccffc7813694"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="359" y="115" width="59" height="16" uuid="c25b7769-f7f2-48f6-98d7-0b17c01fff08"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="359" y="132" width="59" height="16" uuid="de2a498a-f176-4c49-b471-d7321330b3e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="359" y="148" width="59" height="16" uuid="b706bb4e-f8da-40cc-8b23-cc6462fceb7f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="358" y="164" width="59" height="16" uuid="cbf2319f-db70-4a69-9322-ed72cca72140"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="479" y="99" width="59" height="16" uuid="f041f7ef-137b-4df5-aeb5-52fc00907a12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="478" y="114" width="59" height="16" uuid="f23f56ec-4a65-432b-ba39-88e3c9215177"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="478" y="131" width="59" height="16" uuid="458e8a03-d9c7-4e0a-9c68-1811ff9c14f1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_8}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="477" y="148" width="59" height="16" uuid="f3067275-47a6-4ed7-9be0-2246c1c9f134"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{q3_1_5_9}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="1" y="0" width="555" height="770" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c9.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="21" y="633" width="157" height="20" uuid="4675e016-286a-45ad-b0e9-5273b7594fe1"/>
+				<textFieldExpression><![CDATA[$F{d_name}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="261" y="620" width="80" height="33" uuid="d6b3e33d-1bb3-4662-bbff-62e26c7d8243"/>
+				<imageExpression><![CDATA[$V{d_sign}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="260" y="729" width="13" height="13" uuid="b34eb724-6150-4846-a635-c68868f029c4">
+					<printWhenExpression><![CDATA[$F{rel_id}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="11" y="81" width="535" height="493" uuid="ca3afe50-7fa6-4fcd-99af-b32b0937cefc"/>
+				<textFieldExpression><![CDATA[$F{rel_cmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="436" y="640" width="26" height="16" uuid="effee45d-0012-4ac2-be59-7c66fedf1eb3"/>
+				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="468" y="640" width="26" height="13" uuid="54bb9138-7fc1-43f0-8e95-efd349f7a23f"/>
+				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="510" y="640" width="26" height="16" uuid="1443a1e9-825f-4c24-986b-2182348636ba"/>
+				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="1" y="14" width="555" height="623" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/c10.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="14" y="119" width="8" height="8" uuid="ae54cbce-d4b2-4c5c-ac84-ec370d4e4605">
+					<printWhenExpression><![CDATA[$F{r1_1}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="14" y="161" width="8" height="8" uuid="862dd28c-1155-45c5-88a8-0e8e9447f61a">
+					<printWhenExpression><![CDATA[$F{r1_2}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="13" y="236" width="8" height="8" uuid="85fc4a18-786e-430f-89f0-0e3de22ebe5b">
+					<printWhenExpression><![CDATA[$F{r2_1}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="14" y="354" width="8" height="8" uuid="525f1d69-3f18-41a5-8e5b-74392e97fc3f">
+					<printWhenExpression><![CDATA[$F{r3_1}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="14" y="436" width="8" height="8" uuid="356ba7d9-e8e3-4c12-8082-2d930f1e8ff5">
+					<printWhenExpression><![CDATA[$F{r4_1}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="14" y="564" width="8" height="8" uuid="667eaa62-a1b1-480d-a4cb-fb61227c33b7">
+					<printWhenExpression><![CDATA[$F{r5_1}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="138" width="8" height="8" uuid="b53d8c54-efdc-4990-afe8-6870442a32d8">
+					<printWhenExpression><![CDATA[$F{r1_3}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="159" width="8" height="8" uuid="9ac23b1b-04da-49ea-a9bf-1a289980aa8e">
+					<printWhenExpression><![CDATA[$F{r1_5}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="170" width="8" height="8" uuid="11ab6e66-e395-4006-8a78-4ac499663635">
+					<printWhenExpression><![CDATA[$F{r1_6}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="181" width="8" height="8" uuid="a3dc0beb-bfdf-4cb1-9c72-dc9092e947f8">
+					<printWhenExpression><![CDATA[$F{r1_7}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="191" width="8" height="8" uuid="f191cdfc-8f03-4282-a394-f4f72e53444b">
+					<printWhenExpression><![CDATA[$F{r1_8}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="256" width="8" height="8" uuid="1ab57b6b-f805-4bb5-a89c-3c01a00a1f4d">
+					<printWhenExpression><![CDATA[$F{r2_2}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="276" width="8" height="8" uuid="4e23f5ca-95d3-4ea2-83e1-7e18ed3e7950">
+					<printWhenExpression><![CDATA[$F{r2_3}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="287" width="8" height="8" uuid="2733749f-7179-452e-b614-83abc741c6a6">
+					<printWhenExpression><![CDATA[$F{r2_4}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="298" width="8" height="8" uuid="2e921810-a3c6-426c-93d2-f23879f9096e">
+					<printWhenExpression><![CDATA[$F{r2_5}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="279" y="308" width="8" height="8" uuid="4fd3a152-d0fe-46f8-b35f-56f146c25880">
+					<printWhenExpression><![CDATA[$F{r2_6}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="82" y="93" width="133" height="14" uuid="60eb1407-3034-4be7-b640-d015a1f35cfe"/>
+				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="383" y="128" width="65" height="20" uuid="faa0033c-01ef-4637-b5ff-fc2b948130f8"/>
+				<textFieldExpression><![CDATA[$F{r1_4_y}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="301" y="183" width="235" height="35" uuid="42342aa6-7460-433d-9b9e-d39f5d2c0c6d"/>
+				<textElement>
+					<font size="9"/>
+					<paragraph firstLineIndent="120"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r1_8_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="245" width="78" height="20" uuid="fa26e35f-4d35-45d1-b592-9d180bbe6128"/>
+				<textFieldExpression><![CDATA[$F{r2_2_y}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="408" y="318" width="128" height="17" uuid="22d78912-dbcb-42e4-b2eb-7d5447fbd63b"/>
+				<textFieldExpression><![CDATA[$F{r2_7_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="285" y="366" width="252" height="48" uuid="0c847079-c950-4161-b075-1a8c1e213322"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r3_2_c}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="285" y="589" width="253" height="36" uuid="18f79bde-1f03-477f-b38e-d54ab2f437d2"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r5_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="285" y="462" width="253" height="67" uuid="9a1eddea-d0ae-44cc-9a25-e9e267e79de3"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{r4_2_c}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="291" y="90" width="31" height="17" uuid="5b70133b-db77-428b-ac8e-dd2ab30df8a0"/>
+				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="328" y="90" width="31" height="17" uuid="d9845d4b-fd55-416b-8063-17330eed8839"/>
+				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="365" y="90" width="31" height="17" uuid="27a6c025-2aab-4c50-9cbc-8e030dd5ef4e"/>
+				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

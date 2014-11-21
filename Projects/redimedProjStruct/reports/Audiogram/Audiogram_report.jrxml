@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Audiogram_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="835b0ce9-13bd-4174-855e-0c0624b090de">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="561"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="saDataSet" uuid="457fea9b-d248-424c-9c35-9d67f55c107f">
+		<parameter name="patient_id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cal_id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="sa_id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT l.`patient_id` ,l.`cal_id`,l.`SA_ID` , 'Right Ear (dB)' AS 'Frequency (Hz)'  ,
+MAX(IF(l.Name = 500 , l.value_right , NULL )) AS '500Hz' ,
+MAX(IF(l.Name = 1000 , l.value_right , NULL )) AS '1000Hz' ,
+MAX(IF(l.Name = 1500 , l.value_right , NULL )) AS '1500Hz' ,
+MAX(IF(l.Name = 2000 , l.value_right , NULL )) AS '2000Hz' ,
+MAX(IF(l.Name = 3000 , l.value_right , NULL )) AS '3000Hz' ,
+MAX(IF(l.Name = 4000 , l.value_right , NULL )) AS '4000Hz' ,
+MAX(IF(l.Name = 5000 , l.value_right , NULL )) AS '5000Hz' ,
+MAX(IF(l.Name = 6000 , l.value_right , NULL )) AS '6000Hz' ,
+MAX(IF(l.Name = 8000 , l.value_right , NULL )) AS '8000Hz' FROM `cln_sa_df_lines` l WHERE l.`patient_id`= $P{patient_id} AND l.`cal_id` = $P{cal_id} AND l.`sa_id` = $P{sa_id} GROUP BY patient_id , cal_id , sa_id
+UNION ALL
+SELECT l.`patient_id` ,l.`cal_id`,l.`sa_id` , 'Left Ear (dB)' AS 'Frequency (Hz)' ,
+MAX(IF(l.Name = 500 , l.value_left , NULL )) AS '500Hz' ,
+MAX(IF(l.Name = 1000 , l.value_left , NULL )) AS '1000Hz' ,
+MAX(IF(l.Name = 1500 , l.value_left , NULL )) AS '1500Hz' ,
+MAX(IF(l.Name = 2000 , l.value_left , NULL )) AS '2000Hz' ,
+MAX(IF(l.Name = 3000 , l.value_left , NULL )) AS '3000Hz' ,
+MAX(IF(l.Name = 4000 , l.value_left , NULL )) AS '4000Hz' ,
+MAX(IF(l.Name = 5000 , l.value_left , NULL )) AS '5000Hz' ,
+MAX(IF(l.Name = 6000 , l.value_left , NULL )) AS '6000Hz' ,
+MAX(IF(l.Name = 8000 , l.value_left , NULL )) AS '8000Hz' FROM `cln_sa_df_lines` l WHERE l.`patient_id`= $P{patient_id} AND l.`cal_id` = $P{cal_id} AND l.`sa_id` = $P{sa_id} GROUP BY patient_id , cal_id , sa_id]]>
+		</queryString>
+		<field name="patient_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="cal_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="SA_ID" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Frequency (Hz)" class="java.lang.String"/>
+		<field name="500Hz" class="java.lang.Integer"/>
+		<field name="1000Hz" class="java.lang.Integer"/>
+		<field name="1500Hz" class="java.lang.Integer"/>
+		<field name="2000Hz" class="java.lang.Integer"/>
+		<field name="3000Hz" class="java.lang.Integer"/>
+		<field name="4000Hz" class="java.lang.Integer"/>
+		<field name="5000Hz" class="java.lang.Integer"/>
+		<field name="6000Hz" class="java.lang.Integer"/>
+		<field name="8000Hz" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sa_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cln_sa_df_headers.patient_id AS cln_sa_df_headers_patient_id,
+     cln_sa_df_headers.CAL_ID AS cln_sa_df_headers_CAL_ID,
+     cln_sa_df_headers.SA_ID AS cln_sa_df_headers_SA_ID,
+     cln_sa_df_headers.SA_NAME AS cln_sa_df_headers_SA_NAME,
+     cln_sa_df_headers.test_date AS cln_sa_df_headers_test_date,
+     cln_sa_df_headers.tester AS cln_sa_df_headers_tester,
+     cln_patients.Patient_id AS cln_patients_Patient_id,
+     cln_patients.First_name AS cln_patients_First_name,
+     cln_patients.Sur_name AS cln_patients_Sur_name,
+     cln_patients.Middle_name AS cln_patients_Middle_name,
+     cln_patients.DOB AS cln_patients_DOB
+FROM
+     cln_sa_df_headers cln_sa_df_headers INNER JOIN cln_patients cln_patients ON cln_sa_df_headers.patient_id = cln_patients.Patient_id
+WHERE
+     cln_sa_df_headers.patient_id = $P{patient_id}
+ AND cln_sa_df_headers.SA_ID = $P{sa_id}
+ AND cln_sa_df_headers.CAL_ID = $P{cal_id}]]>
+	</queryString>
+	<field name="cln_sa_df_headers_patient_id" class="java.lang.Integer"/>
+	<field name="cln_sa_df_headers_CAL_ID" class="java.lang.Integer"/>
+	<field name="cln_sa_df_headers_SA_ID" class="java.lang.Integer"/>
+	<field name="cln_sa_df_headers_SA_NAME" class="java.lang.String"/>
+	<field name="cln_sa_df_headers_test_date" class="java.sql.Timestamp"/>
+	<field name="cln_sa_df_headers_tester" class="java.lang.String"/>
+	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
+	<field name="cln_patients_First_name" class="java.lang.String"/>
+	<field name="cln_patients_Sur_name" class="java.lang.String"/>
+	<field name="cln_patients_Middle_name" class="java.lang.String"/>
+	<field name="cln_patients_DOB" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="134" y="0" width="273" height="32" uuid="1956d4f5-8c2d-40c9-940e-e8caeaed5538"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_SA_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="746" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="26" width="74" height="20" uuid="e4344035-4ce2-42b3-9b9a-e53e1431aadd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Client Name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="145" y="26" width="163" height="20" uuid="f3d2af62-a199-4769-8a16-57e13a54ffef"/>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="46" width="87" height="20" uuid="0afec178-0bc2-4478-aeef-5de609ad1fca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employer Name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="145" y="46" width="163" height="20" uuid="3d1d0a11-b32e-4eff-b1a4-215210ff03f0"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_First_name}+" "+$F{cln_patients_Middle_name}+" "+$F{cln_patients_Sur_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="66" width="133" height="20" uuid="be2262d3-c19a-496a-854a-734c4972c349"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Audiometric Officer Name : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="86" width="133" height="20" uuid="4b5f9bc7-d261-4efa-874b-0a3224e17ec8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Audiometric Test :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="145" y="66" width="163" height="20" uuid="0fd47155-335c-4a9b-a550-b2290e4c738d"/>
+				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_tester}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="145" y="86" width="163" height="20" uuid="c7d61d10-4c06-48c7-b5ae-96926a7d5805"/>
+				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_test_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="26" width="32" height="20" uuid="30502b8e-95fb-47a3-82de-bca1871d6a0a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOB :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="422" y="26" width="133" height="20" uuid="b2d36d06-74b7-4275-9afe-fc44e50dba5d"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_DOB}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="86" width="121" height="20" uuid="6fe7fd5f-43de-427e-ac78-5e7fd94cf883"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Test Centre: REDiMED
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="131" width="307" height="20" uuid="b7a4fae2-0116-4a40-a021-0d7b7bda4743"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Here are the results of your hearing test and what they mean. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="151" width="121" height="20" uuid="1987b47b-be00-4b8c-8ee6-7d715683c44a"/>
+				<text><![CDATA[What is an audiogram?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="151" width="253" height="31" uuid="f1b5ebc6-83b2-4618-ac51-e4556801817e"/>
+				<text><![CDATA[An audiogram shows the softest level at which a person can hear a range of different pure tones.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="211" width="121" height="20" uuid="ba225f26-fd2b-4154-b164-20a96680c7cb"/>
+				<text><![CDATA[Here is your audiogram:
+]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="330" width="554" height="216" uuid="ba2affdd-0dc8-4773-8280-5acd33f975e0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="559" width="554" height="44" uuid="dd0fe2bc-5bc6-4722-97ca-ab8259b5e411"/>
+				<text><![CDATA[Normal hearing falls between 0dB and 20dB.  If your O's and X's (representing your right and left hearing thresholds) are within this range you are said to have normal hearing.  If the thresholds are below the 20dB line you have some degree of hearing loss - the further down the chart the greater the degree of hearing loss. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="603" width="197" height="20" uuid="162875de-4d45-466a-879e-62c14021566e"/>
+				<text><![CDATA[Degrees of hearing loss are defined as:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="603" width="151" height="20" uuid="90e0a62c-7e3e-449e-af5b-d2044abfa447"/>
+				<text><![CDATA[ Mild Loss:	       25-45dB ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="623" width="151" height="20" uuid="ec7491cb-6411-436b-b227-acf4603fa9f6"/>
+				<text><![CDATA[Moderate Loss:          45-65dB ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="643" width="151" height="20" uuid="d608a2ab-035a-4b94-9559-c989c37ce2c1"/>
+				<text><![CDATA[Severe Loss: 	       65-90dB ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="663" width="153" height="20" uuid="fc8630b1-1185-4089-a4d6-54179229c04f"/>
+				<text><![CDATA[Profound Loss               >90dB ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="702" width="554" height="44" uuid="7d8b1afb-eb0b-414f-b747-23d0ed80075a"/>
+				<text><![CDATA[All the major sounds of speech are in the 20dB to 60dB range.  If your own hearing thresholds show some degree of hearing loss you may have difficulty hearing some speech sounds some of the time (and other environmental sounds as well).  See your doctor or an audiologist for more information about your hearing.
+]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table 13" x="1" y="246" width="510" height="50" uuid="97b6b3ad-2b3a-432b-a4fa-1065e4e944d7"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="saDataSet" uuid="26100c74-e9ff-47a0-bb80-d57965698113">
+						<datasetParameter name="patient_id">
+							<datasetParameterExpression><![CDATA[$P{patient_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cal_id">
+							<datasetParameterExpression><![CDATA[$P{cal_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="sa_id">
+							<datasetParameterExpression><![CDATA[$P{sa_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="3a593df9-4150-4ccb-9de0-0ace1d17439e">
+						<jr:columnHeader height="20" rowSpan="1">
+							<box>
+								<pen lineColor="#F0F0F0"/>
+								<topPen lineColor="#F0F0F0"/>
+								<leftPen lineColor="#F0F0F0"/>
+								<bottomPen lineColor="#F0F0F0"/>
+								<rightPen lineColor="#F0F0F0"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="15" uuid="b72b9453-56e2-4cb8-972b-011ec33394e4"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[Frequency (Hz)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<box>
+								<pen lineColor="#F0F0F0"/>
+								<topPen lineColor="#F0F0F0"/>
+								<leftPen lineColor="#F0F0F0"/>
+								<bottomPen lineColor="#F0F0F0"/>
+								<rightPen lineColor="#F0F0F0"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="568386e2-342f-472f-8ba1-9128b568eb2d"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Frequency (Hz)}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="ec1c74a2-c98b-4edd-9493-f80f8cf49e2a">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="f7e6a37b-0095-49b1-8623-232278c8f1e3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[500Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="699e57ab-7da4-4632-b30e-6d97a0d71557"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{500Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="83029aea-e323-47cf-a4f2-11a2d9733481">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="9983fd9c-e0a6-4216-9bcf-3b500eecbd27"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[1000Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="6dc0fd93-6eb9-4bb0-9d2e-3299d04449cd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{1000Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="58c1a67c-18da-431f-b4c0-941d5d130fc3">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="48a7aedc-6ff2-4d97-b417-121ae69e2a04"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[1500Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="687727aa-e751-43c9-a116-c0232343a317"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{1500Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="db50cf42-c887-414a-a4cc-da480b04193e">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="04759e39-1b22-417a-91f3-f9f837d8171f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[2000Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="9e393f29-ef66-474d-a99e-b9bfc85631a4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{2000Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="de9da411-cfd3-47fe-a3df-f11d1de16227">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="5a0f4da4-622f-47d7-a96f-6322d588569a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[3000Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="2ff4d8a9-e053-48dd-9390-cb70e0f57bea"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{3000Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="55836dd0-5461-45f9-add0-5404610b1f58">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="9e5e46fc-2af5-40eb-8bb8-c296096beafa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[4000Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="b52e6e78-e15d-4678-8163-95b0a7695185"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{4000Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="cf40f681-8cb6-474e-8642-dbc3353de804">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="31f1da24-e22b-42bc-8f8c-db17976d829f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[5000Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="8529007e-b148-4da4-a998-d55b982aa497"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{5000Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="7bbeb491-6672-4083-9cc7-3924b7453ccb">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="e1cbdff9-055f-4e11-b98d-8f48a8713139"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[6000Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="34a476da-ecfd-4350-9ebd-8682ff16b297"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{6000Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="7b6b7a0a-0d53-4277-8215-9b2583611195">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="15" uuid="014af025-40d6-431c-ad3d-720ec2dd1142"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true" isItalic="false"/>
+								</textElement>
+								<text><![CDATA[8000Hz]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="d610089a-d560-4e41-978e-7593429b7960"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{8000Hz}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="215" y="310" width="100" height="20" uuid="bece950a-3db0-40c1-a65e-1973c57585dd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hearing Level dB (decibels) ]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

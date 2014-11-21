@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rcm_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b126feb7-e44d-4ca0-8021-dd277c21a657">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1111"/>
+	<subDataset name="dataset1" uuid="69296197-b1c2-42d9-937f-437480ae8091">
+		<parameter name="rcm_id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="patient_id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cal_id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     cln_rcm_groups.RCM_GROUP_ID AS cln_rcm_groups_RCM_GROUP_ID,
+     cln_rcm_groups.RCM_SECTION_ID AS cln_rcm_groups_RCM_SECTION_ID,
+     cln_rcm_groups.RCM_DF_ID AS cln_rcm_groups_RCM_DF_ID,
+     cln_rcm_groups.PATIENT_ID AS cln_rcm_groups_PATIENT_ID,
+     cln_rcm_groups.CAL_ID AS cln_rcm_groups_CAL_ID,
+     cln_rcm_groups.ORD AS cln_rcm_groups_ORD,
+     cln_rcm_groups.GROUP_NAME AS cln_rcm_groups_GROUP_NAME
+FROM
+     cln_rcm_groups cln_rcm_groups
+WHERE
+     cln_rcm_groups.RCM_DF_ID = $P{rcm_id}
+  AND cln_rcm_groups.PATIENT_ID = $P{patient_id}
+  AND cln_rcm_groups.CAL_ID = $P{cal_id}]]>
+		</queryString>
+		<field name="cln_rcm_groups_RCM_GROUP_ID" class="java.lang.Integer"/>
+		<field name="cln_rcm_groups_RCM_SECTION_ID" class="java.lang.Integer"/>
+		<field name="cln_rcm_groups_RCM_DF_ID" class="java.lang.Integer"/>
+		<field name="cln_rcm_groups_PATIENT_ID" class="java.lang.Integer"/>
+		<field name="cln_rcm_groups_CAL_ID" class="java.lang.Integer"/>
+		<field name="cln_rcm_groups_ORD" class="java.lang.Integer"/>
+		<field name="cln_rcm_groups_GROUP_NAME" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cln_rcm_headers.RCM_DF_ID AS cln_rcm_headers_RCM_DF_ID,
+     cln_rcm_headers.PATIENT_ID AS cln_rcm_headers_PATIENT_ID,
+     cln_rcm_headers.CAL_ID AS cln_rcm_headers_CAL_ID,
+     cln_rcm_headers.DF_CODE AS cln_rcm_headers_DF_CODE,
+     cln_rcm_headers.ITEM_ID AS cln_rcm_headers_ITEM_ID,
+     cln_rcm_headers.PRINTNAME AS cln_rcm_headers_PRINTNAME,
+     cln_rcm_headers.SIGN AS cln_rcm_headers_SIGN,
+     cln_rcm_headers.DATE AS cln_rcm_headers_DATE,
+     cln_rcm_headers.ISGIVE AS cln_rcm_headers_ISGIVE,
+     cln_rcm_headers.RELEVANT_DESCRIPTION AS cln_rcm_headers_RELEVANT_DESCRIPTION,
+     cln_patients.Patient_id AS cln_patients_Patient_id,
+     cln_patients.Title AS cln_patients_Title,
+     cln_patients.First_name AS cln_patients_First_name,
+     cln_patients.Sur_name AS cln_patients_Sur_name,
+     cln_patients.Middle_name AS cln_patients_Middle_name,
+     cln_patients.Known_as AS cln_patients_Known_as,
+     cln_patients.Address1 AS cln_patients_Address1,
+     cln_patients.Address2 AS cln_patients_Address2,
+     cln_patients.Surburb AS cln_patients_Surburb,
+     cln_patients.State AS cln_patients_State,
+     cln_patients.Post_code AS cln_patients_Post_code,
+     cln_patients.Country AS cln_patients_Country,
+     cln_patients.DOB AS cln_patients_DOB,
+     cln_patients.Sex AS cln_patients_Sex,
+     cln_patients.Phone_ext AS cln_patients_Phone_ext,
+     cln_patients.Home_phone AS cln_patients_Home_phone,
+     cln_patients.Work_phone AS cln_patients_Work_phone,
+     cln_patients.Mobile AS cln_patients_Mobile,
+     cln_entities_patients.id AS cln_entities_patients_id,
+     cln_entities_patients.ENTITY_ID AS cln_entities_patients_ENTITY_ID,
+     cln_entities_patients.Patient_id AS cln_entities_patients_Patient_id,
+     cln_entities_patients.Iscurrent AS cln_entities_patients_Iscurrent,
+     cln_entities_patients.site_id AS cln_entities_patients_site_id,
+     sys_entities.ENTITY_ID AS sys_entities_ENTITY_ID,
+     sys_entities.EMP_ID AS sys_entities_EMP_ID,
+     sys_entities.ENTITY_CODE AS sys_entities_ENTITY_CODE,
+     sys_entities.ENTITY_NAME AS sys_entities_ENTITY_NAME,
+     sys_entities.ALT_NAME AS sys_entities_ALT_NAME,
+     sys_entities.TAX_CODE AS sys_entities_TAX_CODE,
+     sys_entities.DESCRIPTION AS sys_entities_DESCRIPTION,
+     sys_entities.ISENABLE AS sys_entities_ISENABLE,
+     sys_entities.ISINTERNAL AS sys_entities_ISINTERNAL,
+     sys_entity_sites.SITE_ID AS sys_entity_sites_SITE_ID,
+     sys_entity_sites.ENTITY_ID AS sys_entity_sites_ENTITY_ID,
+     sys_entity_sites.SITE_NAME AS sys_entity_sites_SITE_NAME,
+     sys_entity_sites.ALT_NAME AS sys_entity_sites_ALT_NAME,
+     sys_entity_sites.TAX_CODE AS sys_entity_sites_TAX_CODE,
+     sys_entity_sites.DESCRIPTION AS sys_entity_sites_DESCRIPTION,
+     sys_entity_sites.ADDRESS AS sys_entity_sites_ADDRESS,
+     sys_entity_sites.SUBURB AS sys_entity_sites_SUBURB,
+     sys_entity_sites.STATE AS sys_entity_sites_STATE,
+     sys_entity_sites.COUNTRY AS sys_entity_sites_COUNTRY,
+     sys_entity_sites.POSTCODE AS sys_entity_sites_POSTCODE,
+     sys_entity_sites.PHONE1 AS sys_entity_sites_PHONE1,
+     sys_entity_sites.PHONE2 AS sys_entity_sites_PHONE2,
+     sys_entity_sites.PHONE3 AS sys_entity_sites_PHONE3,
+     sys_entity_sites.FAX AS sys_entity_sites_FAX,
+     sys_entity_sites.EMAIL AS sys_entity_sites_EMAIL,
+     sys_entity_sites.ISENABLE AS sys_entity_sites_ISENABLE,
+     sys_entity_sites.ISINTERNAL AS sys_entity_sites_ISINTERNAL,
+     sys_entity_sites.ENTITY_TYPE AS sys_entity_sites_ENTITY_TYPE,
+     cln_rcm_headers.RAIL_SAFETY_DESCRIPTION AS cln_rcm_headers_RAIL_SAFETY_DESCRIPTION,
+     cln_rcm_headers.IS_RAIL_SAFETY AS cln_rcm_headers_IS_RAIL_SAFETY,
+     cln_rcm_headers.IS_SIGHTED_PHOTO_ID AS cln_rcm_headers_IS_SIGHTED_PHOTO_ID,
+     cln_rcm_headers.IS_PRE_EMP AS cln_rcm_headers_IS_PRE_EMP,
+     cln_rcm_headers.IS_PERIODIC AS cln_rcm_headers_IS_PERIODIC,
+     cln_rcm_headers.IS_TRIGGERED AS cln_rcm_headers_IS_TRIGGERED,
+     cln_rcm_headers.TRIGGERED_REASON AS cln_rcm_headers_TRIGGERED_REASON,
+     sys_entities.ENTITY_TYPE AS sys_entities_ENTITY_TYPE,
+     cln_patients.Occupation AS cln_patients_Occupation
+FROM
+     cln_patients cln_patients INNER JOIN cln_rcm_headers cln_rcm_headers ON cln_patients.Patient_id = cln_rcm_headers.PATIENT_ID
+     LEFT OUTER JOIN cln_entities_patients cln_entities_patients ON cln_patients.Patient_id = cln_entities_patients.Patient_id
+     LEFT OUTER JOIN sys_entities sys_entities ON cln_entities_patients.ENTITY_ID = sys_entities.ENTITY_ID
+     LEFT OUTER JOIN sys_entity_sites sys_entity_sites ON cln_entities_patients.site_id = sys_entity_sites.SITE_ID
+WHERE
+     cln_rcm_headers.RCM_DF_ID = $P{key}
+ AND cln_rcm_headers.PATIENT_ID = $P{patient_id}
+ AND cln_rcm_headers.CAL_ID = $P{cal_id}]]>
+	</queryString>
+	<field name="cln_rcm_headers_RCM_DF_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_PATIENT_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_CAL_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_DF_CODE" class="java.lang.String"/>
+	<field name="cln_rcm_headers_ITEM_ID" class="java.lang.String"/>
+	<field name="cln_rcm_headers_PRINTNAME" class="java.lang.String"/>
+	<field name="cln_rcm_headers_SIGN" class="java.io.InputStream"/>
+	<field name="cln_rcm_headers_DATE" class="java.sql.Timestamp"/>
+	<field name="cln_rcm_headers_ISGIVE" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_RELEVANT_DESCRIPTION" class="java.lang.String"/>
+	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
+	<field name="cln_patients_Title" class="java.lang.String"/>
+	<field name="cln_patients_First_name" class="java.lang.String"/>
+	<field name="cln_patients_Sur_name" class="java.lang.String"/>
+	<field name="cln_patients_Middle_name" class="java.lang.String"/>
+	<field name="cln_patients_Known_as" class="java.lang.String"/>
+	<field name="cln_patients_Address1" class="java.lang.String"/>
+	<field name="cln_patients_Address2" class="java.lang.String"/>
+	<field name="cln_patients_Surburb" class="java.lang.String"/>
+	<field name="cln_patients_State" class="java.lang.String"/>
+	<field name="cln_patients_Post_code" class="java.lang.String"/>
+	<field name="cln_patients_Country" class="java.lang.String"/>
+	<field name="cln_patients_DOB" class="java.sql.Date"/>
+	<field name="cln_patients_Sex" class="java.lang.String"/>
+	<field name="cln_patients_Phone_ext" class="java.lang.String"/>
+	<field name="cln_patients_Home_phone" class="java.lang.String"/>
+	<field name="cln_patients_Work_phone" class="java.lang.String"/>
+	<field name="cln_patients_Mobile" class="java.lang.String"/>
+	<field name="cln_entities_patients_id" class="java.lang.Integer"/>
+	<field name="cln_entities_patients_ENTITY_ID" class="java.lang.Integer"/>
+	<field name="cln_entities_patients_Patient_id" class="java.lang.Long"/>
+	<field name="cln_entities_patients_Iscurrent" class="java.lang.Integer"/>
+	<field name="cln_entities_patients_site_id" class="java.lang.Integer"/>
+	<field name="sys_entities_ENTITY_ID" class="java.lang.Integer"/>
+	<field name="sys_entities_EMP_ID" class="java.lang.Integer"/>
+	<field name="sys_entities_ENTITY_CODE" class="java.lang.String"/>
+	<field name="sys_entities_ENTITY_NAME" class="java.lang.String"/>
+	<field name="sys_entities_ALT_NAME" class="java.lang.String"/>
+	<field name="sys_entities_TAX_CODE" class="java.lang.String"/>
+	<field name="sys_entities_DESCRIPTION" class="java.lang.String"/>
+	<field name="sys_entities_ISENABLE" class="java.lang.Integer"/>
+	<field name="sys_entities_ISINTERNAL" class="java.lang.Integer"/>
+	<field name="sys_entity_sites_SITE_ID" class="java.lang.Integer"/>
+	<field name="sys_entity_sites_ENTITY_ID" class="java.lang.Integer"/>
+	<field name="sys_entity_sites_SITE_NAME" class="java.lang.String"/>
+	<field name="sys_entity_sites_ALT_NAME" class="java.lang.String"/>
+	<field name="sys_entity_sites_TAX_CODE" class="java.lang.String"/>
+	<field name="sys_entity_sites_DESCRIPTION" class="java.lang.String"/>
+	<field name="sys_entity_sites_ADDRESS" class="java.lang.String"/>
+	<field name="sys_entity_sites_SUBURB" class="java.lang.String"/>
+	<field name="sys_entity_sites_STATE" class="java.lang.String"/>
+	<field name="sys_entity_sites_COUNTRY" class="java.lang.String"/>
+	<field name="sys_entity_sites_POSTCODE" class="java.lang.Integer"/>
+	<field name="sys_entity_sites_PHONE1" class="java.lang.String"/>
+	<field name="sys_entity_sites_PHONE2" class="java.lang.String"/>
+	<field name="sys_entity_sites_PHONE3" class="java.lang.String"/>
+	<field name="sys_entity_sites_FAX" class="java.lang.String"/>
+	<field name="sys_entity_sites_EMAIL" class="java.lang.String"/>
+	<field name="sys_entity_sites_ISENABLE" class="java.lang.Integer"/>
+	<field name="sys_entity_sites_ISINTERNAL" class="java.lang.Integer"/>
+	<field name="sys_entity_sites_ENTITY_TYPE" class="java.lang.String"/>
+	<field name="cln_rcm_headers_RAIL_SAFETY_DESCRIPTION" class="java.lang.String"/>
+	<field name="cln_rcm_headers_IS_RAIL_SAFETY" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_IS_SIGHTED_PHOTO_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_IS_PRE_EMP" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_IS_PERIODIC" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_IS_TRIGGERED" class="java.lang.Integer"/>
+	<field name="cln_rcm_headers_TRIGGERED_REASON" class="java.lang.String"/>
+	<field name="sys_entities_ENTITY_TYPE" class="java.lang.String"/>
+	<field name="cln_patients_Occupation" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="595" height="802" uuid="4724ff22-25df-454a-b903-4222550c15dc"/>
+				<imageExpression><![CDATA["header_crm.jpg"]]></imageExpression>
+			</image>
+		</band>
+		<band height="802">
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="595" height="802" uuid="1d11afdf-d876-494d-ad1a-067b1b4f4215"/>
+				<imageExpression><![CDATA["section_1.jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="123" y="231" width="157" height="14" uuid="95d6ab2e-60f5-42c4-a47e-e9a3589edf32"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_Sur_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="357" y="230" width="143" height="14" uuid="8864ae32-521d-4d40-9409-e4ac44c17ee5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_First_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="122" y="253" width="393" height="14" uuid="5ebfb6af-1ec9-4e56-8669-198cb12c9018"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_Address1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="215" y="271" width="82" height="14" uuid="c24a3342-c42b-49bb-959e-405d460a0813"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_Work_phone}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="363" y="271" width="144" height="14" uuid="e40074a6-6b6e-45eb-83c5-ef6b869fc289"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_DOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="344" width="100" height="15" uuid="ab0e1c01-9274-4a9d-8d91-a55b0ece6a60"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sys_entity_sites_PHONE1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="417" y="342" width="100" height="18" uuid="891518b0-8708-4b60-b4a4-b750cefb48e6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sys_entity_sites_FAX}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="82" y="563" width="13" height="14" uuid="bd9602bd-1a4b-4851-bf53-d74e32d7aa1b"/>
+				<imageExpression><![CDATA[$F{cln_rcm_headers_IS_RAIL_SAFETY} != null && $F{cln_rcm_headers_IS_RAIL_SAFETY}.intValue()==1?"checked.jpg":"nocheck.jpg"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="135" y="581" width="382" height="14" uuid="cb1bf7a8-0c02-45f9-a49c-81751b5da9e9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_rcm_headers_RELEVANT_DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="88" y="663" width="12" height="13" uuid="1644811c-2ee4-4f99-ac3d-8c82808dedaf"/>
+				<imageExpression><![CDATA[$F{cln_rcm_headers_IS_PRE_EMP}!=null && $F{cln_rcm_headers_IS_PRE_EMP}.intValue()==1?"checked.jpg":"nocheck.jpg"]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement x="88" y="682" width="12" height="12" uuid="e454a7ff-0268-45a4-be94-493e3203e472"/>
+				<imageExpression><![CDATA[$F{cln_rcm_headers_IS_PERIODIC}!=null && $F{cln_rcm_headers_IS_PERIODIC}.intValue()==1?"checked.jpg":"nocheck.jpg"]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement x="88" y="702" width="12" height="13" uuid="75ecf1bf-3445-41a2-aa05-c9550dd8aece"/>
+				<imageExpression><![CDATA[$F{cln_rcm_headers_IS_TRIGGERED}!=null && $F{cln_rcm_headers_IS_TRIGGERED}==1?"checked.jpg":"nocheck.jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="205" y="291" width="310" height="13" uuid="3717c0ba-8ff1-4839-9ff5-bc340ea04f85"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_Occupation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="324" width="223" height="15" uuid="89e00208-f0e3-41af-9658-900ba783c015"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sys_entity_sites_ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="152" y="345" width="100" height="15" uuid="e1d761d6-d761-45ab-8b36-aa52f3347352"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="404" width="292" height="13" uuid="bfa3db9a-351d-48ca-bdaa-da7cdf1bab80"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sys_entity_sites_SITE_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="123" y="425" width="335" height="13" uuid="d9cb9714-3d58-445d-8fd1-112fc31adf41"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sys_entity_sites_ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="113" y="445" width="183" height="14" uuid="f22d09a3-2251-4236-b96f-17acaea703f3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sys_entity_sites_PHONE1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="324" y="442" width="193" height="16" uuid="39c95e90-92a9-455b-a2c0-95202bf61323"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sys_entity_sites_FAX}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="0" width="595" height="802" uuid="4fd258bf-cc00-4f72-b628-2496e30b8900"/>
+				<imageExpression><![CDATA["section_2.jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="297" y="547" width="180" height="13" uuid="d7944135-4807-4db8-9540-d5d5c62f25c1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_rcm_headers_PRINTNAME}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="344" y="591" width="163" height="32" uuid="7907b897-4895-4721-bc0b-717eed255896"/>
+			</image>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="317" y="629" width="200" height="16" uuid="8341ce42-c949-4172-b270-69fea1d7aff0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_rcm_headers_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="842" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="27" y="0" width="531" height="290" uuid="f055aec2-ef50-4868-819b-97a56fc9a2f2"/>
+				<imageExpression><![CDATA["section3_part1.jpg"]]></imageExpression>
+			</image>
+			<componentElement>
+				<reportElement x="27" y="290" width="531" height="78" uuid="bac856e9-1d0f-4ae5-8b4a-06bf71a3860c"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset1" uuid="9e40815d-2626-40ed-9ec8-6d61e211dc7a">
+						<datasetParameter name="rcm_id">
+							<datasetParameterExpression><![CDATA[$F{cln_rcm_headers_RCM_DF_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="patient_id">
+							<datasetParameterExpression><![CDATA[$F{cln_rcm_headers_PATIENT_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cal_id">
+							<datasetParameterExpression><![CDATA[$F{cln_rcm_headers_CAL_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="78" width="531">
+						<rectangle>
+							<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="531" height="65" uuid="b51d762b-cf32-4d5f-b9c5-11ca964e9fec"/>
+						</rectangle>
+						<line>
+							<reportElement x="0" y="21" width="531" height="1" uuid="71027c1e-00f9-4775-9d4c-6b7747c06c31"/>
+						</line>
+						<textField>
+							<reportElement x="4" y="0" width="450" height="20" uuid="e3d3fe3d-5d97-4444-9363-1c4a0f1ae402"/>
+							<textElement>
+								<font isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{cln_rcm_groups_GROUP_NAME}]]></textFieldExpression>
+						</textField>
+						<subreport>
+							<reportElement isPrintRepeatedValues="false" mode="Transparent" x="0" y="22" width="531" height="29" uuid="dc0bc725-5fbf-4b18-b229-91686ce6bffc"/>
+							<subreportParameter name="group_id">
+								<subreportParameterExpression><![CDATA[$F{cln_rcm_groups_RCM_GROUP_ID}]]></subreportParameterExpression>
+							</subreportParameter>
+							<subreportParameter name="cal_id">
+								<subreportParameterExpression><![CDATA[$F{cln_rcm_groups_CAL_ID}]]></subreportParameterExpression>
+							</subreportParameter>
+							<subreportParameter name="patient_id">
+								<subreportParameterExpression><![CDATA[$F{cln_rcm_groups_PATIENT_ID}]]></subreportParameterExpression>
+							</subreportParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							<subreportExpression><![CDATA["rcm_section3_sub_report.jasper"]]></subreportExpression>
+						</subreport>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="842">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="595" height="842" uuid="05ce2a0d-f83f-4e04-86c0-d2fec991962e"/>
+				<subreportParameter name="key">
+					<subreportParameterExpression><![CDATA[$F{cln_rcm_headers_RCM_DF_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$F{cln_rcm_headers_PATIENT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$F{cln_rcm_headers_CAL_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="signature">
+					<subreportParameterExpression><![CDATA[$F{cln_rcm_headers_SIGN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Date">
+					<subreportParameterExpression><![CDATA[$F{cln_rcm_headers_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["rcm_recomment_report.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

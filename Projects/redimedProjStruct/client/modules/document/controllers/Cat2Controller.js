@@ -16,6 +16,7 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             startingDay: 1
         };
         //end date
+
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");

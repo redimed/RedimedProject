@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1131"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#D9C3C3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFE6E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="549b730d-d512-4ca7-9f86-e170f809cd8a"/>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     CAST(IFNULL(cln_ma_headers.`BMI`,0) as decimal(8,2)) AS cln_ma_headers_BMI,
+     ifnull(cln_ma_headers.`IS_URINALYSIS`,0) AS cln_ma_headers_IS_URINALYSIS,
+     cln_ma_headers.`MA_ID` AS cln_ma_headers_MA_ID,
+     cln_ma_headers.`Patient_id` AS cln_ma_headers_Patient_id,
+     cln_ma_headers.`HEIGHT` AS cln_ma_headers_HEIGHT,
+     cln_ma_headers.`WEIGHT` AS cln_ma_headers_WEIGHT,
+     cln_ma_headers.`URINALYSIS` AS cln_ma_headers_URINALYSIS,
+     cln_ma_headers.`BSL` AS cln_ma_headers_BSL,
+     cln_ma_headers.`WAIST_CIR` AS cln_ma_headers_WAIST_CIR,
+     cln_ma_headers.`HIP_CIR` AS cln_ma_headers_HIP_CIR,
+     cln_ma_headers.`WAIST_TO_HIP_RATE` AS cln_ma_headers_WAIST_TO_HIP_RATE,
+     cln_ma_headers.`RISK` AS cln_ma_headers_RISK,
+     cln_ma_headers.`DIST_RIGHT_EYE` AS cln_ma_headers_DIST_RIGHT_EYE,
+     cln_ma_headers.`DIST_RIGHT_EYE_CORRECTED` AS cln_ma_headers_DIST_RIGHT_EYE_CORRECTED,
+     cln_ma_headers.`DIST_LEFT_EYE` AS cln_ma_headers_DIST_LEFT_EYE,
+     cln_ma_headers.`DIST_LEFT_EYE_CORRECTED` AS cln_ma_headers_DIST_LEFT_EYE_CORRECTED,
+     cln_ma_headers.`NEAR_RIGHT_EYE` AS cln_ma_headers_NEAR_RIGHT_EYE,
+     cln_ma_headers.`NEAR_RIGHT_EYE_CORRECTED` AS cln_ma_headers_NEAR_RIGHT_EYE_CORRECTED,
+     cln_ma_headers.`NEAR_LEFT_EYE` AS cln_ma_headers_NEAR_LEFT_EYE,
+     cln_ma_headers.`NEAR_LEFT_EYE_CORRECTED` AS cln_ma_headers_NEAR_LEFT_EYE_CORRECTED,
+     ifnull(cln_ma_headers.`PERIPHERAL_VISION`,0) AS cln_ma_headers_PERIPHERAL_VISION,
+     ifnull(cln_ma_headers.`VISUAL_AIDS`,0) AS cln_ma_headers_VISUAL_AIDS,
+     cln_ma_headers.`VISUAL_AIDS_TYPE` AS cln_ma_headers_VISUAL_AIDS_TYPE,
+     ifnull(cln_ma_headers.`COLOR_VISUAL`,0) AS cln_ma_headers_COLOR_VISUAL,
+     cln_ma_headers.`COLOR_VISUAL_SCORE` AS cln_ma_headers_COLOR_VISUAL_SCORE,
+     ifnull(cln_ma_headers.`ISWOULD`,0) AS cln_ma_headers_ISWOULD,
+     cln_ma_headers.`COMMENTS` AS cln_ma_headers_COMMENTS,
+     cln_ma_headers.`FINAL_ASS` AS cln_ma_headers_FINAL_ASS,
+     cln_ma_headers.`COMMENTS2` AS cln_ma_headers_COMMENTS2,
+     cln_ma_headers.`DOCTOR_NAME` AS cln_ma_headers_DOCTOR_NAME,
+     cln_ma_headers.`SIGN` AS cln_ma_headers_SIGN,
+     cln_ma_headers.`HA_DATE` AS cln_ma_headers_HA_DATE,
+     cln_ma_headers.`LOCATION_ID` AS cln_ma_headers_LOCATION_ID,
+     cln_ma_headers.`QUEST_DF_ID` AS cln_ma_headers_QUEST_DF_ID,
+     cln_ma_headers.`CAL_ID` AS cln_ma_headers_CAL_ID,
+     cln_ma_headers.`DF_CODE` AS cln_ma_headers_DF_CODE,
+     cln_ma_headers.`EXAMINED_COMMENT` AS cln_ma_headers_EXAMINED_COMMENT,
+     cln_ma_headers.`IS_CANDIDATE_CAN_UNDERTAKE` AS cln_ma_headers_IS_CANDIDATE_CAN_UNDERTAKE,
+     cln_ma_headers.`IS_CANDIDATE_BE_ADVERSELY_AFFECTED` AS cln_ma_headers_IS_CANDIDATE_BE_ADVERSELY_AFFECTED,
+     cln_ma_headers.`CANDIDATE_CAN_UNDERTAKE_COMMENT` AS cln_ma_headers_CANDIDATE_CAN_UNDERTAKE_COMMENT,
+     cln_ma_headers.`CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT` AS cln_ma_headers_CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT,
+     ifnull(p.`Sex`,'Male') AS p_Sex,
+     p.`DOB` AS p_DOB,
+	p.First_name , p.Sur_name , p.middle_name ,
+concat (ifnull ( p.First_name, ''), ' ', ifnull(p.`Middle_name` , ' ') ,ifnull( p.Sur_name ,'') )  as fullname,
+site_addr
+FROM
+     `cln_patients` p INNER JOIN `cln_ma_headers` cln_ma_headers ON p.`patient_id` = cln_ma_headers.`Patient_id`
+	left join  redimedsites r on r.id = cln_ma_headers.`LOCATION_ID`
+WHERE
+     cln_ma_headers.`Patient_id` = $P{patient_id} and cln_ma_headers.cal_id = $P{cal_id} and  cln_ma_headers.`MA_ID` = $P{key}]]>
+	</queryString>
+	<field name="cln_ma_headers_BMI" class="java.math.BigDecimal"/>
+	<field name="cln_ma_headers_IS_URINALYSIS" class="java.lang.Long"/>
+	<field name="cln_ma_headers_MA_ID" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_Patient_id" class="java.lang.Long"/>
+	<field name="cln_ma_headers_HEIGHT" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_WEIGHT" class="java.lang.String"/>
+	<field name="cln_ma_headers_URINALYSIS" class="java.lang.String"/>
+	<field name="cln_ma_headers_BSL" class="java.lang.Double"/>
+	<field name="cln_ma_headers_WAIST_CIR" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_HIP_CIR" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_WAIST_TO_HIP_RATE" class="java.lang.Double"/>
+	<field name="cln_ma_headers_RISK" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_DIST_RIGHT_EYE" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_DIST_RIGHT_EYE_CORRECTED" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_DIST_LEFT_EYE" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_DIST_LEFT_EYE_CORRECTED" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_NEAR_RIGHT_EYE" class="java.lang.String"/>
+	<field name="cln_ma_headers_NEAR_RIGHT_EYE_CORRECTED" class="java.lang.String"/>
+	<field name="cln_ma_headers_NEAR_LEFT_EYE" class="java.lang.String"/>
+	<field name="cln_ma_headers_NEAR_LEFT_EYE_CORRECTED" class="java.lang.String"/>
+	<field name="cln_ma_headers_PERIPHERAL_VISION" class="java.lang.Long"/>
+	<field name="cln_ma_headers_VISUAL_AIDS" class="java.lang.Long"/>
+	<field name="cln_ma_headers_VISUAL_AIDS_TYPE" class="java.lang.String"/>
+	<field name="cln_ma_headers_COLOR_VISUAL" class="java.lang.Long"/>
+	<field name="cln_ma_headers_COLOR_VISUAL_SCORE" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_ISWOULD" class="java.lang.Long"/>
+	<field name="cln_ma_headers_COMMENTS" class="java.lang.String"/>
+	<field name="cln_ma_headers_FINAL_ASS" class="java.lang.String"/>
+	<field name="cln_ma_headers_COMMENTS2" class="java.lang.String"/>
+	<field name="cln_ma_headers_DOCTOR_NAME" class="java.lang.String"/>
+	<field name="cln_ma_headers_SIGN" class="java.io.InputStream"/>
+	<field name="cln_ma_headers_HA_DATE" class="java.sql.Timestamp"/>
+	<field name="cln_ma_headers_LOCATION_ID" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_QUEST_DF_ID" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_CAL_ID" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_DF_CODE" class="java.lang.String"/>
+	<field name="cln_ma_headers_EXAMINED_COMMENT" class="java.lang.String"/>
+	<field name="cln_ma_headers_IS_CANDIDATE_CAN_UNDERTAKE" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_IS_CANDIDATE_BE_ADVERSELY_AFFECTED" class="java.lang.Integer"/>
+	<field name="cln_ma_headers_CANDIDATE_CAN_UNDERTAKE_COMMENT" class="java.lang.String"/>
+	<field name="cln_ma_headers_CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT" class="java.lang.String"/>
+	<field name="p_Sex" class="java.lang.String"/>
+	<field name="p_DOB" class="java.sql.Date"/>
+	<field name="First_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sur_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="middle_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="site_addr" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="114" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="-16" width="555" height="95" uuid="b77818cb-ee15-4d3a-b8dc-a1edffe56776"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/logo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="83" width="555" height="31" uuid="0e90914b-9da7-45ab-b4ba-6418593bd9fc"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<imageExpression><![CDATA[$P{real_path}+"images/page.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="107" y="83" width="270" height="30" uuid="81618b0b-c088-466f-b6af-4dc5e23eb813"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="455" y="85" width="25" height="20" uuid="ed4286ea-40f6-4cce-95c1-32890949639e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{p_DOB}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="480" y="85" width="25" height="20" uuid="5e3e721c-5ce1-4abc-aea3-20565df90776"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{p_DOB}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="513" y="85" width="30" height="20" uuid="29ebfc80-a484-4da1-b95d-d095ab648ff5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{p_DOB}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="489" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="-1" width="555" height="463" isRemoveLineWhenBlank="true" uuid="74180ab9-083b-4ec1-86e7-b2ef6d728a5e"/>
+				<image>
+					<reportElement x="0" y="0" width="555" height="461" uuid="07c3d56c-de1a-4121-9d36-84054d2da27b"/>
+					<imageExpression><![CDATA[$P{real_path}+"images/head_detail.png"]]></imageExpression>
+				</image>
+				<textField isBlankWhenNull="true">
+					<reportElement x="275" y="337" width="20" height="14" uuid="af554d0b-e4c1-4d5b-aa44-94ef16b2dfb8"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_NEAR_RIGHT_EYE_CORRECTED}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="388" y="337" width="20" height="14" uuid="936e9559-0bb6-4270-8baa-c87421cff906"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_NEAR_LEFT_EYE}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="500" y="337" width="20" height="14" uuid="8481bd97-2d6b-4c07-a00a-05560203cdc6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_NEAR_LEFT_EYE_CORRECTED}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="307" y="424" width="29" height="14" uuid="6b7aeb05-9100-44ad-b144-3b9b23bf40f4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_COLOR_VISUAL_SCORE}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="131" y="366" width="14" height="12" uuid="04637005-c860-4a0e-9da8-daadf8374de1">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_PERIPHERAL_VISION}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="131" y="366" width="14" height="12" uuid="d57faed1-0101-46eb-8fb3-a7a04f7e020a">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_PERIPHERAL_VISION}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="161" y="366" width="14" height="12" uuid="865fef85-8578-446f-9d20-8409f543250f">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_PERIPHERAL_VISION}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="161" y="366" width="14" height="12" uuid="66e6072c-ef2a-4d86-b561-63dfc5f3f646">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_PERIPHERAL_VISION}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="209" y="429" width="14" height="12" uuid="04637005-c860-4a0e-9da8-daadf8374de1">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_COLOR_VISUAL}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="209" y="429" width="14" height="12" uuid="d57faed1-0101-46eb-8fb3-a7a04f7e020a">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_COLOR_VISUAL}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="243" y="429" width="14" height="12" uuid="865fef85-8578-446f-9d20-8409f543250f">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_COLOR_VISUAL}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="243" y="429" width="14" height="12" uuid="66e6072c-ef2a-4d86-b561-63dfc5f3f646">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_COLOR_VISUAL}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="373" y="364" width="14" height="12" uuid="04637005-c860-4a0e-9da8-daadf8374de1">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_VISUAL_AIDS}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="373" y="364" width="14" height="12" uuid="d57faed1-0101-46eb-8fb3-a7a04f7e020a">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_VISUAL_AIDS}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="405" y="364" width="14" height="12" uuid="865fef85-8578-446f-9d20-8409f543250f">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_VISUAL_AIDS}.intValue()==0]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="405" y="364" width="14" height="12" uuid="66e6072c-ef2a-4d86-b561-63dfc5f3f646">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_VISUAL_AIDS}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<rectangle>
+					<reportElement mode="Transparent" x="427" y="364" width="45" height="14" uuid="639e9a76-9c74-42b1-9065-421413aac9c5">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_VISUAL_AIDS_TYPE}.equals("GLASSES") || $F{cln_ma_headers_VISUAL_AIDS_TYPE}.equals("ALL")]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="1.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="478" y="364" width="55" height="14" uuid="c40b958e-33ce-414d-bfbc-8cf44d0e6a96">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_VISUAL_AIDS_TYPE}.equals("CONTACTS") || $F{cln_ma_headers_VISUAL_AIDS_TYPE}.equals("ALL")]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="1.25"/>
+					</graphicElement>
+				</rectangle>
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="24" width="53" height="51" uuid="5483d36a-a60b-4202-be25-767d0f6d4ae7"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_HEIGHT}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="53" y="25" width="48" height="51" uuid="1131896e-30c2-44bc-b3f4-36edc3e69680"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_WEIGHT}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="107" y="26" width="48" height="49" uuid="bdefcae5-686d-40fd-b30c-8aff2fb318f7"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_BMI}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="163" y="26" width="14" height="12" uuid="2da3c24a-9dea-423d-af8b-8e21bae528a0">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="163" y="45" width="14" height="12" uuid="f38b7b8f-ac55-44e4-8bbe-2949e819a7bc">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()==2]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="163" y="63" width="14" height="12" uuid="8068ada6-a8c9-4ba2-9c7b-46de75261412">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()==3]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="163" y="27" width="14" height="12" uuid="2da3c24a-9dea-423d-af8b-8e21bae528a0">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()!=1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="163" y="44" width="14" height="12" uuid="f38b7b8f-ac55-44e4-8bbe-2949e819a7bc">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()!=2]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="163" y="62" width="14" height="12" uuid="8068ada6-a8c9-4ba2-9c7b-46de75261412">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()!=3]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<textField isBlankWhenNull="true">
+					<reportElement x="214" y="24" width="163" height="14" uuid="e62f912c-4d80-45ed-9695-49403dd55f1f">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()==1]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_URINALYSIS}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="224" y="43" width="153" height="14" uuid="637aa5db-79b1-4095-a4c8-c98e425ab63b">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()==2]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_URINALYSIS}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="224" y="59" width="153" height="14" uuid="190da190-bb2e-4153-85b5-37504e31fda4">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_URINALYSIS}.intValue()==3]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_URINALYSIS}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="381" y="25" width="56" height="50" uuid="d62f3653-22e1-4f61-9f8f-fbd4db24e40e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_BSL}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="135" y="97" width="14" height="12" uuid="da985fef-1a56-4f85-a4a1-356e1ff1d94b">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_BMI}<18.5]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="135" y="98" width="14" height="12" uuid="114de619-d7cd-425a-b490-8e63ab807002">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_BMI}>= 18.5]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="135" y="120" width="14" height="12" uuid="81256cff-3186-42f5-b385-4e001587ad7f">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_BMI}>=18.5 &&  $F{cln_ma_headers_BMI}<=24.9]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="135" y="120" width="14" height="12" uuid="594f0ad2-6f63-4ac8-98db-68cbe5c699e2">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_BMI}<18.5 || $F{cln_ma_headers_BMI}>24.9]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="135" y="140" width="14" height="12" uuid="e3584acb-d1a6-405f-abd9-33a245cc5478">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_BMI}>=25.0 && $F{cln_ma_headers_BMI}<=29.9]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="135" y="139" width="14" height="12" uuid="67210fcf-2ad4-4b77-9c9c-de1621c64e7e">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_BMI}<25.0 || $F{cln_ma_headers_BMI}>29.9]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="135" y="162" width="14" height="12" uuid="4ed01c64-b0e4-486d-bfd9-5f00d90bcabc">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_BMI}>=30]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="135" y="162" width="14" height="12" uuid="24d671da-55b3-45ff-9186-c794275c5465">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_BMI}< 30]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<textField isBlankWhenNull="true">
+					<reportElement x="116" y="189" width="18" height="14" uuid="9cffc2ad-7db7-4978-9299-a2d826fffde6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_WAIST_CIR}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="111" y="203" width="23" height="13" uuid="ef76cbed-b10c-4729-8e3f-7411ab95512a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_HIP_CIR}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="101" y="215" width="41" height="12" uuid="5006d248-6633-4dda-95f1-ba58c990abd1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_WAIST_TO_HIP_RATE}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="208" y="198" width="14" height="12" uuid="b0608970-000d-4695-81c2-a1abde4f72bc">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_WAIST_TO_HIP_RATE} < ($F{p_Sex}.equals("Male")? 0.9 : 0.8)]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="208" y="198" width="14" height="12" uuid="4915af76-73d2-4b39-b3bd-2a3f16f7747a">
+						<printWhenExpression><![CDATA[$F{cln_ma_headers_WAIST_TO_HIP_RATE} > ($F{p_Sex}.equals("Male")? 0.9 : 0.8)]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="208" y="214" width="14" height="12" uuid="21edf6db-5e99-4f50-ac5a-a46d923146e6">
+						<printWhenExpression><![CDATA[($F{cln_ma_headers_WAIST_TO_HIP_RATE}>= ($F{p_Sex}.equals("Male")? 0.9 : 0.8)) && ($F{cln_ma_headers_WAIST_TO_HIP_RATE} <= ($F{p_Sex}.equals("Male")? 0.95 : 0.85))]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="208" y="214" width="14" height="12" uuid="9751c218-8536-4df3-b7e0-096858732c39">
+						<printWhenExpression><![CDATA[($F{cln_ma_headers_WAIST_TO_HIP_RATE} < ($F{p_Sex}.equals("Male")? 0.90 : 0.80)) || ($F{cln_ma_headers_WAIST_TO_HIP_RATE} > ($F{p_Sex}.equals("Male")? 0.95 : 0.85))]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="208" y="229" width="14" height="12" uuid="61e58ad8-ec06-4cf5-9c10-6dec1947a715">
+						<printWhenExpression><![CDATA[($F{cln_ma_headers_WAIST_TO_HIP_RATE} > ($F{p_Sex}.equals("Male")? 0.95 : 0.85))]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="208" y="229" width="14" height="12" uuid="066d7b22-c288-4a81-8af5-99922f9037d4">
+						<printWhenExpression><![CDATA[($F{cln_ma_headers_WAIST_TO_HIP_RATE} < ($F{p_Sex}.equals("Male")? 0.95 : 0.85))]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+				</image>
+				<textField isBlankWhenNull="true">
+					<reportElement x="162" y="278" width="20" height="12" uuid="49190091-c4cf-40c0-93b4-495223e603d0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_DIST_RIGHT_EYE}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="274" y="278" width="20" height="12" uuid="e559be7b-1f30-4b92-ae6b-c6983a622c40"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_DIST_RIGHT_EYE_CORRECTED}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="387" y="278" width="20" height="12" uuid="d41e2ae5-228b-432e-993d-d2b022845fce"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_DIST_LEFT_EYE}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="500" y="278" width="20" height="12" uuid="5af001fa-0917-495d-83d1-ee5814b6db65"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_DIST_LEFT_EYE_CORRECTED}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="163" y="337" width="20" height="14" uuid="afcf2827-5e43-4a06-b624-6b5ad1dfb16c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cln_ma_headers_NEAR_RIGHT_EYE}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<subreport>
+				<reportElement x="0" y="459" width="555" height="30" uuid="17a20312-5b55-406a-b86e-8a85b3969225"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ma_id">
+					<subreportParameterExpression><![CDATA[$P{key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="real_path">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{real_path} + "MedicalAssessmentReport_Group.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="607" splitType="Prevent">
+			<image>
+				<reportElement mode="Opaque" x="1" y="0" width="555" height="607" uuid="80cba271-eabb-4526-ae1e-f0277adee278"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<imageExpression><![CDATA[$P{real_path}+"images/footer.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="137" y="36" width="14" height="12" uuid="21edf6db-5e99-4f50-ac5a-a46d923146e6">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_CANDIDATE_CAN_UNDERTAKE}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="137" y="36" width="14" height="12" uuid="9751c218-8536-4df3-b7e0-096858732c39">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_CANDIDATE_CAN_UNDERTAKE}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="197" y="36" width="14" height="12" uuid="61e58ad8-ec06-4cf5-9c10-6dec1947a715">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_CANDIDATE_CAN_UNDERTAKE}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="197" y="36" width="14" height="12" uuid="066d7b22-c288-4a81-8af5-99922f9037d4">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_CANDIDATE_CAN_UNDERTAKE}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="135" y="180" width="14" height="12" uuid="21edf6db-5e99-4f50-ac5a-a46d923146e6">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_CANDIDATE_BE_ADVERSELY_AFFECTED}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="135" y="180" width="14" height="12" uuid="9751c218-8536-4df3-b7e0-096858732c39">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_CANDIDATE_BE_ADVERSELY_AFFECTED}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="195" y="180" width="14" height="12" uuid="61e58ad8-ec06-4cf5-9c10-6dec1947a715">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_CANDIDATE_BE_ADVERSELY_AFFECTED}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="195" y="180" width="14" height="12" uuid="066d7b22-c288-4a81-8af5-99922f9037d4">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_IS_CANDIDATE_BE_ADVERSELY_AFFECTED}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="202" width="550" height="56" uuid="da3f48e5-fa82-4d08-a343-c73e09184bd0"/>
+				<textElement>
+					<font size="11"/>
+					<paragraph firstLineIndent="80" leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_ma_headers_CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="58" width="550" height="80" uuid="5224bf90-2d5b-48ac-9e87-7292816711f8"/>
+				<textElement>
+					<font size="11"/>
+					<paragraph firstLineIndent="80" leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_ma_headers_CANDIDATE_CAN_UNDERTAKE_COMMENT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="262" width="348" height="20" uuid="3f0cb4df-89da-48df-b0b1-ef141ac9d0a3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_ma_headers_EXAMINED_COMMENT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="532" width="142" height="20" uuid="4c9838c1-2d55-48ff-b10c-a6429f4fd4f3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_ma_headers_DOCTOR_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="101" y="552" width="142" height="18" uuid="e40f71a5-fd61-4468-b5b0-712c679dd1f3"/>
+				<textFieldExpression><![CDATA[$F{cln_ma_headers_HA_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="1" y="347" width="554" height="55" uuid="09827aeb-fb5b-4d5f-939d-5942c83c7873"/>
+				<textElement>
+					<font size="11"/>
+					<paragraph lineSpacing="Proportional" lineSpacingSize="1.7" firstLineIndent="80" leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_ma_headers_COMMENTS}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="198" y="408" width="30" height="20" uuid="d791180e-a6a7-4d1f-9e32-063ff0f93057">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals( "FIT" )]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="294" y="408" width="42" height="20" uuid="b3cd50af-5ee3-4836-98c5-47ffcdf17f80">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals( "UNFIT" )]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="392" y="406" width="86" height="30" uuid="4fbf2786-7c61-466f-b7a5-620abd79f8b0">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals( "FitRes" )]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<textField>
+				<reportElement x="5" y="455" width="550" height="57" uuid="269d90e8-b489-4cb2-8972-379e48e971d7"/>
+				<textElement>
+					<font size="11"/>
+					<paragraph firstLineIndent="80" leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_ma_headers_COMMENTS2}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="373" y="497" width="182" height="58" uuid="c70a1829-ebb3-4ca4-9b0f-2cec37b85686"/>
+				<imageExpression><![CDATA[$F{cln_ma_headers_SIGN}]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement x="163" y="287" width="46" height="20" uuid="42dd8df9-280a-4a33-8d32-c9ef6d134cf7">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_ISWOULD}.intValue()==1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="213" y="287" width="60" height="20" uuid="e62b9b20-324c-4532-b3cb-ead0c3d5d917">
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_ISWOULD}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<textField isBlankWhenNull="true">
+				<reportElement x="373" y="555" width="182" height="15" uuid="4b4f1030-21ef-4051-b8d7-5c14426f96c1"/>
+				<textFieldExpression><![CDATA[$F{site_addr}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="3" width="130" height="20" uuid="fed992f0-3fdd-4629-aaa5-8bc24da39c88"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[©2010 Redimed Pty Ltd ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

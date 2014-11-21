@@ -27,6 +27,7 @@ var COEController = require('./controllers/DocumentController/COEController');
 app.post('/api/document/loadCat2', Cat2Controller.loadCat2);
 app.post('/api/document/insertCat2', Cat2Controller.insertCat2);
 app.post('/api/document/editCat2', Cat2Controller.editCat2);
+app.get('/api/document/printCat2/:patientId/:calId/:catId', Cat2Controller.printReport);
 /**
  * end category 2
  */

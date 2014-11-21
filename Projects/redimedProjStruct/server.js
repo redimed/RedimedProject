@@ -3,13 +3,13 @@ var path = require('path');
 var fs = require('fs');//Read js file for import into
 var favicon = require('static-favicon');
 var logger = require('morgan');
+var log = require('./log')(module);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var passport = require('passport');
 var session = require('express-session');
 var config = require('config');
-var oauthserver = require('oauth2-server');
 var compress = require('compression');
 var db = require('./models');
 
@@ -20,6 +20,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(favicon());
 app.use(compress());
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '100mb'}));
@@ -119,36 +120,33 @@ app.all('/*', function(req, res, next) {
 
 });
 
-/// catch 404 and forward to error handler
+/// error handlers
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+    res.status(404);
+    log.debug('NOT FOUND URL: %s',req.url);
+    res.send({ error: 'Not found' });
+    return;
 });
 
-/// error handlers
+app.use(function(err, req, res, next){
+    res.status(err.status || 500);
+    log.error('INTERNAL ERROR (%d): %s',res.statusCode,err.message);
+    res.send({ error: err.message });
+    return;
+});
+
+
 
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+        log.error('INTERNAL ERROR (%d): %s',res.statusCode,err.message);
+        res.send({ error: err.message });
+        return;
     });
 }
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
 
 db.sequelize
     // sync để tự động tạo các bảng trong database
@@ -162,8 +160,8 @@ db.sequelize
             var server = app.listen(app.get('port'), function() {
                 debug('App server listening on port ' + server.address().port);
             });
-            console.log('Connection has been established successfully!');
-            console.log('App server listening on port ' + server.address().port);
+            log.info('Connection has been established successfully!');
+            log.info('App server listening on port ' + server.address().port);
         }
     }
 );

@@ -9,10 +9,10 @@
                     !infoChanged()"
                     ng-click="submit(cat2Form)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
-            <button type="button"
+            <a href="/api/document/printCat2/{{info.patient_id}}/{{info.cal_id}}/{{info.cat_id}}"
                     ng-disabled="cat2Form.$error.pattern || cat2Form.$error.maxlength || cat2Form.$error.required"
-                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
-            </button>
+                    class="btn btn-primary blue pull-right">Print PDF
+            </a>
             <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>

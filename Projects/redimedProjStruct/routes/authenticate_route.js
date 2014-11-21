@@ -3,7 +3,7 @@
  */
 var passport = require('passport'),
     passportLocal = require('passport-local');
-passportHttp = require('passport-http');
+    passportHttp = require('passport-http');
 
 var AuthenticationController = require('./controllers/AuthenticationController');
 

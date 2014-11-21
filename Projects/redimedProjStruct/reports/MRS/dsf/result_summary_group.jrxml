@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="result_summary_group" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="caa57a2d-eb61-40a3-b8c8-27860a87adc8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\JDeveloper\\Repository\\branches\\TeleHealth_Hieu\\IDoctors\\Document\\Reports\\MRS\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="full_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+	t.`MRS_GROUP_ID`,
+	t.`patient_id`,
+	t.`cal_id`,
+	g.comments
+FROM
+	`cln_mrs_groups` t,
+	(
+		SELECT
+			GROUP_CONCAT(`Comments`, ' ') comments,
+			mrs_group_id
+			FROM 	`cln_mrs_lines` line
+			WHERE 	line.`CAL_ID` = $P{cal_id}
+				AND line.`PATIENT_ID` =$P{patient_id}
+				AND `COMP_TYPE` = 3
+				AND line.`comments` IS NOT NULL AND line.`comments`!=''
+			GROUP BY mrs_group_id
+	) g
+WHERE 	t.cal_id = $P{cal_id}
+	AND t.patient_id = $P{patient_id}
+	AND t.mrs_df_id =$P{key}
+	AND g.mrs_group_id = t.mrs_group_id]]>
+	</queryString>
+	<field name="MRS_GROUP_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="patient_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cal_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="comments" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="175">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="45" uuid="5b17f1d7-a9e3-4d6a-af6e-895663243d90"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<subreport>
+					<reportElement x="0" y="0" width="555" height="45" isRemoveLineWhenBlank="true" uuid="e303e72d-bbfd-4094-81ee-8e2d65bb01b5"/>
+					<subreportParameter name="cal_id">
+						<subreportParameterExpression><![CDATA[$F{cal_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="group_id">
+						<subreportParameterExpression><![CDATA[$F{MRS_GROUP_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="patient_id">
+						<subreportParameterExpression><![CDATA[$F{patient_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="real_path">
+						<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="comments">
+						<subreportParameterExpression><![CDATA[$F{comments}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{real_path} + "result_summary_group_line.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="56" width="555" height="39" isRemoveLineWhenBlank="true" uuid="92e6f902-e218-4408-8f1e-11daabf86765"/>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$F{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$F{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="group_id">
+					<subreportParameterExpression><![CDATA[$F{MRS_GROUP_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "result_summary_group_line_input.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="139" width="555" height="36" isRemoveLineWhenBlank="true" uuid="2a586d6e-73bf-4d0c-a1e2-c103cda28f59"/>
+				<subreportParameter name="real_path">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="group_id">
+					<subreportParameterExpression><![CDATA[$F{MRS_GROUP_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$F{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$F{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "result_summary_group_line_check.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement positionType="Float" x="111" y="101" width="311" height="28" uuid="08192060-5e1e-4fb8-85f2-2df9bf3b4203"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["I am of the opinion that "  + $P{full_name} +" (name) is given the below rating for the proposed job:"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

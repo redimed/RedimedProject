@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rcm_recomment_report_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b49860a8-abc4-4497-965d-faac3d8484e2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="rec_line_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cln_rcm_rec_sub.RCM_RC_SUB_ID AS cln_rcm_rec_sub_RCM_RC_SUB_ID,
+     cln_rcm_rec_sub.RCM_RC_LINE_ID AS cln_rcm_rec_sub_RCM_RC_LINE_ID,
+     cln_rcm_rec_sub.RCM_RC_ID AS cln_rcm_rec_sub_RCM_RC_ID,
+     cln_rcm_rec_sub.RCM_DF_ID AS cln_rcm_rec_sub_RCM_DF_ID,
+     cln_rcm_rec_sub.QUESTION AS cln_rcm_rec_sub_QUESTION,
+     cln_rcm_rec_sub.YES_NO AS cln_rcm_rec_sub_YES_NO,
+     cln_rcm_rec_sub.YES_NO_LABEL AS cln_rcm_rec_sub_YES_NO_LABEL,
+     cln_rcm_rec_sub.ISCOMMENT AS cln_rcm_rec_sub_ISCOMMENT,
+     cln_rcm_rec_sub.COMMENT AS cln_rcm_rec_sub_COMMENT,
+     cln_rcm_rec_sub.Created_by AS cln_rcm_rec_sub_Created_by,
+     cln_rcm_rec_sub.Creation_date AS cln_rcm_rec_sub_Creation_date,
+     cln_rcm_rec_sub.Last_updated_by AS cln_rcm_rec_sub_Last_updated_by,
+     cln_rcm_rec_sub.Last_update_date AS cln_rcm_rec_sub_Last_update_date,
+     cln_rcm_rec_sub.PATIENT_ID AS cln_rcm_rec_sub_PATIENT_ID,
+     cln_rcm_rec_sub.CAL_ID AS cln_rcm_rec_sub_CAL_ID,
+     cln_rcm_rec_sub.YES_NO_VAL AS cln_rcm_rec_sub_YES_NO_VAL,
+     cln_rcm_rec_sub.ISENABLE AS cln_rcm_rec_sub_ISENABLE
+FROM
+     cln_rcm_rec_sub cln_rcm_rec_sub
+WHERE
+     cln_rcm_rec_sub.RCM_RC_LINE_ID =  $P{rec_line_id}
+    AND cln_rcm_rec_sub.PATIENT_ID = $P{patient_id}
+    AND cln_rcm_rec_sub.CAL_ID = $P{cal_id}]]>
+	</queryString>
+	<field name="cln_rcm_rec_sub_RCM_RC_SUB_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_RCM_RC_LINE_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_RCM_RC_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_RCM_DF_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_QUESTION" class="java.lang.String"/>
+	<field name="cln_rcm_rec_sub_YES_NO" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_YES_NO_LABEL" class="java.lang.String"/>
+	<field name="cln_rcm_rec_sub_ISCOMMENT" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_COMMENT" class="java.lang.String"/>
+	<field name="cln_rcm_rec_sub_Created_by" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_Creation_date" class="java.sql.Timestamp"/>
+	<field name="cln_rcm_rec_sub_Last_updated_by" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_Last_update_date" class="java.sql.Timestamp"/>
+	<field name="cln_rcm_rec_sub_PATIENT_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_CAL_ID" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_YES_NO_VAL" class="java.lang.Integer"/>
+	<field name="cln_rcm_rec_sub_ISENABLE" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="69" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="37" y="49" width="290" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="004285bc-e7a8-4d32-adaf-456544d8b8fe"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_rcm_rec_sub_YES_NO_LABEL}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="4" y="49" width="18" height="20" isRemoveLineWhenBlank="true" uuid="ec9da3ab-ddcf-4e87-84b4-fb64d1c64f47"/>
+				<imageExpression><![CDATA[$F{cln_rcm_rec_sub_YES_NO_LABEL} == null?null:$F{cln_rcm_rec_sub_YES_NO_VAL}!=null && $F{cln_rcm_rec_sub_YES_NO_VAL}.intValue()==1?"checked.jpg":"nocheck.jpg"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="4" y="5" width="290" height="24" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="5a616597-71b6-433e-b017-f834002cfb6f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_rcm_rec_sub_QUESTION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="4" y="29" width="290" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="08f098e8-12fa-46a1-b70e-918a7d5d606d"/>
+				<textFieldExpression><![CDATA[$F{cln_rcm_rec_sub_COMMENT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

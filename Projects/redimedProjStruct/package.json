@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "Faker": "^0.7.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.0.0",
     "compression": "^1.2.0",
@@ -31,10 +32,12 @@
     "nodemailer": "^1.3.0",
     "nodemailer-smtp-pool": "^0.1.8",
     "nodemailer-smtp-transport": "^0.1.13",
-    "oauth2-server": "^2.3.0",
+    "oauth2orize": "^1.0.1",
     "passport": "^0.2.1",
     "passport-http": "^0.2.2",
+    "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
+    "passport-oauth2-client-password": "^0.1.2",
     "q": "^1.1.1",
     "randomstring": "^1.0.3",
     "sequelize": "^1.7.10",
@@ -42,6 +45,7 @@
     "squel": "^3.9.1",
     "static-favicon": "~1.0.0",
     "underscore": "^1.7.0",
-    "util": "^0.10.3"
+    "util": "^0.10.3",
+    "winston": "^0.8.3"
   }
 }
