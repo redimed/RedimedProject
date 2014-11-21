@@ -34,13 +34,22 @@ angular.module("app.loggedIn.patient", [
         }
     })
 
-    .state("loggedIn.patient.detail", {
-        url: "/detail",
-        views: {
-            "main-content":{
-                templateUrl: "modules/patient/views/detail.html",
-                controller: "PatientDetailController"
-            }
-        }
-    })
-})
+                    .state("loggedIn.patient.detail", {
+                        url: "/detail",
+                        views: {
+                            "main-content": {
+                                templateUrl: "modules/patient/views/detail.html",
+                                controller: "PatientDetailController"
+                            }
+                        }
+                    })
+                    .state("loggedIn.patient.referrals", {
+                        url: "/referrals",
+                        views: {
+                            "main-content": {
+                                templateUrl: "modules/patient/views/referrals.html",
+                                controller: "PatientReferralsController"
+                            }
+                        }
+                    })
+        })

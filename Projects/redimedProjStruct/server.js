@@ -57,7 +57,9 @@ var multipartMiddleware = multipart();
 //-------------------------------------------
 
 app.use(function (req, res, next) {
-    res.locals.k_sql = k_sql(req, res);
+	req.k_sql = k_sql(req, res);
+	req.k_sql.isLog = 2;
+    res.locals.k_sql = req.k_sql;
     next();
 });
 

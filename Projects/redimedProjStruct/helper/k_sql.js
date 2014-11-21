@@ -5,7 +5,7 @@ var fs = require('fs');
 function K_SQL(req, res) {
     var _this = this;
 	
-	this.isLog = 2; // 0 is off, 1 is console, 2 write file
+	this.isLog = 0; // 0 is off, 1 is console, 2 write file
 	
 	var getFileNameLog = function(){
 		var d = new Date();

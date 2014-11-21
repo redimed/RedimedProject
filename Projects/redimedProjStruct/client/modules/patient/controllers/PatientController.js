@@ -6,7 +6,9 @@ angular.module("app.loggedIn.patient.controller", [
     "app.loggedIn.patient.action.controller",
 
     "app.loggedIn.patient.booking.controller",
-    "app.loggedIn.patient.detail.controller"
+    "app.loggedIn.patient.detail.controller",
+    
+    "app.loggedIn.patient.referrals.controller",
 ])
 .controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW) {
     // FOR VIEW LIST
