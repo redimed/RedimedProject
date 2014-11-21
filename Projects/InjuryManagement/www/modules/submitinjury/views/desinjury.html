@@ -2,59 +2,61 @@
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
+    <pane side-menu-content drag-content="false">
+        <div class="bar bar-subheader">
+            <button class="button button-clear button-positive" ui-sref="app.injury.info">
+                Back
+            </button>
+            <h1 class="title">Description Injury</h1>
+            <button class="button button-clear button-positive" ng-click="takePicture()">
+                <i class="fa fa-camera-retro"></i>
+            </button>
+        </div>
 
-    <div class="bar bar-subheader">
-        <button class="button button-clear button-positive" ui-sref="app.injury.info">
-            Back
-        </button>
-        <h1 class="title">Description Injury</h1>
-        <button class="button button-clear button-positive" ng-click="takePicture()">
-            <i class="fa fa-camera"></i>
-        </button>
-    </div>
+        <ion-content class="padding has-subheader has-header">
+            <ion-list>
+                <form name="descinjury" novalidate>
 
-    <ion-content class="padding has-subheader has-header">
-        <ion-list>
-            <form name="descinjury" novalidate>
-                <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}">
-                    <span class="input-label span-input-color">Injury Date</span>
-                    <input ng-required="true" type="text" onfocus="this.type='date';
+                    <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}">
+                        <span class="input-label span-input-color">Injury Date</span>
+                        <input ng-required="true" type="text" onfocus="this.type='date';
                     this.setAttribute('onfocus','');this.blur();
                     this.focus();" ng-model="worker.injury_date" name="injury_date" />
-                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmitdesc && descinjury.injury_date.$invalid}"></i>
-                </label>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmitdesc && descinjury.injury_date.$invalid}"></i>
+                    </label>
 
-                <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_description.$invalid}">
-                    <span class="input-label span-input-color">Injury Description</span>
-                    <textarea ng-required="true" type="text" ng-model="worker.injury_description" name="worker.injury_description" rows="5"></textarea>
-                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmitdesc && descinjury.injury_description.$invalid}"></i>
-                </label>
+                    <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_description.$invalid}">
+                        <span class="input-label span-input-color">Injury Description</span>
+                        <textarea ng-required="true" type="text" ng-model="worker.injury_description" name="worker.injury_description" rows="5"></textarea>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmitdesc && descinjury.injury_description.$invalid}"></i>
+                    </label>
 
+                    <div class="footer_injury padding-top">
+                        <ion-scroll direction="x">
+                            <a class="button button-clear button-positive"
+                               ng-repeat="imgDetail in imgURI" ng:click="selectImg($index)"  style="width: 80px; height: 50px;">
+                                <img ng-src="{{imgDetail.image}}" class="img-responsive"/>
+                            </a>
+                        </ion-scroll>
+                    </div>
 
-                <div class="footer_injury">
-                    <ion-scroll direction="x">
-                        <a class="button button-clear button-positive"
-                           ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail.image, imgDetail.desc)"  style="width: 80px; height: 50px;">
-                            <img ng-src="{{imgDetail.image}}" class="img-responsive"/>
-                        </a>
-                    </ion-scroll>
+                </form>
+            </ion-list>
+            <div class="padding">
+                <div class="col-xs-6  text-center">
+                    <button class="button button-clear" ng-click="showConfirm(descinjury,isClick=true)" style="background-color: #FF5E3A; width: 100%;">
+                        <i class="fa fa-ambulance" style="color: #f5f5f5; font-size: 17px;"></i>
+                        <span style="color: #f5f5f5; font-size: 15px;">Emergency</span>
+                    </button>
                 </div>
-            </form>
-        </ion-list>
-        <div class="padding">
-            <div class="col-xs-6  text-center">
-                <button class="button button-clear" ng-click="showConfirm(descinjury,isClick=true)" style="background-color: #FF5E3A; width: 100%;">
-                    <i class="fa fa-ambulance" style="color: #f5f5f5; font-size: 17px;"></i>
-                    <span style="color: #f5f5f5; font-size: 15px;">Emergency</span>
-                </button>
+                <div class="col-xs-6  text-center">
+                    <button class="button button-clear" ng-click="showConfirm(descinjury,isClick=false)" style="background-color: #34AADC; width: 100%;">
+                        <i class="fa fa-calendar" style="color: #f5f5f5; font-size: 17px;"></i>
+                        <span style="color: #f5f5f5; font-size: 15px;">Non-Emergency</span>
+                    </button>
+                </div>
             </div>
-            <div class="col-xs-6  text-center">
-                <button class="button button-clear" ng-click="showConfirm(descinjury,isClick=false)" style="background-color: #34AADC; width: 100%;">
-                    <i class="fa fa-calendar" style="color: #f5f5f5; font-size: 17px;"></i>
-                    <span style="color: #f5f5f5; font-size: 15px;">Non-Emergency</span>
-                </button>
-            </div>
-        </div>
-    </ion-content>
+
+        </ion-content>
 </ion-view>
 

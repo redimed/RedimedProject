@@ -65,6 +65,15 @@ form i.icon.error {
     height: 100px;
     bottom: 0;
 }
+.h-descImg{
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    top: 0;
+}
 .cssFade {
     transition: 0.5s linear all;
     opacity: 1;
@@ -98,4 +107,25 @@ form i.icon.error {
 .bg-menu-left{
     background: url("../img/bg-menu-left.jpg");
     background-size: cover;
+}
+.item-menu {
+    background-color: rgba(0, 0, 0, 0) !important;
+    border: none;
+    color: rgba(232, 231, 234, 0.8);
+    margin-bottom: 1px;
+}
+.item-menu a {
+    background-color: rgba(0, 0, 0, 0) !important;
+    margin: 0 3px 0 3px;
+}
+.item-menu:active{
+    border: 1px solid #7c699f !important;
+}
+.item-menu a:active, .item-menu a:focus, .item-menu a:visited {
+    background-color: rgba(68, 0, 94, 0.3) !important;
+    margin: 0 3px 0 3px;
+    color: rgba(232, 231, 234, 1);
+}
+.margin-statusbar{
+    margin-top: 20px;
 }

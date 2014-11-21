@@ -5,7 +5,7 @@
     <form name="infor" novalidate>
         <div class="bar bar-subheader">
             <button class="button button-clear button-positive" ng-show="checkNonemerg" ng-click="backdescInjury()">
-                Back
+            Back
             </button>
             <h1 class="title">Information</h1>
             <button class="button button-clear button-positive" ng-click="nextFormMain(infor)">
@@ -14,6 +14,7 @@
         </div>
         <ion-content class="padding has-header has-subheader">
             <ion-list>
+
                 <label class="item item-input item-select" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
                     <span class="input-label span-input-color">Title</span>
                     <select ng-required="true" ng-model="worker.Title" name="Title"

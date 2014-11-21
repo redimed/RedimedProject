@@ -16,7 +16,7 @@ angular.module('starter', ['ionic',
   'app.config',
   'starter.worker',
   'starter.booking',
-    'ui.bootstrap'
+  'ui.bootstrap'
 
 //
   //'starter.playlist'
@@ -49,10 +49,10 @@ angular.module('starter', ['ionic',
 
 
       //ip Luan
-     // RestangularProvider.setBaseUrl("http://192.168.132.137:3000");
+      //RestangularProvider.setBaseUrl("http://192.168.132.137:3000");
 
       //ip nha
-      //RestangularProvider.setBaseUrl("http://192.168.1.106:3000");
+      //RestangularProvider.setBaseUrl("http://192.168.1.110:3000");
 
       $urlRouterProvider.otherwise('/');
       $stateProvider
@@ -77,13 +77,14 @@ angular.module('starter', ['ionic',
           })
 
     })
-    .run(function($state, $rootScope,localStorageService){
+    .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate){
 
       $rootScope.$on("$stateChangeSuccess", function(e, toState){
         if(!localStorageService.get("userInfo")){
-          if(toState.name !== "security.forgot" && toState.name !== "security.login" ){
+          if(toState.name !== "security.forgot" && toState.name !== "security.login") {
             e.preventDefault();
             $state.go("security.login");
+            $ionicSideMenuDelegate.canDragContent(false);
           }
         }
       });

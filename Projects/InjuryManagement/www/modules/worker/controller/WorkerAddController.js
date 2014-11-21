@@ -3,7 +3,9 @@ angular.module('starter.worker.add.controller',[])
     .controller('workerAddController', function($scope, WorkerServices, $state, $stateParams, localStorageService, $ionicPopup, $ionicLoading, $timeout, ConfigService) {
         var userInfoLS = localStorageService.get("userInfo");
 
-        $scope.checkNonemerg = $stateParams.nonEmerg;
+        $timeout(function () {
+            $scope.checkNonemerg = $stateParams.nonEmerg;
+        }, 500);
         $scope.isSubmit = false;
         $scope.isSubmit2 = false;
         $scope.isSubmit3 = false;
@@ -175,8 +177,10 @@ angular.module('starter.worker.add.controller',[])
                 $state.go("app.worker.second");
             }
         }
+
         //back injuryDesc
         $scope.backdescInjury = function() {
+            localStorageService.set("checkNonemerg", $scope.checkNonemerg);
             $state.go('app.injury.desinjury');
         }
 
@@ -217,7 +221,6 @@ angular.module('starter.worker.add.controller',[])
                     });
 
                     $timeout(function () {
-                        alert(JSON.stringify($scope.worker));
                         reset();
                         $ionicLoading.hide();
                         var alertPopup = $ionicPopup.alert({

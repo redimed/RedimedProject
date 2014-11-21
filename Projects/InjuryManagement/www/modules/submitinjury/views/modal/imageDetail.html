@@ -1,12 +1,18 @@
 <!--process modal detailImg-->
 <div class="modal image-modal transparent" ng-controller="InjuryImgControllerModal">
-    <div class="bar bar-header bar-light text-right" style="display: block;">
-        <a class="button button-clear" ng-click="hideModal()">
-            Done
-        </a>
-    </div>
-    <ion-pane>
-        <img ng-src="{{imageDetail}}" class="fullscreen-image"/>
-    </ion-pane>
-
+    <ion-slide-box class="has-header" style="height: 100%;">
+        <div class="text-right h-descImg" style="display: block;">
+            <a class="button button-clear padding" ng-click="hideModal()">
+                <span>{{temp}} Done</span>
+            </a>
+        </div>
+        <ion-slide ng-repeat="img in imageObj" ng-if="$index == temp">
+            <img ng-src="{{img.image}}" class="fullscreen-image"/>
+            <div class="bg-descImg padding">
+               <span>
+                 Description: {{img.desc}}
+               </span>
+            </div>
+        </ion-slide>
+    </ion-slide-box>
 </div>

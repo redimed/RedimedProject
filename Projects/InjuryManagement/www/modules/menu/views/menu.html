@@ -1,4 +1,4 @@
-<ion-side-menus>
+<ion-side-menus  class="margin-statusbar">
   <ion-pane ion-side-menu-content>
     <ion-nav-bar class="bar-stable nav-title-slide-ios7 ">
       <ion-nav-buttons side="right">
@@ -15,7 +15,7 @@
         <span id="profile-description" ng-click="logout()">Logout</span>
       </div>
       <ion-list ng-repeat="menu in Injurymenu">
-        <ion-item ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}">
+        <ion-item ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}" class="item-menu">
           {{submenu.name}}
           <i class="fa fa-angle-right" style="float: right"></i>
         </ion-item>
@@ -23,7 +23,6 @@
     </div>
   </ion-side-menu>
 </ion-side-menus>
-
 <script id="my-popover.html" type="text/ng-template">
   <ion-popover-view>
     <ion-header-bar>

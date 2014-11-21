@@ -4,6 +4,9 @@
     </ion-nav-buttons>
     <form name="info" novalidate>
         <div class="bar bar-subheader">
+            <button class="button button-clear button-positive" ng-click="reset()">
+                Reset
+            </button>
             <h1 class="title">Information</h1>
             <button class="button button-clear button-positive" ng-click="nextform(info)">
                 Next
@@ -148,9 +151,6 @@
                     </label>
 
                 </div>
-                <button class="button button-block button-positive" ng-click="reset()">
-                    Reset
-                </button>
             </ion-list>
         </ion-content>
     </form>

@@ -4,8 +4,6 @@
     top: 44px;
     width: 100%;
     height: 150px;
-
-    /*     background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/94311/bg.jpg') no-repeat transparent;*/
     background-size: 100%;
     background-position: 50% 20%;
 
@@ -13,16 +11,16 @@
 }
 
 #content {
-    position: relative;
-    margin-top: 150px;
-    padding-top: 100px;
+    /*position: relative;*/
+    margin-top: 90px;
+    /*padding-top: 100px;*/
 }
 
 #profile-info {
-    position: absolute;
-    top: -95px;
-    width: 100%;
-    z-index: 2;
+    /*position: absolute;*/
+    /*top: -95px;*/
+    /*width: 100%;*/
+    /*z-index: 2;*/
     text-align: center;
 }
 #profile-name {

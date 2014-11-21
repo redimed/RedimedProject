@@ -2,10 +2,8 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 
 ])
 .controller('rlobChooseAppointmentCalendarController',function($filter,$scope,$stateParams,localStorageService,OnlineBookingService,$state){
+
         $scope.loginInfo = localStorageService.get('userInfo');
-
-
-
         $scope.patientID = $stateParams.Patient_id;
 
         $scope.selectedFilter={
@@ -15,6 +13,11 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
             doctorSelected:{},
             date:''
         };
+
+        $scope.backdescInjury = function() {
+            localStorageService.set("checkNonemerg", true);
+            $state.go('app.injury.desinjury');
+        }
 
         $scope.selectedFilter.date =$filter('date')(new Date(), "yyyy-MM-dd");
 
