@@ -6,9 +6,9 @@ angular.module('app.loggedIn.document.services', [])
         var documentService = {};
         var api = Restangular.all("api");
 
-        documentService.loadPatient = function () {
-            var loadPatient = api.one("document/loadPatient");
-            return loadPatient.get();
+        documentService.loadPatient = function (searchObj) {
+            var loadPatient = api.all("document/loadPatient");
+            return loadPatient.post({searchObj:searchObj});
         }
 
         /* Gorgon COE

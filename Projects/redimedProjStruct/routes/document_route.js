@@ -17,9 +17,9 @@ var form18Controller = require('./controllers/DocumentController/form18Controlle
 var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
 var gorgonMAController = require('./controllers/DocumentController/gorgonMAController');
 var COEController = require('./controllers/DocumentController/COEController');
+var demoController = require('./controllers/DocumentController/demoController');
 
-
-
+app.post('/api/document/loadPatient', demoController.loadPatient);
 
 /**
  * begin category 2

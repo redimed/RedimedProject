@@ -18,19 +18,40 @@ angular.module("app.loggedIn.document", [
     "app.loggedIn.document.SA1.controllers",
     "app.loggedIn.document.SA2.controllers",
     "app.loggedIn.document.COE.controllers",
+    "app.loggedIn.document.demo.controllers",
+    "app.loggedIn.document.detail.controllers",
+    "app.loggedIn.document.addPatient.controllers",
     "app.loggedIn.document.form18.controllers"
 ])
     .config(function ($stateProvider) {
         $stateProvider
 
+            .state("loggedIn.demo", {
+                url: "/demo",
+                templateUrl: "modules/document/views/DemoDocument.html",
+                controller: 'demoController'
+            })
+
+            .state("loggedIn.Detail", {
+                url: "/detail",
+                templateUrl: "modules/document/views/patientDetail.html",
+                controller: 'detailController'
+            })
+
+            .state("loggedIn.addPatient", {
+                url: "/addPatient",
+                templateUrl: "modules/document/views/addPatient.html",
+                controller: 'addPatientController'
+            })
+
             .state("loggedIn.COE", {
-                url: "/COE/:CalID/:PatientID",
+                url: "/COE",
                 templateUrl: "modules/document/views/COE.html",
                 controller: 'COEController'
             })
 
             .state("loggedIn.category2", {
-                url: "/category2/:CalID/:PatientID",
+                url: "/category2",
 
                 templateUrl: "modules/document/views/category2.html",
                 controller: 'Cat2Controller'
@@ -38,7 +59,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.category3", {
-                url: "/category3/:CalID/:PatientID",
+                url: "/category3",
 
                 templateUrl: "modules/document/views/category3.html",
                 controller: 'Cat3Controller'
@@ -46,7 +67,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.FA", {
-                url: "/FA/:CalID/:PatientID",
+                url: "/FA",
 
                 templateUrl: "modules/document/views/functionAssessment.html",
                 controller: 'FAController'
@@ -54,7 +75,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.MA", {
-                url: "/MA/:CalID/:PatientID",
+                url: "/MA",
 
                 templateUrl: "modules/document/views/medicalAssessment.html",
                 controller: 'MAController'
@@ -62,7 +83,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.IDS", {
-                url: "/IDS/:CalID/:PatientID",
+                url: "/IDS",
 
                 templateUrl: "modules/document/views/instantScreen.html",
                 controller: 'IDSController'
@@ -70,7 +91,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.gorgonFA", {
-                url: "/gorgonFA/:CalID/:PatientID",
+                url: "/gorgonFA",
 
                 templateUrl: "modules/document/views/gorgonFA.html",
                 controller: 'gorgonFAController'
@@ -78,7 +99,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.gorgonMA", {
-                url: "/gorgonMA/:CalID/:PatientID",
+                url: "/gorgonMA",
 
                 templateUrl: "modules/document/views/gorgonMA.html",
                 controller: 'gorgonMAController'
@@ -86,7 +107,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.gorgonMH", {
-                url: "/gorgonMH/:CalID/:PatientID",
+                url: "/gorgonMH",
 
                 templateUrl: "modules/document/views/gorgonMH.html",
                 controller: 'gorgonMHController'
@@ -94,7 +115,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.gorgonUQ", {
-                url: "/gorgonUQ/:CalID/:PatientID",
+                url: "/gorgonUQ",
 
                 templateUrl: "modules/document/views/gorgonUQ.html",
                 controller: 'gorgonUQController'
@@ -102,35 +123,35 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.Form18", {
-                url: "/Form18/:CalID/:PatientID",
+                url: "/Form18",
 
                 templateUrl: "modules/document/views/form18.html",
                 controller: 'form18Controller'
             })
 
             .state("loggedIn.MH", {
-                url: "/MH/:CalID/:PatientID",
+                url: "/MH",
 
                 templateUrl: "modules/document/views/medicalhistory.html",
                 controller: 'MHController'
             })
 
             .state("loggedIn.MRS", {
-                url: "/MRS/:CalID/:PatientID",
+                url: "/MRS",
 
                 templateUrl: "modules/document/views/medicalresultsummary.html",
                 controller: 'MRSController'
             })
 
             .state("loggedIn.SA1", {
-                url: "/SA1/:CalID/:PatientID",
+                url: "/SA1",
 
                 templateUrl: "modules/document/views/audiogramresults1.html",
                 controller: 'SA1Controller'
             })
 
             .state("loggedIn.SA2", {
-                url: "/SA2/:CalID/:PatientID",
+                url: "/SA2",
 
                 templateUrl: "modules/document/views/audiogramresults2.html",
                 controller: 'SA2Controller'

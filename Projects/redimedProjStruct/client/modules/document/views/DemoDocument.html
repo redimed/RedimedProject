@@ -1,104 +1,76 @@
-<div class="caption text-center">
-    <i class="icon-book-open x-large"></i>
-    <span class="caption-subject  bold uppercase " style="font-size: 30px;">Demo Document</span>
+<h3 class="page-title">Patient List</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Patients</a>
+        </li>
+    </ul>
 </div>
 
-
-<div class="portlet box purple">
+<div class="portlet yellow box">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>Information Patient
+            <i class="fa fa-cogs"></i>List of Patients
         </div>
+        <a ui-sref="loggedIn.addPatient" class="btn purple pull-right">New Patient</a>
     </div>
     <div class="portlet-body">
-        <div class="table-scrollable">
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>DOB</th>
-                    <th>Sex</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="patient in patients" ng-click="setID(patient.Patient_id)">
-                    <td>{{patient.Patient_id}}</td>
-                    <td>{{patient.Title + " " + patient.Middle_name + " " + patient.Sur_name + " " +  patient.First_name }}</td>
-                    <td>{{patient.DOB | date : 'dd/MM/yyyy'}}</td>
-                    <td>{{patient.Sex}}</td>
-                </tr>
-                </tbody>
-            </table>
+        <!-- PAGINATION -->
+        <div style="float: left;">
+            <pagination boundary-links="true" total-items="list.count" ng-model="searchObjectMap.currentPage"
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                        items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
         </div>
+        <div style="float: right; padding-top: 15px;">
+            <button class="btn btn-sm" ng-click="reset()">Reset</button>
+            <b>Total Patients:</b> {{list.count}}
+            <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows"
+                    ng-change="loadList()">
+            </select>
+        </div>
+        <!-- END PAGINATION -->
+        <table class="table table-responsive table-hover">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Sur Name</th>
+                <th>Postcode</th>
+            </tr>
+            <tr>
+                <!-- SEARCH -->
+                <td>
+                    <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.First_name"
+                           ng-change="loadList()">
+                </td>
+                <td>
+                    <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Middle_name"
+                           ng-change="loadList()">
+                </td>
+                <td>
+                    <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Sur_name"
+                           ng-change="loadList()">
+                </td>
+                <td>
+                    <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Post_code"
+                           ng-change="loadList()">
+                </td>
+                <!-- END SEARCH -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="l in list.results" ng-click="goToTimetableDetail(l)"  style="cursor: pointer;">
+                <td>{{l.First_name}}</td>
+                <td>{{l.Middle_name| undefined}}</td>
+                <td>{{l.Sur_name| undefined}}</td>
+                <td>{{l.Post_code| undefined}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
-<div class="portlet box yellow">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-cogs"></i>Document List
-        </div>
-    </div>
-    <div class="portlet-body">
-        <div class="row">
-            <div class="col-lg-4">
-                <a  ><h4>Gorgon Medical Assessment</h4></a>
-            </div>
-            <div class="col-lg-4">
-                <a ><h4>Gorgon Functional Assessment</h4></a>
-            </div>
-            <div class="col-lg-4">
-                <label>Patient ID</label>
-                <input type="text" ng-model="patientID" class="form-control">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <a  ><h4>Gorgon User Questionnaire</h4></a>
-            </div>
-            <div class="col-lg-4">
-                <a ><h4>Gorgon Medical Result Summary</h4></a>
-            </div>
-            <div class="col-lg-4">
-                <label>Please choose </label>
-                <input type="text" max-date="maxDate" class="form-control" name="dob" ng-model="calID" datepicker-popup="dd/MM/yyyy"  is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions" close-text="Close" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <a  ><h4>Functional Assessment</h4></a>
-            </div>
-            <div class="col-lg-4">
-                <a ><h4> Medical Assessment</h4></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <a  ><h4>Category 2</h4></a>
-            </div>
-            <div class="col-lg-4">
-                <a ><h4>Category 3</h4></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <a  ><h4>Instant Drug Screen</h4></a>
-            </div>
-            <div class="col-lg-4">
-                <a ><h4>Form 18</h4></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <a  ><h4>Audiogram 2</h4></a>
-            </div>
-            <div class="col-lg-4">
-                <a ><h4>Audiogram 3</h4></a>
-            </div>
-        </div>
-
-
-
-    </div>
-</div>
-

@@ -1,0 +1,133 @@
+<div class="portlet box yellow">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Information Patient
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-sm-4"><strong>Full name: </strong></div>
+                <div class="col-sm-8">{{patient.First_name || ''}} {{patient.Middle_name || ''}} {{patient.Sur_name || ''}}</div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-sm-4"><strong>Nick name: </strong></div>
+                <div class="col-sm-8">{{patient.Known_as}}</div>
+            </div>
+
+        </div>
+        <div class="break-row"></div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-sm-4"><strong>Sex: </strong></div>
+                <div class="col-sm-8">{{patient.Sex}}</div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-sm-4"><strong>DOB: </strong></div>
+                <div class="col-sm-8">{{patient.DOB}}</div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="col-sm-4"><strong>Mobile: </strong></div>
+                <div class="col-sm-8">{{patient.Mobile}}</div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-sm-4"><strong>Email: </strong></div>
+                <div class="col-sm-8">{{patient.Email}}</div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-sm-4"><strong>Country: </strong></div>
+                <div class="col-sm-8">{{patient.Country}}</div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-sm-4"><strong>Post code: </strong></div>
+                <div class="col-sm-8">{{patient.Post_code}}</div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="col-sm-4"><strong>Address 1: </strong></div>
+                <div class="col-sm-8">{{patient.Address1}}</div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="col-sm-4"><strong>Address 2: </strong></div>
+                <div class="col-sm-8">{{patient.Address2}}</div>
+            </div>
+        </div>
+        <div class="break-row"></div>
+
+    </div>
+</div>
+
+<div class="portlet box purple" id="appt_paperless">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>All document
+        </div>
+    </div>
+    <div class="portlet-body">
+
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a  ui-sref="loggedIn.gorgonMA" >Gorgon Medical Assessment</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.gorgonFA" >Gorgon Functional Assessment</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a  ui-sref="loggedIn.gorgonUQ" >Gorgon User Questionnaire</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.MRS" >Medical Result Summary</a>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.FA"  >Functional Assessment</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.MA" > Medical Assessment</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.category2" >Category 2</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.category3" >Category 3</a>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a  ui-sref="loggedIn.IDS" >Instant Drug Screen</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.Form18" >Form 18</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.SA1"  >Audiogram 1</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.SA2" >Audiogram 2</a>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.gorgonMH" >Gorgon Medical History</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.MH"  >Medical History</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ui-sref="loggedIn.COE"  >COE</a>
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
+</div>

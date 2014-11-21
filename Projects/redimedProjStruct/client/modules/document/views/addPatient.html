@@ -1,0 +1,38 @@
+<!-- INSERT -->
+<!-- STEP 1 -->
+<form novalidate name="patientForm">
+<div>
+
+    <!-- HEADER -->
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn default" ng-click="insertBackStep()" ng-show="insert_step > 1">
+                Back
+            </button>
+            <button class="btn green" ng-click="insertNextStep(patientForm)">
+                <span ng-show="insert_step < 3">Next</span>
+                <span ng-show="insert_step === 3">Accept Patient</span>
+            </button>
+        </div>
+    </div>
+    <!-- END HEADER -->
+
+    <div ng-show="insert_step === 1" class="row">
+        <div ng-include="'modules/patient/views/patient/step1.html'"></div>
+    </div>
+    <!-- END STEP 1 -->
+
+    <!-- STEP 2 -->
+    <div ng-show="insert_step == 2" class="row">
+        <div ng-include="'modules/patient/views/patient/step2.html'"></div>
+    </div>
+    <!-- END STEP 2 -->
+
+    <!-- STEP 3 -->
+                <span ng-show="insert_step === 3">
+                    <div ng-include="'modules/patient/views/patient/step3.html'"></div>
+
+<!-- END STEP 3 -->
+</div>
+<!-- END INSERT -->
+</form>
