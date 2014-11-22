@@ -2,7 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="from18" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="40e22dbc-5d64-4c12-8822-2963494dc432">
 	<property name="ireport.zoom" value="1.0000000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="531"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -10,22 +12,23 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT 	af.*,
+		<![CDATA[SELECT 	af.*,SUBSTRING_INDEX(af.`WORKER_SIGNATURE`, ',', -1) AS WORKER_SIGNATURE1,
+	SUBSTRING_INDEX(af.`PERSON_ARRANGING_SIGNATURE`, ',', -1) AS PERSON_ARRANGING_SIGNATURE1,
 	CONCAT(IFNULL(patient.`First_name`,''),' ',IFNULL(patient.`Middle_name`,''),' ',IFNULL(patient.`Sur_name`,'')) AS WORKER_NAME,
 	patient.`Address1` AS WORKER_ADDRESS_1,
 	patient.`Address2` AS WORKER_ADDRESS_2,
 	doctor.`NAME` AS DOCTOR_NAME,
 	redimed.`Site_name` AS NAME_CLINIC,
 	redimed.`Site_addr` AS ADDRESS_CLINIC,
-	`entityPatient`.`ENTITY_NAME` AS NAME_EMPLOYER,
-	`entityPatient`.`ADDRESS` AS WORKSITE,
-	doctor.`Signature` AS DOCTOR_SIGNATURE
+	`cm`.`Company_name` AS NAME_EMPLOYER,
+	`cm`.`Addr` AS WORKSITE,
+	SUBSTRING_INDEX(doctor.`Signature`, ',', -1)AS DOCTOR_SIGNATURE
 FROM
 	`GORGON_AUDIOMETRIC_FORM18` af LEFT JOIN `cln_patients` patient ON af.`PATIENT_ID`=patient.`Patient_id`
 	LEFT JOIN `doctors` doctor ON af.`DOCTOR_ID`=doctor.`doctor_id`
 	LEFT JOIN `cln_appointment_calendar` calendar ON af.`CAL_ID`=calendar.`CAL_ID`
 	LEFT JOIN `redimedsites` redimed ON calendar.`SITE_ID`=`redimed`.`id`
-	LEFT JOIN `entity_patient` entityPatient ON af.`PATIENT_ID`=`entityPatient`.`Patient_id`
+	LEFT JOIN `companies` cm ON patient.`company_id`=`cm`.`id`
 WHERE	af.`GORGON_ID`=$P{key}]]>
 	</queryString>
 	<field name="GORGON_ID" class="java.lang.Integer">
@@ -46,7 +49,7 @@ WHERE	af.`GORGON_ID`=$P{key}]]>
 	<field name="WORK_COVER_NO" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="PERSON_ARRANGING_SIGNATURE" class="java.io.InputStream">
+	<field name="PERSON_ARRANGING_SIGNATURE" class="java.lang.Object">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="PERSON_ARRANGING_NAME" class="java.lang.String">
@@ -58,9 +61,11 @@ WHERE	af.`GORGON_ID`=$P{key}]]>
 	<field name="DOCTOR_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="WORKER_SIGNATURE" class="java.io.InputStream">
+	<field name="WORKER_SIGNATURE" class="java.lang.Object">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="WORKER_SIGNATURE1" class="java.lang.Object"/>
+	<field name="PERSON_ARRANGING_SIGNATURE1" class="java.lang.Object"/>
 	<field name="WORKER_NAME" class="java.lang.String"/>
 	<field name="WORKER_ADDRESS_1" class="java.lang.String"/>
 	<field name="WORKER_ADDRESS_2" class="java.lang.String"/>
@@ -69,7 +74,10 @@ WHERE	af.`GORGON_ID`=$P{key}]]>
 	<field name="ADDRESS_CLINIC" class="java.lang.String"/>
 	<field name="NAME_EMPLOYER" class="java.lang.String"/>
 	<field name="WORKSITE" class="java.lang.String"/>
-	<field name="DOCTOR_SIGNATURE" class="java.io.InputStream"/>
+	<field name="DOCTOR_SIGNATURE" class="java.lang.Object"/>
+	<variable name="DOCTOR_SIGNATURE_VAR" class="java.awt.Image">
+		<variableExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{WORKER_SIGNATURE1}.getBytes("UTF-8"))))]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -77,7 +85,7 @@ WHERE	af.`GORGON_ID`=$P{key}]]>
 		<band height="802" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="785" uuid="4704a83a-2ea8-4851-9aff-de0449794326"/>
-				<imageExpression><![CDATA[$P{real_path}+"af18-background.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/af18-background.jpg"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="58" y="92" width="454" height="20" uuid="82f1df54-2c17-49ed-a52d-f8cf2fd00a6c"/>
@@ -136,7 +144,7 @@ WHERE	af.`GORGON_ID`=$P{key}]]>
 			</textField>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="58" y="481" width="161" height="57" uuid="095876fb-c265-49f9-8380-13f373ea8423"/>
-				<imageExpression><![CDATA[$F{PERSON_ARRANGING_SIGNATURE}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{PERSON_ARRANGING_SIGNATURE1}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
 				<reportElement x="229" y="518" width="80" height="20" uuid="34cc0e72-0ae4-4f0e-baab-07696587de28"/>
@@ -160,7 +168,7 @@ WHERE	af.`GORGON_ID`=$P{key}]]>
 			</textField>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="58" y="691" width="139" height="37" uuid="009ae1c6-daf6-4f9a-ae87-f6589f83c6f2"/>
-				<imageExpression><![CDATA[$F{WORKER_SIGNATURE}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{WORKER_SIGNATURE1}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
 				<reportElement x="206" y="710" width="62" height="20" uuid="358ec9f3-460a-4af1-b2c6-f25e901798a0"/>
@@ -169,7 +177,7 @@ WHERE	af.`GORGON_ID`=$P{key}]]>
 			</textField>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="297" y="691" width="140" height="39" uuid="1f602312-0173-4638-8848-527d614b24b7"/>
-				<imageExpression><![CDATA[$F{DOCTOR_SIGNATURE}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{DOCTOR_SIGNATURE}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
 				<reportElement x="447" y="710" width="62" height="20" uuid="bf7f0568-5d23-4dae-aabb-cebeffb22476"/>

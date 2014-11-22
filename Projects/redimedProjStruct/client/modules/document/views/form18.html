@@ -6,10 +6,10 @@
                     ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || !infoChanged()"
                     ng-click="submit(form18)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
-            <button type="button"
+            <a href="/api/document/printForm18/{{info.GORGON_ID}}/{{info.PATIENT_ID}}/{{info.CAL_ID}}"
                     ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required"
-                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
-            </button>
+                    class="btn btn-primary blue pull-right">Print PDF
+            </a>
             <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>

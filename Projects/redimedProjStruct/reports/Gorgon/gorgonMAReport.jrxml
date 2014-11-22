@@ -2,7 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gorgonMAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d5e1d6a5-cccc-4b09-a010-c017da2c939f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1104"/>
+	<property name="ireport.y" value="2787"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="84940f7f-a360-45b6-8549-d07a2fbd07c5"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -115,7 +117,7 @@
      cln_patients.`First_name` AS cln_patients_First_name,
      cln_patients.`Sur_name` AS cln_patients_Sur_name,
      cln_patients.`Middle_name` AS cln_patients_Middle_name,
-     gorgon_doc_ma.`SIGNATURE` AS gorgon_doc_ma_SIGNATURE,
+     SUBSTRING_INDEX(gorgon_doc_ma.`SIGNATURE`, ',', -1) AS gorgon_doc_ma_SIGNATURE,
      gorgon_doc_ma.`EXAMINER_NAME` AS gorgon_doc_ma_EXAMINER_NAME,
      gorgon_doc_ma.`EXAMINER_ADDRESS` AS gorgon_doc_ma_EXAMINER_ADDRESS,
      gorgon_doc_ma.`RIGHT_EAR_500` AS gorgon_doc_ma_RIGHT_EAR_500,
@@ -261,7 +263,7 @@ WHERE
 	<field name="cln_patients_First_name" class="java.lang.String"/>
 	<field name="cln_patients_Sur_name" class="java.lang.String"/>
 	<field name="cln_patients_Middle_name" class="java.lang.String"/>
-	<field name="gorgon_doc_ma_SIGNATURE" class="java.io.InputStream"/>
+	<field name="gorgon_doc_ma_SIGNATURE" class="java.lang.String"/>
 	<field name="gorgon_doc_ma_EXAMINER_NAME" class="java.lang.String"/>
 	<field name="gorgon_doc_ma_EXAMINER_ADDRESS" class="java.lang.String"/>
 	<field name="gorgon_doc_ma_RIGHT_EAR_500" class="java.lang.Integer"/>
@@ -3936,7 +3938,8 @@ Barrow Island LNG Plant ]]></text>
 			</textField>
 			<image>
 				<reportElement x="46" y="675" width="216" height="50" uuid="66cd0ee8-3c6f-4ba7-9c6a-ed2b63d98d2d"/>
-				<imageExpression><![CDATA[$F{gorgon_doc_ma_SIGNATURE}]]></imageExpression>
+				<imageExpression><![CDATA[
+ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{gorgon_doc_ma_SIGNATURE}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="11" y="606" width="121" height="15" uuid="d26988c7-a56f-447a-8906-537090d2a9c7"/>

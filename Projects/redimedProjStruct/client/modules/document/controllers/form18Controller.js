@@ -3,6 +3,13 @@
  */
 angular.module('app.loggedIn.document.form18.controllers', [])
     .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
+
+        $scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        // var doctorInfo = $cookieStore.get('doctorInfo');
+        var Patient_ID = $scope.patientInfo.Patient_id;
+        var CalID = $scope.apptInfo.CAL_ID;
+
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -59,8 +66,8 @@ angular.module('app.loggedIn.document.form18.controllers', [])
             //set value default
             $scope.info = {
                 GORGON_ID: null,
-                PATIENT_ID: $stateParams.PatientID,
-                CAL_ID: $stateParams.CalID,
+                PATIENT_ID: Patient_ID,
+                CAL_ID: CalID,
                 DocId: null,
                 TIME_TEST: localStorageService.get('tempAppt').FROM_TIME,
                 WORK_COVER_NO: null,

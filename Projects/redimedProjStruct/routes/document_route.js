@@ -69,18 +69,21 @@ app.get('/api/document/printUQ/:patientId/:calId/:id', UQController.printReport)
 app.post('/api/document/insertCOE',COEController.insertCOE);
 app.post('/api/document/updateCOE',COEController.updateCOE);
 app.post('/api/document/checkCOE',COEController.checkCOE);
+app.get('/api/document/printCOE/:coeId/:calId', COEController.printReport);
 // end
 
 //Begin gorgon FA
 app.post('/api/document/insertGorgonFA',gorgonFAController.insertFA);
 app.post('/api/document/editGorgonFA',gorgonFAController.editFA);
 app.post('/api/document/checkGorgonFA',gorgonFAController.checkGorgonFA);
+app.get('/api/document/printGorgonFA/:gorgonId/:calId', gorgonFAController.printReport);
 //end
 
 //Begin gorgon MA
 app.post('/api/document/insertGorgonMA',gorgonMAController.insertMA);
 app.post('/api/document/editGorgonMA',gorgonMAController.editMA);
 app.post('/api/document/checkGorgonMA',gorgonMAController.checkGorgonMA);
+app.get('/api/document/printgorgonMAReport/:gorgonId/:calId', gorgonMAController.printReport);
 //end
 
 /**
@@ -99,6 +102,7 @@ app.post('/api/document/editCat3', Cat3Controller.editCat3);
 app.post('/api/document/loadForm18', form18Controller.loadForm18);
 app.post('/api/document/insertForm18', form18Controller.insertForm18);
 app.post('/api/document/editForm18', form18Controller.editForm18);
+app.get('/api/document/printForm18/:gorgonId/:patientId/:calId', form18Controller.printReport);
 /**
  * end form 18
  */
