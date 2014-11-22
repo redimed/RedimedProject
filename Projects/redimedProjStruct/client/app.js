@@ -28,7 +28,8 @@ angular.module("app", [
     'ui.tree',                   // angular ui tree for [admin_booking]-- tannv.dts@gmail.com
     'ng-context-menu',            // angular context menu (menu right click) for [admin_booking]-- tannv.dts@gmail.com
 	'LocalStorageModule',
-    'ui-iconpicker'
+    'ui-iconpicker',
+    'ngPDFViewer'
 ])
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {
