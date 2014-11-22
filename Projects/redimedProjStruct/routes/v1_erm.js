@@ -29,7 +29,8 @@ k_route.setRoute(app, v1_Test, '/api/erm/v1/test/');
 
 var v2_ReferralsController = require('./controllers/v2_ReferralsController');
 var v2_CompanyController = require('./controllers/v2_CompanyController');
-
+var v2_InsurerController = require('./controllers/v2_InsurerController');
 
 k_route.setRoute(app, v2_ReferralsController, '/api/erm/v2/referrals/');
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
+k_route.setRoute(app, v2_InsurerController, '/api/erm/v2/insurer/');
