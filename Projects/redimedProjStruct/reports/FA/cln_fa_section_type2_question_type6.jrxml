@@ -66,16 +66,16 @@ WHERE 	detail.`ISENABLE`=1
 	<group name="LINE_GROUP">
 		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="45">
+			<band height="40">
 				<textField>
-					<reportElement x="0" y="10" width="515" height="20" uuid="2755ce17-d44e-4def-91ca-8c617a7a081d"/>
+					<reportElement x="0" y="5" width="515" height="20" uuid="2755ce17-d44e-4def-91ca-8c617a7a081d"/>
 					<textElement verticalAlignment="Top">
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{LINE_QUESTION}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="315" y="30" width="200" height="15" uuid="c7bd8bea-6898-4d67-b94a-54e00cfe5c33"/>
+					<reportElement x="315" y="25" width="200" height="15" uuid="c7bd8bea-6898-4d67-b94a-54e00cfe5c33"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -90,7 +90,7 @@ WHERE 	detail.`ISENABLE`=1
 					<text><![CDATA[Illustration]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="30" width="157" height="15" uuid="d48fc54e-0800-4249-9dbf-d7fd700cbb23"/>
+					<reportElement x="0" y="25" width="157" height="15" uuid="d48fc54e-0800-4249-9dbf-d7fd700cbb23"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -105,7 +105,7 @@ WHERE 	detail.`ISENABLE`=1
 					<text><![CDATA[Test]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="157" y="30" width="158" height="15" uuid="d09de70c-2231-4c90-9337-33725045e44d"/>
+					<reportElement x="157" y="25" width="158" height="15" uuid="d09de70c-2231-4c90-9337-33725045e44d"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -178,11 +178,11 @@ WHERE 	detail.`ISENABLE`=1
 			</frame>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="163" y="3" width="13" height="13" uuid="975502cf-0217-457f-b22e-c251218fed2c"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="163" y="19" width="13" height="13" uuid="cc094abb-ac51-4c83-b55d-dda655d79d44"/>
-				<imageExpression><![CDATA[$P{DIR_PATH} +( $F{VAL2_CHECKBOX}!=null && $F{VAL2_CHECKBOX}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH} +( $F{VAL2_CHECKBOX}!=null && $F{VAL2_CHECKBOX}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="157" height="88" uuid="f5d78da6-40e2-4189-aec5-a138e6f35245"/>

@@ -18,9 +18,6 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
         $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
         var doctorInfo = $cookieStore.get('doctorInfo');
-        console.log(doctorInfo);
-        console.log($scope.apptInfo);
-        console.log($scope.patientInfo);
         var Patient_ID = $scope.patientInfo.Patient_id;
         var CalID = $scope.apptInfo.CAL_ID;
 
@@ -395,13 +392,5 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
         });
 
 
-
-
-
-
-
-        $scope.print = function(){
-            $window.location.href = '/api/document/gorgonUQ/print/7';
-        }
 
     });

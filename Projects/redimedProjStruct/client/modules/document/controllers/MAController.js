@@ -30,6 +30,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
         var doctorInfo = $cookieStore.get('doctorInfo');
+        console.log($scope.patientInfo);
         var Patient_ID = $scope.patientInfo.Patient_id;
         var CalID = $scope.apptInfo.CAL_ID;
         var sex = $scope.patientInfo.Sex;
@@ -214,6 +215,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             {
                 $scope.isNew = false;
                 $scope.infoH = {
+                    MA_ID : response.MA_ID,
                     Patient_id : response.Patient_id,
                     HEIGHT : response.HEIGHT,
                     WEIGHT: response.WEIGHT,

@@ -32,4 +32,16 @@ angular.module("app.loggedIn.company", [
             }
         }
     })
+    
+    
+    // HOME
+    .state("loggedIn.company.list", {
+        url: "/company/list",
+        views: {
+            "main-content": {
+                templateUrl: "modules/company/views/list.html",
+                controller: "CompanyListController"
+            }
+        }
+    })
 })

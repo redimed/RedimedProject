@@ -185,7 +185,7 @@
 					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{real_path} + "MedicalAssessmentReport_Group_Line.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{real_path} + "/MedicalAssessmentReport_Group_Line.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

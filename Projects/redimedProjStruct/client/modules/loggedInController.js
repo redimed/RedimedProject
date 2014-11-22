@@ -1,7 +1,66 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-.controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q){
+.controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q, ConfigService){
+
+    // DATE
+    $scope.dateOptions = {
+        changeYear: true,
+        changeMonth: true,
+        dateFormat: "dd/mm/yy"
+    };
+
+    // OPTIONS
+    $scope.options = {
+        titles: ConfigService.title_option(),
+        sexes: ConfigService.sex_option(),
+        sms: ConfigService.yes_no_option(),
+        countries: ConfigService.country_option(),
+        gaps: ConfigService.yes_no_option(),
+        acc_types: ConfigService.acc_type_option(),
+        app_types: ConfigService.app_type_option()
+    }
+
+    var loadOptionsApi = function(){
+        ConfigService.account_type_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.account_types = response.list;
+        })
+
+        ConfigService.private_type_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.private_types = response.list;
+        })
+
+        ConfigService.provider_type_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.provider_types = response.list;
+        })
+
+        ConfigService.referral_source_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.referral_types = response.list;
+        })
+
+        ConfigService.marial_status_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.marial_status_types = response.list;
+        })
+
+        ConfigService.culture_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.culture_types = response.list;
+        })
+
+        ConfigService.language_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.language_types = response.list;
+        })
+    }
+
+    loadOptionsApi();
+    // END OPTIONS
+
     var userInfo = null;
     if( typeof $cookieStore.get('userInfo') != 'undefined')
          userInfo = $cookieStore.get('userInfo');

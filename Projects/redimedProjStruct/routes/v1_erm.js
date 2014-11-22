@@ -16,8 +16,10 @@ k_route.setRoute(app, v1_AppointmentController, '/api/erm/v1/appointment/');
 k_route.setRoute(app, v1_InvItemsController, '/api/erm/v1/items/');
 k_route.setRoute(app, v1_UsersController, '/api/erm/v1/users/');
 k_route.setRoute(app, v1_PatientController, '/api/erm/v1/patients/');
+
 k_route.setRoute(app, v1_SystemController, '/api/erm/v1/system/');
 k_route.setRoute(app, v1_InventoryController, '/api/erm/v1/inv/');
+
 k_route.setRoute(app, v1_WAFirstAssessmentController,'/api/erm/v1/wa/workcover/first/');
 k_route.setRoute(app, v1_WAProgressAssessmentController,'/api/erm/v1/wa/workcover/progress/');
 k_route.setRoute(app, v1_WAFinalAssessmentController,'/api/erm/v1/wa/workcover/final/');
@@ -29,7 +31,8 @@ k_route.setRoute(app, v1_Test, '/api/erm/v1/test/');
 
 var v2_ReferralsController = require('./controllers/v2_ReferralsController');
 var v2_CompanyController = require('./controllers/v2_CompanyController');
-
+var v2_InsurerController = require('./controllers/v2_InsurerController');
 
 k_route.setRoute(app, v2_ReferralsController, '/api/erm/v2/referrals/');
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
+k_route.setRoute(app, v2_InsurerController, '/api/erm/v2/insurer/');
