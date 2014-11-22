@@ -58,6 +58,33 @@ var model_sql = {
                 .where('Isenable = ?', 1);
         return query.toString();
     },
+
+    sql_referral_list: function(){
+        var query = squel.select()
+                .from('cln_referral_source')
+                .where('Isenable = ?', 1);
+        return query.toString();
+    },
+
+    sql_marial_status_list: function(){
+        var query = squel.select()
+                .from('sys_marial_status')
+                .where('Isenable = ?', 1);
+        return query.toString();
+    },
+
+    sql_culture_list: function(){
+        var query = squel.select()
+                .from('sys_cultures')
+                .where('Isenable = ?', 1);
+        return query.toString();
+    },
+
+    sql_language_list: function(){
+        var query = squel.select()
+                .from('language');
+        return query.toString();
+    },
     
     sql_get_by_opt: function(search_opt){
         var limit = (search_opt.limit) ? search_opt.limit : 0;
@@ -95,6 +122,80 @@ var model_sql = {
 };
 
 module.exports = {
+    getClaim: function(req, res){
+        var claim_id = req.body.Claim_id;
+        var sql = "SELECT * FROM cln_claims WHERE Claim_id="+claim_id;
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data[0]});
+            });
+        });
+    },
+    editClaim: function(req, res){
+        var claim_id = req.body.Claim_id;
+        delete req.body.Claim_id;
+        delete req.body.Last_update_date;
+
+        var sqlbuilder = squel.update()
+                .table("cln_claims")
+                .set('Last_update_date', 'NOW()', {dontQuote: true})
+                .where('Claim_id = ?', claim_id);
+
+        var data = req.body;
+
+        for (var key in data) {
+            if (data[key] || data[key] === 0 || data[key] === '0')
+                sqlbuilder.set(key, data[key]);
+        }
+
+        var sql = sqlbuilder.toString();
+        
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
+    insertClaim: function(req, res){
+        var created_by = req.body.Created_by;
+
+        delete req.body.Created_by;
+
+        var sqlbuilder = squel.insert()
+                .into("cln_claims")
+                .set('Creation_date', 'NOW()', {dontQuote: true})
+                .set('Created_by', created_by);
+        ;
+
+        var data = req.body;
+
+        for (var key in data) {
+            if (data[key] || data[key] === 0 || data[key] === '0')
+                sqlbuilder.set(key, data[key]);
+        }
+
+        var sql = sqlbuilder.toString();
+        
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: err, sql: sql});
+                    return;
+                }
+                res.json({status: 'success', data: data});
+            });
+        });
+    },
+
     getAll: function(req, res){
         var sql = "SELECT *"
                 +" FROM cln_patients"
@@ -207,6 +308,58 @@ module.exports = {
             if(err) res.json({"status": "FAILED", "image": "none"});
             else
                 res.json({"status":"OK", "image": "http://"+hostname+"/"+return_filename});
+        });
+    },
+    getReferralSource: function(req, res){
+        var sql = model_sql.sql_referral_list();
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error'});
+                    return;
+                }
+                res.json({status: 'success', list: data});
+            });
+        });
+    },
+    getMarialStatus: function(req, res){
+        var sql = model_sql.sql_marial_status_list();
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error'});
+                    return;
+                }
+                res.json({status: 'success', list: data});
+            });
+        });
+    },
+    getCulture: function(req, res){
+        var sql = model_sql.sql_culture_list();
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error'});
+                    return;
+                }
+                res.json({status: 'success', list: data});
+            });
+        });
+    },
+    getLanguage: function(req, res){
+        var sql = model_sql.sql_language_list();
+
+        req.getConnection(function (err, connection) {
+            var query = connection.query(sql, function (err, data) {
+                if (err) {
+                    res.json({status: 'error'});
+                    return;
+                }
+                res.json({status: 'success', list: data});
+            });
         });
     },
     getQualificationList: function(req, res){
@@ -357,7 +510,8 @@ module.exports = {
                 var sqlbuilder = squel.insert()
                         .into("cln_patients")
                         .set('Isenable', 1)
-                        .set('Patient_id', new_id);
+                        .set('Patient_id', new_id)
+						.set('Type', '');
                 ;
                 sqlbuilder.set('Creation_date', 'NOW()', {dontQuote: true});
                 var patient_data = req.body.patient;

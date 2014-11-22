@@ -17,6 +17,7 @@ angular.module("app", [
     "app.loggedIn",             // MODULES LOGGED IN
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
      "app.config", // ANGULAR CONFIG
+    "app.model",    // ANGULAR MODEL
     "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
     "ui.slider", // ANGULAR SLIDER
     "pragmatic-angular", // ANGULAR PRAGMATIC

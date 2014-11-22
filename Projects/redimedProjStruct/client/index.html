@@ -82,8 +82,12 @@
         <!-- END ANGULAR STRAP -->
 	
 	<!-- ANGULAR CONFIG -->
-        <script type="text/javascript" src="common/config/Config.js"></script>
-        <!-- END ANGULAR CONFIG -->
+    <script type="text/javascript" src="common/config/Config.js"></script>
+    <!-- END ANGULAR CONFIG -->
+
+    <!-- ANGULAR MODEL -->
+    <script type="text/javascript" src="common/models/Model.js"></script>
+    <!-- END ANGULAR MODEL -->
 
 	<!-- RESTANGULAR -->
 	<script type="text/javascript" src="vendor/lodash/dist/lodash.compat.min.js"></script>
@@ -201,8 +205,6 @@
     <!-- END ANGULAR X-EDITABLE -->
 
 
-
-
     <script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
     <script src="theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -234,11 +236,10 @@
 
 
 
-        <!-- ===============================================START MODULE====================================================== -->
-        <!-- ANGULAR DIRECTIVES -->
-        <script type="text/javascript" src="common/directives/common.js"></script>
-        <script src="common/directives/mydatatable.js" type="text/javascript"></script>
-        <!-- END ANGULAR DIRECTIVES -->
+    <!-- ===============================================START MODULE====================================================== -->
+    <!-- ANGULAR DIRECTIVES -->
+    <script type="text/javascript" src="common/directives/common.js"></script>
+    <!-- END ANGULAR DIRECTIVES -->
 
     <!-- APPLICATION SYSTEM STRUCTURE -->
     <script type="text/javascript" src="app.js"></script>
@@ -423,6 +424,9 @@
 		<script src="modules/doctor/controllers/DoctorItemsAddController.js" type="text/javascript"></script>
 		<script src="modules/doctor/controllers/DoctorItemsEditController.js" type="text/javascript"></script>
 		<script src="modules/doctor/controllers/DoctorItemsCatController.js" type="text/javascript"></script>
+
+        <script src="modules/doctor/directives/DoctorDirective.js" type="text/javascript"></script>
+        <script src="modules/doctor/directives/DoctorList.js" type="text/javascript"></script>
         <!-- END MODULE DOCTOR -->
 
         <!-- MODULE RECEPTIONIST -->
@@ -441,7 +445,8 @@
         
         <script type="text/javascript" src="modules/patient/directives/PatientDirectives.js"></script>
         <script type="text/javascript" src="modules/patient/directives/PatientDetail.js"></script>
-        <script type="text/javascript" src="modules/patient/directives/MyDataTable.js"></script>
+        <script type="text/javascript" src="modules/patient/directives/PatientClaim.js"></script>
+        <script type="text/javascript" src="modules/patient/directives/PatientOutsideReferral.js"></script>
         
         <script type="text/javascript" src="modules/patient/controllers/PatientController.js"></script>
         <script type="text/javascript" src="modules/patient/controllers/PatientListController.js"></script>
@@ -473,6 +478,9 @@
         <script type="text/javascript" src="modules/certificate/controllers/CertificateHomeController.js"></script>
         <script type="text/javascript" src="modules/certificate/controllers/CertificateReferralController.js"></script>
         <script type="text/javascript" src="modules/certificate/controllers/CertificateScriptsController.js"></script>
+
+        <script type="text/javascript" src="modules/certificate/directives/CertificateDirective.js"></script>
+        <script type="text/javascript" src="modules/certificate/directives/ScriptDirective.js"></script>
         <!--END CERTIFICATE-->
 
         <!-- D3 -->

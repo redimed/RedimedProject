@@ -1,0 +1,81 @@
+<form name="outsideReferralForm" novalidate>
+	<!-- ACTION -->
+	<div class="row" style="margin-bottom: 15px;">
+	    <div class="col-md-2 col-sm-3 col-xs-6">
+	        <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+	            <i class="fa fa-plus"></i>
+	            {{mode.text}}
+	        </button>
+	    </div>
+	</div>
+	<!-- END ACTION -->
+
+	<div class="row">
+		<!-- DATE ISSUED -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field" ng-class="{'has-error': outsideReferralForm.date_issued.$invalid && isSubmit}">
+	            <label for="date_issued">Date Issued</label>
+	            <input ui-date="{dateFormat: 'dd/mm/yy'}" id="date_issued" placeholder="Date Issued" name="date_issued" required ng-model="modelObjectMap.date_issued" float-label>
+	            <!-- ERROR -->
+	            <span ng-show="outsideReferralForm.date_issued.$invalid && isSubmit">
+	                <span class="mdt-popover above" ng-show="outsideReferralForm.date_issued.$error.required">
+	                    Date Issued is required
+	                </span>
+	            </span>
+	            <!-- ERROR -->
+	        </span>
+	    </div>
+	    <!-- END DATE ISSUED -->
+
+	    <!-- DATE STARTED -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field" ng-class="{'has-error': outsideReferralForm.date_started.$invalid && isSubmit}">
+	            <label for="date_started">Date Started</label>
+	            <input ui-date="{dateFormat: 'dd/mm/yy'}" id="date_started" placeholder="Date Started" name="date_started" required ng-model="modelObjectMap.date_started" to-date="expire_date" float-label>
+	            <!-- ERROR -->
+	            <span ng-show="outsideReferralForm.date_started.$invalid && isSubmit">
+	                <span class="mdt-popover above" ng-show="outsideReferralForm.date_started.$error.required">
+	                    Date Started is required
+	                </span>
+	            </span>
+	            <!-- ERROR -->
+	        </span>
+	    </div>
+	    <!-- END DATE STARTED -->
+
+	    <!-- EXPIRE DATE -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field">
+	            <label for="expire_date">Expire Date</label>
+	            <input ui-date="{dateFormat: 'dd/mm/yy'}" id="expire_date" placeholder="Expire Date" name="expire_date" 
+	            	ng-model="modelObjectMap.expire_date" from-date="date_started" float-label>
+	        </span>
+	    </div>
+	    <!-- END EXPIRE DATE -->
+
+	    <div class="break-row"></div>
+
+	    <!-- DURATION -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field" ng-class="{'has-error': outsideReferralForm.duration.$invalid && isSubmit}">
+	            <label for="duration">Duration</label>
+	            <input type="number" placeholder="Duration" name="duration" 
+	                ng-model="modelObjectMap.duration" min="0"
+	                class="form-control" id="duration" float-label>
+	            <!-- ERROR -->
+	            <span ng-show="outsideReferralForm.duration.$invalid && isSubmit">
+	                <span class="mdt-popover above" ng-show="outsideReferralForm.duration.$error.number">
+	                    Duration must be number
+	                </span>
+	                <span class="mdt-popover above" ng-show="outsideReferralForm.duration.$error.min">
+	                    Duration must be large than zero
+	                </span>
+	            </span>
+	            <!-- ERROR -->
+	        </span>
+	    </div>
+	    <!-- END DURATION -->
+
+	</div>
+
+</form>

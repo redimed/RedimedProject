@@ -51,7 +51,12 @@ app.get('/api/patient/totals', ClientController.getTotals);
 app.get('/api/patient/list_account_type', ClientController.getAccountTypeList);
 app.get('/api/erm/patient/list_account_type', ClientController.getAccountTypeList);
 app.get('/api/patient/list_private_fund', ClientController.getPrivateFundList);
+app.get('/api/erm/patient/list_private_fund', ClientController.getPrivateFundList);
 app.get('/api/erm/patient/list_provider_type', ClientController.getProviderTypeList);
+app.get('/api/erm/patient/list_referral_source', ClientController.getReferralSource);
+app.get('/api/erm/patient/list_marial_status', ClientController.getMarialStatus);
+app.get('/api/erm/patient/list_culture', ClientController.getCulture);
+app.get('/api/erm/patient/list_language', ClientController.getLanguage);
 app.get('/api/erm/patient/qualification', ClientController.getQualificationList);
 app.post('/api/patient/insert', ClientController.insert);
 app.post('/api/patient/update', ClientController.update);
@@ -62,6 +67,12 @@ app.get('/api/patient/tesst', ClientController.test);
 
 
 /* END KHANH RESPONSIBILITY */
+
+// VUONG
+app.post('/api/patient/getClaim', ClientController.getClaim);
+app.post('/api/patient/insertClaim', ClientController.insertClaim);
+app.post('/api/patient/editClaim', ClientController.editClaim);
+// END VUONG
 
 // COMPANY
  app.post('/api/erm/company/getDetail', CompanyController.getDetail);
@@ -82,6 +93,7 @@ app.post("/api/v1/skinapp/patient/image", ClientController.getSkinAppImage);
 app.post("/api/v1/skinapp/patient/add", ClientController.addSkinApp);
 app.post("/api/v1/skinapp/patient/getFields", ClientController.getFields);
 app.post("/api/v1/skinapp/patient/update", ClientController.updateSkinApp);
+
 
 /**
  *  KHANK CONVERTOR

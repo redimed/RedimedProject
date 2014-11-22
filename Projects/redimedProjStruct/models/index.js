@@ -4,7 +4,7 @@ var fs = require('fs'),
     useTransaction = require('sequelize-transactions');
     lodash = require('lodash'),
     config = require('config'),
-    sequelize = new Sequelize('sakila', 'root', 'root', {
+    sequelize = new Sequelize('sakila', 'root', '', {
         host: 'localhost',
         port: 3306,
         maxConcurrentQueries: 100,

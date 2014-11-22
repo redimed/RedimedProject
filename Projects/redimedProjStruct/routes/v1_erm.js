@@ -16,8 +16,10 @@ k_route.setRoute(app, v1_AppointmentController, '/api/erm/v1/appointment/');
 k_route.setRoute(app, v1_InvItemsController, '/api/erm/v1/items/');
 k_route.setRoute(app, v1_UsersController, '/api/erm/v1/users/');
 k_route.setRoute(app, v1_PatientController, '/api/erm/v1/patients/');
+
 k_route.setRoute(app, v1_SystemController, '/api/erm/v1/system/');
 k_route.setRoute(app, v1_InventoryController, '/api/erm/v1/inv/');
+
 k_route.setRoute(app, v1_WAFirstAssessmentController,'/api/erm/v1/wa/workcover/first/');
 k_route.setRoute(app, v1_WAProgressAssessmentController,'/api/erm/v1/wa/workcover/progress/');
 k_route.setRoute(app, v1_WAFinalAssessmentController,'/api/erm/v1/wa/workcover/final/');
