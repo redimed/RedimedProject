@@ -136,10 +136,5 @@ module.exports = {
         }
 
         return year+"-"+month+"-"+date;
-    },
-	printReportPDF: function(reportId,patientId,reportName){
-
-
-
-	}
+    }
 };

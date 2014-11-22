@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Audiogram_report_WA" language="groovy" pageWidth="598" pageHeight="1075" columnWidth="558" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8d269830-c96a-4f26-930c-c81dd460147e">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.2396694214876032"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="302"/>
+	<property name="ireport.y" value="1626"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -40,7 +42,7 @@
 	<parameter name="real_path" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="result_image" class="java.lang.Object" isForPrompting="false"/>
+	<parameter name="result_image" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT
      cln_sa_df_headers.`patient_id` AS cln_sa_df_headers_patient_id,
@@ -49,15 +51,16 @@
      cln_sa_df_headers.`SA_NAME` AS cln_sa_df_headers_SA_NAME,
      cln_sa_df_headers.`test_date` AS cln_sa_df_headers_test_date,
      cln_sa_df_headers.`tester` AS cln_sa_df_headers_tester,
+     SUBSTRING_INDEX(cln_sa_df_headers.`Signature`,',',-1) AS Signature,
      cln_patients.`Patient_id` AS cln_patients_Patient_id,
-   	concat(ifnull(cln_patients.`First_name` ,' ') ,
-	ifnull(cln_patients.`Sur_name` 	 ,' ') ,
-	ifnull(cln_patients.`Middle_name` ,' ')) AS cln_patient_name,
- 	e.`ENTITY_NAME` as entity_name,
+   	CONCAT(IFNULL(cln_patients.`First_name` ,' ') ,
+	IFNULL(cln_patients.`Sur_name` 	 ,' ') ,
+	IFNULL(cln_patients.`Middle_name` ,' ')) AS cln_patient_name,
+ 	e.`Company_name` AS entity_name,
 	r.site_addr , cln_sa_df_headers.recipient_name , d.Name
-from
-     `cln_sa_df_headers` cln_sa_df_headers INNER JOIN `cln_patients` cln_patients ON cln_sa_df_headers.`patient_id` = cln_patients.`Patient_id`  left join `entity_patient` e on `cln_patients`.`Patient_id` = e.`Patient_id`
-left join redimedsites r on r.id = cln_sa_df_headers.cal_id inner join doctors d on d.doctor_id = cln_sa_df_headers.doctor_id
+FROM
+     `cln_sa_df_headers` cln_sa_df_headers INNER JOIN `cln_patients` cln_patients ON cln_sa_df_headers.`patient_id` = cln_patients.`Patient_id`  LEFT JOIN `companies` e ON `cln_patients`.`company_id` = e.`id`
+LEFT JOIN redimedsites r ON r.id = cln_sa_df_headers.cal_id INNER JOIN doctors d ON d.doctor_id = cln_sa_df_headers.doctor_id
 WHERE
      cln_sa_df_headers.patient_id = $P{patient_id} AND cln_sa_df_headers.SA_ID = $P{sa_id} AND
      cln_sa_df_headers.CAL_ID = $P{cal_id}]]>
@@ -68,11 +71,12 @@ WHERE
 	<field name="cln_sa_df_headers_SA_NAME" class="java.lang.String"/>
 	<field name="cln_sa_df_headers_test_date" class="java.sql.Timestamp"/>
 	<field name="cln_sa_df_headers_tester" class="java.lang.String"/>
-	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
-	<field name="cln_patient_name" class="java.lang.String"/>
-	<field name="entity_name" class="java.lang.String">
+	<field name="Signature" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
+	<field name="cln_patient_name" class="java.lang.String"/>
+	<field name="entity_name" class="java.lang.String"/>
 	<field name="site_addr" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -149,6 +153,10 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_test_date}]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="40" y="333" width="269" height="60" uuid="369a5e3c-0863-4a72-99f6-4531f01fcfe7"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
 		</band>
 		<band height="869" splitType="Stretch">
 			<rectangle radius="10">
@@ -268,7 +276,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="0" y="274" width="558" height="384" uuid="4bfb84f8-a640-4574-b84e-93ecc7d5c6ba"/>
-				<imageExpression><![CDATA[$P{result_image}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($P{result_image}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 		</band>
 	</detail>

@@ -2,6 +2,7 @@
  * Created by thanh on 10/8/2014.
  */
 var db = require('../../models');
+var fs = require('fs');
 
 var mkdirp = require('mkdirp');
 var java = require('java');
@@ -20,6 +21,7 @@ java.classpath.push('./lib/org-apache-commons-codec.jar');
 
 
 //var ImageIO = java.import('javax.imageio.ImageIO');
+var BufferedImage = java.import('java.awt.image.BufferedImage');
 var HashMap = java.import('java.util.HashMap');
 var JRException = java.import('net.sf.jasperreports.engine.JRException');
 var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
@@ -33,7 +35,7 @@ var FileInputStream = java.import('java.io.FileInputStream');
 module.exports = {
     printReport : function(req,res,next){
         var calId = req.params.calId;
-        var catId = req.params.catId;
+        var id = req.params.id;
         var patientId = req.params.patientId;
 
         mkdirp('.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId, function (err) {
@@ -46,12 +48,13 @@ module.exports = {
 
                 paramMap.putSync("cal_id",parseInt(calId));
                 paramMap.putSync("patient_id",parseInt(patientId));
-                paramMap.putSync("key",parseInt(catId));
-                paramMap.putSync("real_path","./reports/CAT2");
+                paramMap.putSync("sa_id",parseInt(id));
+                paramMap.putSync("real_path","./reports/SACln/");
+                paramMap.putSync("result_image",base64Image("./reports/SACln/images/Redimed.png"));
 
-                var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\category_2.pdf';
+                var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\Audiogram_1.pdf';
 
-                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager','fillReport','./reports/CAT2/category_2.jasper',paramMap,con);
+                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager','fillReport','./reports/SACln/Government.jasper',paramMap,con);
 
                 java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager','exportReportToPdfFile',jPrint,filePath,function(err,rs){
                     if(err)
@@ -62,7 +65,7 @@ module.exports = {
                     else
                     {
 
-                        res.download(filePath,'category_2.pdf',function(err){
+                        res.download(filePath,'Audiogram_1.pdf',function(err){
                             if(err)
                             {
                                 console.log(err);
@@ -284,3 +287,8 @@ module.exports = {
         })
     }
 };
+
+function base64Image(src) {
+    var data = fs.readFileSync(src).toString("base64");
+    return data;
+}
