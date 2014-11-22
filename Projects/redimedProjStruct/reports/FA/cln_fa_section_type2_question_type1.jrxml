@@ -130,9 +130,9 @@ WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR 
 	<group name="LINE_GROUP">
 		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="30">
+			<band height="24">
 				<textField>
-					<reportElement x="0" y="10" width="555" height="20" uuid="26abdc99-e002-48b6-baf8-ac05d6643bae"/>
+					<reportElement x="0" y="4" width="555" height="20" uuid="26abdc99-e002-48b6-baf8-ac05d6643bae"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>

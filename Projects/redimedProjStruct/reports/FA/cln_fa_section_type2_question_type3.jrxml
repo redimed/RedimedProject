@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_type2_question_type3" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="86b2345e-e67a-4c34-8bbb-fe5fceb51e7b">
 	<property name="ireport.zoom" value="1.3310000000000015"/>
-	<property name="ireport.x" value="2"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -75,16 +75,16 @@ WHERE 	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 	<group name="LINE_GROUP">
 		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="45">
+			<band height="42">
 				<textField isBlankWhenNull="true">
-					<reportElement x="0" y="10" width="477" height="20" uuid="c7200374-1bb4-408a-a190-09deb8ce48d7"/>
+					<reportElement x="0" y="6" width="477" height="20" uuid="c7200374-1bb4-408a-a190-09deb8ce48d7"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="30" width="134" height="15" uuid="74f8bfce-cc36-4e47-b83e-51a2348016a2"/>
+					<reportElement x="0" y="27" width="134" height="15" uuid="74f8bfce-cc36-4e47-b83e-51a2348016a2"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -99,7 +99,7 @@ WHERE 	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 					<text><![CDATA[Test]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="134" y="30" width="213" height="15" uuid="cad8991a-a716-43d8-81c4-8b5074e2688d"/>
+					<reportElement x="134" y="27" width="213" height="15" uuid="cad8991a-a716-43d8-81c4-8b5074e2688d"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -114,7 +114,7 @@ WHERE 	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 					<text><![CDATA[Result]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="347" y="30" width="130" height="15" uuid="2d8b0cc7-f05f-4d76-8b75-6a2c9941247f"/>
+					<reportElement x="347" y="27" width="130" height="15" uuid="2d8b0cc7-f05f-4d76-8b75-6a2c9941247f"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -154,7 +154,7 @@ WHERE 	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 					<reportElement x="10" y="23" width="13" height="13" isRemoveLineWhenBlank="true" uuid="f4008364-b6b4-4bff-b8eb-b0ce9dd77226">
 						<printWhenExpression><![CDATA[$F{VAL2_ISCHECKBOX}!=null && $F{VAL2_ISCHECKBOX}==1]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VAL2_CHECKBOX}!=null && $F{VAL2_CHECKBOX}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+					<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VAL2_CHECKBOX}!=null && $F{VAL2_CHECKBOX}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 				</image>
 				<textField isBlankWhenNull="true">
 					<reportElement x="25" y="21" width="177" height="15" isRemoveLineWhenBlank="true" uuid="e9d6b767-1e4f-469e-b9d1-7a47c279e8d4">
@@ -172,17 +172,17 @@ WHERE 	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 				</staticText>
 				<ellipse>
 					<reportElement mode="Transparent" x="8" y="2" width="55" height="18" uuid="c33ec2b7-6e6e-4cab-bfa4-b3106ea12a27">
-						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "UNABLE" )]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "0" )]]></printWhenExpression>
 					</reportElement>
 				</ellipse>
 				<ellipse>
 					<reportElement mode="Transparent" x="65" y="2" width="55" height="18" uuid="551e5e89-f34c-4f5d-8b93-097e7520aa4d">
-						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "PARTIAL" )]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "1" )]]></printWhenExpression>
 					</reportElement>
 				</ellipse>
 				<ellipse>
 					<reportElement mode="Transparent" x="121" y="3" width="41" height="15" uuid="2df97b6d-e818-49ea-8824-6f70fd87f189">
-						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "ABLE" )]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "2" )]]></printWhenExpression>
 					</reportElement>
 				</ellipse>
 			</frame>
