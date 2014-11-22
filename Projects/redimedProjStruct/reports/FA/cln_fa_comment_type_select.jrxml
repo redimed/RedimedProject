@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_comment_type_select" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dc9b09be-43e1-466a-8e8f-325134f1dc8b">
 	<property name="ireport.zoom" value="1.464100000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="7"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -80,7 +80,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</textField>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="2" width="13" height="13" uuid="ce7ad42a-b9d7-4d03-b7fa-fee0bab29da1"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 		</band>
 		<band height="29">
@@ -102,15 +102,15 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="15" width="13" height="13" uuid="7b1cfaf0-4a08-4851-b043-e638b2b03bf7"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "UNABLE" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "0" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="71" y="15" width="13" height="13" uuid="5cae94e8-1c63-4941-986d-5b615739d24a"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "PARTIAL" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="142" y="15" width="13" height="13" uuid="b484e9b6-ced9-47d9-911c-25281ff7649d"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "ABLE" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "2" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="220" height="15" isRemoveLineWhenBlank="true" uuid="aa3032af-fda3-44e8-9c18-012fa89cc0ef"/>
@@ -132,7 +132,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="15" width="13" height="13" uuid="8b147672-b775-4f32-a11a-b6c8935b0f28"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "0" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="76" y="14" width="23" height="15" uuid="fb1db1f7-9193-494d-bbcf-c6798c080199"/>
@@ -141,7 +141,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="57" y="15" width="13" height="13" uuid="2bfbc04c-f5d2-4bb4-9c02-2ec7ad745bd2"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "NO" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 		</band>
 		<band height="29">
@@ -153,7 +153,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</textField>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="5" y="15" width="13" height="13" uuid="af802e45-1816-4c33-bb88-e21501131bc4"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "GOOD" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "0" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="19" y="14" width="38" height="15" uuid="d767381c-d1c7-4dad-85eb-4171398ea701"/>
@@ -162,7 +162,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="66" y="15" width="13" height="13" uuid="b7d36469-3558-4ba5-901d-447a8bc717e1"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "AVERAGE" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="84" y="14" width="58" height="15" uuid="fe5a72c0-1b7c-4d6d-845f-f1cfb6cefd5f"/>
@@ -176,14 +176,14 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="151" y="15" width="13" height="13" uuid="da81a855-6c6a-42d2-aa8f-680dc543670c"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "POOR" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "2" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 		</band>
 		<band height="29">
 			<printWhenExpression><![CDATA[$F{Comment_Type}!=null && $F{Comment_Type}==5]]></printWhenExpression>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="15" width="13" height="13" uuid="9f15b199-e20a-4c07-8599-8d5bc1d60ff3"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "MINIMAL" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "0" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="220" height="15" isRemoveLineWhenBlank="true" uuid="a8107b94-5bdf-49b0-9e8a-6d56d1875df8"/>
@@ -192,7 +192,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</textField>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="71" y="15" width="13" height="13" uuid="83fd72f4-f811-4eb2-9d56-7b804d8f159d"/>
-				<imageExpression><![CDATA[$P{DIR_PATH} +( $F{VALUE}!=null && $F{VALUE}.equals( "MODERATE" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH} +( $F{VALUE}!=null && $F{VALUE}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="88" y="14" width="58" height="15" uuid="7d9aa802-9f03-4543-9b69-581a0d946f61"/>
@@ -206,7 +206,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="155" y="15" width="13" height="13" uuid="1f102fdb-eb93-4c88-b3a3-fac091442d85"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "MAXIMAL" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "2" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="18" y="14" width="44" height="15" uuid="0778aec7-806f-4b3d-b5d5-2c440b7f96f3"/>
@@ -223,7 +223,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="1" y="32" width="13" height="13" uuid="d9e74b7e-73f5-42ae-89b6-9c4d1d90bc1a"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "WITHIN" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="220" height="15" isRemoveLineWhenBlank="true" uuid="c78108df-4062-4e25-ab30-76e9d5d6f4cd"/>
@@ -237,7 +237,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="1" y="16" width="13" height="13" uuid="f266b587-04ed-4b39-874a-d68bac63d125"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "ABOVE" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VALUE}!=null && $F{VALUE}.equals( "0" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="18" y="14" width="202" height="15" uuid="763b2a3c-e7d7-44a1-b156-4b62adfc44df"/>
@@ -246,7 +246,7 @@ WHERE 	h.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="1" y="48" width="13" height="13" uuid="7c558d2a-1241-4fb3-a702-b0c7efde41b8"/>
-				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "BELOW" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+( $F{VALUE}!=null && $F{VALUE}.equals( "2" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 		</band>
 	</detail>

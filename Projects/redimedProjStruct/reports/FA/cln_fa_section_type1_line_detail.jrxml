@@ -152,7 +152,7 @@ WHERE 	detail.`PATIENT_ID`=$P{PATIENT_ID_LINE_DETAIL_PARAM}
 				<reportElement x="173" y="6" width="13" height="13" uuid="0124592f-8add-43fd-8681-73c577d8d548">
 					<printWhenExpression><![CDATA[$F{VAL1_ISCHECKBOX}!=null && $F{VAL1_ISCHECKBOX}==1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+ ( $F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="142" y="2" width="25" height="20" uuid="e73b7baf-e9cf-44e4-ab31-bd7386499255">
@@ -172,7 +172,7 @@ WHERE 	detail.`PATIENT_ID`=$P{PATIENT_ID_LINE_DETAIL_PARAM}
 				<reportElement x="243" y="6" width="13" height="13" uuid="fd3b7a8c-9a9d-4e8b-bb3e-dd169cc35e04">
 					<printWhenExpression><![CDATA[$F{VAL2_ISCHECKBOX}!=null && $F{VAL2_ISCHECKBOX}==1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{DIR_PATH}+($F{VAL2_CHECKBOX}!=null && $F{VAL2_CHECKBOX}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+($F{VAL2_CHECKBOX}!=null && $F{VAL2_CHECKBOX}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="280" y="0" width="140" height="22" isPrintWhenDetailOverflows="true" uuid="9e8f2e3a-2240-41d5-a229-50efca0d4454"/>

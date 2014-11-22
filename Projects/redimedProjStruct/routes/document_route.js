@@ -134,6 +134,8 @@ app.get('/api/document/printMRS/:patientId/:calId/:id', MRSController.printRepor
 app.post('/api/document/loadSA1', SA1Controller.loadSA1);
 app.post('/api/document/insertSA1', SA1Controller.insertSA1);
 app.post('/api/document/editSA1', SA1Controller.editSA1);
+app.get('/api/document/printSA1/:patientId/:calId/:id', SA1Controller.printReport);
+
 /**
  * end audiogram 1
  */

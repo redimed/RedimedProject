@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_type2_question_type4" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8246d576-b96c-4250-ba46-459fba2ad31a">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="87"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="CAL_ID_PARAM" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -54,9 +54,9 @@ where 	line.`ISENABLE`=1
 	<group name="LINE_GROUP">
 		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="45">
+			<band height="40">
 				<staticText>
-					<reportElement x="49" y="30" width="81" height="15" uuid="070aea8e-5617-4539-9dfe-3f6810674baf"/>
+					<reportElement x="49" y="25" width="81" height="15" uuid="070aea8e-5617-4539-9dfe-3f6810674baf"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -70,7 +70,7 @@ where 	line.`ISENABLE`=1
 					<text><![CDATA[WEIGHT]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="30" width="49" height="15" uuid="0283137a-570e-4b5d-b904-c540fca2b1c1"/>
+					<reportElement x="0" y="25" width="49" height="15" uuid="0283137a-570e-4b5d-b904-c540fca2b1c1"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -84,7 +84,7 @@ where 	line.`ISENABLE`=1
 					<text><![CDATA[REP]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="130" y="30" width="100" height="15" uuid="ff022afe-9a7b-4715-bb3c-7bfe907edc09"/>
+					<reportElement x="130" y="25" width="100" height="15" uuid="ff022afe-9a7b-4715-bb3c-7bfe907edc09"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -98,7 +98,7 @@ where 	line.`ISENABLE`=1
 					<text><![CDATA[PAIN/LOCATION]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="230" y="30" width="68" height="15" uuid="387e9cdc-c4f6-48fb-b6fe-494f1e3cf63a"/>
+					<reportElement x="230" y="25" width="68" height="15" uuid="387e9cdc-c4f6-48fb-b6fe-494f1e3cf63a"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -112,7 +112,7 @@ where 	line.`ISENABLE`=1
 					<text><![CDATA[RATING]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="298" y="30" width="257" height="15" uuid="b30f64c5-d593-483d-b83f-1b45fb5fbb39"/>
+					<reportElement x="298" y="25" width="257" height="15" uuid="b30f64c5-d593-483d-b83f-1b45fb5fbb39"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25"/>
@@ -126,7 +126,7 @@ where 	line.`ISENABLE`=1
 					<text><![CDATA[COMMENTS FOLLOWING FEEDBACK]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="0" y="10" width="555" height="20" uuid="26f59770-6935-42d0-9e41-36454131001b"/>
+					<reportElement x="0" y="4" width="555" height="20" uuid="26f59770-6935-42d0-9e41-36454131001b"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>

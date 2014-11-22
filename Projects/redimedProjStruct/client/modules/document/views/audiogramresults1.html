@@ -6,10 +6,10 @@
                     ng-disabled="SA1.$error.pattern || SA1.$error.maxlength || !infoChanged()"
                     ng-click="submit(SA1)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
-            <button type="button"
+            <a href="/api/document/printSA1/{{info.patient_id}}/{{info.CAL_ID}}/{{info.headers[0].SA_ID}}" target="_self"
                     ng-disabled="SA1.$error.pattern || SA1.$error.maxlength"
                     ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
-            </button>
+            </a>
             <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>

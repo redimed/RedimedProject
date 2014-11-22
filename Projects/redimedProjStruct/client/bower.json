@@ -48,7 +48,8 @@
     "ng-table": "~0.3.3",
     "angular-fcsa-number": "~1.5.3",
     "angular-xeditable": "~0.1.8",
-    "ui-iconpicker": "~0.1.4"
+    "ui-iconpicker": "~0.1.4",
+    "ng-pdfviewer": "~0.2.1"
   },
   "resolutions": {
     "angular": "1.2.25",
