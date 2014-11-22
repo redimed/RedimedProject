@@ -1,4 +1,6 @@
-angular.module("app.directive.common", [])
+angular.module("app.directive.common", [
+    "app.directive.common.mydatatable"
+])
 
 .filter('offset', function () {
     return function (input, start) {
@@ -617,5 +619,17 @@ angular.module("app.directive.common", [])
                 date.getUTCSeconds());
         };
 
-})
-
+    })
+    .directive('ngEnter', function () {
+        return function (scope, element, attrs) {
+//            console.log(attrs)
+            element.bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                    scope.$apply(function (){
+                        scope.$eval(attrs.ngEnter);
+                    });
+                    event.preventDefault();
+                }
+            });
+        };
+    })

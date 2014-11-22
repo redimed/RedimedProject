@@ -58,12 +58,11 @@
     <script src="theme/assets/global/plugins/angular/angular-cookies.min.js"></script>
     <script src="theme/assets/global/plugins/angular/angular-filter.min.js"></script>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-shim.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-sham.min.js"></script>
-    <script src="theme/assets/global/plugins/angular/angular-file-upload.min.js"></script>
-    <script src="theme/assets/global/plugins/angular/angular-mailto.js"></script>
-    <!---------------------->
-	<!-- END ANGULAR -->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-shim.min.js"></script>
+        <script src="theme/assets/global/plugins/angular/angular-file-upload.min.js"></script>
+        <script src="theme/assets/global/plugins/angular/angular-mailto.js"></script>
+        <!---------------------->
+        <!-- END ANGULAR -->
 
 	<!-- UNIFORM PLUGINS -->
 	<script type="text/javascript" src="theme/assets/global/plugins/uniform/jquery.uniform.min.js"></script>
@@ -235,10 +234,11 @@
 
 
 
-    <!-- ===============================================START MODULE====================================================== -->
-    <!-- ANGULAR DIRECTIVES -->
-    <script type="text/javascript" src="common/directives/common.js"></script>
-    <!-- END ANGULAR DIRECTIVES -->
+        <!-- ===============================================START MODULE====================================================== -->
+        <!-- ANGULAR DIRECTIVES -->
+        <script type="text/javascript" src="common/directives/common.js"></script>
+        <script src="common/directives/mydatatable.js" type="text/javascript"></script>
+        <!-- END ANGULAR DIRECTIVES -->
 
     <!-- APPLICATION SYSTEM STRUCTURE -->
     <script type="text/javascript" src="app.js"></script>
@@ -388,10 +388,18 @@
         <script type="text/javascript" src="modules/company/Company.js"></script>
         <script type="text/javascript" src="modules/company/services/CompanyServices.js"></script>
         <script type="text/javascript" src="modules/company/controllers/CompanyController.js"></script>
+        <script src="modules/company/controllers/CompanyListController.js" type="text/javascript"></script>
         <script type="text/javascript" src="modules/company/controllers/CompanyHomeController.js"></script>
         <script type="text/javascript" src="modules/company/controllers/CompanyServiceController.js"></script>
         <!-- END MODULE COMPANY -->
-
+        
+        <!-- MODULE INSURER -->
+        <script src="modules/insurer/Insurer.js" type="text/javascript"></script>
+        <script src="modules/insurer/services/InsurerServices.js" type="text/javascript"></script>
+        <script src="modules/insurer/controllers/InsurerController.js" type="text/javascript"></script>
+        <script src="modules/insurer/controllers/InsurerListController.js" type="text/javascript"></script>
+        <!-- END MODULE INSURER -->
+        
         <!-- MODULE DOCTOR -->
         <script type="text/javascript" src="modules/doctor/Doctor.js"></script>
         <script type="text/javascript" src="modules/doctor/services/DoctorServices.js"></script>

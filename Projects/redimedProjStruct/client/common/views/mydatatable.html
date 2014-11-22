@@ -1,0 +1,41 @@
+<div>
+    <div class="pull-left">
+        <pagination boundary-links="true" total-items="page_data.totalItems" ng-model="page_data.currentPage" 
+                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
+                    items-per-page="page_data.itemPerPage" max-size="page_data.maxSize" ng-change="setPage()"></pagination>
+    </div>
+    <div class="pull-right">
+        <strong>Total Items</strong> : {{page_data.totalItems}} - 
+        <strong>Item per page</strong> :
+        <select ng-model="page_data.itemPerPage" ng-options="item.value as item.value for item in limit_opt" 
+                ng-change="ajaxGetData()">
+        </select>
+    </div>
+    <div class="clearfix"></div>
+
+
+    <table class="table table-strip table-hover">
+        <thead>
+            <tr>
+                <th ng-show="options.show_index">#</th>
+                <th ng-repeat="col in options.columns" ng-hide="col.is_hide" width="{{col.width}}">{{col.label || col.field }}</th>
+            </tr>
+            <!-- SEARCH -->
+            <tr ng-show="options.use_filters">
+                <td ng-show="options.show_index">Search</td>
+                <td ng-repeat="col in options.columns" ng-init="field = options.filters[col.field]" ng-hide="col.is_hide">
+                    <input ng-if="field.type == 'text'" ng-model="search[col.field]" ng-enter="ajaxGetData()" type="text" placeholder="{{col.label || col.field}}" class="form-control input-sm" />
+                    <input ng-if="field.type == 'number'" ng-model="search[col.field]" ng-change="ajaxGetData()" type="number" placeholder="{{col.label || col.field}}"  class="form-control input-sm" />
+                    <select ng-if="field.type == 'dropdown'" ng-model="search[col.field]" ng-change="ajaxGetData()" ng-options="item.code as item.label for item in field.values" class="form-control input-sm" ></select>
+                </td>
+            </tr>
+             <!-- END SEARCH -->
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in data.items" ng-click="row_click(item)">
+                <td ng-show="options.show_index">{{$index + 1}}</td>
+                <td ng-repeat="col in options.columns" ng-hide="col.is_hide">{{item[col.field]}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

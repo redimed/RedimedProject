@@ -1,0 +1,6 @@
+Exec SQL (Sat Nov 22 2014 14:31:24 GMT+0700 (SE Asia Standard Time)): UPDATE cln_insurers SET suburb = 'ZZZZ' WHERE id = 1
+Exec SQL (Sat Nov 22 2014 14:31:25 GMT+0700 (SE Asia Standard Time)): INSERT INTO cln_insurers(id, insurer_name) VALUES (5, 'CAI NAY  NE')
+Exec SQL (Sat Nov 22 2014 14:42:51 GMT+0700 (SE Asia Standard Time)): SELECT id, Company_name, Industry, Addr, State, Country FROM companies LIMIT 10
+Exec SQL (Sat Nov 22 2014 14:42:51 GMT+0700 (SE Asia Standard Time)): SELECT COUNT(1) AS "count" FROM companies
+Exec SQL (Sat Nov 22 2014 14:42:55 GMT+0700 (SE Asia Standard Time)): SELECT id, Company_name, Industry, Addr, State, Country FROM companies LIMIT 10
+Exec SQL (Sat Nov 22 2014 14:42:55 GMT+0700 (SE Asia Standard Time)): SELECT COUNT(1) AS "count" FROM companies
