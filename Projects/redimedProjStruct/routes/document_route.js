@@ -40,6 +40,7 @@ app.post('/api/document/loadFA', FAController.loadFA);
 app.post('/api/document/insertFA',FAController.insertFA);
 app.post('/api/document/checkFA',FAController.checkFA);
 app.post('/api/document/checkRating',FAController.checkRating);
+app.get('/api/document/FA/print-report/:cal_id/:patient_id/:key',FAController.printReport);
 //end
 
 // Begin Medical Assessment

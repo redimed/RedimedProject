@@ -2,7 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_header_type_summary" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="47c8ab37-63f7-4d5f-a033-36f560eba008">
 	<property name="ireport.zoom" value="1.3310000000000024"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="161"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="CAL_ID_PARAM" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -17,7 +19,7 @@
 	</parameter>
 	<parameter name="DIR_PATH" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT 	DISTINCT header.*,line.`LINE_ID`
+		<![CDATA[SELECT 	DISTINCT header.*,line.`LINE_ID`, SUBSTRING_INDEX(header.`ASSESSED_SIGN`, ',', -1) AS  'ASSESSED_SIGN_1'
 FROM 	`cln_fa_df_headers` header INNER JOIN `cln_fa_df_sections` section ON header.`FA_ID`=section.`FA_ID` AND header.`PATIENT_ID`=section.`PATIENT_ID` AND header.`CAL_ID`=section.`CAL_ID`
 	INNER JOIN `cln_fa_df_lines` line ON section.`SECTION_ID`=line.`SECTION_ID` AND section.`PATIENT_ID`=line.`PATIENT_ID` AND section.`CAL_ID`=line.`CAL_ID`
 WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
@@ -93,7 +95,7 @@ WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
 	<field name="ASSESSED_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ASSESSED_SIGN" class="java.lang.Object">
+	<field name="ASSESSED_SIGN" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="ASSESSED_DATE" class="java.sql.Timestamp">
@@ -102,9 +104,13 @@ WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
 	<field name="ASSESSED_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="ITEM_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="LINE_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="ASSESSED_SIGN_1" class="java.lang.String"/>
 	<group name="HEADER_SUMMARY_GROUP">
 		<groupExpression><![CDATA[$F{FA_ID}]]></groupExpression>
 		<groupHeader>
@@ -354,7 +360,7 @@ WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
 				</textField>
 				<image vAlign="Bottom">
 					<reportElement positionType="Float" x="263" y="193" width="100" height="37" uuid="2f6de339-899a-4c29-8aa7-0e958c3318f1"/>
-					<imageExpression><![CDATA[$F{ASSESSED_SIGN}]]></imageExpression>
+					<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{ASSESSED_SIGN_1}.getBytes("UTF-8"))))]]></imageExpression>
 				</image>
 			</band>
 		</groupFooter>
