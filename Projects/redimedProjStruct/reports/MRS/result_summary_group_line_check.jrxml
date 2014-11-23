@@ -118,13 +118,13 @@ and mrs_group_id = $P{group_id} and patient_id = $P{patient_id}  order by ORD]]>
 					<reportElement x="112" y="12" width="18" height="18" uuid="47b0d6b9-0f40-4ef3-a852-b8390fa8772f">
 						<printWhenExpression><![CDATA[$F{QUEST_VALUE}.equals("1")]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/checked.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 				</image>
 				<image>
 					<reportElement x="112" y="12" width="18" height="18" uuid="d254fa97-4164-40ac-bd6f-13cf40be9a56">
 						<printWhenExpression><![CDATA[!$F{QUEST_VALUE}.equals("1")]]></printWhenExpression>
 					</reportElement>
-					<imageExpression><![CDATA[$P{real_path}+"images/uncheck.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{real_path}+"/images/uncheck.png"]]></imageExpression>
 				</image>
 			</frame>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">

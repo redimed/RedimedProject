@@ -55,6 +55,7 @@ app.post('/api/document/newIDS', IDSController.newIDS);
 app.post('/api/document/loadIDS', IDSController.loadIDS);
 app.post('/api/document/insertIDS',IDSController.insertIDS);
 app.post('/api/document/checkIDS',IDSController.checkIDS);
+app.get('/api/document/printIDS/:patientId/:calId/:id', IDSController.printReport);
 // end
 
 // Begin User Question

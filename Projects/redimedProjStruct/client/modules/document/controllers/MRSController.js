@@ -32,11 +32,20 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 tempSignature = $scope.info.practitionSign;
             }
             //end signature
+
+            $scope.apptInfo = localStorageService.get('tempAppt');
+            $scope.patientInfo = localStorageService.get('tempPatient');
+            var doctorInfo = $cookieStore.get('doctorInfo');
+            var Patient_ID = $scope.patientInfo.Patient_id;
+            var CalID = $scope.apptInfo.CAL_ID;
+            var sex = $scope.patientInfo.Sex;
+
             $scope.info = {
-                PATIENT_ID: $stateParams.PatientID,
-                CAL_ID: $stateParams.CalID
+                PATIENT_ID: Patient_ID,
+                CAL_ID: CalID
             };
-            $scope.info.headers = [];
+
+
             /**
              * exist cookies
              */
@@ -56,10 +65,13 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 /**
                  * load data to input
                  */
-                var PATIENT_ID = $stateParams.PatientID;
-                var CAL_ID = $stateParams.CalID;
+                $scope.info.headers = [];
+                var PATIENT_ID = Patient_ID;
+                var CAL_ID = CalID;
                 var data = response[0];
+
                 angular.forEach(data.headers, function (dataH, hIndex) {
+                    console.log(dataH.MRS_DF_ID);
                     $scope.info.headers.push({
                         "MRS_DF_ID": dataH.MRS_DF_ID,
                         "PATIENT_ID": PATIENT_ID,
@@ -121,9 +133,9 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         });
                     });
                 });
-                $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
-                $scope.info.apptInfo = localStorageService.get('tempAppt');
-                $scope.info.patient = localStorageService.get('tempPatient');
+//                $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
+//                $scope.info.apptInfo = localStorageService.get('tempAppt');
+//                $scope.info.patient = localStorageService.get('tempPatient');
 
 
                 oriInfo = angular.copy($scope.info);

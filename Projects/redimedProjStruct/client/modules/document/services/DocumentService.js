@@ -47,9 +47,9 @@ angular.module('app.loggedIn.document.services', [])
             return loadFA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
         }
 
-        documentService.insertFA = function(infoH,infoS,infoL,infoD,infoC){
+        documentService.insertFA = function(infoH,infoL,infoD,infoC){
             var insertFA = api.all("document/insertFA");
-            return insertFA.post({infoL:infoL,infoH:infoH,infoS:infoS,infoD:infoD,infoC:infoC});
+            return insertFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC});
         }
 
         documentService.checkFA = function(PatientID, calID){

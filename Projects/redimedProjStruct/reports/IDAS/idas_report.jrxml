@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="idas_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="380e6717-6efb-44f3-9f91-4e5c6ef55dba">
-	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="384"/>
+	<property name="ireport.y" value="0"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -91,10 +93,10 @@ WHERE
      cln_idas_headers.Last_update_date AS cln_idas_headers_Last_update_date,
      cln_idas_headers.NAME_COMMENT AS cln_idas_headers_NAME_COMMENT,
      cln_idas_headers.ISENABLE AS cln_idas_headers_ISENABLE,
-     cln_idas_headers.SIGNATURE AS cln_idas_headers_SIGNATURE,
+     SUBSTRING_INDEX(cln_idas_headers.SIGNATURE, ',', -1)  AS cln_idas_headers_SIGNATURE,
      cln_idas_headers.TesterDate AS cln_idas_headers_TesterDate,
      doctors.NAME AS doctor_name,
-     doctors.Signature AS doctor_sign,
+     SUBSTRING_INDEX(doctors.Signature, ',', -1)  AS doctor_sign,
      cln_patients.Patient_id AS cln_patients_Patient_id,
      cln_patients.Title AS cln_patients_Title,
      cln_patients.First_name AS cln_patients_First_name,
@@ -169,11 +171,7 @@ cln_idas_headers cln_idas_headers LEFT OUTER JOIN doctors doctors ON
 cln_idas_headers.DOCTOR_ID = doctors.doctor_id ,
 cln_patients cln_patients
 
-
-
 WHERE
-
-
 	cln_patients.Patient_id = cln_idas_headers.PATIENT_ID  AND
 	 cln_idas_headers.IDAS_ID = $P{key}
 	AND  cln_idas_headers.PATIENT_ID = $P{patient_id}
@@ -200,10 +198,10 @@ WHERE
 	<field name="cln_idas_headers_Last_update_date" class="java.sql.Timestamp"/>
 	<field name="cln_idas_headers_NAME_COMMENT" class="java.lang.String"/>
 	<field name="cln_idas_headers_ISENABLE" class="java.lang.Integer"/>
-	<field name="cln_idas_headers_SIGNATURE" class="java.io.InputStream"/>
+	<field name="cln_idas_headers_SIGNATURE" class="java.lang.String"/>
 	<field name="cln_idas_headers_TesterDate" class="java.sql.Timestamp"/>
 	<field name="doctor_name" class="java.lang.String"/>
-	<field name="doctor_sign" class="java.io.InputStream"/>
+	<field name="doctor_sign" class="java.lang.Object"/>
 	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
 	<field name="cln_patients_Title" class="java.lang.String"/>
 	<field name="cln_patients_First_name" class="java.lang.String"/>
@@ -280,7 +278,7 @@ WHERE
 		<band height="83" splitType="Stretch">
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="458" height="62" uuid="c7de221a-a840-4278-87ce-428573db7a8e"/>
-				<imageExpression><![CDATA[$P{real_path}+"logo_long.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/logo_long.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
@@ -332,7 +330,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="411" y="99" width="113" height="50" uuid="1ef3732d-f028-4ba0-b931-5f039c8f4004"/>
-				<imageExpression><![CDATA[$F{doctor_sign}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctor_sign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="0" y="180" width="552" height="50" uuid="b5d9e41a-ccf1-4bdc-9df5-c6ba35da6f53"/>
@@ -347,7 +345,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="97" y="244" width="120" height="50" uuid="1e4faf05-6edb-467e-8333-73523861d2f3"/>
-				<imageExpression><![CDATA[$F{cln_idas_headers_SIGNATURE}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{cln_idas_headers_SIGNATURE}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="232" y="260" width="43" height="20" uuid="13a1a388-2615-48a5-941c-87353ec29ef3"/>
@@ -401,7 +399,7 @@ WHERE
 								<subreportParameterExpression><![CDATA[$F{cln_idas_groups_IDAS_ID}]]></subreportParameterExpression>
 							</subreportParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-							<subreportExpression><![CDATA[$P{real_path}+"idas_report_subreport1.jasper"]]></subreportExpression>
+							<subreportExpression><![CDATA[$P{real_path}+"/idas_report_subreport1.jasper"]]></subreportExpression>
 						</subreport>
 						<rectangle>
 							<reportElement style="table" positionType="Float" x="0" y="39" width="411" height="20" isRemoveLineWhenBlank="true" uuid="07497612-3ba3-4a86-9735-ff30c51c2e64"/>
@@ -555,7 +553,7 @@ WHERE
 			</staticText>
 			<image hAlign="Center">
 				<reportElement positionType="Float" x="250" y="540" width="17" height="17" uuid="633181db-1cca-42d4-bd44-df402011dc3f"/>
-				<imageExpression><![CDATA[$F{cln_idas_headers_Positive_Negative} != null && $F{cln_idas_headers_Positive_Negative}.intValue()==1?$P{real_path}+"checked.jpg":$P{real_path}+"nocheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$F{cln_idas_headers_Positive_Negative} != null && $F{cln_idas_headers_Positive_Negative}.intValue()==1?$P{real_path}+"/checked.jpg":$P{real_path}+"/nocheck.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement positionType="Float" x="277" y="540" width="35" height="17" uuid="389a571a-8adc-4dde-a4ec-d863b9d91fbb"/>
@@ -566,7 +564,7 @@ WHERE
 			</staticText>
 			<image hAlign="Center">
 				<reportElement positionType="Float" x="314" y="540" width="17" height="17" uuid="48179ed2-9caa-47c1-85e2-ae9882dbbd39"/>
-				<imageExpression><![CDATA[$F{cln_idas_headers_Positive_Negative} != null && $F{cln_idas_headers_Positive_Negative}.intValue()==0? $P{real_path}+"checked.jpg": $P{real_path}+"nocheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$F{cln_idas_headers_Positive_Negative} != null && $F{cln_idas_headers_Positive_Negative}.intValue()==0? $P{real_path}+"/checked.jpg": $P{real_path}+"/nocheck.jpg"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement positionType="Float" x="342" y="535" width="1" height="24" uuid="bb4aa315-503c-4d86-8b93-cdb770b71bcf"/>

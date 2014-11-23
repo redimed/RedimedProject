@@ -82,6 +82,8 @@ module.exports = {
         var info = req.body.info;
         var PATIENT_ID = info.PATIENT_ID;
         var CAL_ID = info.CAL_ID;
+        console.log(PATIENT_ID);
+        console.log(CAL_ID);
         /**
          * search in cln table
          */

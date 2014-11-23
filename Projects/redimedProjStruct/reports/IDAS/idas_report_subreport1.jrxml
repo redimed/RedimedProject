@@ -61,11 +61,11 @@ WHERE
 			</textField>
 			<image>
 				<reportElement x="285" y="4" width="18" height="18" uuid="8deb457d-ec8c-464f-987b-645668fefb7b"/>
-				<imageExpression><![CDATA[$F{cln_idas_lines_YES_NO} != null && $F{cln_idas_lines_YES_NO}.intValue() == 0 ? $P{real_path}+"checked.jpg" : $P{real_path}+"nocheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$F{cln_idas_lines_YES_NO} != null && $F{cln_idas_lines_YES_NO}.intValue() == 0 ? $P{real_path}+"/checked.jpg" : $P{real_path}+"/nocheck.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="362" y="4" width="18" height="18" uuid="1f0aa25b-da59-4d8a-9e05-8f60e28b3679"/>
-				<imageExpression><![CDATA[$F{cln_idas_lines_YES_NO} != null && $F{cln_idas_lines_YES_NO}.intValue() == 1? $P{real_path}+"checked.jpg" : $P{real_path}+"nocheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$F{cln_idas_lines_YES_NO} != null && $F{cln_idas_lines_YES_NO}.intValue() == 1? $P{real_path}+"/checked.jpg" : $P{real_path}+"/nocheck.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</detail>

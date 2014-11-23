@@ -3,6 +3,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="fb71c9c0-58bf-4055-b248-f597c5a711f9"/>
 	<parameter name="patient_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -20,7 +22,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select concat( ifnull(p.`First_name`,''),' ' ,ifnull(p.`Sur_name`,'')) as full_name , p.`DOB` , ifnull(p.`Address1`, p.`Address2`) as Address , concat(  ifnull(p.`Suburb` , ''),'/',ifnull(p.`State`,''),'/', ifnull( p.`Post_code`,''))  as code , p.`Sex`   , p.`Country`  ,p.`Mobile` , p.`Occupation` , h.`practitioner` , h.`practitionSign` , h.`practitionDate` , h.`CAL_ID` , h.`MRS_DF_ID` , h.`PATIENT_ID` , ifnull(isReview,0) as isReview from `cln_mrs_headers` h inner join `cln_patients` p on p.`Patient_id` = h.`PATIENT_ID` where h.cal_id = $P{cal_id} and h.mrs_df_id = $P{key} and h.patient_id = $P{patient_id}]]>
+		<![CDATA[select concat( ifnull(p.`First_name`,''),' ' ,ifnull(p.`Sur_name`,'')) as full_name , p.`DOB` , ifnull(p.`Address1`, p.`Address2`) as Address , concat(  ifnull(p.`Suburb` , ''),'/',ifnull(p.`State`,''),'/', ifnull( p.`Post_code`,''))  as code , p.`Sex`   , p.`Country`  ,p.`Mobile` , p.`Occupation` , h.`practitioner` , SUBSTRING_INDEX(h.`practitionSign`, ',', -1) as practitionSign , h.`practitionDate` , h.`CAL_ID` , h.`MRS_DF_ID` , h.`PATIENT_ID` , ifnull(isReview,0) as isReview from `cln_mrs_headers` h inner join `cln_patients` p on p.`Patient_id` = h.`PATIENT_ID` where h.cal_id = $P{cal_id} and h.mrs_df_id = $P{key} and h.patient_id = $P{patient_id}]]>
 	</queryString>
 	<field name="full_name" class="java.lang.String"/>
 	<field name="DOB" class="java.sql.Date">
@@ -47,7 +49,7 @@
 	<field name="practitioner" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="practitionSign" class="java.awt.Image">
+	<field name="practitionSign" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="practitionDate" class="java.sql.Timestamp">
@@ -72,7 +74,7 @@
 		<band height="53" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="138" height="53" uuid="371e42f9-e46f-446d-8a47-9d478ac7fb8f"/>
-				<imageExpression><![CDATA[$P{real_path}+"images/logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/logo.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="149" y="15" width="245" height="38" uuid="9bf001d9-0857-4c26-8d95-55baa0e5fdc1"/>
@@ -255,7 +257,7 @@
 					<subreportParameterExpression><![CDATA[$F{full_name}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{real_path} + "result_summary_group.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{real_path} + "/result_summary_group.jasper"]]></subreportExpression>
 			</subreport>
 			<frame>
 				<reportElement positionType="Float" x="1" y="133" width="554" height="23" uuid="2e067962-d6c2-4416-a9e7-e1308d57cb4d"/>
@@ -334,7 +336,7 @@
 			</textField>
 			<image>
 				<reportElement isPrintRepeatedValues="false" x="316" y="10" width="88" height="36" uuid="18c26d5c-cacc-4f5c-80d4-ba804539b30a"/>
-				<imageExpression><![CDATA[$F{practitionSign}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{practitionSign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 		</band>
 	</pageFooter>

@@ -54,11 +54,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         var CalID = $scope.apptInfo.CAL_ID;
 
         $scope.listFA = [];
-        $scope.infoH = [];
-        $scope.infoL = [];
-        $scope.infoS = [];
-        $scope.infoD = [];
-        $scope.infoC = [];
+        $scope.infoH = {};
+        $scope.infoL = {};
+        $scope.infoS = {};
+        $scope.infoD = {};
+        $scope.infoC = {};
         $scope.manage = [];
         $scope.a = {};
         $scope.total = {};
@@ -239,7 +239,9 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                 toastr.error("Please Input All Required Information!", "Error");
             }else
             {
-                DocumentService.insertFA($scope.infoH,$scope.infoS,$scope.infoL,$scope.infoD,$scope.infoC).then(function(response){
+                console.log($scope.infoD);
+                console.log($scope.infoC.VALUE);
+                DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC).then(function(response){
                     console.log(response['status']);
                     if(response['status'] === 'success') {
                         alert("Insert Successfully!");

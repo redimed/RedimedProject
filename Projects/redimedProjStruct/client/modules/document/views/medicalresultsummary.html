@@ -3,14 +3,14 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <button type="button"
-                    ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required || !infoChanged()"
+
                     ng-click="submit(mrsForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
-            <button href="/api/document/printMRS/{{dataH.PATIENT_ID}}/{{dataH.CAL_ID}}/{{dataH.MRS_DF_ID}}"
+            <a href="/api/document/printMRS/{{info.PATIENT_ID}}/{{info.CAL_ID}}/{{info.headers[0].MRS_DF_ID}}"
                     type="button"
                     ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required"
                      class="btn btn-primary blue pull-right">Print PDF
-            </button>
+            </a>
             <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>

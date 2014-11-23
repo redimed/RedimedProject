@@ -83,7 +83,7 @@ WHERE 	t.cal_id = $P{cal_id}
 						<subreportParameterExpression><![CDATA[$F{comments}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{real_path} + "result_summary_group_line.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{real_path} + "/result_summary_group_line.jasper"]]></subreportExpression>
 				</subreport>
 			</frame>
 			<subreport>
@@ -98,7 +98,7 @@ WHERE 	t.cal_id = $P{cal_id}
 					<subreportParameterExpression><![CDATA[$F{MRS_GROUP_ID}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "result_summary_group_line_input.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/result_summary_group_line_input.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="139" width="555" height="36" isRemoveLineWhenBlank="true" uuid="2a586d6e-73bf-4d0c-a1e2-c103cda28f59"/>
@@ -115,7 +115,7 @@ WHERE 	t.cal_id = $P{cal_id}
 					<subreportParameterExpression><![CDATA[$F{patient_id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "result_summary_group_line_check.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/result_summary_group_line_check.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement positionType="Float" x="111" y="101" width="311" height="28" uuid="08192060-5e1e-4fb8-85f2-2df9bf3b4203"/>

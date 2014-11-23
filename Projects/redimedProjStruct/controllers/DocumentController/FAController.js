@@ -64,6 +64,9 @@ module.exports = {
         var infoD = req.body.infoD;
         var infoC = req.body.infoC;
         var max;
+        console.log(infoD);
+        console.log(infoC);
+        console.log(infoC.VALUE);
 
         sequelize.transaction(function(t) {
             db.HeaderFA.update({
