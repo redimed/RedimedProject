@@ -1,14 +1,20 @@
 <!--process modal detailImg-->
-<div class="modal image-modal transparent" ng-controller="InjuryImgControllerModal">
-    <ion-slide-box class="has-header" style="height: 100%;">
-        <div class="text-right h-descImg" style="display: block;">
-            <a class="button button-clear padding" ng-click="hideModal()">
-                <span>{{temp}} Done</span>
-            </a>
-        </div>
-        <ion-slide ng-repeat="img in imageObj" ng-if="$index == temp">
-            <img ng-src="{{img.image}}" class="fullscreen-image"/>
-            <div class="bg-descImg padding">
+<div class="modal image-modal transparent" ng-class="hide.bars ? 'content-dark' : 'content-light'">
+    <div class="text-right h-descImg">
+        <a class="button button-clear margin-right-10 margin-top-20 fix-margin cssFade" ng-click="hideModal()" ng-hide="hide.bars">
+            <span class="done-btn">Done</span>
+        </a>
+    </div>
+    <ion-slide-box style="height: 100%;" scroll="false" active-slide="imageObj.selected" show-pager="false">
+        <ion-slide ng-repeat="img in imgURI">
+            <ion-scroll direction="xy" locking="false" zooming="true" min-zoom="1" on-tap="hide.bars = !hide.bars"
+                        class="animate modal-content"
+                        ng-class="hide.bars ? 'content-dark full' : 'content-light has-header has-footer'">
+                <img ng-src="{{img.image}}" class="fullscreen-image" on-tap="hide = !hide"/>
+
+            </ion-scroll>
+
+            <div class="bg-descImg padding cssFade" ng-hide="hide.bars">
                <span>
                  Description: {{img.desc}}
                </span>

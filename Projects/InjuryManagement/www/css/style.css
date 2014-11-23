@@ -66,8 +66,7 @@ form i.icon.error {
     bottom: 0;
 }
 .h-descImg{
-    background-color: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 1);
     z-index: 9999;
     position: fixed;
     width: 100%;
@@ -85,7 +84,7 @@ form i.icon.error {
     border: none !important;
 }
 .transparent {
-    background: transparent !important;
+    background: #2B2B2B !important;
 }
 .image-modal {
     width: 100% !important;
@@ -128,4 +127,10 @@ form i.icon.error {
 }
 .margin-statusbar{
     margin-top: 20px;
+}
+.done-btn{
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 5px !important;
 }
