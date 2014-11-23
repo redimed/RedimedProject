@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonMHReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27f3bba2-f4a5-4437-96b6-2724e2c86cb6">
 	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="497"/>
+	<property name="ireport.x" value="104"/>
+	<property name="ireport.y" value="0"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -465,7 +467,7 @@ WHERE
 	<field name="gorgon_doc_mh_Q23_SittingQuietly" class="java.lang.Integer"/>
 	<field name="gorgon_doc_mh_Q23_InACar" class="java.lang.Integer"/>
 	<field name="gorgon_doc_mh_Q23_TotalScore" class="java.lang.Double"/>
-	<field name="gorgon_doc_mh_Signature" class="java.io.InputStream"/>
+	<field name="gorgon_doc_mh_Signature" class="java.lang.String"/>
 	<field name="gorgon_doc_mh_GorgonDate" class="java.sql.Timestamp"/>
 	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
 	<field name="cln_patients_First_name" class="java.lang.String"/>
@@ -481,11 +483,11 @@ WHERE
 		<band height="53" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="167" height="44" uuid="f98159f9-7600-41f9-9a66-4fae157fc597"/>
-				<imageExpression><![CDATA[$P{realPath}+"gorgonLeftLogo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+"/gorgonLeftLogo.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="507" y="0" width="48" height="44" uuid="d903e1d0-55a6-483b-b7fb-86c0863b6f9a"/>
-				<imageExpression><![CDATA[$P{realPath}+"gorgon_RightLogo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+"/gorgon_RightLogo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="167" y="7" width="221" height="31" uuid="db76c527-1861-4896-bfe7-606d7c9e2a44"/>

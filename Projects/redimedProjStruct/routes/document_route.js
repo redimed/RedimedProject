@@ -92,6 +92,7 @@ app.get('/api/document/printgorgonMAReport/:gorgonId/:calId', gorgonMAController
 app.post('/api/document/insertCat3', Cat3Controller.insertCat3);
 app.post('/api/document/loadCat3', Cat3Controller.loadCat3);
 app.post('/api/document/editCat3', Cat3Controller.editCat3);
+app.get('/api/document/printCat3/:patientId/:calId/:catId', Cat3Controller.printReport);
 /**
  * end category 3
  */
@@ -113,6 +114,7 @@ app.get('/api/document/printForm18/:gorgonId/:patientId/:calId', form18Controlle
 app.post('/api/document/loadMH', MHController.loadMH);
 app.post('/api/document/insertMH', MHController.insertMH);
 app.post('/api/document/editMH', MHController.editMH);
+app.get('/api/document/printMH/:PATIENT_ID/:CAL_ID/:MH_DF_ID', MHController.printReport);
 /**
  * end medical history
  */
@@ -156,6 +158,7 @@ app.post('/api/document/editSA2', SA2Controller.editSA2);
 app.post('/api/document/loadGGMH', gorgonMHController.loadGGMH);
 app.post('/api/document/insertGGMH', gorgonMHController.insertGGMH);
 app.post('/api/document/editGGMH', gorgonMHController.editGGMH);
+app.get('/api/document/printgorgonMH/:Patient_Id/:CalId/:Gorgon_Id', gorgonMHController.printReport);
 /**
  * end gorgon medical history
  */

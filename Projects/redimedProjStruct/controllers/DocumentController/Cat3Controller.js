@@ -72,7 +72,7 @@ module.exports = {
         });
     },
     loadCat3: function (req, res) {
-        var info = req.body.info;
+        var info = req.body.info; //get cal_id, patient_id, doctor_id
         var cal_id = info.cal_id;
         var patient_id = info.patient_id;
         var doctor_id = info.DOCTOR_ID;
