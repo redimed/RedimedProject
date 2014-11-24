@@ -34,7 +34,7 @@
                     <div class="footer_injury padding-top">
                         <ion-scroll direction="x">
                             <a class="button button-clear button-positive"
-                               ng-repeat="imgDetail in imgURI" ng:click="selectImg($index)"  style="width: 80px; height: 50px;">
+                               ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)"  style="width: 80px; height: 50px;">
                                 <img ng-src="{{imgDetail.image}}" class="img-responsive"/>
                             </a>
                         </ion-scroll>

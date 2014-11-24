@@ -7,6 +7,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                                                 $ionicLoading, $compile,$timeout   ){
 
 
+
+
         $scope.isSubmit = false;
         $scope.isShow = true;
         $scope.imgURI = [];
@@ -18,6 +20,11 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.isFailEmail = false;
         $scope.isMobile = null;
         $scope.goAddworker = false;
+        $scope.imageObj = {};
+        $scope.hide = [{
+            bars: true
+        }]
+
         var i = 0;
         var serverUpload = "http://testapp.redimed.com.au:3000/api/im/upload";
         var checkNonemerg = localStorageService.get("checkNonemerg");
@@ -121,10 +128,15 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         });
 
         //SHOW MODAL IMAGE DETAIL
-        $scope.selectImg = function(a) {
-            $scope.temp = a;
-            $scope.imageObj = $scope.imgURI;
+        $scope.selectImg = function(selected) {
+            $cordovaStatusbar.hide();
+            $scope.imageObj.selected = selected.id;
             $scope.InjuryImgControllerModal.show();
+        };
+        $scope.hideModal = function() {
+            $cordovaStatusbar.show();
+            $scope.hide.bars = false;
+            $scope.InjuryImgControllerModal.hide();
         };
 
         //TAKE PHOTO WITH CAMERA
@@ -134,7 +146,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 destinationType : Camera.DestinationType.FILE_URI,
                 popoverOptions: CameraPopoverOptions,
                 sourceType: navigator.camera.PictureSourceType.CAMERA,
-                saveToPhotoAlbum: true
+                saveToPhotoAlbum: false
             };
             //select multiple photo
             //phonegap plugin add https://github.com/wymsee/cordova-imagePicker.git
@@ -327,22 +339,22 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
     })
 
-    //.directive('noDragRight', ['$ionicGesture', function($ionicGesture) {
-    //
-    //    return {
-    //        restrict: 'A',
-    //        link: function($scope, $element, $attr) {
-    //
-    //            $ionicGesture.on('dragright', function(e) {
-    //                e.gesture.srcEvent.preventDefault();
-    //            }, $element);
-    //        }
-    //    }
-    //}])
+//.directive('noDragRight', ['$ionicGesture', function($ionicGesture) {
+//
+//    return {
+//        restrict: 'A',
+//        link: function($scope, $element, $attr) {
+//
+//            $ionicGesture.on('dragright', function(e) {
+//                e.gesture.srcEvent.preventDefault();
+//            }, $element);
+//        }
+//    }
+//}])
 
-    //CONTROLLER TEMP FOR MODAL SHOW DETAIL PICTURE
-    .controller('InjuryImgControllerModal', function($scope){
-        $scope.hideModal = function() {
-            $scope.InjuryImgControllerModal.hide();
-        };
-    })
+//CONTROLLER TEMP FOR MODAL SHOW DETAIL PICTURE
+//.controller('InjuryImgControllerModal', function($scope){
+//    $scope.hideModal = function() {
+//        $scope.InjuryImgControllerModal.hide();
+//    };
+//})
