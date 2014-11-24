@@ -1,0 +1,91 @@
+<form name="mainForm" novalidate>
+    <!-- ACTION -->
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-2 col-sm-3 col-xs-6">
+            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">  
+                <i ng-if="mode.text=='add'" class="fa fa-plus"></i>
+                <i ng-if="mode.text=='edit'" class="fa fa-pencil"></i>
+                {{mode.text}}
+            </button>
+        </div>
+    </div>
+    <!-- END ACTION -->
+
+    <div class="row">
+        <!-- INSURER NAME -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.insurer_name.$invalid && isSubmit}">
+                <label for="insurer_name">Insurer name</label>
+                <input type="text" id="insurer_name" required
+                       name="insurer_name" ng-model="modelObjectMap.insurer_name" placeholder="Insurer Name" float-label />
+                <!-- ERROR -->
+                <span ng-show="mainForm.insurer_name.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.insurer_name.$error.required">
+                        Insurer Name is required
+                    </span>
+                </span>
+                <!-- ERROR -->
+            </span>
+        </div>
+        <!-- END INSURER NAME -->
+        
+         <!-- ADDRESS -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.address.$invalid && isSubmit}">
+                <label for="address">Address</label>
+                <input type="text" id="address" required
+                       name="address" ng-model="modelObjectMap.address" placeholder="Address" float-label />
+                <!-- ERROR -->
+                <span ng-show="mainForm.address.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.address.$error.required">
+                        Address is required
+                    </span>
+                </span>
+                <!-- ERROR -->
+            </span>
+        </div>
+        <!-- END ADDRESS -->
+     
+         <!-- POSTCODE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="postcode">Postcode</label>
+                <input type="text" id="postcode"
+                       name="postcode" ng-model="modelObjectMap.postcode" placeholder="Postcode" float-label />
+            </span>
+        </div>
+        <!-- END POSTCODE -->
+
+        <div class="break-row"></div>
+        
+       <!-- SUBURB -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="suburb">Suburb</label>
+                <input type="text" id="suburb"
+                       name="suburb" ng-model="modelObjectMap.suburb" placeholder="Suburb" float-label />
+            </span>
+        </div>
+        <!-- END SUBURB -->   
+       
+        <!-- STATE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="state">State</label>
+                <input type="text" id="state"
+                       name="state" ng-model="modelObjectMap.state" placeholder="State" float-label />
+            </span>
+        </div>
+        <!-- END STATE -->
+
+      
+        <!-- IS ENABLE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" 
+                   ng-model="modelObjectMap.isenable" ng-true-value="1" ng-false-value="0">
+            <label for="isenable">Is Enable</label>
+        </div>
+        <!-- END IS ENABLE -->
+        <div class="break-row"></div>
+
+    </div>

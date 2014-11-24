@@ -117,3 +117,59 @@ angular.module("app.model", [])
 	last_update_date: null
 })
 // END OUTSIDE REFERRAL
+
+// COMPANY
+.value("CompanyModel", {
+    id : null, // int (11)
+    Company_name : null, // varchar (100)r
+    Industry : null, // varchar (50)r
+    Addr : null, // varchar (100)r
+    postcode : null, // int (11)r
+    State : null, // varchar (25)r
+    Description : null, // varchar (250) r
+    latitude : null, // float ()
+    longitude : null, // float ()
+    country : null, // varchar (45)r
+    result_email : null, // varchar (100) r
+    invoice_email : null, // varchar (100) r
+    PO_number : null, // varchar (50) r
+    isProject : null, // tinyint (4)
+    isCalendar : null, // tinyint (4) 
+    father_id : null, // int (11)
+    report_to_email : null, // varchar (50) r
+    default_status : null, // varchar (20)
+    isInvoiceEmailToUser : null, // int (11) r
+    Created_by : null, // int (11) 
+    Creation_date : null, // datetime ()
+    Last_updated_by : null, // int (11)
+    Last_update_date : null, // datetime ()
+    isAddContactEmailToResult : null, // int (11) r 
+    IMA : null, // varchar (50) 
+    Site_name : null, // varchar (100)
+    Medic_contact_no : null, // varchar (15)
+    Email : null, // varchar (100) r
+    CODE : null, // varchar (100) r
+    Insurer : null, // int (11)r
+    Phone : null, // varchar (15) r
+    Site_medic : null, // varchar (100) r
+    User_id : null, // int (11)
+    isPO : null, // int (11) r 
+    isExtra : null, // int (11) 
+})
+// END COMPANY
+// 
+// INSURER
+.value("InsurerModel", {
+    id : null, // int (11)
+    insurer_name : null, // varchar (200)
+    address : null, // varchar (200)
+    suburb : null, // varchar (200)
+    postcode : null, // varchar (50)
+    state : null, // varchar (100)
+    isenable : null, // tinyint (1)
+    created_by : null, // int (11)
+    creation_date : null, // datetime ()
+    last_updated_by : null, // int (11)
+    last_update_date : null, // datetime ()
+})
+// END INSURER

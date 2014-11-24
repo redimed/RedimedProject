@@ -20,7 +20,7 @@ function K_MODEL(table, primary_key) {
     this._squel = squel;
     this._callback = {search: null};
 
-    this._default_values = {Is_enable : 1};
+    this._default_values = {};
 
     /*
      *  ADD ON FOR SQUEL
