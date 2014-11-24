@@ -19,7 +19,6 @@ java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
 
 
-//var ImageIO = java.import('javax.imageio.ImageIO');
 var HashMap = java.import('java.util.HashMap');
 var JRException = java.import('net.sf.jasperreports.engine.JRException');
 var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
@@ -36,7 +35,7 @@ module.exports = {
         var patientId = req.params.PATIENT_ID;
 
         mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
-            if (err) console.error(err)
+            if (err) console.error("ERROR:" + err);
             else {
                 var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
 
@@ -53,14 +52,14 @@ module.exports = {
 
                 java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
                     if (err) {
-                        console.log(err);
+                        console.log("ERROR:" + err);
                         return;
                     }
                     else {
 
                         res.download(filePath, 'MedicalHistory.pdf', function (err) {
                             if (err) {
-                                console.log(err);
+                                console.log("ERROR:" + err);
                                 return;
                             }
                         });
@@ -77,7 +76,6 @@ module.exports = {
         var info = req.body.info;
         var PATIENT_ID = info.PATIENT_ID;
         var CAL_ID = info.CAL_ID;
-//        var patient_id = req.body.id.patient_id;
         db.headersMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
             .success(function (dataH) {
                 db.groupsMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
@@ -91,62 +89,71 @@ module.exports = {
                                     }
                                 }, {raw: true})
                                     .success(function (dataS) {
-                                        if (dataH.length == 0 || dataG.length == 0 || dataL.length == 0 || dataS.length == 0) {
-                                            // find null
-                                            //load in sys table
-                                            db.headersMHSYS.findAll({}, {raw: true})
-                                                .success(function (dataH) {
-                                                    db.groupsMHSYS.findAll({}, {raw: true})
-                                                        .success(function (dataG) {
-                                                            db.linesMHSYS.findAll({}, {raw: true})
-                                                                .success(function (dataL) {
-                                                                    db.subquestionsMHSYS.findAll({}, {raw: true})
-                                                                        .success(function (dataS) {
-                                                                            var data = [
-                                                                                {
-                                                                                    "headers": dataH,
-                                                                                    "groups": dataG,
-                                                                                    "lines": dataL,
-                                                                                    "subquestions": dataS,
-                                                                                    "status": "findNull"
-                                                                                }
-                                                                            ];
-                                                                            res.json(data);
+                                        db.Patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
+                                            .success(function (patient) {
+                                                if (dataH === null || dataG === null || dataL === null || dataS === null || dataH.length == 0 || dataG.length == 0 || dataL.length == 0 || dataS.length == 0) {
+                                                    // find null
+                                                    //load in sys table
+                                                    db.headersMHSYS.findAll({}, {raw: true})
+                                                        .success(function (dataH) {
+                                                            db.groupsMHSYS.findAll({}, {raw: true})
+                                                                .success(function (dataG) {
+                                                                    db.linesMHSYS.findAll({}, {raw: true})
+                                                                        .success(function (dataL) {
+                                                                            db.subquestionsMHSYS.findAll({}, {raw: true})
+                                                                                .success(function (dataS) {
+                                                                                    var data = [
+                                                                                        {
+                                                                                            "headers": dataH,
+                                                                                            "groups": dataG,
+                                                                                            "lines": dataL,
+                                                                                            "subquestions": dataS,
+                                                                                            "patient": patient,
+                                                                                            "status": "findNull"
+                                                                                        }
+                                                                                    ];
+                                                                                    res.json(data);
+                                                                                })
+                                                                                .error(function (err) {
+                                                                                    console.log("ERROR:" + err);
+                                                                                    res.json({status: "fail"});
+                                                                                });
                                                                         })
                                                                         .error(function (err) {
                                                                             console.log("ERROR:" + err);
-                                                                            res.json({status: "fail"});
+                                                                            res.json({status: 'fail'})
                                                                         });
                                                                 })
                                                                 .error(function (err) {
                                                                     console.log("ERROR:" + err);
-                                                                    res.json({status: 'fail'})
+                                                                    res.json({status: 'fail'});
                                                                 });
                                                         })
                                                         .error(function (err) {
                                                             console.log("ERROR:" + err);
                                                             res.json({status: 'fail'});
-                                                        });
-                                                })
-                                                .error(function (err) {
-                                                    console.log("ERROR:" + err);
-                                                    res.json({status: 'fail'});
-                                                })
+                                                        })
 
-                                        }
-                                        else {
-                                            // find found
-                                            var data = [
-                                                {
-                                                    "headers": dataH,
-                                                    "groups": dataG,
-                                                    "lines": dataL,
-                                                    "subquestions": dataS,
-                                                    "status": "findFound"
                                                 }
-                                            ];
-                                            res.json(data);
-                                        }
+                                                else {
+                                                    // find found
+                                                    var data = [
+                                                        {
+                                                            "headers": dataH,
+                                                            "groups": dataG,
+                                                            "lines": dataL,
+                                                            "subquestions": dataS,
+                                                            "patient": patient,
+                                                            "status": "findFound"
+                                                        }
+                                                    ];
+                                                    res.json(data);
+                                                }
+                                            })
+                                            .error(function (err) {
+                                                console.log("ERROR:" + err);
+                                                res.json({status: 'fail'});
+                                            })
                                     })
                                     .error(function (err) {
                                         console.log("ERROR:" + err);
@@ -160,13 +167,13 @@ module.exports = {
                     })
                     .error(function (err) {
                         console.log("ERROR:" + err);
-                        res.json({status: 'fail'});
-                    })
+                        res.json({status: "fail"});
+                    });
             })
             .error(function (err) {
                 console.log("ERROR:" + err);
-                res.json({status: "fail"});
-            });
+                res.json({status: 'fail'});
+            })
     },
     insertMH: function (req, res) {
         var info = req.body.info;

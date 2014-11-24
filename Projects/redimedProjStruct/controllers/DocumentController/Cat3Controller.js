@@ -84,7 +84,7 @@ module.exports = {
                             .success(function (doctor) {
                                 db.Company.find({where: {id: patient.company_id}}, {raw: true})
                                     .success(function (company) {
-                                        if (data.length === 0) {
+                                        if (data === null || data.length === 0) {
                                             var response = [
                                                 {
                                                     "status": "findNull",

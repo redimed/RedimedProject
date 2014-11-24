@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="category_3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="96cc77b9-d078-41e3-ba89-9854d46780bc">
-	<property name="ireport.zoom" value="1.3636363636363635"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="6749"/>
+	<property name="ireport.y" value="1536"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -19,7 +19,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT p.`First_name` , p.`Sur_name` ,
-CONCAT(IFNULL(p.`First_name` ,''), IFNULL(p.`Sur_name`,'')) AS 'full_name' ,
+CONCAT(CONCAT(IFNULL(p.`First_name` ,''),' '), IFNULL(p.`Sur_name`,'')) AS 'full_name' ,
     p.`DOB` , IFNULL(p.`Address1`,p.`Address2`)  AS address ,
     p.`Occupation` ,
 e.`Company_name` AS 'e_name' ,

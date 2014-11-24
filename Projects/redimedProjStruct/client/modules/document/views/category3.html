@@ -11,7 +11,7 @@
                 </button>
                 <!--BEGIN PRINT PDF-->
                 <a href="/api/document/printCat3/{{info.patient_id}}/{{info.cal_id}}/{{info.cat_id}}"
-                   ng-disabled="infoChanged() || category3Form.$error.maxlength || categoryForm.$error.pattern"
+                   ng-disabled="infoChanged() || category3Form.$error.maxlength || categoryForm.$error.pattern || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <!--END PRINT PDF-->
@@ -125,10 +125,10 @@
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-6 col-sm-6">
                                 <label class="control-label">Surname:&nbsp;<span
-                                        class="text-info">{{info.patient.Sur_name}}</span></label>
+                                        class="text-info">{{info.patient.Sur_name==null?'':info.patient.Sur_name}}</span></label>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <label class="control-label">First name:&nbsp;<span class="text-info"> {{info.patient.First_name}}</span></label>
+                                <label class="control-label">First name:&nbsp;<span class="text-info"> {{info.patient.First_name==null?'':info.patient.First_name}}</span></label>
                             </div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12 col-sm-12">
-                                <label class="control-label">Location:&nbsp;<span class="text-info">{{info.patient.Address1||info.patient.Address2}}</span></label>
+                                <label class="control-label">Location:&nbsp;<span class="text-info">{{(info.patient.Address1==null && info.patient.Address2==null)?'':(info.patient.Address1 || info.patient.Address2)}}</span></label>
                             </div>
                         </div>
                     </div>
@@ -144,10 +144,10 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-6 col-sm-6">
-                                <label class="control-label">Company Employment Number:&nbsp;<span class="text-info">{{info.patient.Work_phone}}</span></label>
+                                <label class="control-label">Company Employment Number:&nbsp;<span class="text-info">{{info.patient.Work_phone==null?'':info.patient.Work_phone}}</span></label>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <label class="control-label">Date Of Birth:&nbsp;<span class="text-info">{{info.patient.DOB | date: 'dd/MM/yyyy'}}</span></label>
+                                <label class="control-label">Date Of Birth:&nbsp;<span class="text-info">{{info.patient.DOB==null?'': info.patient.DOB | date: 'dd/MM/yyyy'}}</span></label>
                             </div>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12 col-sm-12">
-                                <label class="control-label">Prospective/Current Position:&nbsp;<span class="text-info">{{info.patient.Occupation}}</span></label>
+                                <label class="control-label">Prospective/Current Position:&nbsp;<span class="text-info">{{info.patient.Occupation==null?'':info.patient.Occupation}}</span></label>
                             </div>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-12 col-sm-12">
-                                <label class="control-label">Supervisor/Contact:&nbsp;<span class="text-info">{{info.company.Company_name}}</span></label>
+                                <label class="control-label">Supervisor/Contact:&nbsp;<span class="text-info">{{info.company.Company_name==null?'':info.company.Company_name}}</span></label>
                             </div>
                         </div>
                     </div>
@@ -188,7 +188,7 @@
                             </div>
                             <div class="col-md-4 col-sm-4">
                                 <label class="control-label">Phone:&nbsp;<span
-                                        class="text-info"> {{info.company.Phone}}</span></label>
+                                        class="text-info"> {{info.company.Phone==null?'':info.company.Phone}}</span></label>
                             </div>
                             <div class="col-md-4 col-sm-4">
                                 <label class="control-label">Fax:</label>
@@ -221,7 +221,7 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12 col-sm-12">
-                                <label class="control-label">Health Professional:&nbsp; <span class="text-info">{{info.doctor.NAME}}</span>
+                                <label class="control-label">Health Professional:&nbsp; <span class="text-info">{{info.doctor.NAME==null?'':info.doctor.NAME}}</span>
                                 </label>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12 col-sm-12">
-                                <label class="control-label">Address:&nbsp;<span class="text-info">{{info.doctor.Address}}</span>
+                                <label class="control-label">Address:&nbsp;<span class="text-info">{{info.doctor.Address==null?'':info.doctor.Address}}</span>
                                 </label>
                             </div>
                         </div>
@@ -240,7 +240,7 @@
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-6 col-sm-6">
                                 <label class="control-label">Phone:&nbsp;<span
-                                        class="text-info">{{info.doctor.Phone}}</span></label>
+                                        class="text-info">{{info.doctor.Phone==null?'':info.doctor.Phone}}</span></label>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <label class="control-label">Fax:</label>
@@ -251,10 +251,10 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-6 col-sm-6">
-                                <label class="control-label">Appointment date:&nbsp;<span class="text-info">{{info.apptInfo.FROM_TIME|date:'dd/MM/yyyy'}}</span></label>
+                                <label class="control-label">Appointment date:&nbsp;<span class="text-info">{{info.apptInfo.FROM_TIME==null?'':info.apptInfo.FROM_TIME|date:'dd/MM/yyyy'}}</span></label>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <label class="control-label">Appointment time:&nbsp;<span class="text-info">{{info.apptInfo.FROM_TIME|date:'dd/MM/yyyy'}}</span></label>
+                                <label class="control-label">Appointment time:&nbsp;<span class="text-info">{{info.apptInfo.FROM_TIME==null?'':info.apptInfo.FROM_TIME|date:'dd/MM/yyyy'}}</span></label>
                             </div>
                         </div>
                     </div>
@@ -523,7 +523,7 @@
                                     </p>
 
                                     <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                        I,&nbsp;<span class="text-info">{{info.patient.First_name + ' ' + info.patient.Middle_name + ' ' + info.patient.Sur_name}}</span>
+                                        I,&nbsp;<span class="text-info">{{(info.patient.First_name==null?'':info.patient.First_name) + ' ' + (info.patient.Middle_name==null?'':info.patient.Middle_name) + ' ' + (info.patient.Sur_name==null?'':info.patient.Sur_name)}}</span>
                                         &nbsp;
                                     </p>
 
@@ -1747,7 +1747,7 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12 col-sm-12">
-                                <label class="control-label">I, &nbsp;<span class="text-info">{{info.patient.First_name + ' ' + info.patient.Middle_name + ' ' + info.patient.Sur_name}}</span>
+                                <label class="control-label">I, &nbsp;<span class="text-info">{{(info.patient.First_name==null?'':info.patient.First_name) + ' ' + (info.patient.Middle_name==null?'':info.patient.Middle_name) + ' ' + (info.patient.Sur_name==null?'':info.patient.Sur_name)}}</span>
                                     &nbsp;</label>
                             </div>
                         </div>
@@ -1756,10 +1756,10 @@
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12 col-sm-12">
                                 <label class="btn">
-                                    <input type="radio" name='s4_1' ng-model="info.s4_1" value="1"/> give
+                                    <input type="radio" name='s4_1' ng-model="info.s4_1" ng-value="1"/> give
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s4_1' ng-model="info.s4_1" value="0"/> do not give
+                                    <input type="radio" name='s4_1' ng-model="info.s4_1" ng-value="0"/> do not give
                                 </label>
                                 <label class="control-label">(please indicate) permission for the examining
                                     health
@@ -1880,10 +1880,11 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-4 col-sm-4" style="text-align: center;">
-                                <label class=" control-label bold">Worker's Name</label>
+                                <label class=" control-label bold">Worker's Name:&nbsp;<span class="text-info">{{(info.patient.First_name==null?'':info.patient.First_name) + ' ' + (info.patient.Middle_name==null?'':info.patient.Middle_name) + ' ' + (info.patient.Sur_name==null?'':info.patient.Sur_name)}}</span>
+                                    </label>
                             </div>
                             <div class="col-md-4 col-sm-4" style="text-align: center;">
-                                <label class=" control-label bold">Date of Birth</label>
+                                <label class=" control-label bold">Date of Birth: &nbsp;<span class="text-info">{{info.patient.DOB|date:'dd/MM/yyyy'}}</span></label>
                             </div>
                             <div class="col-md-4 col-sm-4" style="text-align: center;">
                                 <label class="control-label bold">Employment Number</label>

@@ -46,8 +46,6 @@ module.exports = {
 
                 var paramMap = new HashMap();
 
-                //paramMap.putSync("cal_id",parseInt(calId));
-                //paramMap.putSync("patient_id",parseInt(patientId));
                 paramMap.putSync("id", parseInt(id));
                 paramMap.putSync("realPath", "./reports/Gorgon/");
 
@@ -79,11 +77,13 @@ module.exports = {
 
     loadGGMH: function (req, res) {
         var info = req.body.info;
-        db.gorgonMH.findAll({where: {Patient_Id: info.Patient_Id, CalId: info.CalId}}, {raw: true})
+        var Patient_Id = info.Patient_Id;
+        var CalId = info.CalId;
+        db.gorgonMH.find({where: {Patient_Id: Patient_Id, CalId: CalId}}, {raw: true})
             .success(function (data) {
-                db.Patient.findAll({where: {Patient_Id: info.Patient_Id}})
+                db.Patient.find({where: {Patient_Id: info.Patient_Id}})
                     .success(function (patient) {
-                        if (data.length === 0) {
+                        if (data === null || data.length === 0) {
                             var response = [
                                 {"status": "findNull", "patient": patient}
                             ];
@@ -333,11 +333,9 @@ module.exports = {
                     Q23_InACar: info.Q23_InACar,
                     Q23_TotalScore: info.Q23_TotalScore,
                     Signature: info.Signature,
-                    GorgonDate: info.GorgonDate,
+                    GorgonDate: new Date(),
                     Created_by: info.Created_by,
-                    Creation_date: info.Creation_date,
                     Last_updated_by: info.Last_updated_by,
-                    Last_update_date: info.Last_update_date,
                     CalId: info.CalId,
                     DocId: info.DocId,
                     Q21Other1Comment: info.Q21Other1Comment,
@@ -579,11 +577,9 @@ module.exports = {
             Q23_InACar: info.Q23_InACar,
             Q23_TotalScore: info.Q23_TotalScore,
             Signature: info.Signature,
-            GorgonDate: info.GorgonDate,
+            GorgonDate: new Date(),
             Created_by: info.Created_by,
-            Creation_date: info.Creation_date,
             Last_updated_by: info.Last_updated_by,
-            Last_update_date: info.Last_update_date,
             CalId: info.CalId,
             DocId: info.DocId,
             Q21Other1Comment: info.Q21Other1Comment,

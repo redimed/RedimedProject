@@ -1,299 +1,306 @@
 <form name="form18" method="post" novalidate>
-<div class="caption">
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <button type="button"
-                    ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || !infoChanged()"
-                    ng-click="submit(form18)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
-            </button>
-            <a href="/api/document/printForm18/{{info.GORGON_ID}}/{{info.PATIENT_ID}}/{{info.CAL_ID}}"
-                    ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required"
-                    class="btn btn-primary blue pull-right">Print PDF
-            </a>
-            <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
-        </div>
-    </div>
-</div>
-<br/>
-
-<div class="portlet box grey-cascade">
-<div class="portlet-title">
     <div class="caption">
-        <i class="fa fa-gift"></i>NOTICE OF ARRANGEMENT OF
-        AUDIOMETRIC TEST
-        Form 18
-    </div>
-    <div class="tools">
-        <a href="javascript:;" class="collapse">
-        </a>
-    </div>
-</div>
-<div class="portlet-body form">
-<div class="panel panel-default">
-    <div class="panel-body">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <label class="control-label">To: (Full legal name of worker):&nbsp;<span class="text-info">{{info.doctorInfo.NAME}}</span>
-                </label>
-            </div>
-        </div>
-        <br/>
-
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">Address of worker:&nbsp;<span
-                        class="text-info">{{info.doctorInfo.Address}}</span></label>
+                <button type="button"
+                        ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || !infoChanged()"
+                        ng-click="submit(form18)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+                </button>
+                <a href="/api/document/printForm18/{{info.GORGON_ID}}/{{info.PATIENT_ID}}/{{info.CAL_ID}}"
+                   ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || infoChanged() || isNew"
+                   class="btn btn-primary blue pull-right">Print PDF
+                </a>
+                <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
+                </button>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <p style="margin-left: 10px;">Notice is hereby given that I have
-            arranged
-            for you
-            to
-            undergo an audiometric test to be conducted by:</p>
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">Name of person approved under regulation 19B:&nbsp;<span class="text-info">Emyly Orgel</span></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">Name of clinic:&nbsp;<span class="text-info">Redimed</span> </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">Address of clinic:&nbsp;<span
-                        class="text-info">I Frederick St. Belment</span> </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2 col-sm-2" style="width: auto;">
-                <label class="control-label" style="margin-top: 35px;">Time test:</label>
-            </div>
-            <div class="col-md-10 col-sm-10">
-                <timepicker ng-model="info.TIME_TEST" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2 col-sm-1" style="width: auto;">
-                <label class="control-label" style="margin-top: 7px;">Date test:</label>
-            </div>
-            <div class="col-md-3 col-sm-3">
-                <input type="text" class="form-control col-md-12" name="dob"
-                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.TIME_TEST"
-                       is-open="openDOB" ng-click="openDOB = true"
-                       datepicker-options="dateOptions"
-                       close-text="Close"/>
-            </div>
-        </div>
-        <br/>
+    <br/>
 
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">Name of employer::&nbsp;<span
-                        class="text-info">{{info.patient.First_name + ' ' + info.patient.Sur_name}}</span></label>
+    <div class="portlet box grey-cascade">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>NOTICE OF ARRANGEMENT OF
+                AUDIOMETRIC TEST
+                Form 18
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">Location/worksite::&nbsp;<span
-                        class="text-info">{{info.patient.Address1 || info.patient.Address2}}</span></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">Employer WorkCover No(obtainable
-                    from
-                    your insurer):</label>
-            </div>
-            <div class="col-md-7 col-sm-7">
-                <div ng-class="{'has-error': form18.WORK_COVER_NO.$error.maxlength}">
-                    <input type="text" class="form-control" name="WORK_COVER_NO" ng-model="info.WORK_COVER_NO"
-                           ng-maxlength="50"/>
-
-                    <div class="help-block" ng-show="form18.WORK_COVER_NO.$error.maxlength">
-                        <label class="control-label">Too long!</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/>
-
-        <div class="row">
-            <div class="col-md-5 col-sm-5">
-                <a href="javascript:;" class="btn green" ng-click="showSignature()">Signature of person arranging
-                    test</a>
-
-                <div class="col-md-7 col-sm-7"
-                     ng-show="info.PERSON_ARRANGING_SIGNATURE!=null && info.PERSON_ARRANGING_SIGNATURE!='' && !isSignature">
-                    <img src="" ng-src="{{info.PERSON_ARRANGING_SIGNATURE}}" alt=""
-                         style="width: 200px;height: 40px;"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-2">
-                <label class="control-label" style="margin-left: 10px;">Date: &nbsp;<span>{{today|date:'dd/MM/yyyy'}}</span> </label>
-            </div>
-            <div class="col-md-5 col-sm-5">
-                <div class="col-md-12 col-sm-12">
-                    <label class="control-label">Name of person arranging test:</label>
-
-                    <div ng-class="{'has-error': form18.PERSON_ARRANGING_NAME.$error.maxlength}">
-                        <input type="text" class="form-control" name="PERSON_ARRANGING_NAME"
-                               ng-model="info.PERSON_ARRANGING_NAME" ng-maxlength="200"/>
-
-                        <div class="help-block" ng-show="form18.PERSON_ARRANGING_NAME.$error.maxlength">
-                            <label class="control-label">Too long!</label>
+        <div class="portlet-body form">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">To: (Full legal name of worker):&nbsp;<span class="text-info">{{(info.patient.First_name==null?'':info.patient.First_name) + ' ' + (info.patient.Middle_name==null?'':info.patient.Middle_name) + ' ' + (info.patient.Sur_name==null?'':info.patient.Sur_name)}}</span>
+                            </label>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12 col-sm-12">
-                    <label class="control-label">Position:</label>
+                    <br/>
 
-                    <div ng-class="{'has-error': form18.PERSON_ARRANGING_POSITION.$error.maxlength}">
-                        <input type="text" class="form-control" name="PERSON_ARRANGING_POSITION"
-                               ng-model="info.PERSON_ARRANGING_POSITION" ng-maxlength="200"/>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Address of worker:
+                                <span
+                                        class="text-info col-md-12 col-sm-12">{{info.patient.Address1==null?'':info.patient.Address1}}</span>
+                            </label>
+                            <span
+                                    class="text-info col-md-12 col-sm-12">{{info.patient.Address2==null?'':info.patient.Address2}}</span>
 
-                        <div class="help-block" ng-show="form18.PERSON_ARRANGING_POSITION.$error.maxlength">
-                            <label class="control-label">Too long!</label>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="text-align: left;" ng-show="isSignature">
-            <div class="col-md-12 col-sm-12">
-                <canvas width="500" height="400" id="canvas"
-                        signature ng-model="info.PERSON_ARRANGING_SIGNATURE" style="background-color: #8eece8">
-                </canvas>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <p style="margin-left: 10px;">Notice is hereby given that I have
+                        arranged
+                        for you
+                        to
+                        undergo an audiometric test to be conducted by:</p>
+                </div>
             </div>
-            <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
-                <div class="break-row"></div>
-                <div class="btn-group">
-                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
-                        Cancel
-                    </button>
-                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
-                    </button>
-                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Name of person approved under regulation 19B:&nbsp;<span
+                                    class="text-info">{{info.doctor.NAME==null?'':info.doctor.NAME}}</span></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Name of clinic:&nbsp;<span class="text-info">{{info.rmSite.Site_name==null?'':info.rmSite.Site_name}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Address of clinic:&nbsp;<span
+                                    class="text-info">{{info.rmSite.Site_addr==null?'':info.rmSite.Site_addr}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2" style="width: auto;">
+                            <label class="control-label" style="margin-top: 35px;">Time test:</label>
+                        </div>
+                        <div class="col-md-10 col-sm-10">
+                            <timepicker ng-model="info.TIME_TEST" hour-step="1" minute-step="5"
+                                        show-meridian="false"></timepicker>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-1" style="width: auto;">
+                            <label class="control-label" style="margin-top: 7px;">Date test:</label>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <input type="text" class="form-control col-md-12" name="dob"
+                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.TIME_TEST"
+                                   is-open="openDOB" ng-click="openDOB = true"
+                                   datepicker-options="dateOptions"
+                                   close-text="Close"/>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Name of employer::&nbsp;<span
+                                    class="text-info">{{info.company.Company_name==null?'':info.company.Company_name}}</span></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Location/worksite::&nbsp;<span
+                                    class="text-info">{{info.company.Addr==null?'':info.company.Addr}}</span></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">Employer WorkCover No(obtainable
+                                from
+                                your insurer):</label>
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            <div ng-class="{'has-error': form18.WORK_COVER_NO.$error.maxlength}">
+                                <input type="text" class="form-control" name="WORK_COVER_NO"
+                                       ng-model="info.WORK_COVER_NO"
+                                       ng-maxlength="50"/>
+
+                                <div class="help-block" ng-show="form18.WORK_COVER_NO.$error.maxlength">
+                                    <label class="control-label">Too long!</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5">
+                            <a href="javascript:;" class="btn green" ng-click="showSignature()">Signature of person
+                                arranging
+                                test</a>
+
+                            <div class="col-md-7 col-sm-7"
+                                 ng-show="info.PERSON_ARRANGING_SIGNATURE!=null && info.PERSON_ARRANGING_SIGNATURE!='' && !isSignature">
+                                <img src="" ng-src="{{info.PERSON_ARRANGING_SIGNATURE}}" alt=""
+                                     style="width: 200px;height: 70px;"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <label class="control-label" style="margin-left: 10px;">Date: &nbsp;<span>{{info.TIME_TEST|date:'dd/MM/yyyy'}}</span>
+                            </label>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <div class="col-md-12 col-sm-12">
+                                <label class="control-label">Name of person arranging test:</label>
+
+                                <div ng-class="{'has-error': form18.PERSON_ARRANGING_NAME.$error.maxlength}">
+                                    <input type="text" class="form-control" name="PERSON_ARRANGING_NAME"
+                                           ng-model="info.PERSON_ARRANGING_NAME" ng-maxlength="200"/>
+
+                                    <div class="help-block" ng-show="form18.PERSON_ARRANGING_NAME.$error.maxlength">
+                                        <label class="control-label">Too long!</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <label class="control-label">Position:</label>
+
+                                <div ng-class="{'has-error': form18.PERSON_ARRANGING_POSITION.$error.maxlength}">
+                                    <input type="text" class="form-control" name="PERSON_ARRANGING_POSITION"
+                                           ng-model="info.PERSON_ARRANGING_POSITION" ng-maxlength="200"/>
+
+                                    <div class="help-block" ng-show="form18.PERSON_ARRANGING_POSITION.$error.maxlength">
+                                        <label class="control-label">Too long!</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="text-align: left;" ng-show="isSignature">
+                        <div class="col-md-12 col-sm-12">
+                            <canvas width="500" height="400" id="canvas"
+                                    signature ng-model="info.PERSON_ARRANGING_SIGNATURE"
+                                    style="background-color: #8eece8">
+                            </canvas>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
+                            <div class="break-row"></div>
+                            <div class="btn-group">
+                                <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+                                    Cancel
+                                </button>
+                                <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+                                </button>
+                                <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-3 col-sm-3" style="width: auto;">
+                        <p class="bold">Non attendance:</p>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <p>A worker shall not, without reasonable excuse, fail to submit themselves for an
+                            audiometric test
+                            of
+                            which
+                            the worker has notice (regulation 19D(3)).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-3 col-sm-3" style="width: auto;">
+                        <p class="bold">Period of Quiet:</p>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <p>An employer shall ensure that the worker is not knowingly exposed in the
+                            workplace,
+                            and
+                            the
+                            worker
+                            shall not knowingly permit himself to be exposed , to noise levels above 80dB(A)
+                            during
+                            16 hours
+                            immediately preceding the audiometric test (regulation 19D(2)).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="com-md-12 col-sm-12">
+                        <p>To be completed at the start of the appointment</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="control-label">I (Full legal name of worker): </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <p>Confirm that I have observed the period of quiet. </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3" style="margin-top: 25px;">
+                            <a href="javascript:;" class="btn green" ng-click="showSignature1()"
+                               ng-show="!isSignature1">Worker's
+                                signature</a>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <label class="control-label">Date:&nbsp;<span>{{info.TIME_TEST|date:'dd/MM/yyyy'}}</span>
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <label class="control-label">Tester's signature:</label>
+                            <img src="" alt="" style="width: 200px; height: 70px;" ng-src="{{info.doctor.Signature}}"/>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <label class="control-label">Date:&nbsp;<span>{{info.TIME_TEST|date:'dd/MM/yyyy'}}</span></label>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12"
+                             ng-show="info.WORKER_SIGNATURE!=null && info.WORKER_SIGNATURE!='' && !isSignature1">
+                            <img src="" ng-src="{{info.WORKER_SIGNATURE}}" alt=""
+                                 style="width: 200px;height: 70px;"/>
+                        </div>
+                    </div>
+
+                    <div class="row" style="text-align: left;" ng-show="isSignature1">
+                        <div class="col-md-12 col-sm-12">
+                            <canvas width="500" height="400" id="canvas1"
+                                    signature ng-model="info.WORKER_SIGNATURE" style="background-color: #8eece8">
+                            </canvas>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
+                            <div class="break-row"></div>
+                            <div class="btn-group">
+                                <button type="button" ng-click="cancelClick1()" class="btn btn-danger btn-sm">
+                                    Cancel
+                                </button>
+                                <button type="button" ng-click="clearClick1()" class="btn btn-warning btn-sm">Clear
+                                </button>
+                                <button type="button" ng-click="okClick1()" class="btn green btn-sm">Ok</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="width: auto;">
-            <p class="bold">Non attendance:</p>
-        </div>
-        <div class="col-md-9 col-sm-9">
-            <p>A worker shall not, without reasonable excuse, fail to submit themselves for an
-                audiometric test
-                of
-                which
-                the worker has notice (regulation 19D(3)).</p>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="col-md-3 col-sm-3" style="width: auto;">
-            <p class="bold">Period of Quiet:</p>
-        </div>
-        <div class="col-md-9 col-sm-9">
-            <p>An employer shall ensure that the worker is not knowingly exposed in the
-                workplace,
-                and
-                the
-                worker
-                shall not knowingly permit himself to be exposed , to noise levels above 80dB(A)
-                during
-                16 hours
-                immediately preceding the audiometric test (regulation 19D(2)).</p>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="com-md-12 col-sm-12">
-            <p>To be completed at the start of the appointment</p>
-        </div>
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">I (Full legal name of worker): </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <p>Confirm that I have observed the period of quiet. </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-3" style="margin-top: 25px;">
-                <a href="javascript:;" class="btn green" ng-click="showSignature1()" ng-show="!isSignature1">Worker's
-                    signature</a>
-            </div>
-            <div class="col-md-3 col-sm-3">
-                <label class="control-label">Date:</label>
-                <input type="text" class="form-control col-md-12" name="dob1"
-                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.TIME_TEST"
-                       is-open="openDOB1" ng-click="openDOB1 = true"
-                       datepicker-options="dateOptions"
-                       close-text="Close"/>
-            </div>
-            <div class="col-md-3 col-sm-3">
-                <label class="control-label">Worker's signature:</label>
-            </div>
-            <div class="col-md-3 col-sm-3">
-                <label class="control-label">Date:</label>
-                <input type="text" class="form-control col-md-12" name="dob"
-                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.TIME_TEST"
-                       is-open="openDOB2" ng-click="openDOB2 = true"
-                       datepicker-options="dateOptions"
-                       close-text="Close"/>
-            </div>
-        </div>
-        <br/>
-
-        <div class="row">
-            <div class="col-md-12 col-sm-12"
-                 ng-show="info.WORKER_SIGNATURE!=null && info.WORKER_SIGNATURE!='' && !isSignature1">
-                <img src="" ng-src="{{info.WORKER_SIGNATURE}}" alt=""
-                     style="width: 200px;height: 40px;"/>
-            </div>
-        </div>
-
-        <div class="row" style="text-align: left;" ng-show="isSignature1">
-            <div class="col-md-12 col-sm-12">
-                <canvas width="500" height="400" id="canvas1"
-                        signature ng-model="info.WORKER_SIGNATURE" style="background-color: #8eece8">
-                </canvas>
-            </div>
-            <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
-                <div class="break-row"></div>
-                <div class="btn-group">
-                    <button type="button" ng-click="cancelClick1()" class="btn btn-danger btn-sm">
-                        Cancel
-                    </button>
-                    <button type="button" ng-click="clearClick1()" class="btn btn-warning btn-sm">Clear
-                    </button>
-                    <button type="button" ng-click="okClick1()" class="btn green btn-sm">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
 </form>

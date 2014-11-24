@@ -8,8 +8,8 @@
                         ng-click="submit(mhForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
                 <a href="/api/document/printMH/{{info.headers[0].PATIENT_ID}}/{{info.headers[0].CAL_ID}}/{{info.headers[0].MH_DF_ID}}"
-                   ng-disabled="mhForm.$error.pattern || mhForm.$error.maxlength|| mhForm.$error.required"
-                   ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+                   ng-disabled="mhForm.$error.pattern || mhForm.$error.maxlength|| mhForm.$error.required || infoChanged() || isNew"
+                   class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
                 </button>
@@ -37,11 +37,12 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="col-md-6 col-sm-6" style="margin-top: 10px;">
-                                    <label class="control-label">Surname:&nbsp;<span class="text-info">{{info.patient.Sur_name}}</span>
+                                    <label class="control-label">Surname:&nbsp;<span class="text-info">{{info.patient.Sur_name==null?'':info.patient.Sur_name}}</span>
                                     </label>
                                 </div>
                                 <div class="col-md-6 col-sm-6" style="margin-top: 10px;">
-                                    <label class="control-label">Given Names:</label>
+                                    <label class="control-label">Given Names:&nbsp;<span class="text-info">{{info.patient.First_name==null?'':info.patient.First_name}}</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +67,7 @@
                                 </div>
                                 <div class="col-md-4 col-sm-3">
                                     <label class="control-label">Phone Extension:&nbsp;<span
-                                            class="text-info">{{info.patient.Phone_ext}}</span></label>
+                                            class="text-info">{{info.patient.Phone_ext==null?'':info.patient.Phone_ext}}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -74,16 +75,16 @@
                         <div class="row">
                             <div class="col-md-8 col-sm-8">
                                 <label class="control-label" style="margin-left: 10px;">Home Address:&nbsp;<span
-                                        class="text-info">{{info.patient.Address1 || info.patient.Address1}}</span></label>
+                                        class="text-info">{{info.patient.Address1==null?'':info.patient.Address1}}</span></label>
                             </div>
                             <div class="col-md-4 col-sm-4">
                                 <div class="col-md-12 col-sm-12">
                                     <label class="control-label">Home Phone:&nbsp;<span
-                                            class="text-info">{{info.patient.Home_phone}}</span></label>
+                                            class="text-info">{{info.patient.Home_phone==null?'':info.patient.Home_phone}}</span></label>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <label class="control-label">Mobile:&nbsp;<span
-                                            class="text-info">{{info.patient.Mobile}}</span></label>
+                                            class="text-info">{{info.patient.Mobile==null?'':info.patient.Mobile}}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -91,16 +92,17 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="col-md-4 col-sm-5">
-                                    <label class="control-label">Next of Kin/Emergency Contact:</label>
+                                    <label class="control-label">Next of Kin/Emergency Contact:&nbsp;<span
+                                            class="text-info">{{info.patient.NOK_Emerg_Contact==null?'':info.patient.NOK_Emerg_Contact}}</span>
+                                    </label>
                                 </div>
                                 <div class="col-md-4 col-sm-4">
-                                    <label class="control-label">Relationship:</label>
+                                    <label class="control-label">Relationship:&nbsp;<span class="text-info">{{info.patient.Partner_name==null?'':info.patient.Partner_name}}</span>
+                                    </label>
                                 </div>
                                 <div class="col-md-4 col-sm-3">
-                                    <label class="control-label">Contact No (A/H):&nbsp;<span
-                                            class="text-info">{{info.patient.Home_phone}}</span></label><br/>
-                                    <label class="control-label">Contact No (W/H):&nbsp;<span
-                                            class="text-info">{{info.patient.Work_phone}}</span></label>
+                                    <label class="control-label">Contact No (A/H):</label><br/>
+                                    <label class="control-label">Contact No (W/H):</label>
                                 </div>
                             </div>
                         </div>
@@ -150,16 +152,18 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-4 col-sm-4">
-                                <label class="control-label">Name:&nbsp;<span class="text-info">{{info.patient.Sur_name}}</span>
+                                <label class="control-label">Name:&nbsp;<span class="text-info">{{(info.patient.First_name==null?'':info.patient.First_name) + ' ' + (info.patient.Middle_name==null?'':info.patient.Middle_name) + ' ' + (info.patient.Sur_name==null?'':info.patient.Sur_name)}}</span>
                                 </label>
                             </div>
-                            <div class="col-md-4 col-sm-4">
-                                <label class="control-label">Sign:</label>
-                                <img src="" ng-model="info.Sign"
-                                     style="width:200px;height: 40px;"/>
+                            <div ng-show="info.Sign!=null && info.Sign!=''">
+                                <div class="col-md-4 col-sm-4">
+                                    <label class="control-label">Sign:</label>
+                                    <img src="" ng-src="{{info.Sign}}"
+                                         style="width:200px;height: 70px;"/>
+                                </div>
                             </div>
                             <div class="col-md-3 col-sm-3">
-                                <label class="control-label">Date:&nbsp;<span class="text-info">{{today|date:'dd/MM/yyyy'}}</span>
+                                <label class="control-label">Date:&nbsp;<span class="text-info">{{info.Date|date:'dd/MM/yyyy'}}</span>
                                 </label>
                             </div>
                         </div>
@@ -171,7 +175,7 @@
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-1 col-sm-1" style="width: 5px;">
                                 <label class="control-label">I,&nbsp;<span
-                                        class="text-info">{{info.patient.Sur_name}},</span>&nbsp;DOB:&nbsp;<span
+                                        class="text-info">{{(info.patient.First_name==null?'':info.patient.First_name) + ' ' + (info.patient.Sur_name==null?'':info.patient.Sur_name)}},</span>&nbsp;DOB:&nbsp;<span
                                         class="text-info">{{info.patient.DOB|date:'dd/MM/yyyy'}}</span> </label>
                             </div>
                         </div>
@@ -198,7 +202,7 @@
                                 <div class="col-md-10 col-sm-10"
                                      ng-show="info.Sign!=null && info.Sign!='' && !isSignature">
                                     <img src="" ng-src="{{info.Sign}}" alt=""
-                                         style="width: 200px;height: 40px;margin-top: 10px;"/>
+                                         style="width: 200px;height: 70px;margin-top: 10px;"/>
                                 </div>
                             </div>
                         </div>
@@ -222,7 +226,25 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="col-md-2 col-sm-2" style="width: auto;">
+                                    <label class="control-label">Witness:</label>
+                                </div>
+                                <div ng-class="{'has-error': mhForm.Declaration_witness_sign.$error.maxlength}">
+                                    <div class="col-md-3 col-sm-4">
+                                        <input type="text" class="form-control" name="Declaration_witness_sign"
+                                               ng-maxlength="2" ng-model="info.Declaration_witness_sign"/>
 
+                                        <div class="help-block"
+                                             ng-show="mhForm.Declaration_witness_sign.$error.maxlength">
+                                            <label class="control-label">Too long!</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="col-md-1 col-sm-1" style="width: auto;">
@@ -244,7 +266,7 @@
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12 col-sm-12" style="width: 5px;">
                                 <label class="control-label">I,&nbsp;<span
-                                        class="text-info">{{info.patient.Sur_name}},</span>&nbsp;DOB:&nbsp;<span
+                                        class="text-info">{{(info.patient.First_name==null?'':info.patient.First_name) + ' ' + (info.patient.Sur_name==null?'':info.patient.Sur_name)}},</span>&nbsp;DOB:&nbsp;<span
                                         class="text-info">{{info.patient.DOB|date:'dd/MM/yyyy'}}</span> </label>
                             </div>
                         </div>
@@ -274,7 +296,7 @@
                                 <div class="col-md-10 col-sm-10"
                                      ng-show="info.Declaration_sign!=null && info.Declaration_sign!='' && !isSignature1">
                                     <img src="" ng-src="{{info.Declaration_sign}}" alt=""
-                                         style="width: 200px;height: 40px;"/>
+                                         style="width: 200px;height: 70px;"/>
                                 </div>
                             </div>
                         </div>
@@ -321,7 +343,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="col-md-12 col-sm-12" style="width: auto;">
-                                    <label class="control-label">Date:&nbsp;<span class="text-info">{{today|date:'dd/MM/yyyy'}}</span>
+                                    <label class="control-label">Date:&nbsp;<span class="text-info">{{info.Date|date:'dd/MM/yyyy'}}</span>
                                     </label>
                                 </div>
                             </div>
@@ -667,16 +689,6 @@
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-12 col-sm-12" style="width: auto; margin-top: 5px;">
-                        <label class="control-label">Name:&nbsp;<span class="text-info">{{info.patient.Sur_name}}</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <br/>
-
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
                     <div class="col-md-1 col-sm-1" style="width: auto;">
                         <a href="javascript:;" class="btn green" ng-click="showSignature2()"
                            ng-show="!isSignature2">Sign</a>
@@ -684,7 +696,7 @@
                     <div class="col-md-10 col-sm-10"
                          ng-show="info.Statement_sign!=null && info.Statement_sign!='' && !isSignature2">
                         <img src="" ng-src="{{info.Statement_sign}}" alt=""
-                             style="width: 200px;height: 40px;"/>
+                             style="width: 200px;height: 70px;"/>
                     </div>
                 </div>
             </div>
@@ -708,6 +720,16 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12" style="width: auto; margin-top: 5px;">
+                        <label class="control-label">Name:&nbsp;<span
+                                class="text-info">{{(info.patient.First_name==null?'':info.patient.First_name) + ' ' + (info.patient.Sur_name==null?'':info.patient.Sur_name)}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <br/>
 
             <div class="row">
                 <div class="col-md-12 col-sm-12">

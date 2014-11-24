@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonMHReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27f3bba2-f4a5-4437-96b6-2724e2c86cb6">
 	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="104"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
@@ -232,7 +232,7 @@
      gorgon_doc_mh.`Q23_SittingQuietly` AS gorgon_doc_mh_Q23_SittingQuietly,
      gorgon_doc_mh.`Q23_InACar` AS gorgon_doc_mh_Q23_InACar,
      gorgon_doc_mh.`Q23_TotalScore` AS gorgon_doc_mh_Q23_TotalScore,
-     gorgon_doc_mh.`Signature` AS gorgon_doc_mh_Signature,
+     SUBSTRING_INDEX(gorgon_doc_mh.`Signature`, ',', -1) AS gorgon_doc_mh_Signature,
      gorgon_doc_mh.`GorgonDate` AS gorgon_doc_mh_GorgonDate,
      cln_patients.`Patient_id` AS cln_patients_Patient_id,
      cln_patients.`First_name` AS cln_patients_First_name,
@@ -7062,8 +7062,8 @@ Barrow Island LNG Plant ]]></text>
 				</graphicElement>
 			</line>
 			<image>
-				<reportElement x="44" y="635" width="151" height="41" uuid="2814ffe6-0819-41ad-badb-ea02ed576f7f"/>
-				<imageExpression><![CDATA[$F{gorgon_doc_mh_Signature}]]></imageExpression>
+				<reportElement x="42" y="637" width="151" height="41" uuid="2814ffe6-0819-41ad-badb-ea02ed576f7f"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{gorgon_doc_mh_Signature}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="300" y="226" width="59" height="13" uuid="126ff009-985e-4d9a-aabe-4c3cfc06f8f9"/>
