@@ -127,9 +127,13 @@ module.exports = {
                                             dataL[i].PICTURE = base64Image(dataL[i].PICTURE);
                                         }
                                     }
-
                                     db.DetailFA.findAll({where : {ISENABLE : 1,PATIENT_ID : PATIENT_ID,CAL_ID: CAL_ID}, order : 'ORD'},{transaction: t})
                                         .success(function(dataD){
+                                            for(var i=0; i<dataD.length; i++) {
+                                                if (dataD[i].PICTURE != null) {
+                                                    dataD[i].PICTURE = base64Image(dataD[i].PICTURE);
+                                                }
+                                            }
                                             db.CommentFA.findAll({where : {ISENABLE : 1,PATIENT_ID : PATIENT_ID,CAL_ID: CAL_ID}},{transaction: t})
                                                 .success(function(dataC){
                                                     t.commit().success(function() {

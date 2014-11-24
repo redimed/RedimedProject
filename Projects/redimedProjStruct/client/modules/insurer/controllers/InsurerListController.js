@@ -1,12 +1,12 @@
 angular.module("app.loggedIn.insurer.list.controller", [])
 
-.controller("InsurerListController", function ($scope) {
+.controller("InsurerListController", function ($scope, $state, localStorageService) {
     var item_type_options = [
         {code: 'Service', label: 'Service'},
         {code: 'Goods', label: 'Goods'},
     ]
     $scope.data_options = {
-        api: 'api/erm/v2/insurer/search',
+        api: 'api/erm/v2/insurers/search',
         method: 'post',
         columns: [
             {field: 'id', is_hide: true},
@@ -26,6 +26,8 @@ angular.module("app.loggedIn.insurer.list.controller", [])
     };
 
     $scope.clickRow = function (item) {
-        console.log(item);
+//        console.log(item);
+        localStorageService.set('tempInsurerInfo', item);
+        $state.go('loggedIn.insurer.detail');
     }
 })

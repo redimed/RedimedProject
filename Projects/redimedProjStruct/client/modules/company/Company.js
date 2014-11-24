@@ -1,11 +1,11 @@
 angular.module("app.loggedIn.company", [
     "app.loggedIn.company.controller",
     "app.loggedIn.company.services",
+    "app.loggedIn.company.directives",
 ])
 
-.config(function ($stateProvider) {
+.config(function($stateProvider) {
     $stateProvider
-
     // STRUCTURE
     .state("loggedIn.company", {
         abstract: true,
@@ -32,15 +32,34 @@ angular.module("app.loggedIn.company", [
             }
         }
     })
-    
-    
-    // HOME
+
+    // LIST
     .state("loggedIn.company.list", {
         url: "/company/list",
         views: {
             "main-content": {
                 templateUrl: "modules/company/views/list.html",
                 controller: "CompanyListController"
+            }
+        }
+    })
+    // DETAIL
+    .state("loggedIn.company.detail", {
+        url: "/company/detail",
+        views: {
+            "main-content": {
+                templateUrl: "modules/company/views/detail.html",
+                controller: "CompanyDetailController"
+            }
+        }
+    })
+     // ADD
+    .state("loggedIn.company.add", {
+        url: "/company/add",
+        views: {
+            "main-content": {
+                templateUrl: "modules/company/views/add.html",
+                controller: "CompanyAddController"
             }
         }
     })

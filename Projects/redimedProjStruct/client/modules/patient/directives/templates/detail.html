@@ -7,6 +7,11 @@
             Add Patient
         </button>
     </div>
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center" ng-if="isClose">
+        <button class="btn btn-sm btn-block red" ng-click="closePopup()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
 </div>
 <!-- END ACTION -->
 
@@ -90,7 +95,7 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.dob.$invalid && isSubmit}">
             <label for="dob">Date of Birth *</label>
-            <input type="birthday" readonly="" custom-date="" id="dob" placeholder="Birthday" name="dob" required 
+            <input readonly="" ui-date="{dateFormat: 'dd/mm/yy'}" id="dob" placeholder="Birthday" name="dob" required 
                 ng-model="modelObjectMap.DOB" float-label>
             <!-- ERROR -->
             <span ng-show="patientForm.dob.$invalid && isSubmit">
@@ -116,7 +121,7 @@
     <div class="col-md-4 col-sm-6 col-xs-12" ng-class="{'has-error': patientForm.email.$invalid && isSubmit}">
         <span class="field">
             <label for="email">Email *</label>
-            <input type="email" required placeholder="Email" name="email" ng-model="modelObjectMap.Email"
+            <input type="email" placeholder="Email" name="email" ng-model="modelObjectMap.Email"
                 class="form-control" id="email" float-label>
             <!-- ERROR -->
             <span ng-show="patientForm.email.$invalid && isSubmit">
@@ -351,8 +356,8 @@
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="mediexp">Medicare Expire</label>
-                <input readonly="" custom-date="" id="mediexp" placeholder="Medicare Expire" 
-                    name="mediexp" required 
+                <input readonly="" ui-date="{dateFormat: 'dd/mm/yy'}" id="mediexp" placeholder="Medicare Expire" 
+                    name="mediexp"
                     ng-model="modelObjectMap.Exp_medicare" float-label>
             </span>
         </div>
@@ -439,8 +444,8 @@
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="pensionexp">Pension Expire</label>
-                <input readonly="" custom-date="" id="pensionexp" placeholder="Pension Expire" 
-                    name="pensionexp" required 
+                <input readonly="" ui-date="{dateFormat: 'dd/mm/yy'}" id="pensionexp" placeholder="Pension Expire" 
+                    name="pensionexp"
                     ng-model="modelObjectMap.Exp_pension" float-label>
             </span>
         </div>
@@ -540,7 +545,7 @@
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="partnerdob">Partner's Date of Birth</label>
-                <input type="birthday" readonly="" custom-date="" id="partnerdob" placeholder="Partner's Date of Birth" 
+                <input type="birthday" readonly="" ui-date="{dateFormat: 'dd/mm/yy'}" id="partnerdob" placeholder="Partner's Date of Birth" 
                     name="partnerdob"
                     ng-model="modelObjectMap.Partner_DOB" float-label>
             </span>

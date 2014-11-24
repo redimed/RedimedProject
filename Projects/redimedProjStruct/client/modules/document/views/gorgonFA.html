@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     #modalSign .modal-dialog{
         width: 900px;
         height: 800px;
@@ -14,7 +14,9 @@
                     class="btn green pull-right">{{isNew?"Add New":"Update"}}
             </button>
             <a href="/api/document/printGorgonFA/{{info.id}}/{{info.CalId}}"
-               ng-disabled="isNew == true"
+
+               ng-disabled="isNew || infoChanged()"
+
                class="btn btn-primary blue pull-right">Print PDF
             </a>
             <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>

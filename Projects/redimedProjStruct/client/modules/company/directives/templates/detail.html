@@ -1,0 +1,291 @@
+<form name="mainForm" novalidate>
+    <!-- ACTION -->
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-2 col-sm-3 col-xs-6">
+            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+                
+                <i ng-if="mode.text=='add'" class="fa fa-plus"></i>
+                <i ng-if="mode.text=='edit'" class="fa fa-pencil"></i>
+                
+                {{mode.text}}
+            </button>
+        </div>
+    </div>
+    <!-- END ACTION -->
+
+    <div class="row">
+        <!-- COMPANY NAME -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.Company_name.$invalid && isSubmit}">
+                <label for="Company_name">Inury name</label>
+                <input type="text" id="Company_name" required
+                       name="Company_name" ng-model="modelObjectMap.Company_name" placeholder="Company Name" float-label />
+                <!-- ERROR -->
+                <span ng-show="mainForm.Company_name.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.Company_name.$error.required">
+                        Company Name is required
+                    </span>
+                </span>
+                <!-- ERROR -->
+            </span>
+        </div>
+        <!-- END COMPANY NAME -->
+
+        <!-- INDUSTRY -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.Industry.$invalid && isSubmit}">
+                <label for="Industry">Industry</label>
+                <input type="text" id="Industry" required
+                       name="Industry" ng-model="modelObjectMap.Industry" placeholder="Industry" float-label />
+                <!-- ERROR -->
+                <span ng-show="mainForm.Industry.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.Industry.$error.required">
+                        Industry is required
+                    </span>
+                </span>
+                <!-- ERROR -->
+            </span>
+        </div>
+        <!-- END INDUSTRY -->
+
+
+        <!-- CODE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="CODE">CODE</label>
+                <input type="text" id="location"
+                       name="CODE" ng-model="modelObjectMap.CODE" placeholder="CODE" float-label />
+            </span>
+        </div>
+        <!-- CODE -->
+
+        <div class="break-row"></div>
+
+        <!-- ADDRESS -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.Addr.$invalid && isSubmit}">
+                <label for="Addr">Address</label>
+                <input type="text" id="Addr" required
+                       name="Addr" ng-model="modelObjectMap.Addr" placeholder="Address" float-label />
+                <!-- ERROR -->
+                <span ng-show="mainForm.Addr.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.Addr.$error.required">
+                        Address is required
+                    </span>
+                </span>
+                <!-- ERROR -->
+            </span>
+        </div>
+        <!-- END ADDRESS -->
+
+        <!-- STATE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="State">State</label>
+                <input type="text" id="postcode"
+                       name="State" ng-model="modelObjectMap.State" placeholder="State" float-label />
+            </span>
+        </div>
+        <!-- END STATE -->
+
+        <!-- COUNTRY -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="country">Country </label>
+                <select required ng-options="title.name as title.name for title in options.countries" 
+                        name="country" ng-model="modelObjectMap.country" id="country" float-label>
+                    <option value="" disabled selected>Country</option>
+                </select>
+            </span>
+        </div>
+        <!-- END COUNTRY -->
+
+        <div class="break-row"></div>
+
+        <!-- POSTCODE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="postcode">Postcode</label>
+                <input type="text" id="postcode"
+                       name="postcode" ng-model="modelObjectMap.postcode" placeholder="Postcode" float-label />
+            </span>
+        </div>
+        <!-- END POSTCODE -->
+
+        <!-- PHONE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="Phone">Phone</label>
+                <input type="text" id="postcode"
+                       name="Phone" ng-model="modelObjectMap.Phone" placeholder="Phone" float-label />
+            </span>
+        </div>
+        <!-- END PHONE -->
+        
+        <!-- EMAIL -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.Email.$invalid && isSubmit}">
+                <label for="Email">Email</label>
+                <input type="email" id="Email"
+                       name="Email" ng-model="modelObjectMap.Email" placeholder="Email" float-label />
+            </span>
+            <!-- ERROR -->
+            <span ng-show="mainForm.Email.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="mainForm.Email.$error.email">
+                    Email is incorrect format
+                </span>
+            </span>
+            <!-- ERROR -->
+        </div>
+        <!-- END EMAIL -->
+        <div class="break-row"></div>
+        
+         <!-- SITE MEDICARE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="Site_medic">Site Medicare</label>
+                <input type="text" id="Site_medic"
+                       name="Site_medic" ng-model="modelObjectMap.Site_medic" placeholder="Site Medicare" float-label />
+            </span>
+        </div>
+        <!-- END SITE MEDICARE -->
+        
+         <!-- SITE MEDIC CONTACT NO -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="Medic_contact_no">Medicare Contact No</label>
+                <input  id="Medic_contact_no"
+                       name="Medic_contact_no" ng-model="modelObjectMap.Medic_contact_no" placeholder="Medicare Contact No" float-label />
+            </span>
+        </div>
+        <!-- END SITE MEDIC CONTACT NO -->
+        
+        <!-- SITE MEDIC CONTACT NO -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="Description">Description</label>
+                <input  type="text" id="Description"
+                       name="Description" ng-model="modelObjectMap.Description" placeholder="Description" float-label />
+            </span>
+        </div>
+        <!-- END SITE MEDIC CONTACT NO -->
+        
+        <div class="break-row"></div>
+        <!-- IS PO -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isPO" id="isPO" class="mdt-checkbox" 
+                   ng-model="modelObjectMap.isPO" ng-true-value="1" ng-false-value="0">
+            <label for="isPO">Is PO</label>
+        </div>
+        <!-- END IS PO -->
+
+        <!-- PO NUM -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="PO_number">Po number</label>
+                <input type="text" id="postcode"
+                       name="PO_number" ng-model="modelObjectMap.PO_number" placeholder="Po number" float-label />
+            </span>
+        </div>
+        <!-- END  PO NUM -->
+
+        <!-- IMA -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="IMA">IMA</label>
+                <input type="text" id="IMA"
+                       name="IMA" ng-model="modelObjectMap.IMA" placeholder="IMA" float-label />
+            </span>
+        </div>
+        <!-- END IMA -->
+
+        <div class="break-row"></div>
+
+        <!-- IS INVOICE EMAIL TO INVOICE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isInvoiceEmailToUser" id="isInvoiceEmailToUser" class="mdt-checkbox" 
+                   ng-model="modelObjectMap.isInvoiceEmailToUser" ng-true-value="1" ng-false-value="0">
+            <label for="isInvoiceEmailToUser">Invoice Email To User</label>
+        </div>
+        <!-- END IS INVOICE EMAIL TO INVOICE -->
+
+
+        <!-- INVOICE EMAIL -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.invoice_email.$invalid && isSubmit}">
+                <label for="invoice_email">Invoice Email</label>
+                <input type="email" id="invoice_email"
+                       name="invoice_email" ng-model="modelObjectMap.invoice_email" placeholder="Invoice Email" float-label />
+            </span>
+            <!-- ERROR -->
+            <span ng-show="mainForm.invoice_email.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="mainForm.invoice_email.$error.email">
+                    Invoice Email is incorrect format
+                </span>
+            </span>
+            <!-- ERROR -->
+        </div>
+        <!-- END INVOICE EMAIL -->
+
+        <div class="break-row"></div>
+
+        <!-- IS ADD CONTACT TO RESULT -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isAddContactEmailToResult" id="isAddContactEmailToResult" class="mdt-checkbox" 
+                   ng-model="modelObjectMap.isAddContactEmailToResult" ng-true-value="1" ng-false-value="0">
+            <label for="isAddContactEmailToResult">Add Contact Email To Result</label>
+        </div>
+        <!-- END IS ADD CONTACT TO RESULT -->
+
+        <!-- EMAIL REPORT -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.result_email.$invalid && isSubmit}">
+                <label for="result_email">Result Email</label>
+                <input type="email" id="report_to_email"
+                       name="result_email" ng-model="modelObjectMap.result_email" placeholder="Result Email" float-label />
+            </span>
+            <!-- ERROR -->
+            <span ng-show="mainForm.result_email.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="mainForm.result_email.$error.email">
+                    Email is incorrect format
+                </span>
+            </span>
+            <!-- ERROR -->
+        </div>
+        <!-- END EMAIL REPORT -->
+
+
+        <!-- REPORT 2 EMAIL REPORT -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.report_to_email.$invalid && isSubmit}">
+                <label for="report_to_email">Report to Email</label>
+                <input type="email" id="report_to_email"
+                       name="report_to_email" ng-model="modelObjectMap.report_to_email" placeholder="Report to Email" float-label />
+            </span>
+            <!-- ERROR -->
+            <span ng-show="mainForm.report_to_email.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="mainForm.report_to_email.$error.email">
+                    Email is incorrect format
+                </span>
+            </span>
+            <!-- ERROR -->
+        </div>
+        <!-- END REPORT 2 EMAIL REPORT -->
+
+        <div class="break-row"></div>
+
+
+        <!-- INSURER -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a class="btn btn-block btn-sm btn-primary">Insurer</a>
+        </div>
+        <!-- END INSURER -->
+
+
+        <div class="break-row"></div>
+
+
+
+
+        <div class="break-row"></div>
+    </div>

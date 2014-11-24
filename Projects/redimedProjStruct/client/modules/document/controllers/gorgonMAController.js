@@ -34,21 +34,46 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
         $scope.patientInfo = localStorageService.get('tempPatient');
         var CalID = $scope.apptInfo.CAL_ID;
         var Patient_ID = $scope.patientInfo.Patient_id;
-        console.log("gorgon MA: " + CalID + " patient: " + Patient_ID);
 
-
-        $scope.checkAudiogram = function (value) {
-            if (value == true) {
-
+        $scope.checkAudiogram = function () {
+            if ($scope.info.AUDIOGRAM == true) {
+                $scope.info.RIGHT_EAR_500 =  null,
+                $scope.info.RIGHT_EAR_1000 =  null,
+                $scope.info.RIGHT_EAR_1500 =  null,
+                $scope.info.RIGHT_EAR_2000 =  null,
+                $scope.info.RIGHT_EAR_3000 =  null,
+                $scope.info.RIGHT_EAR_4000 =  null,
+                $scope.info.RIGHT_EAR_6000 =  null,
+                $scope.info.RIGHT_EAR_8000 =  null,
+                $scope.info.LEFT_EAR_500 =  null,
+                $scope.info.LEFT_EAR_1000 =  null,
+                $scope.info.LEFT_EAR_1500 =  null,
+                $scope.info.LEFT_EAR_2000 =  null,
+                $scope.info.LEFT_EAR_3000 =  null,
+                $scope.info.LEFT_EAR_4000 =  null,
+                $scope.info.LEFT_EAR_6000 =  null,
+                $scope.info.LEFT_EAR_8000 =  null
             }
 
         };
 
-        $scope.checkSpirometry = function (value) {
-            if (value == true) {
-
+        $scope.checkSpirometry = function () {
+            if ($scope.info.SPIROMETRY == true) {
+                $scope.info.PRE_BR1_V1 =  null,
+                $scope.info.PRE_BR1_V2 =  null,
+                $scope.info.PRE_BR1_V3 =  null,
+                $scope.info.PRE_BR1_V4 =  null,
+                $scope.info.PRE_BR1_V5 =  null,
+                $scope.info.PRE_BR1_V6 =  null,
+                $scope.info.PRE_BR1_V7 =  null,
+                $scope.info.PRE_BR2_V1 =  null,
+                $scope.info.PRE_BR2_V2 =  null,
+                $scope.info.PRE_BR2_V3 =  null,
+                $scope.info.PRE_BR2_V4 =  null,
+                $scope.info.PRE_BR2_V5 =  null,
+                $scope.info.PRE_BR2_V6 =  null,
+                $scope.info.PRE_BR2_V7 =  null
             }
-
         };
         var date = new Date();
         var today = $filter('date')(date, 'dd/MM/yyyy');
@@ -206,6 +231,8 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
         }
 
         $scope.infoChanged = function () {
+            console.log(oriInfo);
+            console.log($scope.info);
             return !angular.equals(oriInfo, $scope.info);
         }
 
@@ -235,23 +262,25 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                 if (insert == true) {
                     DocumentService.insertGorgonMA(info).then(function (response) {
                         if (response['status'] === 'success') {
-                            alert("Insert Successfully!");
+                            toastr.success("Successfully","Success");
+                            $scope.isNew = false;
+
                             $state.go('loggedIn.gorgonMA', null, {'reload': true});
                         }
                         else {
-                            alert("Insert Failed!");
+                            toastr.error("Fail", "Error");
                         }
                     });
                 } else {
                     var info = $scope.info;
                     DocumentService.editGorgonMA(info).then(function (response) {
                         if (response['status'] === 'success') {
-                            alert("Edit Successfully!");
+                            toastr.success("Successfully","Success");
                             $state.go('loggedIn.gorgonMA', null, {'reload': true});
 
                         }
                         else {
-                            alert("Edit Failed!");
+                            toastr.error("Fail", "Error");
                         }
                     });
                 }

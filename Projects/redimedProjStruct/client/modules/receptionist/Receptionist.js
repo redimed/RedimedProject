@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.receptionist", [
     "app.loggedIn.receptionist.controller",
     "app.loggedIn.receptionist.services",
+    "app.loggedIn.receptionist.directives"
 ])
 
 .config(function ($stateProvider) {

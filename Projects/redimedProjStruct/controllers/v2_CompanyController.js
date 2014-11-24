@@ -8,7 +8,7 @@ module.exports = {
 			res.end();
 			return; 
 		}
-		var sql = CompanyModel.get(id);
+		var sql = CompanyModel.sql_get(id);
 		var k_sql = req.k_sql;
 		k_sql.exec_row( sql, function(data){
 			res.json({status: 'success', row: data});
@@ -46,7 +46,7 @@ module.exports = {
 		});
 	},
 	postUpdate: function(req, res) {
-		var id = req.query.id;
+		var id = req.body.id;
 		var data = req.body.data;
 		if(!id || !data) {
 			res.end();

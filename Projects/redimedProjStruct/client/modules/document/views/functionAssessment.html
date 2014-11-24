@@ -11,7 +11,7 @@
         <!--</a>-->
 
         <a href="/api/document/FA/print-report/{{infoH.CAL_ID}}/{{infoH.PATIENT_ID}}/{{infoH.FA_ID}}"
-           ng-disabled="FAForm.$error.pattern || FAForm.$error.maxlength || FAForm.$error.required"
+           ng-disabled="isNew"
            class="btn btn-primary blue pull-right">Print PDF
         </a>
 
@@ -52,6 +52,9 @@
                                 <div ng-repeat="detail in line.detail">
                                     <ng-form name="numberForm">
                                         <label class="bold">{{detail.detail_name}}</label>
+                                        <div ng-if="detail.image != null">
+                                            <img ng-src="{{detail.image}}">
+                                        </div>
                                         <div class="row">
                                             <div ng-if="detail.val1_name != null" ng-class="{'col-md-3 col-lg-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
                                                 <label  style="margin-top: 10px" ng-class="{'pull-right' : detail.val1_name != null}">
@@ -370,7 +373,17 @@
                                                     </div>
                                                 </div>
                                                 <div ng-if="nameC.comment_type == 6" ng-class="{'col-md-8 col-lg-8' : nameC.comment_type == 6}">
-                                                    <textarea class="form-control" ng-model="infoC.VALUE[nameC.comment_id]"></textarea>
+                                                    <div class="btn-group " >
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="infoC.VALUE[nameC.comment_id]" value="0"/> Above Normal Range
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="infoC.VALUE[nameC.comment_id]" value="1"/> Within Normal Range
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="infoC.VALUE[nameC.comment_id]" value="2"/> Below Normal Range
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -382,7 +395,7 @@
                                         <label ng-if="line.line_comment == 1" class="control-label bold">Question Comments</label>
                                         <div class="row">
                                             <div ng-if="line.line_comment == 1" ng-class="{'col-md-8' : line.line_comment == 1}">
-                                                <textarea class="form-control" ng-model="infoL.COMMENTS[line.line_id]"></textarea>
+                                                <textarea  class="form-control" ng-model="infoL.COMMENTS[line.line_id]"></textarea>
                                             </div>
                                         </div>
                                     </div>

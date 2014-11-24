@@ -65,7 +65,7 @@ angular.module("app.model", [])
 	Fee_type: '', //yes
 	Gradudate_status: null, //yes
 	Patient_note: '',
-	Isenable: null, //yes
+	Isenable: '1', //yes
 	Created_by: null,
 	Creation_date: null,
 	Last_updated_by: null,
@@ -117,3 +117,36 @@ angular.module("app.model", [])
 	last_update_date: null
 })
 // END OUTSIDE REFERRAL
+
+// APPOINTMENT CALENDAR
+.value("ClnAppointmentCalendarModel", {
+	CAL_ID: null,
+	DOCTOR_ID: null,
+	SITE_ID: null,
+	FROM_TIME: null,
+	TO_TIME: null,
+	NOTES: '',
+	PHONE: '',
+	APP_TYPE: '',
+	STATUS: '',
+	ARR_TIME: null,
+	ATTEND_TIME: null,
+	AVAILABLE: null,
+	SERVICE_ID: null,
+	CLINICAL_DEPT_ID: null,
+	ACC_TYPE: '',
+	bill_to: 1
+})
+// END APPOINTMENT CALENDAR
+
+//WAITING LIST
+.value("WaitingListModel", {
+	id: null,
+	reason: '',
+	priority: null,
+	doctor_id: null,
+	Patient_id: null,
+	Creation_date: null,
+	Created_by: null
+})
+//END WAITING LIST

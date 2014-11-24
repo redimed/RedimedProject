@@ -1,0 +1,170 @@
+<form name="bookingForm" novalidate>
+<!-- ACTION -->
+<div class="row" style="margin-bottom: 15px;">
+    <!--<div class="col-md-2 col-sm-3 col-xs-6">
+        <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+            <i class="fa fa-plus"></i>
+            {{mode.text}}
+        </button>
+    </div>-->
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center" ng-if="isClose">
+    	<button class="btn btn-sm btn-block red" ng-click="closePopup()">
+    		<i class="fa fa-times"></i>
+    	</button>
+    </div>
+</div>
+<!-- END ACTION -->
+
+<div class="row">
+	<!-- DOCTOR NAME -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="doctor_name">Doctor</label>
+            <input type="text" id="doctor_name" disabled
+                name="doctor_name" ng-model="data.DOCTOR.NAME" placeholder="Doctor Name" float-label />
+        </span>
+    </div>
+	<!-- END DOCTOR NAME -->
+	<!-- DATE BOOKING -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="date_booking">Date Booking</label>
+            <input ui-date="{dateFormat: 'dd/mm/yy'}" id="date_booking" disabled
+                name="date_booking" ng-model="data.MAIN_INFO.datepicker" placeholder="Date Booking" float-label />
+        </span>
+    </div>
+	<!-- END DATE BOOKING -->
+	<!-- SITE -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="site">Site Name</label>
+            <select ng-options="site.id as site.Site_name for site in options.redimedsites" 
+            	disabled
+                name="site" ng-model="data.MAIN_INFO.site" id="site" float-label>
+            </select>
+        </span>
+    </div>
+	<!-- END SITE -->
+	<div class="break-row"></div>
+	<!-- DEPARTMENT -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="dept">Clinical Department</label>
+            <select ng-options="dept.CLINICAL_DEPT_ID as dept.CLINICAL_DEPT_NAME for dept in options.dept" 
+            	disabled
+                name="dept" ng-model="data.MAIN_INFO.dept" id="dept" float-label>
+            </select>
+        </span>
+    </div>
+	<!-- END DEPARTMENT -->
+	<!-- FROM TIME -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="from_time">From Time</label>
+            <input type="text" id="from_time" disabled
+                name="from_time" ng-model="data.FROM_TIME" placeholder="From Time" float-label />
+        </span>
+    </div>
+	<!-- END FROM TIME -->
+	<!-- END TIME -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="to_time">To Time</label>
+            <input type="text" id="to_time" disabled
+                name="to_time" ng-model="data.TO_TIME" placeholder="To Time" float-label />
+        </span>
+    </div>
+	<!-- END END TIME -->
+	<div class="break-row"></div>
+	<!-- SERVICE -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="service">Service</label>
+            <select ng-options="service.SERVICE_ID as service.SERVICE_NAME for service in options.services" 
+                name="service" ng-model="modelObjectMap.SERVICE_ID" id="service" float-label>
+                <option value="" disabled selected>Service</option>
+            </select>
+        </span>
+    </div>
+	<!-- END SERVICE -->
+	<!-- ACCOUNT TYPE -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="acc_type">Account Type</label>
+            <select ng-options="acc_type.code as acc_type.name for acc_type in options.acc_types" 
+                name="acc_type" ng-model="modelObjectMap.ACC_TYPE" id="acc_type" float-label>
+                <option value="" disabled selected>Account Type</option>
+            </select>
+        </span>
+    </div>
+	<!-- END ACCOUNT TYPE -->
+	<!-- APP TYPE -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="app_type">App Type</label>
+            <select ng-options="app_type.code as app_type.name for app_type in options.app_types" 
+                name="app_type" ng-model="modelObjectMap.APP_TYPE" id="acc_type" float-label>
+                <option value="" disabled selected>App Type</option>
+            </select>
+        </span>
+    </div>
+	<!-- END APP TYPE -->
+	<div class="break-row"></div>
+	<!-- STATUS -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="status">Status</label>
+            <input type="text" id="status"
+                name="status" ng-model="modelObjectMap.STATUS" placeholder="Status" float-label />
+        </span>
+    </div>
+	<!-- END STATUS -->
+	<!-- BILL TO -->
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        <input id="bill_to_1" type="radio" ng-model="modelObjectMap.bill_to" value="1" class="mdt-radio">
+        <label for="bill_to_1">Self</label>
+        <input id="bill_to_2" type="radio" ng-model="modelObjectMap.bill_to" value="2" class="mdt-radio">
+        <label for="bill_to_2">Employer</label>
+        <input id="bill_to_3" type="radio" ng-model="modelObjectMap.bill_to" value="3" class="mdt-radio">
+        <label for="bill_to_3">Insurer</label>
+    </div>
+	<!-- END BILL TO -->
+	<div class="break-row"></div>
+	<!-- ARRANGE TIME -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="arr_time">Arrange Time</label>
+            <input type="timepicker" ng-model="modelObjectMap.ARR_TIME" id="arr_time"
+                name="arr_time" float-label placeholder="Arrange Time">
+        </span>
+    </div>
+	<!-- END ARRANGE TIME -->
+	<!-- ATTEND TIME -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="att_time">Attend Time</label>
+            <input type="timepicker" ng-model="modelObjectMap.ATTEND_TIME" id="att_time"
+                name="att_time" float-label placeholder="Attend Time">
+        </span>
+    </div>
+	<!-- END ATTEND TIME -->
+	<!-- STATUS -->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="notes">Notes</label>
+            <input type="text" id="notes"
+                name="notes" ng-model="modelObjectMap.NOTES" placeholder="Notes" float-label />
+        </span>
+    </div>
+	<!-- END STATUS -->
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="btn-group btn-group-sm btn-group-solid">
+			<button class="btn green" type="button" ng-click="clickPatient({type:'select'})">Select Patient</button>
+			<button class="btn blue" type="button" ng-click="clickPatient({type:'add'})">Add Patient</button>
+		</div>
+	</div>
+</div>
+</form>

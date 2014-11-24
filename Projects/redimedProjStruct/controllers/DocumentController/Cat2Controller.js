@@ -31,40 +31,36 @@ var InputStream = java.import('java.io.InputStream');
 var FileInputStream = java.import('java.io.FileInputStream');
 
 module.exports = {
-    printReport : function(req,res,next){
+    printReport: function (req, res, next) {
         var calId = req.params.calId;
         var catId = req.params.catId;
         var patientId = req.params.patientId;
 
-        mkdirp('.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId, function (err) {
+        mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
             if (err) console.error(err)
-            else
-            {
-                var con = java.callStaticMethodSync('java.sql.DriverManager','getConnection',"jdbc:mysql://localhost:3306/sakila","root","root");
+            else {
+                var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
 
                 var paramMap = new HashMap();
 
-                paramMap.putSync("cal_id",parseInt(calId));
-                paramMap.putSync("patient_id",parseInt(patientId));
-                paramMap.putSync("key",parseInt(catId));
-                paramMap.putSync("real_path","./reports/CAT2");
+                paramMap.putSync("cal_id", parseInt(calId));
+                paramMap.putSync("patient_id", parseInt(patientId));
+                paramMap.putSync("key", parseInt(catId));
+                paramMap.putSync("real_path", "./reports/CAT2");
 
-                var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\category_2.pdf';
+                var filePath = '.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId + '\\category_2.pdf';
 
-                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager','fillReport','./reports/CAT2/category_2.jasper',paramMap,con);
+                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager', 'fillReport', './reports/CAT2/category_2.jasper', paramMap, con);
 
-                java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager','exportReportToPdfFile',jPrint,filePath,function(err,rs){
-                    if(err)
-                    {
+                java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
+                    if (err) {
                         console.log(err);
                         return;
                     }
-                    else
-                    {
+                    else {
 
-                        res.download(filePath,'category_2.pdf',function(err){
-                            if(err)
-                            {
+                        res.download(filePath, 'category_2.pdf', function (err) {
+                            if (err) {
                                 console.log(err);
                                 return;
                             }
@@ -76,15 +72,15 @@ module.exports = {
         });
 
 
-
     },
     loadCat2: function (req, res) {
         var info = req.body.info;
-        db.Category2.findAll({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
+        console.log(info);
+        db.Category2.find({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
             .success(function (dataCat2) {
-                db.Patient.findAll({where: {patient_id: info.patient_id}}, {raw: true})
+                db.Patient.find({where: {Patient_id: info.patient_id}}, {raw: true})
                     .success(function (patient) {
-                        if (dataCat2.length === 0) {
+                        if (dataCat2 == null || dataCat2.length === 0) {
                             response = [
                                 {
                                     "patient": patient, "status": "findNull"

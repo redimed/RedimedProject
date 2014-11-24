@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.company.list.controller", [])
-.controller("CompanyListController", function ($scope) {
+.controller("CompanyListController", function ($scope, $state, localStorageService) {
 
     var item_type_options = [
         {code: 'Service', label: 'Service'},
@@ -28,6 +28,8 @@ angular.module("app.loggedIn.company.list.controller", [])
     };
 
     $scope.clickRow = function (item) {
-        console.log(item);
+//        console.log(item);
+        localStorageService.set('tempCompanyInfo', item);
+        $state.go('loggedIn.company.detail');
     }
 })

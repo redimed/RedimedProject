@@ -564,6 +564,67 @@ module.exports =
         });
     },
     search: function(req, res){
+        var limit = (req.body.search.limit)?req.body.search.limit:10;
+        var offset = (req.body.search.offset)?req.body.search.offset:0;
+        var data = (req.body.search.data)?req.body.search.data:{};
+
+        var params = "WHERE ";
+        for(var key in data){
+            if(key !== "DATE"){
+                if(data[key] === null)
+                    data[key] = "";
+                params += "IFNULL(d."+key+", 1) LIKE '%"+data[key]+"%' AND ";
+            }else{
+                var str_date = "";
+                for(var key2 in data[key]){
+                    if(data[key][key2].from_map !== null && data[key][key2].to_map !== null){
+                        str_date += "d."+key2;
+                        str_date += " BETWEEN '"+data[key][key2].from_map+"' AND '"+data[key][key2].to_map+"' AND ";
+                    }
+                }
+                params += str_date;
+            }
+        }
+
+        // CUT AND STRING
+        params = params.substring(0, params.length - 5);
+        // END CUT AND STRING
+
+        var sql = "SELECT d.doctor_id, d.NAME, d.Email, d.Phone, d.Title, d.First_name, d.Middle_name, d.Sur_name "+
+            " FROM doctors d "+
+            params+
+            " ORDER BY d.Creation_date DESC "+
+            " LIMIT "+limit+
+            " OFFSET "+offset;
+
+        req.getConnection(function(err, connection){
+
+            var key_result=connection.query(sql,
+                    function(err,rows){
+                        if(err)
+                        {
+                            res.json({status:err});
+                        }
+                        else
+                        {
+                            var count = 0;
+
+                            var key_result = connection.query("SELECT COUNT(d.doctor_id) AS count "+
+                                " FROM doctors d "+
+                                params, function(err, rowsCount){
+                                    if(err)
+                                    {
+                                        res.json({status:err});
+                                    }else{
+                                        var count = rowsCount[0].count;
+                                        res.json({count:count, results:rows, params: params});
+                                    }
+                                }
+                            );
+                        }
+                    }
+            )
+        });
     },
     getById: function(req, res){
         var id = (req.body.id)?req.body.id:0;
@@ -587,6 +648,7 @@ module.exports =
     listByClinical: function(req, res){
         var dept = (req.body.dept)?req.body.dept:0;
         var datepicker = (req.body.datepicker_map)?req.body.datepicker_map:"";
+        var site = (req.body.site)?req.body.site:0;
 
         req.getConnection(function(err, connection){
             var sql = "SELECT DISTINCT cac.DOCTOR_ID, d.NAME"+
@@ -594,7 +656,8 @@ module.exports =
                 " INNER JOIN doctors d ON cac.DOCTOR_ID=d.doctor_id"+
                 " AND cac.clinical_dept_id="+dept+
                 " AND DATE(cac.FROM_TIME) LIKE '%"+datepicker+"%'"+
-                " ORDER BY cac.DOCTOR_ID";
+                " AND cac.SITE_ID="+site+
+                " ORDER BY cac.DOCTOR_ID DESC";
             var query = connection.query(
                 sql
                 ,function(err,rows)
