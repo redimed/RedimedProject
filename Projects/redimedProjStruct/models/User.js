@@ -30,6 +30,7 @@ module.exports = function(sequelize, DataTypes) {
       isAdmin : DataTypes.INTEGER(11) ,
       isReceiveEmailAfterHour : DataTypes.INTEGER(11) ,
       function_id : DataTypes.INTEGER(11) ,
+      function_mobile: DataTypes.INTEGER(11),
       function_taskFlow : DataTypes.STRING(100) ,
       employee_id : DataTypes.INTEGER(11),
       img: DataTypes.TEXT

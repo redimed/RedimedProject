@@ -1,3 +1,7 @@
+var nodemailer = require("nodemailer");
+var smtpTransport = require('nodemailer-smtp-transport');
+var smtpPool = require('nodemailer-smtp-pool');
+
 module.exports = {
 	convertFromHoursToDateTime: function(hours){
 		date = new Date();
@@ -136,5 +140,29 @@ module.exports = {
         }
 
         return year+"-"+month+"-"+date;
-    }
+    },
+	sendMail: function(mailOptions){
+		var transport = nodemailer.createTransport(smtpTransport({
+			host: "mail.redimed.com.au", // hostname
+			secure: false,
+			port: 25, // port for secure SMTP
+			auth: {
+				user: "programmer2",
+				pass: "Hello8080"
+			},
+			tls: {rejectUnauthorized: false},
+			debug:true
+		}));
+
+		transport.sendMail(mailOptions, function(error, response){  //callback
+			if(error){
+				console.log(error);
+				res.json({status:"fail"});
+			}else{
+				console.log("Message sent: " + response.message);
+				res.json({status:"success"});
+			}
+			transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+		});
+	}
 };

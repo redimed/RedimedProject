@@ -272,6 +272,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             resultEmail:null,
             reportEmail:null,
             function_id:null,
+            function_mobile: null,
             empId:null,
             isCalendar:null,
             isProject:null,
@@ -346,6 +347,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             resultEmail:null,
             reportEmail:null,
             function_id:null,
+            function_mobile: null,
             empId:null,
             isCalendar:null,
             isProject:null,
@@ -358,7 +360,17 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         })
 
         OnlineBookingAdminService.getListFunction().then(function(data){
-            $scope.functionList = data;
+            var listWeb = [];
+            var listMobile = [];
+            for(var i=0; i<data.length; i++)
+            {
+                if(data[i].isWeb == 1)
+                    listWeb.push(data[i]);
+                if(data[i].isMobile == 1)
+                    listMobile.push(data[i]);
+            }
+            $scope.functionList = listWeb;
+            $scope.functionMobList = listMobile;
         })
 
         OnlineBookingAdminService.getListEmployee().then(function(data){
@@ -386,6 +398,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             $scope.info.resultEmail = data.result_email;
             $scope.info.reportEmail = data.Report_To_email;
             $scope.info.function_id = data.function_id;
+            $scope.info.function_mobile = data.function_mobile;
             $scope.info.empId = data.employee_id;
             $scope.info.isCalendar = data.isCalendar == 1 ? '1':'0';
             $scope.info.isProject = data.isProject == 1 ? '1':'0';
