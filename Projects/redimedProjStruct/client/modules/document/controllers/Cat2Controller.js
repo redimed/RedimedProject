@@ -2,9 +2,9 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
     .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter, $stateParams, localStorageService) {
         $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-       // var doctorInfo = $cookieStore.get('doctorInfo');
+        // var doctorInfo = $cookieStore.get('doctorInfo');
         var Patient_ID = $scope.patientInfo.Patient_id;
-        var CalID = $scope.apptInfo.CAL_ID;
+        var CalID = $scope.apptInfo.CAL_ID || -1;
 
         //begin show-hidden img signature
         //clear signature
