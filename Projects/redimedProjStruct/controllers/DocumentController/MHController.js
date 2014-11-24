@@ -82,12 +82,7 @@ module.exports = {
                     .success(function (dataG) {
                         db.linesMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
                             .success(function (dataL) {
-                                db.subquestionsMHCLN.findAll({
-                                    where: {
-                                        PATIENT_ID: PATIENT_ID,
-                                        CAL_ID: CAL_ID
-                                    }
-                                }, {raw: true})
+                                db.subquestionsMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
                                     .success(function (dataS) {
                                         db.Patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
                                             .success(function (patient) {

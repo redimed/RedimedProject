@@ -8,10 +8,10 @@
             </button>
             <a href="/api/document/printMRS/{{info.PATIENT_ID}}/{{info.CAL_ID}}/{{info.headers[0].MRS_DF_ID}}"
                     type="button"
-                    ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required || infoChanged() || isNew"
+                    ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required"
                      class="btn btn-primary blue pull-right">Print PDF
             </a>
-            <button ng-disabled="!infoChanged() || mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
+            <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>
 </div>

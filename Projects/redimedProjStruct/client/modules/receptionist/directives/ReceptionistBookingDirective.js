@@ -28,9 +28,8 @@ angular.module("app.loggedIn.receptionist.booking.directive", [])
 
 			//ACTION PATIENT ID
 			scope.$watch("patient", function(newPatient){
-				scope.modelObjectMap.CAL_ID = scope.data.CAL_ID;
-
 				if(typeof newPatient !== 'undefined'){
+					scope.modelObjectMap.CAL_ID = scope.data.CAL_ID;
 					scope.modelObjectMap.Patient_id = newPatient.Patient_id;
 
 					if(scope.data.patients[0].Patient_id !== 0){

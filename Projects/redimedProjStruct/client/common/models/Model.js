@@ -138,3 +138,15 @@ angular.module("app.model", [])
 	bill_to: 1
 })
 // END APPOINTMENT CALENDAR
+
+//WAITING LIST
+.value("WaitingListModel", {
+	id: null,
+	reason: '',
+	priority: null,
+	doctor_id: null,
+	Patient_id: null,
+	Creation_date: null,
+	Created_by: null
+})
+//END WAITING LIST

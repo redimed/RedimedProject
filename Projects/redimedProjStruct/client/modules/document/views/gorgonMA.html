@@ -1,4 +1,4 @@
-<form name="gorgonMAForm" ng-submit="submitGorgonMA(gorgonMAForm)" method="post" novalidate>
+﻿<form name="gorgonMAForm" ng-submit="submitGorgonMA(gorgonMAForm)" method="post" novalidate>
 <div class="caption">
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -6,7 +6,9 @@
                     class="btn green pull-right">{{isNew?"Add New":"Update"}}
             </button>
             <a href="/api/document/printgorgonMAReport/{{info.GORGON_ID}}/{{info.CalId}}"
+
                ng-disabled="isNew || infoChanged()"
+
                 class="btn btn-primary blue pull-right">Print PDF
             </a>
             <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()"

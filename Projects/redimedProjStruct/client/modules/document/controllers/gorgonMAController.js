@@ -30,10 +30,11 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
         };
 
 
-        //$scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        var CalID = -1;//$scope.apptInfo.CAL_ID;
+        var CalID = $scope.apptInfo.CAL_ID;
         var Patient_ID = $scope.patientInfo.Patient_id;
+
         $scope.checkAudiogram = function () {
             if ($scope.info.AUDIOGRAM == true) {
                 $scope.info.RIGHT_EAR_500 =  null,
@@ -263,6 +264,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                         if (response['status'] === 'success') {
                             toastr.success("Successfully","Success");
                             $scope.isNew = false;
+
                             $state.go('loggedIn.gorgonMA', null, {'reload': true});
                         }
                         else {

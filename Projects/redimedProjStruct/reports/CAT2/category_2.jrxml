@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="category_3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="96cc77b9-d078-41e3-ba89-9854d46780bc">
 	<property name="ireport.zoom" value="1.1269722013523664"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2455"/>
+	<property name="ireport.y" value="8064"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -19,7 +19,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT p.`First_name` , p.`Sur_name` ,
-CONCAT(IFNULL(p.`First_name` ,''), IFNULL(p.`Sur_name`,'')) AS 'full_name' ,
+CONCAT(CONCAT(IFNULL(p.`First_name` ,''),' '), IFNULL(p.`Sur_name`,'')) AS 'full_name' ,
     p.`DOB` , IFNULL(p.`Address1`,p.`Address2`)  AS address ,
     p.`Occupation` ,
 e.`Company_name` AS 'e_name' ,
@@ -681,15 +681,15 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<imageExpression><![CDATA[$P{real_path}+"/images/c3.png"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="301" y="599" width="186" height="20" uuid="51d0135b-f07a-40f2-ae21-e938f8ebafb7"/>
+				<reportElement x="290" y="607" width="186" height="20" uuid="51d0135b-f07a-40f2-ae21-e938f8ebafb7"/>
 				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="359" y="655" width="104" height="37" uuid="59b4d775-dca2-484e-a229-7c103637573d"/>
+				<reportElement x="334" y="655" width="104" height="37" uuid="59b4d775-dca2-484e-a229-7c103637573d"/>
 				<imageExpression><![CDATA[$V{Signature1}]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="352" y="697" width="100" height="20" uuid="d41a5e68-76a3-4ab8-8a35-f6c1e76b07e2"/>
+				<reportElement x="307" y="702" width="100" height="20" uuid="d41a5e68-76a3-4ab8-8a35-f6c1e76b07e2"/>
 				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -1784,27 +1784,27 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="37" y="542" width="230" height="15" uuid="9c49be2b-d4d2-4470-a67c-7d01c46e14b6"/>
+				<reportElement x="26" y="542" width="230" height="15" uuid="9c49be2b-d4d2-4470-a67c-7d01c46e14b6"/>
 				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="47" y="665" width="265" height="15" uuid="f899f5aa-832c-4762-9eca-00b4177c4b4a"/>
+				<reportElement x="47" y="670" width="265" height="15" uuid="f899f5aa-832c-4762-9eca-00b4177c4b4a"/>
 				<textFieldExpression><![CDATA[$F{d_name}]]></textFieldExpression>
 			</textField>
 			<image isUsingCache="false">
-				<reportElement x="108" y="680" width="117" height="38" uuid="25693b98-4ff1-4c54-bde3-caddb0d1f906"/>
+				<reportElement x="61" y="680" width="117" height="38" uuid="25693b98-4ff1-4c54-bde3-caddb0d1f906"/>
 				<imageExpression><![CDATA[$V{d_sign}]]></imageExpression>
 			</image>
 			<image isUsingCache="false">
-				<reportElement x="182" y="597" width="100" height="36" uuid="c3aa85f6-17e8-4b4c-b0b2-34059ee71664"/>
+				<reportElement x="140" y="591" width="100" height="36" uuid="c3aa85f6-17e8-4b4c-b0b2-34059ee71664"/>
 				<imageExpression><![CDATA[$V{Signature1}]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="374" y="607" width="121" height="20" uuid="073156bb-d5c9-48e0-9825-ff30dedd8480"/>
+				<reportElement x="365" y="614" width="121" height="20" uuid="073156bb-d5c9-48e0-9825-ff30dedd8480"/>
 				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="372" y="692" width="127" height="20" uuid="fc893165-e9c3-440b-92a1-5f11cdd9bb9e"/>
+				<reportElement x="363" y="699" width="127" height="20" uuid="fc893165-e9c3-440b-92a1-5f11cdd9bb9e"/>
 				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -2529,11 +2529,11 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<imageExpression><![CDATA[$P{real_path}+"/images/c9.png"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="21" y="633" width="157" height="20" uuid="4675e016-286a-45ad-b0e9-5273b7594fe1"/>
+				<reportElement x="21" y="643" width="157" height="20" uuid="4675e016-286a-45ad-b0e9-5273b7594fe1"/>
 				<textFieldExpression><![CDATA[$F{d_name}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="261" y="620" width="80" height="33" uuid="d6b3e33d-1bb3-4662-bbff-62e26c7d8243"/>
+				<reportElement x="221" y="620" width="80" height="33" uuid="d6b3e33d-1bb3-4662-bbff-62e26c7d8243"/>
 				<imageExpression><![CDATA[$V{d_sign}]]></imageExpression>
 			</image>
 			<image>
@@ -2547,15 +2547,15 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<textFieldExpression><![CDATA[$F{rel_cmt}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd" isBlankWhenNull="true">
-				<reportElement x="436" y="640" width="26" height="16" uuid="effee45d-0012-4ac2-be59-7c66fedf1eb3"/>
+				<reportElement x="436" y="643" width="26" height="16" uuid="effee45d-0012-4ac2-be59-7c66fedf1eb3"/>
 				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MM" isBlankWhenNull="true">
-				<reportElement x="468" y="640" width="26" height="13" uuid="54bb9138-7fc1-43f0-8e95-efd349f7a23f"/>
+				<reportElement x="468" y="643" width="26" height="13" uuid="54bb9138-7fc1-43f0-8e95-efd349f7a23f"/>
 				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy" isBlankWhenNull="true">
-				<reportElement x="510" y="640" width="26" height="16" uuid="1443a1e9-825f-4c24-986b-2182348636ba"/>
+				<reportElement x="510" y="643" width="26" height="16" uuid="1443a1e9-825f-4c24-986b-2182348636ba"/>
 				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -2665,7 +2665,7 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="383" y="128" width="65" height="20" uuid="faa0033c-01ef-4637-b5ff-fc2b948130f8"/>
+				<reportElement x="383" y="130" width="65" height="20" uuid="faa0033c-01ef-4637-b5ff-fc2b948130f8"/>
 				<textFieldExpression><![CDATA[$F{r1_4_y}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -2677,11 +2677,11 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<textFieldExpression><![CDATA[$F{r1_8_c}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="379" y="245" width="78" height="20" uuid="fa26e35f-4d35-45d1-b592-9d180bbe6128"/>
+				<reportElement x="379" y="250" width="78" height="20" uuid="fa26e35f-4d35-45d1-b592-9d180bbe6128"/>
 				<textFieldExpression><![CDATA[$F{r2_2_y}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="408" y="318" width="128" height="17" uuid="22d78912-dbcb-42e4-b2eb-7d5447fbd63b"/>
+				<reportElement x="408" y="320" width="128" height="17" uuid="22d78912-dbcb-42e4-b2eb-7d5447fbd63b"/>
 				<textFieldExpression><![CDATA[$F{r2_7_c}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -2706,15 +2706,15 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<textFieldExpression><![CDATA[$F{r4_2_c}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd" isBlankWhenNull="true">
-				<reportElement x="291" y="90" width="31" height="17" uuid="5b70133b-db77-428b-ac8e-dd2ab30df8a0"/>
+				<reportElement x="291" y="93" width="31" height="17" uuid="5b70133b-db77-428b-ac8e-dd2ab30df8a0"/>
 				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MM" isBlankWhenNull="true">
-				<reportElement x="328" y="90" width="31" height="17" uuid="d9845d4b-fd55-416b-8063-17330eed8839"/>
+				<reportElement x="328" y="93" width="31" height="17" uuid="d9845d4b-fd55-416b-8063-17330eed8839"/>
 				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy" isBlankWhenNull="true">
-				<reportElement x="365" y="90" width="31" height="17" uuid="27a6c025-2aab-4c50-9cbc-8e030dd5ef4e"/>
+				<reportElement x="365" y="93" width="31" height="17" uuid="27a6c025-2aab-4c50-9cbc-8e030dd5ef4e"/>
 				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
 			</textField>
 		</band>

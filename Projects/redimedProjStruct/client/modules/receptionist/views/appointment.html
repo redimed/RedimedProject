@@ -1,6 +1,8 @@
 <span id="appointment">
 
-<h3 class="page-title">Appointment {{patient}}</h3>
+<mdt-waiting-list></mdt-waiting-list>
+
+<h3 class="page-title">Appointment</h3>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
@@ -76,7 +78,7 @@
 							status: status, type: 'one'})">
 
 						<ul class="mdt-list-booking-patient">
-							<li ng-repeat="p in status">
+							<li ng-repeat="p in status track by $index">
 								<a ng-click="bookingaPatient(data, overviewIndex, doctorIndex)">
 									{{p.Patient_name}}
 								</a>
