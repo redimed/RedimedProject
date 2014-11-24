@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="row static-info">
                                         <div class="col-md-5 name">
-                                            Other name:
+                                            First name:
                                         </div>
                                         <div class="col-md-7 value">
                                             {{newBooking.ASS_OTHERNAMES}}
@@ -235,15 +235,18 @@
                                     <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_OTHERNAMES.$invalid  && hadForcused}">
                                         <div class="col-md-4">
                                             <label class="control-label" for="WRK_OTHERNAMES">
-                                                Other name:
+                                                First name:
                                             </label>
                                         </div>
                                         <div class="col-md-8">
                                             <input class="form-control" type="text"
                                                    ng-maxlength="50"
-                                                   ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES" name="WRK_OTHERNAMES"/>
+                                                   ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES" name="WRK_OTHERNAMES" required />
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_OTHERNAMES.$error.required  && hadForcused">
+                                                First name is required.
+                                            </small>
                                             <small class="help-block pull-right" ng-show="bookingForm.WRK_OTHERNAMES.$error.maxlength && hadForcused">
-                                                Other name cannot be longer than 50 characters.
+                                                First name cannot be longer than 50 characters.
                                             </small>
                                         </div>
                                     </div>
@@ -289,18 +292,17 @@
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_EMAIL.$invalid  && hadForcused}">
                                         <div class="col-md-4">
                                             <label class="control-label" for="WRK_EMAIL">Email address:
-                                                <span class="required" aria-required="true">*</span>
+                                                <!--<span class="required" aria-required="true">*</span>-->
                                             </label>
                                         </div>
                                         <div class="col-md-8">
                                             <input class="form-control" type="email" name="WRK_EMAIL"
-                                                   required
                                                    ng-maxlength="50"
                                                    ng-model="newBooking.WRK_EMAIL" id="WRK_EMAIL"/>
 
-                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.required  && hadForcused">
-                                                Email is required.
-                                            </small>
+                                            <!--<small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.required  && hadForcused">-->
+                                                <!--Email is required.-->
+                                            <!--</small>-->
                                             <small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.email  && hadForcused">
                                                 That is not a valid email. Please input a valid email.
                                             </small>
@@ -332,15 +334,17 @@
                                     </div>
 
                                     <div class="row form-group">
-                                        <div class="col-md-4">
+                                        <div class="col-md-12">
                                             <!--for="ISNEW"-->
-                                            <label>Is the patient new to REDiMED:</label>
-                                        </div>
-                                        <div class="col-md-8">
+                                            <label>Is the patient new to REDiMED     </label>
+                                        <!--</div>-->
+                                        <!--<div style="margin-top: 5px" class="col-md-7">-->
                                             <!--<input  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW" id="ISNEW">-->
 
-                                            <input style="float: left" type="radio" ng-model="newBooking.ISNEW" value="1">YES<br/>
-                                            <input style="float: left" type="radio" ng-model="newBooking.ISNEW" value="0">NO<br/>
+                                            <input type="radio" ng-model="newBooking.ISNEW" value="1">
+                                            <span>YES</span>
+                                            <input type="radio" ng-model="newBooking.ISNEW" value="0">
+                                            <span>NO</span>
                                         </div>
                                     </div>
 
@@ -379,16 +383,19 @@
                                     </label>
                                     <p>
                                         REDiLEGAL to contact the patient and arrage a time
-                                        <input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTPATIENT">
+                                        <input style="" type="radio" ng-model="newBooking.ISCONTACTPATIENT" value="1">
+                                        <span>YES</span>
+                                        <input style="" type="radio" ng-model="newBooking.ISCONTACTPATIENT" value="0">
+                                        <span>NO</span>
                                     </p>
-                                    <p>
-                                        REDiLEGAL to contact the case manager to arrange a time for the worker
-                                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTMANAGER">
-                                    </p>
-                                    <p>
-                                        Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment
-                                        <input title="sdfasdfadsf" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.isUrgent">
-                                    </p>
+                                    <!--<p>-->
+                                        <!--REDiLEGAL to contact the case manager to arrange a time for the worker-->
+                                        <!--<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTMANAGER">-->
+                                    <!--</p>-->
+                                    <!--<p>-->
+                                        <!--Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment-->
+                                        <!--<input title="sdfasdfadsf" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.isUrgent">-->
+                                    <!--</p>-->
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.NOTES.$invalid  && hadForcused}">
                                         <div class="col-md-12 col-sm-12">

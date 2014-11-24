@@ -1,12 +1,11 @@
 <div class="modal-body">
     <div class="actions">
-
         <div class="row">
             <div class="col-md-3 col-sm-3">
                 <p>Location</p>
                 <p>
                     <select class="form-control" ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()">
-                        <option  value=""></option>
+                        <option  value="">All</option>
                     </select>
                 </p>
             </div>
@@ -14,7 +13,7 @@
                 <p>Type</p>
                 <p>
                     <select class="form-control "  ng-model="selectedFilter.rltypeSelected" ng-options="rltype.Rl_TYPE_NAME for rltype in rltypesFilter" ng-change="rlTypesFilterChange(selectedFilter.rltypeSelected.RL_TYPE_ID)">
-                        <option  value=""></option>
+                        <option  value="">All</option>
                     </select>
                 </p>
             </div>
@@ -24,7 +23,7 @@
                 </p>
                 <p>
                     <select class="form-control " ng-model="selectedFilter.clnSpecialitySelected" ng-options="speciality.Specialties_name for speciality in specialitiesFilter" ng-change="specialitiesChange(selectedFilter.clnSpecialitySelected.Specialties_id)">
-                        <option  value=""></option>
+                        <option  value="">All</option>
                     </select>
                 </p>
             </div>
@@ -32,7 +31,7 @@
                 <p>Doctor</p>
                 <p>
                     <select class="form-control "  ng-model="selectedFilter.doctorSelected" ng-options="doctor.NAME for doctor in doctorsFilter" ng-change="updateAppoinmentsList();">
-                        <option  value=""></option>
+                        <option  value="">All</option>
                     </select>
                 </p>
             </div>
