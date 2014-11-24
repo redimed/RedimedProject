@@ -13,7 +13,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
 
         $timeout(function(){
             $scope.selectedBooking=localStorageService.get("selectedBooking");
-        }, 500);
+        },600);
 
         var serverUpload = "http://testapp.redimed.com.au:3000/api/im/upload";
         function uploadFile(img, server, params) {

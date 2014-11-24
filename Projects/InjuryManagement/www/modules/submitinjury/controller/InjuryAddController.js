@@ -331,13 +331,101 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
 
         $scope.isCollapsed = false;
+              //maps
+              //Google map
+        $scope.testMap = function(){
 
-
-
+            new GMaps({
+                div: '#map',
+                lat: -12.043333,
+                lng: -77.028333
+            });
+        }
 
 
 
     })
+
+    .directive("mdtMap", function(){
+        return {
+            restrict: "A",
+            replace: "true",
+            scope:{
+                address: '='
+            },
+            link: function(scope, element, attrs){
+                var id = "#"+attrs.id;
+
+                alert(scope.address);
+                var map = new GMaps({
+                    el: id,
+                    lat: -12.043333,
+                    lng: -77.028333,
+                    zoomControl : true,
+                    zoomControlOpt: {
+                        style : 'SMALL',
+                        position: 'TOP_LEFT'
+                    },
+                    panControl : false,
+                    streetViewControl : false,
+                    mapTypeControl: false,
+                    overviewMapControl: false
+                });
+
+                GMaps.geolocate({
+                    success: function(position) {
+                        map.setCenter(position.coords.latitude, position.coords.longitude);
+                        map.addMarker({
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                            title: 'Lima',
+                            click: function(e) {
+                                alert('You clicked in this marker');
+                            }
+                        });
+
+                    },
+                    error: function(error) {
+                        alert('Geolocation failed: '+error.message);
+                    },
+                    not_supported: function() {
+                        alert("Your browser does not support geolocation");
+                    }
+                    //,
+                    //always: function() {
+                    //    alert("done");
+                    //}
+                });
+
+
+                   var ad= function(){
+                       GMaps.geocode({
+                           address:scope.address ,
+                           callback: function(results, status){
+                               if(status=='OK'){
+                                   var latlng = results[0].geometry.location;
+                                   map.setCenter(latlng.lat(), latlng.lng());
+                                   map.addMarker({
+                                       lat: latlng.lat(),
+                                       lng: latlng.lng()
+                                   });
+                               }
+                           }
+                       });
+                   }
+
+                    scope.$watch('address',function(newadd,oldadd){
+                        if(typeof newadd!== undefined){
+                            scope.address = newadd;
+                            ad();
+                        }
+                    })
+
+
+
+            }
+        }
+    });
 
 //.directive('noDragRight', ['$ionicGesture', function($ionicGesture) {
 //
