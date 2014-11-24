@@ -1,0 +1,178 @@
+<form name="claimForm" novalidate>
+<!-- ACTION -->
+<div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-2 col-sm-3 col-xs-6">
+        <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+            <i class="fa fa-plus"></i>
+            {{mode.text}}
+        </button>
+    </div>
+</div>
+<!-- END ACTION -->
+
+<div class="row">
+	<!-- REASON -->
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <span class="field">
+            <label for="reason">Reason</label>
+            <input type="text" id="reason"
+                name="reason" ng-model="modelObjectMap.reason" placeholder="Reason" float-label />
+        </span>
+    </div>
+    <!-- END REASON -->
+</div>
+
+<div class="row">
+	<!-- INJURY NAME -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field" ng-class="{'has-error': claimForm.injury_name.$invalid && isSubmit}">
+            <label for="injury_name">Inury name</label>
+            <input type="text" id="injury_name" required
+                name="injury_name" ng-model="modelObjectMap.Injury_name" placeholder="Injury Name" float-label />
+            <!-- ERROR -->
+            <span ng-show="claimForm.injury_name.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="claimForm.injury_name.$error.required">
+                    Injury Name is required
+                </span>
+            </span>
+            <!-- ERROR -->
+        </span>
+    </div>
+    <!-- END INJURY NAME -->
+
+    <!-- INJURY DATE -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field" ng-class="{'has-error': claimForm.injury_date.$invalid && isSubmit}">
+            <label for="injury_date">Injury Date *</label>
+            <input ui-date="{dateFormat: 'dd/mm/yy'}" id="injury_date" placeholder="Injury Date" name="injury_date" required 
+                ng-model="modelObjectMap.Injury_date" float-label>
+            <!-- ERROR -->
+            <span ng-show="claimForm.injury_date.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="claimForm.injury_date.$error.required">
+                    Injury Date is required
+                </span>
+            </span>
+            <!-- ERROR -->
+        </span>
+    </div>
+    <!-- END INJURY DATE -->
+
+    <!-- LOCATION -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="location">Location</label>
+            <input type="text" id="location"
+                name="location" ng-model="modelObjectMap.Location" placeholder="Location" float-label />
+        </span>
+    </div>
+    <!-- END LOCATION -->
+
+    <div class="break-row"></div>
+
+    <!-- HOW INJURY OCCURRED -->
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <span class="field">
+            <label for="how_injury_occurred">How Injury Occurred</label>
+            <input type="text" id="how_injury_occurred"
+                name="how_injury_occurred" ng-model="modelObjectMap.How_Injury_Occurred" 
+                placeholder="How Injury Occurred" float-label />
+        </span>
+    </div>
+    <!-- END HOW INJURY OCCURRED -->
+
+    <!-- ADDRESS -->
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <span class="field">
+            <label for="address">Address</label>
+            <input type="text" id="address"
+                name="address" ng-model="modelObjectMap.Address" 
+                placeholder="Address" float-label />
+        </span>
+    </div>
+    <!-- END ADDRESS -->
+
+    <div class="break-row"></div>
+
+    <!-- CLAIM DATE -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field" ng-class="{'has-error': claimForm.claim_date.$invalid && isSubmit}">
+            <label for="claim_date">Claim Date *</label>
+            <input ui-date="{dateFormat: 'dd/mm/yy'}" id="claim_date" placeholder="Claim Date" name="claim_date" required 
+                ng-model="modelObjectMap.Claim_date" float-label>
+            <!-- ERROR -->
+            <span ng-show="claimForm.claim_date.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="claimForm.claim_date.$error.required">
+                    Claim Date is required
+                </span>
+            </span>
+            <!-- ERROR -->
+        </span>
+    </div>
+    <!-- END CLAIM DATE -->
+
+    <!-- CLAIM NO -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field" ng-class="{'has-error': claimForm.claim_no.$invalid && isSubmit}">
+            <label for="claim_no">Claim No</label>
+            <input type="number" placeholder="Claim Number" name="claim_no" 
+                ng-model="modelObjectMap.Claim_no" min="0" required
+                class="form-control" id="claim_no" float-label>
+            <!-- ERROR -->
+            <span ng-show="claimForm.claim_no.$invalid && isSubmit">
+            	<span class="mdt-popover above" ng-show="claimForm.claim_no.$error.required">
+                    Claim No is required
+                </span>
+                <span class="mdt-popover above" ng-show="claimForm.claim_no.$error.number">
+                    Claim No must be number
+                </span>
+                <span class="mdt-popover above" ng-show="claimForm.claim_no.$error.min">
+                    Claim No must be large than zero
+                </span>
+            </span>
+            <!-- ERROR -->
+        </span>
+    </div>
+    <!-- END CLAIM NO -->
+
+    <!-- INSURER -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="insurer">Insurer</label>
+            <input type="text" id="insurer"
+                name="insurer" ng-model="modelObjectMap.Insurer" 
+                placeholder="Insurer" float-label />
+        </span>
+    </div>
+    <!-- END INSURER -->
+
+    <div class="break-row"></div>
+
+    <!-- CASE MANAGER -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="case_manager">Case Manager</label>
+            <input type="text" id="case_manager"
+                name="case_manager" ng-model="modelObjectMap.Case_manager" 
+                placeholder="Case Manager" float-label />
+        </span>
+    </div>
+    <!-- END CASE MANAGER -->
+
+    <!-- IS ENABLE -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" 
+            ng-model="modelObjectMap.Isenable" ng-true-value="1" ng-false-value="0">
+        <label for="isenable">Is Enable</label>
+    </div>
+    <!-- END IS ENABLE -->
+
+    <!-- IS CURRENT -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <input type="checkbox" name="iscurrent" id="iscurrent" class="mdt-checkbox" 
+            ng-model="modelObjectMap.isCurr" ng-true-value="1" ng-false-value="0">
+        <label for="iscurrent">Is Current</label>
+    </div>
+    <!-- END IS CURRENT -->
+
+    <div class="break-row"></div>
+</div>
