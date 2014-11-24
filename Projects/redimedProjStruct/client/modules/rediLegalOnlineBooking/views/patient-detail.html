@@ -35,6 +35,8 @@
                                         </div>
                                     </div>
                                     <div class="row static-info">
+                                        <!--chien-->
+                                        <!--phanquocchien.c1109g@gmail.com-->
                                         <div class="col-md-5 name">
                                             First name:
                                         </div>
@@ -234,14 +236,20 @@
 
                                     <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_OTHERNAMES.$invalid  && hadForcused}">
                                         <div class="col-md-4">
-                                            <label class="control-label" for="WRK_OTHERNAMES">
-                                                First name:
+                                            <!--chien-->
+                                            <!--phanquocchien.c1109g@gmail.com-->
+                                            <label class="control-label" for="WRK_OTHERNAMES">First name:
+                                            <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
                                         <div class="col-md-8">
+                                            <!--chien-->
+                                            <!--phanquocchien.c1109g@gmail.com-->
                                             <input class="form-control" type="text"
                                                    ng-maxlength="50"
                                                    ng-model="newBooking.WRK_OTHERNAMES" id="WRK_OTHERNAMES" name="WRK_OTHERNAMES" required />
+                                            <!--chien-->
+                                            <!--phanquocchien.c1109g@gmail.com-->
                                             <small class="help-block pull-right" ng-show="bookingForm.WRK_OTHERNAMES.$error.required  && hadForcused">
                                                 First name is required.
                                             </small>
@@ -296,10 +304,13 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
+                                            <!--chien-->
+                                            <!--phanquocchien.c1109g@gmail.com-->
                                             <input class="form-control" type="email" name="WRK_EMAIL"
                                                    ng-maxlength="50"
                                                    ng-model="newBooking.WRK_EMAIL" id="WRK_EMAIL"/>
-
+                                            <!--chien-->
+                                            <!--phanquocchien.c1109g@gmail.com-->
                                             <!--<small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.required  && hadForcused">-->
                                                 <!--Email is required.-->
                                             <!--</small>-->
@@ -334,13 +345,14 @@
                                     </div>
 
                                     <div class="row form-group">
+                                        <!--chien-->
+                                        <!--phanquocchien.c1109g@gmail.com-->
                                         <div class="col-md-12">
                                             <!--for="ISNEW"-->
                                             <label>Is the patient new to REDiMED     </label>
                                         <!--</div>-->
                                         <!--<div style="margin-top: 5px" class="col-md-7">-->
                                             <!--<input  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW" id="ISNEW">-->
-
                                             <input type="radio" ng-model="newBooking.ISNEW" value="1">
                                             <span>YES</span>
                                             <input type="radio" ng-model="newBooking.ISNEW" value="0">
@@ -381,6 +393,8 @@
                                     <label style="font-weight: bolder; color: #585858; font-size: x-large">
                                         Appointment
                                     </label>
+                                    <!--chien-->
+                                    <!--phanquocchien.c1109g@gmail.com-->
                                     <p>
                                         REDiLEGAL to contact the patient and arrage a time
                                         <input style="" type="radio" ng-model="newBooking.ISCONTACTPATIENT" value="1">
@@ -388,6 +402,8 @@
                                         <input style="" type="radio" ng-model="newBooking.ISCONTACTPATIENT" value="0">
                                         <span>NO</span>
                                     </p>
+                                    <!--chien-->
+                                    <!--phanquocchien.c1109g@gmail.com-->
                                     <!--<p>-->
                                         <!--REDiLEGAL to contact the case manager to arrange a time for the worker-->
                                         <!--<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTMANAGER">-->

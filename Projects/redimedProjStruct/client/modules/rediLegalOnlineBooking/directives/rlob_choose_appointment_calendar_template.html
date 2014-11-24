@@ -3,6 +3,8 @@
         <div class="row">
             <div class="col-md-3 col-sm-3">
                 <p>Location</p>
+                <!--chien-->
+                <!--phanquocchien.c1109g@gmail.com-->
                 <p>
                     <select class="form-control" ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()">
                         <option  value="">All</option>
@@ -11,6 +13,8 @@
             </div>
             <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
                 <p>Type</p>
+                <!--chien-->
+                <!--phanquocchien.c1109g@gmail.com-->
                 <p>
                     <select class="form-control "  ng-model="selectedFilter.rltypeSelected" ng-options="rltype.Rl_TYPE_NAME for rltype in rltypesFilter" ng-change="rlTypesFilterChange(selectedFilter.rltypeSelected.RL_TYPE_ID)">
                         <option  value="">All</option>
@@ -21,6 +25,8 @@
                 <p>
                     Specialty
                 </p>
+                <!--chien-->
+                <!--phanquocchien.c1109g@gmail.com-->
                 <p>
                     <select class="form-control " ng-model="selectedFilter.clnSpecialitySelected" ng-options="speciality.Specialties_name for speciality in specialitiesFilter" ng-change="specialitiesChange(selectedFilter.clnSpecialitySelected.Specialties_id)">
                         <option  value="">All</option>
@@ -29,6 +35,8 @@
             </div>
             <div ng-show="bookingType=='REDiLEGAL'" class="col-md-3  col-sm-3">
                 <p>Doctor</p>
+                <!--chien-->
+                <!--phanquocchien.c1109g@gmail.com-->
                 <p>
                     <select class="form-control "  ng-model="selectedFilter.doctorSelected" ng-options="doctor.NAME for doctor in doctorsFilter" ng-change="updateAppoinmentsList();">
                         <option  value="">All</option>
