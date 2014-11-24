@@ -65,7 +65,8 @@ angular.module('app.loggedIn.document.form18.controllers', [])
             }
             else {
                 var Patient_ID = patientInfo.Patient_id;
-                var CalID = apptInfo.CAL_ID;
+                //var CalID = apptInfo.CAL_ID;
+                var CalID = -1; //set default value
                 $scope.info = {
                     GORGON_ID: null,
                     PATIENT_ID: Patient_ID,
