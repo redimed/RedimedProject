@@ -6,11 +6,10 @@
                     ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required || !infoChanged()"
                     ng-click="submit(mrsForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
             </button>
-            <button href="/api/document/printMRS/{{dataH.PATIENT_ID}}/{{dataH.CAL_ID}}/{{dataH.MRS_DF_ID}}"
-                    type="button"
-                    ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required"
+            <a href="/api/document/printMRS/{{info.headers[0].PATIENT_ID}}/{{info.headers[0].CAL_ID}}/{{info.headers[0].MRS_DF_ID}}"
+                    ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required || infoChanged() ||isNew"
                      class="btn btn-primary blue pull-right">Print PDF
-            </button>
+            </a>
             <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
         </div>
     </div>
