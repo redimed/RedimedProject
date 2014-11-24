@@ -405,6 +405,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                                if(status=='OK'){
                                    var latlng = results[0].geometry.location;
                                    map.setCenter(latlng.lat(), latlng.lng());
+
                                    map.addMarker({
                                        lat: latlng.lat(),
                                        lng: latlng.lng()
@@ -416,7 +417,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
                     scope.$watch('address',function(newadd,oldadd){
                         if(typeof newadd!== undefined){
+
                             scope.address = newadd;
+
                             ad();
                         }
                     })
