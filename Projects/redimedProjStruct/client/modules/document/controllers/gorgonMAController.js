@@ -30,9 +30,6 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
         };
 
 
-        $scope.print = function () {
-            $window.location.href = '/api/document/gorgonMA/print/5';
-        }
         $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
         var CalID = $scope.apptInfo.CAL_ID;
@@ -239,7 +236,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                     DocumentService.insertGorgonMA(info).then(function (response) {
                         if (response['status'] === 'success') {
                             alert("Insert Successfully!");
-                            $state.go('LoggedIn.MA', null, {'reload': true});
+                            $state.go('loggedIn.gorgonMA', null, {'reload': true});
                         }
                         else {
                             alert("Insert Failed!");
@@ -250,7 +247,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                     DocumentService.editGorgonMA(info).then(function (response) {
                         if (response['status'] === 'success') {
                             alert("Edit Successfully!");
-                            $state.go('LoggedIn.MA', null, {'reload': true});
+                            $state.go('loggedIn.gorgonMA', null, {'reload': true});
 
                         }
                         else {
