@@ -19,11 +19,10 @@
 
                     <label class="item item-input item-select" ng-class="{'has-error':isSubmit && info.Title.$invalid}">
                         <span class="input-label span-input-color">Title</span>
-                        <select ng-required="true" ng-model="worker.Title" name="worker"
+                        <select ng-required="true" ng-model="worker.Title" name="Title"
                                 ng-options="row.name as row.name for row in titleIndex" ng-disabled="worker.Patient_id != -1 && temp1.Title">
                             <option value="">--Select Title--</option>
                         </select>
-                        <i ng-class="{'icon ion-alert-circled error':isSubmit && info.Title.$invalid}"></i>
                     </label>
 
                     <label class="item item-input" ng-class="{'has-error':isSubmit && info.First_name.$invalid}">
@@ -104,19 +103,18 @@
                         </a>
                     </ion-scroll>
 
-                    <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Mobile.$invalid || isFailMobile}">
+                    <label class="item item-input" ng-class="{'has-error':(isSubmit && info.Mobile.$invalid) || isFailMobile}">
                         <span class="input-label span-input-color">Mobile Phone</span>
-                        <input ng-required="true" type="tel" ng-model="worker.Mobile" name="Mobile" ng-blur="Checkfield(isMobile = true)" ng-disabled="worker.Patient_id != -1 && temp1.Mobile"/>
-                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Mobile.$invalid || isFailMobile}"></i>
+                        <input ng-required="true" type="tel" ng-model="worker.Mobile" name="Mobile" ng-change="Checkfield(isMobile = true)" ng-disabled="worker.Patient_id != -1 && temp1.Mobile"/>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Mobile.$invalid || isFailMobile}"></i>
                     </label>
 
-                    <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Email.$invalid || isFailEmail}">
+                    <label class="item item-input" ng-class="{'has-error':(isSubmit && info.Email.$invalid) || isFailEmail}">
                         <span class="input-label span-input-color">Email</span>
-                        <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-blur="Checkfield(isMobile = false)" ng-disabled="worker.Patient_id != -1 && temp1.Email"/>
-                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Email.$invalid || isFailEmail}"></i>
+                        <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-change="Checkfield(isMobile = false)" ng-disabled="worker.Patient_id != -1 && temp1.Email"/>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Email.$invalid || isFailEmail}"></i>
                     </label>
 
-                    <!---->
                     <label class="item item-input item-select" ng-class="{'has-error':isSubmit && info.Sex.$invalid}">
                         <span class="input-label span-input-color">Sex</span>
                         <select ng-required="true" ng-model="worker.Sex" name="Sex" ng-disabled="worker.Patient_id != -1 && temp1.Sex"
@@ -125,16 +123,6 @@
                         </select>
                         <i ng-class="{'icon ion-alert-circled error':isSubmit && infor.Sex.$invalid}"></i>
                     </label>
-
-                    <!--<label class="item item-input item-select" ng-class="{'has-error':isSubmit && info.Sex.$invalid}">-->
-                        <!--<span class="input-label span-input-color">Gender</span>-->
-                        <!--<select ng-required="true" ng-model="worker.Sex" name="Sex" ng-disabled="worker.Patient_id != -1 && temp1.Sex">-->
-                            <!--<option>Female</option>-->
-                            <!--<option>Male</option>-->
-                            <!--<option>Other</option>-->
-                        <!--</select>-->
-                        <!--<i ng-class="{'icon ion-alert-circled error':isSubmit && info.Sex.$invalid}"></i>-->
-                    <!--</label>-->
 
                     <label class="item item-input" ng-class="{'has-error':isSubmit && info.DOB.$invalid}">
                         <span class="input-label span-input-color">Birthday</span>
@@ -162,8 +150,6 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-
-
                 </div>
             </ion-list>
         </ion-content>
