@@ -15,7 +15,7 @@ angular.module('starter', ['ionic',
   'app.config',
   'starter.worker',
   'starter.booking',
-  'ui.bootstrap'
+  'ui.bootstrap',
 
 
 ])

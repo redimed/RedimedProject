@@ -16,10 +16,8 @@
                 <input ng-required="true" type="date"
 
                        ng-model="selectedFilter.date" name="Date"  />
-                {{selectedFilter.date}}
+
             </label>
-
-
             <label  class="item item-input item-select" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
                 <span class="input-label span-input-color">Location</span>
                 <select  ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()">
@@ -67,6 +65,4 @@
             </div>
         </ion-list>
     </ion-content>
-
-
 </ion-view>
