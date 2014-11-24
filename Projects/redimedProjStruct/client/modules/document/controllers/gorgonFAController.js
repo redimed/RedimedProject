@@ -45,20 +45,11 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             return age;
         }
 
-
-        // Get CalID & PatientID
-//        var CalID = $stateParams.CalID;
-//        var Patient_ID = $stateParams.PatientID;
-//        console.log("gorgon FA: " + CalID + " patient: " + Patient_ID);
-
-        $scope.apptInfo = localStorageService.get('tempAppt');
+        //$scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        var doctorInfo = $cookieStore.get('doctorInfo');
-        console.log(doctorInfo);
-        console.log($scope.apptInfo);
-        console.log($scope.patientInfo);
+        //var doctorInfo = $cookieStore.get('doctorInfo');
         var Patient_ID = $scope.patientInfo.Patient_id;
-        var CalID = $scope.apptInfo.CAL_ID;
+        var CalID = -1;//$scope.apptInfo.CAL_ID;
         var sex = $scope.patientInfo.Sex;
         //============================================================================
         // Math on interface
@@ -116,10 +107,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             }
 
         };
-
-        $scope.print = function(){
-            $window.location.href = '/api/document/gorgonFA/print/7';
-        }
 
         $scope.c_Right3 = function(){
             if($scope.info.c_Grip3 == 0)
@@ -563,6 +550,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                     var info = $scope.info;
                     DocumentService.insertGorgonFA(info).then(function(response){
                         if(response['status'] === 'success') {
+                            $scope.isNew = false;
                             toastr.success("Successfully","Success");
                         }
                         else

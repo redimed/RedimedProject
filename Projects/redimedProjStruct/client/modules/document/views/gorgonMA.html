@@ -6,7 +6,7 @@
                     class="btn green pull-right">{{isNew?"Add New":"Update"}}
             </button>
             <a href="/api/document/printgorgonMAReport/{{info.GORGON_ID}}/{{info.CalId}}"
-               ng-disabled="isNew == true"
+               ng-disabled="isNew"
                 class="btn btn-primary blue pull-right">Print PDF
             </a>
             <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()"
