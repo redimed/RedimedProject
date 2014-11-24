@@ -109,6 +109,20 @@ function K_SQL(req, res) {
         });
     }
 
+    /*
+    *   TRANSACTION
+    */
+    this.start_transaction = function(){
+        return this.exec2 ('START TRANSACTION');
+    }
+
+    this.commit = function(){
+        return this.exec2 ('COMMIT');
+    }
+
+    this.rollback = function(){
+        return this.exec2 ('ROLLBACK');
+    }
 	/***
 	*	PUBLIC FUNCTION
 	**/

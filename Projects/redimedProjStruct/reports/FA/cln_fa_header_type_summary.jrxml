@@ -3,6 +3,8 @@
 	<property name="ireport.zoom" value="1.3310000000000024"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="CAL_ID_PARAM" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -17,7 +19,7 @@
 	</parameter>
 	<parameter name="DIR_PATH" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT 	DISTINCT header.*,line.`LINE_ID`
+		<![CDATA[SELECT 	DISTINCT header.*,line.`LINE_ID`, SUBSTRING_INDEX(header.`ASSESSED_SIGN`, ',', -1) AS  'ASSESSED_SIGN_1'
 FROM 	`cln_fa_df_headers` header INNER JOIN `cln_fa_df_sections` section ON header.`FA_ID`=section.`FA_ID` AND header.`PATIENT_ID`=section.`PATIENT_ID` AND header.`CAL_ID`=section.`CAL_ID`
 	INNER JOIN `cln_fa_df_lines` line ON section.`SECTION_ID`=line.`SECTION_ID` AND section.`PATIENT_ID`=line.`PATIENT_ID` AND section.`CAL_ID`=line.`CAL_ID`
 WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
@@ -93,7 +95,7 @@ WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
 	<field name="ASSESSED_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ASSESSED_SIGN" class="java.lang.Object">
+	<field name="ASSESSED_SIGN" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="ASSESSED_DATE" class="java.sql.Timestamp">
@@ -102,9 +104,13 @@ WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
 	<field name="ASSESSED_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="ITEM_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="LINE_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="ASSESSED_SIGN_1" class="java.lang.String"/>
 	<group name="HEADER_SUMMARY_GROUP">
 		<groupExpression><![CDATA[$F{FA_ID}]]></groupExpression>
 		<groupHeader>
@@ -154,11 +160,11 @@ WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
 					</staticText>
 					<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 						<reportElement positionType="Float" x="272" y="88" width="13" height="13" uuid="33840b40-e3e1-4907-a9e6-9aac6f104b29"/>
-						<imageExpression><![CDATA[$P{DIR_PATH}+( $F{Recommend}!=null && $F{Recommend}.equals( "YES" )?"checked.png":"uncheck.png")]]></imageExpression>
+						<imageExpression><![CDATA[$P{DIR_PATH}+( $F{Recommend}!=null && $F{Recommend}.equals( "0" )?"checked.png":"uncheck.png")]]></imageExpression>
 					</image>
 					<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 						<reportElement positionType="Float" x="322" y="88" width="13" height="13" uuid="d8585729-14b2-45bf-b631-110f8e1c6575"/>
-						<imageExpression><![CDATA[$P{DIR_PATH}+( $F{Recommend}!=null && $F{Recommend}.equals( "NO" )?"checked.png":"uncheck.png")]]></imageExpression>
+						<imageExpression><![CDATA[$P{DIR_PATH}+( $F{Recommend}!=null && $F{Recommend}.equals( "1" )?"checked.png":"uncheck.png")]]></imageExpression>
 					</image>
 					<staticText>
 						<reportElement positionType="Float" x="289" y="83" width="23" height="20" uuid="5bb164d6-4ac1-4c75-8cc4-35673c16f5d0"/>
@@ -215,17 +221,17 @@ WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
 				</staticText>
 				<ellipse>
 					<reportElement mode="Transparent" x="39" y="15" width="100" height="20" uuid="16bfa87b-1460-4f91-9862-ee716a3a9e8e">
-						<printWhenExpression><![CDATA[$F{Risk}!=null && $F{Risk}.equals( "LOW" )]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{Risk}!=null && $F{Risk}.equals( "0" )]]></printWhenExpression>
 					</reportElement>
 				</ellipse>
 				<ellipse>
 					<reportElement mode="Transparent" x="214" y="15" width="100" height="20" uuid="d97ef01c-46eb-49c0-a1a6-d873af5a1d40">
-						<printWhenExpression><![CDATA[$F{Risk}!=null && $F{Risk}.equals( "MEDIUM" )]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{Risk}!=null && $F{Risk}.equals( "1" )]]></printWhenExpression>
 					</reportElement>
 				</ellipse>
 				<ellipse>
 					<reportElement mode="Transparent" x="389" y="15" width="100" height="20" uuid="97ea1b83-e804-416d-a0f3-769c50891944">
-						<printWhenExpression><![CDATA[$F{Risk}!=null && $F{Risk}.equals( "HIGH" )]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{Risk}!=null && $F{Risk}.equals( "2" )]]></printWhenExpression>
 					</reportElement>
 				</ellipse>
 				<frame>
@@ -354,7 +360,7 @@ WHERE	header.`ISENABLE`=1 AND section.`ISENABLE`=1 AND line.`ISENABLE`=1
 				</textField>
 				<image vAlign="Bottom">
 					<reportElement positionType="Float" x="263" y="193" width="100" height="37" uuid="2f6de339-899a-4c29-8aa7-0e958c3318f1"/>
-					<imageExpression><![CDATA[$F{ASSESSED_SIGN}]]></imageExpression>
+					<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{ASSESSED_SIGN_1}.getBytes("UTF-8"))))]]></imageExpression>
 				</image>
 			</band>
 		</groupFooter>

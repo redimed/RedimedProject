@@ -568,6 +568,30 @@ angular.module("app.directive.common", [])
     };
 })
 
+.directive("floatLabel", function(){
+    return {
+        require: "ngModel",
+        restrict: "A",
+        scope:{
+            ngModel: "="
+        },
+        link: function(scope, element, attrs){
+            scope.$watch("ngModel", function(newModel, oldModel){
+                if(typeof newModel === 'undefined' || newModel === '' || newModel === null){
+                    element.parent().removeClass('show-label');
+                }else{
+                    element.parent().addClass('show-label');
+
+                    if(attrs.toDate){
+                        angular.element("#"+attrs.toDate).datepicker("option", "minDate", scope.ngModel);
+                    }else if(attrs.fromDate){
+                        angular.element("#"+attrs.fromDate).datepicker("option", "maxDate", scope.ngModel);
+                    }
+                } // end else
+            })
+        }
+    }
+})
 
     .directive("signature", function ($timeout) {
         return {
@@ -617,5 +641,96 @@ angular.module("app.directive.common", [])
                 date.getUTCSeconds());
         };
 
+    })
+
+.directive("myDataTable", function (Restangular) {
+    return{
+        restrict: "E",
+        templateUrl: "common/views/mydatatable.html",
+        scope: {
+            options: '=options',
+            row_click: '=rowclick',
+        },
+        controller: function ($scope, $element, $attrs, $http) {
+            var options = $scope.options;
+            $scope.search = {};
+            
+            var getFields = function () {
+                var fields = [];
+                for (var i = 0, len = options.columns.length; i < len; ++i) {
+                    var item = options.columns[i];
+                    fields.push(item.field);
+                }
+                return fields;
+            }
+            
+            var getSearchData = function(){
+                for(var key in options.filters) {
+                    var model = $scope.search[key];
+                }
+            }
+            
+            var processData = function(data){
+                $scope.data.items = data.list;
+                $scope.page_data.totalItems = data.count;
+            }
+
+            $scope.ajaxGetData = function () {
+                var limit = $scope.page_data.itemPerPage;
+                var offset = ($scope.page_data.currentPage - 1) * limit;
+                var fields = getFields();
+                var opt = {
+                    limit: limit,
+                    offset: offset,
+                    fields: fields,
+                };
+                if(options.use_filters) {
+                    opt.search = $scope.search;
+                }
+
+                if (options.method && options.method.toLowerCase() == 'post') {
+                    Restangular.all(options.api).post(opt).then(processData);
+                } else {
+                    Restangular.one(options.api).get(opt).then(processData);
+                }
+            }
+
+
+            var init = function () {
+                $scope.data = {};
+                $scope.search = {};
+                $scope.limit_opt = [
+                    {value: 5},
+                    {value: 10},
+                    {value: 20},
+                    {value: 50},
+                ];
+                $scope.page_data = {
+                    totalItems: 0,
+                    currentPage: 1,
+                    maxSize: 5, // max size of pagination
+                    itemPerPage: 4
+                };
+
+                if (options.api) {
+                    $scope.ajaxGetData();
+                }
+            }
+            init();
+        }
+    }
 })
 
+.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});

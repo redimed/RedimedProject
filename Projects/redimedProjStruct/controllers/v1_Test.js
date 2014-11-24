@@ -59,5 +59,28 @@ module.exports = {
         };
 
         res.json(r);
+    },
+    getTransaction: function(req, res) {
+
+        var result = null, result2 = null;
+
+        var k_sql = res.locals.k_sql;
+        k_sql.start_transaction()
+        .then(function (data) {
+            console.log(data);
+            return  k_sql.exec('UPDATE cln_insurers SET suburb = \'ZZZZ\' WHERE id = 1');
+        }).then(function (data) {
+            result = data;
+            return k_sql.exec('INSERT INTO cln_insurers(id, insurer_name) VALUES (5, \'CAI NAY  NE\')');
+        }).then(function (data) {
+            result2 = data;
+            return k_sql.commit();
+        }).then(function (data) {
+             res.json(result);
+        }).catch(function(err){
+            k_sql.rollback().then(function(){
+                res.json('error')
+            });
+        });
     }
 }

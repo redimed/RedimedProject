@@ -17,6 +17,7 @@ angular.module("app", [
     "app.loggedIn",             // MODULES LOGGED IN
     "app.security",              // FOR LOGIN, FOTGOT FORM, REGISTER FORM
      "app.config", // ANGULAR CONFIG
+    "app.model",    // ANGULAR MODEL
     "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
     "ui.slider", // ANGULAR SLIDER
     "pragmatic-angular", // ANGULAR PRAGMATIC
@@ -28,7 +29,8 @@ angular.module("app", [
     'ui.tree',                   // angular ui tree for [admin_booking]-- tannv.dts@gmail.com
     'ng-context-menu',            // angular context menu (menu right click) for [admin_booking]-- tannv.dts@gmail.com
 	'LocalStorageModule',
-    'ui-iconpicker'
+    'ui-iconpicker',
+    'ngPDFViewer'
 ])
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {

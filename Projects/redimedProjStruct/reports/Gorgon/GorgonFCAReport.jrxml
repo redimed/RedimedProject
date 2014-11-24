@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonFCAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1453719-11ad-40a0-b0d5-bfa64cf77775">
-	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2030"/>
+	<property name="ireport.y" value="4268"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -16,7 +18,7 @@
      gorgon_doc_fca.`DOB` AS gorgon_doc_fca_DOB,
      gorgon_doc_fca.`DOA` AS gorgon_doc_fca_DOA,
      gorgon_doc_fca.`IsConsentReason` AS gorgon_doc_fca_IsConsentReason,
-     gorgon_doc_fca.`fsign` AS gorgon_doc_fca_fsign,
+     SUBSTRING_INDEX(gorgon_doc_fca.`fsign`, ',', -1) AS gorgon_doc_fca_fsign,
      gorgon_doc_fca.`fsignDate` AS gorgon_doc_fca_fsignDate,
      gorgon_doc_fca.`Estimated` AS gorgon_doc_fca_Estimated,
      gorgon_doc_fca.`EstimatedComments` AS gorgon_doc_fca_EstimatedComments,
@@ -149,7 +151,7 @@ WHERE
 	<field name="gorgon_doc_fca_DOB" class="java.sql.Date"/>
 	<field name="gorgon_doc_fca_DOA" class="java.sql.Date"/>
 	<field name="gorgon_doc_fca_IsConsentReason" class="java.lang.Integer"/>
-	<field name="gorgon_doc_fca_fsign" class="java.io.InputStream"/>
+	<field name="gorgon_doc_fca_fsign" class="java.lang.String"/>
 	<field name="gorgon_doc_fca_fsignDate" class="java.sql.Date"/>
 	<field name="gorgon_doc_fca_Estimated" class="java.lang.Integer"/>
 	<field name="gorgon_doc_fca_EstimatedComments" class="java.lang.String"/>
@@ -432,7 +434,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="71" y="219" width="144" height="40" uuid="79e3c72e-9500-48b3-80a9-077e461d40ad"/>
-				<imageExpression><![CDATA[$F{gorgon_doc_fca_fsign}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{gorgon_doc_fca_fsign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="10" y="279" width="310" height="14" uuid="65fb97c3-51d5-4994-94e0-1709fa08ee74"/>
@@ -6720,7 +6722,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Reference:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="359" width="534" height="14" uuid="ffcbb4bc-d995-478c-a791-aa2b1b64ad92"/>
+				<reportElement x="10" y="360" width="534" height="14" uuid="ffcbb4bc-d995-478c-a791-aa2b1b64ad92"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>

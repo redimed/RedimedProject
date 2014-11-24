@@ -7,6 +7,7 @@ angular.module('app.loggedIn.document.COE.controllers', [])
             var insert = true;
         //================================================================
         // Start Signature
+
         var tempSignature;
         $scope.isSignature = false;
         $scope.showSignature = function () {

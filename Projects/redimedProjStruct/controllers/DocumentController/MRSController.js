@@ -46,7 +46,7 @@ module.exports = {
                 paramMap.putSync("cal_id",parseInt(calId));
                 paramMap.putSync("patient_id",parseInt(patientId));
                 paramMap.putSync("key",parseInt(id));
-                paramMap.putSync("real_path","./reports/MRS");
+                paramMap.putSync("real_path","./reports/MRS/");
                 paramMap.putSync("SUBREPORT_DIR","./reports/MRS");
 
                 var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\MRS.pdf';

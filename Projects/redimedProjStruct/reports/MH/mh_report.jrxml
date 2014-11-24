@@ -2,7 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mh_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ed7ad48-d2ae-4fdc-8d98-79bb0b845af6">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1245"/>
+	<property name="ireport.y" value="240"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -176,13 +178,13 @@ ORDER BY `GROUP_ID`]]>
      cln_mh_df_headers.PATIENT_ID AS cln_mh_df_headers_PATIENT_ID,
      cln_mh_df_headers.CAL_ID AS cln_mh_df_headers_CAL_ID,
      cln_mh_df_headers.MH_DF_ID AS cln_mh_df_headers_MH_DF_ID,
-     cln_mh_df_headers.Sign AS cln_mh_df_headers_Sign,
-     cln_mh_df_headers.Sign AS cln_mh_df_headers_Sign_2,
+     SUBSTRING_INDEX(cln_mh_df_headers.Sign, ',', -1) AS cln_mh_df_headers_Sign,
+     SUBSTRING_INDEX(cln_mh_df_headers.Sign, ',', -1) AS cln_mh_df_headers_Sign_2,
      cln_mh_df_headers.Date AS cln_mh_df_headers_Date,
      cln_patients.Sex AS cln_patients_Sex,
-     cln_mh_df_headers.Statement_sign AS cln_mh_df_headers_Statement_sign,
+     SUBSTRING_INDEX(cln_mh_df_headers.Statement_sign, ',', -1) AS cln_mh_df_headers_Statement_sign,
      cln_mh_df_headers.Declaration_witness_sign AS cln_mh_df_headers_Declaration_witness_sign,
-     cln_mh_df_headers.Declaration_sign AS cln_mh_df_headers_Declaration_sign,
+     SUBSTRING_INDEX(cln_mh_df_headers.Declaration_sign, ',', -1) AS cln_mh_df_headers_Declaration_sign,
      cln_patients.NOK_Emerg_Contact AS cln_patients_NOK_Emerg_Contact,
      cln_patients.Partner_name AS cln_patients_Partner_name
 FROM
@@ -207,13 +209,13 @@ WHERE
 	<field name="cln_mh_df_headers_PATIENT_ID" class="java.lang.Integer"/>
 	<field name="cln_mh_df_headers_CAL_ID" class="java.lang.Integer"/>
 	<field name="cln_mh_df_headers_MH_DF_ID" class="java.lang.Integer"/>
-	<field name="cln_mh_df_headers_Sign" class="java.io.InputStream"/>
-	<field name="cln_mh_df_headers_Sign_2" class="java.io.InputStream"/>
+	<field name="cln_mh_df_headers_Sign" class="java.lang.String"/>
+	<field name="cln_mh_df_headers_Sign_2" class="java.lang.String"/>
 	<field name="cln_mh_df_headers_Date" class="java.sql.Timestamp"/>
 	<field name="cln_patients_Sex" class="java.lang.String"/>
-	<field name="cln_mh_df_headers_Statement_sign" class="java.io.InputStream"/>
+	<field name="cln_mh_df_headers_Statement_sign" class="java.lang.String"/>
 	<field name="cln_mh_df_headers_Declaration_witness_sign" class="java.lang.String"/>
-	<field name="cln_mh_df_headers_Declaration_sign" class="java.io.InputStream"/>
+	<field name="cln_mh_df_headers_Declaration_sign" class="java.lang.String"/>
 	<field name="cln_patients_NOK_Emerg_Contact" class="java.lang.String"/>
 	<field name="cln_patients_Partner_name" class="java.lang.String"/>
 	<background>
@@ -302,7 +304,7 @@ WHERE
 				<reportElement x="349" y="100" width="1" height="194" uuid="394b382c-ba8b-4f01-a8f2-acd4178f8bcc"/>
 			</line>
 			<staticText>
-				<reportElement x="362" y="99" width="98" height="20" uuid="066cb457-f73a-45de-94e7-42da2d0e91c9"/>
+				<reportElement x="362" y="105" width="98" height="20" uuid="066cb457-f73a-45de-94e7-42da2d0e91c9"/>
 				<textElement textAlignment="Left">
 					<font isBold="true"/>
 				</textElement>
@@ -319,14 +321,14 @@ WHERE
 				<text><![CDATA[Home Address:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="129" width="73" height="20" uuid="11f97d09-f8a4-4671-bcff-2fa1f2023974"/>
+				<reportElement x="362" y="135" width="73" height="20" uuid="11f97d09-f8a4-4671-bcff-2fa1f2023974"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Home Phone:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="163" width="76" height="20" uuid="419c1fa6-3d4c-41b8-998b-955484e6f796"/>
+				<reportElement x="362" y="165" width="76" height="20" uuid="419c1fa6-3d4c-41b8-998b-955484e6f796"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -381,7 +383,7 @@ WHERE
 				<text><![CDATA[As above]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
-				<reportElement x="149" y="294" width="21" height="20" uuid="aba5e1dd-904c-4902-be63-cb08f66ed209"/>
+				<reportElement x="149" y="290" width="21" height="20" uuid="aba5e1dd-904c-4902-be63-cb08f66ed209"/>
 				<imageExpression><![CDATA[$F{cln_patients_Address2} == null || $F{cln_patients_Address1}.equals($F{cln_patients_Address2}.toString()) ?$P{real_path}+ "checked.jpg": $P{real_path} +"nocheck.jpg"]]></imageExpression>
 			</image>
 			<line>
@@ -430,11 +432,11 @@ WHERE
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="79" width="141" height="20" uuid="5cd2dfc7-a37a-447b-90fc-064f12949c05"/>
+				<reportElement x="100" y="82" width="141" height="20" uuid="5cd2dfc7-a37a-447b-90fc-064f12949c05"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_Sur_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="392" y="79" width="146" height="20" uuid="df02a8d3-062b-4a36-b11c-ebdae32d44e4"/>
+				<reportElement x="392" y="82" width="146" height="20" uuid="df02a8d3-062b-4a36-b11c-ebdae32d44e4"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_First_name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
@@ -442,7 +444,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cln_patients_DOB}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="455" y="99" width="83" height="20" uuid="8ba0befd-91ae-4f85-a652-38bdcd72df97"/>
+				<reportElement x="455" y="105" width="83" height="20" uuid="8ba0befd-91ae-4f85-a652-38bdcd72df97"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_Phone_ext}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -450,11 +452,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cln_patients_Address1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="438" y="129" width="100" height="20" uuid="43f6474e-2bea-4930-940d-dbbe4fa33acb"/>
+				<reportElement x="438" y="135" width="100" height="20" uuid="43f6474e-2bea-4930-940d-dbbe4fa33acb"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_Home_phone}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="438" y="163" width="100" height="20" uuid="c05b3a87-8552-45f6-9ea0-fb22e1806fd6"/>
+				<reportElement x="438" y="165" width="100" height="20" uuid="c05b3a87-8552-45f6-9ea0-fb22e1806fd6"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_Mobile}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -467,7 +469,6 @@ WHERE
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="363" y="232" width="162" height="17" uuid="4b133019-97cb-46c4-aaa7-7cb404cce6a1"/>
-				<textFieldExpression><![CDATA[]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="363" y="269" width="162" height="20" uuid="520c50bf-45dc-495f-971a-53cecc245553"/>
@@ -490,7 +491,7 @@ WHERE
 			</textField>
 			<image scaleImage="FillFrame">
 				<reportElement x="244" y="417" width="119" height="59" uuid="763262b4-c708-4535-af93-a8c4043ad57d"/>
-				<imageExpression><![CDATA[$F{cln_mh_df_headers_Sign_2}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{cln_mh_df_headers_Sign_2}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="229" y="109" width="15" height="20" uuid="5401736e-2f45-4930-944c-5b8583f415b8"/>
@@ -500,7 +501,7 @@ WHERE
 				<text><![CDATA[M]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
-				<reportElement x="247" y="109" width="17" height="19" uuid="64461b1d-2f12-4894-974d-ebc8f8dedacf"/>
+				<reportElement x="247" y="105" width="17" height="19" uuid="64461b1d-2f12-4894-974d-ebc8f8dedacf"/>
 				<imageExpression><![CDATA[$F{cln_patients_Sex} != null && $F{cln_patients_Sex}.equals("Male")?$P{real_path}+"checked.jpg":$P{real_path}+"nocheck.jpg"]]></imageExpression>
 			</image>
 			<staticText>
@@ -511,7 +512,7 @@ WHERE
 				<text><![CDATA[F]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
-				<reportElement x="285" y="109" width="18" height="19" uuid="ed3c495e-4e1d-463c-94dd-c378d532056f"/>
+				<reportElement x="285" y="105" width="18" height="19" uuid="ed3c495e-4e1d-463c-94dd-c378d532056f"/>
 				<imageExpression><![CDATA[$F{cln_patients_Sex} != null && $F{cln_patients_Sex}.equals("Female")?$P{real_path}+"checked.jpg":$P{real_path}+"nocheck.jpg"]]></imageExpression>
 			</image>
 		</band>
@@ -641,11 +642,11 @@ employed, my employment may be terminated.]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
 				<reportElement x="100" y="151" width="135" height="42" uuid="141345c3-99d2-40c2-a098-28a32643dc19"/>
-				<imageExpression><![CDATA[$F{cln_mh_df_headers_Sign}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{cln_mh_df_headers_Sign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement x="100" y="465" width="129" height="50" uuid="cb662ddc-e256-4c2d-87f6-0bb07c908cbe"/>
-				<imageExpression><![CDATA[$F{cln_mh_df_headers_Declaration_sign}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{cln_mh_df_headers_Declaration_sign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="11" y="320" width="22" height="20" uuid="55813f6b-e5c7-4cc4-9c1d-e7d4f9e3683e"/>
@@ -857,7 +858,7 @@ past health has been withheld]]></text>
 				<text><![CDATA[Name:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="262" y="153" width="41" height="20" uuid="b93b04cd-ec41-42e8-a131-b64f961ea54d"/>
+				<reportElement x="262" y="153" width="25" height="20" uuid="b93b04cd-ec41-42e8-a131-b64f961ea54d"/>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
@@ -865,12 +866,12 @@ past health has been withheld]]></text>
 				<textFieldExpression><![CDATA[$F{cln_patients_First_name}+" "+$F{cln_patients_Middle_name}+" "+$F{cln_patients_Sur_name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="303" y="153" width="100" height="20" uuid="85677e19-5c35-4e12-ab53-f73e5243f569"/>
+				<reportElement x="292" y="153" width="100" height="20" uuid="85677e19-5c35-4e12-ab53-f73e5243f569"/>
 				<textFieldExpression><![CDATA[$F{cln_mh_df_headers_Date}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame">
-				<reportElement x="100" y="150" width="144" height="35" uuid="bb8a112d-446d-4dd6-b082-7c599cbbb8ea"/>
-				<imageExpression><![CDATA[$F{cln_mh_df_headers_Statement_sign}]]></imageExpression>
+				<reportElement x="85" y="150" width="144" height="35" uuid="bb8a112d-446d-4dd6-b082-7c599cbbb8ea"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{cln_mh_df_headers_Statement_sign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="70" y="204" width="194" height="1" uuid="b4e57edc-67cf-4c4b-b12d-52bc34e61635"/>

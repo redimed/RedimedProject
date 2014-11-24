@@ -1189,6 +1189,31 @@ angular.module('app.config', [])
         return accountApi.get();
     }
 
+    configService.private_type_option = function(){
+        var privateApi = configApi.one("patient/list_private_fund");
+        return privateApi.get();
+    }
+
+    configService.referral_source_option = function(){
+        var referralApi = configApi.one("patient/list_referral_source");
+        return referralApi.get();
+    }
+
+    configService.marial_status_option = function(){
+        var marialApi = configApi.one("patient/list_marial_status");
+        return marialApi.get();
+    }
+
+    configService.culture_option = function(){
+        var cultureApi = configApi.one("patient/list_culture");
+        return cultureApi.get();
+    }
+
+    configService.language_option = function(){
+        var languageApi = configApi.one("patient/list_language");
+        return languageApi.get();
+    }
+
     configService.system_service_by_clinical = function(clinical_dept_id){
         var serviceApi = configApi.all("system/listServiceByClinical");
         return serviceApi.post({dept:clinical_dept_id});

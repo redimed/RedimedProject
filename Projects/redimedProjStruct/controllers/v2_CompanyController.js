@@ -1,22 +1,100 @@
 var CompanyModel = require('../v1_models/Companies');
-var InsurerModel =  require('../v1_models/Cln_insurers');
 
 module.exports = {
-	
-	getSearch: function(req, res){
-		var limit = (req.query.limit) ? req.query.limit : 10;
-        var offset = (req.query.offset) ? req.query.offset : 0;
+
+	getDetail: function(req, res) {
+		var id = req.query.id;
+		if(!id) {
+			res.end();
+			return; 
+		}
+		var sql = CompanyModel.get(id);
+		var k_sql = req.k_sql;
+		k_sql.exec_row( sql, function(data){
+			res.json({status: 'success', row: data});
+		}, function(err) {
+			res.json({status: 'error'});
+		});
+	},
+	postGetAll : function (req, res) {
+		var fields = req.body.fields;
+
+		var sql = CompanyModel.sql_get_all(fields);
+		var k_sql = res.locals.k_sql;
+
+		k_sql.exec(sql, function (data) {
+			res.json({status: 'success', list: data});
+        }, function(err) {
+			res.json({status: 'error'});
+		});
+	}, 
+	postInsert: function(req, res) {
+		var data = req.body.data;
+
+		if(!data) {
+			res.end();
+			return; 
+		}
+
+		var sql = CompanyModel.sql_insert(data);
+		var k_sql = res.locals.k_sql;
+
+		k_sql.exec(sql, function (data) {
+			res.json({status: 'success', data: data});
+        }, function(err) {
+			res.json({status: 'error'});
+		});
+	},
+	postUpdate: function(req, res) {
+		var id = req.query.id;
+		var data = req.body.data;
+		if(!id || !data) {
+			res.end();
+			return; 
+		}
+
+		var sql = CompanyModel.sql_update(id, data);
+		var k_sql = res.locals.k_sql;
+		k_sql.exec(sql, function (data) {
+			res.json({status: 'success', data: data});
+        }, function(err) {
+			res.json({status: 'error'});
+		});
+	},
+	postDelete: function(req, res) {
+		var id = req.body.id;
+
+		if(!id) {
+			res.end();
+			return; 
+		}
+
+		var sql = CompanyModel.sql_delete(id);
+		var k_sql = req.k_sql;
+		k_sql.exec( function(data){
+			res.json({status: 'success', data: data});
+		}, function(err) {
+			res.json({status: 'error'});
+		});
+	},
 		
-		var Company_name = req.query.name;
-		//var sql = CompanyModel.sql_search_item(limit, offset, code, name, type);
+	postSearch: function(req, res){
+		var limit = (req.body.limit) ? req.body.limit : 10;
+        var offset = (req.body.offset) ? req.body.offset : 0;
+		var fields = req.body.fields;
+
+		var search_data = req.body.search;
 		
-		CompanyModel._callback.search = function(query_builder){
-			if(Company_name)
-				query_builder.where('Company_name LIKE ?', '%' + Company_name + '%');
-		};
+		if(search_data) {
+			CompanyModel._callback.search = function(query_builder){
+				for (var key in search_data) {
+					query_builder.where(key + ' LIKE ?', '%' + search_data[key] + '%');
+				}
+			};
+		}
 		
 		var sql_count = CompanyModel.sql_search_count();
-        var sql_data = CompanyModel.sql_search_data(limit, offset);
+        var sql_data = CompanyModel.sql_search_data(limit, offset, fields);
 		
 		var k_sql = req.k_sql;
 		var result = null;
@@ -28,15 +106,5 @@ module.exports = {
 		}).catch(function(err){
 			console.log(err);
 		})
-		
 	},
-	
-	getGetAll : function (req, res) {
-		var sql = CompanyModel.sql_get_all(['id', 'company_name']);
-		var k_sql = res.locals.k_sql;
-
-		k_sql.exec(sql, function (data) {
-			res.json(data);
-        });
-	}, 
 }

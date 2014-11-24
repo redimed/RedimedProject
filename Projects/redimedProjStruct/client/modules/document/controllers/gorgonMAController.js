@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.gorgonMA.controllers', [])
-    .controller("gorgonMAController", function ($scope, $filter, DocumentService, $http, $cookieStore, $state, toastr, $stateParams) {
+    .controller("gorgonMAController", function ($scope, $filter, DocumentService, $http, $cookieStore, $state, toastr, $stateParams,localStorageService) {
         var isEdit = true;
         var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
 
@@ -30,12 +30,10 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
         };
 
 
-        $scope.print = function () {
-            $window.location.href = '/api/document/gorgonMA/print/5';
-        }
-
-        var CalID = $stateParams.CalID;
-        var Patient_ID = $stateParams.PatientID;
+        $scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        var CalID = $scope.apptInfo.CAL_ID;
+        var Patient_ID = $scope.patientInfo.Patient_id;
         console.log("gorgon MA: " + CalID + " patient: " + Patient_ID);
 
 
@@ -238,7 +236,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                     DocumentService.insertGorgonMA(info).then(function (response) {
                         if (response['status'] === 'success') {
                             alert("Insert Successfully!");
-                            $state.go('LoggedIn.MA', null, {'reload': true});
+                            $state.go('loggedIn.gorgonMA', null, {'reload': true});
                         }
                         else {
                             alert("Insert Failed!");
@@ -249,7 +247,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                     DocumentService.editGorgonMA(info).then(function (response) {
                         if (response['status'] === 'success') {
                             alert("Edit Successfully!");
-                            $state.go('LoggedIn.MA', null, {'reload': true});
+                            $state.go('loggedIn.gorgonMA', null, {'reload': true});
 
                         }
                         else {

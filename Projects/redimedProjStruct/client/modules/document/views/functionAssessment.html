@@ -5,12 +5,19 @@
                 ng-disabled="!infoChanged()"
                 class="btn green pull-right">{{isNew?"Add New":"Update"}}
         </button>
-        <a href="javascript:;" type="button"
-           ng-disabled="isNew == true"
-           ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
+        <!--<a href="javascript:;" type="button"-->
+           <!--ng-disabled="isNew == true"-->
+           <!--ng-click="print()" class="btn btn-primary blue pull-right">Print PDF-->
+        <!--</a>-->
+
+        <a href="/api/document/FA/print-report/{{infoH.CAL_ID}}/{{infoH.PATIENT_ID}}/{{infoH.FA_ID}}"
+           ng-disabled="FAForm.$error.pattern || FAForm.$error.maxlength || FAForm.$error.required"
+           class="btn btn-primary blue pull-right">Print PDF
         </a>
+
         <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
     </div>
+
 </div>
     <div ng-repeat="header in listFA">
 

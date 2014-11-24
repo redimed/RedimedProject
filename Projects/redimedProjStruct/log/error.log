@@ -4,3 +4,6 @@ Error at Thu Nov 20 2014 22:57:13 GMT+0700 (SE Asia Standard Time) : {"code":"ER
 Exec SQL: SELECT doctor_id,  first_nae FROM doctors LIMIT 3 OFFSET 2
 Error at Thu Nov 20 2014 22:57:53 GMT+0700 (SE Asia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
 
+Exec SQL: INSERT INTO cln_insurers(id, insurer_name) VALUES (5, 'CAI NAY  NE')
+Error at Sat Nov 22 2014 14:31:25 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+

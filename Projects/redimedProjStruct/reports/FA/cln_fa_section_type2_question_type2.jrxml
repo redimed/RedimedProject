@@ -73,9 +73,9 @@ WHERE 	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 	<group name="LINE_GROUP">
 		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="30">
+			<band height="27">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="0" y="10" width="440" height="20" uuid="37e977e6-3bc8-4c28-aa94-aab585727512"/>
+					<reportElement x="0" y="7" width="440" height="20" uuid="37e977e6-3bc8-4c28-aa94-aab585727512"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>

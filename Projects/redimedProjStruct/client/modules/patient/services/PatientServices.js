@@ -4,6 +4,21 @@ angular.module("app.loggedIn.patient.services", [])
     var instanceService = {};
     var appApi = Restangular.all("api");
 
+    instanceService.getClaim = function(claim_id){
+        var claimApi = appApi.all("patient/getClaim");
+        return claimApi.post({'Claim_id': claim_id});
+    }
+
+    instanceService.insertClaim = function(data){
+        var claimApi = appApi.all("patient/insertClaim");
+        return claimApi.post(data);
+    }
+
+    instanceService.editClaim = function(data){
+        var claimApi = appApi.all("patient/editClaim");
+        return claimApi.post(data);
+    }
+
     instanceService.getSkinApp = function(image){
         var skinappApi = appApi.all("v1/skinapp/patient/image");
         return skinappApi.post({'image': image});

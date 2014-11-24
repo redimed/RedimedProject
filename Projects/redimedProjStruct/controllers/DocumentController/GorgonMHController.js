@@ -5,62 +5,85 @@ var db = require('../../models');
 
 var mkdirp = require('mkdirp');
 
+var java = require('java');
+java.options.push("-Djava.awt.headless=true");
+java.classpath.push('commons-lang3-3.1.jar');
+java.classpath.push('commons-io.jar');
+java.classpath.push('./lib/commons-beanutils-1.8.2.jar');
+java.classpath.push('./lib/commons-collections-3.2.1.jar');
+java.classpath.push('./lib/commons-digester-2.1.jar');
+java.classpath.push('./lib/commons-logging-1.1.jar');
+java.classpath.push('./lib/groovy-all-2.0.1.jar');
+java.classpath.push('./lib/iText-2.1.7.js2.jar');
+java.classpath.push('./lib/jasperreports-5.6.0.jar');
+java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
+java.classpath.push('./lib/org-apache-commons-codec.jar');
+
+
+//var ImageIO = java.import('javax.imageio.ImageIO');
+var HashMap = java.import('java.util.HashMap');
+var JRException = java.import('net.sf.jasperreports.engine.JRException');
+var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
+var JasperFillManager = java.import('net.sf.jasperreports.engine.JasperFillManager');
+var JasperPrint = java.import('net.sf.jasperreports.engine.JasperPrint');
+var DriverManager = java.import('java.sql.DriverManager');
+var Driver = java.import('com.mysql.jdbc.Driver');
+var InputStream = java.import('java.io.InputStream');
+var FileInputStream = java.import('java.io.FileInputStream');
+
 
 module.exports = {
 
-    printReport : function(req,res){
-        var java = require('java');
-        java.options.push("-Djava.awt.headless=true");
-        java.classpath.push('commons-lang3-3.1.jar');
-        java.classpath.push('commons-io.jar');
-        java.classpath.push('./lib/commons-beanutils-1.8.2.jar');
-        java.classpath.push('./lib/commons-collections-3.2.1.jar');
-        java.classpath.push('./lib/commons-digester-2.1.jar');
-        java.classpath.push('./lib/commons-logging-1.1.jar');
-        java.classpath.push('./lib/groovy-all-2.0.1.jar');
-        java.classpath.push('./lib/iText-2.1.7.js2.jar');
-        java.classpath.push('./lib/jasperreports-5.6.0.jar');
-        java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
+    printReport: function (req, res, next) {
+        var calId = req.params.CalId;
+        var id = req.params.Gorgon_Id;
+        var patientId = req.params.Patient_Id;
 
-        var HashMap = java.import('java.util.HashMap');
-        var JRException = java.import('net.sf.jasperreports.engine.JRException');
-        var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
-        var JasperFillManager = java.import('net.sf.jasperreports.engine.JasperFillManager');
-        var JasperPrint = java.import('net.sf.jasperreports.engine.JasperPrint');
-        var DriverManager = java.import('java.sql.DriverManager');
-        var Driver = java.import('com.mysql.jdbc.Driver');
-        var InputStream = java.import('java.io.InputStream');
-        var FileInputStream = java.import('java.io.FileInputStream');
-
-        mkdirp('./download/report/GorgonMH', function (err) {
+        mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
             if (err) console.error(err)
-            else console.log('success!')
+            else {
+                var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
+
+                var paramMap = new HashMap();
+
+                paramMap.putSync("id", parseInt(id));
+                paramMap.putSync("realPath", "./reports/Gorgon/");
+
+                var filePath = '.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId + '\\gorgonMH.pdf';
+
+                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager', 'fillReport', './reports/Gorgon/GorgonMHReport.jasper', paramMap, con);
+
+                java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    else {
+
+                        res.download(filePath, 'gorgonMH.pdf', function (err) {
+                            if (err) {
+                                console.log(err);
+                                return;
+                            }
+                        });
+                    }
+
+                });
+            }
         });
 
-        var id = req.params.id;
 
-        var con = java.callStaticMethodSync('java.sql.DriverManager','getConnection',"jdbc:mysql://localhost:3306/sakila","root","root");
-
-        var paramMap = new HashMap();
-
-        paramMap.putSync("id",parseInt(id));
-        paramMap.putSync("realPath","./reports/Gorgon/");
-
-
-        var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager','fillReport','./reports/Gorgon/GorgonMHReport.jasper',paramMap,con);
-
-        java.callStaticMethodSync('net.sf.jasperreports.engine.JasperExportManager','exportReportToPdfFile',jPrint,'./download/report/GorgonMH/gorgonMH.pdf');
-
-        res.download('./download/report/GorgonMH/gorgonMH.pdf');
     },
 
     loadGGMH: function (req, res) {
         var info = req.body.info;
-        db.gorgonMH.findAll({where: {Patient_Id: info.Patient_Id, CalId: info.CalId}}, {raw: true})
+        var Patient_Id = info.Patient_Id;
+        var CalId = info.CalId;
+        db.gorgonMH.find({where: {Patient_Id: Patient_Id, CalId: CalId}}, {raw: true})
             .success(function (data) {
-                db.Patient.findAll({where: {Patient_Id: info.Patient_Id}})
+                db.Patient.find({where: {Patient_Id: info.Patient_Id}})
                     .success(function (patient) {
-                        if (data.length === 0) {
+                        if (data === null || data.length === 0) {
                             var response = [
                                 {"status": "findNull", "patient": patient}
                             ];
@@ -310,11 +333,9 @@ module.exports = {
                     Q23_InACar: info.Q23_InACar,
                     Q23_TotalScore: info.Q23_TotalScore,
                     Signature: info.Signature,
-                    GorgonDate: info.GorgonDate,
+                    GorgonDate: new Date(),
                     Created_by: info.Created_by,
-                    Creation_date: info.Creation_date,
                     Last_updated_by: info.Last_updated_by,
-                    Last_update_date: info.Last_update_date,
                     CalId: info.CalId,
                     DocId: info.DocId,
                     Q21Other1Comment: info.Q21Other1Comment,
@@ -556,11 +577,9 @@ module.exports = {
             Q23_InACar: info.Q23_InACar,
             Q23_TotalScore: info.Q23_TotalScore,
             Signature: info.Signature,
-            GorgonDate: info.GorgonDate,
+            GorgonDate: new Date(),
             Created_by: info.Created_by,
-            Creation_date: info.Creation_date,
             Last_updated_by: info.Last_updated_by,
-            Last_update_date: info.Last_update_date,
             CalId: info.CalId,
             DocId: info.DocId,
             Q21Other1Comment: info.Q21Other1Comment,

@@ -59,7 +59,9 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         $scope.infoS = {};
         $scope.infoD = {};
         $scope.infoC = {};
-        $scope.manage = [];
+
+        $scope.manage = {};
+
         $scope.a = {};
         $scope.total = {};
 
@@ -389,7 +391,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                 $scope.infoH = {
                     PATIENT_ID: response.PATIENT_ID ,
                     CAL_ID : response.CAL_ID ,
-                    //FA_ID: response.FA_ID ,
+                    FA_ID: response.FA_ID ,
                     ENTITY_ID: response.ENTITY_ID ,
                     //FA_TYPE: response.FA_TYPE ,
                     //FA_NAME : response.FA_NAME ,

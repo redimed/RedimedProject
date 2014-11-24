@@ -2,28 +2,124 @@
  * Created by thanh on 10/10/2014.
  */
 var db = require('../../models');
+var mkdirp = require('mkdirp');
+
+var java = require('java');
+java.options.push("-Djava.awt.headless=true");
+java.classpath.push('commons-lang3-3.1.jar');
+java.classpath.push('commons-io.jar');
+java.classpath.push('./lib/commons-beanutils-1.8.2.jar');
+java.classpath.push('./lib/commons-collections-3.2.1.jar');
+java.classpath.push('./lib/commons-digester-2.1.jar');
+java.classpath.push('./lib/commons-logging-1.1.jar');
+java.classpath.push('./lib/groovy-all-2.0.1.jar');
+java.classpath.push('./lib/iText-2.1.7.js2.jar');
+java.classpath.push('./lib/jasperreports-5.6.0.jar');
+java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
+java.classpath.push('./lib/org-apache-commons-codec.jar');
+
+
+var HashMap = java.import('java.util.HashMap');
+var JRException = java.import('net.sf.jasperreports.engine.JRException');
+var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
+var JasperFillManager = java.import('net.sf.jasperreports.engine.JasperFillManager');
+var JasperPrint = java.import('net.sf.jasperreports.engine.JasperPrint');
+var DriverManager = java.import('java.sql.DriverManager');
+var Driver = java.import('com.mysql.jdbc.Driver');
+var InputStream = java.import('java.io.InputStream');
+var FileInputStream = java.import('java.io.FileInputStream');
+
 
 module.exports = {
-    loadCat3: function (req, res) {
-        var info = req.body.info; //get cal_id, patient_id
-        db.Category3.findAll({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
-            .success(function (data) {
-                db.Patient.findAll({where: {patient_id: info.patient_id}}, {raw: true})
-                    .success(function (patient) {
-                        if (data.length === 0) {
-                            var response = [
-                                {"status": "findNull", "patient": patient}
-                            ];
-                            res.json(response);
-                        }
-                        else {
-                            var response = [
-                                {"status": "findFound", "data": data, "patient": patient}
-                            ];
-                            res.json(response);
-                        }
-                    }).error(function (err) {
+    printReport: function (req, res, next) {
+        var calId = req.params.calId;
+        var catId = req.params.catId;
+        var patientId = req.params.patientId;
+
+        mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
+            if (err) console.error(err)
+            else {
+                var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
+
+                var paramMap = new HashMap();
+
+                paramMap.putSync("cal_id", parseInt(calId));
+                paramMap.putSync("patient_id", parseInt(patientId));
+                paramMap.putSync("key", parseInt(catId));
+                paramMap.putSync("real_path", "./reports/CAT3");
+
+                var filePath = '.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId + '\\category_3.pdf';
+
+                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager', 'fillReport', './reports/CAT3/category_3.jasper', paramMap, con);
+
+                java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
+                    if (err) {
                         console.log("ERROR:" + err);
+                        return;
+                    }
+                    else {
+
+                        res.download(filePath, 'category_3.pdf', function (err) {
+                            if (err) {
+                                console.log("ERROR:" + err);
+                                return;
+                            }
+                        });
+                    }
+
+                });
+            }
+        });
+    },
+    loadCat3: function (req, res) {
+        var info = req.body.info; //get cal_id, patient_id, doctor_id
+        var cal_id = info.cal_id;
+        var patient_id = info.patient_id;
+        var doctor_id = info.DOCTOR_ID;
+        db.Category3.find({where: {cal_id: cal_id, patient_id: patient_id}}, {raw: true})
+            .success(function (data) {
+                db.Patient.find({where: {patient_id: patient_id}}, {raw: true})
+                    .success(function (patient) {
+                        db.Doctor.find({where: {doctor_id: doctor_id}}, {raw: true})
+                            .success(function (doctor) {
+                                db.Company.find({where: {id: patient.company_id}}, {raw: true})
+                                    .success(function (company) {
+                                        if (data === null || data.length === 0) {
+                                            var response = [
+                                                {
+                                                    "status": "findNull",
+                                                    "patient": patient,
+                                                    "doctor": doctor,
+                                                    "company": company
+                                                }
+                                            ];
+                                            res.json(response);
+                                        }
+                                        else {
+                                            var response = [
+                                                {
+                                                    "status": "findFound",
+                                                    "data": data,
+                                                    "patient": patient,
+                                                    "doctor": doctor,
+                                                    "company": company
+                                                }
+                                            ];
+                                            res.json(response);
+                                        }
+                                    }).error(function (err) {
+                                        console.log("ERROR:" + err);
+                                        res.json({status: 'fail'});
+                                    });
+                            })
+                            .error(function (err) {
+                                console.log("ERROR:" + err);
+                                res.json({status: 'fail'});
+                            });
+                    })
+                    .error(function (err) {
+                        console.log("ERROR:" + err);
+                        res.json({status: 'fail'});
                     })
             })
             .error(function (err) {

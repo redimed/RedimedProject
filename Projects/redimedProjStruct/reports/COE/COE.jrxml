@@ -2,7 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="COE" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bbd20295-566f-4fa1-b314-70faaee1b730">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="156"/>
+	<property name="ireport.y" value="559"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="key" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -10,8 +12,8 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select c.* ,e.* , concat(ifnull(p.first_name,''),' ',ifnull(p.sur_name,'')) as full_name , p.dob from gorgon_doc_coe c inner join cln_patients p on p.patient_id = c.PatientId left join entity_patient e on c.PatientId = e.patient_id
-where coe_id = $P{key}]]>
+		<![CDATA[SELECT c.*,SUBSTRING_INDEX(c.`Signature1`, ',', -1) AS Signature11,SUBSTRING_INDEX(c.`Signature2`, ',', -1)AS Signature22,e.* , CONCAT(IFNULL(p.first_name,''),' ',IFNULL(p.sur_name,'')) AS full_name , p.dob FROM gorgon_doc_coe c INNER JOIN cln_patients p ON p.patient_id = c.PatientId LEFT JOIN entity_patient e ON c.PatientId = e.patient_id
+WHERE coe_id = $P{key}]]>
 	</queryString>
 	<field name="coe_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -37,7 +39,7 @@ where coe_id = $P{key}]]>
 	<field name="inPosition" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="signature1" class="java.awt.Image">
+	<field name="Signature1" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="coeName" class="java.lang.String">
@@ -49,9 +51,11 @@ where coe_id = $P{key}]]>
 	<field name="coeDate" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="signature2" class="java.awt.Image">
+	<field name="Signature2" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="Signature11" class="java.lang.String"/>
+	<field name="Signature22" class="java.lang.String"/>
 	<field name="Patient_id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -71,6 +75,9 @@ where coe_id = $P{key}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="PHONE1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SITE_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="full_name" class="java.lang.String"/>
@@ -156,11 +163,11 @@ where coe_id = $P{key}]]>
 			</textField>
 			<image>
 				<reportElement x="24" y="623" width="208" height="89" uuid="28a3e62b-c5c5-456e-996f-f86ac7fc6a45"/>
-				<imageExpression><![CDATA[$F{signature2}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature22}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="118" y="366" width="91" height="41" uuid="770911fc-53a0-4519-8a41-a8aa0ba89d25"/>
-				<imageExpression><![CDATA[$F{signature1}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature11}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 		</band>
 	</detail>

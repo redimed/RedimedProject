@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_summary_question_type1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b4c9904-5604-4f9f-bb4b-f5cd91fb3f13">
 	<property name="ireport.zoom" value="1.6105100000000008"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="259"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -55,9 +55,9 @@ WHERE	line.`ISENABLE`=1
 	<group name="LINE_GROUP">
 		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="30">
+			<band height="25">
 				<textField isBlankWhenNull="true">
-					<reportElement x="0" y="10" width="531" height="20" uuid="1b07eabd-ceeb-4ab1-a5ae-85da5010da08"/>
+					<reportElement x="0" y="5" width="531" height="20" uuid="1b07eabd-ceeb-4ab1-a5ae-85da5010da08"/>
 					<textElement verticalAlignment="Top">
 						<font isBold="true" isUnderline="true"/>
 						<paragraph leftIndent="5"/>
@@ -122,12 +122,12 @@ WHERE	line.`ISENABLE`=1
 			</staticText>
 			<ellipse>
 				<reportElement mode="Transparent" x="391" y="0" width="70" height="15" uuid="30da771c-ba6b-446c-b3f3-dc2c29d644a1">
-					<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "YES" )]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "0" )]]></printWhenExpression>
 				</reportElement>
 			</ellipse>
 			<ellipse>
 				<reportElement mode="Transparent" x="461" y="0" width="70" height="15" uuid="b85f6337-eada-4bd0-9fa0-089fe2743402">
-					<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "NO" )]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}!=null && $F{VAL1_CHECKBOX}.equals( "1" )]]></printWhenExpression>
 				</reportElement>
 			</ellipse>
 			<textField>
