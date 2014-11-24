@@ -413,15 +413,10 @@
                         <input type="radio" ng-model="infoH.COLOR_VISUAL" value="0"/> No
                     </label>
                 </div>
-                <div class="col-md-4 col-sm-4 " ng-class="{'has-error':showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.pattern}">
+                <div class="col-md-4 col-sm-4 " ng-class="{'has-error':showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.max}">
                     <label class="control-label">Color Visual Score</label>
-                    <input type="text" ng-pattern="/^[0-9]+$/" ng-required="infoH.COLOR_VISUAL_SCORE == 17" name="COLOR_VISUAL_SCORE" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 40px;margin-top: 10px">/17
-                    <div ng-show="showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.pattern">
-                        <div class="help-block" for="COLOR_VISUAL_SCORE" >
-                            <label>Score must be number</label>
-                        </div>
-                    </div>
-                    <div ng-show="showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.required">
+                    <input type="number"  max="17" min="0" name="COLOR_VISUAL_SCORE" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 40px;margin-top: 10px">/17
+                    <div ng-show="showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.max">
                         <div class="help-block" for="COLOR_VISUAL_SCORE" >
                             <label>Score must be less than 17</label>
                         </div>

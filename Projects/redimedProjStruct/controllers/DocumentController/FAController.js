@@ -2,7 +2,16 @@
  * Created by meditech on 24/09/2014.
  */
 var db = require('../../models');
-var chainer = new db.Sequelize.Utils.QueryChainer;
+//var chainer = new db.Sequelize.Utils.QueryChainer;
+var fs = require('fs');
+var util = require("util");
+var mime = require("mime");
+
+function base64Image(src) {
+    var data = fs.readFileSync(src).toString("base64");
+    return util.format("data:%s;base64,%s", mime.lookup(src), data);
+}
+
 module.exports = {
     newFA: function(req,res)
     {
@@ -36,6 +45,12 @@ module.exports = {
                         .success(function(dataS){
                             db.LineFA.findAll({where : {ISENABLE : 1,PATIENT_ID : PATIENT_ID,CAL_ID: CAL_ID}, order : 'ORD'},{transaction: t})
                                 .success(function(dataL){
+                                    for(var i=0; i<dataL.length; i++) {
+                                        if (dataL[i].PICTURE != null) {
+                                            dataL[i].PICTURE = base64Image(dataL[i].PICTURE);
+                                        }
+                                    }
+
                                     db.DetailFA.findAll({where : {ISENABLE : 1,PATIENT_ID : PATIENT_ID,CAL_ID: CAL_ID}, order : 'ORD'},{transaction: t})
                                         .success(function(dataD){
                                             db.CommentFA.findAll({where : {ISENABLE : 1,PATIENT_ID : PATIENT_ID,CAL_ID: CAL_ID}},{transaction: t})

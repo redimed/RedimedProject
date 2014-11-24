@@ -340,7 +340,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                 angular.forEach(data.Line, function(dataL){
                                     if(dataL.SECTION_ID ==  $scope.listFA[0].section[i].section_id )
                                     {
-                                        $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"rating_id1" :dataL.RATING_ID1,"rating_id2" :dataL.RATING_ID2,"line_name": dataL.QUESTION,"line_type": dataL.LineType, "line_comment" : dataL.IsCommentsText, "line_isscore1" : dataL.ISSCORE1,"line_isscore2" : dataL.ISSCORE2,"line_israting1" : dataL.ISRATING1,"line_israting2" : dataL.ISRATING2,"score_type1" : dataL.SCORE_TYPE1,"score_type2" : dataL.SCORE_TYPE2, "detail":[],"comment":[]});
+                                        $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"image" : dataL.PICTURE,"rating_id1" :dataL.RATING_ID1,"rating_id2" :dataL.RATING_ID2,"line_name": dataL.QUESTION,"line_type": dataL.LineType, "line_comment" : dataL.IsCommentsText, "line_isscore1" : dataL.ISSCORE1,"line_isscore2" : dataL.ISSCORE2,"line_israting1" : dataL.ISRATING1,"line_israting2" : dataL.ISRATING2,"score_type1" : dataL.SCORE_TYPE1,"score_type2" : dataL.SCORE_TYPE2, "detail":[],"comment":[]});
                                         $scope.infoL.COMMENTS[dataL.LINE_ID] = dataL.COMMENTS;
                                         $scope.infoL.SCORE1[dataL.LINE_ID] = dataL.SCORE1;
                                         $scope.infoL.SCORE2[dataL.LINE_ID] = dataL.SCORE2;
@@ -431,7 +431,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                             angular.forEach(data.Line, function(dataL){
                                 if(dataL.SECTION_ID ==  $scope.listFA[0].section[i].section_id )
                                 {
-                                    $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"rating_id1" :dataL.RATING_ID1,"rating_id2" :dataL.RATING_ID2,"line_name": dataL.QUESTION,"line_type": dataL.LineType, "line_comment" : dataL.IsCommentsText, "line_isscore1" : dataL.ISSCORE1,"line_isscore2" : dataL.ISSCORE2,"line_israting1" : dataL.ISRATING1,"line_israting2" : dataL.ISRATING2,"score_type1" : dataL.SCORE_TYPE1,"score_type2" : dataL.SCORE_TYPE2, "detail":[],"comment":[]});
+                                    $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"image" : dataL.PICTURE,"rating_id1" :dataL.RATING_ID1,"rating_id2" :dataL.RATING_ID2,"line_name": dataL.QUESTION,"line_type": dataL.LineType, "line_comment" : dataL.IsCommentsText, "line_isscore1" : dataL.ISSCORE1,"line_isscore2" : dataL.ISSCORE2,"line_israting1" : dataL.ISRATING1,"line_israting2" : dataL.ISRATING2,"score_type1" : dataL.SCORE_TYPE1,"score_type2" : dataL.SCORE_TYPE2, "detail":[],"comment":[]});
                                     $scope.infoL.COMMENTS[dataL.LINE_ID] = dataL.COMMENTS;
                                     $scope.infoL.SCORE1[dataL.LINE_ID] = dataL.SCORE1;
                                     $scope.infoL.SCORE2[dataL.LINE_ID] = dataL.SCORE2;
@@ -467,6 +467,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                             });
                             i++;
                         });
+                        console.log($scope.listFA[0]);
                         oriInfoL  = angular.copy($scope.infoL);
                         oriInfoD  = angular.copy($scope.infoD);
                         oriInfoC  = angular.copy($scope.infoC.VALUE);
