@@ -33,6 +33,27 @@ angular.module("app.loggedIn.receptionist.services", [])
 		var updateApi = receptionistApi.all("appointment/update");
 		return updateApi.post(options);
 	}
+	receptionistService.insertOutdoc = function(options){
+		var postData = {
+			outdoc: options
+		};
+		var updateApi = receptionistApi.all("v1/doctors/outside/add");
+		return updateApi.post(postData);
+	}
+	receptionistService.getOutDoc = function(options){
+		var postData = {
+			outdoc: options
+		};
+		var updateApi = receptionistApi.all("v1/doctors/outside/get");
+		return updateApi.post(postData);
+	}
+	receptionistService.updateOutDoc = function(options){
+		var postData = {
+			outdoc: options
+		};
+		var updateApi = receptionistApi.all("v1/doctors/outside/update");
+		return updateApi.post(postData);
+	}
 
 	return receptionistService;
 })

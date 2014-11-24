@@ -35,4 +35,14 @@ angular.module("app.loggedIn.receptionist", [
             }
         }
     })
+        //OUT SIDE DOCTOR
+        .state("loggedIn.receptionist.appointment.doctor.outside", {
+            url: "/outside/add",
+            views: {
+                "main-content@loggedIn.receptionist": {
+                    templateUrl: "modules/receptionist/views/outdoc.html",
+                    controller: "ReceptionistAppointmentOutsideController"
+                }
+            }
+        })
 })

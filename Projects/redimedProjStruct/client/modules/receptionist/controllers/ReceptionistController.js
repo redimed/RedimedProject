@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.receptionist.controller", [
     "app.loggedIn.receptionist.appointment.controller",
-    "app.loggedIn.receptionist.appointment.doctor.controller"
+    "app.loggedIn.receptionist.appointment.doctor.controller",
+	"app.loggedin.receptionist.appointment.outside.controller",
 ])
 
 .controller("ReceptionistController", function ($scope, ConfigService) {
@@ -34,4 +35,8 @@ angular.module("app.loggedIn.receptionist.controller", [
 		ACC_TYPE: "",
 		bill_to: 0
 	}
+
+	$scope.outdoc = {};
+
+
 })

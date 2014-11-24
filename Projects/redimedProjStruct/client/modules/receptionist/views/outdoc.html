@@ -1,0 +1,143 @@
+<h3 class="page-title">Outside Doctor</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a >Outside</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>{{info.action}}</a>
+        </li>
+    </ul>
+</div>
+
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Outside Doctor
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form name="outDocForm" novalidate="">
+                    <div class="form-body">
+                        <div class="break-row"></div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 form-group">
+                                <div class="col-md-6 col-sm-6" ng-class="{'has-error': isSubmit && outDocForm.title.$invalid}"s>
+                                    <label class="col-md-3 col-sm-3 control-label">Title <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9" >
+                                        <select name="title" ng-required="true" class="form-control" ng-model="outdoc.title" ng-options="t.code as t.name for t in options.title">
+                                            <option value="">--Please select--</option>
+                                        </select>
+                                        <div class="error" ng-show="isSubmit && outDocForm.title.$invalid">
+                                            <label class="control-label">
+                                                Title is required.
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6" ng-class="{'has-error': isSubmit && outDocForm.fullname.$invalid}">
+                                    <label class="col-md-3 col-sm-3 control-label">Full name <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9" >
+                                        <input type="text" ng-required="true" name="fullname" class="form-control" ng-model="outdoc.name">
+                                        <div class="error" ng-show="isSubmit && outDocForm.fullname.$invalid">
+                                            <label class="control-label">
+                                                Full name is required.
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="break-row"></div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 form-group">
+                                <div class="col-md-6 col-sm-6"  ng-class="{'has-error': isSubmit && outDocForm.gender.$invalid}">
+                                    <label class="col-md-3 col-sm-3 control-label">Gender <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <select name="gender" ng-required="true" class="form-control" ng-model="outdoc.sex" ng-options="g.code as g.name for g in options.gender">
+                                            <option value="">--Please select--</option>
+                                        </select>
+                                        <div class="error" ng-show="isSubmit && outDocForm.gender.$invalid">
+                                            <label class="control-label">
+                                                Gender is required.
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6 col-sm-6" ng-class="{'has-error': isSubmit && outDocForm.address.$invalid}">
+                                    <label class="col-md-3 col-sm-3 control-label">Address <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9">
+                                        <input name="address" ng-required="true" type="text" class="form-control" ng-model="outdoc.address">
+                                        <div class="error" ng-show="isSubmit && outDocForm.address.$invalid">
+                                            <label class="control-label">
+                                                Address is required.
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="break-row"></div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 form-group">
+                                <div class="col-md-6 col-sm-6">
+                                    <label class="col-md-3 col-sm-3 control-label">Suburb</label>
+                                    <div class="col-md-9 col-sm-9">
+                                        <input type="text" class="form-control" ng-model="outdoc.suburb">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label class="col-md-3 col-sm-3 control-label">State</label>
+                                    <div class="col-md-9 col-sm-9">
+                                        <input type="text" class="form-control" ng-model="outdoc.state">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="break-row"></div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 form-group">
+                                <div class="col-md-6 col-sm-6">
+                                    <label class="col-md-3 col-sm-3 control-label">Phone</label>
+                                    <div class="col-md-9 col-sm-9">
+                                        <input type="text" class="form-control" ng-model="outdoc.phone">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6" ng-class="{'has-error': isSubmit && outDocForm.provider.$invalid}"s>
+                                    <label class="col-md-3 col-sm-3 control-label" >Provider No. <span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9">
+                                        <input ng-required="true" name="provider" type="text" class="form-control" ng-model="outdoc.provider_no">
+                                        <div class="error" ng-show="isSubmit && outDocForm.provider.$invalid">
+                                            <label class="control-label">
+                                                Provider No. is required.
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-10 col-sm-offset-10 col-md-2 col-sm-2">
+                                <button type="button" class="btn-lg btn green" ng-click="addOutDoc()" ng-show="updateMode == false" >
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Submit
+                                </button>
+                                <button type="button" class="btn-lg btn green" ng-click="updateOutDoc()" ng-show="updateMode == true" >
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ></span> Update
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
