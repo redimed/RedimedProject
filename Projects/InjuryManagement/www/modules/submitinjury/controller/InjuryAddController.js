@@ -4,11 +4,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                                                 InjuryServices, $cordovaCamera, $ionicPopup,
                                                 $ionicSideMenuDelegate, localStorageService,
                                                 $cordovaFile, $ionicModal, ConfigService,$ionicSlideBoxDelegate,$cordovaGeolocation,
-                                                $ionicLoading, $compile,$timeout   ){
-
-
-
-
+                                                $ionicLoading, $compile,$timeout){
         $scope.isSubmit = false;
         $scope.isShow = true;
         $scope.imgURI = [];
@@ -26,25 +22,40 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }]
 
         var i = 0;
-        var serverUpload = "http://testapp.redimed.com.au:3000/api/im/upload";
+        var ipUpload = "192.168.132.39";
+        var serverUpload = "http://"+ipUpload+":3000/api/im/upload";
         var checkNonemerg = localStorageService.get("checkNonemerg");
         var userInfoLS = localStorageService.get("userInfo");
         //set tam
         $ionicSideMenuDelegate.canDragContent(false)
 
+
+        //CONFIG MODAL
+        $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/imageDetail.html', function(modal) {
+            $scope.InjuryImgControllerModal = modal;
+        },{
+            scope: $scope,
+            animation: 'slide-in-up'
+        });
+        $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/modalPicture.html', function(modal) {
+            $scope.pictureModal = modal;
+        },{
+            scope: $scope,
+            animation: 'slide-in-up'
+        });
+
         //VALID NEXT FORM DESCRIPTION INJURY (TAKE PHOTO)
         $scope.nextform = function(info) {
-            $state.go('app.injury.desinjury');
-            //$scope.isSubmit = true;
-            //if(info.$invalid) {
-            //    var alertValid = $ionicPopup.alert({
-            //        title: "Can't next form",
-            //        template: 'Please Check Your Information!'
-            //    });
-            //}
-            //else {
-            //
-            //}
+            $scope.isSubmit = true;
+            if(info.$invalid || $scope.isFailMobile == true || $scope.isFailEmail == true) {
+                var alertValid = $ionicPopup.alert({
+                    title: "Can't next form",
+                    template: 'Please Check Your Information!'
+                });
+            }
+            else {
+                $state.go('app.injury.desinjury');
+            }
         }
 
         //INIT OBJECT WORKER FOR FORM
@@ -75,6 +86,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             popUpconfirm.then(function(res) {
                 if(res)
                 {
+                    $scope.isSubmit = false;
+                    $scope.isFailMobile = false;
+                    $scope.isFailEmail = false;
+                    $scope.isSubmitdesc = false;
                     $scope.worker = angular.copy(scopeReset);
                     $scope.isShow = !$scope.isShow;
                 }
@@ -84,6 +99,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         //SELECT A ROW WORKER WHEN WRITE
         $scope.selectWorker = function (id) {
             $scope.isShow = !$scope.isShow;
+            $scope.isFailMobile = false;
+            $scope.isFailEmail = false;
             InjuryServices.getPatientID(id).then(function (data) {
                 $scope.worker = data;
                 $scope.worker.DOB = $filter('date')(new Date($scope.worker.DOB),'dd/MM/yyyy');
@@ -98,7 +115,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     alert('error init search');
                     return;
                 }
-                else{
+                else {
                     $scope.list = data.rs;
                 }
             });
@@ -119,14 +136,6 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             }
         };
 
-        //CONFIG MODAL
-        $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/imageDetail.html', function(modal) {
-            $scope.InjuryImgControllerModal = modal;
-        },{
-            scope: $scope,
-            animation: 'slide-in-up'
-        });
-
         //SHOW MODAL IMAGE DETAIL
         $scope.selectImg = function(selected) {
             $cordovaStatusbar.hide();
@@ -138,6 +147,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             $scope.hide.bars = false;
             $scope.InjuryImgControllerModal.hide();
         };
+
+        $scope.modalImage = function () {
+            $scope.pictureModal.show();
+        }
 
         //TAKE PHOTO WITH CAMERA
         $scope.takePicture = function() {
@@ -165,8 +178,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             //);
             $cordovaCamera.getPicture(options).then(function(imageData) {
                 var myPopup = $ionicPopup.show({
-                    template: '<input type="text" ng-model="worker.description">',
-                    title: 'Enter Description',
+                    template: '<textarea rows="5" type="text" ng-model="worker.description">',
+                    title: 'Description for picture',
                     subTitle: 'Please use description picture',
                     scope: $scope,
                     buttons: [
@@ -181,6 +194,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                                         image: imageData,
                                         desc: ''
                                     })
+
                                 } else {
                                     $scope.imgURI.push({
                                         id: i++,
@@ -193,9 +207,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         },
                     ]
                 });
-            }, function(err) {
-                alert("Can't get picture",err);
             });
+            //    , function(err) {
+            //    alert(err);
+            //});
         };
 
         //UPLOAD IMAGE FUNCTION
@@ -211,7 +226,23 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
             var ft = new FileTransfer();
             ft.upload(img, server, function(r) {
-
+                $ionicLoading.show({
+                    template: "<div class='icon ion-ios7-reloading'></div>"+
+                    "<br />"+
+                    "<span>Waiting...</span>",
+                    animation: 'fade-in',
+                    showBackdrop: true,
+                    maxWidth: 200,
+                    showDelay: 0
+                });
+                $timeout(function () {
+                    $ionicLoading.hide();
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Insert Successfully',
+                        template: 'We have added worker to company!'
+                    });
+                    $state.go('app.injury.info');
+                }, 1000);
             }, function(error) {
                 console.log(error);
             }, options);
@@ -221,94 +252,117 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.Checkfield = function (isMobile) {
             if(isMobile)
             {
-                //InjuryServices.checkMobile($scope.worker.Mobile).then(function(data) {
-                //    if(data.status == 'success')
-                //    {
-                //        if(data.count == 0)
-                //        {
-                //            $scope.isFailMobile = true;
-                //            console.log($scope.isFailMobile);
-                //        }
-                //        else
-                //        {
-                //            $scope.isFailMobile = false;
-                //        }
-                //    }
-                //})
+                InjuryServices.checkMobile($scope.worker.Mobile).then(function(data) {
+                    if(data.status == 'success')
+                    {
+                        if(data.count == 0)
+                        {
+                            $scope.isFailMobile = false;
+                        }
+                        else
+                        {
+                            $scope.isFailMobile = true;
+                        }
+                    }
+                })
             }
             else
             {
-                //InjuryServices.checkEmail($scope.worker.Email).then(function (data) {
-                //    if (data.status == 'success') {
-                //        if (data.count == 0) {
-                //            console.log("pass")
-                //            $scope.isFailEmail = true;
-                //        }
-                //        else {
-                //            $scope.isFailEmail = false;
-                //        }
-                //    }
-                //
-                //})
+                InjuryServices.checkEmail($scope.worker.Email).then(function (data) {
+                    if (data.status == 'success') {
+                        if (data.count == 0) {
+                            $scope.isFailEmail = false;
+                        }
+                        else {
+                            $scope.isFailEmail = true;
+                        }
+                    }
+
+                })
             }
         }
 
 
         //SUBMIT EMERGENCY AND NON-EMERGENCY
         $scope.showConfirm = function(desc, click) {
-            if($scope.imgURI.length > 0) {
-                if(click)
+            if(click)
+            {
+                $scope.isSubmitdesc = true;
+                if (desc.$invalid && isClick)
                 {
-                    $scope.isSubmitdesc = true;
-                    if(desc.$invalid && isClick)
-                    {
-                        var alertPopup = $ionicPopup.alert({
-                            title: "Error",
-                            template: 'Please Check Your Information!'
-                        });
-                    }
-                    else
-                    {
-                        InjuryServices.insertInjury($scope.worker).then(function(data){
-                            if(data.status == 'success')
-                            {
-                                for(var i = 0 ; i < $scope.imgURI.length; i++)
-                                {
-                                    var params = {
-                                        injury_id: data.injury_id,
-                                        description: $scope.imgURI[i].desc
-                                    };
-                                    uploadFile($scope.imgURI[i].image,serverUpload,params);
-                                }
-                                alert('Add Injury Success');
-                                $state.go('app.injury.info');
-                            }
-                        })
-                    }
+                    var alertPopup = $ionicPopup.alert({
+                        title: "Error",
+                        template: 'Please Check Your Information!'
+                    });
                 }
                 else
                 {
-                    NonEmergency();
+                    if($scope.imgURI.length > 0) {
+                        $state.go('app.injury.desinjurySuccess');
+                    }
+                    else
+                    {
+                        var confirmPopup = $ionicPopup.confirm({
+                            title: 'You need take photo',
+                            template: 'Are you sure you want to take photo?'
+                        });
+                        confirmPopup.then(function (res) {
+                            if (res) {
+                                $scope.takePicture();
+                            }
+                        });
+                    }
                 }
             }
             else
             {
-                var confirmPopup = $ionicPopup.confirm({
-                    title: 'You need take photo',
-                    template: 'Are you sure you want to take photo?'
-                });
-                confirmPopup.then(function (res) {
-                    if (res) {
-                        $scope.takePicture();
-                    } else {
-                        //de function o day de test neu khong chup anh thi qua add worker.
+                $scope.isSubmitdesc = true;
+                if (desc.$invalid && isClick)
+                {
+                    var alertPopup = $ionicPopup.alert({
+                        title: "Error",
+                        template: 'Please Check Your Information!'
+                    });
+                }
+                else{
+                    if($scope.imgURI.length > 0) {
                         NonEmergency();
-                        //console.log("cancel");
                     }
-                });
+                    else
+                    {
+                        var confirmPopup = $ionicPopup.confirm({
+                            title: 'You need take photo',
+                            template: 'Are you sure you want to take photo?'
+                        });
+                        confirmPopup.then(function (res) {
+                            if (res) {
+                                $scope.takePicture();
+                            }
+                            else {
+                                NonEmergency();
+                            }
+                        });
+                    }
+
+                }
             }
         };
-
+        //SUBMIT END INSERT INJURY LAST
+        $scope.submitInjuryAll = function () {
+            InjuryServices.insertInjury($scope.worker).then(function(data) {
+                if(data.status == 'success')
+                {
+                    for(var i = 0 ; i < $scope.imgURI.length; i++)
+                    {
+                        var params = {
+                            injury_id: data.injury_id,
+                            description: $scope.imgURI[i].desc
+                        };
+                        uploadFile($scope.imgURI[i].image,serverUpload,params);
+                    }
+                }
+            })
+        }
         //CHECK NON-EMERGENCY CHANGE FORM
         function NonEmergency() {
             $scope.infoInjury = {

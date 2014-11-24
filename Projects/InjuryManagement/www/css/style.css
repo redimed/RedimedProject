@@ -33,7 +33,7 @@ form i.icon.error {
     margin-top: 10px;
     width: 100%;
     height: 60px;
-    background-color: rgba(217, 223, 225, 0.6);
+    /*background-color: rgba(217, 223, 225, 0.6);*/
     white-space: nowrap;
 }
 .full{
@@ -64,6 +64,7 @@ form i.icon.error {
     width: 100%;
     height: 100px;
     bottom: 0;
+    text-align: left !important;
 }
 .h-descImg{
     color: rgba(255, 255, 255, 1);
@@ -76,6 +77,7 @@ form i.icon.error {
 .cssFade {
     transition: 0.5s linear all;
     opacity: 1;
+    text-align: right;
 }
 .cssFade.ng-hide {
     opacity: 0;
@@ -99,7 +101,7 @@ form i.icon.error {
     left: 0;
     margin: auto;
     overflow: auto;
-    position: fixed;
+    position: absolute;
     right: 0;
     top: 0;
 }
@@ -117,9 +119,6 @@ form i.icon.error {
     background-color: rgba(0, 0, 0, 0) !important;
     margin: 0 3px 0 3px;
 }
-.item-menu:active{
-    border: 1px solid #7c699f !important;
-}
 .item-menu a:active, .item-menu a:focus, .item-menu a:visited {
     background-color: rgba(68, 0, 94, 0.3) !important;
     margin: 0 3px 0 3px;
@@ -129,8 +128,21 @@ form i.icon.error {
     margin-top: 20px;
 }
 .done-btn{
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.7) !important;
     padding: 5px;
     border: 1px solid;
     border-radius: 5px !important;
+}
+.heightcs {
+    height: 100% !important;
+}
+.heightcs div{
+    height: 100% !important;
+}
+.custom-texarea{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 84px;
+    margin-right: 100px;
+    padding: 0 5px 0 5px;
 }
