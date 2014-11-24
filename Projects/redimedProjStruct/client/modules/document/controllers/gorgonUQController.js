@@ -224,12 +224,12 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
                     {
                         DocumentService.insertUQ($scope.info).then(function(response){
                             if(response['status'] === 'success') {
-                                alert("Insert Successfully!");
-                                //$state.go('loggedIn.home');
+                                toastr.success("Successfully","Success");
+                                $state.go('loggedIn.gorgonUQ', null, {'reload': true});
                             }
                             else
                             {
-                                alert("Insert Failed!");
+                                toastr.error("Fail", "Error");
                             }
                         });
                     }
@@ -377,12 +377,12 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
                         var info = $scope.info;
                         DocumentService.updateUQ(info).then(function(response){
                             if(response['status'] === 'success') {
-                                alert("Update Successfully!");
-                                //$state.go('loggedIn.home');
+                                toastr.success("Successfully","Success");
+                                $state.go('loggedIn.gorgonUQ', null, {'reload': true});
                             }
                             else
                             {
-                                alert("Update Failed!");
+                                toastr.error("Fail", "Error");
                             }
                         });
                     }

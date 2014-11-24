@@ -552,6 +552,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                         if(response['status'] === 'success') {
                             $scope.isNew = false;
                             toastr.success("Successfully","Success");
+                            $state.go('loggedIn.gorgonFA', null, {'reload': true});
                         }
                         else
                         {
@@ -562,6 +563,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                     DocumentService.editGorgonFA($scope.info).then(function(response){
                         if(response['status'] === 'success') {
                             toastr.success("Successfully","Success");
+                            $state.go('loggedIn.gorgonFA', null, {'reload': true});
                         }
                         else
                         {

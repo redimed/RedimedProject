@@ -9,7 +9,7 @@
                 </button>
                 <a href="/api/document/printUQ/{{info.Patient_Id}}/{{info.CalId}}/{{info.Quest_Id}}"
                    type="button"
-                   ng-disabled="submitGorgonUQ.$error.pattern || submitGorgonUQ.$error.maxlength || isNew == true"
+                   ng-disabled="submitGorgonUQ.$error.pattern || submitGorgonUQ.$error.maxlength || isNew == true || infoChanged()"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>

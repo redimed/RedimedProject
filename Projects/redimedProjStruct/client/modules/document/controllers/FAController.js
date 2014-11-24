@@ -47,11 +47,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
 //        console.log("FA: " + CalID + " patient: " + Patient_ID);
 
 
-        $scope.apptInfo = localStorageService.get('tempAppt');
+        //$scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        var doctorInfo = $cookieStore.get('doctorInfo');
+        //var doctorInfo = $cookieStore.get('doctorInfo');
         var Patient_ID = $scope.patientInfo.Patient_id;
-        var CalID = $scope.apptInfo.CAL_ID;
+        var CalID = -1;//$scope.apptInfo.CAL_ID;
 
         $scope.listFA = [];
         $scope.infoH = {};
@@ -233,8 +233,6 @@ angular.module('app.loggedIn.document.FA.controllers',[])
 
 
         $scope.submitFA = function(FAForm){
-//            var imageSign = document.getElementById('signDisplay').src;
-//            $scope.infoH.SIGNATURE = imageSign;
 
             $scope.showClickedValidation = true;
             if(FAForm.$invalid){
@@ -354,7 +352,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                         angular.forEach(data.Detail, function(dataD){
                                             if(dataD.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                             {
-                                                $scope.listFA[0].section[i].line[j].detail.push({"detail_id": dataD.DETAIL_ID, "detail_name": dataD.QUESTION, "val1_yes": dataD.VAL1_ISCOMMENT_WHEN_YES, "val1_no": dataD.VAL1_ISCOMMENT_WHEN_NO, "val2_yes" : dataD.VAL2_ISCOMMENT_WHEN_YES, "val2_no" : dataD.VAL2_ISCOMMENT_WHEN_NO, "val1Validate" : dataD.VAL1_VALUE_IS_NUMBER,"val2Validate" : dataD.VAL2_VALUE_IS_NUMBER, "val1_name": dataD.VAL1_NAME, "val2_name": dataD.VAL2_NAME,"val1_isvalue": dataD.VAL1_ISVALUE,"val2_isvalue": dataD.VAL2_ISVALUE,"val1_ischeckbox": dataD.VAL1_ISCHECKBOX,"val2_ischeckbox": dataD.VAL2_ISCHECKBOX, "comment_text": dataD.IsCommentText,"summary" : dataD.LineTestRefer});
+                                                $scope.listFA[0].section[i].line[j].detail.push({"detail_id": dataD.DETAIL_ID,"image" : dataD.PICTURE, "detail_name": dataD.QUESTION, "val1_yes": dataD.VAL1_ISCOMMENT_WHEN_YES, "val1_no": dataD.VAL1_ISCOMMENT_WHEN_NO, "val2_yes" : dataD.VAL2_ISCOMMENT_WHEN_YES, "val2_no" : dataD.VAL2_ISCOMMENT_WHEN_NO, "val1Validate" : dataD.VAL1_VALUE_IS_NUMBER,"val2Validate" : dataD.VAL2_VALUE_IS_NUMBER, "val1_name": dataD.VAL1_NAME, "val2_name": dataD.VAL2_NAME,"val1_isvalue": dataD.VAL1_ISVALUE,"val2_isvalue": dataD.VAL2_ISVALUE,"val1_ischeckbox": dataD.VAL1_ISCHECKBOX,"val2_ischeckbox": dataD.VAL2_ISCHECKBOX, "comment_text": dataD.IsCommentText,"summary" : dataD.LineTestRefer});
                                                 $scope.infoD.COMMENTS[dataD.DETAIL_ID]=dataD.COMMENTS;
                                                 $scope.infoD.VAL1_CHECKBOX[dataD.DETAIL_ID] = dataD.VAL1_CHECKBOX;
                                                 $scope.infoD.VAL2_CHECKBOX[dataD.DETAIL_ID] = dataD.VAL2_CHECKBOX;
@@ -445,7 +443,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                     angular.forEach(data.Detail, function(dataD){
                                         if(dataD.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                         {
-                                            $scope.listFA[0].section[i].line[j].detail.push({"detail_id": dataD.DETAIL_ID, "detail_name": dataD.QUESTION, "val1_yes": dataD.VAL1_ISCOMMENT_WHEN_YES, "val1_no": dataD.VAL1_ISCOMMENT_WHEN_NO, "val2_yes" : dataD.VAL2_ISCOMMENT_WHEN_YES, "val2_no" : dataD.VAL2_ISCOMMENT_WHEN_NO, "val1Validate" : dataD.VAL1_VALUE_IS_NUMBER,"val2Validate" : dataD.VAL2_VALUE_IS_NUMBER, "val1_name": dataD.VAL1_NAME, "val2_name": dataD.VAL2_NAME,"val1_isvalue": dataD.VAL1_ISVALUE,"val2_isvalue": dataD.VAL2_ISVALUE,"val1_ischeckbox": dataD.VAL1_ISCHECKBOX,"val2_ischeckbox": dataD.VAL2_ISCHECKBOX, "comment_text": dataD.IsCommentText,"summary" : dataD.LineTestRefer});
+                                            $scope.listFA[0].section[i].line[j].detail.push({"detail_id": dataD.DETAIL_ID,"image" : dataD.PICTURE, "detail_name": dataD.QUESTION, "val1_yes": dataD.VAL1_ISCOMMENT_WHEN_YES, "val1_no": dataD.VAL1_ISCOMMENT_WHEN_NO, "val2_yes" : dataD.VAL2_ISCOMMENT_WHEN_YES, "val2_no" : dataD.VAL2_ISCOMMENT_WHEN_NO, "val1Validate" : dataD.VAL1_VALUE_IS_NUMBER,"val2Validate" : dataD.VAL2_VALUE_IS_NUMBER, "val1_name": dataD.VAL1_NAME, "val2_name": dataD.VAL2_NAME,"val1_isvalue": dataD.VAL1_ISVALUE,"val2_isvalue": dataD.VAL2_ISVALUE,"val1_ischeckbox": dataD.VAL1_ISCHECKBOX,"val2_ischeckbox": dataD.VAL2_ISCHECKBOX, "comment_text": dataD.IsCommentText,"summary" : dataD.LineTestRefer});
                                             $scope.infoD.COMMENTS[dataD.DETAIL_ID]=dataD.COMMENTS;
                                             $scope.infoD.VAL1_CHECKBOX[dataD.DETAIL_ID] = dataD.VAL1_CHECKBOX;
                                             $scope.infoD.VAL2_CHECKBOX[dataD.DETAIL_ID] = dataD.VAL2_CHECKBOX;
