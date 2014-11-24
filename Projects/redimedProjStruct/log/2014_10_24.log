@@ -83,4 +83,8 @@ Exec SQL (Mon Nov 24 2014 11:28:17 GMT+0700 (SE Asia Standard Time)): SELECT * F
 Exec SQL (Mon Nov 24 2014 11:49:50 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
 Exec SQL (Mon Nov 24 2014 12:06:06 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
 Exec SQL (Mon Nov 24 2014 12:42:55 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
+<<<<<<< HEAD
 >>>>>>> origin/master-v2.0
+=======
+Exec SQL (Mon Nov 24 2014 16:26:49 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
+>>>>>>> 2eae50b86a9ad082a123db447c9313e3dfaa590e
