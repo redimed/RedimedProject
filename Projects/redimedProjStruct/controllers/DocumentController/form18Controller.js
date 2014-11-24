@@ -82,19 +82,19 @@ module.exports = {
                             .success(function (doctor) {
                                 db.APPTCAL.find({where: {cal_id: info.CAL_ID}}, {raw: true})
                                     .success(function (APPT) {
-                                        db.RedimedSite.find({where: {id: APPT.SITE_ID}}, {raw: true})
+                                        db.RedimedSite.find({where: {id: APPT == null ? '' : APPT.SITE_ID}}, {raw: true})
                                             .success(function (rmSite) {
-                                                db.Company.find({where: {id: patient.company_id}}, {raw: true})
+                                                db.Company.find({where: {id: patient == null ? '' : patient.company_id}}, {raw: true})
                                                     .success(function (company) {
                                                         if (dataF18 === null || dataF18.length === 0) {
                                                             var response = [
                                                                 {
                                                                     "status": "findNull",
-                                                                    "patient": patient,
-                                                                    "doctor": doctor,
-                                                                    "APPT": APPT,
-                                                                    "rmSite": rmSite,
-                                                                    "company": company
+                                                                    "patient": patient == null ? [] : patient,
+                                                                    "doctor": doctor == null ? [] : doctor,
+                                                                    "APPT": APPT == null ? [] : APPT,
+                                                                    "rmSite": rmSite == null ? [] : rmSite,
+                                                                    "company": company == null ? [] : company
                                                                 }
                                                             ];
                                                             res.json(response);
@@ -104,11 +104,11 @@ module.exports = {
                                                                 {
                                                                     "dataF18": dataF18,
                                                                     "status": 'findFound',
-                                                                    "patient": patient,
-                                                                    "doctor": doctor,
-                                                                    "APPT": APPT,
-                                                                    "rmSite": rmSite,
-                                                                    "company": company
+                                                                    "patient": patient == null ? [] : patient,
+                                                                    "doctor": doctor == null ? [] : doctor,
+                                                                    "APPT": APPT == null ? [] : APPT,
+                                                                    "rmSite": rmSite == null ? [] : rmSite,
+                                                                    "company": company == null ? [] : company
                                                                 }
                                                             ];
                                                             res.json(response);

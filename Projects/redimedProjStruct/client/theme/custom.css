@@ -252,6 +252,10 @@ input[class^="mdt-checkbox"] + label{
    padding-left: 10px;
 }
 
+.field select:disabled{
+    background-color: rgb(240,240,240);
+}
+
 .field label {
     height: 0;
     overflow: hidden;
@@ -456,21 +460,83 @@ input[class^="mdt-checkbox"] + label{
 /* MEDITEK SEARCH */
 @media screen and (min-width: 768px) {
     .mdt-search{
-        position: absolute;
-        width: 50%;
+        background-color: rgb(241,241,241);
+        position: fixed;
+        width: auto;
         top: 0;
         right: 0;
+        padding: 10px 15px;
+        z-index: 9999;
+        border: 2px solid rgb(100,160,217);
+        display: none;
+        overflow-y: auto;
+        max-height: 100%;
     }
 }
 
 @media screen and (max-width: 767px){
     .mdt-search{
-        position: absolute;
-        width: 75%;
+        background-color: rgb(241,241,241);
+        position: fixed;
+        width: auto;
         top: 0;
         right: 0;
+        padding: 10px 15px;
+        z-index: 9999;
+        border: 2px solid rgb(100,160,217);
+        display: none;
+        overflow-y: auto;
+        max-height: 100%;
     }
 }
 
 
 /* END MEDITEK SEARCH */
+
+/* MEDITEK BOOKING TABLE */
+table.mdt-booking-table{
+    width: auto;
+}
+
+table.mdt-booking-table thead tr th{
+    background-color: rgb(2,174,112);
+    padding: 6px 11px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid rgb(2,174,112);
+}
+
+table.mdt-booking-table thead tr th.no-border{
+    background-color: rgb(241,243,250);
+    border: none;
+}
+
+table.mdt-booking-table thead tr a{
+    color: white;
+}
+
+table.mdt-booking-table tbody td{
+    background-color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 13px;
+    border: 1px solid rgb(2,174,112);
+    width: 150px;
+}
+
+table.mdt-booking-table tbody td.time-booking{
+    width: 100px;
+    background-color: rgb(2,174,112);
+    color: white;
+    border: 1px solid white;
+}
+/* END MEDITEK BOOKING TABLE */
+
+/* MEDITEK LIST BOOKING PATIENT */
+ul.mdt-list-booking-patient{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* END MEDITEK LIST BOOKING PATIENT */

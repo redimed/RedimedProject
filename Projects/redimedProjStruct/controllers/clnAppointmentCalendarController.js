@@ -132,6 +132,7 @@ module.exports =
         var arr_time = (req.body.ARR_TIME)?common_functions.convertFromHoursToDateTime(req.body.ARR_TIME):common_functions.convertFromHoursToDateTime("00:00");
         var att_time = (req.body.ATTEND_TIME)?common_functions.convertFromHoursToDateTime(req.body.ATTEND_TIME):common_functions.convertFromHoursToDateTime("00:00");
         var notes = (req.body.NOTES)?req.body.NOTES:"";
+        var PATIENTS = (req.body.PATIENTS)?req.body.PATIENTS:"";
 
         req.getConnection(function(err, connection){
             var query = connection.query(
@@ -145,13 +146,14 @@ module.exports =
                 ", ATTEND_TIME='"+att_time+"'"+
                 ", NOTES='"+notes+"'"+
                 ", Patient_id='"+patient_id+"'"+
+                ", PATIENTS='"+PATIENTS+"'"+
                 " WHERE CAL_ID="+cal_id,
                 function(err, rows){
                     if(err){
                         console.log("Error Selecting : %s ",err );
                     }
                     else{
-                        res.json({status:"message"});
+                        res.json({status: 'success', data: rows});
                     }
                 });
         });
@@ -161,26 +163,28 @@ module.exports =
         var datepicker = (req.body.datepicker_map)?req.body.datepicker_map:"";
         var dept = (req.body.dept)?req.body.dept:0;
 
-        req.getConnection(function(err, connection){
-            var query = connection.query(
-                "SELECT cac.FROM_TIME, cac.TO_TIME,"+
+        var sql = "SELECT cac.FROM_TIME, cac.TO_TIME,"+
                 " GROUP_CONCAT(cac.DOCTOR_ID ORDER BY cac.DOCTOR_ID) AS doctor,"+
                 " GROUP_CONCAT(d.NAME ORDER BY cac.DOCTOR_ID) AS doctor_name,"+
                 " GROUP_CONCAT(cac.STATUS ORDER BY cac.DOCTOR_ID) AS status,"+
                 " GROUP_CONCAT(cac.CAL_ID ORDER BY cac.DOCTOR_ID) AS CAL_ID,"+
-                " GROUP_CONCAT(IFNULL(CONCAT(p.First_name, p.Sur_name), 'No Patient') ORDER BY cac.DOCTOR_ID) AS PATIENT"+
+                " GROUP_CONCAT(IFNULL(cac.PATIENTS, 'No Patient') ORDER BY cac.DOCTOR_ID separator '|') AS PATIENTS"+
                 " FROM cln_appointment_calendar cac"+
                 " INNER JOIN doctors d ON d.doctor_id=cac.DOCTOR_ID"+
-                " LEFT OUTER JOIN cln_patients p ON p.Patient_id=cac.Patient_id"+
                 " WHERE cac.CLINICAL_DEPT_ID="+dept+
                 " AND cac.SITE_ID="+site+
                 " AND DATE(cac.FROM_TIME) LIKE '%"+datepicker+"%'"+
                 " GROUP BY cac.FROM_TIME"
+
+        req.getConnection(function(err, connection){
+            var query = connection.query(
+                sql
                 , function(err, rows){
                     if(err){
                         console.log("Error Selecting : %s ",err );
                     }
                     else{
+                        console.log(sql);
                         res.json(rows);
                     }
                 });

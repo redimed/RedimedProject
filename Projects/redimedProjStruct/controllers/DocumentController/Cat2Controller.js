@@ -80,9 +80,9 @@ module.exports = {
     },
     loadCat2: function (req, res) {
         var info = req.body.info;
-        db.Category2.findAll({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
+        db.Category2.find({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
             .success(function (dataCat2) {
-                db.Patient.findAll({where: {patient_id: info.patient_id}}, {raw: true})
+                db.Patient.find({where: {patient_id: info.patient_id}}, {raw: true})
                     .success(function (patient) {
                         if (dataCat2.length === 0) {
                             response = [
