@@ -42,8 +42,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             }
             else {
                 var patient_id = tempPatient.Patient_id;
-                //var cal_id = tempAppt.CAL_ID;
-                var cal_id = -1; //set default value
+                var cal_id = tempAppt.CAL_ID;
                 $scope.info = {
                     Gorgon_Id: null,
                     Patient_Id: patient_id,

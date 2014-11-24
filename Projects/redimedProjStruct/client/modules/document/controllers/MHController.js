@@ -87,8 +87,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
             }
             else {
                 var patient_id = tempPatient.Patient_id;
-                //var cal_id = tempAppt.CAL_ID;
-                var cal_id=-1; //set defatul value
+                var cal_id = tempAppt.CAL_ID;
                 $scope.info = {
                     PATIENT_ID: patient_id,
                     CAL_ID: cal_id

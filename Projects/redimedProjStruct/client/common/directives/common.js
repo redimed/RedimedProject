@@ -576,16 +576,6 @@ angular.module("app.directive.common", [])
             ngModel: "="
         },
         link: function(scope, element, attrs){
-            if(attrs.type === 'timepicker'){
-                element.timepicker({
-                    showPeriodLabels: false,
-                    onSelect: function(time, inst){
-                        scope.ngModel = time;
-                        scope.$apply();
-                    }
-                });
-            }
-
             scope.$watch("ngModel", function(newModel, oldModel){
                 if(typeof newModel === 'undefined' || newModel === '' || newModel === null){
                     element.parent().removeClass('show-label');

@@ -4,6 +4,15 @@ angular.module("app.loggedIn.receptionist.controller", [
 ])
 
 .controller("ReceptionistController", function ($scope, ConfigService) {
+	$scope.options = {
+		redimedsites: [],
+		doctors: [],
+		dept: [],
+		services: [],
+		acc_types: ConfigService.acc_type_option(),
+		app_types: ConfigService.app_type_option()
+	}
+
 	$scope.dateOptions = {
 		changeMonth: true,
 		changeYear: true

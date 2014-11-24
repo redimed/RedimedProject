@@ -25,7 +25,7 @@ angular.module('app.loggedIn.document.demo.controllers',[])
         }
 
         $scope.goToTimetableDetail = function (list) {
-            localStorageService.set("tempPatient", list);
+            localStorageService.set("patientTempInfo", list);
             $state.go("loggedIn.Detail");
         }
 
@@ -49,10 +49,10 @@ angular.module('app.loggedIn.document.demo.controllers',[])
                 maxSize: 5,
                 currentPage: 1,
                 data: {
-                    First_name: '',
-                    Sur_name: '',
-                    Middle_name: '',
-                    Post_code: ''
+                    First_name: "",
+                    Sur_name: "",
+                    Middle_name: "",
+                    Post_code: null
                 }
             }
             //SEARCH FUNCTION

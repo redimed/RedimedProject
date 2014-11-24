@@ -15,11 +15,11 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
 //        console.log("gorgon UQ: " + CalID + " patient: " + Patient_ID);
 
 
-        //$scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        //var doctorInfo = $cookieStore.get('doctorInfo');
+        var doctorInfo = $cookieStore.get('doctorInfo');
         var Patient_ID = $scope.patientInfo.Patient_id;
-        var CalID = -1;//$scope.apptInfo.CAL_ID;
+        var CalID = $scope.apptInfo.CAL_ID;
 
 
         function getAge(dateString)

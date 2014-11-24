@@ -42,8 +42,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
             }
             else {
                 var patient_id = tempPatient.Patient_id;
-                //var cal_id = tempAppt.CAL_ID;
-                var cal_id =-1; //set default value
+                var cal_id = tempAppt.CAL_ID;
                 $scope.info = {
                     cat_id: null,
                     cal_id: cal_id,

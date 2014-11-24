@@ -4,70 +4,6 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
 
-	//DECLARE
-	$scope.rightSelectedBooking = {};
-	$scope.selectedCalId = 0;
-	$scope.dataBooking = {};
-	//END DECLARE
-
-	// LEFT CLICK BOOKING
-	$scope.chooseBooking = function($event, option){
-		var slotId = "#status"+option.overId+option.docId;
-		angular.element(slotId).css({"background-color": "yellow"});
-	}
-	// END LEFT CLICK BOOKING
-
-	// WATCH PATIENT ID
-	$scope.$watch("patient", function(newPatient){
-		if(typeof newPatient !== 'undefined'){
-			$scope.refreshAppointment();
-		}
-	})
-	// END WATCH PATIENT ID
-
-	// RIGHT CLICK BOOKING
-	$scope.chooseBookingAction = function($event, option){
-		$scope.rightSelectedBooking.data = option.data;
-		console.log($scope.rightSelectedBooking.data);
-		$scope.rightSelectedBooking.overId = option.overId;
-		$scope.rightSelectedBooking.docId = option.docId;
-
-		var slotId = "#status"+option.overId+option.docId;
-
-		angular.element("#popupMenu").css({
-			'display': 'block',
-			'top': $event.pageY-68,
-			'left': $event.pageX-20
-		});
-	}
-	// END RIGHT CLICK BOOKING
-
-	// GET CLICK ADD OR SELECT PATIENT
-	$scope.clickPatient = function(type){
-		var patientPopupId = "#patientModule";
-
-		if(type === 'add'){
-			angular.element(patientPopupId).fadeIn();
-		}
-	}
-	// END GET CLICK ADD OR SELECT PATIENT
-
-	// GLOBAL CLICK
-	angular.element("#appointment").on("click", function(){
-		angular.element("#popupMenu").css({'display':'none'});
-	})
-	// END GLOBAL CLICK
-
-	// ACTION
-
-	// ADD NEW SLOT
-	$scope.addNewSlot = function(){
-
-	}
-	// END ADD NEW SLOT
-
-	// END ACTION
-
 	var init = function(){
 		if($cookieStore.get("patientBookingInfo")){
 			$scope.modelObjectMap = angular.copy($cookieStore.get("patientBookingInfo").data);
@@ -126,9 +62,11 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 						);
 
 						var doctors = data[i].doctor.split(",");
+						var statuses = data[i].status.split(",");
 						var cals = data[i].CAL_ID.split(",");
-						var patients = data[i].PATIENTS.split("|");
+						var patients = data[i].PATIENT.split(",");
 
+						$scope.overviewAppointment[i].statuses = [];
 						$scope.overviewAppointment[i].doctors = [];
 						$scope.overviewAppointment[i].cals = [];
 						$scope.overviewAppointment[i].patients = [];
@@ -141,15 +79,12 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 							}
 							if(flag !== false){
 								$scope.overviewAppointment[i].doctors.push(doctors[flag]);
+								$scope.overviewAppointment[i].statuses.push(statuses[flag]);
 								$scope.overviewAppointment[i].cals.push(cals[flag]);
-								if(patients[flag] !== 'No Patient'){
-									var tempPatient = angular.element.parseJSON(patients[flag]);
-									$scope.overviewAppointment[i].patients.push(tempPatient);
-								}else{
-									$scope.overviewAppointment[i].patients.push([{Patient_name: "No Patient", Patient_id: 0}]);
-								}
+								$scope.overviewAppointment[i].patients.push(patients[flag]);
 							}else{
 								$scope.overviewAppointment[i].doctors.push("");
+								$scope.overviewAppointment[i].statuses.push("");
 								$scope.overviewAppointment[i].cals.push("");
 								$scope.overviewAppointment[i].patients.push("");
 							}
@@ -172,27 +107,11 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.refreshAppointment = function(){
 		loadAppointmentOverview($scope.modelObjectMap);
 		$scope.modelObjectBookingMap = angular.copy($scope.modelObjectBooking);
-		$scope.rightSelectedBooking = {};
 	}
 
 	/* BOOKING */
 	$scope.bookingPatient = function(data, parentIndex, index){
-		var bookingPopupId="#bookingModule";
-
-		angular.element(bookingPopupId).fadeOut();
-		angular.element(bookingPopupId).fadeIn();
-
-		$scope.selectedCalId = data.cals[index];
-
-		$scope.dataBooking = {
-			CAL_ID: $scope.selectedCalId,
-			DOCTOR: $scope.options.doctors[index],
-			MAIN_INFO: $scope.modelObjectMap,
-			patients: $scope.rightSelectedBooking.data.patients[index],
-			FROM_TIME: data.from_time_map,
-			TO_TIME: data.to_time_map
-		}
-		/*$scope.modelObjectMap.FROM_TIME = data.from_time_map;
+		$scope.modelObjectMap.FROM_TIME = data.from_time_map;
 		$scope.modelObjectMap.TO_TIME = data.to_time_map;		
 
 		$cookieStore.put("patientBookingInfo", {
@@ -209,7 +128,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 				localStorageService.set("patientTempInfo", response);
 				$state.go("loggedIn.doctor.patients.detail.appt");
 			}
-		})*/
+		})
 
 	}
 	/* END BOOKING */
@@ -256,7 +175,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	}
 	// END RIGHT POPUP MENU
 
-	/*$scope.chooseBooking = function($event, options){
+	$scope.chooseBooking = function($event, options){
 		if(options.status !== ''){
 			var isSelected = isSelectedBooking(options);
 			var mutiple = false;
@@ -284,7 +203,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			}
 			// END
 		}
-	}*/
+	}
 	//END CONTEXT MENU
 
 	$scope.rightClickAction = function($event){
