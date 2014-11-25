@@ -1,27 +1,33 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtSysMhDfGroup", {
+            'GROUP_ID': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
+                    },
+            'MH_DF_ID': { 
     type: DataTypes.INTEGER(11),  
             },
-            'user_id': { 
+            'ORD': { 
     type: DataTypes.INTEGER(11),  
             },
-            'isEnable': { 
+            'GROUP_NAME': { 
+    type: DataTypes.STRING(200),  
+            },
+            'ISENABLE': { 
     type: DataTypes.INTEGER(11),  
             },
-            'Created_by': { 
+            'CREATED_BY': { 
     type: DataTypes.INTEGER(11),  
             },
                 'Last_updated_by': { 
     type: DataTypes.INTEGER(11),  
             },
-        }, {
-tableName: "redi_user_menus",
-createdAt: "Creation_date",
+                    'USER_TYPE': { 
+    type: DataTypes.STRING(10),  
+            },
+}, {
+tableName: "sys_mh_df_groups",
+createdAt: "CREATION_DATE",
 updatedAt: "Last_update_date",
 });
 return mdtInstance;

@@ -1,16 +1,25 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtSysPermernantCalendarDf", {
+            'cal_header_df_id': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
         autoIncrement: true,            },
-            'menu_id': { 
+            'doctor_id': { 
     type: DataTypes.INTEGER(11),  
             },
-            'user_id': { 
-    type: DataTypes.INTEGER(11),  
+            'day_of_Week': { 
+    type: DataTypes.STRING(10),  
             },
-            'isEnable': { 
+            'from_time': { 
+    type: DataTypes.DATE,  
+            },
+            'to_time': { 
+    type: DataTypes.DATE,  
+            },
+            'description': { 
+    type: DataTypes.STRING(60),  
+            },
+            'isenable': { 
     type: DataTypes.INTEGER(11),  
             },
             'Created_by': { 
@@ -20,7 +29,7 @@ var mdtInstance = sequelize.define("mdtRediUserMenus", {
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "redi_user_menus",
+tableName: "sys_permernant_calendar_df",
 createdAt: "Creation_date",
 updatedAt: "Last_update_date",
 });

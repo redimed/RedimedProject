@@ -1,16 +1,13 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtClnAccountType", {
+            'Account_id': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
-    type: DataTypes.INTEGER(11),  
+                    },
+            'Account_name': { 
+    type: DataTypes.STRING(50),  
             },
-            'user_id': { 
-    type: DataTypes.INTEGER(11),  
-            },
-            'isEnable': { 
+            'Isenable': { 
     type: DataTypes.INTEGER(11),  
             },
             'Created_by': { 
@@ -20,7 +17,7 @@ var mdtInstance = sequelize.define("mdtRediUserMenus", {
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "redi_user_menus",
+tableName: "cln_account_type",
 createdAt: "Creation_date",
 updatedAt: "Last_update_date",
 });

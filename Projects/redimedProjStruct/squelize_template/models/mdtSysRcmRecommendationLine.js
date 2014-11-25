@@ -1,16 +1,25 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtSysRcmRecommendationLine", {
+            'RCM_RC_LINE_ID': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
+                    },
+            'RCM_RC_ID': { 
     type: DataTypes.INTEGER(11),  
             },
-            'user_id': { 
+            'RCM_DF_ID': { 
     type: DataTypes.INTEGER(11),  
             },
-            'isEnable': { 
+            'QUESTION': { 
+    type: DataTypes.STRING(200),  
+            },
+            'DESCRIPTION': { 
+    type: DataTypes.STRING(500),  
+            },
+            'YES_NO': { 
+    type: DataTypes.INTEGER(11),  
+            },
+            'ISENABLE': { 
     type: DataTypes.INTEGER(11),  
             },
             'Created_by': { 
@@ -20,7 +29,7 @@ var mdtInstance = sequelize.define("mdtRediUserMenus", {
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "redi_user_menus",
+tableName: "sys_rcm_recommendation_lines",
 createdAt: "Creation_date",
 updatedAt: "Last_update_date",
 });

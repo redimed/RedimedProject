@@ -1,17 +1,23 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
+var mdtInstance = sequelize.define("mdtHrTimeSheetLeave", {
             'id': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
+                    },
+            'hr_time_sheet_id': { 
     type: DataTypes.INTEGER(11),  
             },
-            'user_id': { 
-    type: DataTypes.INTEGER(11),  
+            'leave_date': { 
+    type: DataTypes.DATE,  
             },
-            'isEnable': { 
-    type: DataTypes.INTEGER(11),  
+            'leave_hour': { 
+    type: DataTypes.FLOAT,  
+            },
+            'leave_reason': { 
+    type: DataTypes.STRING(200),  
+            },
+            'leave_type': { 
+    type: DataTypes.STRING(10),  
             },
             'Created_by': { 
     type: DataTypes.INTEGER(11),  
@@ -20,7 +26,7 @@ var mdtInstance = sequelize.define("mdtRediUserMenus", {
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "redi_user_menus",
+tableName: "hr_time_sheet_leave",
 createdAt: "Creation_date",
 updatedAt: "Last_update_date",
 });

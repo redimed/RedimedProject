@@ -1,27 +1,30 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtSysPaymentTerm", {
+            'PAYMENT_TERM_ID': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
+                    },
+            'PAYMENT_TERM': { 
+    type: DataTypes.STRING(50),  
+            },
+            'DESCRIPTION': { 
+    type: DataTypes.STRING(100),  
+            },
+            'NO_OF_DAY': { 
     type: DataTypes.INTEGER(11),  
             },
-            'user_id': { 
+            'ISENABLE': { 
     type: DataTypes.INTEGER(11),  
             },
-            'isEnable': { 
-    type: DataTypes.INTEGER(11),  
-            },
-            'Created_by': { 
+            'CREATED_BY': { 
     type: DataTypes.INTEGER(11),  
             },
                 'Last_updated_by': { 
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "redi_user_menus",
-createdAt: "Creation_date",
+tableName: "sys_payment_terms",
+createdAt: "CREATION_DATE",
 updatedAt: "Last_update_date",
 });
 return mdtInstance;

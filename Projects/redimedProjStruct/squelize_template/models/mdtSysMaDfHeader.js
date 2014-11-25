@@ -1,16 +1,19 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtSysMaDfHeader", {
+            'QUEST_DF_ID': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
-    type: DataTypes.INTEGER(11),  
+                    },
+            'DESCRIPTION': { 
+    type: DataTypes.STRING(200),  
             },
-            'user_id': { 
-    type: DataTypes.INTEGER(11),  
+            'DF_CODE': { 
+    type: DataTypes.STRING(10),  
             },
-            'isEnable': { 
+            'ITEM_ID': { 
+    type: DataTypes.STRING(10),  
+            },
+            'ISENABLE': { 
     type: DataTypes.INTEGER(11),  
             },
             'Created_by': { 
@@ -20,7 +23,7 @@ var mdtInstance = sequelize.define("mdtRediUserMenus", {
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "redi_user_menus",
+tableName: "sys_ma_df_headers",
 createdAt: "Creation_date",
 updatedAt: "Last_update_date",
 });

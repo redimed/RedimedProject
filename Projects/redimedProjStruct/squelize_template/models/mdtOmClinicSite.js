@@ -1,27 +1,27 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtOmClinicSite", {
+            'OM_SITE_ID': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
+                    },
+            'SITE_NAME': { 
+    type: DataTypes.STRING(200),  
+            },
+            'ADDRESS': { 
+    type: DataTypes.STRING(200),  
+            },
+            'ISENABLE': { 
     type: DataTypes.INTEGER(11),  
             },
-            'user_id': { 
-    type: DataTypes.INTEGER(11),  
-            },
-            'isEnable': { 
-    type: DataTypes.INTEGER(11),  
-            },
-            'Created_by': { 
+            'CREATED_BY': { 
     type: DataTypes.INTEGER(11),  
             },
                 'Last_updated_by': { 
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "redi_user_menus",
-createdAt: "Creation_date",
+tableName: "om_clinic_sites",
+createdAt: "CREATION_DATE",
 updatedAt: "Last_update_date",
 });
 return mdtInstance;

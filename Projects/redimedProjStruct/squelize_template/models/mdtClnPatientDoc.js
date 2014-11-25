@@ -1,17 +1,20 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtClnPatientDoc", {
+            'Patient_doc_id': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
+                    },
+            'Patient_id': { 
     type: DataTypes.INTEGER(11),  
             },
-            'user_id': { 
+            'cal_id': { 
     type: DataTypes.INTEGER(11),  
             },
-            'isEnable': { 
-    type: DataTypes.INTEGER(11),  
+            'PATH': { 
+    type: DataTypes.STRING(350),  
+            },
+            'DOC_NAME': { 
+    type: DataTypes.STRING(200),  
             },
             'Created_by': { 
     type: DataTypes.INTEGER(11),  
@@ -20,7 +23,7 @@ var mdtInstance = sequelize.define("mdtRediUserMenus", {
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "redi_user_menus",
+tableName: "cln_patient_docs",
 createdAt: "Creation_date",
 updatedAt: "Last_update_date",
 });

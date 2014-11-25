@@ -1,16 +1,19 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtRediUserMenus", {
-            'id': { 
+var mdtInstance = sequelize.define("mdtSysFaDfComment", {
+            'FA_COMMENT_ID': { 
     type: DataTypes.INTEGER(11),  
             primaryKey: true,
-        autoIncrement: true,            },
-            'menu_id': { 
+                    },
+            'LINE_ID': { 
     type: DataTypes.INTEGER(11),  
             },
-            'user_id': { 
-    type: DataTypes.INTEGER(11),  
+            'NAME': { 
+    type: DataTypes.STRING(50),  
             },
-            'isEnable': { 
+            'VALUE': { 
+    type: DataTypes.STRING(20),  
+            },
+            'ISENABLE': { 
     type: DataTypes.INTEGER(11),  
             },
             'Created_by': { 
@@ -19,8 +22,11 @@ var mdtInstance = sequelize.define("mdtRediUserMenus", {
                 'Last_updated_by': { 
     type: DataTypes.INTEGER(11),  
             },
-        }, {
-tableName: "redi_user_menus",
+                    'Comment_Type': { 
+    type: DataTypes.INTEGER(11),  
+            },
+}, {
+tableName: "sys_fa_df_comments",
 createdAt: "Creation_date",
 updatedAt: "Last_update_date",
 });

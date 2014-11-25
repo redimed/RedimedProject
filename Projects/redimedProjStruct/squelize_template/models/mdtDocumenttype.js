@@ -1,11 +1,11 @@
 module.exports = function(sequelize, DataTypes){
-var mdtInstance = sequelize.define("mdtSysMarialStatus", {
-            'Marial_status': { 
-    type: DataTypes.STRING(50),  
+var mdtInstance = sequelize.define("mdtDocumenttype", {
+            'TypeValue': { 
+    type: DataTypes.STRING(10),  
             primaryKey: true,
                     },
-            'Isenable': { 
-    type: DataTypes.INTEGER(11),  
+            'TypeName': { 
+    type: DataTypes.STRING(200),  
             },
             'Created_by': { 
     type: DataTypes.INTEGER(11),  
@@ -14,7 +14,7 @@ var mdtInstance = sequelize.define("mdtSysMarialStatus", {
     type: DataTypes.INTEGER(11),  
             },
         }, {
-tableName: "sys_marial_status",
+tableName: "documenttype",
 createdAt: "Creation_date",
 updatedAt: "Last_update_date",
 });
