@@ -1,14 +1,50 @@
-<h1 class="text-center"> List of Insurers </h1>
+<h3 class="page-title">List of Insurers</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Insurers</a>
+        </li>
+    </ul>
+</div>
+
 <div class="portlet box red">
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-medkit"></i> Insurer Companies
         </div>
         <div class="pull-right navbar-right">
-            <a class="btn blue" ui-sref="loggedIn.insurer.add"><i class="fa fa-plus"></i> New Insurer</a>
+            <a class="btn blue" ng-click="toogleAddForm()"><i class="fa fa-plus"></i> New Insurer</a>
         </div>
     </div>
     <div class="portlet-body">
         <my-data-table options="data_options" rowclick="clickRow">
     </div>
 </div>
+
+
+<div class="mdt-search" style="display: block;" ng-if="show_edit_form">
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="toogleAddForm()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="break-row" style="margin-bottom: 15px;"></div>
+    <insurer-detail data="{id:{{insurerInfo.id}}}" onsuccess="reloadpage"></insurer-detail>
+</div>
+
+<div class="mdt-search" style="display: block;" ng-if="show_add_form">
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="toogleAddForm()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="break-row" style="margin-bottom: 15px;"></div>
+    <insurer-detail data="{}" onsuccess="reloadpage"></insurer-detail>
+</div>
+
+
