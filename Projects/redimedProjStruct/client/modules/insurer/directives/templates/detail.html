@@ -1,15 +1,4 @@
 <form name="mainForm" novalidate>
-    <!-- ACTION -->
-    <div class="row" style="margin-bottom: 15px;">
-        <div class="col-md-2 col-sm-3 col-xs-6">
-            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">  
-                <i ng-if="mode.text=='add'" class="fa fa-plus"></i>
-                <i ng-if="mode.text=='edit'" class="fa fa-pencil"></i>
-                {{mode.text}}
-            </button>
-        </div>
-    </div>
-    <!-- END ACTION -->
 
     <div class="row">
         <!-- INSURER NAME -->
@@ -86,6 +75,16 @@
             <label for="isenable">Is Enable</label>
         </div>
         <!-- END IS ENABLE -->
-        <div class="break-row"></div>
+        <div class="break-row" style="margin-top:15px"></div>
+          <!-- ACTION -->
 
+        <div class="col-sm-4 col-xs-6">
+            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+                <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
+                <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
+                {{mode.text}}
+            </button>
+        </div>
+
+        <!-- END ACTION -->
     </div>

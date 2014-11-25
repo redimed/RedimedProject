@@ -1,17 +1,4 @@
 <form name="mainForm" novalidate>
-    <!-- ACTION -->
-    <div class="row" style="margin-bottom: 15px;">
-        <div class="col-md-2 col-sm-3 col-xs-6">
-            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
-                
-                <i ng-if="mode.text=='add'" class="fa fa-plus"></i>
-                <i ng-if="mode.text=='edit'" class="fa fa-pencil"></i>
-                
-                {{mode.text}}
-            </button>
-        </div>
-    </div>
-    <!-- END ACTION -->
 
     <div class="row">
         <!-- COMPANY NAME -->
@@ -121,7 +108,7 @@
             </span>
         </div>
         <!-- END PHONE -->
-        
+
         <!-- EMAIL -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.Email.$invalid && isSubmit}">
@@ -139,8 +126,8 @@
         </div>
         <!-- END EMAIL -->
         <div class="break-row"></div>
-        
-         <!-- SITE MEDICARE -->
+
+        <!-- SITE MEDICARE -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="Site_medic">Site Medicare</label>
@@ -149,27 +136,27 @@
             </span>
         </div>
         <!-- END SITE MEDICARE -->
-        
-         <!-- SITE MEDIC CONTACT NO -->
+
+        <!-- SITE MEDIC CONTACT NO -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="Medic_contact_no">Medicare Contact No</label>
                 <input  id="Medic_contact_no"
-                       name="Medic_contact_no" ng-model="modelObjectMap.Medic_contact_no" placeholder="Medicare Contact No" float-label />
+                        name="Medic_contact_no" ng-model="modelObjectMap.Medic_contact_no" placeholder="Medicare Contact No" float-label />
             </span>
         </div>
         <!-- END SITE MEDIC CONTACT NO -->
-        
+
         <!-- SITE MEDIC CONTACT NO -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="Description">Description</label>
                 <input  type="text" id="Description"
-                       name="Description" ng-model="modelObjectMap.Description" placeholder="Description" float-label />
+                        name="Description" ng-model="modelObjectMap.Description" placeholder="Description" float-label />
             </span>
         </div>
         <!-- END SITE MEDIC CONTACT NO -->
-        
+
         <div class="break-row"></div>
         <!-- IS PO -->
         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -276,16 +263,26 @@
 
 
         <!-- INSURER -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <a class="btn btn-block btn-sm btn-primary">Insurer</a>
-        </div>
+        <!--        <div class="col-md-4 col-sm-6 col-xs-12">
+                    <a class="btn btn-block btn-sm btn-primary">Insurer</a>
+                </div>-->
         <!-- END INSURER -->
 
 
-        <div class="break-row"></div>
+        <div class="break-row" style="margin-top: 15px"></div>
 
 
+        <!-- ACTION -->
 
+        <div class="col-sm-4 col-xs-6">
+            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+                <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
+                <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
+                {{mode.text}}
+            </button>
+        </div>
+
+        <!-- END ACTION -->
 
         <div class="break-row"></div>
     </div>

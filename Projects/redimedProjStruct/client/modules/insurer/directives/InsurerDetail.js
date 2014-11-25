@@ -4,7 +4,8 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                 restrict: "EA",
                 scope: {
                     data: "@",
-                    options: "="
+                    options: "=",
+                    on_success: '=onsuccess'
                 },
                 templateUrl: "modules/insurer/directives/templates/detail.html",
                 link: function (scope, element, attrs) {
@@ -20,7 +21,6 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                                         scope.modelObjectMap[key] = new Date(scope.modelObjectMap[key]);
                                 }
                             }
-                            console.log(scope.modelObjectMap)
                         });
                     };
                     scope.modelObjectMap = angular.copy(InsurerModel);
@@ -39,6 +39,9 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                                 toastr.success("Added a new Insurer", "Success");
                                 scope.modelObjectMap = angular.copy(InsurerModel);
                                 scope.isSubmit = false;
+                                 if (scope.on_success) {
+                                    scope.on_success();
+                                }
                             }
                         })
                     }
@@ -50,6 +53,9 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                             if (response.status === 'success') {
                                 toastr.success("Edit Insurer Successfully", "Success");
                                 scope.isSubmit = false;
+                                 if (scope.on_success) {
+                                    scope.on_success();
+                                }
                             }
                         })
                     }

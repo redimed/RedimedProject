@@ -175,7 +175,7 @@
                     <!--/span-->
                     <div class="col-md-6 col-sm-6" >
                         <div class="form-group" >
-                            <label class="control-label col-md-3 col-sm-3">Main Function </label>
+                            <label class="control-label col-md-3 col-sm-3">Web Main Function </label>
                             <div class="col-md-8 col-sm-8">
                                 <select ng-model="info.function_id" ng-options="func.function_id as func.decription for func in functionList" class="form-control pull-left">
                                     <option value="">--Select Function--</option>
@@ -197,6 +197,16 @@
                         </div>
                     </div>
                     <!--/span-->
+                    <div class="col-md-6 col-sm-6" >
+                        <div class="form-group" >
+                            <label class="control-label col-md-3 col-sm-3">Mobile Main Function </label>
+                            <div class="col-md-8 col-sm-8">
+                                <select ng-model="info.function_mobile" ng-options="func.function_id as func.decription for func in functionMobList" class="form-control pull-left">
+                                    <option value="">--Select Function--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br/>
                 <div class="row">

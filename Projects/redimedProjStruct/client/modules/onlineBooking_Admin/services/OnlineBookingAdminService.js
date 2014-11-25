@@ -107,6 +107,8 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return list.get();
         }
 
+
+
         adminBooking.getListEmployee = function(){
             var list = api.one('users/employee/list');
             return list.get();
