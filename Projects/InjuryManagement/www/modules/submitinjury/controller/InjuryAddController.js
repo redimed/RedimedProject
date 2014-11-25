@@ -4,7 +4,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                                                 InjuryServices, $cordovaCamera, $ionicPopup,
                                                 $ionicSideMenuDelegate, localStorageService,
                                                 $cordovaFile, $ionicModal, ConfigService,$ionicSlideBoxDelegate,$cordovaGeolocation,
-                                                $ionicLoading, $compile,$timeout){
+                                                $ionicLoading, $compile,$timeout,$cordovaStatusbar){
         $scope.isSubmit = false;
         $scope.isShow = true;
         $scope.imgURI = [];
@@ -74,6 +74,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             injury_date: '',
             description:''
         };
+
+        $scope.worker.injury_date = $filter('date')(new Date(), "yyyy-MM-dd");
 
         var scopeReset = angular.copy($scope.worker);
 
@@ -429,6 +431,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 GMaps.geolocate({
                     success: function(position) {
                         map.setCenter(position.coords.latitude, position.coords.longitude);
+                        alert(position);
                         map.addMarker({
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,

@@ -17,11 +17,10 @@
             <ion-list>
                 <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}">
                     <span class="input-label span-input-color">Injury Date</span>
-                    <input ng-required="true" type="text" onfocus="this.type='date';
-                    this.setAttribute('onfocus','');this.blur();
-                    this.focus();" ng-model="worker.injury_date" name="injury_date" />
+                    <input ng-required="true" type="date" ng-model="worker.injury_date" name="injury_date" />
                     <i ng-class="{'icon ion-alert-circled error col col-10':isSubmitdesc && descinjury.injury_date.$invalid}"></i>
                 </label>
+                {{worker.injury_date}}
 
                 <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_description.$invalid}">
                     <span class="input-label span-input-color">Injury Description</span>
