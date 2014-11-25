@@ -1,6 +1,4 @@
-var nodemailer = require("nodemailer");
-var smtpTransport = require('nodemailer-smtp-transport');
-var smtpPool = require('nodemailer-smtp-pool');
+
 
 module.exports = {
 	convertFromHoursToDateTime: function(hours){

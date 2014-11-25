@@ -1,10 +1,19 @@
-/**
- * Created by Luan Nguyen on 11/15/2014.
- */
-var db = require('../models');
-var mkdirp = require('mkdirp');
-var fs = require('fs');
-var f = require('../functions.js');
+var nodemailer = require("nodemailer");
+var smtpTransport = require('nodemailer-smtp-transport');
+var smtpPool = require('nodemailer-smtp-pool');
+
+var transport = nodemailer.createTransport(smtpTransport({
+    host: "mail.redimed.com.au", // hostname
+    secure: false,
+    port: 25, // port for secure SMTP
+    auth: {
+        user: "programmer2",
+        pass: "Hello8080"
+    },
+    tls: {rejectUnauthorized: false},
+    debug:true
+}));
+
 
 
 module.exports = {
@@ -84,7 +93,7 @@ module.exports = {
                                                   subject: "Confirmation for appointment of "+pData[0].Company_name+" # "+pData[0].Title+'.'+pData[0].First_name+' '+pData[0].Sur_name+' '+pData[0].Middle_name, // Subject line
                                                   html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
                                                   "<br>Your medical assessment has been booked at the following:</b><br>"+
-                                                  "Date / Time: <b>" + new Date(aData[0].FROM_TIME).format("dd/MM/yyyy - hh:mm:ss") +"</b> <br>" +
+                                                  "Date / Time: <b>" + 'aaa' +"</b> <br>" +
                                                   "Location: <b>REDiMED " + aData[0].Site_name + "</b><br>" +
                                                   "<br>" +
                                                   "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
@@ -97,7 +106,16 @@ module.exports = {
 
                                               };
 
-                                              f.sendMail(mailOptions);
+                                              transport.sendMail(mailOptions, function(error, response){  //callback
+                                                  if(error){
+                                                      console.log(error);
+                                                      res.json({status:"fail"});
+                                                  }else{
+                                                      console.log("Message sent: " + response.message);
+                                                      res.json({status:"success"});
+                                                  }
+                                                  transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                                              });
 
 
                                           })
