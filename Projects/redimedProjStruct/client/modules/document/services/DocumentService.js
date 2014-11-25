@@ -94,12 +94,6 @@ angular.module('app.loggedIn.document.services', [])
         /* Instant Drug Screen
          Begin
          */
-
-        documentService.newIDS = function (PATIENT_ID,CAL_ID) {
-            var newIDS = api.all("document/newIDS");
-            return newIDS.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
-        }
-
         documentService.loadIDS = function (PATIENT_ID,CAL_ID) {
             var loadIDS = api.all("document/loadIDS");
             return loadIDS.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});

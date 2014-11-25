@@ -78,20 +78,6 @@ module.exports = {
 
 
     },
-    newIDS: function(req,res)
-    {
-        var PATIENT_ID = req.body.PATIENT_ID;
-        var CAL_ID = req.body.CAL_ID;
-        db.sequelize.query("INSERT INTO `cln_idas_headers` (PATIENT_ID,CAL_ID,IDAS_ID,DF_CODE,ITEM_ID,ISENABLE) SELECT ?,?,h.IDAS_DF_ID,h.DF_CODE,h.ITEM_ID,h.ISENABLE FROM `sys_idas_headers` h",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-            db.sequelize.query("INSERT INTO `cln_idas_groups` (PATIENT_ID,CAL_ID,IDAS_GROUP_ID,IDAS_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE) SELECT ?,?,IDAS_GROUP_ID,IDAS_DF_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE FROM `sys_idas_groups`",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-                db.sequelize.query("INSERT INTO `cln_idas_lines` (PATIENT_ID,CAL_ID,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE) SELECT ?,?,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE FROM `sys_idas_lines`",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-                    res.json({status:"success"});
-                });
-            });
-        }).error(function(err){
-            res.json({status:"fail"});
-        });
-    },
 
     loadIDS: function(req,res){
         var data = [];
@@ -166,16 +152,20 @@ module.exports = {
             .success(function(data){
                 if(data == null)
                 {
-                    res.json({status:'fail'});
+                    db.sequelize.query("INSERT INTO `cln_idas_headers` (PATIENT_ID,CAL_ID,IDAS_ID,DF_CODE,ITEM_ID,ISENABLE) SELECT ?,?,h.IDAS_DF_ID,h.DF_CODE,h.ITEM_ID,h.ISENABLE FROM `sys_idas_headers` h",null,{raw:true},[Patient_Id,CalId]).success(function(){
+                        db.sequelize.query("INSERT INTO `cln_idas_groups` (PATIENT_ID,CAL_ID,IDAS_GROUP_ID,IDAS_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE) SELECT ?,?,IDAS_GROUP_ID,IDAS_DF_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE FROM `sys_idas_groups`",null,{raw:true},[Patient_Id,CalId]).success(function(){
+                            db.sequelize.query("INSERT INTO `cln_idas_lines` (PATIENT_ID,CAL_ID,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE) SELECT ?,?,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE FROM `sys_idas_lines`",null,{raw:true},[Patient_Id,CalId]).success(function(){
+                                res.json({status:'new'});
+                            });
+                        });
+                    }).error(function(err){
+                        res.json({status:"fail"});
+                    });
                 }else
                 {
-                    //var buffer = new Buffer( data.SIGNATURE, 'binary' );
-                    //var sign = buffer.toString('base64');
-
-                    //var rs = util.format("data:image/png;base64,%s", "");
-
-                    res.json({data: data});
+                    res.json({status:'update',data: data});
                 }
+
             })
             .error(function(err){
                 res.json({status:'error'});

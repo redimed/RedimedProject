@@ -8,18 +8,11 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
         };
         var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
 
-
-
-//        var CalID = $stateParams.CalID;
-//        var Patient_ID = $stateParams.PatientID;
-//        console.log("gorgon UQ: " + CalID + " patient: " + Patient_ID);
-
-
-        $scope.apptInfo = localStorageService.get('tempAppt');
+        //$scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        var doctorInfo = $cookieStore.get('doctorInfo');
+        //var doctorInfo = $cookieStore.get('doctorInfo');
         var Patient_ID = $scope.patientInfo.Patient_id;
-        var CalID = $scope.apptInfo.CAL_ID;
+        var CalID = -1;// $scope.apptInfo.CAL_ID;
 
 
         function getAge(dateString)
@@ -214,27 +207,7 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
             if(response['status'] === 'fail') {
                 var date = new Date();
                 $scope.isNew = true;
-
                 $scope.maxDate = new Date(date.getFullYear() - 1,date.getMonth() ,date.getDate());
-                $scope.submitGorgonUQ = function(gorgonUQForm){
-                    $scope.showClickedValidation = true;
-                    if(gorgonUQForm.$invalid){
-                        toastr.error("Please Input All Required Information!", "Error");
-                    }else
-                    {
-                        DocumentService.insertUQ($scope.info).then(function(response){
-                            if(response['status'] === 'success') {
-                                toastr.success("Successfully","Success");
-                                $state.go('loggedIn.gorgonUQ', null, {'reload': true});
-                            }
-                            else
-                            {
-                                toastr.error("Fail", "Error");
-                            }
-                        });
-                    }
-
-                };
             }
             else
             {
@@ -245,7 +218,7 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
                     Patient_Id : response.Patient_Id,
                     age : getAge($scope.patientInfo.DOB),
                     sex : $scope.patientInfo.Sex,
-                    TodayDate: new Date(),
+                    TodayDate: response.TodayDate ,
                     Height : response.Height,
                     Weight :   response.Weight,
                     JobTitle : response.JobTitle,
@@ -368,29 +341,43 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers',[])
                     isUseRespirator : response.isUseRespirator
                 };
                 oriInfo = angular.copy($scope.info);
-                $scope.submitGorgonUQ = function(gorgonUQForm){
-                    $scope.showClickedValidation = true;
-                    if(gorgonUQForm.$invalid){
-                        toastr.error("Please Input All Required Information!", "Error");
-                    }else
-                    {
-                        var info = $scope.info;
-                        DocumentService.updateUQ(info).then(function(response){
-                            if(response['status'] === 'success') {
-                                toastr.success("Successfully","Success");
-                                $state.go('loggedIn.gorgonUQ', null, {'reload': true});
-                            }
-                            else
-                            {
-                                toastr.error("Fail", "Error");
-                            }
-                        });
-                    }
-
-                };
             }
         });
 
+        $scope.submitGorgonUQ = function(gorgonUQForm){
+            $scope.showClickedValidation = true;
+            if(gorgonUQForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }else
+            {
+                if($scope.isNew)
+                {
+                    DocumentService.insertUQ($scope.info).then(function(response){
+                        if(response['status'] === 'success') {
+                            toastr.success("Successfully","Success");
+                            $state.go('loggedIn.gorgonUQ', null, {'reload': true});
+                        }
+                        else
+                        {
+                            toastr.error("Fail", "Error");
+                        }
+                    });
+                }else
+                {
+                    DocumentService.updateUQ($scope.info).then(function(response){
+                        if(response['status'] === 'success') {
+                            toastr.success("Successfully","Success");
+                            $state.go('loggedIn.gorgonUQ', null, {'reload': true});
+                        }
+                        else
+                        {
+                            toastr.error("Fail", "Error");
+                        }
+                    });
+                }
+            }
+
+        };
 
 
     });

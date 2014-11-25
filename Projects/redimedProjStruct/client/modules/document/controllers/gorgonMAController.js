@@ -1,8 +1,6 @@
 angular.module('app.loggedIn.document.gorgonMA.controllers', [])
     .controller("gorgonMAController", function ($scope, $filter, DocumentService, $http, $cookieStore, $state, toastr, $stateParams,localStorageService) {
         var isEdit = true;
-        var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
-
 
         // Start Signature
         var tempSignature;
@@ -75,9 +73,11 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                 $scope.info.PRE_BR2_V7 =  null
             }
         };
+
         var date = new Date();
         var today = $filter('date')(date, 'dd/MM/yyyy');
         $scope.maxDate = new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+
         $scope.info = {
             GORGON_ID: null,
             PATIENT_ID: Patient_ID,

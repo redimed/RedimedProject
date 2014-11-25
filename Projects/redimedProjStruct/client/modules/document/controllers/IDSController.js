@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.document.IDS.controllers',[])
-    .controller("IDSController",function($scope,DocumentService,$http,$cookieStore,$stateParams,localStorageService) {
+    .controller("IDSController",function($scope,$state,DocumentService,$http,$cookieStore,$stateParams,toastr,localStorageService) {
         var oriInfoH;
         var oriInfoL;
         $scope.infoL = [];
@@ -30,14 +30,11 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
 //        var Patient_ID = $stateParams.PatientID;
 //        console.log("IDS: " + CalID + " patient: " + Patient_ID);
 
-        var doctorInfo = $cookieStore.get('doctorInfo');
-        console.log(doctorInfo.doctor_id);
-        $scope.apptInfo = localStorageService.get('tempAppt');
+        //var doctorInfo = $cookieStore.get('doctorInfo');
+        //$scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        console.log($scope.apptInfo);
-        console.log($scope.patientInfo);
         var Patient_ID =$scope.patientInfo.Patient_id;
-        var CalID = $scope.apptInfo.CAL_ID;
+        var CalID = -1; // $scope.apptInfo.CAL_ID;
 
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -104,12 +101,12 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                 var infoH = $scope.infoH;
                 DocumentService.insertIDS(infoL,infoH).then(function(response){
                     if(response['status'] === 'success') {
-                        alert("Insert Successfully!");
-                        //$state.go('loggedIn.home');
+                        toastr.success("Successfully","Success");
+                        $state.go('loggedIn.IDS', null, {'reload': true});
                     }
                     else
                     {
-                        alert("Insert Failed!");
+                        toastr.error("Fail", "Error");
                     }
                 });
             }
@@ -117,72 +114,11 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         };
 
         DocumentService.checkIDS(Patient_ID,CalID).then(function(response){
-            if(response['status'] === 'fail') {
+            if(response['status'] === 'new') {
                 $scope.isNew = true;
-                DocumentService.newIDS(Patient_ID,CalID).then(function(response){
-                    DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
-                        if(response['status'] === 'fail') {
-                            alert("load fail!");
-                        }
-                        else
-                        {
-                            var data = response[0];
-                            var dataH = data.Header[0];
-                            $scope.listIDS.push({"header_id" : dataH.IDAS_ID, "group":[]});
-                            var i = 0;
-                            angular.forEach(data.Group, function(dataG){
-                                if(dataG.IDAS_ID ==  $scope.listIDS[0].header_id  )
-                                {
-                                    $scope.listIDS[0].group.push({"group_id" : dataG.IDAS_GROUP_ID, "group_name": dataG.GROUP_NAME, "line":[]});
-                                    angular.forEach(data.Line, function(dataL){
-                                        if(dataL.IDAS_GROUP_ID ==  $scope.listIDS[0].group[i].group_id )
-                                        {
-                                            $scope.listIDS[0].group[i].line.push({ "line_id" : dataL.IDAS_LINE_ID,"line_name": dataL.QUESTION});
-                                        }
-                                    });
-                                    i++;
-                                }
-                            });
-                            oriInfoH  = angular.copy($scope.infoH);
-                            oriInfoL  = angular.copy($scope.infoL.YES_NO);
-                        }
-                    });
-                });
-            }else
+            }else if(response['status'] === 'update')
             {
                 $scope.isNew = false;
-                DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
-                    if(response['status'] === 'fail') {
-                        alert("load fail!");
-                    }
-                    else
-                    {
-                        var data = response[0];
-                        var dataH = data.Header[0];
-                        $scope.listIDS.push({"header_id" : dataH.IDAS_ID, "group":[]});
-                        var i = 0;
-                        angular.forEach(data.Group, function(dataG){
-                            if(dataG.IDAS_ID ==  $scope.listIDS[0].header_id  )
-                            {
-                                $scope.listIDS[0].group.push({"group_id" : dataG.IDAS_GROUP_ID, "group_name": dataG.GROUP_NAME, "line":[]});
-                                angular.forEach(data.Line, function(dataL){
-                                    if(dataL.IDAS_GROUP_ID ==  $scope.listIDS[0].group[i].group_id )
-                                    {
-                                        $scope.listIDS[0].group[i].line.push({ "line_id" : dataL.IDAS_LINE_ID,"line_name": dataL.QUESTION});
-                                        $scope.infoL.YES_NO.push(dataL.YES_NO);
-                                    }
-                                });
-                                i++;
-                            }
-                        });
-
-                        oriInfoL  = angular.copy($scope.infoL.YES_NO);
-
-                    }
-
-
-
-                });
                 $scope.infoH = {
                     IDAS_ID : response.data.IDAS_ID,
                     PATIENT_ID : response.data.PATIENT_ID,
@@ -213,7 +149,39 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
                     TesterDate : response.data.TesterDate
                 };
                 oriInfoH  = angular.copy($scope.infoH);
+            }else
+            {
+                toastr.error("Fail", "Error");
+                return;
             }
+
+            DocumentService.loadIDS(Patient_ID,CalID).then(function(response){
+                if(response['status'] === 'fail') {
+                    toastr.error("Fail", "Error");
+                }
+                else
+                {
+                    var data = response[0];
+                    var dataH = data.Header[0];
+                    $scope.listIDS.push({"header_id" : dataH.IDAS_ID, "group":[]});
+                    var i = 0;
+                    angular.forEach(data.Group, function(dataG){
+                        if(dataG.IDAS_ID ==  $scope.listIDS[0].header_id  )
+                        {
+                            $scope.listIDS[0].group.push({"group_id" : dataG.IDAS_GROUP_ID, "group_name": dataG.GROUP_NAME, "line":[]});
+                            angular.forEach(data.Line, function(dataL){
+                                if(dataL.IDAS_GROUP_ID ==  $scope.listIDS[0].group[i].group_id )
+                                {
+                                    $scope.listIDS[0].group[i].line.push({ "line_id" : dataL.IDAS_LINE_ID,"line_name": dataL.QUESTION});
+                                    $scope.infoL.YES_NO.push(dataL.YES_NO);
+                                }
+                            });
+                            i++;
+                        }
+                    });
+                    oriInfoL  = angular.copy($scope.infoL.YES_NO);
+                }
+            });
         });
 
 
