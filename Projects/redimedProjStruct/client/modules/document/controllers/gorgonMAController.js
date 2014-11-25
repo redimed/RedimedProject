@@ -30,9 +30,9 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
         };
 
 
-        $scope.apptInfo = localStorageService.get('tempAppt');
+        //$scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        var CalID = $scope.apptInfo.CAL_ID;
+        var CalID = -1;//$scope.apptInfo.CAL_ID;
         var Patient_ID = $scope.patientInfo.Patient_id;
 
         $scope.checkAudiogram = function () {
