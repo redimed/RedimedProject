@@ -19,6 +19,7 @@ java.classpath.push('./lib/jasperreports-5.6.0.jar');
 java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
 java.classpath.push('./lib/sun.misc.BASE64Decoder.jar');
+java.classpath.push('./lib/Audio.jar');
 
 var BasicStroke = java.import('java.awt.BasicStroke');
 var Color = java.import('java.awt.Color');
@@ -48,54 +49,72 @@ var JasperPrint = java.import('net.sf.jasperreports.engine.JasperPrint');
 var DriverManager = java.import('java.sql.DriverManager');
 var Driver = java.import('com.mysql.jdbc.Driver');
 
+//var AudioBean = java.import('audio.AudioBean');
+
 module.exports = {
     printReport : function(req,res,next){
+        var arr = [];
         var calId = req.params.calId;
         var id = req.params.id;
         var patientId = req.params.patientId;
 
+        db.sequelize.query("SELECT * FROM cln_sa_df_lines WHERE patient_id = 181 AND CAL_ID=17060 AND SA_ID=3",null,{raw:true})
+            .success(function(data){
+                arr = data;
 
-        mkdirp('.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId, function (err) {
-            if (err) console.error(err)
-            else
-            {
-                var con = java.callStaticMethodSync('java.sql.DriverManager','getConnection',"jdbc:mysql://localhost:3306/sakila","root","root");
+                var str = java.callStaticMethodSync('audio.AudioBean','getImageChart','./reports/SACln/images/Government.png',arr,true);
+                var a = java.callStaticMethodSync('audio.AudioBean','decodeToImage',str.substring(22));
 
-                var a = decodeToImage(getImageChart().substring(22));
-
-                var paramMap = new HashMap();
-
-                paramMap.putSync("cal_id",parseInt(calId));
-                paramMap.putSync("patient_id",parseInt(patientId));
-                paramMap.putSync("sa_id",parseInt(id));
-                paramMap.putSync("real_path","./reports/SACln/");
-                paramMap.putSync("result_image",a);
-
-                var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\Audiogram_1.pdf';
-
-                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager','fillReport','./reports/SACln/Government.jasper',paramMap,con);
-
-                java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager','exportReportToPdfFile',jPrint,filePath,function(err,rs){
-                    if(err)
-                    {
-                        console.log(err);
-                        return;
-                    }
+                mkdirp('.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId, function (err) {
+                    if (err) console.error(err)
                     else
                     {
+                        var con = java.callStaticMethodSync('java.sql.DriverManager','getConnection',"jdbc:mysql://localhost:3306/sakila","root","root");
 
-                        res.download(filePath,'Audiogram_1.pdf',function(err){
+                        var a = decodeToImage(getImageChart().substring(22));
+
+                        var paramMap = new HashMap();
+
+                        paramMap.putSync("cal_id",parseInt(calId));
+                        paramMap.putSync("patient_id",parseInt(patientId));
+                        paramMap.putSync("sa_id",parseInt(id));
+                        paramMap.putSync("real_path","./reports/SACln/");
+                        paramMap.putSync("result_image",a);
+
+                        var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\Audiogram_1.pdf';
+
+                        var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager','fillReport','./reports/SACln/Government.jasper',paramMap,con);
+
+                        java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager','exportReportToPdfFile',jPrint,filePath,function(err,rs){
                             if(err)
                             {
                                 console.log(err);
                                 return;
                             }
+                            else
+                            {
+
+                                res.download(filePath,'Audiogram_1.pdf',function(err){
+                                    if(err)
+                                    {
+                                        console.log(err);
+                                        return;
+                                    }
+                                });
+                            }
+
                         });
                     }
-
                 });
-            }
-        });
+            })
+            .error(function(err){
+                console.log(err);
+            })
+
+
+
+
+
     },
     loadSA1: function (req, res) {
         var info = req.body.info; //get id find
