@@ -27,9 +27,27 @@ angular.module("app.loggedIn.company.list.controller", [])
         },
     };
 
-    $scope.clickRow = function (item) {
+            $scope.reloadpage = function () {
+                console.log(123)
+                $state.go($state.current, {}, {reload: true});
+            }
+
+            $scope.show_add_form = false;
+            $scope.show_edit_form = false;
+
+            $scope.toogleAddForm = function () {
+                $scope.show_add_form = !$scope.show_add_form;
+            }
+
+            $scope.toogleEditForm = function () {
+                $scope.show_edit_form = !$scope.show_edit_form;
+            }
+
+            $scope.clickRow = function (item) {
+                $scope.companyInfo = item;
+                $scope.toogleEditForm();
 //        console.log(item);
-        localStorageService.set('tempCompanyInfo', item);
-        $state.go('loggedIn.company.detail');
-    }
-})
+//        localStorageService.set('tempCompanyInfo', item);
+//        $state.go('loggedIn.company.detail');
+            }
+        })
