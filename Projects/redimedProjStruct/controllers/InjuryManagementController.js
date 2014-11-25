@@ -4,7 +4,7 @@
 var db = require('../models');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
-var f = require('./functions.js');
+var f = require('../functions.js');
 
 
 module.exports = {
