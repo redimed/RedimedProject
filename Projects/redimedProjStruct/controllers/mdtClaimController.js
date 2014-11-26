@@ -29,7 +29,7 @@ module.exports = {
 		var sql = "";
 		sql = mdt_functions.commonSearch(post_fields);
 
-		db.mdtPatient
+		db.mdtClaim
 		.findAndCountAll({
 			where: [sql],
 			offset: pagination.offset,

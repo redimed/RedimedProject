@@ -7,12 +7,13 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			data: "@",
 			options: "=",
 			isClose: "@",
-			patient: "="
+			patient: "=",
+			params: "="
 		},
 		templateUrl: "modules/patient/directives/templates/detail.html",
 		link: function(scope, element, attrs){
 			if(scope.data){
-				var data = scope.$eval(scope.data);	
+				var data = scope.$eval(scope.data);
 			}
 
 			if(scope.isClose){
@@ -26,6 +27,28 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				main_one: true,
 				main_two: true
 			}
+
+			var initObject = function(){
+				scope.modelObjectMap = angular.copy(PatientModel);
+				if(typeof scope.params !== 'undefined'){
+					PatientService.mdtById(scope.params.Patient_id).then(function(response){
+						if(response.status === 'success'){
+							angular.extend(scope.modelObjectMap, response.data);
+
+							for(var key in scope.modelObjectMap){
+								if(scope.modelObjectMap[key]){
+									if(key.indexOf("is") != -1 || key.indexOf("Is") != -1)
+										scope.modelObjectMap[key] = scope.modelObjectMap[key].toString();
+									if(key.indexOf("_date") != -1 || key.indexOf("DOB") != -1 || key.indexOf("Exp") != -1)
+										scope.modelObjectMap[key] = new Date(scope.modelObjectMap[key]);
+								}
+							}	
+						}
+					})
+				}
+			}
+
+			initObject();
 			// END DECLARE
 
 			//POPUP

@@ -11,9 +11,19 @@ angular.module("app.loggedIn.patient.services", [])
         return funcApi.post(options);
     }
 
+    instanceService.mdtById = function(Patient_id){
+        var funcApi = mdtApi.all("byId");
+        return funcApi.post({'Patient_id': Patient_id});
+    }
+
     instanceService.mdtInsertWaitingList = function(params){
         var funcApi = mdtApi.all("waiting_list/add");
         return funcApi.post(params);
+    }
+
+    instanceService.mdtClaimSearch = function(options){
+        var funcApi = mdtApi.all("claim/search");
+        return funcApi.post(options);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////

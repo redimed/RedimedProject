@@ -1,0 +1,57 @@
+<div class="row">
+	<div class="col-md-5">
+		<!-- PAGINATION -->
+		<pagination boundary-links="true" total-items="list.count" ng-model="params.pagination.current_page" 
+	        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+	        items-per-page="params.pagination.limit" max-size="params.pagination.max_size" ng-change="setPage()">
+	    </pagination>
+	    <!-- END PAGINATION -->
+	</div>
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center">
+        <button class="btn btn-sm btn-block green" ng-click="openPopup({type:'add'})">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<table class="mdt-table">
+			<thead>
+				<tr>
+					<th>Claim No</th>
+					<th>Injury Name</th>
+					<th>Location</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="no-hover">
+					<td>
+						<input type="text" ng-model="params.filters[1].value" class="form-control" ng-change="refreshList()">
+					</td>
+					<td>
+						<input type="text" ng-model="params.filters[2].value" class="form-control" ng-change="refreshList()">
+					</td>
+					<td>
+						<input type="text" ng-model="params.filters[3].value" class="form-control" ng-change="refreshList()">
+					</td>
+				</tr>
+				<tr ng-repeat="l in list.data" ng-click="clickRow({row: l})" style="cursor: pointer;">
+					<td>
+						{{l.Claim_no}}
+					</td>
+					<td>
+						{{l.Injury_name}}
+					</td>
+					<td>{{l.Location}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<!-- OPEN CLAIM ADD -->
+<div class="mdt-search" id="PopupClaimDetailAdd">
+    <patient-claim options="options" is-close="PopupClaimDetailAdd" permission="permission"></patient-claim>
+</div>
+<!-- END OPEN CLAIM ADD -->
