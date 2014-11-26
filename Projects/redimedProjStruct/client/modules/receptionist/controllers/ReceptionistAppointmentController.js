@@ -5,6 +5,9 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.overviewAppointment = [];
 
 	//DECLARE
+	var waitingListSelectId = "#waitingListSelectModule";
+	var appointmentPatientSearchId = "#appointmentPatientSearch";
+
 	$scope.rightSelectedBooking = {};
 	$scope.selectedCalId = 0;
 	$scope.dataBooking = {};
@@ -28,7 +31,6 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	// RIGHT CLICK BOOKING
 	$scope.chooseBookingAction = function($event, option){
 		$scope.rightSelectedBooking.data = option.data;
-		console.log($scope.rightSelectedBooking.data);
 		$scope.rightSelectedBooking.overId = option.overId;
 		$scope.rightSelectedBooking.docId = option.docId;
 
@@ -48,25 +50,78 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 		if(type === 'add'){
 			angular.element(patientPopupId).fadeIn();
+		}else if(type === 'select'){
+			angular.element(appointmentPatientSearch).fadeIn();
 		}
 	}
+
+	$scope.selectPatient = function(row){
+		var dataBooking = {
+			CAL_ID: $scope.rightSelectedBooking.data.cals[$scope.rightSelectedBooking.docId],
+			patients: $scope.rightSelectedBooking.data.patients[$scope.rightSelectedBooking.docId],
+		}
+
+		dataBooking.Patient_id = row.Patient_id;
+
+		if(dataBooking.patients[0].Patient_id !== 0){
+			dataBooking.patients.push({Patient_id: dataBooking.Patient_id, Patient_name: row.First_name+" "+row.Sur_name});
+			dataBooking.PATIENTS = JSON.stringify(dataBooking.patients);
+		}else{
+			dataBooking.PATIENTS = JSON.stringify([{Patient_id: dataBooking.Patient_id, Patient_name: row.First_name+" "+row.Sur_name}]);
+		}
+
+		ReceptionistService.booking(dataBooking).then(function(data){
+            if(data.status === 'success'){
+            	angular.element("#bookingModule").fadeOut();
+            	angular.element(appointmentPatientSearch).fadeOut();
+            	$scope.refreshAppointment();
+            }
+            
+        })
+	}
 	// END GET CLICK ADD OR SELECT PATIENT
+
+	// ADD WAITING LIST
+	$scope.addWaitingList = function(){
+		var waitingListId = "#waitingListAddModule";
+
+		angular.element(waitingListId).fadeIn();
+	}
+
+	$scope.openWaitingList = function(){
+		angular.element(waitingListSelectId).fadeIn();	
+	}
+
+	$scope.selectWaitingList = function(row){
+		var dataBooking = {
+			CAL_ID: $scope.rightSelectedBooking.data.cals[$scope.rightSelectedBooking.docId],
+			patients: $scope.rightSelectedBooking.data.patients[$scope.rightSelectedBooking.docId],
+		}
+
+		dataBooking.Patient_id = row.Patient_id;
+
+		if(dataBooking.patients[0].Patient_id !== 0){
+			dataBooking.patients.push({Patient_id: dataBooking.Patient_id, Patient_name: row.First_name+" "+row.Sur_name});
+			dataBooking.PATIENTS = JSON.stringify(dataBooking.patients);
+		}else{
+			dataBooking.PATIENTS = JSON.stringify([{Patient_id: dataBooking.Patient_id, Patient_name: row.First_name+" "+row.Sur_name}]);
+		}
+
+		ReceptionistService.booking(dataBooking).then(function(data){
+            if(data.status === 'success'){
+            	angular.element(waitingListSelectModule).fadeOut();
+            	$scope.refreshAppointment();
+            }
+            
+        })
+	}
+	// END ADD WAITING LIST
 
 	// GLOBAL CLICK
 	angular.element("#appointment").on("click", function(){
 		angular.element("#popupMenu").css({'display':'none'});
 	})
 	// END GLOBAL CLICK
-
-	// ACTION
-
-	// ADD NEW SLOT
-	$scope.addNewSlot = function(){
-
-	}
-	// END ADD NEW SLOT
-
-	// END ACTION
 
 	var init = function(){
 		if($cookieStore.get("patientBookingInfo")){
@@ -168,6 +223,14 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 		$cookieStore.put("appointmentDoctor", $scope.modelObjectMap);
 		$state.go("loggedIn.receptionist.appointment.doctor");
 	}
+
+	// GO TO PATIENT
+	$scope.goToPatientDetail = function(patient, data, index){
+		localStorageService.set("apptTempInfo", {'CAL_ID': data.cals[index]});
+		localStorageService.set("patientTempInfo", patient);
+		$state.go("loggedIn.doctor.patients.detail.appt");
+	}
+	// END GO TO PATIENT
 
 	$scope.refreshAppointment = function(){
 		loadAppointmentOverview($scope.modelObjectMap);

@@ -9,7 +9,7 @@ var v1_WAProgressAssessmentController = require('./controllers/v1_WAProgressAsse
 var v1_WAFinalAssessmentController = require('./controllers/v1_WAFinalAssessmentController');
 
 var v1_InventoryController = require('./controllers/v1_InventoryController');
-var v1_Test = require('./controllers/v1_Test');
+/// var v1_Test = require('./controllers/v1_Test');
 
 k_route.setRoute(app, v1_DoctorController, '/api/erm/v1/doctors/');
 k_route.setRoute(app, v1_AppointmentController, '/api/erm/v1/appointment/');
@@ -23,16 +23,13 @@ k_route.setRoute(app, v1_InventoryController, '/api/erm/v1/inv/');
 k_route.setRoute(app, v1_WAFirstAssessmentController,'/api/erm/v1/wa/workcover/first/');
 k_route.setRoute(app, v1_WAProgressAssessmentController,'/api/erm/v1/wa/workcover/progress/');
 k_route.setRoute(app, v1_WAFinalAssessmentController,'/api/erm/v1/wa/workcover/final/');
-k_route.setRoute(app, v1_Test, '/api/erm/v1/test/');
+/// k_route.setRoute(app, v1_Test, '/api/erm/v1/test/');
 
 /*
 *	VERSION 2
 */
-
-var v2_ReferralsController = require('./controllers/v2_ReferralsController');
 var v2_CompanyController = require('./controllers/v2_CompanyController');
 var v2_InsurersController = require('./controllers/v2_InsurersController');
 
-k_route.setRoute(app, v2_ReferralsController, '/api/erm/v2/referrals/');
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
 k_route.setRoute(app, v2_InsurersController, '/api/erm/v2/insurers/');

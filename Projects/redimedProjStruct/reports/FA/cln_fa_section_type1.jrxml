@@ -159,4 +159,7 @@ WHERE	section.`ISENABLE`=1 AND line.`ISENABLE`=1
 			</frame>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="105"/>
+	</pageFooter>
 </jasperReport>

@@ -1,0 +1,56 @@
+angular.module("app.loggedIn.patient.claim.list.controller", [
+	
+])
+
+.controller("ClaimListController", function($scope, $stateParams, ClaimService){
+	//DECLARE
+	var idClaimDetailAdd = "#PopupClaimDetailAdd";
+
+	$scope.permission = {
+		Patient_id: $stateParams.patient_id
+	};
+	$scope.list = {};
+
+	$scope.params = {
+		pagination: {
+			limit: 10,
+			offset: 0,
+			current_page: 1,
+			max_size: 5
+		},
+		filters: [
+			{type: 'select', name: 'Patient_id', value: $stateParams.patient_id},
+			{type: 'select', name: 'Claim_no', value: ''},
+			{type: 'text', name: 'Injury_name', value:''},
+			{type: 'text', name: 'Location', value: ''}
+		],
+		select: ['Claim_id', 'Patient_id', 'Claim_no', 'Injury_name', 'Location']
+	}//END DECLARE
+
+	var loadList = function(){
+		ClaimService.search($scope.params).then(function(response){
+			if(response.status==='success'){
+				$scope.list = response;
+			}
+		}, function(error){
+			console.log("Error Server");
+		})
+	}
+
+	loadList();
+
+	$scope.refreshList = function(){
+		loadList();
+	}
+
+	$scope.setPage = function(){
+		$scope.params.pagination.offset = (scope.params.pagination.current_page-1)*scope.params.pagination.limit;
+		loadList();
+	}
+
+	$scope.openPopup = function(option){
+		if(option.type === 'add'){
+			angular.element(idClaimDetailAdd).fadeIn();
+		}
+	}
+})

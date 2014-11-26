@@ -4,6 +4,30 @@ angular.module("app.loggedIn.patient.services", [])
     var instanceService = {};
     var appApi = Restangular.all("api");
 
+    var mdtApi = Restangular.all("api/meditek/v1/patient/");
+
+    instanceService.mdtSearch = function(options){
+        var funcApi = mdtApi.all("search");
+        return funcApi.post(options);
+    }
+
+    instanceService.mdtById = function(Patient_id){
+        var funcApi = mdtApi.all("byId");
+        return funcApi.post({'Patient_id': Patient_id});
+    }
+
+    instanceService.mdtInsertWaitingList = function(params){
+        var funcApi = mdtApi.all("waiting_list/add");
+        return funcApi.post(params);
+    }
+
+    instanceService.mdtClaimSearch = function(options){
+        var funcApi = mdtApi.all("claim/search");
+        return funcApi.post(options);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+
     instanceService.getClaim = function(claim_id){
         var claimApi = appApi.all("patient/getClaim");
         return claimApi.post({'Claim_id': claim_id});

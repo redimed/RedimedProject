@@ -18,7 +18,7 @@
 	detail.`LINE_ID`,detail.`QUESTION` DETAIL_QUESTION,detail.`VAL1_ISCHECKBOX`,detail.`VAL1_CHECKBOX`,
 	detail.`VAL1_NAME`,detail.`VAL2_NAME`,
 	detail.`VAL2_ISCHECKBOX`,detail.`VAL2_CHECKBOX`,detail.`IsCommentText`,detail.`COMMENTS` DETAIL_COMMENT,
-	detail.`PICTURE`,
+	 SUBSTRING(detail.`PICTURE`,3) as PICTURE,
 	line.`QUESTION` LINE_QUESTION
 FROM 	`cln_fa_df_line_details` detail INNER JOIN `cln_fa_df_lines` line ON detail.`LINE_ID`=line.`LINE_ID` AND detail.`CAL_ID`=line.`CAL_ID` AND detail.`PATIENT_ID`=line.`PATIENT_ID`
 WHERE 	detail.`ISENABLE`=1
@@ -59,7 +59,7 @@ WHERE 	detail.`ISENABLE`=1
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="DETAIL_COMMENT" class="java.lang.String"/>
-	<field name="PICTURE" class="java.io.InputStream">
+	<field name="PICTURE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="LINE_QUESTION" class="java.lang.String"/>
@@ -173,7 +173,7 @@ WHERE 	detail.`ISENABLE`=1
 				</box>
 				<image hAlign="Center" vAlign="Middle">
 					<reportElement x="0" y="1" width="200" height="83" uuid="d352f7f0-7c09-420e-b8ce-77db64832b5f"/>
-					<imageExpression><![CDATA[$F{PICTURE}]]></imageExpression>
+					<imageExpression><![CDATA[$P{DIR_PATH}+$F{PICTURE}]]></imageExpression>
 				</image>
 			</frame>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">

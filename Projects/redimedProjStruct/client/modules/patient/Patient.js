@@ -1,7 +1,9 @@
 angular.module("app.loggedIn.patient", [
     "app.loggedIn.patient.controller",
     "app.loggedIn.patient.services",
-    "app.loggedIn.patient.directives"
+    "app.loggedIn.patient.directives",
+
+    "app.loggedIn.patient.claim"
 ])
 
 .config(function ($stateProvider) {
