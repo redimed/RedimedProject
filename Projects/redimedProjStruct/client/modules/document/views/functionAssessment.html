@@ -156,16 +156,16 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div ng-if="detail.val1_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
+                                            <div ng-if="detail.val1_name != null" ng-class="{'col-md-3 col-lg-2 col-sm-3' : detail.val1_name != null && detail.val1_name.length >= 5, 'col-md-1 col-sm-1': detail.val1_name != null && detail.val1_name.length < 5}">
                                             </div>
-                                            <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val1_isvalue == 1}">
+                                            <div ng-if="detail.val1_isvalue == 1" ng-class="{'col-md-3 col-sm-3' : detail.val1_isvalue == 1}">
                                                 <label style="color: #8b0000"  ng-show="showClickedValidation && numberForm.value1.$error.pattern ">Must be number</label>
                                             </div>
                                             <div ng-if="detail.val1_ischeckbox == 1"  ng-class="{'col-md-1 col-sm-1' : detail.val1_ischeckbox == 1}"></div>
                                             <div ng-if="detail.val1_ischeckbox == 2" ng-class="{'col-md-4 col-sm-6' : detail.val1_ischeckbox == 2}"> </div>
                                             <div ng-if="detail.val1_ischeckbox == 3" ng-class="{'col-md-2 col-sm-3' : detail.val1_ischeckbox == 3}"></div>
-                                            <div ng-if="detail.val2_name != null" ng-class="{'col-md-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}"></div>
-                                            <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-2 col-sm-3' : detail.val2_isvalue == 1}">
+                                            <div ng-if="detail.val2_name != null" ng-class="{'col-md-3 col-lg-2 col-sm-3' : detail.val2_name != null && detail.val2_name.length >= 5, 'col-md-1 col-sm-1': detail.val2_name != null && detail.val2_name.length < 5}"></div>
+                                            <div ng-if="detail.val2_isvalue == 1" ng-class="{'col-md-3 col-sm-3' : detail.val2_isvalue == 1}">
                                                 <label style="color: #8b0000"  ng-show="showClickedValidation && numberForm.value2.$error.pattern ">Must be number</label>
                                             </div>
                                             <div ng-if="detail.val2_ischeckbox == 1" ng-class="{'col-md-1 col-sm-1' : detail.val2_ischeckbox == 1}"></div>
@@ -346,7 +346,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div ng-if="nameC.comment_type == 4" ng-class="{'col-md-6 col-sm-6' : nameC.comment_type == 4}">
+                                                <div ng-if="nameC.comment_type == 4" ng-class="{'col-md-6 col-sm-8' : nameC.comment_type == 4}">
                                                     <div class="btn-group " >
                                                         <label class="btn">
                                                             <input type="radio" ng-model="infoC.VALUE[nameC.comment_id]" value="0"/> GOOD
@@ -372,7 +372,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div ng-if="nameC.comment_type == 6" ng-class="{'col-md-8 col-lg-8' : nameC.comment_type == 6}">
+                                                <div ng-if="nameC.comment_type == 6" ng-class="{'col-md-11 col-lg-8' : nameC.comment_type == 6}">
                                                     <div class="btn-group " >
                                                         <label class="btn">
                                                             <input type="radio" ng-model="infoC.VALUE[nameC.comment_id]" value="0"/> Above Normal Range

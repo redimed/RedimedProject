@@ -43,7 +43,7 @@
                     <input type="text" ng-model="infoH.HEIGHT" ng-pattern="/^[0-9]+$/" name="HEIGHT" class="form-control">
                     <div ng-show="showClickedValidation && MAForm.HEIGHT.$error.pattern">
                         <div class="help-block" for="HEIGHT"  >
-                            <label>Height must be number</label>
+                            <label>Must be number</label>
                         </div>
                     </div>
                 </div>
@@ -133,11 +133,12 @@
                 <label class="control-label col-md-4 col-lg-3 col-sm-4">BSL(MMOL/L):</label>
                 <div class="col-md-2 col-sm-4">
                     <input type="text" ng-model="infoH.BSL" ng-pattern="/^[0-9]+$/" name="BSL" class="form-control">
-                    <div ng-show="showClickedValidation && MAForm.BSL.$error.pattern">
-                        <div class="help-block" for="BSL"  >
-                            <label>BSL must be number</label>
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="showClickedValidation && MAForm.BSL.$error.pattern">
+                <div class="col-md-4 col-lg-3 col-sm-4"></div>
+                <div class="col-md-5 col-sm-6 help-block" for="BSL"  >
+                    <label>BSL must be number</label>
                 </div>
             </div>
         </div>
@@ -151,7 +152,7 @@
             </div>
             <div class="row" ng-show="showClickedValidation && MAForm.WAIST_CIR.$error.pattern">
                 <div class="col-md-4 col-lg-3 col-sm-4"></div>
-                <div class="col-md-4 col-sm-6 help-block" for="WAIST_CIR"  >
+                <div class="col-md-5 col-sm-6 help-block" for="WAIST_CIR"  >
                     <label>WAIST CIRCUMFERENCE must be number</label>
                 </div>
             </div>
@@ -166,7 +167,7 @@
             </div>
             <div class="row" ng-show="showClickedValidation && MAForm.HIP_CIR.$error.pattern">
                 <div class="col-md-4 col-lg-3 col-sm-4"></div>
-                <div class="col-md-4 col-sm-6 help-block" for="HIP_CIR"  >
+                <div class="col-md-5 col-sm-6 help-block" for="HIP_CIR"  >
                     <label>HIP CIRCUMFERENCE must be number</label>
                 </div>
             </div>
@@ -413,12 +414,17 @@
                         <input type="radio" ng-model="infoH.COLOR_VISUAL" value="0"/> No
                     </label>
                 </div>
-                <div class="col-md-4 col-sm-4 " ng-class="{'has-error':showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.max}">
+                <div class="col-md-4 col-sm-4 " ng-class="{'has-error':showClickedValidation && (MAForm.COLOR_VISUAL_SCORE.$error.max || MAForm.COLOR_VISUAL_SCORE.$error.required)}">
                     <label class="control-label">Color Visual Score</label>
-                    <input type="number"  max="17" min="0" name="COLOR_VISUAL_SCORE" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 40px;margin-top: 10px">/17
+                    <input type="number" required  max="17" min="0" name="COLOR_VISUAL_SCORE" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 40px;margin-top: 10px">/17
                     <div ng-show="showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.max">
                         <div class="help-block" for="COLOR_VISUAL_SCORE" >
                             <label>Score must be less than 17</label>
+                        </div>
+                    </div>
+                    <div ng-show="showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.required">
+                        <div class="help-block" for="COLOR_VISUAL_SCORE" >
+                            <label>Score must be number</label>
                         </div>
                     </div>
                 </div>
@@ -588,15 +594,15 @@
             </label>
             not require special services or facilities to be provided in order to be suitable for the applicant.
         </label>
-        <div ng-class="{'has-error':showClickedValidation && MAForm.COMMENTS.$invalid && infoH.ISWOULD == 0 }">
+        <div ng-class="{'has-error':showClickedValidation && MAForm.COMMENTS.$invalid && infoH.ISWOULD == 1 }">
 
             <div class="row">
-                <label class="control-label col-md-2">Comments<span ng-show="infoH.ISWOULD == 0" class="bold large">*</span></label>
+                <label class="control-label col-md-2">Comments<span ng-show="infoH.ISWOULD == 1" class="bold large">*</span></label>
                 <div class="col-md-10">
-                    <textarea class="form-control" name="COMMENTS" ng-required="infoH.ISWOULD == 0" ng-model="infoH.COMMENTS"></textarea>
+                    <textarea class="form-control" name="COMMENTS" ng-required="infoH.ISWOULD == 1" ng-model="infoH.COMMENTS"></textarea>
                 </div>
             </div>
-            <div class="row" ng-show="showClickedValidation && MAForm.COMMENTS.$invalid && infoH.ISWOULD == 0">
+            <div class="row" ng-show="showClickedValidation && MAForm.COMMENTS.$invalid && infoH.ISWOULD == 1">
                 <div class="col-md-2"></div>
                 <div class="col-md-10 help-block"  for="COMMENTS">
                     <label>Must be enter if would</label>

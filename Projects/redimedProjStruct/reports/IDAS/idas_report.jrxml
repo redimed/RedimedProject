@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="idas_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="380e6717-6efb-44f3-9f91-4e5c6ef55dba">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="144"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -76,6 +76,7 @@ WHERE
      cln_idas_headers.PATIENT_ID AS cln_idas_headers_PATIENT_ID,
      cln_idas_headers.CAL_ID AS cln_idas_headers_CAL_ID,
      cln_idas_headers.NAME AS cln_idas_headers_NAME,
+     cln_idas_headers.NAME_COMMENT AS cln_idas_headers_NAME_COMMENT,
      cln_idas_headers.IDAS_DATE AS cln_idas_headers_IDAS_DATE,
      cln_idas_headers.Temperature AS cln_idas_headers_Temperature,
      cln_idas_headers.Creatinine AS cln_idas_headers_Creatinine,
@@ -181,6 +182,7 @@ WHERE
 	<field name="cln_idas_headers_PATIENT_ID" class="java.lang.Integer"/>
 	<field name="cln_idas_headers_CAL_ID" class="java.lang.Integer"/>
 	<field name="cln_idas_headers_NAME" class="java.lang.String"/>
+	<field name="cln_idas_headers_NAME_COMMENT" class="java.lang.String"/>
 	<field name="cln_idas_headers_IDAS_DATE" class="java.sql.Timestamp"/>
 	<field name="cln_idas_headers_Temperature" class="java.lang.String"/>
 	<field name="cln_idas_headers_Creatinine" class="java.lang.String"/>
@@ -196,7 +198,6 @@ WHERE
 	<field name="cln_idas_headers_Creation_date" class="java.sql.Timestamp"/>
 	<field name="cln_idas_headers_Last_updated_by" class="java.lang.Integer"/>
 	<field name="cln_idas_headers_Last_update_date" class="java.sql.Timestamp"/>
-	<field name="cln_idas_headers_NAME_COMMENT" class="java.lang.String"/>
 	<field name="cln_idas_headers_ISENABLE" class="java.lang.Integer"/>
 	<field name="cln_idas_headers_SIGNATURE" class="java.lang.String"/>
 	<field name="cln_idas_headers_TesterDate" class="java.sql.Timestamp"/>
@@ -333,26 +334,26 @@ WHERE
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctor_sign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="0" y="180" width="552" height="50" uuid="b5d9e41a-ccf1-4bdc-9df5-c6ba35da6f53"/>
+				<reportElement x="0" y="180" width="552" height="60" uuid="b5d9e41a-ccf1-4bdc-9df5-c6ba35da6f53"/>
 				<textFieldExpression><![CDATA["I,"+$F{cln_idas_headers_NAME}+", understand that I am required to provide a sample of my urine "+
 "under supervision for drug testing and/or a breath sample for alcohol testing. I am aware these results will "+
 "be sent to the company requesting the drug and alcohol screen, and kept on record at RediMed. I declare "+
 "that I have taken the following medications (prescription and non-prescription) in the last 14 days:"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="260" width="97" height="20" uuid="cfb134c4-f45d-4bfd-ba91-390ae97448ea"/>
+				<reportElement x="7" y="297" width="97" height="20" uuid="cfb134c4-f45d-4bfd-ba91-390ae97448ea"/>
 				<text><![CDATA[Candidate signature:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="97" y="244" width="120" height="50" uuid="1e4faf05-6edb-467e-8333-73523861d2f3"/>
+				<reportElement x="104" y="281" width="120" height="50" uuid="1e4faf05-6edb-467e-8333-73523861d2f3"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{cln_idas_headers_SIGNATURE}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="232" y="260" width="43" height="20" uuid="13a1a388-2615-48a5-941c-87353ec29ef3"/>
+				<reportElement x="368" y="297" width="43" height="20" uuid="13a1a388-2615-48a5-941c-87353ec29ef3"/>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="275" y="260" width="100" height="20" uuid="6543ec24-f1f4-447a-a1a5-8dc2ce5b05b9"/>
+				<reportElement x="411" y="297" width="100" height="20" uuid="6543ec24-f1f4-447a-a1a5-8dc2ce5b05b9"/>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_IDAS_DATE}]]></textFieldExpression>
 			</textField>
 			<componentElement>
@@ -585,11 +586,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Reading2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="149" width="35" height="20" uuid="b5ddd75d-9ca1-4467-86a5-ce1915406e8f"/>
+				<reportElement x="3" y="149" width="35" height="20" uuid="b5ddd75d-9ca1-4467-86a5-ce1915406e8f"/>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="39" y="149" width="100" height="20" uuid="24fa6b45-b6e5-4fe3-b832-158c7e4d691d"/>
+				<reportElement x="38" y="149" width="100" height="20" uuid="24fa6b45-b6e5-4fe3-b832-158c7e4d691d"/>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_TesterDate}]]></textFieldExpression>
 			</textField>
 			<rectangle>
@@ -598,6 +599,10 @@ WHERE
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
+			<textField pattern="">
+				<reportElement x="4" y="240" width="548" height="41" uuid="c577ae9e-5246-4244-88d7-8fda3958b804"/>
+				<textFieldExpression><![CDATA[$F{cln_idas_headers_NAME_COMMENT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>

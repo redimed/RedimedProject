@@ -27,3 +27,4 @@ Exec SQL (Tue Nov 25 2014 08:35:14 GMT+0700 (SE Asia Standard Time)): UPDATE com
 Exec SQL (Tue Nov 25 2014 08:35:15 GMT+0700 (SE Asia Standard Time)): SELECT id, Company_name, Industry, Addr, State, Country FROM companies LIMIT 4
 Exec SQL (Tue Nov 25 2014 08:35:15 GMT+0700 (SE Asia Standard Time)): SELECT COUNT(1) AS "count" FROM companies
 >>>>>>> origin/master-v2.0
+Exec SQL (Tue Nov 25 2014 16:25:54 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 29)
