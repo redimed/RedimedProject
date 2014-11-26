@@ -64,6 +64,7 @@ app.post('/api/rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-not-change-status',rlBookingsController.getPassBookingNotChangeStatus);
 app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document',rlBookingsController.getUpcommingBookingHaveNotClientDocument);
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);
+app.get('/api/rlob/rl_bookings/admin/get-document-status-summary',rlBookingsController.getDocumentStatusSummary);
 
 //rl_booking_files
 app.get('/api/rlob/rl_booking_files/get-new-key',rlBookingFilesController.getNewKey);

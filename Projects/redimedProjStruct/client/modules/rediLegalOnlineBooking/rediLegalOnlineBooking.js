@@ -13,7 +13,8 @@ angular.module('app.loggedIn.rlob',
     ,'app.loggedIn.rlob.adminBookingReport.controller'
     ,'app.loggedIn.rlob.adminBookingReport.type3.controller'
     ,'app.loggedIn.rlob.adminBookingReport.type1.controller'
-    ,'app.loggedIn.rlob.adminBookingReport.type2.controller'])
+    ,'app.loggedIn.rlob.adminBookingReport.type2.controller'
+    ,'app.loggedIn.rlob.adminDocumentStatusSummary.controller'])
     .config(function($stateProvider){
         $stateProvider
 
@@ -71,6 +72,12 @@ angular.module('app.loggedIn.rlob',
                 url:'/type2',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/admin-booking-report-type2.html',
                 controller: 'rlob_admin_bookingReport_type2Controller'
+            })
+
+            .state('loggedIn.rlob.rlob_document_status_summary',{
+                url:'/booking/document-status-summary',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/admin-document-status-summary.html',
+                controller: 'rlob_admin_documentStatusSummaryController'
             })
 //            .state('loggedIn.rlob.rlob_booking_detail', {
 //                url: '/booking/booking-detail/:bookingId',

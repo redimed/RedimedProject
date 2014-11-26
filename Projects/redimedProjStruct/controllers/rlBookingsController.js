@@ -1049,7 +1049,44 @@ module.exports =
                 }
             });
         });
-    }
+    },
 
+    /**
+     * Get document status sumary list
+     * tannv.dts@gmail.com
+     *
+     */
+    getDocumentStatusSummary:function(req,res)
+    {
+        var fromDate=req.query.fromDate?req.query.fromDate:'';
+        var toDate=req.query.toDate?req.query.toDate:'';
+        var sql=
+            " SELECT 	booking.*                                                         "+
+            " FROM `rl_bookings` booking                                                  "+
+            " WHERE booking.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)   "+
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC                                     ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[fromDate,toDate],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    }
 
 }

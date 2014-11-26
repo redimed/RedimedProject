@@ -118,6 +118,12 @@ angular.module('app.loggedIn.rlob.services',[])
             return result.post({bookingType:info.bookingType,doctorId:info.doctorId,pageIndex:info.pageIndex,itemsPerPage:info.itemsPerPage,searchKeys:info.searchKeys});
         }
 
+        rlobService.getDocumentStatusSummary=function(fromDate,toDate)
+        {
+            var result=api.one('rlob/rl_bookings/admin/get-document-status-summary');
+            return result.get({fromDate:fromDate,toDate:toDate});
+        }
+
 
 
         //-------------------------------------------------------------------
