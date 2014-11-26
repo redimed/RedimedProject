@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Audiogram_report_WA" language="groovy" pageWidth="598" pageHeight="1075" columnWidth="558" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8d269830-c96a-4f26-930c-c81dd460147e">
 	<property name="ireport.zoom" value="1.0245201830476058"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1254"/>
+	<property name="ireport.y" value="1290"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -42,7 +42,9 @@
 	<parameter name="real_path" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="result_image" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="result_image" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      cln_sa_df_headers.`patient_id` AS cln_sa_df_headers_patient_id,
@@ -274,7 +276,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[You have three months from the date of receiving these results to notify WorkCover WA that you wish to disagree with the results.]]></text>
 			</staticText>
-			<image>
+			<image hAlign="Center">
 				<reportElement x="4" y="274" width="554" height="384" uuid="4bfb84f8-a640-4574-b84e-93ecc7d5c6ba"/>
 				<imageExpression><![CDATA[$P{result_image}]]></imageExpression>
 			</image>

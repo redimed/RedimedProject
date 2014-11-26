@@ -2,7 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UserQuestionnaireReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d1146a0-3d50-4a42-bea5-3b6b3c2fd9ba">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2859"/>
+	<property name="ireport.y" value="3225"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -129,7 +131,8 @@
      cln_patients.`Sur_name` AS cln_patients_Sur_name,
      cln_patients.`Sex` AS cln_patients_Sex,
      cln_patients.`DOB` AS cln_patients_DOB,
-     userquestionnaire.`isUseRespirator` AS userquestionnaire_isUseRespirator
+     userquestionnaire.`isUseRespirator` AS userquestionnaire_isUseRespirator,
+     SUBSTRING_INDEX(userquestionnaire.`SIGNATURE`,',',-1) AS Signature
 FROM
      `cln_patients` cln_patients INNER JOIN `userquestionnaire` userquestionnaire ON cln_patients.`Patient_id` = userquestionnaire.`Patient_Id`
 WHERE
@@ -256,6 +259,9 @@ WHERE
 	<field name="cln_patients_Sex" class="java.lang.String"/>
 	<field name="cln_patients_DOB" class="java.sql.Date"/>
 	<field name="userquestionnaire_isUseRespirator" class="java.lang.Integer"/>
+	<field name="Signature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -2994,6 +3000,17 @@ WHERE
 				<reportElement x="434" y="634" width="108" height="14" uuid="10e77e04-0a74-4335-b664-6a3e2671980c"/>
 				<textFieldExpression><![CDATA[$F{userquestionnaire_UQDate} != null ? $F{userquestionnaire_UQDate} : ""]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="259" y="562" width="283" height="13" uuid="31cd047e-2d25-463b-bbf2-ae4cc19ffec8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Signature]]></text>
+			</staticText>
+			<image hAlign="Center">
+				<reportElement x="294" y="499" width="216" height="50" uuid="b04d80d3-8adc-42ac-8287-60058ef605ac"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 </jasperReport>
