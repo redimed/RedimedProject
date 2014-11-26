@@ -6,7 +6,7 @@
                         ng-disabled="COEForm.$error.pattern || COEForm.$error.maxlength || !infoChanged()"
                         ng-click="submitCOE(COEForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="/api/document/printCOE/{{info.coe_id}}/{{info.CalId}}"
+                <a href="/api/document/printCOE/{{info.PatientId}}/{{info.CalId}}/{{info.coe_id}}"
                         ng-disabled="COEForm.$error.pattern || COEForm.$error.maxlength"
                         class="btn btn-primary blue pull-right">Print PDF
                 </a>

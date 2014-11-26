@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="COE" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bbd20295-566f-4fa1-b314-70faaee1b730">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="559"/>
+	<property name="ireport.x" value="53"/>
+	<property name="ireport.y" value="672"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="key" class="java.lang.String">
@@ -12,7 +12,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT c.*,SUBSTRING_INDEX(c.`Signature1`, ',', -1) AS Signature11,SUBSTRING_INDEX(c.`Signature2`, ',', -1)AS Signature22,e.* , CONCAT(IFNULL(p.first_name,''),' ',IFNULL(p.sur_name,'')) AS full_name , p.dob FROM gorgon_doc_coe c INNER JOIN cln_patients p ON p.patient_id = c.PatientId LEFT JOIN entity_patient e ON c.PatientId = e.patient_id
+		<![CDATA[SELECT c.*,SUBSTRING_INDEX(c.`Signature1`, ',', -1) AS Signature11,SUBSTRING_INDEX(c.`Signature2`, ',', -1)AS Signature22,e.* , CONCAT(IFNULL(p.first_name,''),' ',IFNULL(p.sur_name,'')) AS full_name , p.dob FROM gorgon_doc_coe c INNER JOIN cln_patients p ON p.patient_id = c.PatientId LEFT JOIN companies e ON p.`company_id` = e.id
 WHERE coe_id = $P{key}]]>
 	</queryString>
 	<field name="coe_id" class="java.lang.Integer">
@@ -56,28 +56,106 @@ WHERE coe_id = $P{key}]]>
 	</field>
 	<field name="Signature11" class="java.lang.String"/>
 	<field name="Signature22" class="java.lang.String"/>
-	<field name="Patient_id" class="java.lang.Long">
+	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ENTITY_ID" class="java.lang.Integer">
+	<field name="Company_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ENTITY_NAME" class="java.lang.String">
+	<field name="Industry" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="EMAIL" class="java.lang.String">
+	<field name="Addr" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FAX" class="java.lang.String">
+	<field name="postcode" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ADDRESS" class="java.lang.String">
+	<field name="State" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="PHONE1" class="java.lang.String">
+	<field name="Description" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="SITE_NAME" class="java.lang.String">
+	<field name="latitude" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="longitude" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="result_email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invoice_email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PO_number" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isProject" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isCalendar" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="father_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="report_to_email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="default_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isInvoiceEmailToUser" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isAddContactEmailToResult" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IMA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Site_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Medic_contact_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Insurer" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Site_medic" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="User_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isPO" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="full_name" class="java.lang.String"/>
@@ -99,7 +177,7 @@ WHERE coe_id = $P{key}]]>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="52" y="319" width="336" height="15" uuid="703c3bc6-8590-4cb5-9b86-f94f1eac4441"/>
-				<textFieldExpression><![CDATA[$F{ENTITY_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Company_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="139" y="347" width="354" height="16" uuid="13c32499-62ec-43d4-9fd2-7d089a07b188"/>
