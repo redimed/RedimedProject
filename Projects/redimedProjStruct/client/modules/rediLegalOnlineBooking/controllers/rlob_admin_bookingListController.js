@@ -735,8 +735,9 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             });
         }
 
-        $scope.getBookingDetailWhenCursor=function(bookingId)
+        $scope.getBookingDetailWhenCursor=function(bookingId,scope)
         {
+            $scope.currentNodeBooking=scope;
             if(bookingId)
             {
                 rlobService.getBookingById(bookingId).then(function(data){
