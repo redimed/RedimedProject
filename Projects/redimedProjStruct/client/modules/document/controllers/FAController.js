@@ -162,6 +162,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                             }
                         }
                         val =$scope.infoD.VAL1_VALUE[max];
+                        $scope.infoL.SCORE1[idL] = val;
                     }else if(type1 == 6)
                     {
                         val = $scope.infoD.VAL1_VALUE[idD];
