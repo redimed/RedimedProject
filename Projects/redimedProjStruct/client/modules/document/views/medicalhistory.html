@@ -18,11 +18,18 @@
     </div>
     <br/>
 
-    <h1 style="text-align: center; font-weight: bold;">MEDICAL HISTORY</h1>
-
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="portlet box grey-cascade">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="glyphicon glyphicon-file"></i>MEDICAL HISTORY
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
                 <div class="portlet-body form">
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
@@ -169,7 +176,8 @@
                         </div>
                     </div>
                     <br/>
-                    <label class="control-label bold" style="margin-left: 10px">Release of Medical Information</label>
+                    <label class="control-label bold" style="margin-left: 10px">Release of Medical
+                        Information</label>
 
                     <div class="form-group">
                         <div class="col-md-12 col-sm-12">
@@ -180,7 +188,8 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12">
-                            <p>request to make available to the appropriate authorised management staff of my company,
+                            <p>request to make available to the appropriate authorised management staff of my
+                                company,
                                 any details from my
                                 medical examination which may affect my suitablility for the position which I have
                                 applied for.</p>
@@ -188,7 +197,8 @@
                         <br/>
 
                         <div class="col-md-12 col-sm-12">
-                            <p>I understand that I will be tested for drugs as part of my Employment Medical Examination
+                            <p>I understand that I will be tested for drugs as part of my Employment Medical
+                                Examination
                                 and that it is in
                                 my interests
                                 to reveal any prescription drugs that I am taking.</p>
@@ -220,7 +230,8 @@
                                     <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
                                         Cancel
                                     </button>
-                                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+                                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">
+                                        Clear
                                     </button>
                                     <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
                                 </div>
@@ -234,7 +245,7 @@
                                 <div ng-class="{'has-error': mhForm.Declaration_witness_sign.$error.maxlength}">
                                     <div class="col-md-3 col-sm-4">
                                         <input type="text" class="form-control" name="Declaration_witness_sign"
-                                               ng-maxlength="2" ng-model="info.Declaration_witness_sign"/>
+                                               ng-maxlength="200" ng-model="info.Declaration_witness_sign"/>
 
                                         <div class="help-block"
                                              ng-show="mhForm.Declaration_witness_sign.$error.maxlength">
@@ -245,6 +256,7 @@
                             </div>
                         </div>
                         <br/>
+
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="col-md-1 col-sm-1" style="width: auto;">
@@ -271,10 +283,12 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12">
-                            <p>Declare that to the best of my knowledge the answers in this application are correct and
+                            <p>Declare that to the best of my knowledge the answers in this application are correct
+                                and
                                 I understand that if
                                 any false
-                                or deliberately misleading information is given, or any material facts are withheld, I
+                                or deliberately misleading information is given, or any material facts are withheld,
+                                I
                                 will not be accepted,
                                 or if I am
                                 employed, my employment may be terminated.</p>
@@ -305,7 +319,8 @@
                         <div class="row" style="text-align: left;margin-left: 10px;" ng-show="isSignature1">
                             <div class="col-md-12 col-sm-12">
                                 <canvas width="500" height="400" id="canvas1"
-                                        signature ng-model="info.Declaration_sign" style="background-color: #8eece8">
+                                        signature ng-model="info.Declaration_sign"
+                                        style="background-color: #8eece8">
                                 </canvas>
                             </div>
                             <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
@@ -314,7 +329,8 @@
                                     <button type="button" ng-click="cancelClick1()" class="btn btn-danger btn-sm">
                                         Cancel
                                     </button>
-                                    <button type="button" ng-click="clearClick1()" class="btn btn-warning btn-sm">Clear
+                                    <button type="button" ng-click="clearClick1()" class="btn btn-warning btn-sm">
+                                        Clear
                                     </button>
                                     <button type="button" ng-click="okClick1()" class="btn green btn-sm">Ok</button>
                                 </div>
@@ -349,315 +365,248 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="caption">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <h3 style="text-align: center;">
+                    Medical History/Questionnaire
+                </h3>
 
-                    <div class="caption">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <h3 style="text-align: center;">
-                                    Medical History/Questionnaire
-                                </h3>
+                <h3 style="text-align: center;">
+                    (To be filled out prior to Doctors visit)
+                </h3>
 
-                                <h3 style="text-align: center;">
-                                    (To be filled out prior to Doctors visit)
-                                </h3>
+                <h3 style="text-align: center;font-weight: bolder;">
+                    Please answer the following as fully as possible.
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div ng-repeat="(hIndex, header) in info.headers">
+        <div class="caption">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                </div>
+            </div>
+        </div>
 
-                                <h3 style="text-align: center;font-weight: bolder;">
-                                    Please answer the following as fully as possible.
-                                </h3>
-                            </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="portlet box grey-cascade" ng-repeat="(gIndex, group) in header.group">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="glyphicon glyphicon-paperclip"></i> {{group.GROUP_NAME}}
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse">
+                            </a>
                         </div>
                     </div>
-                    <div ng-repeat="(hIndex, header) in info.headers">
-                        <div class="caption">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12">
-                                    <!--begin input store headers-->
-                                    <input type="hidden" ng-model="info.headers[hIndex].MH_DF_ID"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].DF_CODE"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].DESCRIPTION"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].ISENABLE"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].CREATED_BY"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].Last_updated_by"/>
-                                    <!--end input store headers-->
-                                </div>
-                            </div>
-                        </div>
+                    <div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
+                        <ng-form name="lineForm">
+                            <!--begin not subquestion-->
+                            <div ng-if="line.subquestion.length == 0">
+                                <div class="panel-heading">
+                                    <label class="control-label bold" style="text-align: left;">{{line.ORD
+                                        + ". " +
+                                        line.QUESTION}}</label>
 
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="portlet box grey-cascade" ng-repeat="(gIndex, group) in header.group">
-                                    <div class="portlet-title">
-                                        <div class="caption">
-                                            <i class="fa fa-gift"></i> {{group.GROUP_NAME}}
-                                        </div>
-                                        <div class="tools">
-                                            <a href="javascript:;" class="collapse">
-                                            </a>
+                                    <div class="row">
+                                        <div class="clo-md-12">
+                                            <div class="col-md-1 col-sm-2"
+                                                 style="margin-top: 5px;width: auto;">
+                                                <label class="control-label">Answer:</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                <div class="btn-group">
+                                                    <label class="btn">
+                                                        <input type="radio"
+                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
+                                                               ng-value="1"/>
+                                                        Yes
+                                                    </label>
+                                                    <label class="btn">
+                                                        <input type="radio"
+                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
+                                                               ng-value="0"/>
+                                                        No
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!--begin input save group-->
-                                    <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].GROUP_ID"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].MH_DF_ID"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].ORD"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].GROUP_NAME"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].ISENABLE"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].CREATED_BY"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].Last_updated_by"/>
-                                    <input type="hidden" ng-model="info.headers[hIndex].group[gIndex].USER_TYPE"/>
-                                    <!--end input save group-->
-
-                                    <div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
-                                        <ng-form name="lineForm">
-                                            <!--begin input save line-->
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MH_LINE_ID"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].GROUP_ID"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].MH_DF_ID"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ORD"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUESTION"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_YES"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_NO"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISDETAILS_ANSWER_ONLY"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISENABLE"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].CREATED_BY"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Last_updated_by"/>
-                                            <input type="hidden"
-                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].ISDetails_Answer_IfYes"/>
-                                            <!--end input save line-->
-
-                                            <!--begin not subquestion-->
-                                            <div ng-if="line.subquestion.length == 0">
-                                                <div class="panel-heading">
-                                                    <label class="control-label bold" style="text-align: left;">{{line.ORD
-                                                        + ". " +
-                                                        line.QUESTION}}</label>
-
-                                                    <div class="row">
-                                                        <div class="clo-md-12">
-                                                            <div class="col-md-1 col-sm-2"
-                                                                 style="margin-top: 5px;width: auto;">
-                                                                <label class="control-label">Answer:</label>
-                                                            </div>
-                                                            <div class="col-md-4 col-sm-4">
-                                                                <div class="btn-group">
-                                                                    <label class="btn">
-                                                                        <input type="radio"
-                                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
-                                                                               ng-value="1"/>
-                                                                        Yes
-                                                                    </label>
-                                                                    <label class="btn">
-                                                                        <input type="radio"
-                                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
-                                                                               ng-value="0"/>
-                                                                        No
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-1 col-sm-2"
-                                                             style="width: auto;margin-top: 5px;">
-                                                            <label class="control-label"><span
-                                                                    ng-show="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Comment:</label>
-                                                        </div>
-                                                        <div class="col-md-5 col-sm-5">
-                                                            <div ng-class="{'has-error': lineForm.Comments.$error.required || lineForm.Comments.$error.maxlength}">
-                                                                <input type="text" class="form-control" name="Comments"
-                                                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Comments"
-                                                                       ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].YES_NO &&
+                                    <div class="row">
+                                        <div class="col-md-1 col-sm-2"
+                                             style="width: auto;margin-top: 5px;">
+                                            <label class="control-label"><span
+                                                    ng-show="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Comment:</label>
+                                        </div>
+                                        <div class="col-md-5 col-sm-5">
+                                            <div ng-class="{'has-error': lineForm.Comments.$error.required || lineForm.Comments.$error.maxlength}">
+                                                <input type="text" class="form-control" name="Comments"
+                                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].Comments"
+                                                       ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].YES_NO &&
                     info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_YES) ||
                     (!info.headers[hIndex].group[gIndex].line[lIndex].YES_NO &&
                     info.headers[hIndex].group[gIndex].line[lIndex].ISCOMMENT_WHEN_NO
                     )" ng-maxlength="200"/>
 
-                                                                <div ng-show="lineForm.Comments.$error.required">
-                                                                    <label class="help-block">Required!</label>
-                                                                </div>
-                                                                <div ng-show="lineForm.Comments.$error.maxlength">
-                                                                    <label class="help-block">Comment too long!</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                <div ng-show="lineForm.Comments.$error.required">
+                                                    <label class="help-block">Required!</label>
+                                                </div>
+                                                <div ng-show="lineForm.Comments.$error.maxlength">
+                                                    <label class="help-block">Comment too long!</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end line not subquestion-->
+
+                            <!--begin line has subquestion-->
+                            <div ng-if="line.subquestion.length != 0">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label bold" style="text-align: left;">{{line.ORD
+                                                + ". " +
+                                                line.QUESTION}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-if="line.ISDetails_Answer_IfYes">
+                                        <div class="col-md-12">
+                                            <div class="col-md-1 col-sm-2"
+                                                 style="margin-top: 5px;width: auto;">
+                                                <label class="control-label">Answer:</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                <div class="btn-group">
+                                                    <label class="btn">
+                                                        <input type="radio"
+                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
+                                                               ng-value="1"/>
+                                                        Yes
+                                                    </label>
+                                                    <label class="btn">
+                                                        <input type="radio"
+                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
+                                                               ng-value="0"/>
+                                                        No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end line has subquestion-->
+
+                            <!--begin input save subquestion-->
+                            <div class="panel panel-default" style="width: 95%;margin-left: 20px;"
+                                 ng-if="line.subquestion.length != 0">
+                                <div class="panel-body">
+                                    <div ng-repeat="(sIndex,subquestion) in line.subquestion">
+                                        <ng-form name="subForm">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label bold"
+                                                               style="margin-top: 10px;text-align: left;">{{line.ORD
+                                                            +
+                                                            ". " +
+                                                            subquestion.ORD + ". "
+                                                            + subquestion.QUESTION}}</label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end line not subquestion-->
-
-                                            <!--begin line has subquestion-->
-                                            <div ng-if="line.subquestion.length != 0">
-                                                <div class="panel-heading">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label class="control-label bold" style="text-align: left;">{{line.ORD
-                                                                + ". " +
-                                                                line.QUESTION}}</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row" ng-if="line.ISDetails_Answer_IfYes">
-                                                        <div class="col-md-12">
-                                                            <div class="col-md-1 col-sm-2"
-                                                                 style="margin-top: 5px;width: auto;">
-                                                                <label class="control-label">Answer:</label>
-                                                            </div>
-                                                            <div class="col-md-4 col-sm-4">
-                                                                <div class="btn-group">
-                                                                    <label class="btn">
-                                                                        <input type="radio"
-                                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
-                                                                               ng-value="1"/>
-                                                                        Yes
-                                                                    </label>
-                                                                    <label class="btn">
-                                                                        <input type="radio"
-                                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].YES_NO"
-                                                                               ng-value="0"/>
-                                                                        No
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end line has subquestion-->
-
-                                            <!--begin input save subquestion-->
-                                            <div class="panel panel-default" style="width: 95%;margin-left: 20px;"
-                                                 ng-if="line.subquestion.length != 0">
-                                                <div class="panel-body">
-                                                    <div ng-repeat="(sIndex,subquestion) in line.subquestion">
-                                                        <ng-form name="subForm">
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_SUB_ID"/>
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].MH_LINE_ID"/>
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ORD"/>
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].QUESTION"/>
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_YES"/>
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO"/>
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISENABLE"/>
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].CREATED_BY"/>
-                                                            <input type="hidden"
-                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Last_updated_by"/>
-                                                            <!--end input save subquestion-->
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-12">
-                                                                        <label class="control-label bold"
-                                                                               style="margin-top: 10px;text-align: left;">{{line.ORD
-                                                                            +
-                                                                            ". " +
-                                                                            subquestion.ORD + ". "
-                                                                            + subquestion.QUESTION}}</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12 col-sm-12">
-                                                                    <div class="col-md-1 col-sm-2"
-                                                                         style="margin-top: 5px;width: auto;">
-                                                                        <label class="control-label"><span
-                                                                                ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISDetails_Answer_IfYes &&
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="col-md-1 col-sm-2"
+                                                         style="margin-top: 5px;width: auto;">
+                                                        <label class="control-label"><span
+                                                                ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISDetails_Answer_IfYes &&
                             info.headers[hIndex].group[gIndex].line[lIndex].YES_NO">*</span>Answer:</label>
-                                                                    </div>
-                                                                    <div class="col-md-4 col-sm-4">
-                                                                        <div class="btn-group">
-                                                                            <label class="btn">
-                                                                                <input type="radio"
-                                                                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
-                                                                                       ng-value="1"/> Yes
-                                                                            </label>
-                                                                            <label class="btn">
-                                                                                <input type="radio"
-                                                                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
-                                                                                       ng-value="0"/> No
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-1 col-sm-2"
-                                                                         style="width: auto;margin-top: 10px;">
-                                                                        <label class="control-label"><span
-                                                                                ng-show="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO">*</span>Comment:</label>
-                                                                    </div>
-                                                                    <div class="col-md-5 col-sm-5">
-                                                                        <div ng-class="{'has-error': subForm.Comments.$error.required ||
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4">
+                                                        <div class="btn-group">
+                                                            <label class="btn">
+                                                                <input type="radio"
+                                                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
+                                                                       ng-value="1"/> Yes
+                                                            </label>
+                                                            <label class="btn">
+                                                                <input type="radio"
+                                                                       ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO"
+                                                                       ng-value="0"/> No
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-1 col-sm-2"
+                                                         style="width: auto;margin-top: 10px;">
+                                                        <label class="control-label"><span
+                                                                ng-show="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO">*</span>Comment:</label>
+                                                    </div>
+                                                    <div class="col-md-5 col-sm-5">
+                                                        <div ng-class="{'has-error': subForm.Comments.$error.required ||
                     subForm.Comments.$error.maxlength}">
-                                                                            <input type="text" class="form-control"
-                                                                                   name="Comments"
-                                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Comments"
-                                                                                   ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
+                                                            <input type="text" class="form-control"
+                                                                   name="Comments"
+                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].Comments"
+                                                                   ng-required="(info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
                                info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_YES) ||
                                (!info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].YES_NO &&
                                info.headers[hIndex].group[gIndex].line[lIndex].subquestion[sIndex].ISCOMMENT_WHEN_NO)"
-                                                                                   ng-maxlength="200"/>
+                                                                   ng-maxlength="200"/>
 
-                                                                            <div ng-show="subForm.Comments.$error.required">
-                                                                                <label class="control-label">Required!</label>
-                                                                            </div>
-                                                                            <div ng-show="subForm.Comments.$error.maxlength">
-                                                                                <label class="control-label">Comment too
-                                                                                    long!</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                            <div ng-show="subForm.Comments.$error.required">
+                                                                <label class="control-label">Required!</label>
                                                             </div>
-                                                        </ng-form>
+                                                            <div ng-show="subForm.Comments.$error.maxlength">
+                                                                <label class="control-label">Comment too
+                                                                    long!</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!--end subquestion-->
-                                            <div ng-if="line.line_id !==group.line[group.line.length - 1].line_id">
-                                                <hr/>
-                                            </div>
-                                            <div ng-if="line.line_id === group.line[group.line.length - 1].line_id">
-                                                <br/>
                                             </div>
                                         </ng-form>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <!--end subquestion-->
+                            <div ng-if="line.line_id !==group.line[group.line.length - 1].line_id">
+                                <hr/>
+                            </div>
+                            <div ng-if="line.line_id === group.line[group.line.length - 1].line_id">
+                                <br/>
+                            </div>
+                        </ng-form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="portlet box grey-cascade">
-        <div class="portlet-body form">
-            <br/>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-12 col-sm-12">
-                        <p style="font-weight: bold; margin-left: 10px;"><u>Statement</u></p>
-                    </div>
-                </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>Statement
             </div>
-
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-12 col-sm-12">
@@ -669,7 +618,8 @@
                             where it is proved that the worker has, at the time of seeking or entering employment in
                             respect
                             of
-                            which he claims compensation for an injury, wilfully and falsely represented himself as not
+                            which he claims compensation for an injury, wilfully and falsely represented himself as
+                            not
                             having
                             previously suffered from the injury.</p>
                     </div>
@@ -679,7 +629,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-12 col-sm-12">
-                        <p style="text-align: left; margin-left: 10px;">I have read the above statements. The answers
+                        <p style="text-align: left; margin-left: 10px;">I have read the above statements. The
+                            answers
                             are
                             correct,
                             and no information concerning my present or
@@ -745,9 +696,9 @@
                     </div>
                 </div>
             </div>
-            <br/>
         </div>
     </div>
+    <br/>
 </form>
 
 

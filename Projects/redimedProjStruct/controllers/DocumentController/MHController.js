@@ -2,6 +2,19 @@
  * Created by thanh on 10/8/2014.
  */
 var db = require('../../models');
+
+//Begin table module
+var clnHeaders = db.headersMHCLN;
+var clnGroups = db.groupsMHCLN;
+var clnLines = db.linesMHCLN;
+var clnSub = db.subquestionsMHCLN;
+var sysHeaders = db.headersMHSYS;
+var sysGroups = db.groupsMHSYS;
+var sysLines = db.linesMHSYS;
+var sysSub = db.subquestionsMHSYS;
+var patient = db.Patient;
+//End table module
+
 var mkdirp = require('mkdirp');
 
 var java = require('java');
@@ -28,6 +41,7 @@ var DriverManager = java.import('java.sql.DriverManager');
 var Driver = java.import('com.mysql.jdbc.Driver');
 var InputStream = java.import('java.io.InputStream');
 var FileInputStream = java.import('java.io.FileInputStream');
+
 module.exports = {
     printReport: function (req, res, next) {
         var calId = req.params.CAL_ID;
@@ -73,105 +87,74 @@ module.exports = {
         /**
          * load cln table
          */
-        var info = req.body.info;
+        var info = req.body.info || [];
         var PATIENT_ID = info.PATIENT_ID;
         var CAL_ID = info.CAL_ID;
-        db.headersMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
+        clnHeaders.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
             .success(function (dataH) {
-                db.groupsMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
+                if (dataH == null || dataH.length == 0) return loadSYS(req, res, info);
+                clnGroups.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
                     .success(function (dataG) {
-                        db.linesMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
+                        if (dataG == null || dataG.length == 0) return loadSYS(req, res, info);
+                        ;
+                        clnLines.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
                             .success(function (dataL) {
-                                db.subquestionsMHCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
+                                if (dataL == null || dataL.length == 0) return loadSYS(req, res, info);
+                                ;
+                                clnSub.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
                                     .success(function (dataS) {
-                                        db.Patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
+                                        if (dataS == null || dataS.length == 0) return loadSYS(req, res, info);
+                                        patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
                                             .success(function (patient) {
-                                                if (dataH === null || dataG === null || dataL === null || dataS === null || dataH.length == 0 || dataG.length == 0 || dataL.length == 0 || dataS.length == 0) {
-                                                    // find null
-                                                    //load in sys table
-                                                    db.headersMHSYS.findAll({}, {raw: true})
-                                                        .success(function (dataH) {
-                                                            db.groupsMHSYS.findAll({}, {raw: true})
-                                                                .success(function (dataG) {
-                                                                    db.linesMHSYS.findAll({}, {raw: true})
-                                                                        .success(function (dataL) {
-                                                                            db.subquestionsMHSYS.findAll({}, {raw: true})
-                                                                                .success(function (dataS) {
-                                                                                    var data = [
-                                                                                        {
-                                                                                            "headers": dataH,
-                                                                                            "groups": dataG,
-                                                                                            "lines": dataL,
-                                                                                            "subquestions": dataS,
-                                                                                            "patient": patient,
-                                                                                            "status": "findNull"
-                                                                                        }
-                                                                                    ];
-                                                                                    res.json(data);
-                                                                                })
-                                                                                .error(function (err) {
-                                                                                    console.log("ERROR:" + err);
-                                                                                    res.json({status: "fail"});
-                                                                                });
-                                                                        })
-                                                                        .error(function (err) {
-                                                                            console.log("ERROR:" + err);
-                                                                            res.json({status: 'fail'})
-                                                                        });
-                                                                })
-                                                                .error(function (err) {
-                                                                    console.log("ERROR:" + err);
-                                                                    res.json({status: 'fail'});
-                                                                });
-                                                        })
-                                                        .error(function (err) {
-                                                            console.log("ERROR:" + err);
-                                                            res.json({status: 'fail'});
-                                                        })
-
+                                                if (patient == null | patient.length == 0) {
+                                                    console.log("******************* Not found user in patient table *******************");
+                                                    res.json({status: 'fail'});
+                                                    return false;
                                                 }
-                                                else {
-                                                    // find found
-                                                    var data = [
-                                                        {
-                                                            "headers": dataH,
-                                                            "groups": dataG,
-                                                            "lines": dataL,
-                                                            "subquestions": dataS,
-                                                            "patient": patient,
-                                                            "status": "findFound"
-                                                        }
-                                                    ];
-                                                    res.json(data);
-                                                }
+                                                // find found
+                                                var data = [{
+                                                    "headers": dataH,
+                                                    "groups": dataG,
+                                                    "lines": dataL,
+                                                    "subquestions": dataS,
+                                                    "patient": patient,
+                                                    "status": "findFound"
+                                                }];
+                                                res.json(data);
+                                                return true;
                                             })
                                             .error(function (err) {
-                                                console.log("ERROR:" + err);
+                                                console.log("******************* ERROR:" + err + '*******************');
                                                 res.json({status: 'fail'});
-                                            })
+                                                return false;
+                                            });
                                     })
                                     .error(function (err) {
-                                        console.log("ERROR:" + err);
+                                        console.log("*******************ERROR:" + err + '*******************');
                                         res.json({status: 'fail'});
-                                    })
+                                        return false;
+                                    });
                             })
                             .error(function (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + '*******************');
                                 res.json({status: 'fail'});
-                            })
+                                return false;
+                            });
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
+                        console.log("******************* ERROR:" + err + '*******************');
                         res.json({status: "fail"});
+                        return false;
                     });
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + '*******************');
                 res.json({status: 'fail'});
-            })
+                return false;
+            });
     },
     insertMH: function (req, res) {
-        var info = req.body.info;
+        var info = req.body.info || [];
         var Sign = info.Sign;
         var Date = info.Date;
         var Declaration_sign = info.Declaration_sign;
@@ -264,31 +247,31 @@ module.exports = {
                                                         res.json({status: 'success'});
                                                     })
                                                     .error(function (err) {
-                                                        console.log("ERROR:" + err);
+                                                        console.log("******************* ERROR:" + err + '*******************');
                                                         res.json({status: 'fail'});
                                                     })
                                             })
                                         })
                                         .error(function (err) {
-                                            console.log("ERROR:" + err);
+                                            console.log("******************* ERROR:" + err + '*******************');
                                             res.json({status: 'fail'});
                                         })
                                 })
                             })
                             .error(function (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + '*******************');
                                 res.json({status: 'fail'});
                             })
                     })
                 })
                 .error(function (err) {
-                    console.log("ERROR:" + err);
+                    console.log("******************* ERROR:" + err + '*******************');
                     res.json({status: 'fail'});
                 })
         })
     },
     editMH: function (req, res) {
-        var info = req.body.info;
+        var info = req.body.info || [];
         var Sign = info.Sign;
         var Date = info.Date;
         var Declaration_sign = info.Declaration_sign;
@@ -365,37 +348,117 @@ module.exports = {
                                                     PATIENT_ID: infoS.PATIENT_ID, CAL_ID: infoS.CAL_ID,
                                                     MH_LINE_SUB_ID: infoS.MH_LINE_SUB_ID
                                                 })
-                                                    .success(function (r) {
-                                                        console.log("sasa" + r);
+                                                    .success(function () {
                                                         //check finish insert
                                                         res.json({status: 'success'});
                                                     })
                                                     .error(function (err) {
-                                                        console.log("ERROR:" + err);
+                                                        console.log("******************* ERROR:" + err + '*******************');
                                                         res.json({status: 'fail'});
                                                         return false;
-                                                    })
+                                                    });
                                             })
                                         })
                                         .error(function (err) {
-                                            console.log("ERROR:" + err);
+                                            console.log("******************* ERROR:" + err + '*******************');
                                             res.json({status: 'fail'});
                                             return false;
-                                        })
+                                        });
                                 })
                             })
                             .error(function (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + '*******************');
                                 res.json({status: 'fail'});
                                 return false;
                             })
                     })
                 })
                 .error(function (err) {
-                    console.log("ERROR:" + err);
+                    console.log("******************* ERROR:" + err + '*******************');
                     res.json({status: 'fail'});
                     return false;
                 })
         })
     }
-}
+};
+var loadSYS = function (req, res, info) {
+    var PATIENT_ID = info.PATIENT_ID;
+    //Load table Headers
+    sysHeaders.findAll({}, {raw: true})
+        .success(function (dataH) {
+            if (dataH == null || dataH.length == 0) {
+                console.log("******************* Not found data headers in SYS table *******************");
+                res.json({status: 'fail'});
+                return false;
+            }
+            //load next table Groups
+            sysGroups.findAll({}, {raw: true})
+                .success(function (dataG) {
+                    if (dataG == null || dataG.length == 0) {
+                        console.log("******************* Not found data groups in SYS table *******************");
+                        res.json({status: 'fail'});
+                        return false;
+                    }
+                    sysLines.findAll({}, {raw: true})
+                        .success(function (dataL) {
+                            if (dataL == null || dataL.length == 0) {
+                                console.log("******************* Not found data lines in SYS table *******************");
+                                res.json({status: 'fail'});
+                                return false;
+                            }
+                            sysSub.findAll({}, {raw: true})
+                                .success(function (dataS) {
+                                    if (dataS == null || dataS.length == 0) {
+                                        console.log("******************* Not found data sub in SYS table *******************");
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    }
+                                    patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
+                                        .success(function (patient) {
+                                            if (patient == null || patient.length == 0) {
+                                                console.log("******************* Not found user in patient table *******************");
+                                                res.json({status: 'fail'});
+                                                return false;
+                                            }
+                                            var response = [{
+                                                'headers': dataH,
+                                                'groups': dataG,
+                                                'lines': dataL,
+                                                'subquestions': dataS,
+                                                'patient': patient,
+                                                'status': 'findNull'
+                                            }];
+                                            res.json(response);
+                                            return true;
+                                        })
+                                        .error(function (err) {
+                                            console.log("******************* ERROR:" + err + ' *******************');
+                                            res.json({status: 'fail'});
+                                            return false;
+                                        })
+                                })
+                                .error(function (err) {
+                                    console.log("******************* ERROR:" + err + ' *******************');
+                                    res.json({status: 'fail'});
+                                    return false;
+                                });
+                        })
+                        .error(function (err) {
+                            console.log("******************* ERROR:" + err + ' *******************');
+                            res.json({status: 'fail'});
+                            return false;
+                        });
+                })
+                .error(function (err) {
+                    console.log("******************* ERROR:" + err + '*******************');
+                    res.json({status: 'fail'});
+                    return false;
+                });
+        })
+        .error(function (err) {
+            console.log("******************* ERROR:" + err + '*******************');
+            res.json({status: 'fail'});
+            return false;
+        });
+};
+

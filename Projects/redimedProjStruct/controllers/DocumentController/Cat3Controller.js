@@ -2,6 +2,12 @@
  * Created by thanh on 10/10/2014.
  */
 var db = require('../../models');
+var Category3 = db.Category3;
+var Patient = db.Patient;
+var Company = db.Company;
+var APPTCAL = db.APPTCAL;
+var Doctor = db.Doctor;
+
 var mkdirp = require('mkdirp');
 
 var java = require('java');
@@ -54,14 +60,14 @@ module.exports = {
 
                 java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
                     if (err) {
-                        console.log("ERROR:" + err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         return;
                     }
                     else {
 
                         res.download(filePath, 'category_3.pdf', function (err) {
                             if (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + ' *******************');
                                 return;
                             }
                         });
@@ -72,66 +78,96 @@ module.exports = {
         });
     },
     loadCat3: function (req, res) {
-        var info = req.body.info; //get cal_id, patient_id, doctor_id
+        var info = req.body.info || [];
         var cal_id = info.cal_id;
         var patient_id = info.patient_id;
-        var doctor_id = info.DOCTOR_ID;
-        db.Category3.find({where: {cal_id: cal_id, patient_id: patient_id}}, {raw: true})
+        Category3.find({where: {cal_id: cal_id, patient_id: patient_id}}, {raw: true})
             .success(function (data) {
-                db.Patient.find({where: {patient_id: patient_id}}, {raw: true})
+                Patient.find({where: {patient_id: patient_id}}, {raw: true})
                     .success(function (patient) {
-                        db.Doctor.find({where: {doctor_id: doctor_id}}, {raw: true})
-                            .success(function (doctor) {
-                                db.Company.find({where: {id: patient.company_id}}, {raw: true})
-                                    .success(function (company) {
-                                        if (data === null || data.length === 0) {
-                                            var response = [
-                                                {
-                                                    "status": "findNull",
-                                                    "patient": patient,
-                                                    "doctor": doctor,
-                                                    "company": company
-                                                }
-                                            ];
-                                            res.json(response);
+                        //check exist patient
+                        if (patient == null || patient.length == 0) {
+                            console.log('******************* Not found user in patient table *******************');
+                            res.json({status: 'fail'});
+                            return false;
+                        }
+                        APPTCAL.find({where: {cal_id: cal_id}}, {raw: true})
+                            .success(function (APPT) {
+                                //check appointment calendar
+                                if (APPT == null || APPT.length == 0) {
+                                    console.log("******************* Not found Appointment calendar in APPT table *******************");
+                                    res.json({status: 'fail'});
+                                    return false;
+                                }
+                                Doctor.find({where: {doctor_id: APPT.DOCTOR_ID}}, {raw: true})
+                                    .success(function (doctor) {
+                                        //check exist doctor
+                                        if (doctor == null || doctor.length == 0) {
+                                            console.log("******************* Not found doctor in doctor table *******************");
+                                            res.json({status: 'fail'});
+                                            return false;
                                         }
-                                        else {
-                                            var response = [
-                                                {
-                                                    "status": "findFound",
-                                                    "data": data,
-                                                    "patient": patient,
-                                                    "doctor": doctor,
-                                                    "company": company
+                                        Company.find({where: {id: patient.company_id}}, {raw: true})
+                                            .success(function (company) {
+                                                if (data === null || data.length === 0) {
+                                                    var response = [{
+                                                        "status": "findNull",
+                                                        "patient": patient,
+                                                        "doctor": doctor,
+                                                        "appt": APPT,
+                                                        "company": (company == null || company.length == 0) ? [] : company
+                                                    }];
+                                                    res.json(response);
+                                                    return true;
                                                 }
-                                            ];
-                                            res.json(response);
-                                        }
+                                                else {
+                                                    var response = [{
+                                                        "status": "findFound",
+                                                        "data": data,
+                                                        "patient": patient,
+                                                        "doctor": doctor,
+                                                        "appt": APPT,
+                                                        "company": (company == null || company.length == 0) ? [] : company
+                                                    }];
+                                                    res.json(response);
+                                                    return true;
+                                                }
+                                            })
+                                            .error(function (err) {
+                                                console.log('******************* ERROR:' + err + ' *******************');
+                                                res.json({status: 'fail'});
+                                                return false;
+                                            });
+
                                     }).error(function (err) {
-                                        console.log("ERROR:" + err);
+                                        console.log("******************* ERROR:" + err + ' *******************');
                                         res.json({status: 'fail'});
+                                        return false;
                                     });
                             })
                             .error(function (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + ' *******************');
                                 res.json({status: 'fail'});
+                                return false;
                             });
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         res.json({status: 'fail'});
+                        return false;
                     })
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: "fail"});
+                return false;
             });
     },
     insertCat3: function (req, res) {
-        var info = req.body.info;
-        db.Category3.max('cat_id').success(function (maxId) {
+        var info = req.body.info || [];
+        Category3.max('cat_id').success(function (maxId) {
             var cat_id = maxId + 1;
-            db.Category3.create({
+            Category3.create({
                 cat_id: cat_id,
                 cal_id: info.cal_id,
                 patient_id: info.patient_id,
@@ -237,19 +273,22 @@ module.exports = {
             }, {raw: true})
                 .success(function () {
                     res.json({status: "success"});
+                    return true;
                 }).error(function (err) {
-                    console.log("ERROR:" + err);
+                    console.log("******************* ERROR:" + err + ' *******************');
                     res.json({status: "fail"});
+                    return false;
                 })
         }).error(function (err) {
-            console.log("ERROR:" + err);
+            console.log("******************* ERROR:" + err + ' *******************');
             res.json({status: "fail"});
+            return false;
         })
 
     },
     editCat3: function (req, res) {
-        var info = req.body.info;
-        db.Category3.update({
+        var info = req.body.info || [];
+        Category3.update({
             cal_id: info.cal_id,
             patient_id: info.patient_id,
             q1_4: info.q1_4,
@@ -352,10 +391,12 @@ module.exports = {
             DOCTOR_ID: info.DOCTOR_ID
         }, {cat_id: info.cat_id}).success(function () {
             res.json({status: 'success'});
+            return true;
         }).error(function (err) {
-            console.log("ERROR:" + err);
+            console.log(" *******************ERROR:" + err + ' *******************');
             res.json({status: 'fail'});
+            return false;
         });
     }
 
-}
+};

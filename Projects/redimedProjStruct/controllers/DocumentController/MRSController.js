@@ -2,6 +2,14 @@
  * Created by thanh on 10/8/2014.
  */
 var db = require('../../models');
+var headersMRSCLN = db.headersMRSCLN;
+var groupsMRSCLN = db.groupsMRSCLN;
+var linesMRSCLN = db.linesMRSCLN;
+var headersMRSSYS = db.headersMRSSYS;
+var groupsMRSSYS = db.groupsMRSSYS;
+var linesMRSSYS = db.linesMRSSYS;
+var Patient = db.Patient;
+
 var mkdirp = require('mkdirp');
 
 var java = require('java');
@@ -19,7 +27,6 @@ java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
 
 
-//var ImageIO = java.import('javax.imageio.ImageIO');
 var HashMap = java.import('java.util.HashMap');
 var JRException = java.import('net.sf.jasperreports.engine.JRException');
 var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
@@ -30,42 +37,38 @@ var Driver = java.import('com.mysql.jdbc.Driver');
 var InputStream = java.import('java.io.InputStream');
 var FileInputStream = java.import('java.io.FileInputStream');
 module.exports = {
-    printReport : function(req,res,next){
+    printReport: function (req, res, next) {
         var calId = req.params.calId;
         var id = req.params.id;
         var patientId = req.params.patientId;
 
-        mkdirp('.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId, function (err) {
-            if (err) console.error(err)
-            else
-            {
-                var con = java.callStaticMethodSync('java.sql.DriverManager','getConnection',"jdbc:mysql://localhost:3306/sakila","root","root");
+        mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
+            if (err) console.error("******************* ERROR:" + err + ' *******************');
+            else {
+                var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
 
                 var paramMap = new HashMap();
 
-                paramMap.putSync("cal_id",parseInt(calId));
-                paramMap.putSync("patient_id",parseInt(patientId));
-                paramMap.putSync("key",parseInt(id));
-                paramMap.putSync("real_path","./reports/MRS/");
-                paramMap.putSync("SUBREPORT_DIR","./reports/MRS");
+                paramMap.putSync("cal_id", parseInt(calId));
+                paramMap.putSync("patient_id", parseInt(patientId));
+                paramMap.putSync("key", parseInt(id));
+                paramMap.putSync("real_path", "./reports/MRS/");
+                paramMap.putSync("SUBREPORT_DIR", "./reports/MRS");
 
-                var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\MRS.pdf';
+                var filePath = '.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId + '\\MRS.pdf';
 
-                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager','fillReport','./reports/MRS/result_summary.jasper',paramMap,con);
+                var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager', 'fillReport', './reports/MRS/result_summary.jasper', paramMap, con);
 
-                java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager','exportReportToPdfFile',jPrint,filePath,function(err,rs){
-                    if(err)
-                    {
-                        console.log(err);
+                java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
+                    if (err) {
+                        console.log('******************* ERROR:' + err + ' *******************');
                         return;
                     }
-                    else
-                    {
+                    else {
 
-                        res.download(filePath,'MRS.pdf',function(err){
-                            if(err)
-                            {
-                                console.log(err);
+                        res.download(filePath, 'MRS.pdf', function (err) {
+                            if (err) {
+                                console.log('******************* ERROR:' + err + ' *******************');
                                 return;
                             }
                         });
@@ -76,75 +79,67 @@ module.exports = {
         });
 
 
-
     },
     loadMRS: function (req, res) {
         var info = req.body.info;
         var PATIENT_ID = info.PATIENT_ID;
         var CAL_ID = info.CAL_ID;
-        console.log(PATIENT_ID);
-        console.log(CAL_ID);
         /**
          * search in cln table
          */
         db.headersMRSCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
             .success(function (dataH) {
+                //check exist headers cln
+                if (dataH == null || dataH.length == 0) return LoadSYS(req, res, info);
                 db.groupsMRSCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
                     .success(function (dataG) {
+                        //check exist groups cln
+                        if (dataG == null || dataG.length == 0) return LoadSYS(req, res, info);
                         db.linesMRSCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
                             .success(function (dataL) {
-                                if (dataH.length == 0 || dataG.length == 0 || dataL.length == 0) {
-                                    //find null
-                                    /**
-                                     * select in sys table
-                                     */
-                                    db.headersMRSSYS.findAll({}, {raw: true})
-                                        .success(function (dataH) {
-                                            db.groupsMRSSYS.findAll({}, {raw: true})
-                                                .success(function (dataG) {
-                                                    db.linesMRSSYS.findAll({}, {raw: true})
-                                                        .success(function (dataL) {
-                                                            var data = [
-                                                                {"headers": dataH, "groups": dataG, "lines": dataL, "status": "findNull"}
-                                                            ];
-                                                            res.json(data);
-                                                        })
-                                                        .error(function (err) {
-                                                            console.log("ERROR:" + err);
-                                                            res.json({status: 'fail'});
-                                                        })
-                                                })
-                                                .error(function (err) {
-                                                    console.log("ERROR:" + err);
-                                                    res.json({status: 'fail'});
-                                                })
-                                        })
-                                        .error(function (err) {
-                                            console.log("ERROR:" + err);
+                                //check exist lines cln
+                                if (dataL == null || dataL == 0) return LoadSYS(req, res, info);
+                                Patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
+                                    .success(function (patient) {
+                                        //check exist user in patient table
+                                        if (patient == null || patient.length == 0) {
+                                            console.log("******************* Not found user in table patient *******************");
                                             res.json({status: 'fail'});
-                                        })
-                                }
-                                else {
-                                    var data = [
-                                        {"headers": dataH, "groups": dataG, "lines": dataL, "status": 'findFound'}
-                                    ];
-                                    res.json(data);
-                                }
+                                            return false;
+                                        }
+                                        var data = [{
+                                            "headers": dataH,
+                                            "groups": dataG,
+                                            "lines": dataL,
+                                            "patient": patient,
+                                            "status": 'findFound'
+                                        }];
+                                        res.json(data);
+                                        return true;
+                                    })
+                                    .error(function (err) {
+                                        console.log("******************* ERROR:" + err + '*******************');
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    });
                             })
                             .error(function (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + ' *******************');
                                 res.json({status: 'fail'});
-                            })
+                                return false;
+                            });
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         res.json({status: 'fail'});
-                    })
+                        return false;
+                    });
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
-            })
+                return false;
+            });
     },
     insertMRS: function (req, res) {
         var info = req.body.info;
@@ -205,23 +200,27 @@ module.exports = {
                                     }, {raw: true})
                                         .success(function () {
                                             res.json({status: 'success'});
+                                            return true;
                                         })
                                         .error(function (err) {
-                                            console.log("ERROR:" + err);
+                                            console.log("******************* ERROR:" + err + ' *******************');
                                             res.json({status: 'fail'});
-                                        })
+                                            return false;
+                                        });
                                 })
                             })
                             .error(function (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + ' *******************');
                                 res.json({status: 'fail'});
-                            })
+                                return false;
+                            });
                     })
                 })
                 .error(function (err) {
-                    console.log("ERROR:" + err);
+                    console.log("******************* ERROR:" + err + ' *******************');
                     res.json({status: 'fail'});
-                })
+                    return false;
+                });
         })
     },
     editMRS: function (req, res) {
@@ -242,7 +241,7 @@ module.exports = {
                 practitionSign: practitionSign,
                 practitionDate: practitionDate,
                 isReview: isReview
-            }, { MRS_DF_ID: infoH.MRS_DF_ID, PATIENT_ID: infoH.PATIENT_ID, CAL_ID: infoH.CAL_ID})
+            }, {MRS_DF_ID: infoH.MRS_DF_ID, PATIENT_ID: infoH.PATIENT_ID, CAL_ID: infoH.CAL_ID})
                 .success(function () {
                     info.headers[hIndex].group.forEach(function (infoG, gIndex) {
                         db.groupsMRSCLN.update({
@@ -270,27 +269,95 @@ module.exports = {
                                         ISENABLE: infoL.ISENABLE,
                                         Created_by: infoL.Created_by,
                                         Last_updated_by: infoL.Last_updated_by
-                                    }, {MRS_LINE_ID: infoL.MRS_LINE_ID, PATIENT_ID: infoL.PATIENT_ID,
-                                        CAL_ID: infoL.CAL_ID})
+                                    }, {
+                                        MRS_LINE_ID: infoL.MRS_LINE_ID, PATIENT_ID: infoL.PATIENT_ID,
+                                        CAL_ID: infoL.CAL_ID
+                                    })
                                         .success(function () {
                                             res.json({status: 'success'});
+                                            return true;
                                         })
                                         .error(function (err) {
-                                            console.log("ERROR:" + err);
+                                            console.log("******************* ERROR:" + err + ' *******************');
                                             res.json({status: 'fail'});
-                                        })
+                                            return false;
+                                        });
                                 })
                             })
                             .error(function (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + ' *******************');
                                 res.json({status: 'fail'});
-                            })
+                                return false;
+                            });
                     })
                 })
                 .error(function (err) {
-                    console.log("ERROR:" + err);
+                    console.log("******************* ERROR:" + err + ' *******************');
                     res.json({status: 'fail'});
-                })
+                    return false;
+                });
         })
     }
-}
+};
+var LoadSYS = function (req, res, info) {
+    var PATIENT_ID = info.PATIENT_ID;
+    headersMRSSYS.findAll({}, {raw: true})
+        .success(function (dataH) {
+            //check exist headers in sys table
+            if (dataH == null || dataH.length == 0) {
+                console.log("******************* Not found headers in headers table *******************");
+                res.json({status: 'fail'});
+                return false;
+            }
+            groupsMRSSYS.findAll({}, {raw: true})
+                .success(function (dataG) {
+                    //check exist groups in groups table
+                    if (dataG == null || dataG.length == 0) {
+                        console.log("******************* Not found groups in groups table *******************");
+                        res.json({status: 'fail'});
+                        return false;
+                    }
+                    linesMRSSYS.findAll({}, {raw: true})
+                        .success(function (dataL) {
+                            //check exist lines in lines table
+                            if (dataL == null || dataL.length == 0) {
+                                console.log("******************* Not found lines in lines table *******************");
+                                res.json({status: 'fail'});
+                                return false;
+                            }
+                            Patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
+                                .success(function (patient) {
+                                    //check exist patient
+                                    if (patient == null || patient.length == 0) {
+                                        console.log("******************* Not found user in patient table *******************");
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    }
+                                    var response = [{
+                                        "headers": dataH,
+                                        "groups": dataG,
+                                        "lines": dataL,
+                                        "patient": patient,
+                                        "status": "findNull"
+
+                                    }];
+                                    res.json(response);
+                                    return true;
+                                })
+                                .error(function (err) {
+                                    console.log("******************* ERROR:" + err + '*******************');
+                                    return false;
+                                });
+                        }).error(function (err) {
+                            console.log("******************* ERROR:" + err + ' *******************');
+                            return false;
+                        });
+                }).error(function (err) {
+                    console.log("******************* ERROR:" + err + ' *******************');
+                    return false;
+                });
+        }).error(function (err) {
+            console.log("******************* ERROR:" + err + ' *******************');
+            return false;
+        });
+};

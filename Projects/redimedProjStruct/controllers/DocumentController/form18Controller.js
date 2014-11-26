@@ -1,8 +1,13 @@
 /**
  * Created by thanh on 10/31/2014.
  */
-
 var db = require('../../models');
+var Form18 = db.Form18;
+var Patient = db.Patient;
+var Doctor = db.Doctor;
+var APPTCAL = db.APPTCAL;
+var RedimedSite = db.RedimedSite;
+var Company = db.Company;
 var mkdirp = require('mkdirp');
 var java = require('java');
 java.options.push("-Djava.awt.headless=true");
@@ -19,7 +24,6 @@ java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
 
 
-//var ImageIO = java.import('javax.imageio.ImageIO');
 var HashMap = java.import('java.util.HashMap');
 var JRException = java.import('net.sf.jasperreports.engine.JRException');
 var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
@@ -37,7 +41,7 @@ module.exports = {
         var patientId = req.params.patientId;
 
         mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
-            if (err) console.error(err)
+            if (err) console.error("******************* ERROR:" + err + ' *******************')
             else {
                 var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
 
@@ -53,14 +57,14 @@ module.exports = {
 
                 java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
                     if (err) {
-                        console.log(err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         return;
                     }
                     else {
 
                         res.download(filePath, 'from18.pdf', function (err) {
                             if (err) {
-                                console.log(err);
+                                console.log("******************* ERROR:" + err + " *******************");
                                 return;
                             }
                         });
@@ -73,85 +77,114 @@ module.exports = {
 
 
     loadForm18: function (req, res) {
-        var info = req.body.info;
-        db.Form18.find({where: {PATIENT_ID: info.PATIENT_ID, CAL_ID: info.CAL_ID}}, {raw: true})
+        var info = req.body.info || [];
+        Form18.find({where: {PATIENT_ID: info.PATIENT_ID, CAL_ID: info.CAL_ID}}, {raw: true})
             .success(function (dataF18) {
-                db.Patient.find({where: {patient_id: info.PATIENT_ID}}, {raw: true})
+                Patient.find({where: {patient_id: info.PATIENT_ID}}, {raw: true})
                     .success(function (patient) {
-                        db.Doctor.find({where: {doctor_id: info.DOCTOR_ID}}, {raw: true})
+                        if (patient == null || patient.length == 0) {
+                            console.log("******************* Not found user in patient table *******************");
+                            res.json({status: 'fail'});
+                            return false;
+                        }
+                        Doctor.find({where: {doctor_id: info.DOCTOR_ID}}, {raw: true})
                             .success(function (doctor) {
-                                db.APPTCAL.find({where: {cal_id: info.CAL_ID}}, {raw: true})
+                                if (doctor == null || doctor.length == 0) {
+                                    console.log("******************* Not found user in doctor table *******************");
+                                    res.json({status: 'fail'});
+                                    return false;
+                                }
+                                APPTCAL.find({where: {cal_id: info.CAL_ID}}, {raw: true})
                                     .success(function (APPT) {
-                                        db.RedimedSite.find({where: {id: APPT == null ? '' : APPT.SITE_ID}}, {raw: true})
+                                        if (APPT == null || APPT.length == 0) {
+                                            console.log("******************* Not found appointment calendar in appt table *******************");
+                                            res.json({status: 'fail'});
+                                            return false;
+                                        }
+                                        RedimedSite.find({where: {id: APPT.SITE_ID}}, {raw: true})
                                             .success(function (rmSite) {
-                                                db.Company.find({where: {id: patient == null ? '' : patient.company_id}}, {raw: true})
+                                                if (rmSite == null || rmSite.length == 0) {
+                                                    console.log("******************* Not found redimedSite in redimedSite table *******************");
+                                                    res.json({status: 'fail'});
+                                                    return false;
+                                                }
+                                                Company.find({where: {id: patient.company_id}}, {raw: true})
                                                     .success(function (company) {
+                                                        if (company == null || company.length == 0) {
+                                                            console.log("******************* Not found Company in Company table *******************");
+                                                            res.json({status: 'fail'});
+                                                            return false;
+                                                        }
                                                         if (dataF18 === null || dataF18.length === 0) {
                                                             var response = [
                                                                 {
                                                                     "status": "findNull",
-                                                                    "patient": patient == null ? [] : patient,
-                                                                    "doctor": doctor == null ? [] : doctor,
-                                                                    "APPT": APPT == null ? [] : APPT,
-                                                                    "rmSite": rmSite == null ? [] : rmSite,
-                                                                    "company": company == null ? [] : company
+                                                                    "patient": patient,
+                                                                    "doctor": doctor,
+                                                                    "APPT": APPT,
+                                                                    "rmSite": rmSite,
+                                                                    "company": company
                                                                 }
                                                             ];
                                                             res.json(response);
+                                                            return true;
                                                         }
                                                         else {
-                                                            var response = [
-                                                                {
-                                                                    "dataF18": dataF18,
-                                                                    "status": 'findFound',
-                                                                    "patient": patient == null ? [] : patient,
-                                                                    "doctor": doctor == null ? [] : doctor,
-                                                                    "APPT": APPT == null ? [] : APPT,
-                                                                    "rmSite": rmSite == null ? [] : rmSite,
-                                                                    "company": company == null ? [] : company
-                                                                }
-                                                            ];
+                                                            var response = [{
+                                                                "dataF18": dataF18,
+                                                                "status": 'findFound',
+                                                                "patient": patient,
+                                                                "doctor": doctor,
+                                                                "APPT": APPT,
+                                                                "rmSite": rmSite,
+                                                                "company": company
+                                                            }];
                                                             res.json(response);
                                                         }
                                                     })
                                                     .error(function (err) {
-                                                        console.log("ERROR:" + err);
+                                                        console.log("******************* ERROR:" + err + ' *******************');
                                                         res.json({status: 'fail'});
-                                                    })
+                                                        return false;
+                                                    });
                                             })
                                             .error(function (err) {
-                                                console.log("ERROR:" + err);
+                                                console.log("******************* ERROR:" + err + ' *******************');
                                                 res.json({status: 'fail'});
-                                            })
+                                                return false;
+                                            });
                                     })
                                     .error(function (err) {
-                                        console.log("ERROR:" + err);
+                                        console.log("******************* ERROR:" + err + ' *******************');
                                         res.json({status: 'fail'});
-                                    })
+                                        return false;
+                                    });
                             })
                             .error(function (err) {
-                                console.log("ERROR:" + err);
+                                console.log("******************* ERROR:" + err + ' *******************');
                                 res.json({status: 'fail'});
-                            })
+                                return false;
+                            });
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
+                        console.log("*******************ERROR: " + err + ' *******************');
                         res.json({status: 'fail'});
-                    })
-            }
-        )
+                        return false;
+                    });
+            })
             .
             error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("*******************ERROR: " + err + ' *******************');
                 res.json({status: 'fail'});
-            })
+                return false;
+            });
     },
     insertForm18: function (req, res) {
-        var info = req.body.info;
-        db.Form18.max('GORGON_ID')
+        var info = req.body.info || [];
+        Form18.max('GORGON_ID')
             .success(function (max_id) {
                 var GORGON_ID = max_id + 1;
-                db.Form18.create({
+                Form18.create({
                     GORGON_ID: GORGON_ID,
                     PATIENT_ID: info.PATIENT_ID,
                     CAL_ID: info.CAL_ID,
@@ -166,21 +199,23 @@ module.exports = {
                 }, {raw: true})
                     .success(function () {
                         res.json({status: 'success'});
+                        return true;
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         res.json({status: 'fail'});
-                    })
+                        return false;
+                    });
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
-            })
-    }
-    ,
+                return false;
+            });
+    },
     editForm18: function (req, res) {
-        var info = req.body.info;
-        db.Form18.update({
+        var info = req.body.info || [];
+        Form18.update({
             CAL_ID: info.CAL_ID,
             PATIENT_ID: info.PATIENT_ID,
             DocId: info.DocId,
@@ -194,10 +229,12 @@ module.exports = {
         }, {GORGON_ID: 1})
             .success(function () {
                 res.json({status: 'success'});
+                return true;
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
-            })
+                return false;
+            });
     }
-}
+};
