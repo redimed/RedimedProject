@@ -122,9 +122,7 @@ angular.module("app.model", [])
 	Patient_note: '',
 	Isenable: '1', //yes
 	Created_by: null,
-	Creation_date: null,
 	Last_updated_by: null,
-	Last_update_date: null,
 	data: '',
 	Type: '',
 	test: null,
@@ -148,9 +146,7 @@ angular.module("app.model", [])
 	Case_manager: '', //yes
 	Isenable: '1', //yes
 	Created_by: null,
-	Creation_date: null,
 	Last_updated_by: null,
-	Last_update_date: null,
 	isCurr: '1', //yes
 	insurer_site: null
 })
@@ -198,10 +194,10 @@ angular.module("app.model", [])
 .value("WaitingListModel", {
 	id: null,
 	reason: '',
-	priority: null,
+	priority: 'low',
 	doctor_id: null,
 	Patient_id: null,
-	Creation_date: null,
-	Created_by: null
+	Created_by: null,
+	Last_updated_by: null
 })
 //END WAITING LIST

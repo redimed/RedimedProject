@@ -18,7 +18,8 @@ angular.module("app.loggedIn.controller",[
         countries: ConfigService.country_option(),
         gaps: ConfigService.yes_no_option(),
         acc_types: ConfigService.acc_type_option(),
-        app_types: ConfigService.app_type_option()
+        app_types: ConfigService.app_type_option(),
+        priorities: ConfigService.priority_option()
     }
 
     var loadOptionsApi = function(){
@@ -55,6 +56,16 @@ angular.module("app.loggedIn.controller",[
         ConfigService.language_option().then(function(response){
             if(response.status === 'success')
                 $scope.options.language_types = response.list;
+        })
+
+        ConfigService.doctors_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.doctor_types = response.data;
+        })
+
+        ConfigService.patients_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.patient_types = response.data;
         })
     }
 

@@ -5,12 +5,10 @@
 var db = require('../models');
 var util = require('util');
 var common_function = require("../functions.js");
-var DoctorModel = require("../v1_models/Doctors.js");
 
-// var squel = require("squel");
-// squel.useFlavour('mysql');
 
-var squel = DoctorModel._squel;
+ var squel = require("squel");
+ squel.useFlavour('mysql');
 
 module.exports =
 {
