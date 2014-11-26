@@ -373,7 +373,7 @@ input[class^="mdt-checkbox"] + label{
 }
 
 .mdt-table th{
-    background: url(img/noise-diagonal.png), linear-gradient(#777, #444);
+    background: linear-gradient(#777, #444);
     border-left: 1px solid #555;
     border-right: 1px solid #777;
     border-top: 1px solid #555;
@@ -446,14 +446,13 @@ input[class^="mdt-checkbox"] + label{
     box-shadow: inset -1px -1px 0 #fff;
 }   
 
-.mdt-table tbody:hover td {
-    color: transparent;
-    text-shadow: 0 0 3px #aaa;
+.mdt-table tbody:hover tr:hover td {
+    background-color: rgb(100,160,217);
 }
 
-.mdt-table tbody:hover tr:hover td {
-    color: #444;
-    text-shadow: 0 1px 0 #fff;
+.mdt-table tbody:hover tr.no-hover:hover td {
+    color: #ddd;
+    background-color: #f1f1f1;
 }
 /* END MEDITEK TABLE */
 
@@ -462,7 +461,7 @@ input[class^="mdt-checkbox"] + label{
     .mdt-search{
         background-color: rgb(241,241,241);
         position: fixed;
-        width: auto;
+        width: 50%;
         top: 0;
         right: 0;
         padding: 10px 15px;
@@ -478,7 +477,7 @@ input[class^="mdt-checkbox"] + label{
     .mdt-search{
         background-color: rgb(241,241,241);
         position: fixed;
-        width: auto;
+        width: 75%;
         top: 0;
         right: 0;
         padding: 10px 15px;
@@ -540,3 +539,13 @@ ul.mdt-list-booking-patient{
     margin: 0;
 }
 /* END MEDITEK LIST BOOKING PATIENT */
+
+.view-mode{
+    border: none;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-image: none;
+}

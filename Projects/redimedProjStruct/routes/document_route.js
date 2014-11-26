@@ -35,7 +35,7 @@ app.get('/api/document/printCat2/:patientId/:calId/:catId', Cat2Controller.print
 
 
 // Begin funtion assessment
-app.post('/api/document/newFA', FAController.newFA);
+//app.post('/api/document/newFA', FAController.newFA);
 app.post('/api/document/loadFA', FAController.loadFA);
 app.post('/api/document/insertFA',FAController.insertFA);
 app.post('/api/document/checkFA',FAController.checkFA);
@@ -44,7 +44,7 @@ app.get('/api/document/FA/print-report/:cal_id/:patient_id/:key',FAController.pr
 //end
 
 // Begin Medical Assessment
-app.post('/api/document/newMA', MAController.newMA);
+//app.post('/api/document/newMA', MAController.newMA);
 app.post('/api/document/loadMA', MAController.loadMA);
 app.post('/api/document/insertMA',MAController.insertMA);
 app.post('/api/document/checkMA',MAController.checkMA);
@@ -52,7 +52,7 @@ app.get('/api/document/printMA/:patientId/:calId/:MA_ID', MAController.printRepo
 // End
 
 //Begin Instant Drug Screen
-app.post('/api/document/newIDS', IDSController.newIDS);
+//app.post('/api/document/newIDS', IDSController.newIDS);
 app.post('/api/document/loadIDS', IDSController.loadIDS);
 app.post('/api/document/insertIDS',IDSController.insertIDS);
 app.post('/api/document/checkIDS',IDSController.checkIDS);

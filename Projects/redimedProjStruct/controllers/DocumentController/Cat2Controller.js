@@ -2,6 +2,12 @@
  * Created by thanh on 11/6/2014.
  */
 var db = require('../../models');
+var Category2 = db.Category2;
+var Patient = db.Patient;
+var APPTCAL = db.APPTCAL;
+var Doctor = db.Doctor;
+var Company = db.Company;
+
 var mkdirp = require('mkdirp');
 
 var java = require('java');
@@ -19,7 +25,6 @@ java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
 
 
-//var ImageIO = java.import('javax.imageio.ImageIO');
 var HashMap = java.import('java.util.HashMap');
 var JRException = java.import('net.sf.jasperreports.engine.JRException');
 var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
@@ -37,7 +42,7 @@ module.exports = {
         var patientId = req.params.patientId;
 
         mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
-            if (err) console.error(err)
+            if (err) console.error("******************* ERROR:" + err + '*******************');
             else {
                 var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
 
@@ -54,14 +59,14 @@ module.exports = {
 
                 java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
                     if (err) {
-                        console.log(err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         return;
                     }
                     else {
 
                         res.download(filePath, 'category_2.pdf', function (err) {
                             if (err) {
-                                console.log(err);
+                                console.log("******************* ERROR:" + err + ' *******************');
                                 return;
                             }
                         });
@@ -74,41 +79,91 @@ module.exports = {
 
     },
     loadCat2: function (req, res) {
-        var info = req.body.info;
-        console.log(info);
-        db.Category2.find({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
+        var info = req.body.info || [];
+        Category2.find({where: {cal_id: info.cal_id, patient_id: info.patient_id}}, {raw: true})
             .success(function (dataCat2) {
-                db.Patient.find({where: {Patient_id: info.patient_id}}, {raw: true})
+                Patient.find({where: {Patient_id: info.patient_id}}, {raw: true})
                     .success(function (patient) {
-                        if (dataCat2 == null || dataCat2.length === 0) {
-                            response = [
-                                {
-                                    "patient": patient, "status": "findNull"
-                                }
-                            ];
-                            res.json(response);
+                        //check exist patient
+                        if (patient == null || patient.length == 0) {
+                            console.log("******************* Not found user in patient table *******************");
+                            res.json({status: 'fail'});
+                            return false;
                         }
-                        else {
-                            var response = [
-                                {
-                                    "dataCat2": dataCat2, "patient": patient, "status": "findFound"
+                        APPTCAL.find({where: {cal_id: info.cal_id}}, {raw: true})
+                            .success(function (APPT) {
+                                //check exist appointment calendar
+                                if (APPT == null || APPT.length == 0) {
+                                    console.log('******************* Not found Appointment Calendar in APPT table *******************');
+                                    res.json({status: 'fail'});
+                                    return false;
                                 }
-                            ];
-                            res.json(response);
-                        }
+                                Doctor.find({where: {DOCTOR_ID: APPT.DOCTOR_ID}}, {raw: true})
+                                    .success(function (doctor) {
+                                        //check exist doctor
+                                        if (doctor == null || doctor.length == 0) {
+                                            console.log('******************* Not found Doctor in Doctor table *******************');
+                                            res.json({status: 'fail'});
+                                            return false;
+                                        }
+                                        Company.find({where: {id: patient.company_id}}, {raw: true})
+                                            .success(function (company) {
+                                                if (dataCat2 == null || dataCat2.length === 0) {
+                                                    response = [{
+                                                        "patient": patient,
+                                                        "appt": APPT,
+                                                        "doctor": doctor,
+                                                        "company": (company == null || company.length == 0) ? [] : company,
+                                                        "status": "findNull"
+                                                    }];
+                                                    res.json(response);
+                                                    return true;
+                                                }
+                                                else {
+                                                    var response = [{
+                                                        "dataCat2": dataCat2,
+                                                        "patient": patient,
+                                                        "appt": APPT,
+                                                        "doctor": doctor,
+                                                        "company": (company == null || company.length == 0) ? [] : company,
+                                                        "status": "findFound"
+                                                    }];
+                                                    res.json(response);
+                                                    return true;
+                                                }
+                                            }).error(function (err) {
+                                                console.log("******************* ERROR:" + err + ' *******************');
+                                                res.json({status: 'fail'});
+                                                return false;
+                                            });
+                                    }).error(function (err) {
+                                        console.log("******************* ERROR:" + err + ' *******************');
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    });
+                            })
+                            .error(function (err) {
+                                console.log("******************* ERROR:" + err + ' *******************');
+                                res.json({status: 'fail'});
+                                return false;
+                            });
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         res.json({status: 'fail'});
-                    })
+                        return false;
+
+                    });
             })
-            .error(function () {
+            .error(function (err) {
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
-            })
+                return false;
+            });
     },
     insertCat2: function (req, res) {
-        var info = req.body.info;
-        db.Category2.max('cat_id')
+        var info = req.body.info || [];
+        Category2.max('cat_id')
             .success(function (maxId) {
                 //insert
                 var cat_id = maxId + 1;
@@ -285,18 +340,20 @@ module.exports = {
                         res.json({status: 'success'});
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         res.json({status: 'fail'});
+                        return false;
                     })
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
+                return false;
             });
     },
     editCat2: function (req, res) {
-        var info = req.body.info;
-        db.Category2.update({
+        var info = req.body.info || [];
+        Category2.update({
             cal_id: info.cal_id,
             DocId: info.DocId,
             patient_id: info.patient_id,
@@ -466,11 +523,13 @@ module.exports = {
         }, {cat_id: info.cat_id})
             .success(function () {
                 res.json({status: 'success'});
+                return true;
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
-            })
+                return false;
+            });
     }
-}
+};
 

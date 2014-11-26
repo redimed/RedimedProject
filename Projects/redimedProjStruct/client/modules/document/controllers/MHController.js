@@ -8,10 +8,11 @@ angular.module('app.loggedIn.document.MH.controllers', [])
             console.log("ERROR: Cookies not exist!");
         }
         else {
-            //set value default
+            //Set value default
             $scope.today = new Date();
             $scope.info = [];
-            //begin signature
+
+            //Begin signature
             var tempSignature;
             $scope.isSignature = false;
             $scope.showSignature = function () {
@@ -29,9 +30,9 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 $scope.isSignature = !$scope.isSignature;
                 tempSignature = $scope.info.Sign;
             }
-            //end signature
+            //End signature
 
-            //begin signature 1
+            //Begin signature 1
             var tempSignature1;
             $scope.isSignature1 = false;
             $scope.showSignature1 = function () {
@@ -49,9 +50,9 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 $scope.isSignature1 = !$scope.isSignature1;
                 tempSignature1 = $scope.info.Declaration_sign;
             }
-            //end signature 1
+            //End signature 1
 
-            //begin signature 2
+            //Begin signature 2
             var tempSignature2;
             $scope.isSignature2 = false;
             $scope.showSignature2 = function () {
@@ -69,25 +70,20 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 $scope.isSignature2 = !$scope.isSignature2;
                 tempSignature2 = $scope.info.Signature2;
             }
-            //end signature 2
+            //End signature 2
 
             $scope.info.Date = new Date();
             $scope.info.Statement_Date = new Date();
-            //var PATIENT_ID = $stateParams.PatientID;
-            //var CAL_ID = $stateParams.CalID;
-            //$scope.info = {
-            //    PATIENT_ID: PATIENT_ID,
-            //    CAL_ID: CAL_ID
-            //};
-            var tempAppt = localStorageService.get('tempAppt');
-            var tempPatient = localStorageService.get('tempPatient');
-            if (tempAppt === 'undefined' || tempPatient === 'undefined') {
+            //var tempAppt = localStorageService.get('tempAppt');
+            var tempPatient = localStorageService.get('tempPatient') || [];
+            if (tempPatient == null || tempPatient === 'undefined') {
                 $state.go('loggedIn.home', null, {"reload": true});
-                toastr.error("Load some information fail, please try again!", "Error");
+                toastr.error("Load information fail, please try again!", "Error");
             }
             else {
                 var patient_id = tempPatient.Patient_id;
-                var cal_id = tempAppt.CAL_ID;
+                //var cal_id = tempAppt.CAL_ID;
+                var cal_id = -1; //Set default cal_id
                 $scope.info = {
                     PATIENT_ID: patient_id,
                     CAL_ID: cal_id
@@ -99,19 +95,19 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         $state.go('loggedIn.home', null, {"reload": true});
                     }
                     else if (response[0].status === 'findNull') {
-                        //add new MH.
+                        //Add new document MH.
                         $scope.isNew = true;
                     }
                     else if (response[0].status === 'findFound') {
-                        //edit MH
+                        //Edit document MH
                         $scope.isNew = false;
                     }
                     else {
-                        //throw new exception
+                        //Throw exception
                         $state.go('loggedIn.home', null, {"reload": true});
                     }
                     /**
-                     * load data normal input
+                     * Load data normal input
                      */
                     var data = response[0];
                     $scope.info.headers = [];
@@ -216,7 +212,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 $scope.resetForm = function () {
                     $scope.info = angular.copy(oriInfo);
                     $scope.mhForm.$setPristine();
-                }
+                };
 
                 $scope.checkAbove = function () {
                     if ($scope.info.asAbove == 1) {
@@ -226,11 +222,11 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         $scope.info.Above = '';
                         $scope.info.asAbove == 0;
                     }
-                }
+                };
 
                 $scope.infoChanged = function () {
                     return !angular.equals(oriInfo, $scope.info);
-                }
+                };
                 $scope.submit = function (mhForm) {
                     //check validate
                     if (mhForm.$error.required || mhForm.$error.maxlength || mhForm.$error.pattern) {
@@ -240,7 +236,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         var info = angular.copy($scope.info);
                         if ($scope.isNew) {
                             /**
-                             * new document
+                             * new document MH
                              */
                             DocumentService.insertMH(info).then(function (response) {
                                 if (response['status'] === 'success') {
@@ -255,7 +251,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
 
                         else {
                             /**
-                             * edit document
+                             * edit document MH
                              */
                             DocumentService.editMH(info).then(function (response) {
                                 if (response['status'] === 'success') {

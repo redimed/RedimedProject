@@ -1108,9 +1108,33 @@ angular.module('app.config', [])
     {code:'Billing', title: 'Billing'},
     {code: null, title: 'Not Met'},
 ])
-.factory('ConfigService', function (USER_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, COUNTRY_LIST, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, SYS_TITLE,  APPT_STATUS,  Restangular) {
+
+.constant("PRIORITY_OPTION", [
+    {code: 'high', name: 'High'},
+    {code: 'average', name: 'Average'},
+    {code: 'low', name: 'Low'}
+])
+
+.factory('ConfigService', function (PRIORITY_OPTION, USER_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, COUNTRY_LIST, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, SYS_TITLE,  APPT_STATUS,  Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
+    var mdtApi = Restangular.all("api/meditek/v1");
+
+    // NEW
+    configService.doctors_option = function(){
+        var funcApi = mdtApi.one("doctor/dropdown");
+        return funcApi.get();
+    }
+
+    configService.patients_option = function(){
+        var funcApi = mdtApi.one("patient/dropdown");
+        return funcApi.get();
+    }
+    // END NEW
+
+    configService.priority_option = function(){
+        return PRIORITY_OPTION;
+    }
 
     configService.number_of_week_option = function(){
         return NUMBER_OF_WEEK;
@@ -1123,7 +1147,8 @@ angular.module('app.config', [])
     /* KHANK */
     configService.appt_status_option = function(){
         return APPT_STATUS;
-    }	
+    }
+
 	configService.taxes_option = function(){
         var siteApi = configApi.one("v1/system/list_taxes");
         return siteApi.get({is_option: 1});

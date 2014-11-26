@@ -28,7 +28,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         };
         //Set Date End
         //============================================================================
-        //var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
         var date = new Date();
         var today = $filter('date')(date,'dd/MM/yyyy');
 
@@ -45,20 +44,11 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
             return age;
         }
 
-
-        // Get CalID & PatientID
-//        var CalID = $stateParams.CalID;
-//        var Patient_ID = $stateParams.PatientID;
-//        console.log("gorgon FA: " + CalID + " patient: " + Patient_ID);
-
-        $scope.apptInfo = localStorageService.get('tempAppt');
+        //$scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        var doctorInfo = $cookieStore.get('doctorInfo');
-        console.log(doctorInfo);
-        console.log($scope.apptInfo);
-        console.log($scope.patientInfo);
+        //var doctorInfo = $cookieStore.get('doctorInfo');
         var Patient_ID = $scope.patientInfo.Patient_id;
-        var CalID = $scope.apptInfo.CAL_ID;
+        var CalID = -1; // $scope.apptInfo.CAL_ID;
         var sex = $scope.patientInfo.Sex;
         //============================================================================
         // Math on interface
@@ -557,7 +547,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                 toastr.error("Please Input All Required Information!", "Error");
             }else
             {
-
                 if(insert == true)
                 {
                     var info = $scope.info;
@@ -571,7 +560,8 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
                             toastr.error("Fail", "Error");
                         }
                     });
-                }else{
+                }else
+                {
                     DocumentService.editGorgonFA($scope.info).then(function(response){
                         if(response['status'] === 'success') {
                             toastr.success("Successfully","Success");

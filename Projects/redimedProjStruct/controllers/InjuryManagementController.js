@@ -1,10 +1,3 @@
-/**
- * Created by Luan Nguyen on 11/15/2014.
- */
-var db = require('../models');
-var mkdirp = require('mkdirp');
-var fs = require('fs');
-
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
@@ -20,6 +13,7 @@ var transport = nodemailer.createTransport(smtpTransport({
     tls: {rejectUnauthorized: false},
     debug:true
 }));
+
 
 
 module.exports = {

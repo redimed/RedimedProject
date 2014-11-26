@@ -25,7 +25,7 @@ angular.module('app.loggedIn.document.demo.controllers',[])
         }
 
         $scope.goToTimetableDetail = function (list) {
-            localStorageService.set("patientTempInfo", list);
+            localStorageService.set("tempPatient", list);
             $state.go("loggedIn.Detail");
         }
 

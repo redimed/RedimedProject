@@ -2,6 +2,8 @@
  * Created by thanh on 10/22/2014.
  */
 var db = require('../../models');
+var gorgonMH = db.gorgonMH;
+var patient = db.Patient;
 
 var mkdirp = require('mkdirp');
 
@@ -20,7 +22,6 @@ java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
 
 
-//var ImageIO = java.import('javax.imageio.ImageIO');
 var HashMap = java.import('java.util.HashMap');
 var JRException = java.import('net.sf.jasperreports.engine.JRException');
 var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
@@ -40,7 +41,7 @@ module.exports = {
         var patientId = req.params.Patient_Id;
 
         mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
-            if (err) console.error(err)
+            if (err) console.error("******************* ERROR:" + err + ' *******************');
             else {
                 var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
 
@@ -55,14 +56,14 @@ module.exports = {
 
                 java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
                     if (err) {
-                        console.log(err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         return;
                     }
                     else {
 
                         res.download(filePath, 'gorgonMH.pdf', function (err) {
                             if (err) {
-                                console.log(err);
+                                console.log("******************* ERROR:" + err + ' *******************');
                                 return;
                             }
                         });
@@ -76,41 +77,55 @@ module.exports = {
     },
 
     loadGGMH: function (req, res) {
-        var info = req.body.info;
+        var info = req.body.info || [];
         var Patient_Id = info.Patient_Id;
         var CalId = info.CalId;
-        db.gorgonMH.find({where: {Patient_Id: Patient_Id, CalId: CalId}}, {raw: true})
+        gorgonMH.find({where: {Patient_Id: Patient_Id, CalId: CalId}}, {raw: true})
             .success(function (data) {
-                db.Patient.find({where: {Patient_Id: info.Patient_Id}})
+                patient.find({where: {Patient_Id: info.Patient_Id}})
                     .success(function (patient) {
+                        if (patient == null || patient.length == 0) {
+                            console.log("******************* Patient has id = " + Patient_Id + " not exist*******************");
+                            res.json({status: 'fail'});
+                            return false;
+                        }
+                        ;
                         if (data === null || data.length === 0) {
-                            var response = [
-                                {"status": "findNull", "patient": patient}
-                            ];
+                            var response = [{
+                                "status": "findNull",
+                                "patient": patient
+                            }];
                             res.json(response);
+                            return true;
                         }
                         else {
-                            var response = [
-                                {"status": 'findFound', "data": data, "patient": patient}
-                            ];
+                            var response = [{
+                                "status": 'findFound',
+                                "data": data,
+                                "patient": patient
+                            }];
                             res.json(response);
+                            return true;
                         }
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
-                    })
+                        console.log("******************* ERROR:" + err + ' *******************');
+                        res.json({status: 'fail'});
+                        return false;
+                    });
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
-            })
+                return false;
+            });
     },
     insertGGMH: function (req, res) {
-        var info = req.body.info;
-        db.gorgonMH.max('gorgon_id')
+        var info = req.body.info || [];
+        gorgonMH.max('gorgon_id')
             .success(function (maxId) {
                 var gorgon_id = maxId + 1;
-                db.gorgonMH.create({
+                gorgonMH.create({
                     Gorgon_Id: gorgon_id,
                     Patient_Id: info.Patient_Id,
                     JobNo: info.JobNo,
@@ -333,7 +348,7 @@ module.exports = {
                     Q23_InACar: info.Q23_InACar,
                     Q23_TotalScore: info.Q23_TotalScore,
                     Signature: info.Signature,
-                    GorgonDate: new Date(),
+                    GorgonDate: info.GorgonDate,
                     Created_by: info.Created_by,
                     Last_updated_by: info.Last_updated_by,
                     CalId: info.CalId,
@@ -343,19 +358,22 @@ module.exports = {
                 }, {raw: true})
                     .success(function () {
                         res.json({status: 'success'});
+                        return true;
                     })
                     .error(function (err) {
-                        console.log("ERROR:" + err);
+                        console.log("******************* ERROR:" + err + ' *******************');
                         res.json({status: 'fail'});
-                    })
+                        return false;
+                    });
             }).error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
-            })
+                return false;
+            });
     },
     editGGMH: function (req, res) {
-        var info = req.body.info;
-        db.gorgonMH.update({
+        var info = req.body.info || [];
+        gorgonMH.update({
             Patient_Id: info.Patient_Id,
             JobNo: info.JobNo,
             Occupation: info.Occupation,
@@ -577,7 +595,7 @@ module.exports = {
             Q23_InACar: info.Q23_InACar,
             Q23_TotalScore: info.Q23_TotalScore,
             Signature: info.Signature,
-            GorgonDate: new Date(),
+            GorgonDate: info.GorgonDate,
             Created_by: info.Created_by,
             Last_updated_by: info.Last_updated_by,
             CalId: info.CalId,
@@ -587,10 +605,12 @@ module.exports = {
         }, {Gorgon_Id: info.Gorgon_Id})
             .success(function () {
                 res.json({status: 'success'});
+                return true;
             })
             .error(function (err) {
-                console.log("ERROR:" + err);
+                console.log("******************* ERROR:" + err + ' *******************');
                 res.json({status: 'fail'});
+                return false;
             });
     }
-}
+};

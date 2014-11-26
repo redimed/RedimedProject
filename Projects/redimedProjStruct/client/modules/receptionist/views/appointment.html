@@ -1,7 +1,5 @@
 <span id="appointment">
 
-<mdt-waiting-list></mdt-waiting-list>
-
 <h3 class="page-title">Appointment</h3>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
@@ -79,7 +77,7 @@
 
 						<ul class="mdt-list-booking-patient">
 							<li ng-repeat="p in status track by $index">
-								<a ng-click="bookingaPatient(data, overviewIndex, doctorIndex)">
+								<a ng-click="goToPatientDetail(p, data, doctorIndex)">
 									{{p.Patient_name}}
 								</a>
 							</li>
@@ -102,7 +100,8 @@
 			Make new Booking
 		</a>
 	</li>
-	<li><a ng-click="addNewSlot()">Add a new slot</a></li>
+	<li><a ng-click="addWaitingList()">Add Waiting List</a></li>
+	<li><a ng-click="openWaitingList()">Select Waiting List</a></li>
 </ul>
 <!-- END RIGHT CLICK DROPDOWN MENU -->
 
@@ -115,7 +114,27 @@
 <!-- END BOOKING MODULE -->
 
 <!-- PATIENT MODULE -->
-<div class="mdt-search" id="patientModule" style="width: 100%;">
+<div class="mdt-search" id="patientModule" style="width: 75%">
 	<patient-module options="options" is-close="patientModule" patient="patient"></patient-module>
 </div>
 <!-- END PATIENT MODULE -->
+
+<!-- PATIENT MODULE -->
+<div class="mdt-search" id="appointmentPatientSearch">
+	<patient-search is-close="appointmentPatientSearch" click-row="selectPatient(row)">
+    </patient-search>
+</div>
+<!-- END PATIENT MODULE -->
+
+<!-- ADD WAITING LIST ADD MODULE -->
+<div class="mdt-search" id="waitingListAddModule">
+	<mdt-waiting-list options="options" is-close="waitingListAddModule"></mdt-waiting-list>
+</div>
+<!-- END WAITING LIST ADD MODULE -->
+
+<!-- SELECT WAITING LIST MODULE -->
+<div class="mdt-search" id="waitingListSelectModule">
+	<waiting-list-search options="options" is-close="waitingListSelectModule" click-row="selectWaitingList(row)">
+	</waiting-list-search>
+</div>
+<!-- END SELECT WAITING LIST MODULE -->

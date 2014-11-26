@@ -4,13 +4,14 @@ angular.module("app.loggedIn.patient.claim.directive", [])
 	return {
 		restrict: "EA",
 		scope: {
-			data: "@",
-			options: "="
+			options: "=",
+			isClose: "@",
+			permission: "="
 		},
 		templateUrl: "modules/patient/directives/templates/claim.html",
 		link: function(scope, element, attrs){
 			var loadInit = function(){
-				PatientService.getClaim(data.Claim_id).then(function(response){
+				PatientService.getClaim(scope.permission.Claim_id).then(function(response){
 					if(response.status === 'success'){
 						angular.extend(scope.modelObjectMap, response.data);
 
@@ -25,22 +26,29 @@ angular.module("app.loggedIn.patient.claim.directive", [])
 					}
 				}) // end Patient Service
 			}
-			
-			if(scope.data){
-				var data = scope.$eval(scope.data);	
+
+			if(scope.isClose){
+				var idClose = "#"+scope.isClose;
 			}
 
 			// DECLARE
 			scope.isSubmit = false;
 			scope.modelObjectMap = angular.copy(ClaimModel);
+			scope.modelObjectMap.Patient_id = scope.permission.Patient_id;
 			scope.mode = {type: 'add', text: 'Add Claim'};
 			scope.modelObjectMap.Patient_id = data.Patient_id;
 
-			if(data.Claim_id){
+			if(typeof scope.permission.Claim_id !== 'undefined'){
 				scope.mode = {type: 'edit', text: 'Edit Claim'};
 				loadInit();
 			} // endif
 			// END DECLARE
+
+			//POPUP
+			scope.closePopup = function(){
+				angular.element(idClose).fadeOut();
+			}
+			//END POPUP
 
 			// ACTION
 			scope.clickAction = function(option){

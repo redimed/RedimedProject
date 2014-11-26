@@ -33,166 +33,171 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
             }
             //end signature
 
-            $scope.apptInfo = localStorageService.get('tempAppt');
-            $scope.patientInfo = localStorageService.get('tempPatient');
+            //var apptInfo = localStorageService.get('tempAppt');
+            var patientInfo = localStorageService.get('tempPatient');
             var doctorInfo = $cookieStore.get('doctorInfo');
-            var Patient_ID = $scope.patientInfo.Patient_id;
-            var CalID = $scope.apptInfo.CAL_ID;
-            var sex = $scope.patientInfo.Sex;
+            if (patientInfo == null || patientInfo == 'undefined') {
+                $state.go("loggedIn.home", null, {"reload": true});
+                toastr.error("Load information fail, Please try again", "Error");
+            }
+            else {
 
-            $scope.info = {
-                PATIENT_ID: Patient_ID,
-                CAL_ID: CalID
-            };
+                var PATIENT_ID = patientInfo.Patient_id;
+                //var CAL_ID = $scope.apptInfo.CAL_ID;
+                var CAL_ID = -1; //set default cal_id
+                //var sex = $scope.patientInfo.Sex;
+
+                $scope.info = {
+                    PATIENT_ID: PATIENT_ID,
+                    CAL_ID: CAL_ID
+                };
 
 
-            /**
-             * exist cookies
-             */
-            var oriInfo;
-            var info = $scope.info;
-            DocumentService.loadMRS(info).then(function (response) {
-                if (response['status'] === 'fail') {
-                    $state.go('loggedIn.MRS', null, {raw: true});
-                }
-                else if (response[0].status === 'findNull') {
-                    //add new mrs
-                    $scope.isNew = true;
-                }
-                else if (response[0].status === 'findFound') {
-                    $scope.isNew = false;
-                }
                 /**
-                 * load data to input
+                 * exist cookies
                  */
-                $scope.info.headers = [];
-                var PATIENT_ID = Patient_ID;
-                var CAL_ID = CalID;
-                var data = response[0];
+                var oriInfo;
+                var info = $scope.info;
+                DocumentService.loadMRS(info).then(function (response) {
+                    if (response['status'] === 'fail') {
+                        $state.go('loggedIn.MRS', null, {raw: true});
+                    }
+                    else if (response[0].status === 'findNull') {
+                        //add new mrs
+                        $scope.isNew = true;
+                    }
+                    else if (response[0].status === 'findFound') {
+                        $scope.isNew = false;
+                    }
+                    /**
+                     * load data to input
+                     */
+                    $scope.info.headers = [];
+                    var data = response[0];
 
-                angular.forEach(data.headers, function (dataH, hIndex) {
-                    console.log(dataH.MRS_DF_ID);
-                    $scope.info.headers.push({
-                        "MRS_DF_ID": dataH.MRS_DF_ID,
-                        "PATIENT_ID": PATIENT_ID,
-                        "CAL_ID": CAL_ID,
-                        "DF_CODE": dataH.DF_CODE,
-                        "ITEM_ID": dataH.ITEM_ID,
-                        "DESCRIPTION": dataH.DESCRIPTION,
-                        "ISENABLE": dataH.ISENABLE,
-                        "Created_by": dataH.Created_by,
-                        "Last_updated_by": dataH.Last_updated_by,
-                        "practitioner": dataH.practitioner,
-                        "practitionSign": dataH.practitionSign,
-                        "practitionDate": dataH.practitionDate || new Date(),
-                        "isReview": dataH.isReview, "group": []
-                    })
+                    angular.forEach(data.headers, function (dataH, hIndex) {
+                        $scope.info.headers.push({
+                            "MRS_DF_ID": dataH.MRS_DF_ID,
+                            "PATIENT_ID": PATIENT_ID,
+                            "CAL_ID": CAL_ID,
+                            "DF_CODE": dataH.DF_CODE,
+                            "ITEM_ID": dataH.ITEM_ID,
+                            "DESCRIPTION": dataH.DESCRIPTION,
+                            "ISENABLE": dataH.ISENABLE,
+                            "Created_by": dataH.Created_by,
+                            "Last_updated_by": dataH.Last_updated_by,
+                            "practitioner": dataH.practitioner,
+                            "practitionSign": dataH.practitionSign,
+                            "practitionDate": dataH.practitionDate || new Date(),
+                            "isReview": dataH.isReview, "group": []
+                        })
 
-                    $scope.info.practitionSign = $scope.info.headers[hIndex].practitionSign;
-                    $scope.info.practitionDate = $scope.info.headers[hIndex].practitionDate;
-                    $scope.info.isReview = $scope.info.headers[hIndex].isReview;
-                    $scope.info.practitioner = $scope.info.headers[hIndex].practitioner;
+                        $scope.info.practitionSign = $scope.info.headers[hIndex].practitionSign;
+                        $scope.info.practitionDate = $scope.info.headers[hIndex].practitionDate;
+                        $scope.info.isReview = $scope.info.headers[hIndex].isReview;
+                        $scope.info.practitioner = $scope.info.headers[hIndex].practitioner;
 
-                    angular.forEach(data.groups, function (dataG, gIndex) {
-                        if (dataG.MRS_DF_ID === $scope.info.headers[hIndex].MRS_DF_ID) {
-                            $scope.info.headers[hIndex].group.push({
-                                "MRS_GROUP_ID": dataG.MRS_GROUP_ID,
-                                "MRS_DF_ID": dataG.MRS_DF_ID,
-                                "PATIENT_ID": PATIENT_ID,
-                                "CAL_ID": CAL_ID,
-                                "ORD": dataG.ORD,
-                                "GROUP_NAME": dataG.GROUP_NAME,
-                                "USER_TYPE": dataG.USER_TYPE,
-                                "ISENABLE": dataG.ISENABLE,
-                                "Created_by": dataG.Created_by,
-                                "Last_updated_by": dataG.Last_updated_by,
-                                "line": []
-                            })
-                        }
-                        angular.forEach(data.lines, function (dataL, lIndex) {
-                            if (dataL.MRS_GROUP_ID === $scope.info.headers[hIndex].group[gIndex].MRS_GROUP_ID) {
-                                $scope.info.headers[hIndex].group[gIndex].line.push({
-                                    "MRS_LINE_ID": dataL.MRS_LINE_ID,
-                                    "MRS_GROUP_ID": dataL.MRS_GROUP_ID,
-                                    "MRS_DF_ID": dataL.MRS_DF_ID,
+                        angular.forEach(data.groups, function (dataG, gIndex) {
+                            if (dataG.MRS_DF_ID === $scope.info.headers[hIndex].MRS_DF_ID) {
+                                $scope.info.headers[hIndex].group.push({
+                                    "MRS_GROUP_ID": dataG.MRS_GROUP_ID,
+                                    "MRS_DF_ID": dataG.MRS_DF_ID,
                                     "PATIENT_ID": PATIENT_ID,
                                     "CAL_ID": CAL_ID,
-                                    "ORD": dataL.ORD,
-                                    "COMP_TYPE": dataL.COMP_TYPE,
-                                    "QUEST_LABEL": dataL.QUEST_LABEL,
-                                    "QUEST_VALUE": dataL.QUEST_VALUE,
-                                    "ISCOMMENT": dataL.ISCOMMENT,
-                                    "COMMENT_LABEL": dataL.COMMENT_LABEL,
-                                    "comments": dataL.comments,
-                                    "ISREQ_COMMENT": dataL.ISREQ_COMMENT,
-                                    "ISENABLE": dataL.ISENABLE,
-                                    "Created_by": dataL.Created_by,
-                                    "Last_updated_by": dataL.Last_updated_by
-                                });
+                                    "ORD": dataG.ORD,
+                                    "GROUP_NAME": dataG.GROUP_NAME,
+                                    "USER_TYPE": dataG.USER_TYPE,
+                                    "ISENABLE": dataG.ISENABLE,
+                                    "Created_by": dataG.Created_by,
+                                    "Last_updated_by": dataG.Last_updated_by,
+                                    "line": []
+                                })
                             }
+                            angular.forEach(data.lines, function (dataL, lIndex) {
+                                if (dataL.MRS_GROUP_ID === $scope.info.headers[hIndex].group[gIndex].MRS_GROUP_ID) {
+                                    $scope.info.headers[hIndex].group[gIndex].line.push({
+                                        "MRS_LINE_ID": dataL.MRS_LINE_ID,
+                                        "MRS_GROUP_ID": dataL.MRS_GROUP_ID,
+                                        "MRS_DF_ID": dataL.MRS_DF_ID,
+                                        "PATIENT_ID": PATIENT_ID,
+                                        "CAL_ID": CAL_ID,
+                                        "ORD": dataL.ORD,
+                                        "COMP_TYPE": dataL.COMP_TYPE,
+                                        "QUEST_LABEL": dataL.QUEST_LABEL,
+                                        "QUEST_VALUE": dataL.QUEST_VALUE,
+                                        "ISCOMMENT": dataL.ISCOMMENT,
+                                        "COMMENT_LABEL": dataL.COMMENT_LABEL,
+                                        "comments": dataL.comments,
+                                        "ISREQ_COMMENT": dataL.ISREQ_COMMENT,
+                                        "ISENABLE": dataL.ISENABLE,
+                                        "Created_by": dataL.Created_by,
+                                        "Last_updated_by": dataL.Last_updated_by
+                                    });
+                                }
+                            });
                         });
                     });
-                });
 //                $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
 //                $scope.info.apptInfo = localStorageService.get('tempAppt');
-//                $scope.info.patient = localStorageService.get('tempPatient');
+                    $scope.info.patient = response[0].patient;
 
 
-                oriInfo = angular.copy($scope.info);
-            });
-            $scope.checkChange = function (hIndex, gIndex, lIndex) {
-                if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 1) {
-                    $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = true;
-                }
-                else if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 0) {
-                    $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = false;
-                    $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments = 0;
-                }
-            }
-            $scope.resetForm = function () {
-                $scope.info = angular.copy(oriInfo);
-                $scope.mrsForm.$setPristine();
-            }
-
-            $scope.infoChanged = function () {
-                return !angular.equals(oriInfo, $scope.info);
-            }
-            $scope.submit = function (mrsForm) {
-                if (mrsForm.$error.pattern || mrsForm.$error.maxlength) {
-                    toastr.error("Please Input All Required Information!", "Error");
-                }
-                else {
-                    var info = $scope.info;
-                    console.log(info);
-                    if ($scope.isNew == true) {
-                        //add new mrs
-                        DocumentService.insertMRS(info).then(function (response) {
-                            if (response['status'] === 'fail') {
-                                //insert error
-                                toastr.error("Add new fail", "Error");
-                            }
-                            else if (response['status'] === 'success') {
-                                toastr.success("Add new success", "Success");
-                                $state.go('loggedIn.MRS', null, {"reload": true});
-                            }
-                            else {
-                                //throw exception
-                                $state.go('loggedIn.MRS', null, {"reload": true});
-                            }
-                        })
+                    oriInfo = angular.copy($scope.info);
+                });
+                $scope.checkChange = function (hIndex, gIndex, lIndex) {
+                    if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 1) {
+                        $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = true;
                     }
-                    else if ($scope.isNew == false) {
-                        //edit old mrs
-                        DocumentService.editMRS(info).then(function (response) {
-                            if (response['status'] === 'fail') {
-                                //edit error
-                                toastr.error("Update fail!", "Error");
-                            }
-                            else if (response['status'] === 'success') {
-                                toastr.success("Update success!", "Success");
-                                $state.go('loggedIn.MRS', null, {"reload": true});
-                            }
-                        });
+                    else if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 0) {
+                        $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = false;
+                        $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments = 0;
+                    }
+                }
+                $scope.resetForm = function () {
+                    $scope.info = angular.copy(oriInfo);
+                    $scope.mrsForm.$setPristine();
+                }
+
+                $scope.infoChanged = function () {
+                    return !angular.equals(oriInfo, $scope.info);
+                }
+                $scope.submit = function (mrsForm) {
+                    if (mrsForm.$error.pattern || mrsForm.$error.maxlength) {
+                        toastr.error("Please Input All Required Information!", "Error");
+                    }
+                    else {
+                        var info = $scope.info;
+                        console.log(info);
+                        if ($scope.isNew == true) {
+                            //add new mrs
+                            DocumentService.insertMRS(info).then(function (response) {
+                                if (response['status'] === 'fail') {
+                                    //insert error
+                                    toastr.error("Add new fail", "Error");
+                                }
+                                else if (response['status'] === 'success') {
+                                    toastr.success("Add new success", "Success");
+                                    $state.go('loggedIn.MRS', null, {"reload": true});
+                                }
+                                else {
+                                    //throw exception
+                                    $state.go('loggedIn.MRS', null, {"reload": true});
+                                }
+                            })
+                        }
+                        else if ($scope.isNew == false) {
+                            //edit old mrs
+                            DocumentService.editMRS(info).then(function (response) {
+                                if (response['status'] === 'fail') {
+                                    //edit error
+                                    toastr.error("Update fail!", "Error");
+                                }
+                                else if (response['status'] === 'success') {
+                                    toastr.success("Update success!", "Success");
+                                    $state.go('loggedIn.MRS', null, {"reload": true});
+                                }
+                            });
+                        }
                     }
                 }
             }

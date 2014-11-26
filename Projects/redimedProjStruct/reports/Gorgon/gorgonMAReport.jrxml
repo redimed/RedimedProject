@@ -2,7 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gorgonMAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d5e1d6a5-cccc-4b09-a010-c017da2c939f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2737"/>
+
+	<property name="ireport.y" value="492"/>
+
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="84940f7f-a360-45b6-8549-d07a2fbd07c5"/>
@@ -1258,7 +1260,7 @@ Barrow Island LNG Plant ]]></text>
 			<textField>
 				<reportElement x="147" y="564" width="40" height="15" uuid="61c543ca-68d8-42ea-b102-2d25e3dd3c97"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_PRE_BR2_V1} != null ? $F{gorgon_doc_ma_PRE_BR2_V1} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_PRE_BR2_V2} != null ? $F{gorgon_doc_ma_PRE_BR2_V2} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="87" y="564" width="40" height="15" uuid="ddde9d62-60cf-406d-934f-297041f73b31"/>

@@ -34,15 +34,16 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
 
             //end signature
             //set value default
-            var tempAppt = localStorageService.get('tempAppt');
+            //var tempAppt = localStorageService.get('tempAppt');
             var tempPatient = localStorageService.get('tempPatient');
-            if (tempAppt === 'undefined' || tempPatient === 'undefined') {
+            if (tempPatient === 'undefined' || tempPatient == null) {
                 $state.go('loggedIn.home', null, {"reload": true});
-                toastr.error("Load some information fail, please try again!", "Error");
+                toastr.error("Load information fail, please try again!", "Error");
             }
             else {
                 var patient_id = tempPatient.Patient_id;
-                var cal_id = tempAppt.CAL_ID;
+                //var cal_id = tempAppt.CAL_ID;
+                var cal_id = -1;//set value default cal_id
                 $scope.info = {
                     cat_id: null,
                     cal_id: cal_id,
@@ -144,7 +145,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     q1_5_3_c: null,
                     PATIENT_SIGNATURE: null,
                     PATIENT_DATE: new Date(),
-                    DOCTOR_ID: $cookieStore.get('doctorInfo').doctor_id
+                    DOCTOR_ID: $cookieStore.get('doctorInfo').doctor_id || null
                 };
                 var oriInfo;
                 var info = $scope.info;
@@ -158,7 +159,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                             // Add new category 3
                             $scope.isNew = true;
                             $scope.info.patient = response[0].patient;
-                            $scope.info.apptInfo = localStorageService.get('tempAppt');
+                            $scope.info.apptInfo = response[0].appt;
                             $scope.info.doctor = response[0].doctor;
                             $scope.info.company = response[0].company;
                             oriInfo = angular.copy($scope.info);
@@ -166,10 +167,11 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                         else if (response[0].status === 'findFound') {
                             var data = response[0].data;
                             $scope.isNew = false;
-
+                            var timeAppt = (((new Date(response[0].appt.FROM_TIME)).getHours()) % 12 <= 9 ? '0' + ((new Date(response[0].appt.FROM_TIME)).getHours()) % 12 : ((new Date(response[0].appt.FROM_TIME)).getHours()) % 12) + ' : ' + (((new Date(response[0].appt.FROM_TIME)).getMinutes()) <= 9 ? '0' + ((new Date(response[0].appt.FROM_TIME)).getMinutes()) : ((new Date(response[0].appt.FROM_TIME)).getMinutes())) + (((new Date(response[0].appt.FROM_TIME)).getHours()) > 12 ? ' PM' : ' AM');
                             // Update category 3
                             $scope.info = {
-                                apptInfo: localStorageService.get('tempAppt'),
+                                timeAppt: timeAppt,
+                                apptInfo: response[0].appt,
                                 patient: response[0].patient,
                                 doctor: response[0].doctor,
                                 company: response[0].company,
@@ -294,15 +296,15 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     return !angular.equals(oriInfo, $scope.info);
                 }
                 $scope.submit = function (category3Form) {
-                    if ($scope.isNew === true) {
-                        /**
-                         * add new cat3
-                         */
-                        if (category3Form.$error.pattern || category3Form.$error.maxlength) {
-                            toastr.error("Please Input All Required Information!", "Error");
-                        }
-                        else {
-                            var info = $scope.info;
+                    if (category3Form.$error.pattern || category3Form.$error.maxlength) {
+                        toastr.error("Please Input All Required Information!", "Error");
+                    }
+                    else {
+                        var info = $scope.info;
+                        if ($scope.isNew === true) {
+                            /**
+                             * add new cat3
+                             */
                             DocumentService.insertCat3(info).then(function (response) {
                                 if (response['status'] === 'success') {
 
@@ -314,18 +316,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
 
                             });
                         }
-                    }
-
-                    else {
-                        /**
-                         * edit cat3
-                         */
-
-                        if (category3Form.$error.pattern || category3Form.$error.maxlength || category3Form.$error.required) {
-                            toastr.error("Please Input All Required Information!", "Error");
-                        }
-                        else {
-                            var info = $scope.info;
+                        else if ($scope.isNew == false) {
                             DocumentService.editCat3(info).then(function (response) {
                                 if (response['status'] === 'success') {
                                     toastr.success("Update success!", "Success");
@@ -341,10 +332,11 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                                      */
                                     $state.go('loggedIn.home', null, {"reload": true});
                                 }
-                            })
+                            });
                         }
 
                     }
+
                 }
             }
         }

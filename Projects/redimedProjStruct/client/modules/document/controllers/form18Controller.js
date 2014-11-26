@@ -57,15 +57,16 @@ angular.module('app.loggedIn.document.form18.controllers', [])
             //end signature1
 
             //set value default
-            var apptInfo = localStorageService.get('tempAppt');
+            //var apptInfo = localStorageService.get('tempAppt');
             var patientInfo = localStorageService.get('tempPatient');
-            if (apptInfo == 'undefined' || patientInfo == 'undefined') {
+            if (patientInfo == null || patientInfo == 'undefined') {
                 $state.go('loggedIn.home', null, {"reload": true});
                 toastr.error("Load some information fail, please try again!", "Error");
             }
             else {
                 var Patient_ID = patientInfo.Patient_id;
-                var CalID = apptInfo.CAL_ID;
+                //var CalID = apptInfo.CAL_ID;
+                var CalID = -1; //set value default test Calender ID
                 $scope.info = {
                     GORGON_ID: null,
                     PATIENT_ID: Patient_ID,
@@ -83,7 +84,8 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                 var info = $scope.info;
                 DocumentService.loadForm18(info).then(function (response) {
                     if ('fail' === response['status']) {
-                        $state.go("loggedIn.home", null, {"reload": true});
+                        $state.go("loggedIn.demo", null, {"reload": true});
+                        toastr.error("Load information fail, Please try again!", "Error");
                     }
                     else if ('findNull' === response[0].status) {
                         $scope.isNew = true;

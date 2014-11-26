@@ -105,6 +105,7 @@ angular.module('app.loggedIn.document.addPatient.controllers',[])
                                 $state.go("loggedIn.receptionist.appointment");
                             })*/
                             toastr.success('Insert Successfully !!!', "Success");
+                            $state.go("loggedIn.demo");
                         })
                         $scope.isSubmit = false;
                     }

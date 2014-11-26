@@ -1,7 +1,10 @@
 angular.module("app.loggedIn.doctor", [
     "app.loggedIn.doctor.controller",
     "app.loggedIn.doctor.services",
-    "app.loggedIn.doctor.directives"
+    "app.loggedIn.doctor.directives",
+
+    //MODULES CON
+    "app.loggedIn.doctor.waitingList"
 ])
 
 .config(function ($stateProvider) {

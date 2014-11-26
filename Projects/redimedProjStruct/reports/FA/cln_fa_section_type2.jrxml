@@ -58,9 +58,9 @@ WHERE	section.`ISENABLE`=1 AND line.`ISENABLE`=1
 	<group name="SECTION_GROUP">
 		<groupExpression><![CDATA[$F{SECTION_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="43">
+			<band height="49">
 				<textField isBlankWhenNull="true">
-					<reportElement x="0" y="20" width="595" height="20" uuid="531f8f88-531d-4c76-9a5f-20e0bd57bc1a"/>
+					<reportElement x="0" y="29" width="595" height="20" uuid="531f8f88-531d-4c76-9a5f-20e0bd57bc1a"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isUnderline="true"/>
 					</textElement>

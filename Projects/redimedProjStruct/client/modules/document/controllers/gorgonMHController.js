@@ -5,7 +5,6 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             formatYear: 'yy',
             startingDay: 1
         };
-        $scope.today = new Date();
         //end date
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
@@ -34,15 +33,16 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
 
             //end signature
             //set value default
-            var tempAppt = localStorageService.get('tempAppt');
-            var tempPatient = localStorageService.get('tempPatient');
-            if (tempAppt === 'undefined' || tempPatient === 'undefined') {
+            //var apptInfo = localStorageService.get('tempAppt');
+            var tempPatient = localStorageService.get('tempPatient') || [];
+            if (tempPatient === null || tempPatient === 'undefined') {
                 $state.go('loggedIn.home', null, {"reload": true});
                 toastr.error("Load some information fail, please try again!", "Error");
             }
             else {
                 var patient_id = tempPatient.Patient_id;
-                var cal_id = tempAppt.CAL_ID;
+                //var cal_id = tempAppt.CAL_ID;
+                var cal_id = -1;
                 $scope.info = {
                     Gorgon_Id: null,
                     Patient_Id: patient_id,
@@ -564,7 +564,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                     //set value total score
                     $scope.info.Q23_TotalScore = $scope.info.Q23_SittingReading + $scope.info.Q23_WatchingTV + $scope.info.Q23_Inactive +
                     $scope.info.Q23_Passenger + $scope.info.Q23_LyingDown + $scope.info.Q23_SittingTalking + $scope.info.Q23_SittingQuietly +
-                    $scope.info.Q23_InACar
+                    $scope.info.Q23_InACar + 0;
                     if ($scope.isNew === true) {
                         /**
                          * edit gorgon medical history

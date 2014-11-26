@@ -93,26 +93,6 @@ module.exports = {
 
 
     },
-    newFA: function(req,res)
-    {
-        var PATIENT_ID = req.body.PATIENT_ID;
-        var CAL_ID = req.body.CAL_ID;
-        console.log(PATIENT_ID + "=========" + CAL_ID);
-        db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-            db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-                db.sequelize.query("INSERT INTO `cln_fa_df_line_details` SELECT ?,?,d.* FROM `sys_fa_df_line_details` d",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-                    db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM  `sys_fa_df_headers` h",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-                        db.sequelize.query("INSERT INTO `cln_fa_df_comments` SELECT ?,?,c.* FROM `sys_fa_df_comments` c",null,{raw:true},[PATIENT_ID,CAL_ID]).success(function(){
-                            res.json({status:"success"});
-                        });
-                    });
-                });
-            });
-        }).error(function(err){
-            res.json({status:'error'});
-            console.log(err);
-        });
-    },
 
     loadFA: function(req,res){
         var PATIENT_ID = req.body.PATIENT_ID;
@@ -267,10 +247,23 @@ module.exports = {
             .success(function(data){
                 if(data == null)
                 {
-                    res.json({status:'fail'});
+                    db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s",null,{raw:true},[Patient_Id,CalId]).success(function(){
+                        db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l",null,{raw:true},[Patient_Id,CalId]).success(function(){
+                            db.sequelize.query("INSERT INTO `cln_fa_df_line_details` SELECT ?,?,d.* FROM `sys_fa_df_line_details` d",null,{raw:true},[Patient_Id,CalId]).success(function(){
+                                db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM  `sys_fa_df_headers` h",null,{raw:true},[Patient_Id,CalId]).success(function(){
+                                    db.sequelize.query("INSERT INTO `cln_fa_df_comments` SELECT ?,?,c.* FROM `sys_fa_df_comments` c",null,{raw:true},[Patient_Id,CalId]).success(function(){
+                                        res.json({status:"new"});
+                                    });
+                                });
+                            });
+                        });
+                    }).error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    });
                 }else
                 {
-                    res.json(data);
+                    res.json({status:"update",data:data});
                 }
             })
             .error(function(err){

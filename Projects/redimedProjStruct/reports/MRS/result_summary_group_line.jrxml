@@ -122,7 +122,7 @@
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{quest_value}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{quest_value}.equals( '0' )?"S":($F{quest_value}.equals( '1' )?"C":(($F{quest_value}.equals( '2' )?"US":"")))]]></textFieldExpression>
 				</textField>
 			</frame>
 			<line>

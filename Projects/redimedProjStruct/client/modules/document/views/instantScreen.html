@@ -24,16 +24,16 @@
     <div class="portlet light">
         <div class="portlet-body">
             <div class="row">
-                <label class="control-label col-md-2 col-sm-3">Candidate name: </label>
-                <label class="control-label text-info col-md-3 col-sm-8">{{patientInfo.First_name + " " + patientInfo.Sur_name + " " + patientInfo.Middle_name}} </label>
-                <label class="control-label col-md-2 col-sm-3">D.O.B </label>
-                <label class="control-label text-info col-md-3 col-sm-8">{{patientInfo.DOB | date : 'dd / MM / yyyy'}} </label>
+                <label class="control-label col-md-3 col-lg-2 col-sm-3">Candidate name: </label>
+                <label class="control-label text-info col-lg-4 col-md-9 col-sm-8">{{patientInfo.First_name + " " + patientInfo.Sur_name + " " + patientInfo.Middle_name}} </label>
+                <label class="control-label col-md-3 col-lg-2 col-sm-3">D.O.B </label>
+                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{patientInfo.DOB | date : 'dd / MM / yyyy'}} </label>
             </div>
             <div class="row">
-                <label class="control-label col-md-2 col-sm-3">Address: </label>
-                <label class="control-label text-info col-md-3 col-sm-8">{{patientInfo.Address1}} </label>
-                <label class="control-label col-md-2 col-sm-3">Contact Number:</label>
-                <label class="control-label text-info col-md-3 col-sm-8">{{patientInfo.Mobile}} </label>
+                <label class="control-label col-md-3 col-lg-2 col-sm-3">Address: </label>
+                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{patientInfo.Address1}}</label>
+                <label class="control-label col-md-3 col-lg-2 col-sm-3">Contact Number:</label>
+                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{patientInfo.Mobile}} </label>
             </div>
             <label class="control-label">
                 I,
@@ -153,7 +153,7 @@
                 </div>
                 <label class="control-label col-md-2 col-sm-2">Expiry Date: </label>
                 <div class="col-md-3 col-sm-4">
-                    <input type="text" class="form-control" ng-model="infoH.Expiry_Date" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate1" ng-click="openConsentDate1 = true"  datepicker-options="dateOptions" close-text="Close" />
+                    <input type="text" class="form-control" ng-model="infoH.Expiry_Date" name="consentDate"  datepicker-popup="MM/yyyy"  is-open="openConsentDate1" ng-click="openConsentDate1 = true"  datepicker-options="dateOptions" close-text="Close" />
 
                 </div>
             </div>
@@ -200,7 +200,7 @@
                     <div class="col-md-4 col-sm-4">
                         <input type="text" ng-model="infoH.Reading" class="form-control">
                     </div>
-                    <label class="control-label col-md-2 col-sm-3">2nd reading (if req): </label>
+                    <label class="control-label col-md-3 col-lg-2 col-sm-3">2nd reading (if req): </label>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" ng-model="infoH.Reading2" class="form-control">
                     </div>
@@ -212,55 +212,3 @@
 
 </form>
 
-
-
-<!--=============================== Signature Form ============================================-->
-<div id="modalSign" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Signature</h4>
-            </div>
-            <div class="modal-body">
-                <div id="signature"></div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn red" data-dismiss="modal">Cancel</a>
-                <a href="javascript:;" id="resetSig" class="btn blue">Reset</a>
-                <a href="javascript:;" id="okSig" class="btn green">OK</a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script src="../../../theme/assets/global/plugins/jSignature/jSignature.min.noconflict.js"></script>
-
-<script>
-    (function($){
-        $(document).ready(function() {
-
-            $('#signDisplay').hide();
-            var $sigdiv = $("#signature").jSignature({lineWidth: 2, width: 900, height: 500});
-
-            $('#resetSig').on('click',function(){
-                $sigdiv.jSignature('reset')
-            });
-
-            $('#okSig').on('click',function(){
-                var data = $sigdiv.jSignature('getData')
-                if(data != null)
-                {
-                    $('#signDisplay').attr("src",data);
-                    $('#signDisplay').show();
-                }
-
-                $('#modalSign').modal('hide');
-
-            });
-
-        })
-    })(jQuery)
-</script>

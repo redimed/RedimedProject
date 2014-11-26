@@ -76,14 +76,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label col-md-7" style="margin-top: 10px;">Is there any reason that you could not perform the work fitness assessment today?</label>
+                    <label class="control-label col-md-9 col-lg-6">Is there any reason that you could not perform the work fitness assessment today?</label>
                     <div class="clearfix">
-                        <div class="col-md-4 btn-group">
+                        <div class="col-md-3 col-lg-4 btn-group">
                             <label class="btn">
-                                <input type="radio" ng-model="info.IsConsentReason" value="0"/>Yes
+                                <input type="radio" ng-model="info.IsConsentReason" value="1"/>Yes
                             </label>
                             <label class="btn">
-                                <input type="radio" ng-model="info.IsConsentReason" value="1"/> No
+                                <input type="radio" ng-model="info.IsConsentReason" value="0"/> No
                             </label>
                         </div>
                     </div>
@@ -151,15 +151,15 @@
         <div class="clearfix" style="margin-top: 15px;">
             <div class="btn-group  col-md-12">
                 <label class="btn">
-                    <input type="radio" ng-model="info.Estimated" value="0"> Sedentary </label>
+                    <input type="radio" ng-model="info.Estimated" value="1"> Sedentary </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.Estimated" value="1"> Light </label>
+                    <input type="radio" ng-model="info.Estimated" value="2"> Light </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.Estimated" value="2"> Medium </label>
+                    <input type="radio" ng-model="info.Estimated" value="3"> Medium </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.Estimated" value="3"> Heavy </label>
+                    <input type="radio" ng-model="info.Estimated" value="4"> Heavy </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.Estimated" value="4"> Very Heavy </label>
+                    <input type="radio" ng-model="info.Estimated" value="5"> Very Heavy </label>
             </div>
         </div>
         <br/>
@@ -192,96 +192,96 @@
     <div class="portlet-body form">
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-lg-3 col-sm-3">
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Heart Conditions</label>
             </div>
-            <div class="btn-group col-md-4 col-lg-2 col-sm-4">
+            <div class="btn-group col-md-3 col-lg-2 col-sm-4">
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_HeartConditions" value="0"> Yes </label>
+                    <input type="radio" ng-model="info.MS_HeartConditions" value="1"> Yes </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_HeartConditions" value="1"> No </label>
+                    <input type="radio" ng-model="info.MS_HeartConditions" value="0"> No </label>
             </div>
-            <div class="col-md-4 col-lg-6 col-sm-5 ">
+            <div class="col-md-6 col-lg-6 col-sm-5 ">
                 <input type="text" ng-model="info.MS_HeartConditions_Comment" ng-model="info.MS_HeartConditions_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-lg-3 col-sm-3">
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Lungs Conditions/Asthma</label>
             </div>
-            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-3" >
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Lung_Asthma" value="0"> Yes </label>
+                    <input type="radio" ng-model="info.MS_Lung_Asthma" value="1"> Yes </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Lung_Asthma" value="1"> No </label>
+                    <input type="radio" ng-model="info.MS_Lung_Asthma" value="0"> No </label>
             </div>
-            <div class="col-md-4 col-lg-6 col-sm-5">
+            <div class="col-md-6 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Lung__Asthma_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-lg-3 col-sm-3">
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Diabetes</label>
             </div>
-            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-3" >
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Diabetes" value="0"> Yes </label>
+                    <input type="radio" ng-model="info.MS_Diabetes" value="1"> Yes </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Diabetes" value="1"> No </label>
+                    <input type="radio" ng-model="info.MS_Diabetes" value="0"> No </label>
             </div>
-            <div class="col-md-4 col-lg-6 col-sm-5">
+            <div class="col-md-6 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Diabetes_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-lg-3 col-sm-3">
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Fits/Seizures</label>
             </div>
-            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-3" >
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Fits" value="0"> Yes </label>
+                    <input type="radio" ng-model="info.MS_Fits" value="1"> Yes </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Fits" value="1"> No </label>
+                    <input type="radio" ng-model="info.MS_Fits" value="0"> No </label>
             </div>
-            <div class="col-md-4 col-lg-6 col-sm-5">
+            <div class="col-md-6 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Fits_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-lg-3 col-sm-3">
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Medication</label>
             </div>
-            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-3" >
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Medication" value="0"> Yes </label>
+                    <input type="radio" ng-model="info.MS_Medication" value="1"> Yes </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Medication" value="1"> No </label>
+                    <input type="radio" ng-model="info.MS_Medication" value="0"> No </label>
             </div>
-            <div class="col-md-4 col-lg-6 col-sm-5">
+            <div class="col-md-6 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Medication_Comment" class="form-control" placeholder="Comment" />
             </div>
 
         </div>
         <br/>
         <div class="row" style="margin-left:10px;margin-right:10px;">
-            <div class="col-md-4 col-lg-3 col-sm-3">
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <label class="control-label" style="margin-top: 7px">Others(ie Surgery,Physio)</label>
             </div>
-            <div class="btn-group col-sm-4 col-lg-2 col-md-4" >
+            <div class="btn-group col-sm-4 col-lg-2 col-md-3" >
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Other" value="0"> Yes </label>
+                    <input type="radio" ng-model="info.MS_Other" value="1"> Yes </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.MS_Other" value="1"> No </label>
+                    <input type="radio" ng-model="info.MS_Other" value="0"> No </label>
             </div>
-            <div class="col-md-4 col-lg-6 col-sm-5">
+            <div class="col-md-6 col-lg-6 col-sm-5">
                 <input type="text" ng-model="info.MS_Other_Comment" class="form-control" placeholder="Comment" />
             </div>
 
@@ -663,9 +663,9 @@
             </div>
             <div class="btn-group col-md-3 col-sm-4">
                 <label class="btn">
-                    <input type="radio" ng-model="info.Step_Correct2" value="0"> Yes </label>
+                    <input type="radio" ng-model="info.Step_Correct2" value="1"> Yes </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.Step_Correct2" value="1"> No </label>
+                    <input type="radio" ng-model="info.Step_Correct2" value="0"> No </label>
             </div>
         </div>
         <br/>
@@ -770,17 +770,17 @@
         <div class="row">
             <div class="btn-group col-md-3 col-sm-4" style="margin-left:15px">
                 <label class="btn">
-                    <input type="radio" ng-model="info.c_Grip3" value="0" ng-change="c_Right3()"> RHD </label>
+                    <input type="radio" ng-model="info.c_Grip3" value="1" ng-change="c_Right3()"> RHD </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.c_Grip3" value="1" ng-change="c_Left3()"> LHD </label>
+                    <input type="radio" ng-model="info.c_Grip3" value="0" ng-change="c_Left3()"> LHD </label>
             </div>
             <div   ng-class="{'has-error':showClickedValidation && gorgonFAForm.c_Right3.$error.pattern || gorgonFAForm.c_Left3.$error.pattern}">
-                <div class="col-md-3 col-sm-3" style="margin-top: 10px">
+                <div class="col-md-3 col-lg-2 col-sm-3" style="margin-top: 10px">
                     <input type="text" ng-model="info.c_Right3" ng-pattern="/^[0-9]+$/" name="c_Right3" ng-change="c_Right3()" style="width:50px;">
                     <label>/</label>
                     <input type="text" ng-model="info.c_Left3" ng-pattern="/^[0-9]+$/" name="c_Left3" ng-change="c_Left3()" style="width:50px;">
                 </div>
-                <div class="col-md-3 col-sm-5 help-block" for="c_Right3 || c_Left3" style="margin-top: 10px" ng-show="showClickedValidation && gorgonFAForm.c_Right3.$error.pattern || gorgonFAForm.c_Left3.$error.pattern">
+                <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="c_Right3 || c_Left3" style="margin-top: 10px" ng-show="showClickedValidation && gorgonFAForm.c_Right3.$error.pattern || gorgonFAForm.c_Left3.$error.pattern">
                     <label>Grip Strength must be number</label>
                 </div>
             </div>
@@ -908,9 +908,9 @@
                 <label class="control-label" style="margin-left:15px;">Crepitus</label>
                 <div class="btn-group" >
                     <label class="btn">
-                        <input type="radio" ng-model="info.bCrepitus4" value="0"> Yes </label>
+                        <input type="radio" ng-model="info.bCrepitus4" value="1"> Yes </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.bCrepitus4" value="1"> No </label>
+                        <input type="radio" ng-model="info.bCrepitus4" value="0"> No </label>
                 </div>
             </div>
         </div>
@@ -1097,15 +1097,15 @@
         </div>
         <div class="btn-group  col-md-12 col-sm-12">
             <label class="btn">
-                <input type="radio" ng-model="info.eWaitesBow5" value="1"> Unable To Complete </label>
+                <input type="radio" ng-model="info.eResult5" value="1"> Unable To Complete </label>
             <label class="btn">
-                <input type="radio" ng-model="info.eWaitesBow5" value="2"> 0-29° </label>
+                <input type="radio" ng-model="info.eResult5" value="2"> 0-29° </label>
             <label class="btn">
-                <input type="radio" ng-model="info.eWaitesBow5" value="3"> 30-49° </label>
+                <input type="radio" ng-model="info.eResult5" value="3"> 30-49° </label>
             <label class="btn">
-                <input type="radio" ng-model="info.eWaitesBow5" value="4"> 50-70° </label>
+                <input type="radio" ng-model="info.eResult5" value="4"> 50-70° </label>
             <label class="btn">
-                <input type="radio" ng-model="info.eWaitesBow5" value="5"> +70° </label>
+                <input type="radio" ng-model="info.eResult5" value="5"> +70° </label>
         </div>
 
         <br/>
@@ -1224,15 +1224,15 @@
 
         <div class="btn-group  col-md-12">
             <label class="btn">
-                <input type="radio" ng-model="info.aResult6" disabled value="0"> Sedentary </label>
+                <input type="radio" ng-model="info.aResult6" disabled value="1"> Sedentary </label>
             <label class="btn">
-                <input type="radio" ng-model="info.aResult6" disabled value="1"> Light </label>
+                <input type="radio" ng-model="info.aResult6" disabled value="2"> Light </label>
             <label class="btn">
-                <input type="radio" ng-model="info.aResult6" disabled value="2"> Medium </label>
+                <input type="radio" ng-model="info.aResult6" disabled value="3"> Medium </label>
             <label class="btn">
-                <input type="radio" ng-model="info.aResult6" disabled value="3"> Heavy </label>
+                <input type="radio" ng-model="info.aResult6" disabled value="4"> Heavy </label>
             <label class="btn">
-                <input type="radio" ng-model="info.aResult6" disabled value="4"> Very Heavy </label>
+                <input type="radio" ng-model="info.aResult6" disabled value="5"> Very Heavy </label>
         </div>
         <br/>
         <div class="row">
@@ -1253,15 +1253,15 @@
         </div>
         <div class="btn-group  col-md-12">
             <label class="btn">
-                <input type="radio" ng-model="info.bResult6" disabled value="0"> Sedentary </label>
+                <input type="radio" ng-model="info.bResult6" disabled value="1"> Sedentary </label>
             <label class="btn">
-                <input type="radio" ng-model="info.bResult6" disabled value="1"> Light </label>
+                <input type="radio" ng-model="info.bResult6" disabled value="2"> Light </label>
             <label class="btn">
-                <input type="radio" ng-model="info.bResult6" disabled value="2"> Medium </label>
+                <input type="radio" ng-model="info.bResult6" disabled value="3"> Medium </label>
             <label class="btn">
-                <input type="radio" ng-model="info.bResult6" disabled value="3"> Heavy </label>
+                <input type="radio" ng-model="info.bResult6" disabled value="4"> Heavy </label>
             <label class="btn">
-                <input type="radio" ng-model="info.bResult6" disabled value="4"> Very Heavy </label>
+                <input type="radio" ng-model="info.bResult6" disabled value="5"> Very Heavy </label>
         </div>
         <br/>
         <div class="row">
@@ -1498,15 +1498,15 @@
         </div>
         <div class="btn-group  col-md-12">
             <label class="btn">
-                <input type="radio" ng-model="info.LEPDC" value="0"> Sedentary </label>
+                <input type="radio" ng-model="info.LEPDC" value="1"> Sedentary </label>
             <label class="btn">
-                <input type="radio" ng-model="info.LEPDC" value="1"> Light </label>
+                <input type="radio" ng-model="info.LEPDC" value="2"> Light </label>
             <label class="btn">
-                <input type="radio" ng-model="info.LEPDC" value="2"> Medium </label>
+                <input type="radio" ng-model="info.LEPDC" value="3"> Medium </label>
             <label class="btn">
-                <input type="radio" ng-model="info.LEPDC" value="3"> Heavy </label>
+                <input type="radio" ng-model="info.LEPDC" value="4"> Heavy </label>
             <label class="btn">
-                <input type="radio" ng-model="info.LEPDC" value="4"> Very Heavy </label>
+                <input type="radio" ng-model="info.LEPDC" value="5"> Very Heavy </label>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
@@ -1514,15 +1514,15 @@
         </div>
         <div class="btn-group  col-md-12">
             <label class="btn">
-                <input type="radio" ng-model="info.LAPC" value="0"> Sedentary </label>
+                <input type="radio" ng-model="info.LAPC" value="1"> Sedentary </label>
             <label class="btn">
-                <input type="radio" ng-model="info.LAPC" value="1"> Light </label>
+                <input type="radio" ng-model="info.LAPC" value="2"> Light </label>
             <label class="btn">
-                <input type="radio" ng-model="info.LAPC" value="2"> Medium </label>
+                <input type="radio" ng-model="info.LAPC" value="3"> Medium </label>
             <label class="btn">
-                <input type="radio" ng-model="info.LAPC" value="3"> Heavy </label>
+                <input type="radio" ng-model="info.LAPC" value="4"> Heavy </label>
             <label class="btn">
-                <input type="radio" ng-model="info.LAPC" value="4"> Very Heavy </label>
+                <input type="radio" ng-model="info.LAPC" value="5"> Very Heavy </label>
         </div>
         <br/>
         <div class="row" style="margin-left:10px;">
