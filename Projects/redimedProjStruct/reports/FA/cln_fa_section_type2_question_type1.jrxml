@@ -19,7 +19,7 @@
 	<queryString>
 		<![CDATA[SELECT DISTINCT
  	line.`LINE_ID`,
-	line.`PICTURE`,
+	SUBSTRING(line.`PICTURE`,3) as PICTURE,
 	line.`QUESTION`,
 	line.`COMMENTS`,
 	line.`IsCommentsText`,
@@ -58,7 +58,7 @@ WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR 
 	<field name="LINE_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="PICTURE" class="java.io.InputStream">
+	<field name="PICTURE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="QUESTION" class="java.lang.String">
@@ -130,9 +130,9 @@ WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR 
 	<group name="LINE_GROUP">
 		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="24">
+			<band height="31">
 				<textField>
-					<reportElement x="0" y="4" width="555" height="20" uuid="26abdc99-e002-48b6-baf8-ac05d6643bae"/>
+					<reportElement x="0" y="11" width="555" height="20" uuid="26abdc99-e002-48b6-baf8-ac05d6643bae"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
@@ -184,7 +184,7 @@ WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR 
 			</subreport>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Top">
 				<reportElement x="0" y="0" width="191" height="146" uuid="14cdead6-4590-4e04-aff6-e347ff4c3baa"/>
-				<imageExpression><![CDATA[$F{PICTURE}]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_PATH}+$F{PICTURE}]]></imageExpression>
 			</image>
 		</band>
 		<band height="50">
