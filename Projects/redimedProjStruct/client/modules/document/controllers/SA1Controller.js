@@ -111,7 +111,7 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                                         "LINE_ID": dataL.LINE_ID,
                                         "SECTION_ID": dataL.SECTION_ID,
                                         "SA_ID": dataL.SA_ID,
-                                        "Name": dataL.Name,
+                                        "NAME": dataL.NAME,
                                         "VALUE_RIGHT": dataL.VALUE_RIGHT,
                                         "VALUE_LEFT": dataL.VALUE_LEFT,
                                         "ISENABLE": dataL.ISENABLE,
