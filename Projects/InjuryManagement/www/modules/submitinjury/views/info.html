@@ -111,8 +111,10 @@
 
                     <label class="item item-input" ng-class="{'has-error':(isSubmit && info.Email.$invalid) || isFailEmail}">
                         <span class="input-label span-input-color">Email</span>
-                        <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-change="Checkfield(isMobile = false)" ng-disabled="worker.Patient_id != -1 && temp1.Email"/>
+                        <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-change="isLoading = !isLoading;Checkfield(isMobile = false)" ng-blur="isSuccess = false" ng-disabled="worker.Patient_id != -1 && temp1.Email"/>
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Email.$invalid || isFailEmail}"></i>
+                        <i ng-class="{'icon ion-loading-a':isLoading}"></i>
+                        <i ng-class="{'icon ion-checkmark-round text-success':isSuccess}"></i>
                     </label>
 
                     <label class="item item-input item-select" ng-class="{'has-error':isSubmit && info.Sex.$invalid}">
@@ -121,14 +123,12 @@
                                 ng-options="row.name as row.name for row in sexIndex">
                             <option value="">--Select Title--</option>
                         </select>
-                        <i ng-class="{'icon ion-alert-circled error':isSubmit && infor.Sex.$invalid}"></i>
+                        <i ng-class="{'icon ion-alert-circled error':isSubmit && info.Sex.$invalid}"></i>
                     </label>
 
                     <label class="item item-input" ng-class="{'has-error':isSubmit && info.DOB.$invalid}">
                         <span class="input-label span-input-color">Birthday</span>
-                        <input ng-required="true" type="text" onfocus="this.type='date';
-                this.setAttribute('onfocus','');this.blur();
-                this.focus();" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB"/>
+                        <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB"/>
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.DOB.$invalid}"></i>
                     </label>
 
@@ -141,4 +141,5 @@
             </ion-list>
         </ion-content>
     </form>
+
 </ion-view>

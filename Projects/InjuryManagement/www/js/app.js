@@ -16,8 +16,7 @@ angular.module('starter', ['ionic',
     'starter.worker',
     'starter.booking',
     'ui.bootstrap',
-
-
+    'ngCordova',
 ])
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -45,7 +44,7 @@ angular.module('starter', ['ionic',
         //RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
 
         //ip Luan
-        RestangularProvider.setBaseUrl("http://192.168.132.154:3000");
+        RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
 
         //ip nha
         //RestangularProvider.setBaseUrl("http://192.168.1.110:3000");
@@ -74,7 +73,6 @@ angular.module('starter', ['ionic',
 
     })
     .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate){
-
         $rootScope.$on("$stateChangeSuccess", function(e, toState){
             if(!localStorageService.get("userInfo")){
                 if(toState.name !== "security.forgot" && toState.name !== "security.login") {

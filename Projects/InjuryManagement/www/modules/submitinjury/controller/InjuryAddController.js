@@ -379,8 +379,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
             }
         }
-
         initForm();
+
+
         $scope.isCollapsed = false;
               //maps
               //Google map
