@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3d7fd071-90c9-4b63-bffd-9ed4babcea7e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/lib/Audio.jar" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/lib/Audio.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/Cat2Controller.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/Cat2Controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/Cat3Controller.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/Cat3Controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/GorgonMHController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/GorgonMHController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MHController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MHController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MRSController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MRSController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/form18Controller.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/form18Controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonMH.html" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonMH.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/gorgonMHController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/gorgonMHController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/package.json" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="3d7fd071-90c9-4b63-bffd-9ed4babcea7e" name="Default" comment="" />
     <ignored path="RedimedProject.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -245,7 +232,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1379" height="744" extended-state="1" />
+    <frame x="-8" y="0" width="1379" height="744" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
