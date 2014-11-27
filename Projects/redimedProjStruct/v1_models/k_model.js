@@ -122,7 +122,7 @@ function K_MODEL(table, primary_key) {
 
     this.query_get = function (id, fields) {
         var querybuilder = this.query_get_base(fields);
-        querybuilder.where('`' + this._primary_key + '` = ?', id);
+        querybuilder.where(this._table + '.`' + this._primary_key + '` = ?', id);
         return querybuilder;
     };
 

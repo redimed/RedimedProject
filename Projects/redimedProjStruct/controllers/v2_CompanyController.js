@@ -1,4 +1,5 @@
 var CompanyModel = require('../v1_models/Companies');
+var InsurerModel = require('../v1_models/Cln_insurers');
 
 module.exports = {
 
@@ -8,13 +9,35 @@ module.exports = {
 			res.end();
 			return; 
 		}
+		// var query = CompanyModel.query_get(id);
+		// query.left_join('cln_insurers', null, 'companies.Insurer = cln_insurers.id');
+		// var sql =  query.toString();
+
+				var k_sql = req.k_sql;
+
+		var company_data = {};
+
 		var sql = CompanyModel.sql_get(id);
-		var k_sql = req.k_sql;
-		k_sql.exec_row( sql, function(data){
-			res.json({status: 'success', row: data});
-		}, function(err) {
+
+		k_sql.exec_row(sql, function(data){
+			company_data = data;	
+			if(!company_data.Insurer) {
+				res.json({status: 'success', row: company_data});
+				return; 
+			}
+
+			var sql =  InsurerModel.sql_get(company_data.Insurer);
+			k_sql.exec_row(sql, function(data2){
+				company_data.insurer_data = data2;
+				res.json({status: 'success', row: company_data});	
+			},function(err){
+				res.json({status: 'error'});
+			})
+		},function(err){
 			res.json({status: 'error'});
-		});
+		})
+
+
 	},
 	postGetAll : function (req, res) {
 		var fields = req.body.fields;
@@ -29,37 +52,62 @@ module.exports = {
 		});
 	}, 
 	postInsert: function(req, res) {
-		var data = req.body.data;
+		var post_data = req.body.data;
 
-		if(!data) {
+		if(!post_data) {
 			res.end();
 			return; 
 		}
 
-		var sql = CompanyModel.sql_insert(data);
+		var sql = CompanyModel.sql_insert(post_data);
 		var k_sql = res.locals.k_sql;
 
-		k_sql.exec(sql, function (data) {
-			res.json({status: 'success', data: data});
-        }, function(err) {
-			res.json({status: 'error'});
-		});
+		var err_handle = function(err){
+            res.json('error')
+        };
+
+        var insertId = 0;
+		if(post_data.Insurer) {
+			k_sql.exec(sql).then(function (data) {
+				insertId = data.insertId;
+	            var sql2 = CompanyModel.sql_insert_company_insurer(insertId, post_data.Insurer);
+	            return k_sql.exec(sql2);
+	        }).then(function (data) {
+	            res.json({'status' : 'success', insertId: insertId});
+	        }).catch(err_handle);
+        } else {
+        	k_sql.exec(sql, function(data){
+        		res.json({'status' : 'success', insertId: data.insertId});
+        	}, err_handle);
+        }
 	},
 	postUpdate: function(req, res) {
 		var id = req.body.id;
-		var data = req.body.data;
-		if(!id || !data) {
+		var post_data = req.body.data;
+		if(!id || !post_data) {
 			res.end();
 			return; 
 		}
-
-		var sql = CompanyModel.sql_update(id, data);
+		var err_handle = function(err){
+            res.json('error')
+        };
+		var sql = CompanyModel.sql_update(id, post_data);
 		var k_sql = res.locals.k_sql;
-		k_sql.exec(sql, function (data) {
-			res.json({status: 'success', data: data});
-        }, function(err) {
-			res.json({status: 'error'});
-		});
+		
+		if(post_data.Insurer) {
+			k_sql.exec(sql).then(function (data) {
+	            var sql2 = CompanyModel.sql_insert_company_insurer(id, post_data.Insurer);
+	            return k_sql.exec(sql2);
+	        }).then(function (data) {
+	            res.json({'status' : 'success'});
+	        }).catch(function (err) {
+	            res.json({'status' : 'success'});
+	        });
+		} else {
+			k_sql.exec(sql, function (data) {
+				res.json({status: 'success'});
+	        }, err_handle);
+		}
 	},
 	postDelete: function(req, res) {
 		var id = req.body.id;
