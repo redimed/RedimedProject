@@ -47,5 +47,13 @@ angular.module('starter.worker', [
                 }
             }
         })
+        .state('app.worker.readNFC',{
+            url:"/readNFC",
+            views:{
+                'content':{
+                    templateUrls:"modules/worker/views/readNFC.html"
+                }
+            }
+        })
 
 })
