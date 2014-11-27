@@ -149,6 +149,7 @@ app.get('/api/document/printSA1/:patientId/:calId/:id', SA1Controller.printRepor
 app.post('/api/document/loadSA2', SA2Controller.loadSA2);
 app.post('/api/document/insertSA2', SA2Controller.insertSA2);
 app.post('/api/document/editSA2', SA2Controller.editSA2);
+app.get('/api/document/printSA2/:patientId/:calId/:id', SA2Controller.printReport);
 /**
  * end audiogram 2
  */

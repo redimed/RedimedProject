@@ -42,7 +42,7 @@ var Driver = java.import('com.mysql.jdbc.Driver');
 var InputStream = java.import('java.io.InputStream');
 var FileInputStream = java.import('java.io.FileInputStream');
 
-var AudioBean = java.import('audio.AudioBean');
+var AudioBean = java.import('com.au.AudioBean');
 
 module.exports = {
     printReport : function(req,res,next){

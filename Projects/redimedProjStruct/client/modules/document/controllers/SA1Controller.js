@@ -3,11 +3,9 @@
  */
 angular.module('app.loggedIn.document.SA1.controllers', [])
     .controller("SA1Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr, $stateParams, localStorageService) {
-        $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        // var doctorInfo = $cookieStore.get('doctorInfo');
+        var CalID = -1;//$scope.apptInfo.CAL_ID;
         var Patient_ID = $scope.patientInfo.Patient_id;
-        var CalID = $scope.apptInfo.CAL_ID;
 
         $scope.dateOptions = {
             formatYear: 'yy',
