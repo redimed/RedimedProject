@@ -29,6 +29,38 @@
 			</div>
 		</div>
 	</tab>
+		<tab heading="Companies">
+		<div class="portlet box grey-cascade" style="positon: relative;">
+			<div class="portlet-body">
+				<button ng-click="openCompanySearch()" class="pull-right btn btn-small blue"><i class="fa fa-search"></i> Search </button>
+				<button ng-click="openCompanyForm()" class="pull-right btn btn-small green"><i class="fa fa-plus"></i> Add </button>
+				<!-- POPUP FORM-COMPANY  -->
+				<div class="mdt-search" style="display: block;" ng-if="show_company_form">
+				    <div class="pull-right text-center ng-scope">
+				        <button class="btn btn-sm btn-block red" ng-click="closeCompanyForm()">
+				            <i class="fa fa-times"></i>
+				        </button>
+				    </div>
+				    <div class="break-row" style="margin-bottom: 15px;"></div>
+				    <company-detail id="add-form" data="{}" options="options" onsuccess="updateCompany"></company-detail>
+				</div>
+				 <!-- POPUP FORM-COMPANY  -->
+				<!-- POPUP SEARCH-COMPANY  -->
+				<div class="mdt-search" style="display: block;" ng-if="show_company_search">
+				    <div class="pull-right text-center ng-scope">
+				        <button class="btn btn-sm btn-block red" ng-click="closeCompanySearch()">
+				            <i class="fa fa-times"></i>
+				        </button>
+				    </div>
+				    <my-data-table options="company_search_options" rowclick="chooseCompany">
+				</div>
+				 <!-- POPUP SEARCH-COMPANY  -->
+
+
+				<patient-companies data="{Patient_id: {{patient.Patient_id}}}"></patient-companies>	
+			</div>
+		</div>
+	</tab>
 	<tab heading="Claim">
 		<div class="portlet grey-cascade box">
 			<div class="portlet-body">
@@ -106,7 +138,6 @@
 						<div class="col-sm-8">{{patient.First_name}} {{patient.Middle_name}} {{patient.Sur_name}} 
 						</div>
 					</div>
-					
 				</div>
 				<div class="break-row"></div>
 				
@@ -202,7 +233,7 @@
                         </td>
                         <td>{{item.ITEM_CODE}}</td>
                         <td style="width: 80%">{{item.ITEM_NAME}}</td>
-						<td style="width: 7%"><input type="number" class="form-control" ng-model="item.QUANTITY"></td>
+						<td style="width: 7%"><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
                     </tr>
 					
 					<tr ng-show="extra_list.length > 0" class="item-label">
@@ -215,7 +246,7 @@
                         </td>
                         <td>{{item.ITEM_CODE}}</td>
                         <td style="width: 85%">{{item.ITEM_NAME}}</td>
-						<td style="width: 7%"><input type="number" class="form-control" ng-model="item.QUANTITY"></td>
+						<td style="width: 7%"><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
                     </tr>
 					
                 </tbody>

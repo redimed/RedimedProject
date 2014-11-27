@@ -57,7 +57,8 @@ module.exports = {
         	k_sql.exec(sql, function (data) {
         		res.json({status: 'success'});
         	}, function(err) {
-	            res.json({status: 'error'});
+		   // DUPLICATE PRIMARY KEY of patient companies
+	            res.json({status: 'success'});
 	        });
         }, function(err) {
             res.json({status: 'error'});

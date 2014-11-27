@@ -10,35 +10,7 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 
 	var arrGetBy = $filter('arrGetBy');
 	
-    var active_item = function () {
-		function item_cat(items) {
-			// MUST ORDER BY 'ITEM DEPT' POPULAR_HEADER_ID
-			var newlist = [];
-			for (var i = 0, len = items.length; i < len; ++i) {
-				var item = items[i];
-					
-				if (newlist.length == 0 || newlist[newlist.length - 1].cat != item.POPULAR_HEADER_ID) {
-					var t2 = {
-						cat: item.POPULAR_HEADER_ID,
-						cattitle: item.POPULAR_NAME,
-						list: []
-					};
-					newlist.push(t2)
-				}
-				var t = {
-					ITEM_ID: item.ITEM_ID,
-					ITEM_CODE: item.ITEM_CODE,
-					ITEM_NAME: item.ITEM_NAME,
-					QUANTITY: item.QUANTITY ? item.QUANTITY  :  1, 
-					inserted: (item.inserted) ? true : false,
-					appt_item_id: item.appt_item_id,
-					checked: (item.checked) ? '1' : '0'//Math.round(Math.random()) + ''
-				}
-				newlist[newlist.length - 1].list.push(t);
-			}
-			return newlist;
-		}
-		
+    var active_item = function () {		
 		// TRAVEL APPT ITEM
         for (var i = 0; i < $scope.list_appt_item.length; ++i) {
 			var appt_item = $scope.list_appt_item [i];
@@ -77,7 +49,7 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		}
 		
 		
-        $scope.item_list = item_cat($scope.list_dept_item);
+         $scope.item_list =  DoctorService.catItemDept($scope.list_dept_item); //item_cat($scope.list_dept_item);
 		delete $scope.list_dept_item;
 		delete $scope.list_appt_item;
     };
@@ -91,10 +63,6 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 		PatientService.getById ($scope.patient.Patient_id).then(function (data) {
 			//console.log('PATIENT INFO ', data);
             $scope.modelObjectMap = data;
-
-            ///
-            ///quynh chiu trach nhiem ve phan nay
-            ///
             localStorageService.set('tempPatient', data);
 			
 			$scope.modelObjectMap.DOB = ConfigService.getCommonDateDefault($scope.modelObjectMap.DOB);
@@ -103,7 +71,6 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 
         });	
 		
-		// $scope.options = {}; 
         var doctorInfo = $cookieStore.get('doctorInfo');
 		
 		$scope.apptInfo = localStorageService.get('apptTempInfo');
@@ -115,9 +82,6 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			//console.log('APPOINTMENT INFO ', data);
 			$scope.apptInfo = data;
 
-            ///
-            ///quynh chiu trach nhiem ve phan nay
-            ///
             localStorageService.set('tempAppt', data);
 
 			$scope.apptChange = {};
@@ -285,5 +249,58 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 			toastr.success('Update Successfully!!!', "Success");
 		});
 	}
+  /*
+    *   COMPANY FORM
+    */ 
+     $scope.updateCompany = function(company){
+        // console.log(company)
+        PatientService.update({Patient_id: $scope.patient.Patient_id, company_id: company.id}).then(function(data){
+            if(data.status == 'success') {
+                toastr.success('Save Successfully!!!', "Success");
+                reloadpage();
+            }
+            console.log(data);
+        });
+       
+    }
+
+    $scope.company_search_options  = {
+        api: 'api/erm/v2/companies/search',
+        method: 'post',
+        columns: [
+            {field: 'id', is_hide: true},
+            {field: 'Company_name', label: 'Company Name'},
+            {field: 'Industry'},             
+        ],
+        use_filters: true,
+        filters: {
+            Company_name: {type: 'text'},
+            Industry: {type: 'text'},
+        },
+    };
+
+    $scope.chooseCompany = function(item) {
+        console.log(item);
+        $scope.updateCompany(item);
+    }
+
+    $scope.show_company_form = false;
+    $scope.show_company_search = false;
+
+    $scope.openCompanySearch = function () {
+        $scope.show_company_search = true;
+    }
+    $scope.closeCompanySearch = function () {
+        $scope.show_company_search = false;
+    }
+
+    $scope.openCompanyForm = function () {
+        $scope.show_company_form = true;
+    }
+    $scope.closeCompanyForm = function () {
+        $scope.show_company_form = false;
+    }
+   
+   //  $scope.updateCompany({id: 211});
 	
 });

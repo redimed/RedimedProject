@@ -660,16 +660,24 @@ angular.module("app.directive.common", [])
         scope: {
             options: '=options',
             row_click: '=rowclick',
+            row_class: '=rowclass'
         },
-        controller: function ($scope, $element, $attrs, $http) {
+        controller: function ($scope, $element, $attrs) {
             var options = $scope.options;
+            console.log(options)
+            if(!options) return;
             $scope.search = {};
             
             var getFields = function () {
                 var fields = [];
                 for (var i = 0, len = options.columns.length; i < len; ++i) {
                     var item = options.columns[i];
-                    fields.push(item.field);
+                    if(item.not_submit)
+                        continue;
+                    if(!item.db_field)
+                        fields.push(item.field);
+                    else
+                        fields.push(item.db_field);
                 }
                 return fields;
             }
@@ -698,6 +706,10 @@ angular.module("app.directive.common", [])
                     opt.search = $scope.search;
                 }
 
+                if(options.search) {
+                    if(!opt.search)   opt.search = {};
+                    angular.extend(opt.search, options.search);
+                }
                 if (options.method && options.method.toLowerCase() == 'post') {
                     Restangular.all(options.api).post(opt).then(processData);
                 } else {
