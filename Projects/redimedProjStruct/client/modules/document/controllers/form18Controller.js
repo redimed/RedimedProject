@@ -100,8 +100,8 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                         $scope.isNew = false;
                         var data = response[0].dataF18;
                         $scope.info = {
-                            doctorInfo: $cookieStore.get('doctorInfo'),
-                            apptInfo: localStorageService.get('tempAppt'),
+                            doctorInfo: response[0].doctor,
+                            apptInfo: response[0].APPT,
                             patient: response[0].patient,
                             "doctor": response[0].doctor,
                             "APPT": response[0].APPT,

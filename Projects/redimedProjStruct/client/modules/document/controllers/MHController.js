@@ -203,8 +203,8 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                             }
                         });
                     });
-                    $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
-                    $scope.info.apptInfo = localStorageService.get('tempAppt');
+                    $scope.info.doctorInfo = response[0].doctor;
+                    $scope.info.apptInfo = response[0].appt;
                     $scope.info.patient = response[0].patient;
                     oriInfo = angular.copy($scope.info);
                 });

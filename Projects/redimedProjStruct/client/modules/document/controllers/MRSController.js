@@ -1,5 +1,5 @@
 /**
- * Created by HUYNHAN on 10/1/2014.
+ * Created by thanh on 10/1/2014.
  */
 angular.module('app.loggedIn.document.MRS.controllers', [])
     .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
@@ -35,7 +35,6 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
 
             //var apptInfo = localStorageService.get('tempAppt');
             var patientInfo = localStorageService.get('tempPatient');
-            var doctorInfo = $cookieStore.get('doctorInfo');
             if (patientInfo == null || patientInfo == 'undefined') {
                 $state.go("loggedIn.home", null, {"reload": true});
                 toastr.error("Load information fail, Please try again", "Error");
@@ -137,8 +136,6 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                             });
                         });
                     });
-//                $scope.info.doctorInfo = $cookieStore.get('doctorInfo');
-//                $scope.info.apptInfo = localStorageService.get('tempAppt');
                     $scope.info.patient = response[0].patient;
 
 

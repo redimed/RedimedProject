@@ -4,6 +4,7 @@
 var db = require('../../models');
 var gorgonMH = db.gorgonMH;
 var patient = db.Patient;
+var APPTCAL = db.APPTCAL;
 
 var mkdirp = require('mkdirp');
 
@@ -78,18 +79,18 @@ module.exports = {
 
     loadGGMH: function (req, res) {
         var info = req.body.info || [];
-        var Patient_Id = info.Patient_Id;
-        var CalId = info.CalId;
-        gorgonMH.find({where: {Patient_Id: Patient_Id, CalId: CalId}}, {raw: true})
+        var patient_id = info.Patient_Id;
+        var cal_id = info.CalId;
+        gorgonMH.find({where: {Patient_Id: patient_id, CalId: cal_id}}, {raw: true})
             .success(function (data) {
                 patient.find({where: {Patient_Id: info.Patient_Id}})
                     .success(function (patient) {
                         if (patient == null || patient.length == 0) {
-                            console.log("******************* Patient has id = " + Patient_Id + " not exist*******************");
+                            console.log("******************* Patient has id = " + patient_id + " not exist*******************");
                             res.json({status: 'fail'});
                             return false;
                         }
-                        ;
+
                         if (data === null || data.length === 0) {
                             var response = [{
                                 "status": "findNull",
