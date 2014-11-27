@@ -66,8 +66,8 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                 angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({
                         patient: response[0].patient[0],
-                        apptInfo: localStorageService.get('tempAppt'),
-                        doctorInfo: $cookieStore.get('doctorInfo'),
+                        apptInfo: [],
+                        doctorInfo: [],
                         "patient_id": Patient_ID,
                         "CAL_ID": CalID,
                         "SA_ID": dataH.SA_ID,
@@ -80,7 +80,7 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                         "tester": dataH.tester,
                         "report_type": dataH.report_type,
                         "RECIPIENT_NAME": dataH.RECIPIENT_NAME,
-                        "DOCTOR_ID": dataH.DOCTOR_ID || $cookieStore.get('doctorInfo').doctor_id,
+                        "DOCTOR_ID": dataH.DOCTOR_ID || 1,
                         "Signature": dataH.Signature,
                         "LOCATION_ID": dataH.LOCATION_ID,
                         "sections": []
@@ -107,7 +107,7 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                                 if ($scope.info.headers[hIndex].sections[j].SECTION_ID === dataL.SECTION_ID) {
                                     $scope.info.headers[hIndex].sections[j].lines.push({
                                         "patient_id": Patient_ID,
-                                        "CAL_ID":CalID,
+                                        "CAL_ID": CalID,
                                         "LINE_ID": dataL.LINE_ID,
                                         "SECTION_ID": dataL.SECTION_ID,
                                         "SA_ID": dataL.SA_ID,
