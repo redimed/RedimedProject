@@ -218,7 +218,7 @@ WHERE	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{VAL2_VALUE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{RATE1}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -6,8 +6,8 @@
                         ng-disabled="COEForm.$error.pattern || COEForm.$error.maxlength || !infoChanged()"
                         ng-click="submitCOE(COEForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="/api/document/printCOE/{{info.coe_id}}/{{info.CalId}}"
-                        ng-disabled="COEForm.$error.pattern || COEForm.$error.maxlength"
+                <a href="/api/document/printCOE/{{info.PatientId}}/{{info.CalId}}/{{info.coe_id}}"
+                        ng-disabled="isNew == true || infoChanged()"
                         class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
@@ -23,17 +23,14 @@
     </div>
     <div class="portlet light">
         <div class="row">
-            <label class="col-md-5">Redimed completed a work cover compliant hearing test on:</label>
-            <div class="col-md-5">
-                <input class="form-control" type="text">
-            </div>
+            <label class="col-md-10">Redimed completed a work cover compliant hearing test on:</label>
         </div>
         </br>
         <div class="row">
-            <label class="col-md-1">Name: </label>
-            <label class="col-md-5">{{patientInfo.First_name + " " + patientInfo.Sur_name + " " + patientInfo.Middle_name}}</label>
-            <label class="col-md-1">DOB: </label>
-            <label class="col-md-5">{{patientInfo.DOB | date : 'dd/MM/yyyy'}}</label>
+            <label class="col-md-1 col-sm-2">Name: </label>
+            <label class="col-md-5 col-sm-6">{{patientInfo.First_name + " " + patientInfo.Sur_name + " " + patientInfo.Middle_name}}</label>
+            <label class="col-md-1 col-sm-1">DOB: </label>
+            <label class="col-md-5 col-sm-2">{{patientInfo.DOB | date : 'dd/MM/yyyy'}}</label>
         </div>
         </br>
         <div class="row">
@@ -46,8 +43,8 @@
             </p>
         </div>
         <div class="row">
-            <label class="col-md-1" style="margin-top: 10px;">EMPLOYED: </label>
-            <div class="col-md-4 col-lg-3 btn-group">
+            <label class="col-md-2 col-lg-1 col-sm-2" style="margin-top: 10px;">EMPLOYED: </label>
+            <div class="col-md-4 col-lg-3 col-sm-3 btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="info.isEmployed" value="0"/>Yes
                 </label>
@@ -55,8 +52,8 @@
                     <input type="radio" ng-model="info.isEmployed" value="1"/> No
                 </label>
             </div>
-            <label class="col-lg-2 " style="margin-top: 10px;">If yes, date employed:</label>
-            <div class="col-md-3 col-sm-7">
+            <label class="col-lg-2 col-md-3 col-sm-3" style="margin-top: 10px;">If yes, date employed:</label>
+            <div class="col-md-3 col-sm-3">
                 <input style="margin-top: 10px" type="text" ng-model="info.dateEmployed"  name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
             </div>
         </div>
@@ -64,8 +61,8 @@
             <label class="col-lg-1 col-md-1 col-sm-2">By: </label>
         </div>
         <div class="row">
-            <label class="col-lg-2 col-md-4" style="margin-top: 10px;">In the position of:</label>
-            <div class="col-md-7 col-lg-6">
+            <label class="col-lg-2 col-md-3 col-sm-3" style="margin-top: 10px;">In the position of:</label>
+            <div class="col-md-7 col-lg-6 col-sm-7">
                 <input class="form-control" ng-model="info.inPosition" type="text">
             </div>
         </div>
@@ -103,16 +100,16 @@
         </div>
         </br>
         <div class="row">
-            <label class="col-lg-1 col-md-1" style="margin-top: 10px;">Name</label>
-            <div class="col-md-3 col-lg-3">
+            <label class="col-lg-1 col-md-1 col-sm-1" style="margin-top: 10px;">Name</label>
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <input class="form-control" ng-model="info.coeName" type="text">
             </div>
-            <label class="col-lg-1 col-md-1" style="margin-top: 10px;">Title</label>
-            <div class="col-md-3 col-lg-3">
+            <label class="col-lg-1 col-md-1 col-sm-1" style="margin-top: 10px;">Title</label>
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <input class="form-control" ng-model="info.coeTitle" type="text">
             </div>
-            <label class="col-lg-1 col-md-1" style="margin-top: 10px;">Date</label>
-            <div class="col-md-3 col-lg-3">
+            <label class="col-lg-1 col-md-1 col-sm-1" style="margin-top: 10px;">Date</label>
+            <div class="col-md-3 col-lg-3 col-sm-3">
                 <input style="margin-top: 10px" type="text" ng-model="info.coeDate"  name="consentDate1"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate1" ng-click="openConsentDate1 = true"  datepicker-options="dateOptions" close-text="Close" />
             </div>
         </div>

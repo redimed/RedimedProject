@@ -54,21 +54,18 @@ angular.module('app.loggedIn.document.COE.controllers', [])
         //Set Date End
         //============================================================================
         // Get value
-        var doctorInfo = $cookieStore.get('userInfo');
-        console.log(doctorInfo.doctor_id);
-        $scope.apptInfo = localStorageService.get('tempAppt');
+//        var doctorInfo = $cookieStore.get('userInfo');
+//        $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
-        console.log($scope.apptInfo);
-        console.log($scope.patientInfo);
         var Patient_ID =$scope.patientInfo.Patient_id;
-        var CalID = $scope.apptInfo.CAL_ID;
+        var CalID = -1; //$scope.apptInfo.CAL_ID;
         var date = new Date();
         var today = $filter('date')(date,'dd/MM/yyyy');
         //============================================================================
          $scope.info ={
              coe_id: null,
              DocId: null,
-             DOCTOR_ID: doctorInfo.doctor_id,
+             DOCTOR_ID: null, // doctorInfo.doctor_id,
              CalId: CalID,
              PatientId: Patient_ID,
              isEmployed: null,
