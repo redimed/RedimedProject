@@ -39,4 +39,13 @@ angular.module('starter.worker', [
                 }
             }
         })
+        .state('app.worker.writeNFC',{
+            url:"/writeNFC",
+            views:{
+                'content':{
+                    templateUrl:"modules/worker/views/writeNFC.html"
+                }
+            }
+        })
+
 })

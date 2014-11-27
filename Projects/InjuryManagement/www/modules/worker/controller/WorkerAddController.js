@@ -186,6 +186,7 @@ angular.module('starter.worker.add.controller',[])
 
         //submit worker check true false
         $scope.submit = function (workerForm, second) {
+            alert(JSON.stringify($scope.worker));
             //$scope.isSubmit3 = true;
             //if (second.$invalid) {
             //    var alertPopup = $ionicPopup.alert({
@@ -223,13 +224,30 @@ angular.module('starter.worker.add.controller',[])
                     $timeout(function () {
                         reset();
                         $ionicLoading.hide();
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopup = $ionicPopup.confirm({
                             title: 'Insert Successfully',
-                            template: 'We have added worker to company!'
+                            template: 'We have added worker to company! You want write NFC to tag?'
                         });
+
+                        alertPopup.then(function(res){
+                            if(res){
+                                alert(JSON.stringify(data));
+                                $state.go('app.worker.writeNFC');
+                            }else{
+                                console.log("No Write");
+                            }
+                        })
                     }, 2000);
                 })
             }
         }
+
+        $scope.NFCwrite = function(){
+            alert(JSON.stringify($scope.worker));
+            writeNFC.initialize()
+        }
+
+
+
         init();
     })

@@ -17,12 +17,16 @@ angular.module('starter.worker.services',[])
             return detailApi.get();
         }
         workerServices.checkMobile = function (data) {
-            var detailApi = workerApi.all("im/patients/checkMobile")
+            var detailApi = workerApi.all("im/patients/checkMobile");
             return detailApi.post({mobile:data});
         }
         workerServices.checkEmail = function (data) {
-            var detailApi = workerApi.all("im/patients/checkEmail")
+            var detailApi = workerApi.all("im/patients/checkEmail");
             return detailApi.post({email:data});
         }
+
+
         return workerServices;
+
+
     })
