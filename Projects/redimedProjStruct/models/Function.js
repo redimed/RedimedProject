@@ -6,7 +6,9 @@ module.exports = function(sequelize,DataTypes){
         function_id: {type:DataTypes.INTEGER(11), primaryKey:true},
         decription: DataTypes.STRING(60),
         definition: DataTypes.STRING(200),
-        type: DataTypes.STRING(50)
+        type: DataTypes.STRING(50),
+        isWeb: DataTypes.INTEGER(11),
+        isMobile: DataTypes.INTEGER(11)
     },{
         tableName : 'redi_functions',
         timestamps: false

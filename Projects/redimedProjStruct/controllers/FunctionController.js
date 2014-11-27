@@ -8,6 +8,8 @@ module.exports = {
         db.Function.findAll({},{raw: true})
             .success(function(data){
 
+                console.log(data);
+
                 res.json(data);
             })
             .error(function(err){
