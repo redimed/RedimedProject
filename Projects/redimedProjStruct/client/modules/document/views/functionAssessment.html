@@ -475,17 +475,16 @@
                                     <label class="bold">{{detail.detail_name}}</label>
                                 </div>
                                 <div class="col-md-3 col-sm-3">
-                                    <label>{{a[line.line_id][detail.summary] =infoL.RATING_VALUE1[detail.summary]}}/4</label>
-                                    <input ng-bind="a[line.line_id].rating=line.rating_id1" type="hidden">
+                                    <label>{{infoD.VAL1_VALUE[detail.detail_id] =infoL.RATING_VALUE1[detail.summary]}}/4</label>
                                 </div>
                                 <div class="col-md-3 col-sm-3">
-                                    <label>{{infoL.RATE1[detail.summary]}}</label>
-                                </div>{{detail.summary}}
+                                    <label>{{infoD.VAL2_VALUE[detail.detail_id]=infoL.RATE1[detail.summary]}}</label>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
-                                    <label class="bold">Total</label>
-                                </div>
+                            <label class="bold">Total</label>
+                            </div>
                                 <div class="col-md-3 col-sm-3">
                                     <label class="bold">{{infoL.RATING_VALUE1[line.line_id]}}/{{line.detail.length * 4}}</label>
                                 </div>
