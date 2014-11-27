@@ -145,7 +145,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     q1_5_3_c: null,
                     PATIENT_SIGNATURE: null,
                     PATIENT_DATE: new Date(),
-                    DOCTOR_ID: $cookieStore.get('doctorInfo').doctor_id || null
+                    DOCTOR_ID:null
                 };
                 var oriInfo;
                 var info = $scope.info;

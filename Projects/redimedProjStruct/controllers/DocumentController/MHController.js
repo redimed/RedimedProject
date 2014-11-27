@@ -13,6 +13,8 @@ var sysGroups = db.groupsMHSYS;
 var sysLines = db.linesMHSYS;
 var sysSub = db.subquestionsMHSYS;
 var patient = db.Patient;
+var Doctor = db.Doctor;
+var APPTCAL = db.APPTCAL;
 //End table module
 
 var mkdirp = require('mkdirp');
@@ -111,17 +113,45 @@ module.exports = {
                                                     res.json({status: 'fail'});
                                                     return false;
                                                 }
-                                                // find found
-                                                var data = [{
-                                                    "headers": dataH,
-                                                    "groups": dataG,
-                                                    "lines": dataL,
-                                                    "subquestions": dataS,
-                                                    "patient": patient,
-                                                    "status": "findFound"
-                                                }];
-                                                res.json(data);
-                                                return true;
+                                                APPTCAL.find({where: {cal_id: CAL_ID}}, {raw: true})
+                                                    .success(function (APPT) {
+                                                        if (APPT == null || APPT.length == 0) {
+                                                            console.log("******************* Not found APPT in APPT table *******************");
+                                                            res.json({status: 'fail'});
+                                                            return false;
+                                                        }
+                                                        Doctor.find({where: {doctor_id: APPT.DOCTOR_ID}}, {raw: true})
+                                                            .success(function (doctor) {
+                                                                if (doctor == null || doctor.length == 0) {
+                                                                    console.log("******************* Not found doctor in doctor table *******************");
+                                                                    res.json({status: 'fail'});
+                                                                    return false;
+                                                                }
+                                                                // find found
+                                                                var data = [{
+                                                                    "headers": dataH,
+                                                                    "groups": dataG,
+                                                                    "lines": dataL,
+                                                                    "subquestions": dataS,
+                                                                    "patient": patient,
+                                                                    "doctor": doctor,
+                                                                    "appt": APPT,
+                                                                    "status": "findFound"
+                                                                }];
+                                                                res.json(data);
+                                                                return true;
+                                                            })
+                                                            .error(function (err) {
+                                                                console.log("******************* ERROR:" + err + '*******************');
+                                                                res.json({status: 'fail'});
+                                                                return false;
+                                                            });
+                                                    })
+                                                    .error(function (err) {
+                                                        console.log("******************* ERROR:" + err + '*******************');
+                                                        res.json({status: 'fail'});
+                                                        return false;
+                                                    });
                                             })
                                             .error(function (err) {
                                                 console.log("******************* ERROR:" + err + '*******************');
@@ -383,6 +413,7 @@ module.exports = {
 };
 var loadSYS = function (req, res, info) {
     var PATIENT_ID = info.PATIENT_ID;
+    var CAL_ID = info.CAL_ID;
     //Load table Headers
     sysHeaders.findAll({}, {raw: true})
         .success(function (dataH) {
@@ -420,22 +451,50 @@ var loadSYS = function (req, res, info) {
                                                 res.json({status: 'fail'});
                                                 return false;
                                             }
-                                            var response = [{
-                                                'headers': dataH,
-                                                'groups': dataG,
-                                                'lines': dataL,
-                                                'subquestions': dataS,
-                                                'patient': patient,
-                                                'status': 'findNull'
-                                            }];
-                                            res.json(response);
-                                            return true;
+                                            APPTCAL.find({where: {cal_id: CAL_ID}}, {raw: true})
+                                                .success(function (APPT) {
+                                                    if (APPT == null || APPT.length == 0) {
+                                                        console.log("******************* Not found APPT in APPT table *******************");
+                                                        res.json({status: 'fail'});
+                                                        return false;
+                                                    }
+                                                    Doctor.find({where: {doctor_id: APPT.DOCTOR_ID}}, {raw: true})
+                                                        .success(function (doctor) {
+                                                            if (doctor == null || doctor.length == 0) {
+                                                                console.log("******************* Not found doctor in doctor table *******************");
+                                                                res.json({status: 'fail'});
+                                                                return false;
+                                                            }
+                                                            var response = [{
+                                                                'headers': dataH,
+                                                                'groups': dataG,
+                                                                'lines': dataL,
+                                                                'subquestions': dataS,
+                                                                'patient': patient,
+                                                                "doctor": doctor,
+                                                                "appt": APPT,
+                                                                'status': 'findNull'
+                                                            }];
+                                                            res.json(response);
+                                                            return true;
+                                                        })
+                                                        .error(function (err) {
+                                                            console.log("******************* ERROR:" + err + ' *******************');
+                                                            res.json({status: 'fail'});
+                                                            return false;
+                                                        });
+                                                })
+                                                .error(function (err) {
+                                                    console.log("******************* ERROR:" + err + ' *******************');
+                                                    res.json({status: 'fail'});
+                                                    return false;
+                                                });
                                         })
                                         .error(function (err) {
                                             console.log("******************* ERROR:" + err + ' *******************');
                                             res.json({status: 'fail'});
                                             return false;
-                                        })
+                                        });
                                 })
                                 .error(function (err) {
                                     console.log("******************* ERROR:" + err + ' *******************');

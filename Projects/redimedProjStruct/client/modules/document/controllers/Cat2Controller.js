@@ -211,7 +211,7 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                 r5_1: null,
                 r5_2: null,
                 DATE: new Date(),
-                DOCTOR_ID: $cookieStore.get('doctorInfo').doctor_id || null
+                DOCTOR_ID: null
             };
             var oriInfo;
             var info = $scope.info;
