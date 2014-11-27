@@ -15,16 +15,16 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.isFailMobile = false;
         $scope.isFailEmail = false;
         $scope.isMobile = null;
-        $scope.goAddworker = false;
+        $scope.goAddworker = true;
         $scope.imageObj = {};
         $scope.hide = [{
             bars: true
         }]
 
         var i = 0;
-        var ipUpload = "192.168.132.39";
+        var ipUpload = "testapp.redimed.com.au";
         var serverUpload = "http://"+ipUpload+":3000/api/im/upload";
-        var checkNonemerg = localStorageService.get("checkNonemerg");
+        var checkNonemerg = localStorageService.get("checkNonemer");
         var userInfoLS = localStorageService.get("userInfo");
         //set tam
         $ionicSideMenuDelegate.canDragContent(false)
@@ -128,7 +128,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 var injuryinfoLS = localStorageService.get("injuryInfo");
                 $scope.worker = injuryinfoLS.info;
                 $scope.imgURI = injuryinfoLS.dataImage;
-                localStorageService.remove("checkNonemerg");
+                localStorageService.remove("checkNonemer");
                 localStorageService.remove("injuryInfo");
                 $scope.temp1 = angular.copy($scope.worker);
                 $scope.isShow = !$scope.isShow;
@@ -375,17 +375,16 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             localStorageService.set("injuryInfo", $scope.infoInjury);
             if($scope.worker.Patient_id == -1)
             {
-                $scope.goAddworker = true;
-                $state.go('app.worker.add',{nonEmerg: $scope.goAddworker});
+                localStorageService.set("checkNonemer", $scope.goAddworker);
+                $state.go('app.worker.add');
             }
             else
             {
                 $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
             }
         }
+
         initForm();
-
-
         $scope.isCollapsed = false;
               //maps
               //Google map

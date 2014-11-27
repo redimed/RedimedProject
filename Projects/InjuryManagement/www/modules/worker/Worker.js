@@ -15,11 +15,10 @@ angular.module('starter.worker', [
             }
         })
         .state('app.worker.add',{
-            url:"/add/:nonEmerg",
+            url:"/add",
             views: {
                 'content':{
-                    templateUrl: "modules/worker/views/add.html",
-                    controller:"workerAddController"
+                    templateUrl: "modules/worker/views/add.html"
                 }
             }
         })

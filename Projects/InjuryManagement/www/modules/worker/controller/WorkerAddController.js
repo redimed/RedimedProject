@@ -2,10 +2,8 @@ angular.module('starter.worker.add.controller',[])
 
     .controller('workerAddController', function($scope, WorkerServices, $state, $stateParams, localStorageService, $ionicPopup, $ionicLoading, $timeout, ConfigService) {
         var userInfoLS = localStorageService.get("userInfo");
+        $scope.injurySubmitNonemer = localStorageService.get("checkNonemer");
 
-        $timeout(function () {
-            $scope.checkNonemerg = $stateParams.nonEmerg;
-        }, 500);
         $scope.isSubmit = false;
         $scope.isSubmit2 = false;
         $scope.isSubmit3 = false;
@@ -180,21 +178,20 @@ angular.module('starter.worker.add.controller',[])
 
         //back injuryDesc
         $scope.backdescInjury = function() {
-            localStorageService.set("checkNonemerg", $scope.checkNonemerg);
+            localStorageService.set("checkNonemerg", $scope.injurySubmitNonemer);
             $state.go('app.injury.desinjury');
         }
 
         //submit worker check true false
         $scope.submit = function (workerForm, second) {
-            alert(JSON.stringify($scope.worker));
-            //$scope.isSubmit3 = true;
-            //if (second.$invalid) {
-            //    var alertPopup = $ionicPopup.alert({
-            //        title: "Can't insert worker",
-            //        template: 'Please Check Your Information!'
-            //    });
-            //    return;
-            //}
+            $scope.isSubmit3 = true;
+            if (second.$invalid) {
+                var alertPopup = $ionicPopup.alert({
+                    title: "Can't insert worker",
+                    template: 'Please Check Your Information!'
+                });
+                return;
+            }
             if($scope.checkNonemerg)
             {
                 //have id worker submit booking
