@@ -1,8 +1,7 @@
 angular.module('starter.injury.add.controller', ['ngCordova'])
 
     .controller('InjuryAddController', function($scope, $state, $filter, $stateParams,
-                                                InjuryServices, $cordovaCamera, $ionicPopup,
-                                                $ionicSideMenuDelegate, localStorageService,
+                                                InjuryServices, $cordovaCamera, $ionicPopup,localStorageService,
                                                 $cordovaFile, $ionicModal, ConfigService,$ionicSlideBoxDelegate,$cordovaGeolocation,
                                                 $ionicLoading, $compile,$timeout,$cordovaStatusbar){
         $scope.isSubmit = false;
@@ -26,9 +25,6 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         var serverUpload = "http://"+ipUpload+":3000/api/im/upload";
         var checkNonemerg = localStorageService.get("checkNonemer");
         var userInfoLS = localStorageService.get("userInfo");
-        //set tam
-        $ionicSideMenuDelegate.canDragContent(false)
-
 
         //CONFIG MODAL
         $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/imageDetail.html', function(modal) {
@@ -80,7 +76,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         var scopeReset = angular.copy($scope.worker);
 
         //FUNCTION FOR
-        $scope.reset = function() {
+        $scope.resetFormInjury = function() {
             var popUpconfirm = $ionicPopup.confirm ({
                 title: 'Reset',
                 template: 'You will try again input all field !'

@@ -4,7 +4,7 @@
     </ion-nav-buttons>
     <form name="info" novalidate>
         <div class="bar bar-subheader">
-            <button class="button button-clear button-positive" ng-click="reset()">
+            <button class="button button-clear button-positive" ng-click="resetFormInjury()">
                 Reset
             </button>
             <h1 class="title">Information</h1>
@@ -137,15 +137,8 @@
                         <input ng-required="true" id="Address1" type="text"   ng-model="worker.Address1" name="Address1" ng-disabled="worker.Patient_id != -1 && temp1.Address1"/>
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Address1.$invalid}"></i>
                     </label>
-
-
-                          
-
-
-
                 </div>
             </ion-list>
         </ion-content>
     </form>
-
 </ion-view>

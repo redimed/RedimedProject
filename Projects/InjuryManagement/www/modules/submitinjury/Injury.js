@@ -33,7 +33,7 @@ angular.module('starter.injury', [
                 }
             })
             .state('app.injury.desinjurySuccess', {
-                url: "/successINjury",
+                url: "/successInjury",
                 views: {
                     'main': {
                         templateUrl: "modules/submitinjury/views/successinjury.html"
