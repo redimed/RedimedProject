@@ -1147,8 +1147,7 @@ angular.module('app.config', [])
     /* KHANK */
     configService.appt_status_option = function(){
         return APPT_STATUS;
-    }
-
+    }	
 	configService.taxes_option = function(){
         var siteApi = configApi.one("v1/system/list_taxes");
         return siteApi.get({is_option: 1});

@@ -21,8 +21,8 @@ var model_sql = {
         querybuilder.join(dept_items_builder, 'dept_item', 'item_headers.POPULAR_HEADER_ID = dept_item.POPULAR_HEADER_ID')
         querybuilder.join('cln_popular_item_lines', null, 'cln_popular_item_lines.POPULAR_HEADER_ID = item_headers.POPULAR_HEADER_ID')
         querybuilder.join(inv_items_builder, 'inv_items', 'cln_popular_item_lines.ITEM_ID = inv_items.ITEM_ID')
-		querybuilder.order('cln_popular_item_lines.POPULAR_HEADER_ID');
-
+        querybuilder.order('item_headers.POPULAR_HEADER_ID');
+        
         querybuilder.field('inv_items.ITEM_ID', 'ITEM_ID')
                 .field('inv_items.isenable', 'ISENABLE')
                 .field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC').field('ITEM_CODE')
