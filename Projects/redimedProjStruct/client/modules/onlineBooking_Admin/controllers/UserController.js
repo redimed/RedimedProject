@@ -285,7 +285,17 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         })
 
         OnlineBookingAdminService.getListFunction().then(function(data){
-            $scope.functionList = data;
+            var listWeb = [];
+            var listMobile = [];
+            for(var i=0; i<data.length; i++)
+            {
+                if(data[i].isWeb == 1)
+                    listWeb.push(data[i]);
+                if(data[i].isMobile == 1)
+                    listMobile.push(data[i]);
+            }
+            $scope.functionList = listWeb;
+            $scope.functionMobList = listMobile;
         })
 
         OnlineBookingAdminService.getListEmployee().then(function(data){

@@ -168,6 +168,27 @@ db.sequelize
     }
 );
 
+//var java = require('java');
+//java.options.push("-Djava.awt.headless=true");
+//java.classpath.push('commons-lang3-3.1.jar');
+//java.classpath.push('commons-io.jar');
+//
+//java.classpath.push('./lib/Audio.jar');
+//
+//var json = [ { Name: 500, VALUE_RIGHT: 100, VALUE_LEFT: 60 },
+//            { Name: 1000, VALUE_RIGHT: 100, VALUE_LEFT: 60 },
+//            { Name: 1500, VALUE_RIGHT: 200, VALUE_LEFT: 100},
+//            { Name: 2000, VALUE_RIGHT: 300, VALUE_LEFT: 120},
+//            { Name: 3000, VALUE_RIGHT: 150, VALUE_LEFT: 50 },
+//            { Name: 4000, VALUE_RIGHT: 100, VALUE_LEFT: 80 },
+//            { Name: 6000, VALUE_RIGHT: 200, VALUE_LEFT: 100 },
+//            { Name: 8000, VALUE_RIGHT: 170, VALUE_LEFT: 120 } ];
+//
+//var AudioBean = java.import('audio.AudioBean');
+//var audio = new AudioBean();
+//java.callStaticMethodSync('audio.AudioBean','getImageChart',json,true);
+
+
 
 
 
