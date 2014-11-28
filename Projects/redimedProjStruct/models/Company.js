@@ -42,7 +42,13 @@ module.exports = function(sequelize,DataTypes){
     },{
         tableName: 'companies',
         createdAt:'Creation_date',
-        updatedAt: 'Last_update_date'
+        updatedAt: 'Last_update_date',
+        classMethods: {
+            associate: function(models) {
+                Company.hasMany(models.Patient, { foreignKey: 'company_id', as: 'Patients' });
+                Company.hasMany(models.Insurer, {as: 'Insurers', foreignKey: 'company_id', through: 'company_insurers'});
+            }
+        }
     });
 
     return Company;

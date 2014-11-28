@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.detail.directive", [])
 
-.directive("patientDetail", function(PatientService, ConfigService, toastr, PatientModel){
+.directive("patientDetail", function(PatientService, CompanyService, ConfigService, toastr, PatientModel){
 	return{
 		restrict: "EA",
 		scope: {
@@ -23,6 +23,11 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 					main_two: true
 				}
 
+				scope.selectedCompany = {
+					Company_name: "Select Company",
+					error: true
+				} // end scope
+
 				scope.modelObjectMap = angular.copy(PatientModel);
 				if(scope.params.permission.edit === true){
 					PatientService.mdtById(scope.params.id).then(function(response){
@@ -37,14 +42,12 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 										scope.modelObjectMap[key] = new Date(scope.modelObjectMap[key]);
 								}
 							}
+
+							angular.extend(scope.selectedCompany, response.company);
+							scope.selectedCompany.error = false;
 						}// end if
 					})
 				}
-
-				scope.selectedCompany = {
-					Company_name: "Select Company",
-					error: true
-				} // end scope
 			} // end initObject
 
 			initObject();

@@ -1,30 +1,38 @@
 angular.module("app.loggedIn.patient.claim.directive", [])
 
-.directive("patientClaim", function(PatientService, ClaimModel, ConfigService, toastr){
+.directive("patientClaim", function(PatientService, ClaimService, ClaimModel, ConfigService, toastr){
 	return {
 		restrict: "EA",
 		scope: {
 			options: "=",
 			isClose: "@",
-			permission: "="
+			params: "=",
+			claim: "="
 		},
 		templateUrl: "modules/patient/directives/templates/claim.html",
 		link: function(scope, element, attrs){
 			var loadInit = function(){
-				PatientService.getClaim(scope.permission.Claim_id).then(function(response){
-					if(response.status === 'success'){
-						angular.extend(scope.modelObjectMap, response.data);
+				if(scope.params.permission.edit === true){
+					PatientService.getClaim(scope.permission.Claim_id).then(function(response){
+						if(response.status === 'success'){
+							angular.extend(scope.modelObjectMap, response.data);
 
-						for(var key in scope.modelObjectMap){
-							if(scope.modelObjectMap[key]){
-								if(key.indexOf("is") != -1 || key.indexOf("Is") != -1)
-									scope.modelObjectMap[key] = scope.modelObjectMap[key].toString();
-								if(key.indexOf("_date") != -1)
-									scope.modelObjectMap[key] = new Date(scope.modelObjectMap[key]);
+							for(var key in scope.modelObjectMap){
+								if(scope.modelObjectMap[key]){
+									if(key.indexOf("is") != -1 || key.indexOf("Is") != -1)
+										scope.modelObjectMap[key] = scope.modelObjectMap[key].toString();
+									if(key.indexOf("_date") != -1)
+										scope.modelObjectMap[key] = new Date(scope.modelObjectMap[key]);
+								}
 							}
 						}
-					}
-				}) // end Patient Service
+					}) // end Patient Service
+				}// end if
+				PatientService.mdtById(scope.params.Patient_id).then(function(response){
+					if(response.status === 'success'){
+						
+					}// end if
+				})
 			}
 
 			if(scope.isClose){
@@ -34,14 +42,14 @@ angular.module("app.loggedIn.patient.claim.directive", [])
 			// DECLARE
 			scope.isSubmit = false;
 			scope.modelObjectMap = angular.copy(ClaimModel);
-			scope.modelObjectMap.Patient_id = scope.permission.Patient_id;
+			scope.modelObjectMap.Patient_id = scope.params.Patient_id;
 			scope.mode = {type: 'add', text: 'Add Claim'};
-			scope.modelObjectMap.Patient_id = data.Patient_id;
 
-			if(typeof scope.permission.Claim_id !== 'undefined'){
+			if(scope.params.permission.edit === true){
 				scope.mode = {type: 'edit', text: 'Edit Claim'};
-				loadInit();
 			} // endif
+
+			loadInit();
 			// END DECLARE
 
 			//POPUP
@@ -66,14 +74,16 @@ angular.module("app.loggedIn.patient.claim.directive", [])
 						// END DATE
 
 						if(option.type == 'add'){
-							PatientService.insertClaim(postData).then(function(response){
+							ClaimService.add(postData).then(function(response){
 								if(response.status === 'success'){
 									toastr.success("Added a new Claim", "Success");
 									scope.modelObjectMap = angular.copy(ClaimModel);
 									scope.modelObjectMap.Patient_id = data.Patient_id;
 									scope.isSubmit = false;
+
+									scope.claim = response.data;
 								}
-							})
+							});
 						}else{
 							PatientService.editClaim(postData).then(function(response){
 								if(response.status === 'success'){

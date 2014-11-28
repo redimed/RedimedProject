@@ -10,5 +10,10 @@ angular.module("app.loggedIn.patient.claim.services", [])
         return funcApi.post(options);
     }
 
+    claimService.add = function(params){
+        var funcApi = mdtApi.all("add");
+        return funcApi.post(params);
+    }
+
 	return claimService;
 })

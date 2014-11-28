@@ -19,7 +19,7 @@ eval(fs.readFileSync('./routes/redimedSite_route.js')+'');
 //
 eval(fs.readFileSync('./routes/user_route.js')+'');
 //
-eval(fs.readFileSync('./routes/document_route.js')+'');
+ eval(fs.readFileSync('./routes/document_route.js')+'');
 //
 eval(fs.readFileSync('./routes/redi_legal_online_booking.js')+'');
 //
