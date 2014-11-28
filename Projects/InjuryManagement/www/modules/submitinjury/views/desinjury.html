@@ -2,8 +2,6 @@
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
-    <form name="descinjury" novalidate>
-
         <div class="bar bar-subheader">
             <button class="button button-clear button-positive" ui-sref="app.injury.info">
                 Back
@@ -13,7 +11,7 @@
                 <i class="fa fa-camera-retro"></i>
             </button>
         </div>
-
+    <form name="descinjury" novalidate>
         <ion-content class="padding has-subheader has-header">
             <ion-list>
                 <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}">

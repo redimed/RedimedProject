@@ -2,17 +2,20 @@
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
-    <form name="info" novalidate>
-        <div class="bar bar-subheader">
-            <button class="button button-clear button-positive" ng-click="resetFormInjury()">
-                Reset
-            </button>
-            <h1 class="title">Information</h1>
-            <button class="button button-clear button-positive" ng-click="nextform(info)">
-                Next
-            </button>
-        </div>
 
+    <div class="bar bar-subheader">
+
+        <button class="button button-clear button-positive" ng-click="resetFormInjury()">
+            Reset
+        </button>
+        <h1 class="title">Information</h1>
+
+        <button class="button button-clear button-positive" ng-click="nextform(info)">
+            Next
+        </button>
+    </div>
+    
+    <form name="info" novalidate>
         <ion-content class="padding has-header has-subheader">
             <ion-list>
                 <div style="z-index: 1; position:relative; width: 100%;">
@@ -123,7 +126,6 @@
                                 ng-options="row.name as row.name for row in sexIndex">
                             <option value="">--Select Title--</option>
                         </select>
-                        <i ng-class="{'icon ion-alert-circled error':isSubmit && info.Sex.$invalid}"></i>
                     </label>
 
                     <label class="item item-input" ng-class="{'has-error':isSubmit && info.DOB.$invalid}">
