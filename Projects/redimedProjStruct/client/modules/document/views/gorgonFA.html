@@ -5,13 +5,15 @@
     }
 
 </style>
-<form name="gorgonFAForm" ng-submit="submitGorgonFA(gorgonFAForm)" method="post" novalidate>
+<form name="gorgonFAForm" method="post" novalidate>
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="submit"
-                        ng-disabled="!infoChanged()"
-                        class="btn green pull-right">{{isNew?"Add New":"Update"}}
+                <button
+                        ng-disabled="!infoChanged() || gorgonFAForm.$error.required || gorgonFAForm.$error.pattern ||
+                        gorgonFAForm.$error.maxlength"
+                        class="btn green pull-right" ng-click="submitGorgonFA(gorgonFAForm)">{{isNew?"Add
+                    New":"Update"}}
                 </button>
                 <a href="/api/document/printGorgonFA/{{info.id}}/{{info.CalId}}"
 
@@ -19,8 +21,9 @@
 
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
-                <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()"
-                   class="btn btn-danger pull-right">Reset</a>
+                <button ng-disabled="!infoChanged()" ng-click="resetForm()"
+                        class="btn btn-danger pull-right">Reset
+                </button>
             </div>
         </div>
     </div>
@@ -1155,40 +1158,57 @@
             <div class="row">
                 <label class="control-label col-md-12 bold uppercase">5f. Thomas Test</label>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12">
-                    <div class=" col-md-4 col-lg-3 col-sm-5">
-                        <label class="control-label">Right</label>
-
-                        <div class="btn-group">
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fRight5" value="0.5">Hip flexion < 160° </label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fRight5" value="1">Hip flexion 160°-180°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fRight5" value="1.5">Hip flexion 180°- Knee
-                                flexion<90°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fRight5" value="2">Hip flexion 180°- Knee flexion 90°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fRight5" value="2.5">Hip flexion > 180°</label>
+            <div class="border"
+                 style="border-color: #808080; border-style: double;width: 700px; margin-left: 10px;">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-6 col-lg-6 col-sm-6" style="text-align: center;">
+                            <label class="control-label bold">Right</label>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6" style="text-align: center;">
+                            <label class="control-label bold">Left</label>
                         </div>
                     </div>
-                    <div class="btn-group col-lg-3 col-md-3 col-sm-5">
-                        <label class="control-label">Left</label>
-
-                        <div class="btn-group">
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fLeft5" value="0.5">Hip flexion < 160°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fLeft5" value="1">Hip flexion 160°-180°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fLeft5" value="1.5">Hip flexion 180°- Knee
-                                flexion<90°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fLeft5" value="2">Hip flexion 180°- Knee flexion 90°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.fLeft5" value="2.5">Hip flexion > 180°</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-6 col-sm-6" style="text-align: center;">
+                            <div class="btn-group">
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fRight5" value="0.5">Hip flexion < 160°
+                                </label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fRight5" value="1">Hip flexion
+                                    160°-180°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fRight5" value="1.5">Hip flexion 180°- Knee
+                                    flexion<90°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fRight5" value="2">Hip flexion 180°- Knee
+                                    flexion 90°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fRight5" value="2.5">Hip flexion >
+                                    180°</label>
+                            </div>
+                        </div>
+                        <div class="btn-group col-lg-6 col-md-6 col-sm-6" style="text-align: center;">
+                            <div class="btn-group">
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fLeft5" value="0.5">Hip flexion <
+                                    160°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fLeft5" value="1">Hip flexion
+                                    160°-180°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fLeft5" value="1.5">Hip flexion 180°- Knee
+                                    flexion<90°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fLeft5" value="2">Hip flexion 180°- Knee
+                                    flexion 90°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.fLeft5" value="2.5">Hip flexion >
+                                    180°</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1196,38 +1216,55 @@
             <div class="row">
                 <label class="control-label col-md-12 bold uppercase">5g. Knee Extension</label>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12">
-                    <div class="col-md-4 col-lg-3 col-sm-5">
-                        <label class=" control-label">Right</label>
-
-                        <div class="btn-group ">
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gRight5" value="0.5">Knee Extension < 120°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gRight5" value="1">Knee Extension 120°-139°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gRight5" value="1.5">Knee Extension 140°-159°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gRight5" value="2">Knee Extension 160°-179°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gRight5" value="2.5">Knee Extension 180°</label>
+            <div class="border"
+                 style="border-color: #808080; border-style: double;width: 700px; margin-left: 10px;">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-6 col-lg-6 col-sm-6" style="text-align: center;">
+                            <label class="control-label bold">Right</label>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6" style="text-align: center;">
+                            <label class="control-label bold">Left</label>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-5">
-                        <label class="control-label">Left</label>
-
-                        <div class="btn-group ">
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gFloat5" value="0.5">Knee Extension < 120°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gFloat5" value="1">Knee Extension 120°-139°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gFloat5" value="1.5">Knee Extension 140°-159°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gFloat5" value="2">Knee Extension 160°-179°</label>
-                            <label class="btn">
-                                <input type="radio" ng-model="info.gFloat5" value="2.5">Knee Extension 180°</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-6 col-lg-6 col-sm-6" style="text-align: center;">
+                            <div class="btn-group">
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gRight5" value="0.5">Knee Extension <
+                                    120°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gRight5" value="1">Knee Extension
+                                    120°-139°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gRight5" value="1.5">Knee Extension
+                                    140°-159°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gRight5" value="2">Knee Extension
+                                    160°-179°</label><br/>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gRight5" value="2.5">Knee Extension 180°</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6" style="text-align: center;">
+                            <div class="btn-group">
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gFloat5" value="0.5">Knee Extension <
+                                    120°</label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gFloat5" value="1">Knee Extension
+                                    120°-139°</label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gFloat5" value="1.5">Knee Extension
+                                    140°-159°</label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gFloat5" value="2">Knee Extension
+                                    160°-179°</label>
+                                <label class="btn">
+                                    <input type="radio" ng-model="info.gFloat5" value="2.5">Knee Extension 180°</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1236,9 +1273,10 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6 pull-right">
                     <label class="bold">Total:</label>
-                    <label class="bold">{{info.Total5 = 1 * info.aPosture5 + 1 * info.bHoverResult5 + 1 * info.cResult5
+                    <label class="bold">{{info.Total5 = 1 * info.aPosture5 + 1 * info.bHoverResult5 + 1 *
+                        info.cResult5
                         + 1 * info.dResult5 + 1 * info.eWaitesBow5 + 1 * info.fRight5 + 1 * info.fLeft5 + 1 *
-                        info.gRight5 + 1 * info.gFloat5}}</label>
+                        info.gRight5 + 1 * info.gFloat5 + 1*info.eResult5}}</label>
                     <label class="bold">/35</label>
                 </div>
             </div>
@@ -1265,7 +1303,8 @@
                 <div class="row">
                     <div class="col-md-10">
                         <label>Max Safe Lift </label>
-                        <input type="text" ng-model="info.aMax6" ng-pattern="/^[0-9]+$/" ng-change="aMax()" name="aMax6"
+                        <input type="text" ng-model="info.aMax6" ng-pattern="/^[0-9]+$/" ng-change="aMax()"
+                               name="aMax6"
                                style="width:100px;"/>
                         <label>kg</label>
                     </div>
@@ -1294,7 +1333,8 @@
                 <div class="row">
                     <div class="col-md-10">
                         <label>Max Safe Lift </label>
-                        <input type="text" ng-model="info.bMax6" ng-pattern="/^[0-9]+$/" ng-change="bMax()" name="bMax6"
+                        <input type="text" ng-model="info.bMax6" ng-pattern="/^[0-9]+$/" ng-change="bMax()"
+                               name="bMax6"
                                style="width:100px;"/>
                         <label>kg</label>
                     </div>
@@ -1390,7 +1430,8 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-4 col-sm-6 pull-right">
                     <label class="bold">Total:</label>
-                    <label class="bold">{{info.Total6 = info.c_46 * 1 + info.c_56 * 1 + info.c_36 * 1 + info.c_26 * 1 +
+                    <label class="bold">{{info.Total6 = info.c_46 * 1 + info.c_56 * 1 + info.c_36 * 1 + info.c_26 *
+                        1 +
                         info.c_16 * 1}}</label>
                     <label class="bold">/5</label>
 
@@ -1506,14 +1547,16 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-4 col-sm-6 pull-right">
                     <label class="bold">Total:</label>
-                    <label class="bold">{{info.FCAToTal = 1 * info.Rom_Total1 + 1 * info.Total2 + 1 * info.Total3 + 1 *
+                    <label class="bold">{{info.FCAToTal = 1 * info.Rom_Total1 + 1 * info.Total2 + 1 * info.Total3 +
+                        1 *
                         info.Total4 + 1 * info.Total5 + 1 * info.Total6}}</label>
                     <label class="bold">/100</label>
                 </div>
             </div>
             <div class="btn-group  col-md-12">
                 <label class="btn">
-                    <input type="radio" ng-model="info.FCAResult" ng-checked="info.FCAToTal < 60" disabled value="0">
+                    <input type="radio" ng-model="info.FCAResult" ng-checked="info.FCAToTal < 60" disabled
+                           value="0">
                     Poor </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.FCAResult"
@@ -1532,7 +1575,8 @@
             </div>
             <div class="row">
                 <label class="col-md-12"><span
-                        class="bold">Estimated Physical Demand Classification of Job Applying For</span> (Please refer
+                        class="bold">Estimated Physical Demand Classification of Job Applying For</span> (Please
+                    refer
                     to Appendix 1 for definitions)</label>
             </div>
             <div class="btn-group  col-md-12">
@@ -1548,7 +1592,8 @@
                     <input type="radio" ng-model="info.LEPDC" value="5"> Very Heavy </label>
             </div>
             <div class="row">
-                <label class="col-md-12"><span class="bold">Assessed Physical Capacity</span> (Please refer to Appendix
+                <label class="col-md-12"><span class="bold">Assessed Physical Capacity</span> (Please refer to
+                    Appendix
                     1 for definitions)</label>
             </div>
             <div class="btn-group  col-md-12">
