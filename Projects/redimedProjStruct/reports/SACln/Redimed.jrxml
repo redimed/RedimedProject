@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Audiogram_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="835b0ce9-13bd-4174-855e-0c0624b090de">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="357"/>
+	<property name="ireport.y" value="202"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -355,16 +355,18 @@ MAX(IF(l.Name = 8000 , l.value_left , NULL )) AS '8000Hz' FROM `cln_sa_df_lines`
      cln_sa_df_headers.`test_date` AS cln_sa_df_headers_test_date,
      cln_sa_df_headers.`tester` AS cln_sa_df_headers_tester,
      cln_patients.`Patient_id` AS cln_patients_Patient_id,
-   	concat(ifnull(cln_patients.`First_name` ,'') ,
-	ifnull(cln_patients.`Sur_name` 	 ,'') ,
-	ifnull(cln_patients.`Middle_name` ,'')) AS cln_patient_name,
- 	e.`ENTITY_NAME` as entity_name ,
+   	CONCAT(IFNULL(cln_patients.`First_name` ,'') ,
+	IFNULL(cln_patients.`Sur_name` 	 ,'') ,
+	IFNULL(cln_patients.`Middle_name` ,'')) AS cln_patient_name,
+ 	e.`Company_name` AS entity_name ,
  	 cln_patients.DOB AS cln_patients_DOB
 FROM
-     `cln_sa_df_headers` cln_sa_df_headers INNER JOIN `cln_patients` cln_patients ON cln_sa_df_headers.`patient_id` = cln_patients.`Patient_id`  left join `entity_patient` e on `cln_patients`.`Patient_id` = e.`Patient_id`
+     `cln_sa_df_headers` cln_sa_df_headers
+     INNER JOIN `cln_patients` cln_patients ON cln_sa_df_headers.`patient_id` = cln_patients.`Patient_id`
+     LEFT JOIN `companies` e ON `cln_patients`.`company_id` = e.`id`
 WHERE
      cln_sa_df_headers.patient_id = $P{patient_id} AND cln_sa_df_headers.SA_ID = $P{sa_id} AND
-     cln_sa_df_headers.CAL_ID = $P{cal_id} and p.patient_id = $P{patient_id} and p.`Iscurrent` = 1]]>
+     cln_sa_df_headers.CAL_ID =  $P{cal_id}]]>
 	</queryString>
 	<field name="cln_sa_df_headers_patient_id" class="java.lang.Integer"/>
 	<field name="cln_sa_df_headers_CAL_ID" class="java.lang.Integer"/>
@@ -374,9 +376,7 @@ WHERE
 	<field name="cln_sa_df_headers_tester" class="java.lang.String"/>
 	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
 	<field name="cln_patient_name" class="java.lang.String"/>
-	<field name="entity_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="entity_name" class="java.lang.String"/>
 	<field name="cln_patients_DOB" class="java.sql.Date"/>
 	<background>
 		<band splitType="Stretch"/>

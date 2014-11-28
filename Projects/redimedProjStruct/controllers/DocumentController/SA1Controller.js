@@ -9,11 +9,7 @@ var java = require('java');
 java.options.push("-Djava.awt.headless=true");
 java.classpath.push('commons-lang3-3.1.jar');
 java.classpath.push('commons-io.jar');
-java.classpath.push('./lib/commons-beanutils-1.8.2.jar');
-java.classpath.push('./lib/commons-collections-3.2.1.jar');
-java.classpath.push('./lib/commons-digester-2.1.jar');
-java.classpath.push('./lib/commons-logging-1.1.jar');
-java.classpath.push('./lib/groovy-all-2.0.1.jar');
+
 java.classpath.push('./lib/iText-2.1.7.js2.jar');
 java.classpath.push('./lib/jasperreports-5.6.0.jar');
 java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
@@ -30,7 +26,7 @@ var Driver = java.import('com.mysql.jdbc.Driver');
 var InputStream = java.import('java.io.InputStream');
 var FileInputStream = java.import('java.io.FileInputStream');
 
-var AudioBean = java.import('audio.AudioBean');
+var AudioBean = java.import('com.au.AudioBean');
 
 module.exports = {
     printReport : function(req,res,next){
@@ -39,17 +35,16 @@ module.exports = {
         var id = req.params.id;
         var patientId = req.params.patientId;
 
-        db.sequelize.query("SELECT c.Name,c.VALUE_RIGHT,c.VALUE_LEFT FROM cln_sa_df_lines c WHERE c.patient_id = 181 AND c.CAL_ID=17060 AND c.SA_ID=3",null,{raw:true})
+        db.sequelize.query("SELECT c.Name,c.VALUE_RIGHT,c.VALUE_LEFT FROM cln_sa_df_lines c WHERE c.patient_id = ? AND c.CAL_ID=? AND c.SA_ID=?",null,{raw:true},[patientId,calId,id])
             .success(function(data){
                 arr = data;
 
-                console.log(arr);
+                var jString = JSON.stringify(arr);
 
                 mkdirp('.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId, function (err) {
                     if (err) console.error(err)
                     else
                     {
-                        var audio = new AudioBean();
                         var con = java.callStaticMethodSync('java.sql.DriverManager','getConnection',"jdbc:mysql://localhost:3306/sakila","root","root");
 
                         var paramMap = new HashMap();
@@ -58,7 +53,7 @@ module.exports = {
                         paramMap.putSync("patient_id",parseInt(patientId));
                         paramMap.putSync("sa_id",parseInt(id));
                         paramMap.putSync("real_path","./reports/SACln/");
-                        paramMap.putSync("result_image",java.callStaticMethodSync('audio.AudioBean','getImageChart',arr,true));
+                        paramMap.putSync("result_image",java.callStaticMethodSync('com.au.AudioBean','getImageChart',jString,true));
 
                         var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\Audiogram_1.pdf';
 

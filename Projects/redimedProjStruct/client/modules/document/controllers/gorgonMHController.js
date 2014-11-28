@@ -6,6 +6,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             startingDay: 1
         };
         //end date
+        $scope.today = new Date();
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist");
@@ -270,7 +271,9 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                     Created_by: null,
                     Last_updated_by: null,
                     CalId: cal_id,
+
                     DocId: null,//$cookieStore.get('doctorInfo').doctor_id,
+
                     Q21_IsComment: null,
                     Q21Other1Comment: null,
                     PATIENT_SIGNATURE: null

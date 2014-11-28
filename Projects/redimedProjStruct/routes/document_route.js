@@ -37,53 +37,53 @@ app.get('/api/document/printCat2/:patientId/:calId/:catId', Cat2Controller.print
 // Begin funtion assessment
 //app.post('/api/document/newFA', FAController.newFA);
 app.post('/api/document/loadFA', FAController.loadFA);
-app.post('/api/document/insertFA',FAController.insertFA);
-app.post('/api/document/checkFA',FAController.checkFA);
-app.post('/api/document/checkRating',FAController.checkRating);
-app.get('/api/document/FA/print-report/:cal_id/:patient_id/:key',FAController.printReport);
+app.post('/api/document/insertFA', FAController.insertFA);
+app.post('/api/document/checkFA', FAController.checkFA);
+app.post('/api/document/checkRating', FAController.checkRating);
+app.get('/api/document/FA/print-report/:cal_id/:patient_id/:key', FAController.printReport);
 //end
 
 // Begin Medical Assessment
 //app.post('/api/document/newMA', MAController.newMA);
 app.post('/api/document/loadMA', MAController.loadMA);
-app.post('/api/document/insertMA',MAController.insertMA);
-app.post('/api/document/checkMA',MAController.checkMA);
+app.post('/api/document/insertMA', MAController.insertMA);
+app.post('/api/document/checkMA', MAController.checkMA);
 app.get('/api/document/printMA/:patientId/:calId/:MA_ID', MAController.printReport);
 // End
 
 //Begin Instant Drug Screen
 //app.post('/api/document/newIDS', IDSController.newIDS);
 app.post('/api/document/loadIDS', IDSController.loadIDS);
-app.post('/api/document/insertIDS',IDSController.insertIDS);
-app.post('/api/document/checkIDS',IDSController.checkIDS);
+app.post('/api/document/insertIDS', IDSController.insertIDS);
+app.post('/api/document/checkIDS', IDSController.checkIDS);
 app.get('/api/document/printIDS/:patientId/:calId/:id', IDSController.printReport);
 // end
 
 // Begin User Question
-app.post('/api/document/insertUQ',UQController.insertUQ);
-app.post('/api/document/updateUQ',UQController.updateUQ);
-app.post('/api/document/checkUser',UQController.checkUser);
+app.post('/api/document/insertUQ', UQController.insertUQ);
+app.post('/api/document/updateUQ', UQController.updateUQ);
+app.post('/api/document/checkUser', UQController.checkUser);
 app.get('/api/document/printUQ/:patientId/:calId/:id', UQController.printReport);
 // end
 
 // Begin COE
-app.post('/api/document/insertCOE',COEController.insertCOE);
-app.post('/api/document/updateCOE',COEController.updateCOE);
-app.post('/api/document/checkCOE',COEController.checkCOE);
+app.post('/api/document/insertCOE', COEController.insertCOE);
+app.post('/api/document/updateCOE', COEController.updateCOE);
+app.post('/api/document/checkCOE', COEController.checkCOE);
 app.get('/api/document/printCOE/:patientId/:calId/:coeId', COEController.printReport);
 // end
 
 //Begin gorgon FA
-app.post('/api/document/insertGorgonFA',gorgonFAController.insertFA);
-app.post('/api/document/editGorgonFA',gorgonFAController.editFA);
-app.post('/api/document/checkGorgonFA',gorgonFAController.checkGorgonFA);
+app.post('/api/document/insertGorgonFA', gorgonFAController.insertFA);
+app.post('/api/document/editGorgonFA', gorgonFAController.editFA);
+app.post('/api/document/checkGorgonFA', gorgonFAController.checkGorgonFA);
 app.get('/api/document/printGorgonFA/:gorgonId/:calId', gorgonFAController.printReport);
 //end
 
 //Begin gorgon MA
-app.post('/api/document/insertGorgonMA',gorgonMAController.insertMA);
-app.post('/api/document/editGorgonMA',gorgonMAController.editMA);
-app.post('/api/document/checkGorgonMA',gorgonMAController.checkGorgonMA);
+app.post('/api/document/insertGorgonMA', gorgonMAController.insertMA);
+app.post('/api/document/editGorgonMA', gorgonMAController.editMA);
+app.post('/api/document/checkGorgonMA', gorgonMAController.checkGorgonMA);
 app.get('/api/document/printgorgonMAReport/:gorgonId/:calId', gorgonMAController.printReport);
 //end
 
@@ -149,6 +149,7 @@ app.get('/api/document/printSA1/:patientId/:calId/:id', SA1Controller.printRepor
 app.post('/api/document/loadSA2', SA2Controller.loadSA2);
 app.post('/api/document/insertSA2', SA2Controller.insertSA2);
 app.post('/api/document/editSA2', SA2Controller.editSA2);
+app.get('/api/document/printSA2/:patientId/:calId/:id', SA2Controller.printReport);
 /**
  * end audiogram 2
  */

@@ -4,6 +4,10 @@
 angular.module('app.loggedIn.document.SA2.controllers', [])
     .controller("SA2Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr, $stateParams, localStorageService) {
 
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        var CalID = -1;//$scope.apptInfo.CAL_ID;
+        var Patient_ID = $scope.patientInfo.Patient_id;
+
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -37,8 +41,8 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
             //end signature
             var oriInfo;
             $scope.info = {
-                patient_id: $stateParams.PatientID,
-                CAL_ID: $stateParams.CalID
+                patient_id: Patient_ID,
+                CAL_ID: CalID
             };
             var info = $scope.info;
             DocumentService.loadSA2(info).then(function (response) {
@@ -62,10 +66,10 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                 angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({
                         patient: response[0].patient[0],
-                        apptInfo: localStorageService.get('tempAppt'),
-                        doctorInfo: $cookieStore.get('doctorInfo'),
-                        "patient_id": $stateParams.PatientID,
-                        "CAL_ID": $stateParams.CalID,
+                        apptInfo: [],
+                        doctorInfo: [],
+                        "patient_id": Patient_ID,
+                        "CAL_ID": CalID,
                         "SA_ID": dataH.SA_ID,
                         "SA_NAME": dataH.SA_NAME,
                         "ISENABLE": dataH.ISENABLE,
@@ -76,7 +80,7 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                         "tester": dataH.tester,
                         "report_type": dataH.report_type,
                         "RECIPIENT_NAME": dataH.RECIPIENT_NAME,
-                        "DOCTOR_ID": dataH.DOCTOR_ID || $cookieStore.get('doctorInfo').doctor_id,
+                        "DOCTOR_ID": dataH.DOCTOR_ID || 1,
                         "Signature": dataH.Signature,
                         "LOCATION_ID": dataH.LOCATION_ID,
                         "sections": []
@@ -87,8 +91,8 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                     angular.forEach(data.sections, function (dataS) {
                         if ($scope.info.headers[hIndex].SA_ID === dataS.SA_ID) {
                             $scope.info.headers[hIndex].sections.push({
-                                "patient_id": $stateParams.PatientID,
-                                "CAL_ID": $stateParams.CalID,
+                                "patient_id": Patient_ID,
+                                "CAL_ID": CalID,
                                 "SECTION_ID": dataS.SECTION_ID,
                                 "SA_ID": dataS.SA_ID,
                                 "SECTION_NAME": dataS.SECTION_NAME,
@@ -102,12 +106,12 @@ angular.module('app.loggedIn.document.SA2.controllers', [])
                             angular.forEach(data.lines, function (dataL) {
                                 if ($scope.info.headers[hIndex].sections[j].SECTION_ID === dataL.SECTION_ID) {
                                     $scope.info.headers[hIndex].sections[j].lines.push({
-                                        "patient_id": $stateParams.PatientID,
-                                        "CAL_ID": $stateParams.CalID,
+                                        "patient_id": Patient_ID,
+                                        "CAL_ID": CalID,
                                         "LINE_ID": dataL.LINE_ID,
                                         "SECTION_ID": dataL.SECTION_ID,
                                         "SA_ID": dataL.SA_ID,
-                                        "Name": dataL.Name,
+                                        "NAME": dataL.NAME,
                                         "VALUE_RIGHT": dataL.VALUE_RIGHT,
                                         "VALUE_LEFT": dataL.VALUE_LEFT,
                                         "ISENABLE": dataL.ISENABLE,

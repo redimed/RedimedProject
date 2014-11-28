@@ -1,3 +1,5 @@
+var db = require('../models');
+
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
@@ -13,8 +15,6 @@ var transport = nodemailer.createTransport(smtpTransport({
     tls: {rejectUnauthorized: false},
     debug:true
 }));
-
-
 
 module.exports = {
       search : function(req,res) {

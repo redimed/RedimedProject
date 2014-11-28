@@ -30,6 +30,8 @@ k_route.setRoute(app, v1_WAFinalAssessmentController,'/api/erm/v1/wa/workcover/f
 */
 var v2_CompanyController = require('./controllers/v2_CompanyController');
 var v2_InsurersController = require('./controllers/v2_InsurersController');
+var v2_ClientController = require('./controllers/v2_ClientController');
 
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
 k_route.setRoute(app, v2_InsurersController, '/api/erm/v2/insurers/');
+k_route.setRoute(app, v2_ClientController, '/api/erm/v2/patients/');

@@ -14,15 +14,6 @@ angular.module("app.loggedIn.insurer.list.controller", [])
                     {field: 'address', label: 'Address'},
                     {field: 'suburb', label: 'Suburb'},
                 ],
-                show_index: true,
-//        use_filters: false,
-//        filters: {
-//            Company_name: {type: 'text'},
-//            Industry: {type: 'text'},
-//            Addr: {type: 'text'},
-//            State: {type: 'text'},
-//            Country: {type: 'text'},
-//        },
             };
             $scope.show_add_form = false;
             $scope.show_edit_form = false;
@@ -41,4 +32,5 @@ angular.module("app.loggedIn.insurer.list.controller", [])
                 $scope.insurerInfo = item;
                 $scope.toogleEditForm();
             }
+     
         })
