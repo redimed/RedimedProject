@@ -158,6 +158,8 @@
         <!-- END SITE MEDIC CONTACT NO -->
 
         <div class="break-row"></div>
+
+
         <!-- IS PO -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="isPO" id="isPO" class="mdt-checkbox" 
@@ -188,33 +190,7 @@
 
         <div class="break-row"></div>
 
-        <!-- IS INVOICE EMAIL TO INVOICE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <input type="checkbox" name="isInvoiceEmailToUser" id="isInvoiceEmailToUser" class="mdt-checkbox" 
-                   ng-model="modelObjectMap.isInvoiceEmailToUser" ng-true-value="1" ng-false-value="0">
-            <label for="isInvoiceEmailToUser">Invoice Email To User</label>
-        </div>
-        <!-- END IS INVOICE EMAIL TO INVOICE -->
 
-
-        <!-- INVOICE EMAIL -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <span class="field" ng-class="{'has-error': mainForm.invoice_email.$invalid && isSubmit}">
-                <label for="invoice_email">Invoice Email</label>
-                <input type="email" id="invoice_email"
-                       name="invoice_email" ng-model="modelObjectMap.invoice_email" placeholder="Invoice Email" float-label />
-            </span>
-            <!-- ERROR -->
-            <span ng-show="mainForm.invoice_email.$invalid && isSubmit">
-                <span class="mdt-popover above" ng-show="mainForm.invoice_email.$error.email">
-                    Invoice Email is incorrect format
-                </span>
-            </span>
-            <!-- ERROR -->
-        </div>
-        <!-- END INVOICE EMAIL -->
-
-        <div class="break-row"></div>
 
         <!-- IS ADD CONTACT TO RESULT -->
         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -258,22 +234,49 @@
             <!-- ERROR -->
         </div>
         <!-- END REPORT 2 EMAIL REPORT -->
-
+        
         <div class="break-row"></div>
+
+        <!-- IS INVOICE EMAIL TO INVOICE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isInvoiceEmailToUser" id="isInvoiceEmailToUser" class="mdt-checkbox" 
+                   ng-model="modelObjectMap.isInvoiceEmailToUser" ng-true-value="1" ng-false-value="0">
+            <label for="isInvoiceEmailToUser">Invoice Email To User</label>
+        </div>
+        <!-- END IS INVOICE EMAIL TO INVOICE -->
+
+
+        <!-- INVOICE EMAIL -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.invoice_email.$invalid && isSubmit}">
+                <label for="invoice_email">Invoice Email</label>
+                <input type="email" id="invoice_email"
+                       name="invoice_email" ng-model="modelObjectMap.invoice_email" placeholder="Invoice Email" float-label />
+            </span>
+            <!-- ERROR -->
+            <span ng-show="mainForm.invoice_email.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="mainForm.invoice_email.$error.email">
+                    Invoice Email is incorrect format
+                </span>
+            </span>
+            <!-- ERROR -->
+        </div>
+        <!-- END INVOICE EMAIL -->
 
 
         <!-- INSURER -->
-        <!--        <div class="col-md-4 col-sm-6 col-xs-12">
-                    <a class="btn btn-block btn-sm btn-primary">Insurer</a>
-                </div>-->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span ng-if="insurerInfo">{{insurerInfo.insurer_name}}</span>
+            <a class="btn btn-link" ng-click="toogleInsurerPanel()">
+                <i class="fa fa-search"></i> Search Insurer
+            </a>
+        </div>
         <!-- END INSURER -->
-
-
+        
+        
+        
         <div class="break-row" style="margin-top: 15px"></div>
-
-
         <!-- ACTION -->
-
         <div class="col-sm-4 col-xs-6">
             <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
                 <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
@@ -281,8 +284,13 @@
                 {{mode.text}}
             </button>
         </div>
-
         <!-- END ACTION -->
 
         <div class="break-row"></div>
     </div>
+</form>    
+<div>
+    <my-data-table ng-if="showInsurerPanel" options="insurer_options" rowclick="clickInsurerRow"><my-data-table>
+</div>
+
+    

@@ -45,7 +45,15 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-
+    .state("loggedIn.patient.companies", {
+        url: "/:patient_id/companies",
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/companies.html",
+                controller: "PatientCompaniesController"
+            }
+        }
+    })
     .state("loggedIn.patient.booking", {
         url: "/booking",
         views: {
@@ -55,13 +63,13 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-                    .state("loggedIn.patient.referrals", {
-                        url: "/referrals",
-                        views: {
-                            "main-content": {
-                                templateUrl: "modules/patient/views/referrals.html",
-                                controller: "PatientReferralsController"
-                            }
-                        }
-                    })
-        })
+    .state("loggedIn.patient.referrals", {
+        url: "/referrals",
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/referrals.html",
+                controller: "PatientReferralsController"
+            }
+        }
+    })
+})
