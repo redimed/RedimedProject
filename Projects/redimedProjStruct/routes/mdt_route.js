@@ -23,6 +23,7 @@ app.post("/api/meditek/v1/doctor/waiting_list/search", mdtWaitingListController.
 
 //MODULE CLAIM
 app.post("/api/meditek/v1/patient/claim/search", mdtClaimController.postSearch);
+app.post("/api/meditek/v1/patient/claim/add", mdtClaimController.postAdd);
 
 //MODULE APPOINTMENT
 app.get("/api/meditek/v1/appointment/byId", mdtAppointmentController.postById);

@@ -77,8 +77,8 @@ module.exports = function(sequelize, DataTypes){
         classMethods: {
             associate: function(models) {
                 Patient.belongsTo(models.Company, { as: 'Company', foreignKey: 'company_id'});
-                Patient.hasMany(models.Claim, { foreignKey: 'Patient_id', as: 'Claims' });
-                Patient.hasMany(models.OutsideReferral, { foreignKey: 'patient_id', as: 'OutsideReferrals' });
+                //Patient.hasMany(models.Claim, { foreignKey: 'Patient_id', as: 'Claims' });
+                //Patient.hasMany(models.OutsideReferral, { foreignKey: 'patient_id', as: 'OutsideReferrals' });
             }
         }
     });

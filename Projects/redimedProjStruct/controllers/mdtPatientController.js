@@ -53,7 +53,15 @@ module.exports = {
 			if(!patient){
 				res.json(500, {"status": "error", "message": "Database Error"});
 			}else{
-				res.json({"status": "success", "data": patient});
+				patient.getCompany().then(function(company){
+					if(company){
+						res.json({"status": "success", "company": company, "data": patient});
+					}else{
+						res.json(500, {"status": "error", "message": "Database Error"});		
+					}
+				}, function(error){
+					res.json(500, {"status": "error", "message": error});
+				})
 			}
 		})
 		.error(function(error){

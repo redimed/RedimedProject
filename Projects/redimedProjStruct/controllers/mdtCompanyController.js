@@ -2,6 +2,23 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
+	postById: function(req, res){
+		// POST
+		var company_id = req.body.company_id;
+		// END POST
+
+		db.mdtCompany.find(company_id)
+		.success(function(company){
+			if(!company){
+				res.json(500, {"status": "error", "message": "Database Error"});
+			}else{
+				res.json({"status": "success", "data": company});
+			}
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	},
 	postSearch: function(req, res){
 		//POST DUA VAO
 		var pagination = req.body.pagination;

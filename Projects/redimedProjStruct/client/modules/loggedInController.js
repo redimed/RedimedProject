@@ -9,6 +9,11 @@ angular.module("app.loggedIn.controller",[
         changeMonth: true,
         dateFormat: "dd/mm/yy"
     };
+    
+    $scope.reloadpage = function () {
+        $state.go($state.current, {}, {reload: true});
+    }
+
 
     // OPTIONS
     $scope.options = {
