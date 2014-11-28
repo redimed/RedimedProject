@@ -3,7 +3,8 @@ angular.module("app.loggedIn.doctor.controller", [
     "app.loggedIn.doctor.timetable.controller",
     "app.loggedIn.doctor.patients.controller",
     "app.loggedIn.doctor.items.controller",
-    "app.loggedIn.doctor.add.controller"
+    "app.loggedIn.doctor.add.controller",
+    "app.loggedIn.doctor.paperless.controller"
 ])
 
 .controller("DoctorController", function ($scope, $filter, $cookieStore, MODE_ROW, ConfigService, DoctorService) {

@@ -3,6 +3,22 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 	
 ]).controller("DoctorPatientsDetailApptController", function ($scope, $filter, $state, toastr, $cookieStore, ConfigService, DoctorService, PatientService, localStorageService) {
 
+	//Detail appt modules
+	$scope.patient_detail_modules = [
+		{'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user'},
+		{'name': 'Companies', 'color': 'red-soft', 'desc': 'Total: 12', 'icon': 'fa fa-building'},
+		{'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o'},
+		{'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 12', 'icon': 'fa fa-envelope-o'}
+	];
+
+	$scope.patient_apt_modules = [
+		{'name': 'Appointment', 'icon': 'fa fa-bookmark-o', 'color': 'blue soft', 'desc': 'Info'},
+		{'name': 'Paperless', 'icon': 'fa fa-pencil-square-o', 'color': 'red soft', 'desc': 'Total: 12'},
+		{'name': 'Workcover', 'icon': 'fa fa-paper-plane-o', 'color': 'green-soft', 'desc': 'Has: 2'},
+		{'name': 'Script, Referral', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 2'}
+	];
+	//End detail appt modules
+
 	$scope.doctor_detail = {
 		permission: {create: 'no'},
 		Patient_id: localStorageService.get("patientTempInfo").Patient_id

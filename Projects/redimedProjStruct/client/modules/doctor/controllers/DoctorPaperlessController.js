@@ -1,18 +1,7 @@
-angular.module("app.loggedIn.patient.detail.controller", [])
+angular.module("app.loggedIn.doctor.paperless.controller", [])
 
-.controller("PatientDetailController", function($scope, $state, $stateParams, PatientService){
-	//init
+.controller("DoctorPaperlessController", function($scope, PatientService, $stateParams, localStorageService){
 	$scope.current_patient = {};
-
-	//PARAMS
-	$scope.params = {
-		permission: {
-			create: false,
-			edit: true
-		},
-		id: $stateParams.patient_id
-	}
-	//END PARAMS
 
 	// Init Object
 	var initObject = function(){
@@ -27,10 +16,11 @@ angular.module("app.loggedIn.patient.detail.controller", [])
 						$scope.current_patient[key] = new Date($scope.current_patient[key]);
 				}
 			}
+
+			localStorageService.set('tempPatient', $scope.current_patient);
 		})
 	}
 
 	initObject();
 	// End Init Object
-	//end init
 })

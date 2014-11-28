@@ -35,4 +35,15 @@ angular.module("app.loggedIn.receptionist", [
             }
         }
     })
+
+    // APPOINTMENT PATIENT
+    .state("loggedIn.receptionist.appointment.detail", {
+        url: "/detail/:patient_id/:cal_id",
+        views: {
+            "main-content@loggedIn.receptionist": {
+                templateUrl: "modules/receptionist/views/detail.html",
+                controller: "ReceptionistAppointmentDetailController"
+            }
+        }
+    })
 })

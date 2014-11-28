@@ -2,6 +2,47 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
+	postAdd: function(req, res){
+		var postData = req.body;
+
+		db.mdtPatient.create(postData)
+		.success(function(created){
+			if(!created){
+				res.json(500, {"status": "error", "message": "Database Error"});
+			}else{
+				db.mdtPatient.find({
+					order: "Patient_id DESC" 
+				})
+				.success(function(patient){
+					res.json({"status": "success", "data": patient});
+				})
+			}
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	},
+	postEdit: function(req, res){
+		//POST DUA VAO
+		var patient_id = req.body.Patient_id;
+		delete req.body.Patient_id;
+		var postData = req.body;
+
+		db.mdtPatient.find({ where: {Patient_id: patient_id} })
+		.success(function(patient){
+			patient.updateAttributes(postData).success(function(updated){
+				if(!updated){
+					res.json(500, {"status": "error", "message": "Database Error"});
+				}else{
+					res.json({"status": "success", "data": updated});
+				}
+			})
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		})
+		//END POST
+	},
 	postById: function(req, res){
 		// POST
 		var Patient_id = req.body.Patient_id;

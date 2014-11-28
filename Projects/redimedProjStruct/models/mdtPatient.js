@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-    var mdtInstance = sequelize.define("mdtPatient", {
+    var mdtPatient = sequelize.define("mdtPatient", {
         'Patient_id': { 
             type: DataTypes.BIGINT(20),  
             primaryKey: true,
@@ -209,13 +209,26 @@ module.exports = function(sequelize, DataTypes){
             type: DataTypes.STRING(15),  
         },
         'company_id': { 
-            type: DataTypes.INTEGER(11),  
+            type: DataTypes.INTEGER(11),
+        },
+        'passport': {
+            type: DataTypes.STRING(30)
+        },
+        'driver_license': {
+            type: DataTypes.STRING(30)
         }
     }, {
         tableName: "cln_patients",
         createdAt: "Creation_date",
-        updatedAt: "Last_update_date"
+        updatedAt: "Last_update_date",
+        classMethods: {
+            associate: function(models){
+                mdtPatient.hasMany(models.mdtAppointment, 
+                    {as: 'Appointments', foreignKey: 'Patient_id'}
+                );
+            }
+        }// end association
     });
     
-    return mdtInstance;
+    return mdtPatient;
 }

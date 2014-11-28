@@ -16,6 +16,18 @@ angular.module("app.loggedIn.doctor", [
         templateUrl: "modules/doctor/views/structure.html",
         controller: "DoctorController"
     })
+
+    //PAPERLESS
+    .state("loggedIn.doctor.paperless", {
+        url: "/doctor/paperless/:patient_id",
+        views: {
+            "main-content":{
+                templateUrl: "modules/doctor/views/paperless.html",
+                controller: "DoctorPaperlessController"
+            }
+        }
+    })
+    //END PAPERLESS
     // HOME
     .state("loggedIn.doctor.home", {
         url: "/doctor/home",

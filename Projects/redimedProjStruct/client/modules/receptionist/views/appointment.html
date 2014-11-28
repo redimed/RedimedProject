@@ -43,7 +43,7 @@
             <select ng-options="dept.CLINICAL_DEPT_ID as dept.CLINICAL_DEPT_NAME for dept in options.dept" 
             	ng-change="refreshAppointment()"
                 name="dept" ng-model="modelObjectMap.dept" id="dept" float-label>
-                <option value="" disabled selected>Department</option>
+                <option value="">All</option>
             </select>
         </span>
 		<!-- END CHOOSE DEPT -->
@@ -115,7 +115,7 @@
 
 <!-- PATIENT MODULE -->
 <div class="mdt-search" id="patientModule" style="width: 75%">
-	<patient-module options="options" is-close="patientModule" patient="patient"></patient-module>
+	<patient-detail options="options" is-close="patientModule" patient="patient" params="params"></patient-detail>
 </div>
 <!-- END PATIENT MODULE -->
 

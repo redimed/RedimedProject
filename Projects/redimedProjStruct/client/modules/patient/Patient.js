@@ -26,6 +26,26 @@ angular.module("app.loggedIn.patient", [
         }
     })
 
+    .state("loggedIn.patient.appointment", {
+        url: '/appointment/:patient_id/:cal_id',
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/appointment.html",
+                controller: "PatientAppointmentController"
+            }
+        }
+    })
+
+    .state("loggedIn.patient.detail", {
+        url: "/:patient_id/detail",
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/detail.html",
+                controller: "PatientDetailController"
+            }
+        }
+    })
+
     .state("loggedIn.patient.booking", {
         url: "/booking",
         views: {
@@ -35,16 +55,6 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-
-                    .state("loggedIn.patient.detail", {
-                        url: "/detail",
-                        views: {
-                            "main-content": {
-                                templateUrl: "modules/patient/views/detail.html",
-                                controller: "PatientDetailController"
-                            }
-                        }
-                    })
                     .state("loggedIn.patient.referrals", {
                         url: "/referrals",
                         views: {
