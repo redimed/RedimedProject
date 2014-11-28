@@ -33,9 +33,23 @@ var rlobConstant={
     },
 
     notifyJsColor:{
-    warning:'warning',
-    danger:'danger',
-    success:'success'
+        warning:'warning',
+        danger:'danger',
+        success:'success'
+    },
+    
+    //chien set document Status
+    //phanquocchien.c1109g@gmail.com
+    documentStatus:{
+        notConfirmed:'Not confirmed',
+        checked:'Checked',
+        noDocuments:'No documents'
+	},
+
+    documentStatusSummaryStyleClass:{
+        notConfirmed:'booking-item document-status-not-confirmed',
+        checked:'booking-item document-status-checked',
+        noDocuments:'booking-item document-status-no-documents'
     }
 }
 
@@ -50,15 +64,37 @@ var exlog={
     }
 }
 
-var dayOfWeek={
-    '0':{value:'0',display:'Sunday'},
-    '1':{value:'1',display:'Monday'},
-    '2':{value:'2',display:'Tueday'},
-    '3':{value:'3',display:'Wednesday'},
-    '4':{value:'4',display:'Thursday'},
-    '5':{value:'5',display:'Friday'},
-    '6':{value:'6',display:'Saturday'}
+var rlobDate={
+    daysOfWeek:
+        [
+            {value:0,alias:'sun',display:'Sunday'},
+            {value:1,alias:'mon',display:'Monday'},
+            {value:2,alias:'tue',display:'Tueday'},
+            {value:3,alias:'wed',display:'Wednesday'},
+            {value:4,alias:'thu',display:'Thursday'},
+            {value:5,alias:'fri',display:'Friday'},
+            {value:6,alias:'sat',display:'Saturday'}
+        ],
 
+    /**
+     * tannv.dts@gmail.com
+     * @param date: javascript primary Date type
+     * return moment Date()
+     */
+    getDateStartWeek:function(date)
+    {
+        var dayValue=date.getDay();
+        return moment(date).add((1-dayValue),'days');
+    },
+
+
+    getDateEndWeek:function(date)
+    {
+        var dayValue=date.getDay();
+        return moment(date).add((6-dayValue),'days');
+    }
 }
+
+
 
 

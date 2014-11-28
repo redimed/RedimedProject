@@ -474,3 +474,22 @@ input[class^="mdt-checkbox"] + label{
 
 
 /* END MEDITEK SEARCH */
+
+
+/**
+*   TAN CUSTOM CSS
+*/
+/*.rlob-document-status-summary .document-status-table tr th:first-child,*/
+/*.rlob-document-status-summary .document-status-table tr td:first-child{*/
+    /*position: absolute;*/
+    /*width: 100px;*/
+
+    /*z-index: 1000;*/
+    /*background: white;*/
+/*}*/
+/*.rlob-document-status-summary .document-status-table tr th:first-child {*/
+
+/*}*/
+/*.rlob-document-status-summary .document-status-table tr td:first-child {*/
+
+/*}*/

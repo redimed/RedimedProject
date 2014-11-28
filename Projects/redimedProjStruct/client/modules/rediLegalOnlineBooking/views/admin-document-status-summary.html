@@ -1,10 +1,136 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<style>
 
-</body>
-</html>
+
+
+   .rlob-document-status-summary .booking-item{
+       width: 150px;
+   }
+
+    .rlob-document-status-summary .document-status-not-confirmed{
+        background-color:rgba(255,255,0,0.5);
+    }
+    .rlob-document-status-summary .document-status-checked{
+         background-color:rgba(0,255,0,0.5);
+    }
+    .rlob-document-status-summary .document-status-no-documents{
+        background-color:rgba(255,0,0,0.5);
+    }
+
+   .rlob-document-status-summary .outer {
+       position:relative;
+
+
+   }
+
+   .rlob-document-status-summary .inner {
+       overflow-x:scroll;
+       overflow-y:visible;
+       width:90%;
+       margin-left:100px;
+   }
+
+   .rlob-document-status-summary .document-status-table {
+       table-layout: fixed;
+       width: 100%;
+
+   }
+
+
+   .rlob-document-status-summary .document-status-table a{
+       color: #000000;
+       /*font-weight: bold;*/
+   }
+
+   .rlob-document-status-summary .document-status-table td{
+       background-color:rgba(78, 163, 157, 0.025);
+       width: 165px;
+       text-align:center;
+       vertical-align:middle;
+   }
+
+   .rlob-document-status-summary .document-status-table th {
+       border-right: none!important;
+       color: #4da292;
+       position:absolute;
+       left:0;
+       width:100px;
+   }
+
+
+
+   .rlob-document-status-summary .document-status-table thead tr:first-child td{
+       font-weight: bold;
+       color: #4da292;
+       background-color: transparent;
+
+   }
+
+
+
+
+</style>
+
+
+<div class="portlet light rlob-document-status-summary">
+
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-check font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">Document Status Summary
+
+            </span>
+        </div>
+    </div>
+
+    <div class="outer">
+        <div class="inner">
+            <table class="document-status-table table table-bordered">
+                <thead>
+                <tr>
+                    <th></th>
+                    <td  ng-repeat="(key,value) in listHoursInDay">
+                        {{key}}
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="(day_key,day_data) in listDays">
+
+                    <th >
+                        {{day_data.DISPLAY}}
+                    </th>
+                    <td ng-repeat="(time_key,time_data) in day_data.LIST">
+                        <!--{{time_key}}-->
+
+                        <div class="row" ng-repeat="(booking_key,booking_data) in time_data">
+                            <div class="col-md-12" >
+                                <p ng-class="booking_data.STYLE_CLASS">
+                                    <a href="#">{{booking_data.WRK_SURNAME}}</a>
+                                <p>
+                            </div>
+
+                            <!-- <div class="col-md-12" style=" word-wrap:normal">
+
+                            </div> -->
+                        </div>
+
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <!--<div class="actions">-->
+
+
+
+        <!--<div class="table-responsive" style="overflow-x: scroll;">-->
+            <!---->
+            <!---->
+            <!---->
+        <!--</div>-->
+
+    <!--</div>-->
+</div>
+
