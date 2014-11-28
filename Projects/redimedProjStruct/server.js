@@ -169,6 +169,27 @@ db.sequelize
 );
 
 
+//TEST GCM Android
+var gcm = require('node-gcm');
+var message = new gcm.Message();
+var sender = new gcm.Sender('AIzaSyD6Hx6lzWEWgnGViCwW-A9aVQAIvSQuP4s'); //Google Server API Key
+var registrationIds = [];
+
+message.addData('title','My Game');
+message.addData('message','Your turn!!!!');
+message.addData('msgcnt','1');
+message.collapseKey = 'demo';
+message.delayWhileIdle = true;
+message.timeToLive = 3;
+
+// At least one token is required - each app registers a different token
+registrationIds.push('');
+/** * Parameters: message-literal, registrationIds-array, No. of retries, callback-function */
+sender.send(message, registrationIds, 4, function (result)
+{
+    console.log(result);
+});
+
 
 
 
