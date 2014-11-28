@@ -110,7 +110,7 @@ angular.module("app.model", [])
 	Inactive: null, //yes
 	Deceased: null, //yes
 	Memo: '', //yes
-	Occupation: '',
+	Occupation: '', //yes
 	UR_no: null, //yes
 	Custom: '', //yes
 	Culture_id: null, //yes

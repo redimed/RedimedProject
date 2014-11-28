@@ -2,14 +2,24 @@ angular.module("app.loggedIn.patient.claim.list.controller", [
 	
 ])
 
-.controller("ClaimListController", function($scope, $stateParams, ClaimService){
+.controller("ClaimListController", function($scope, $stateParams, ClaimService, toastr){
 	//DECLARE
 	var idClaimDetailAdd = "#PopupClaimDetailAdd";
 
-	$scope.permission = {
+	$scope.claim_params = {
+		permission: {
+			edit: false
+		},
 		Patient_id: $stateParams.patient_id
 	};
 	$scope.list = {};
+
+	$scope.$watch("claim", function(newClaim){
+		if(typeof newClaim !== 'undefined'){
+			loadList();
+			angular.element(idClaimDetailAdd).fadeOut();
+		}
+	});
 
 	$scope.params = {
 		pagination: {

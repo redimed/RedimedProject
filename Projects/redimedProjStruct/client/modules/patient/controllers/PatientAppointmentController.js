@@ -1,7 +1,8 @@
-angular.module("app.loggedIn.patient.appointment.controller", [
-]).controller("PatientAppointmentController", function ($scope, $stateParams, PatientService) {
-    //Detail appt modules
-    $scope.current_patient = {};
+angular.module("app.loggedIn.patient.appointment.controller", [])
+
+.controller("PatientAppointmentController", function($scope, $stateParams, PatientService){
+	//Detail appt modules
+	$scope.current_patient = {};
 
     $scope.patient_detail_modules = [
         {'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
@@ -9,7 +10,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [
         {'name': 'Companies', 'color': 'red-soft', 'desc': 'Total: 12', 'icon': 'fa fa-building',
             'state': 'loggedIn.patient.companies({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
-            'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patient_id + '})'},
+            'state': 'loggedIn.patient.claim.list({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 12', 'icon': 'fa fa-envelope-o',
             'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patient_id + '})'}
     ];

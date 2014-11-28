@@ -9,6 +9,11 @@ angular.module("app.loggedIn.company.services", [])
         return funcApi.post(options);
     }
 
+    companyService.mdtById = function(company_id){
+        var funcApi = mdtApi.all("byId");
+        return funcApi.post({company_id: company_id});
+    }
+
     companyService.detail = function(id) {
         var instanceApi = companyApi.one("v2/companies/detail");
         return instanceApi.get({id: id});
