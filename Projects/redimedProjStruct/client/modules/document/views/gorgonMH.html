@@ -751,7 +751,7 @@
          gorgonMHForm.Q1_ExaminersComments.$error.maxlength }">
                         <textarea class="form-control" name="Q1_ExaminersComments"
                                   ng-model="info.Q1_ExaminersComments"
-                                  ng-required="info.Q1_WorkPast||info.Q1_WorkEnvironment||info.Q1_ShiftWork ||
+                                  ng-required="info.Q1_FIFO ||info.Q1_WorkPast||info.Q1_WorkEnvironment||info.Q1_ShiftWork ||
                                       info.Q1_ShiftWorkDone || info.Q1_FIFODone||info.Q1_TypeOfWork || info.Q1_AnyProblems ||
                                        info.Q1_CauseProblems ||info.Q1_SafetyEquipment ||
                        info.Q1_Underground || info.Q1_WetConditions || info.Q1_GrainDust || info.Q1_Nickel ||
@@ -1567,6 +1567,47 @@
                     </div>
                 </div>
             </div>
+            <!--comment-->
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Examiners Comments to yes answers
+            </p>
+
+            <div class="row">
+                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                    <div ng-class="{'has-error': gorgonMHForm.Q9_ExaminersComments.$error.required || gorgonMHForm.Q9_ExaminersComments.$error.maxlength}">
+                        <textarea class="form-control" name="Q9_ExaminersComments"
+                                  ng-model="info.Q9_ExaminersComments"
+                                  ng-maxlength="500" ng-required="info.Q3_Physio||info.Q9_BreastFeeding||info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury || info.Q3_Arm ||
+            info.Q3_DiskInjury || info.Q3_HandInjury || info.Q3_Backache || info.Q3_LegInjury
+            || info.Q3_KneeCartilage || info.Q3_BackInjury || info.Q3_KneeReconstruction ||
+            info.Q3_Sciatica || info.Q3_FootProblems || info.Q3_BackSurgery ||
+            info.Q3_OtherBone || info.Q3_SwollenJoints || info.Q3_Rheumatism ||
+            info.Q3_ArthriticKnee || info.Q3_RSI || info.Q3_Hernia || info.Q4_MentalHealth ||
+            info.Q4_Psychologist || info.Q4_DrugsProblems || info.Q4_Depression ||
+            info.Q4_Anxiety || info.Q4_PanicAttacks || info.Q4_Insomnia ||
+            info.Q4_NervousProblem || info.Q5_Eczema || info.Q5_Dermatitis ||
+            info.Q5_Psoriasis || info.Q5_SkinCancers || info.Q5_SkinProblem ||
+            info.Q6_Emphysema || info.Q6_LungDisease || info.Q6_HeartDisease ||
+            info.Q6_Artery || info.Q6_Bronchitis || info.Q6_HighBloodPressure ||
+            info.Q6_CollapsedLung || info.Q6_DVT || info.Q6_HeartAttack ||
+            info.Q6_CardiacPacemaker || info.Q7_HeadInjury || info.Q7_SevereHeadaches ||
+            info.Q7_Epilepsy || info.Q7_NeurologicalDisorder || info.Q8_DOInsulin ||
+            info.Q8_Arthritis || info.Q8_DOMedication || info.Q8_BloodDisorder ||
+            info.Q8_DietControl || info.Q8_Cancer || info.Q8_KidneyProblems ||
+            info.Q8_BowelProblems || info.Q8_LiverDisease || info.Q8_Hepatitis ||
+            info.Q8_HearingLoss || info.Q8_VisionProblem || info.Q8_Exhaustion ||
+            info.Q8_ChronicIllness"></textarea>
+
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.required">
+                            <label class="control-label">Required!</label>
+                        </div>
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.maxlength">
+                            <label class="control-label">Too long!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--comment-->
         </div>
     </div>
     <!--Work History Q4-->
@@ -1744,6 +1785,47 @@
 
                 </div>
             </div>
+            <!--comment-->
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Examiners Comments to yes answers
+            </p>
+
+            <div class="row">
+                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                    <div ng-class="{'has-error': gorgonMHForm.Q9_ExaminersComments.$error.required || gorgonMHForm.Q9_ExaminersComments.$error.maxlength}">
+                        <textarea class="form-control" name="Q9_ExaminersComments"
+                                  ng-model="info.Q9_ExaminersComments"
+                                  ng-maxlength="500" ng-required="info.Q3_Physio||info.Q9_BreastFeeding||info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury || info.Q3_Arm ||
+            info.Q3_DiskInjury || info.Q3_HandInjury || info.Q3_Backache || info.Q3_LegInjury
+            || info.Q3_KneeCartilage || info.Q3_BackInjury || info.Q3_KneeReconstruction ||
+            info.Q3_Sciatica || info.Q3_FootProblems || info.Q3_BackSurgery ||
+            info.Q3_OtherBone || info.Q3_SwollenJoints || info.Q3_Rheumatism ||
+            info.Q3_ArthriticKnee || info.Q3_RSI || info.Q3_Hernia || info.Q4_MentalHealth ||
+            info.Q4_Psychologist || info.Q4_DrugsProblems || info.Q4_Depression ||
+            info.Q4_Anxiety || info.Q4_PanicAttacks || info.Q4_Insomnia ||
+            info.Q4_NervousProblem || info.Q5_Eczema || info.Q5_Dermatitis ||
+            info.Q5_Psoriasis || info.Q5_SkinCancers || info.Q5_SkinProblem ||
+            info.Q6_Emphysema || info.Q6_LungDisease || info.Q6_HeartDisease ||
+            info.Q6_Artery || info.Q6_Bronchitis || info.Q6_HighBloodPressure ||
+            info.Q6_CollapsedLung || info.Q6_DVT || info.Q6_HeartAttack ||
+            info.Q6_CardiacPacemaker || info.Q7_HeadInjury || info.Q7_SevereHeadaches ||
+            info.Q7_Epilepsy || info.Q7_NeurologicalDisorder || info.Q8_DOInsulin ||
+            info.Q8_Arthritis || info.Q8_DOMedication || info.Q8_BloodDisorder ||
+            info.Q8_DietControl || info.Q8_Cancer || info.Q8_KidneyProblems ||
+            info.Q8_BowelProblems || info.Q8_LiverDisease || info.Q8_Hepatitis ||
+            info.Q8_HearingLoss || info.Q8_VisionProblem || info.Q8_Exhaustion ||
+            info.Q8_ChronicIllness"></textarea>
+
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.required">
+                            <label class="control-label">Required!</label>
+                        </div>
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.maxlength">
+                            <label class="control-label">Too long!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--comment-->
         </div>
     </div>
     <!--Work History Q5-->
@@ -1854,6 +1936,47 @@
 
                 </div>
             </div>
+            <!--comment-->
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Examiners Comments to yes answers
+            </p>
+
+            <div class="row">
+                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                    <div ng-class="{'has-error': gorgonMHForm.Q9_ExaminersComments.$error.required || gorgonMHForm.Q9_ExaminersComments.$error.maxlength}">
+                        <textarea class="form-control" name="Q9_ExaminersComments"
+                                  ng-model="info.Q9_ExaminersComments"
+                                  ng-maxlength="500" ng-required="info.Q3_Physio ||info.Q9_BreastFeeding||info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury || info.Q3_Arm ||
+            info.Q3_DiskInjury || info.Q3_HandInjury || info.Q3_Backache || info.Q3_LegInjury
+            || info.Q3_KneeCartilage || info.Q3_BackInjury || info.Q3_KneeReconstruction ||
+            info.Q3_Sciatica || info.Q3_FootProblems || info.Q3_BackSurgery ||
+            info.Q3_OtherBone || info.Q3_SwollenJoints || info.Q3_Rheumatism ||
+            info.Q3_ArthriticKnee || info.Q3_RSI || info.Q3_Hernia || info.Q4_MentalHealth ||
+            info.Q4_Psychologist || info.Q4_DrugsProblems || info.Q4_Depression ||
+            info.Q4_Anxiety || info.Q4_PanicAttacks || info.Q4_Insomnia ||
+            info.Q4_NervousProblem || info.Q5_Eczema || info.Q5_Dermatitis ||
+            info.Q5_Psoriasis || info.Q5_SkinCancers || info.Q5_SkinProblem ||
+            info.Q6_Emphysema || info.Q6_LungDisease || info.Q6_HeartDisease ||
+            info.Q6_Artery || info.Q6_Bronchitis || info.Q6_HighBloodPressure ||
+            info.Q6_CollapsedLung || info.Q6_DVT || info.Q6_HeartAttack ||
+            info.Q6_CardiacPacemaker || info.Q7_HeadInjury || info.Q7_SevereHeadaches ||
+            info.Q7_Epilepsy || info.Q7_NeurologicalDisorder || info.Q8_DOInsulin ||
+            info.Q8_Arthritis || info.Q8_DOMedication || info.Q8_BloodDisorder ||
+            info.Q8_DietControl || info.Q8_Cancer || info.Q8_KidneyProblems ||
+            info.Q8_BowelProblems || info.Q8_LiverDisease || info.Q8_Hepatitis ||
+            info.Q8_HearingLoss || info.Q8_VisionProblem || info.Q8_Exhaustion ||
+            info.Q8_ChronicIllness"></textarea>
+
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.required">
+                            <label class="control-label">Required!</label>
+                        </div>
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.maxlength">
+                            <label class="control-label">Too long!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--comment-->
         </div>
     </div>
     <!--Work History Q6-->
@@ -2092,6 +2215,47 @@
                     </div>
                 </div>
             </div>
+            <!--comment-->
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Examiners Comments to yes answers
+            </p>
+
+            <div class="row">
+                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                    <div ng-class="{'has-error': gorgonMHForm.Q9_ExaminersComments.$error.required || gorgonMHForm.Q9_ExaminersComments.$error.maxlength}">
+                        <textarea class="form-control" name="Q9_ExaminersComments"
+                                  ng-model="info.Q9_ExaminersComments"
+                                  ng-maxlength="500" ng-required="info.Q3_Physio||info.Q9_BreastFeeding||info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury || info.Q3_Arm ||
+            info.Q3_DiskInjury || info.Q3_HandInjury || info.Q3_Backache || info.Q3_LegInjury
+            || info.Q3_KneeCartilage || info.Q3_BackInjury || info.Q3_KneeReconstruction ||
+            info.Q3_Sciatica || info.Q3_FootProblems || info.Q3_BackSurgery ||
+            info.Q3_OtherBone || info.Q3_SwollenJoints || info.Q3_Rheumatism ||
+            info.Q3_ArthriticKnee || info.Q3_RSI || info.Q3_Hernia || info.Q4_MentalHealth ||
+            info.Q4_Psychologist || info.Q4_DrugsProblems || info.Q4_Depression ||
+            info.Q4_Anxiety || info.Q4_PanicAttacks || info.Q4_Insomnia ||
+            info.Q4_NervousProblem || info.Q5_Eczema || info.Q5_Dermatitis ||
+            info.Q5_Psoriasis || info.Q5_SkinCancers || info.Q5_SkinProblem ||
+            info.Q6_Emphysema || info.Q6_LungDisease || info.Q6_HeartDisease ||
+            info.Q6_Artery || info.Q6_Bronchitis || info.Q6_HighBloodPressure ||
+            info.Q6_CollapsedLung || info.Q6_DVT || info.Q6_HeartAttack ||
+            info.Q6_CardiacPacemaker || info.Q7_HeadInjury || info.Q7_SevereHeadaches ||
+            info.Q7_Epilepsy || info.Q7_NeurologicalDisorder || info.Q8_DOInsulin ||
+            info.Q8_Arthritis || info.Q8_DOMedication || info.Q8_BloodDisorder ||
+            info.Q8_DietControl || info.Q8_Cancer || info.Q8_KidneyProblems ||
+            info.Q8_BowelProblems || info.Q8_LiverDisease || info.Q8_Hepatitis ||
+            info.Q8_HearingLoss || info.Q8_VisionProblem || info.Q8_Exhaustion ||
+            info.Q8_ChronicIllness"></textarea>
+
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.required">
+                            <label class="control-label">Required!</label>
+                        </div>
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.maxlength">
+                            <label class="control-label">Too long!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--comment-->
         </div>
     </div>
     <!--Work History Q7-->
@@ -2182,6 +2346,47 @@
                     </div>
                 </div>
             </div>
+            <!--comment-->
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Examiners Comments to yes answers
+            </p>
+
+            <div class="row">
+                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                    <div ng-class="{'has-error': gorgonMHForm.Q9_ExaminersComments.$error.required || gorgonMHForm.Q9_ExaminersComments.$error.maxlength}">
+                        <textarea class="form-control" name="Q9_ExaminersComments"
+                                  ng-model="info.Q9_ExaminersComments"
+                                  ng-maxlength="500" ng-required="info.Q3_Physio||info.Q9_BreastFeeding||info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury || info.Q3_Arm ||
+            info.Q3_DiskInjury || info.Q3_HandInjury || info.Q3_Backache || info.Q3_LegInjury
+            || info.Q3_KneeCartilage || info.Q3_BackInjury || info.Q3_KneeReconstruction ||
+            info.Q3_Sciatica || info.Q3_FootProblems || info.Q3_BackSurgery ||
+            info.Q3_OtherBone || info.Q3_SwollenJoints || info.Q3_Rheumatism ||
+            info.Q3_ArthriticKnee || info.Q3_RSI || info.Q3_Hernia || info.Q4_MentalHealth ||
+            info.Q4_Psychologist || info.Q4_DrugsProblems || info.Q4_Depression ||
+            info.Q4_Anxiety || info.Q4_PanicAttacks || info.Q4_Insomnia ||
+            info.Q4_NervousProblem || info.Q5_Eczema || info.Q5_Dermatitis ||
+            info.Q5_Psoriasis || info.Q5_SkinCancers || info.Q5_SkinProblem ||
+            info.Q6_Emphysema || info.Q6_LungDisease || info.Q6_HeartDisease ||
+            info.Q6_Artery || info.Q6_Bronchitis || info.Q6_HighBloodPressure ||
+            info.Q6_CollapsedLung || info.Q6_DVT || info.Q6_HeartAttack ||
+            info.Q6_CardiacPacemaker || info.Q7_HeadInjury || info.Q7_SevereHeadaches ||
+            info.Q7_Epilepsy || info.Q7_NeurologicalDisorder || info.Q8_DOInsulin ||
+            info.Q8_Arthritis || info.Q8_DOMedication || info.Q8_BloodDisorder ||
+            info.Q8_DietControl || info.Q8_Cancer || info.Q8_KidneyProblems ||
+            info.Q8_BowelProblems || info.Q8_LiverDisease || info.Q8_Hepatitis ||
+            info.Q8_HearingLoss || info.Q8_VisionProblem || info.Q8_Exhaustion ||
+            info.Q8_ChronicIllness"></textarea>
+
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.required">
+                            <label class="control-label">Required!</label>
+                        </div>
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.maxlength">
+                            <label class="control-label">Too long!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--comment-->
         </div>
     </div>
     <!--Work History Q8-->
@@ -2462,6 +2667,47 @@
                     </div>
                 </div>
             </div>
+            <!--comment -->
+            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Examiners Comments to yes answers
+            </p>
+
+            <div class="row">
+                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                    <div ng-class="{'has-error': gorgonMHForm.Q9_ExaminersComments.$error.required || gorgonMHForm.Q9_ExaminersComments.$error.maxlength}">
+                        <textarea class="form-control" name="Q9_ExaminersComments"
+                                  ng-model="info.Q9_ExaminersComments"
+                                  ng-maxlength="500" ng-required="info.Q3_Physio||info.Q9_BreastFeeding||info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury || info.Q3_Arm ||
+            info.Q3_DiskInjury || info.Q3_HandInjury || info.Q3_Backache || info.Q3_LegInjury
+            || info.Q3_KneeCartilage || info.Q3_BackInjury || info.Q3_KneeReconstruction ||
+            info.Q3_Sciatica || info.Q3_FootProblems || info.Q3_BackSurgery ||
+            info.Q3_OtherBone || info.Q3_SwollenJoints || info.Q3_Rheumatism ||
+            info.Q3_ArthriticKnee || info.Q3_RSI || info.Q3_Hernia || info.Q4_MentalHealth ||
+            info.Q4_Psychologist || info.Q4_DrugsProblems || info.Q4_Depression ||
+            info.Q4_Anxiety || info.Q4_PanicAttacks || info.Q4_Insomnia ||
+            info.Q4_NervousProblem || info.Q5_Eczema || info.Q5_Dermatitis ||
+            info.Q5_Psoriasis || info.Q5_SkinCancers || info.Q5_SkinProblem ||
+            info.Q6_Emphysema || info.Q6_LungDisease || info.Q6_HeartDisease ||
+            info.Q6_Artery || info.Q6_Bronchitis || info.Q6_HighBloodPressure ||
+            info.Q6_CollapsedLung || info.Q6_DVT || info.Q6_HeartAttack ||
+            info.Q6_CardiacPacemaker || info.Q7_HeadInjury || info.Q7_SevereHeadaches ||
+            info.Q7_Epilepsy || info.Q7_NeurologicalDisorder || info.Q8_DOInsulin ||
+            info.Q8_Arthritis || info.Q8_DOMedication || info.Q8_BloodDisorder ||
+            info.Q8_DietControl || info.Q8_Cancer || info.Q8_KidneyProblems ||
+            info.Q8_BowelProblems || info.Q8_LiverDisease || info.Q8_Hepatitis ||
+            info.Q8_HearingLoss || info.Q8_VisionProblem || info.Q8_Exhaustion ||
+            info.Q8_ChronicIllness"></textarea>
+
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.required">
+                            <label class="control-label">Required!</label>
+                        </div>
+                        <div class="help-block" ng-show="gorgonMHForm.Q9_ExaminersComments.$error.maxlength">
+                            <label class="control-label">Too long!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--comment-->
         </div>
     </div>
     <!--Work History Q9-->
@@ -2513,10 +2759,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="portlet light bordered">
-        <div class="portlet-body form light">
             <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
                 Examiners Comments to yes answers
             </p>
@@ -2526,7 +2768,7 @@
                     <div ng-class="{'has-error': gorgonMHForm.Q9_ExaminersComments.$error.required || gorgonMHForm.Q9_ExaminersComments.$error.maxlength}">
                         <textarea class="form-control" name="Q9_ExaminersComments"
                                   ng-model="info.Q9_ExaminersComments"
-                                  ng-maxlength="500" ng-required="info.Q9_BreastFeeding||info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury || info.Q3_Arm ||
+                                  ng-maxlength="500" ng-required="info.Q3_Physio||info.Q9_BreastFeeding||info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury || info.Q3_Arm ||
             info.Q3_DiskInjury || info.Q3_HandInjury || info.Q3_Backache || info.Q3_LegInjury
             || info.Q3_KneeCartilage || info.Q3_BackInjury || info.Q3_KneeReconstruction ||
             info.Q3_Sciatica || info.Q3_FootProblems || info.Q3_BackSurgery ||
@@ -3229,7 +3471,6 @@
             </div>
         </div>
     </div>
-    <!--sasasas-->
     <!--Work History Q13-->
     <div class="portlet light bordered">
         <div class="portlet-title">
@@ -3612,16 +3853,22 @@
                         normal
                         duties?</label>
 
-                    <div class="clearfix">
-                        <div class="btn-group  col-md-3 col-sm-3">
-                            <label class="btn">
-                                <input type="radio" name='Q14_NormalDuties' ng-model="info.Q14_NormalDuties"
-                                       ng-value="0"/> N
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='Q14_NormalDuties' ng-model="info.Q14_NormalDuties"
-                                       ng-value="1"/> Y
-                            </label>
+                    <div ng-class="{'has-error': gorgonMHForm.Q14_NormalDuties.$error.required}">
+                        <div class="clearfix">
+                            <div class="btn-group  col-md-3 col-sm-3">
+                                <label class="btn">
+                                    <input type="radio" name='Q14_NormalDuties' ng-model="info.Q14_NormalDuties"
+                                           ng-value="0" ng-required="info.Q14_WorkRelatedDisease"/> N
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name='Q14_NormalDuties' ng-model="info.Q14_NormalDuties"
+                                           ng-value="1" ng-required="info.Q14_WorkRelatedDisease"/> Y
+                                </label>
+
+                                <div class="help-block" ng-show="gorgonMHForm.Q14_NormalDuties.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3632,16 +3879,22 @@
                         compensation
                         payout?</label>
 
-                    <div class="clearfix">
-                        <div class="btn-group  col-md-3 col-sm-3">
-                            <label class="btn">
-                                <input type="radio" name='Q14_Compensation' ng-model="info.Q14_Compensation"
-                                       ng-value="0"/> N
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='Q14_Compensation' ng-model="info.Q14_Compensation"
-                                       ng-value="1"/> Y
-                            </label>
+                    <div ng-class="{'has-error': gorgonMHForm.Q14_Compensation.$error.required}">
+                        <div class="clearfix">
+                            <div class="btn-group  col-md-3 col-sm-3">
+                                <label class="btn">
+                                    <input type="radio" name='Q14_Compensation' ng-model="info.Q14_Compensation"
+                                           ng-value="0" ng-required="info.Q14_WorkRelatedDisease"/> N
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name='Q14_Compensation' ng-model="info.Q14_Compensation"
+                                           ng-value="1" ng-required="info.Q14_WorkRelatedDisease"/> Y
+                                </label>
+
+                                <div class="help-block" ng-show="gorgonMHForm.Q14_Compensation.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3652,490 +3905,264 @@
                         associated
                         psychological problems?</label>
 
-                    <div class="clearfix">
-                        <div class="btn-group  col-md-3 col-sm-3">
-                            <label class="btn">
-                                <input type="radio" name='Q14_Psychological' ng-model="info.Q14_Psychological"
-                                       ng-value="0"/> N
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='Q14_Psychological' ng-model="info.Q14_Psychological"
-                                       ng-value="1"/> Y
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                Details
-            </p>
-
-            <div class="row">
-                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
-                    <textarea class="form-control" name="Q14_Details" ng-model="info.Q14_Details"
-                              ng-maxlength="200"></textarea>
-                </div>
-            </div>
-            </br>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-6" style="margin-top: 10px;">Do you have a
-                            current open
-                            W/C claim?</label>
-
+                    <div ng-class="{'has-error': gorgonMHForm.Q14_Psychological.$error.required}">
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3">
                                 <label class="btn">
-                                    <input type="radio" name='Q14_WCClaim' ng-model="info.Q14_WCClaim"
-                                           ng-value="0"/> N
+                                    <input type="radio" name='Q14_Psychological' ng-model="info.Q14_Psychological"
+                                           ng-value="0" ng-required="info.Q14_WorkRelatedDisease"/> N
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='Q14_WCClaim' ng-model="info.Q14_WCClaim"
-                                           ng-value="1"/> Y
+                                    <input type="radio" name='Q14_Psychological' ng-model="info.Q14_Psychological"
+                                           ng-value="1" ng-required="info.Q14_WorkRelatedDisease"/> Y
                                 </label>
+
+                                <div class="help-block" ng-show="gorgonMHForm.Q14_Psychological.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <p class="text-info"
-               style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                Examiners Comments to yes answers
-            </p>
+                <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                    Details
+                </p>
 
-            <div class="row">
-                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
-                    <div ng-class="{'has-error': gorgonMHForm.Q14_ExaminersComments.$error.maxlength || gorgonMHForm.Q14_ExaminersComments.$error.required}">
-                        <textarea class="form-control" name="Q14_ExaminersComments"
-                                  ng-model="info.Q14_ExaminersComments"
-                                  ng-maxlength="500" ng-required="info.Q14_WCClaim"></textarea>
-
-                        <div class="help-block" ng-show="gorgonMHForm.Q14_ExaminersComments.$error.maxlength">
-                            <label class="control-label">Too long!</label>
-                        </div>
-                        <div class="help-block" ng-show="gorgonMHForm.Q14_ExaminersComments.$error.required">
-                            <label class="control-label">Required!</label>
-                        </div>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                        <textarea class="form-control" name="Q14_Details" ng-model="info.Q14_Details"
+                                  ng-maxlength="200"></textarea>
                     </div>
                 </div>
-            </div>
-            </br>
-        </div>
-    </div>
-    <!--Work History Q15-->
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="icon-user font-blue-hoki"></i>
-                <span class="caption-subject font-blue-hoki bold uppercase">Q15</span>
-            </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse">
-                </a>
-            </div>
-        </div>
-        <div class="porlet-body form light">
-            <div class="row">
-                <label class="control-label col-md-6 col-sm-9" style="margin-top: 10px;font-weight: bold">Do you
-                    take any
-                    medications including inhalers and patches?</label>
+                </br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-6" style="margin-top: 10px;">Do you have a
+                                current open
+                                W/C claim?</label>
 
-                <div class="btn-group col-md-3 col-sm-3">
-                    <label class="btn">
-                        <input type="radio" name='Q15_TakeMedications' ng-model="info.Q15_TakeMedications"
-                               ng-value="0"/> N
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name='Q15_TakeMedications' ng-model="info.Q15_TakeMedications"
-                               ng-value="1"/> Y
-                    </label>
-                </div>
-            </div>
-            </br>
-            <div class="row">
-                <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;width: auto">List</label>
-
-                <div class="col-md-6 col-sm-10">
-                    <div ng-class="{'has-error': gorgonMHForm.Q15_ListMedication.$error.maxlength||gorgonMHForm.Q15_ListMedication.$error.required}">
-                        <input type="text" name="Q15_ListMedication" ng-model="info.Q15_ListMedication"
-                               class="form-control"
-                               ng-maxlength="200" ng-required="info.Q15_TakeMedications">
-
-                        <div class="help-block" ng-show="gorgonMHForm.Q15_ListMedication.$error.maxlength">
-                            <label class="control-label">Too long!</label>
-                        </div>
-                        <div class="help-block" ng-show="gorgonMHForm.Q15_ListMedication.$error.required">
-                            <label class="control-label">Required!</label>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!--Work History Q16-->
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="icon-user font-blue-hoki"></i>
-                <span class="caption-subject font-blue-hoki bold uppercase">Q16 - Allergies: (Answer Every Question)</span>
-            </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse">
-                </a>
-            </div>
-        </div>
-        <div class="porlet-body form light">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">I get hay
-                            fever</label>
-
-                        <div class="clearfix">
-                            <div class="btn-group col-md-6 col-sm-7">
-                                <label class="btn">
-                                    <input type="radio" name='Q16_HayFever' ng-model="info.Q16_HayFever"
-                                           ng-value="0"/>
-                                    N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q16_HayFever' ng-model="info.Q16_HayFever"
-                                           ng-value="1"/>
-                                    Y
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">I get
-                            asthma</label>
-
-                        <div class="clearfix">
-                            <div class="btn-group col-md-6 col-sm-7">
-                                <label class="btn">
-                                    <input type="radio" name='Q16_Asthma' ng-model="info.Q16_Asthma"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q16_Asthma' ng-model="info.Q16_Asthma"
-                                           ng-value="1"/> Y
-                                </label>
+                            <div class="clearfix">
+                                <div class="btn-group  col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q14_WCClaim' ng-model="info.Q14_WCClaim"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q14_WCClaim' ng-model="info.Q14_WCClaim"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">I get
-                            eczema/dermatitis</label>
 
-                        <div class="clearfix">
-                            <div class="btn-group col-md-6 col-sm-7">
-                                <label class="btn">
-                                    <input type="radio" name='Q16_Eczema' ng-model="info.Q16_Eczema"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q16_Eczema' ng-model="info.Q16_Eczema"
-                                           ng-value="1"/> Y
-                                </label>
+                <p class="text-info"
+                   style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                    Examiners Comments to yes answers
+                </p>
+
+                <div class="row">
+                    <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                        <div ng-class="{'has-error': gorgonMHForm.Q14_ExaminersComments.$error.maxlength || gorgonMHForm.Q14_ExaminersComments.$error.required}">
+                            <textarea class="form-control" name="Q14_ExaminersComments"
+                                      ng-model="info.Q14_ExaminersComments"
+                                      ng-maxlength="500" ng-required="info.Q14_WCClaim"></textarea>
+
+                            <div class="help-block" ng-show="gorgonMHForm.Q14_ExaminersComments.$error.maxlength">
+                                <label class="control-label">Too long!</label>
+                            </div>
+                            <div class="help-block" ng-show="gorgonMHForm.Q14_ExaminersComments.$error.required">
+                                <label class="control-label">Required!</label>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 col-sm-6">
-
-                    </div>
+                </div>
+                </br>
+            </div>
+        </div>
+        <!--Work History Q15-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-user font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase">Q15</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
                 </div>
             </div>
-            </br>
-            <div class="row">
-                <label class="control-label col-md-2 col-sm-3"
-                       style="margin-left: 15px;margin-top: 10px;width: auto;">I am
-                    allergic to</label>
+            <div class="porlet-body form light">
+                <div class="row">
+                    <label class="control-label col-md-6 col-sm-9" style="margin-top: 10px;font-weight: bold">Do you
+                        take any
+                        medications including inhalers and patches?</label>
 
-                <div class="col-md-5 col-sm-8">
-                    <div ng-class="{'has-error': gorgonMHForm.Q16_Allergic.$error.maxlength}">
-                        <input type="text" name="Q16_Allergic" ng-model="info.Q16_Allergic" class="form-control"
-                               ng-maxlength="200">
-
-                        <div class="help-block" ng-show="gorgonMHForm.Q16_Allergic.$error.maxlength">
-                            <label class="control-label">Too long!</label>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            </br>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <label class="control-label col-md-6 col-sm-9" style="margin-top: 10px;">I have needed
-                        adrenaline in
-                        the past for a serious allergy reaction</label>
-
-                    <div class="btn-group  col-md-3 col-sm-3">
+                    <div class="btn-group col-md-3 col-sm-3">
                         <label class="btn">
-                            <input type="radio" name='Q16_Adrenaline' ng-model="info.Q16_Adrenaline"
+                            <input type="radio" name='Q15_TakeMedications' ng-model="info.Q15_TakeMedications"
                                    ng-value="0"/> N
                         </label>
                         <label class="btn">
-                            <input type="radio" name='Q16_Adrenaline' ng-model="info.Q16_Adrenaline"
+                            <input type="radio" name='Q15_TakeMedications' ng-model="info.Q15_TakeMedications"
                                    ng-value="1"/> Y
                         </label>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <label class="control-label col-md-6 col-sm-4" style="margin-top: 10px;">I carry
-                        Adrenalin
-                        (Epipen)</label>
+                </br>
+                <div class="row">
+                    <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;width: auto">List</label>
 
-                    <div class="clearfix">
-                        <div class="btn-group  col-md-3 col-sm-3">
-                            <label class="btn">
-                                <input type="radio" name='Q16_Epipen' ng-model="info.Q16_Epipen"
-                                       ng-value="0"/>
-                                N
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name='Q16_Epipen' ng-model="info.Q16_Epipen"
-                                       ng-value="1"/>
-                                Y
-                            </label>
+                    <div class="col-md-6 col-sm-10">
+                        <div ng-class="{'has-error': gorgonMHForm.Q15_ListMedication.$error.maxlength||gorgonMHForm.Q15_ListMedication.$error.required}">
+                            <input type="text" name="Q15_ListMedication" ng-model="info.Q15_ListMedication"
+                                   class="form-control"
+                                   ng-maxlength="200" ng-required="info.Q15_TakeMedications">
+
+                            <div class="help-block" ng-show="gorgonMHForm.Q15_ListMedication.$error.maxlength">
+                                <label class="control-label">Too long!</label>
+                            </div>
+                            <div class="help-block" ng-show="gorgonMHForm.Q15_ListMedication.$error.required">
+                                <label class="control-label">Required!</label>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
-    <!--Work History Q17-->
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="icon-user font-blue-hoki"></i>
-                <span class="caption-subject font-blue-hoki bold uppercase">Q17 - Regarding Immunisations. Have you had: (Answer every question)</span>
-            </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse">
-                </a>
-            </div>
-        </div>
-        <div class="porlet-body form light">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Q Fever or
-                            the
-                            immunisation</label>
-
-                        <div class="clearfix">
-                            <div class="btn-group col-md-6 col-sm-7">
-                                <label class="btn">
-                                    <input type="radio" name='Q17_QFever' ng-model="info.Q17_QFever"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q17_QFever' ng-model="info.Q17_QFever"
-                                           ng-value="1"/> Y
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Tetanus
-                            immunisation</label>
-
-                        <div class="clearfix">
-                            <div class="btn-group col-md-6 col-sm-7">
-                                <label class="btn">
-                                    <input type="radio" name='Q17_Tetanus' ng-model="info.Q17_Tetanus"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q17_Tetanus' ng-model="info.Q17_Tetanus"
-                                           ng-value="1"/> Y
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+        <!--Work History Q16-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-user font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase">Q16 - Allergies: (Answer Every Question)</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Hepatitis A
-                            or
-                            theimmunisation</label>
+            <div class="porlet-body form light">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-6 col-sm-6">
+                            <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">I get hay
+                                fever</label>
 
-                        <div class="clearfix">
-                            <div class="btn-group col-md-6 col-sm-7">
-                                <label class="btn">
-                                    <input type="radio" name='Q17_HepatitisA' ng-model="info.Q17_HepatitisA"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q17_HepatitisA' ng-model="info.Q17_HepatitisA"
-                                           ng-value="1"/> Y
-                                </label>
+                            <div class="clearfix">
+                                <div class="btn-group col-md-6 col-sm-7">
+                                    <label class="btn">
+                                        <input type="radio" name='Q16_HayFever' ng-model="info.Q16_HayFever"
+                                               ng-value="0"/>
+                                        N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q16_HayFever' ng-model="info.Q16_HayFever"
+                                               ng-value="1"/>
+                                        Y
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Hepatitis B
-                            or
-                            the
-                            immunisation</label>
+                        <div class="col-md-6 col-sm-6">
+                            <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">I get
+                                asthma</label>
 
-                        <div class="clearfix">
-                            <div class="btn-group col-md-6 col-sm-7">
-                                <label class="btn">
-                                    <input type="radio" name='Q17_HepatitisB' ng-model="info.Q17_HepatitisB"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q17_HepatitisB' ng-model="info.Q17_HepatitisB"
-                                           ng-value="1"/> Y
-                                </label>
+                            <div class="clearfix">
+                                <div class="btn-group col-md-6 col-sm-7">
+                                    <label class="btn">
+                                        <input type="radio" name='Q16_Asthma' ng-model="info.Q16_Asthma"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q16_Asthma' ng-model="info.Q16_Asthma"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="portlet light bordered">
-        <div class="portlet-body form light">
-            <p class="text-info"
-               style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                Examiners Comments to yes answers
-            </p>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-6 col-sm-6">
+                            <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">I get
+                                eczema/dermatitis</label>
 
-            <div class="row">
-                <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
-                    <div ng-class="{'has-error': gorgonMHForm.Q17_ExaminersComments.$error.required || gorgonMHForm.Q17_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q17_ExaminersComments"
-                                  ng-model="info.Q17_ExaminersComments" ng-required="
-                              info.Q16_HayFever || info.Q16_Asthma || info.Q16_Eczema || info.Q16_Adrenaline ||
-                              info.Q16_Epipen || info.Q17_Tetanus || info.Q17_HepatitisA ||
-                              info.Q17_HepatitisB"
-                                  ng-maxlength="500"></textarea>
-
-                        <div class="help-block" ng-show="gorgonMHForm.Q17_ExaminersComments.$error.required">
-                            <label class="control-label">Required!</label>
+                            <div class="clearfix">
+                                <div class="btn-group col-md-6 col-sm-7">
+                                    <label class="btn">
+                                        <input type="radio" name='Q16_Eczema' ng-model="info.Q16_Eczema"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q16_Eczema' ng-model="info.Q16_Eczema"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="help-block" ng-show="gorgonMHForm.Q17_ExaminersComments.$error.maxlength">
-                            <label class="control-label">Too long!</label>
+                        <div class="col-md-5 col-sm-6">
+
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!--Work History Q18-->
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="icon-user font-blue-hoki"></i>
-                <span class="caption-subject font-blue-hoki bold uppercase">Q18 - About your respiratory (lung) health</span>
-            </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse">
-                </a>
-            </div>
-        </div>
-        <div class="porlet-body form light">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">In the past 3
-                            years
-                            have you
-                            had a
-                            period of increased cough and phlegm lasting three weeks or more?</label>
+                </br>
+                <div class="row">
+                    <label class="control-label col-md-2 col-sm-3"
+                           style="margin-left: 15px;margin-top: 10px;width: auto;">I am
+                        allergic to</label>
+
+                    <div class="col-md-5 col-sm-8">
+                        <div ng-class="{'has-error': gorgonMHForm.Q16_Allergic.$error.maxlength}">
+                            <input type="text" name="Q16_Allergic" ng-model="info.Q16_Allergic" class="form-control"
+                                   ng-maxlength="200">
+
+                            <div class="help-block" ng-show="gorgonMHForm.Q16_Allergic.$error.maxlength">
+                                <label class="control-label">Too long!</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <label class="control-label col-md-6 col-sm-9" style="margin-top: 10px;">I have needed
+                            adrenaline in
+                            the past for a serious allergy reaction</label>
 
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn">
-                                <input type="radio" name='Q18_IncreasedCough' ng-model="info.Q18_IncreasedCough"
+                                <input type="radio" name='Q16_Adrenaline' ng-model="info.Q16_Adrenaline"
                                        ng-value="0"/> N
                             </label>
                             <label class="btn">
-                                <input type="radio" name='Q18_IncreasedCough' ng-model="info.Q18_IncreasedCough"
+                                <input type="radio" name='Q16_Adrenaline' ng-model="info.Q16_Adrenaline"
                                        ng-value="1"/> Y
                             </label>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Have you had
-                            any
-                            chest illness
-                            which
-                            has kept you from your usual activities for a week or more?</label>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <label class="control-label col-md-6 col-sm-4" style="margin-top: 10px;">I carry
+                            Adrenalin
+                            (Epipen)</label>
 
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3">
                                 <label class="btn">
-                                    <input type="radio" name='Q18_ChestIllness' ng-model="info.Q18_ChestIllness"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q18_ChestIllness' ng-model="info.Q18_ChestIllness"
-                                           ng-value="1"/> Y
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Do you get
-                            short of
-                            breath when
-                            hurrying on level ground or walking up a slight hill?</label>
-
-                        <div class="clearfix">
-                            <div class="btn-group  col-md-3 col-sm-3">
-                                <label class="btn">
-                                    <input type="radio" name='Q18_SOBHurrying' ng-model="info.Q18_SOBHurrying"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q18_SOBHurrying' ng-model="info.Q18_SOBHurrying"
-                                           ng-value="1"/> Y
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Do you get
-                            short of
-                            breath when
-                            walking with other people of your age on level ground?</label>
-
-                        <div class="clearfix">
-                            <div class="btn-group  col-md-3 col-sm-3">
-                                <label class="btn">
-                                    <input type="radio" name='Q18_SOBwalking' ng-model="info.Q18_SOBwalking"
+                                    <input type="radio" name='Q16_Epipen' ng-model="info.Q16_Epipen"
                                            ng-value="0"/>
                                     N
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='Q18_SOBwalking' ng-model="info.Q18_SOBwalking"
+                                    <input type="radio" name='Q16_Epipen' ng-model="info.Q16_Epipen"
                                            ng-value="1"/>
                                     Y
                                 </label>
@@ -4144,243 +4171,477 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Do you ever
-                            wake up
-                            in your
-                            sleep short of breath?</label>
+        </div>
+        <!--Work History Q17-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-user font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase">Q17 - Regarding Immunisations. Have you had: (Answer every question)</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="porlet-body form light">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-6 col-sm-6">
+                            <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Q Fever or
+                                the
+                                immunisation</label>
 
-                        <div class="clearfix">
-                            <div class="btn-group  col-md-3 col-sm-3">
-                                <label class="btn">
-                                    <input type="radio" name='Q18_SOBWakeUp' ng-model="info.Q18_SOBWakeUp"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q18_SOBWakeUp' ng-model="info.Q18_SOBWakeUp"
-                                           ng-value="1"/> Y
-                                </label>
+                            <div class="clearfix">
+                                <div class="btn-group col-md-6 col-sm-7">
+                                    <label class="btn">
+                                        <input type="radio" name='Q17_QFever' ng-model="info.Q17_QFever"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q17_QFever' ng-model="info.Q17_QFever"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Tetanus
+                                immunisation</label>
+
+                            <div class="clearfix">
+                                <div class="btn-group col-md-6 col-sm-7">
+                                    <label class="btn">
+                                        <input type="radio" name='Q17_Tetanus' ng-model="info.Q17_Tetanus"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q17_Tetanus' ng-model="info.Q17_Tetanus"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-6 col-sm-6">
+                            <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Hepatitis A
+                                or
+                                theimmunisation</label>
+
+                            <div class="clearfix">
+                                <div class="btn-group col-md-6 col-sm-7">
+                                    <label class="btn">
+                                        <input type="radio" name='Q17_HepatitisA' ng-model="info.Q17_HepatitisA"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q17_HepatitisA' ng-model="info.Q17_HepatitisA"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <label class="control-label col-md-6 col-sm-5" style="margin-top: 10px;">Hepatitis B
+                                or
+                                the
+                                immunisation</label>
+
+                            <div class="clearfix">
+                                <div class="btn-group col-md-6 col-sm-7">
+                                    <label class="btn">
+                                        <input type="radio" name='Q17_HepatitisB' ng-model="info.Q17_HepatitisB"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q17_HepatitisB' ng-model="info.Q17_HepatitisB"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Does your chest
-                            ever sound
-                            wheezy or whistling?</label>
+        </div>
+        <div class="portlet light bordered">
+            <div class="portlet-body form light">
+                <p class="text-info"
+                   style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                    Examiners Comments to yes answers
+                </p>
 
-                        <div class="clearfix">
-                            <div class="btn-group  col-md-3 col-sm-3">
-                                <label class="btn">
-                                    <input type="radio" name='Q18_CESWheezy' ng-model="info.Q18_CESWheezy"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q18_CESWheezy' ng-model="info.Q18_CESWheezy"
-                                           ng-value="1"/> Y
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Does your chest
-                            ever feel
-                            tight or your breathing become difficult?</label>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
+                        <div ng-class="{'has-error': gorgonMHForm.Q17_ExaminersComments.$error.required || gorgonMHForm.Q17_ExaminersComments.$error.maxlength}">
+                            <textarea class="form-control" name="Q17_ExaminersComments"
+                                      ng-model="info.Q17_ExaminersComments" ng-required="
+                              info.Q16_HayFever || info.Q16_Asthma || info.Q16_Eczema || info.Q16_Adrenaline ||
+                              info.Q16_Epipen || info.Q17_Tetanus || info.Q17_HepatitisA ||
+                              info.Q17_HepatitisB"
+                                      ng-maxlength="500"></textarea>
 
-                        <div class="clearfix">
-                            <div class="btn-group  col-md-3 col-sm-3">
-                                <label class="btn">
-                                    <input type="radio" name='Q18_CEFTight' ng-model="info.Q18_CEFTight"
-                                           ng-value="0"/> N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q18_CEFTight' ng-model="info.Q18_CEFTight"
-                                           ng-value="1"/> Y
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Have you ever
-                            been
-                            given or
-                            used a puffer?</label>
-
-                        <div class="clearfix">
-                            <div class="btn-group  col-md-3 col-sm-3">
-                                <label class="btn">
-                                    <input type="radio" name='Q18_GivenPuffer' ng-model="info.Q18_GivenPuffer"
-                                           ng-value="0">
-                                    N
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name='Q18_GivenPuffer' ng-model="info.Q18_GivenPuffer"
-                                           ng-value="1"/> Y
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </br>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-5 col-sm-5" style="font-weight: bold">
-                        <div ng-show="info.Q18_GivenPuffer">
-                            <label class="control-label">* If YES, When was the last time you used a
-                                puffer? </label>
-                        </div>
-                        <div ng-show="!info.Q18_GivenPuffer">
-                            <label class="control-label">If YES, When was the last time you used a
-                                puffer? </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div ng-class="{'has-error': gorgonMHForm.Q18_LastTimePuffer.$error.required || gorgonMHForm.Q18_LastTimePuffer.$error.maxlength}">
-                            <input type="text" name="Q18_LastTimePuffer" ng-model="info.Q18_LastTimePuffer"
-                                   class="form-control"
-                                   ng-required="info.Q18_GivenPuffer" ng-maxlength="200">
-
-                            <div class="help-block" ng-show="gorgonMHForm.Q18_LastTimePuffer.$error.required">
+                            <div class="help-block" ng-show="gorgonMHForm.Q17_ExaminersComments.$error.required">
                                 <label class="control-label">Required!</label>
                             </div>
-                            <div class="help-block" ng-show="gorgonMHForm.Q18_LastTimePuffer.$error.maxlength">
+                            <div class="help-block" ng-show="gorgonMHForm.Q17_ExaminersComments.$error.maxlength">
                                 <label class="control-label">Too long!</label>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
-    <!--Work History Q19-->
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="icon-user font-blue-hoki"></i>
-                <span class="caption-subject font-blue-hoki bold uppercase">Q19 - Smoking history</span>
+        <!--Work History Q18-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-user font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase">Q18 - About your respiratory (lung) health</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
             </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse">
-                </a>
-            </div>
-        </div>
-        <div class="porlet-body form light">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-9 col-sm-9"
-                               style="margin-top: 10px;font-weight: bold">Do
-                            you or
-                            did you
-                            smoke more than 1 cigarette/day; a cigar/week; or 2 oz pipe tobacco/month?</label>
+            <div class="porlet-body form light">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">In the past 3
+                                years
+                                have you
+                                had a
+                                period of increased cough and phlegm lasting three weeks or more?</label>
 
-                        <div class="clearfix">
-                            <div class="btn-group col-md-3 col-sm-3">
+                            <div class="btn-group  col-md-3 col-sm-3">
                                 <label class="btn">
-                                    <input type="radio" name='Q19_Smoke' ng-model="info.Q19_Smoke"
+                                    <input type="radio" name='Q18_IncreasedCough' ng-model="info.Q18_IncreasedCough"
                                            ng-value="0"/> N
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='Q19_Smoke' ng-model="info.Q19_Smoke"
+                                    <input type="radio" name='Q18_IncreasedCough' ng-model="info.Q18_IncreasedCough"
                                            ng-value="1"/> Y
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <p class="text-info"
-               style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                If NO go to question 20 below. If YES continue
-            </p>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Have you had
+                                any
+                                chest illness
+                                which
+                                has kept you from your usual activities for a week or more?</label>
 
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-5 col-sm-8">
-                        <label class="control-label">How much do you smoke?cigarettes/cigars per day </label>
-                    </div>
-                    <div class="col-md-2 col-sm-4">
-                        <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeDay.$error.pattern || gorgonMHForm.Q19_SmokeDay.$error.required}">
-                            <input type="text" name="Q19_SmokeDay" ng-model="info.Q19_SmokeDay"
-                                   class="form-control"
-                                   ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke" ng-required="info.Q19_Smoke">
-
-                            <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeDay.$error.pattern">
-                                <label class="control-label">Required is number!</label>
-                            </div>
-                            <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeDay.$error.required">
-                                <label class="control-label">Required!</label>
+                            <div class="clearfix">
+                                <div class="btn-group  col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_ChestIllness' ng-model="info.Q18_ChestIllness"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_ChestIllness' ng-model="info.Q18_ChestIllness"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Do you get
+                                short of
+                                breath when
+                                hurrying on level ground or walking up a slight hill?</label>
 
-            </div>
-            </br>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-5 col-sm-8">
-                        <label class="control-label">or roll your own or pipes grams/week </label>
-                    </div>
-                    <div class="col-md-2 col-sm-4">
-                        <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeWeek.$error.pattern || gorgonMHForm.Q19_SmokeWeek.$error.required}">
-                            <input type="text" name="Q19_SmokeWeek" ng-model="info.Q19_SmokeWeek"
-                                   class="form-control"
-                                   ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke" ng-required="info.Q19_Smoke">
-
-                            <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeWeek.$error.pattern">
-                                <label class="control-label">Required is number!</label>
-                            </div>
-                            <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeWeek.$error.required">
-                                <label class="control-label">Required!</label>
+                            <div class="clearfix">
+                                <div class="btn-group  col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_SOBHurrying' ng-model="info.Q18_SOBHurrying"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_SOBHurrying' ng-model="info.Q18_SOBHurrying"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Do you get
+                                short of
+                                breath when
+                                walking with other people of your age on level ground?</label>
 
-            </div>
-            </br>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-5 col-sm-8">
-                        <label class="control-label">How many years have you or did you smoke for?</label>
-                    </div>
-                    <div class="col-md-2 col-sm-4">
-                        <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeYear.$error.pattern || gorgonMHForm.Q19_SmokeYear.$error.required}">
-                            <input type="text" name="Q19_SmokeYear" ng-model="info.Q19_SmokeYear"
-                                   class="form-control"
-                                   ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke" ng-required="info.Q19_Smoke">
-
-                            <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeYear.$error.pattern">
-                                <label class="control-label">Required is number!</label>
+                            <div class="clearfix">
+                                <div class="btn-group  col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_SOBwalking' ng-model="info.Q18_SOBwalking"
+                                               ng-value="0"/>
+                                        N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_SOBwalking' ng-model="info.Q18_SOBwalking"
+                                               ng-value="1"/>
+                                        Y
+                                    </label>
+                                </div>
                             </div>
-                            <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeYear.$error.required">
-                                <label class="control-label">Required is number!</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Do you ever
+                                wake up
+                                in your
+                                sleep short of breath?</label>
+
+                            <div class="clearfix">
+                                <div class="btn-group  col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_SOBWakeUp' ng-model="info.Q18_SOBWakeUp"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_SOBWakeUp' ng-model="info.Q18_SOBWakeUp"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Does your chest
+                                ever sound
+                                wheezy or whistling?</label>
+
+                            <div class="clearfix">
+                                <div class="btn-group  col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_CESWheezy' ng-model="info.Q18_CESWheezy"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_CESWheezy' ng-model="info.Q18_CESWheezy"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Does your chest
+                                ever feel
+                                tight or your breathing become difficult?</label>
+
+                            <div class="clearfix">
+                                <div class="btn-group  col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_CEFTight' ng-model="info.Q18_CEFTight"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_CEFTight' ng-model="info.Q18_CEFTight"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-7 col-sm-9" style="margin-top: 10px;">Have you ever
+                                been
+                                given or
+                                used a puffer?</label>
+
+                            <div class="clearfix">
+                                <div class="btn-group  col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_GivenPuffer' ng-model="info.Q18_GivenPuffer"
+                                               ng-value="0">
+                                        N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q18_GivenPuffer' ng-model="info.Q18_GivenPuffer"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-5 col-sm-5" style="font-weight: bold">
+                            <div ng-show="info.Q18_GivenPuffer">
+                                <label class="control-label">* If YES, When was the last time you used a
+                                    puffer? </label>
+                            </div>
+                            <div ng-show="!info.Q18_GivenPuffer">
+                                <label class="control-label">If YES, When was the last time you used a
+                                    puffer? </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div ng-class="{'has-error': gorgonMHForm.Q18_LastTimePuffer.$error.required || gorgonMHForm.Q18_LastTimePuffer.$error.maxlength}">
+                                <input type="text" name="Q18_LastTimePuffer" ng-model="info.Q18_LastTimePuffer"
+                                       class="form-control"
+                                       ng-required="info.Q18_GivenPuffer" ng-maxlength="200">
+
+                                <div class="help-block" ng-show="gorgonMHForm.Q18_LastTimePuffer.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
+                                <div class="help-block" ng-show="gorgonMHForm.Q18_LastTimePuffer.$error.maxlength">
+                                    <label class="control-label">Too long!</label>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <br/>
         </div>
+        <!--Work History Q19-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-user font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase">Q19 - Smoking history</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="porlet-body form light">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-9 col-sm-9"
+                                   style="margin-top: 10px;font-weight: bold">Do
+                                you or
+                                did you
+                                smoke more than 1 cigarette/day; a cigar/week; or 2 oz pipe tobacco/month?</label>
 
-    </div>
+                            <div class="clearfix">
+                                <div class="btn-group col-md-3 col-sm-3">
+                                    <label class="btn">
+                                        <input type="radio" name='Q19_Smoke' ng-model="info.Q19_Smoke"
+                                               ng-value="0"/> N
+                                    </label>
+                                    <label class="btn">
+                                        <input type="radio" name='Q19_Smoke' ng-model="info.Q19_Smoke"
+                                               ng-value="1"/> Y
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-info"
+                   style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                    If NO go to question 20 below. If YES continue
+                </p>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-5 col-sm-8">
+                            <label class="control-label">How much do you smoke?cigarettes/cigars per day </label>
+                        </div>
+                        <div class="col-md-2 col-sm-4">
+                            <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeDay.$error.pattern || gorgonMHForm.Q19_SmokeDay.$error.required}">
+                                <input type="text" name="Q19_SmokeDay" ng-model="info.Q19_SmokeDay"
+                                       class="form-control"
+                                       ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke"
+                                       ng-required="info.Q19_Smoke">
+
+                                <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeDay.$error.pattern">
+                                    <label class="control-label">Required is number!</label>
+                                </div>
+                                <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeDay.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-5 col-sm-8">
+                            <label class="control-label">or roll your own or pipes grams/week </label>
+                        </div>
+                        <div class="col-md-2 col-sm-4">
+                            <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeWeek.$error.pattern || gorgonMHForm.Q19_SmokeWeek.$error.required}">
+                                <input type="text" name="Q19_SmokeWeek" ng-model="info.Q19_SmokeWeek"
+                                       class="form-control"
+                                       ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke"
+                                       ng-required="info.Q19_Smoke">
+
+                                <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeWeek.$error.pattern">
+                                    <label class="control-label">Required is number!</label>
+                                </div>
+                                <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeWeek.$error.required">
+                                    <label class="control-label">Required!</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-5 col-sm-8">
+                            <label class="control-label">How many years have you or did you smoke for?</label>
+                        </div>
+                        <div class="col-md-2 col-sm-4">
+                            <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeYear.$error.pattern || gorgonMHForm.Q19_SmokeYear.$error.required}">
+                                <input type="text" name="Q19_SmokeYear" ng-model="info.Q19_SmokeYear"
+                                       class="form-control"
+                                       ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke"
+                                       ng-required="info.Q19_Smoke">
+
+                                <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeYear.$error.pattern">
+                                    <label class="control-label">Required is number!</label>
+                                </div>
+                                <div class="help-block" ng-show="gorgonMHForm.Q19_SmokeYear.$error.required">
+                                    <label class="control-label">Required is number!</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br/>
+            </div>
+
+        </div>
     </div>
     <!--Work History Q20-->
     <div class="portlet light bordered">

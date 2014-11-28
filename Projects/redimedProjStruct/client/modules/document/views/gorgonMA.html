@@ -1859,96 +1859,76 @@
             <div class="row">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Shoulder: </label>
 
-                <div class="btn-group col-sm-5 col-md-5 col-lg-3">
+                <div class="btn-group col-sm-7 col-md-7 col-lg-5">
                     <label class="btn">
                         <input type="radio" ng-model="info.SHOULDER" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.SHOULDER" ng-value="0"/>Reduced
                     </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2"
-                       style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.SHOULDER_PAINFUL == 1"
-                           ng-model="info.SHOULDER_PAINFUL"/>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.SHOULDER" ng-value="2"/>Painful
+                    </label>
                 </div>
             </div>
             <div class="row">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Elbows: </label>
 
-                <div class="btn-group col-sm-5 col-md-5 col-lg-3">
+                <div class="btn-group col-sm-7 col-md-7 col-lg-5">
                     <label class="btn">
                         <input type="radio" ng-model="info.ELBOWS" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.ELBOWS" ng-value="0"/>Reduced
                     </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2"
-                       style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.ELBOWS_PAINFUL == 1"
-                           ng-model="info.ELBOWS_PAINFUL"/>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.ELBOWS" ng-value="2"/>Painful
+                    </label>
                 </div>
             </div>
             <div class="row">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Wrists: </label>
 
-                <div class="btn-group col-sm-5 col-md-5 col-lg-3">
+                <div class="btn-group col-sm-7 col-md-7 col-lg-5">
                     <label class="btn">
                         <input type="radio" ng-model="info.WRISTS" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.WRISTS" ng-value="0"/>Reduced
                     </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2"
-                       style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.WRISTS_PAINFUL == 1"
-                           ng-model="info.WRISTS_PAINFUL"/>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.WRISTS" ng-value="2"/>Painful
+                    </label>
                 </div>
             </div>
             <div class="row">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Knees: </label>
 
-                <div class="btn-group col-sm-5 col-md-5 col-lg-3">
+                <div class="btn-group col-sm-7 col-md-7 col-lg-5">
                     <label class="btn">
                         <input type="radio" ng-model="info.KNEES" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.KNEES" ng-value="0"/>Reduced
                     </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2"
-                       style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.KNEES_PAINFUL == 1"
-                           ng-model="info.KNEES_PAINFUL"/>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.KNEES" ng-value="2"/>Painful
+                    </label>
                 </div>
             </div>
             <div class="row">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 10px">Ankles: </label>
 
-                <div class="btn-group col-sm-5 col-md-5 col-lg-3">
+                <div class="btn-group col-sm-7 col-md-7 col-lg-5">
                     <label class="btn">
                         <input type="radio" ng-model="info.ANKLES" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.ANKLES" ng-value="0"/>Reduced
                     </label>
-                </div>
-                <label class="control-label col-md-1 col-sm-2"
-                       style="font-weight: bold;margin-top: 10px;text-align: right">Painful</label>
-
-                <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.ANKLES_PAINFUL == 1"
-                           ng-model="info.ANKLES_PAINFUL"/>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.ANKLES" ng-value="2"/>Painful
+                    </label>
                 </div>
             </div>
             </br>
@@ -2043,9 +2023,10 @@
             <div ng-class="{'has-error':gorgonMAForm.FUTHER_COMMENTS.$error.required}">
                 <div class="col-md-8" style="margin-left: 15px;">
                     <textarea class="form-control" ng-model="info.FUTHER_COMMENTS" name="FUTHER_COMMENTS" ng-required="
-                        info.SHOULDER==0 || info.ELBOWS==0 || info.WRISTS==0|| info.KNEES==0 || info.ANKLES==0 ||
-                        info.GRIP_STRENGTH==0 || info.EPICONDYLES==0 || info.HEEL_WALK==0 || info.DUCK_WALK==0 ||
-                        info.TOE_WALK==0 || info.RHOMBERGS==0"></textarea>
+                        info.SHOULDER == 0 || info.SHOULDER == 2 || info.ELBOWS == 0 || info.ELBOWS == 2 || info.WRISTS == 0 ||
+                        info.WRISTS == 2 || info.KNEE == 0 || info.KNEES == 2 || info.ANKLES == 0 || info.ANKLES == 2||
+                        info.GRIP_STRENGTH == 0 || info.EPICONDYLES==0 || info.HEEL_WALK == 0 || info.DUCK_WALK ==0 ||
+                        info.TOE_WALK == 0 || info.RHOMBERGS == 0"></textarea>
 
                     <div class="help-block" ng-show="gorgonMAForm.FUTHER_COMMENTS.$error.required">
                         <label class="control-label">Required!</label>
