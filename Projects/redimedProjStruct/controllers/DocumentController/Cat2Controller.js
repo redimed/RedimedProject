@@ -98,7 +98,7 @@ module.exports = {
                                     res.json({status: 'fail'});
                                     return false;
                                 }
-                                Doctor.find({where: {DOCTOR_ID: APPT.DOCTOR_ID}}, {raw: true})
+                                Doctor.find({where: {doctor_id: APPT.DOCTOR_ID}}, {raw: true})
                                     .success(function (doctor) {
                                         //check exist doctor
                                         if (doctor == null || doctor.length == 0) {

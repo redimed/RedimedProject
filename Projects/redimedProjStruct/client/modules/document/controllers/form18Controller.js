@@ -77,7 +77,7 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                     PERSON_ARRANGING_SIGNATURE: null,
                     PERSON_ARRANGING_NAME: null,
                     PERSON_ARRANGING_POSITION: null,
-                    DOCTOR_ID: $cookieStore.get('doctorInfo').doctor_id,
+                    DOCTOR_ID: null,
                     WORKER_SIGNATURE: null
                 };
                 var oriInfo;
@@ -116,7 +116,7 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                             PERSON_ARRANGING_SIGNATURE: data.PERSON_ARRANGING_SIGNATURE,
                             PERSON_ARRANGING_NAME: data.PERSON_ARRANGING_NAME,
                             PERSON_ARRANGING_POSITION: data.PERSON_ARRANGING_POSITION,
-                            DOCTOR_ID: data.DOCTOR_ID,
+                            DOCTOR_ID: response[0].doctor.DOCTOR_ID,
                             WORKER_SIGNATURE: data.WORKER_SIGNATURE
                         };
                         oriInfo = angular.copy($scope.info);
