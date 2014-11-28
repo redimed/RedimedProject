@@ -484,28 +484,28 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
 
         $scope.submitGorgonFA = function (gorgonFAForm) {
             $scope.showClickedValidation = true;
-            if (gorgonFAForm.$invalid) {
+            if (gorgonFAForm.$error.required || gorgonFAForm.$error.pattern || gorgonFAForm.$error.maxlength) {
                 toastr.error("Please Input All Required Information!", "Error");
             } else {
                 if (insert == true) {
                     var info = $scope.info;
                     DocumentService.insertGorgonFA(info).then(function (response) {
                         if (response['status'] === 'success') {
-                            toastr.success("Successfully", "Success");
+                            toastr.success("Add new success!", "Success");
                             $state.go('loggedIn.gorgonFA', null, {'reload': true});
                         }
                         else {
-                            toastr.error("Fail", "Error");
+                            toastr.error("Add new fail!", "Error");
                         }
                     });
                 } else {
                     DocumentService.editGorgonFA($scope.info).then(function (response) {
                         if (response['status'] === 'success') {
-                            toastr.success("Successfully", "Success");
+                            toastr.success("Edit success!", "Success");
                             $state.go('loggedIn.gorgonFA', null, {'reload': true});
                         }
                         else {
-                            toastr.error("Fail", "Error");
+                            toastr.error("Edit fail!", "Error");
                         }
                     });
                 }
