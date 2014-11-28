@@ -196,7 +196,7 @@ module.exports =
         var sql=
             " SELECT 	booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+
             " 	booking.`RL_TYPE_ID`,`rltype`.`Rl_TYPE_NAME`,booking.`SPECIALITY_ID`,spec.`Specialties_name`,                                                "+
-            " 	booking.`DOCTOR_ID`,doctor.`NAME`,booking.`SITE_ID`,redi.`Site_name`,booking.`WRK_SURNAME`,                                                  "+
+            " 	booking.`DOCTOR_ID`,doctor.`NAME`,booking.`SITE_ID`,redi.`Site_name`,booking.`WRK_SURNAME`, booking.DOCUMENT_STATUS,                                                  "+
             " 	calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID,                                                                                               "+
             " 	CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,               "+
             " 	CONCAT(HOUR(calendar.`From_time`),':',MINUTE(calendar.`From_time`)) AS APPOINTMENT_TIME,                                                     "+
@@ -1086,6 +1086,32 @@ module.exports =
                     }
                 }
             });
+        });
+    },
+    //chien change document status
+    //phanquocchien.c1109g@gmail.com
+    lob_change_documents_status:function(req,res)
+    {
+        console.log(JSON.stringify(req.body));
+        var bookingId=req.body.bookingId;
+        var status=req.body.status;
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(
+                'UPDATE `rl_bookings` booking SET booking.`DOCUMENT_STATUS`=? WHERE booking.`BOOKING_ID`=?'
+                ,[status,bookingId],function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        res.json({status:'success'});
+                    }
+
+                });
         });
     }
 

@@ -79,6 +79,13 @@
 
     .pointer {
         cursor: pointer;
+        color: white;
+        text-decoration: none;
+    }
+    .pointer:hover {
+        cursor: pointer;
+        color: white;
+        text-decoration: none;
     }
     .highlight {
         color: #fff;
@@ -102,6 +109,57 @@
         border-right: 2px solid rgba(117, 117, 117, 0.21);
         padding-left: 5px;
         padding-right: 5px;
+    }
+    /*chien document status
+    phanquocchien.c1109g@gmail.com
+    */
+    #documentstatusdiv2{
+        position: fixed;
+        width: 25%;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        margin: auto;
+        z-index: 9000;
+        background-color: rgba(150, 164, 166, 0.862745);
+        display: table;
+    }
+    /*chien booking status
+    phanquocchien.c1109g@gmail.com
+    */
+    #bookingstatusdiv2{
+        position: fixed;
+        width: 40%;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        margin: auto;
+        z-index: 9000;
+        background-color: rgba(150, 164, 166, 0.862745);
+        display: table;
+    }
+    /*chien style class
+    phanquocchien.c1109g@gmail.com
+    */
+    .rlob_document_status_not_confirmed{
+        background-color: rgba(255, 255, 141, 0.55);
+    }
+    .rlob_document_status_checked{
+        background-color: rgba(128, 216, 255, 0.65);
+    }
+    .rlob_document_status_no_document{
+        background-color: rgba(255, 138, 128, 0.44);
+    }
+    .rlob_document_status_not_confirmed:hover{
+        background-color: rgba(255, 255, 141, 0.45);
+    }
+    .rlob_document_status_checked:hover{
+         background-color: rgba(128, 216, 255, 0.55);
+     }
+    .rlob_document_status_no_document:hover{
+        background-color: rgba(255, 138, 128, 0.35);
     }
 </style>
 
@@ -253,45 +311,77 @@
                         </a>
 
                     </li>
-
-                    <p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>
-                    Set Status:
-                    <li ng-hide="selectedBooking.STATUS=='Confirmed'" >
-                        <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"
-                           ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking)">
-                            <span>Confirmed</span>
-
+                    <!--chien set status
+                    phanquocchien.c1109g@gmail.com-->
+                    <li>
+                       <a class="pointer" role="menuitem" tabindex="2" ng-click="bookingstatusfadeIn()">
+                           Set Bookings Status
+                       </a>
+                    </li>
+                    <li>
+                        <a class="pointer" role="menuitem" tabindex="2" ng-click="documentstatusfadeIn()">
+                            Set Documents Status
                         </a>
                     </li>
+                    <!--<p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>-->
+                    <!--Set Bookings Status:-->
+                    <!--<li ng-hide="selectedBooking.STATUS=='Confirmed'" >-->
+                        <!--<a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"-->
+                           <!--ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking)">-->
+                            <!--<span>Confirmed</span>-->
 
-                    <li ng-hide="selectedBooking.STATUS=='Arrived'">
-                        <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
-                            ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking)">
-                            <span>Arrived</span>
+                        <!--</a>-->
+                    <!--</li>-->
 
-                        </a>
-                    </li>
+                    <!--<li ng-hide="selectedBooking.STATUS=='Arrived'">-->
+                        <!--<a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"-->
+                            <!--ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking)">-->
+                            <!--<span>Arrived</span>-->
 
-                    <li ng-hide="selectedBooking.STATUS=='Not Arrived'">
-                        <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-                           ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking)">
-                            <span>Not Arrived</span>
+                        <!--</a>-->
+                    <!--</li>-->
 
-                        </a>
-                    </li>
+                    <!--<li ng-hide="selectedBooking.STATUS=='Not Arrived'">-->
+                        <!--<a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"-->
+                           <!--ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking)">-->
+                            <!--<span>Not Arrived</span>-->
 
-                    <li ng-hide="selectedBooking.STATUS=='Completed'">
-                        <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
-                            ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking)">
-                            <span>Completed</span>
-                        </a>
-                    </li>
-                    <li ng-hide="selectedBooking.STATUS=='Cancel'">
-                        <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
-                            ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking)">
-                            <span>Cancel</span>
-                        </a>
-                    </li>
+                        <!--</a>-->
+                    <!--</li>-->
+
+                    <!--<li ng-hide="selectedBooking.STATUS=='Completed'">-->
+                        <!--<a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"-->
+                            <!--ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking)">-->
+                            <!--<span>Completed</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li ng-hide="selectedBooking.STATUS=='Cancel'">-->
+                        <!--<a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"-->
+                            <!--ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking)">-->
+                            <!--<span>Cancel</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>-->
+                    <!--Set Documents Status:-->
+                    <!--<li ng-hide="selectedDocument.DOCUMENT_STATUS=='Not Confirmed'" >-->
+                        <!--<a ng-hide="selectedDocument.DOCUMENT_STATUS=='Not Confirmed'" class="pointer" role="menuitem" tabindex="4"-->
+                           <!--ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,'Not Confirmed')">-->
+                            <!--<span>Not Confirmed</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+
+                    <!--<li ng-hide="selectedDocument.DOCUMENT_STATUS=='Checked'">-->
+                        <!--<a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"-->
+                            <!--ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,'Checked')">-->
+                            <!--<span>Checked</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li ng-hide="selectedDocument.DOCUMENT_STATUS=='No Documents'">-->
+                        <!--<a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"-->
+                           <!--ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,'No Documents')">-->
+                            <!--<span>No Documents</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </div>
@@ -308,7 +398,7 @@
                       ui-tree-handle class="tree-node tree-node-content "
                       ng-click="getBookingDetailWhenCursor(node.BOOKING_ID,this)">
                     <a class="btn btn-xs"
-                       ng-class="{'btn-primary':node.APPOINTMENT_DATETIME,'btn-success':node.DOCTOR_ID,'btn-warning':node.BOOKING_ID}"
+                       ng-class="{'btn-primary':node.APPOINTMENT_DATETIME,'btn-success':node.DOCTOR_ID}"
                        ng-if="node.nodes && node.nodes.length > 0"
                        nodrag ng-click="toggle(this)">
                         <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}">
@@ -368,46 +458,63 @@
                                     Change appointment calendar
                                 </a>
                             </li>
+                            <!--chien set status
+                            phanquocchien.c1109g@gmail.com-->
 
-                            <p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>
-                            Set Status:
-                            <li ng-hide="node.STATUS=='Confirmed'" >
-                                <a ng-hide="node.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="3"
-                                   ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Confirmed',this)">
-                                    <span>Confirmed</span>
-
+                            <li>
+                                <a class="pointer" role="menuitem" tabindex="2" ng-click="bookingstatusfadeIn()">
+                                    Set Bookings Status
                                 </a>
                             </li>
-
-                            <li ng-hide="node.STATUS=='Arrived'">
-                                <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="4"
-                                    ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Arrived',this)">
-                                    <span>Arrived</span>
-
+                            <li>
+                                <a class="pointer" role="menuitem" tabindex="2" ng-click="documentstatusfadeIn()">
+                                    Set Documents Status
                                 </a>
                             </li>
+                            <!--<li>-->
+                                <!--<a class="pointer" role="menuitem" tabindex="2">-->
+                                    <!--Set Documents Status-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>-->
+                            <!--Set Bookings Status:-->
 
-                            <li ng-hide="node.STATUS=='Not Arrived'">
-                                <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="5"
-                                   ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Not Arrived',this)">
-                                    <span>Not Arrived</span>
+                            <!--<li ng-hide="node.STATUS=='Confirmed'" >-->
+                                <!--<a ng-hide="node.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="3"-->
+                                   <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Confirmed',this)">-->
+                                    <!--<span>Confirmed</span>-->
 
-                                </a>
-                            </li>
+                                <!--</a>-->
+                            <!--</li>-->
 
-                            <li ng-hide="node.STATUS=='Completed'">
-                                <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-                                    ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Completed',this)">
-                                    <span>Completed</span>
-                                </a>
-                            </li>
-                            <li ng-hide="node.STATUS=='Cancel'">
-                                <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
-                                    ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Cancel',this)">
-                                    <span>Cancel</span>
-                                </a>
-                            </li>
+                            <!--<li ng-hide="node.STATUS=='Arrived'">-->
+                                <!--<a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="4"-->
+                                    <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Arrived',this)">-->
+                                    <!--<span>Arrived</span>-->
 
+                                <!--</a>-->
+                            <!--</li>-->
+
+                            <!--<li ng-hide="node.STATUS=='Not Arrived'">-->
+                                <!--<a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="5"-->
+                                   <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Not Arrived',this)">-->
+                                    <!--<span>Not Arrived</span>-->
+
+                                <!--</a>-->
+                            <!--</li>-->
+
+                            <!--<li ng-hide="node.STATUS=='Completed'">-->
+                                <!--<a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"-->
+                                    <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Completed',this)">-->
+                                    <!--<span>Completed</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li ng-hide="node.STATUS=='Cancel'">-->
+                                <!--<a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"-->
+                                    <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Cancel',this)">-->
+                                    <!--<span>Cancel</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
                         </ul>
                     </div>
 
@@ -475,8 +582,9 @@
             <!--<div class="panel-explorer detailScroll" >-->
             <!--</div>-->
 
-            <div class="alert alert-info" role="alert" style="text-align: center;text-decoration: underline">
-                Booking Status: {{selectedBooking.STATUS}}
+            <div ng-class="selectedBooking.style_class" class="alert alert-info" role="alert" style="text-align: center;text-decoration: underline">
+                Booking Status: {{selectedBooking.STATUS}} <br />
+                Documents Status : {{selectedBooking.DOCUMENT_STATUS}}
             </div>
 
 
@@ -649,10 +757,79 @@
 </div>
 
 <div class='notifications top-right rlob_admin_local_notification_popup'></div>
+        <!--chien teamplate booking status
+        phanquocchien.c1109g@gmail.com-->
+<div id="bookingstatus" style="display: none">
+    <div id="bookingstatusdiv2">
+        <i style="color: #ffffff;position: absolute;right: 10px;top: 10px;font-size: 25px;" class="fa fa-times-circle-o" ng-click="bookingstatusfadeOut()"></i>
+        <div class="row" style="display: table-cell;padding-top: 10px;">
+            <ul style="margin-left: -30px;">
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Confirmed'" class="btn btn-primary" >
+                    <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"
+                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking)">
+                        <span>Confirmed</span>
+                    </a>
+                </li>
 
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Arrived'" class="btn btn-success">
+                    <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking)">
+                        <span>Arrived</span>
+                    </a>
+                </li>
 
-<div class="row">
-    <div></div>
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Not Arrived'" class="btn btn-info">
+                    <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
+                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking)">
+                        <span>Not Arrived</span>
+                    </a>
+                </li>
+
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Completed'" class="btn btn-warning">
+                    <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking)">
+                        <span>Completed</span>
+                    </a>
+                </li>
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Cancel'" class="btn btn-danger">
+                    <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking)">
+                        <span>Cancel</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--chien teamplate document status
+phanquocchien.c1109g@gmail.com-->
+<div id="documentstatus" style="display: none;" >
+    <div id="documentstatusdiv2">
+        <i style="color: #ffffff;position: absolute;right: 10px;top: 10px;font-size: 25px;" class="fa fa-times-circle-o" ng-click="documentstatusfadeOut()"></i>
+        <div class="row" style="display: table-cell;padding-top: 10px;">
+            <ul style="margin-left: -30px;">
+                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS=='Not confirmed'" class="btn btn-warning" >
+                    <a ng-hide="selectedBooking.DOCUMENT_STATUS=='Not Confirmed'" class="pointer" role="menuitem" tabindex="4"
+                       ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,'Not confirmed')">
+                        <span>Not confirmed</span>
+                    </a>
+                </li>
+
+                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS=='Checked'" class="btn btn-success">
+                    <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
+                        ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,'Checked')">
+                        <span>Checked</span>
+                    </a>
+                </li>
+                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS=='No documents'" class="btn btn-danger">
+                    <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
+                       ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,'No documents')">
+                        <span>No documents</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 

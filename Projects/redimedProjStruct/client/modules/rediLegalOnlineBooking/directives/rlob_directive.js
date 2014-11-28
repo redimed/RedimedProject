@@ -1050,6 +1050,38 @@ angular.module("app.loggedIn.rlob.directive", [])
             }
         };
     })
+    //chien change document status
+    //phanquocchien.c1109g@gmail.com
+    .directive('rlobChangeDocumentStatus', function(rlobService) {
+        return {
+            restrict: 'E',
+            transclude:true,
+            required:['^ngModel'],
+            scope: {
+                selectedDocument:'='
+            },
+            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_document_change_status_template.html',
+            controller: function ($scope)
+            {
+                $scope.rlob_document_change_status=function(bookingId,status)
+                {
+                    rlobService.changeDocumentStatus(bookingId,status)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                $scope.selectedDocument.DOCUMENT_STATUS=status;
+                                //var refId=bookingId;
+                                //rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
+                            }
+                            else
+                            {
 
+                            }
+                        });
 
+                };
+
+            }
+        };
+    })
 

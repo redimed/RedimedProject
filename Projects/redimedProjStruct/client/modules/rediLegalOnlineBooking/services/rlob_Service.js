@@ -62,7 +62,12 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.all('rlob/rl_bookings/lob-change-status');
             return result.post({bookingId:bookingId,status:status});
         }
-	
+	    //chien change document status
+        rlobService.changeDocumentStatus=function(bookingId,status)
+        {
+            var result=api.all('rlob/rl_bookings/lob-change-documents-status');
+            return result.post({bookingId:bookingId,status:status});
+        }
 	    //chien Upcomming booking
         rlobService.getCountReportUpcommingBookings=function(bookingType,doctorId,filterInfo){
             var TotalBookings=api.all('rlob/rl_bookings/count-report-upcomming-bookings');

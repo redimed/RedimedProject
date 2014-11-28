@@ -126,6 +126,22 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
                 if (!dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID][item.BOOKING_ID]) {
                     dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID][item.BOOKING_ID] = {BOOKING_FILE_ITEMS: []};
+                    //chien set style class node
+                    //phanquocchien.c1109g@gmail.com
+                    var styleClass = '';
+                    if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                        styleClass = 'rlob_document_status_not_confirmed'
+                    }
+                    else{
+                        if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                            styleClass = 'rlob_document_status_checked'
+                        }
+                        else{
+                            if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                                styleClass = 'rlob_document_status_no_document'
+                            }
+                        }
+                    }
                     dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID].BOOKING_ITEMS.push({
                         APPOINTMENT_TIME:item.APPOINTMENT_TIME,
                         APPOINTMENT_DATETIME:item.APPOINTMENT_DATETIME,
@@ -139,7 +155,10 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                         DISPLAY1:"- Site: "+item.Site_name,
                         DISPLAY2:  "- Patient: "+item.WRK_SURNAME,
                         DISPLAY3:  "- Company: "+item.Company_name,
-                        style_class:'lob_admin_booking_node'
+                        DOCUMENT_STATUS:item.DOCUMENT_STATUS,
+                        //chien set style class node
+                        //phanquocchien.c1109g@gmail.com
+                        style_class:styleClass
                     });
                 }
 
@@ -490,6 +509,21 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 .then(function(data){
                     if(data.status=='success')
                     {
+                        // chien set style class
+                        //phanquocchien.c1109g@gmail.com
+                        if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                            data.data.style_class = 'rlob_document_status_not_confirmed'
+                        }
+                        else{
+                            if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                                data.data.style_class = 'rlob_document_status_checked'
+                            }
+                            else{
+                                if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                                    data.data.style_class = 'rlob_document_status_no_document'
+                                }
+                            }
+                        }
                         $scope.selectedBooking=data.data;
                         return {status:'success'};
                     }
@@ -509,10 +543,16 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                                     $scope.selectedBooking.STATUS=status;
                                     var refId=bookingId;
                                     $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.changeStatus,$scope.notificationType.bell,status);
+                                    //chien fadeOut booking status
+                                    //phanquocchien.c1109g@gmail.com
+                                    angular.element('#bookingstatus').fadeOut();
                                     $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
                                 }
                                 else
                                 {
+                                    //chien fadeOut booking status
+                                    //phanquocchien.c1109g@gmail.com
+                                    angular.element('#bookingstatus').fadeOut();
                                     $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
                                 }
                             });
@@ -743,6 +783,21 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 rlobService.getBookingById(bookingId).then(function(data){
                     if(data.status=='success')
                     {
+                        // chien set style class
+                        //phanquocchien.c1109g@gmail.com
+                        if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                            data.data.style_class = 'rlob_document_status_not_confirmed'
+                        }
+                        else{
+                            if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                                data.data.style_class = 'rlob_document_status_checked'
+                            }
+                            else{
+                                if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                                    data.data.style_class = 'rlob_document_status_no_document'
+                                }
+                            }
+                        }
                         $scope.showDetailPanel=true;
                         $scope.selectedBooking=data.data;
                     }
@@ -931,10 +986,75 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 //        })
 
 
+        //chien fadeIn & fadeOut status
+        //phanquocchien.c1109g@gmail.com
+
+        $scope.bookingstatusfadeIn = function(){
+            angular.element('#bookingstatus').fadeIn();
+        }
+        $scope.bookingstatusfadeOut = function(){
+            angular.element('#bookingstatus').fadeOut();
+        }
+        $scope.documentstatusfadeOut = function(){
+            angular.element('#documentstatus').fadeOut();
+        }
+        $scope.documentstatusfadeIn = function(){
+            angular.element('#documentstatus').fadeIn();
+        }
+
+        //chien set rlobhelper
+        //phanquocchien.c1109g@gmail.com
+        $scope.rlobDocumentStatus=rlobConstant.documentStatus;
+
+        //chien change documents status
+        // phanquocchien.c1109g@gmail.com
+        $scope.rlob_document_change_status=function(bookingId,status)
+        {
+            rlobService.changeDocumentStatus(bookingId,status)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        var styleClass = '';
+                        if(status == $scope.rlobDocumentStatus.notConfirmed){
+                            styleClass = 'rlob_document_status_not_confirmed'
+                        }
+                        else{
+                            if(status == $scope.rlobDocumentStatus.checked){
+                                styleClass = 'rlob_document_status_checked'
+                            }
+                            else{
+                                if(status == $scope.rlobDocumentStatus.noDocuments){
+                                    styleClass = 'rlob_document_status_no_document'
+                                }
+                            }
+                        }
+                        $scope.selectedBooking.DOCUMENT_STATUS=status;
+
+                        $scope.selectedBooking.style_class=styleClass;
+
+                        angular.element('#documentstatus').fadeOut();
+                        $scope.showMsgDialog(".lob-msg-dialog",'Change Documents Status','success','Changing status to ['+status+'] success!');
+                        $scope.currentNodeBooking.$modelValue.style_class=styleClass;
+                               //$scope.styleClass = styleClass;
+                               //var refId=bookingId;
+                               //rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
+                    }
+                    else
+                    {
+                        angular.element('#documentstatus').fadeOut();
+                        $scope.showMsgDialog(".lob-msg-dialog",'Change Documents Status','fail','Changing status to ['+status+'] fail!');
+                    }
+                });
+
+        };
+
+        // chien fadeOut status
+        // phanquocchien.c1109g@gmail.com
+        $scope.$watch('selectedBooking.BOOKING_ID',function(newValue, oldValue){
+            if ( newValue !== oldValue ) {
+                angular.element('#documentstatus').fadeOut();
+                angular.element('#bookingstatus').fadeOut();
+            }
+        });
 
 });
-
-
-
-
-

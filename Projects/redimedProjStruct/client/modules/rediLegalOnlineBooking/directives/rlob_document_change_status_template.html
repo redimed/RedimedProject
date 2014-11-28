@@ -1,0 +1,35 @@
+<div class="btn-group dropdown">
+
+    <a type="button" class="dropdown-toggle btn btn-default" data-toggle="dropdown">
+        <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
+        </span>
+        <label>Change Documents Status</label>
+    </a>
+
+    <ul class="dropdown-menu" role="menu">
+        <li ng-hide="selectedDocument.DOCUMENT_STATUS=='Not Confirmed'" >
+            <a ng-hide="selectedDocument.DOCUMENT_STATUS=='Not Confirmed'" class="pointer" role="menuitem" tabindex="4"
+               ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,'Not Confirmed')">
+                <span>Not Confirmed</span>
+
+            </a>
+        </li>
+
+        <li ng-hide="selectedDocument.DOCUMENT_STATUS=='Checked'">
+            <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
+                ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,'Checked')">
+                <span>Checked</span>
+
+            </a>
+        </li>
+
+        <li ng-hide="selectedDocument.DOCUMENT_STATUS=='No Documents'">
+            <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
+               ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,'No Documents')">
+                <span>No Documents</span>
+
+            </a>
+        </li>
+    </ul>
+</div>
+{{selectedDocument.DOCUMENT_STATUS}}
