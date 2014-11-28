@@ -1566,7 +1566,7 @@
             <div class="row">
                 <label class="col-md-12 bold">Comments</label>
             </div>
-            <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonFAForm.LComment.$invalid}">
+            <div class="form-group" ng-class="{'has-error':gorgonFAForm.LComment.$error.required}">
                 <div class="row">
                     <label class="col-md-12">Please document any physical restrictions from the assessment that may
                         place the applicant at risk of performing his /her physical duties. Please document any
@@ -1576,14 +1576,16 @@
                 <div class="row">
                     <div class="col-md-8 col-sm-10">
                         <textarea class="form-control" name="LComment" ng-model="info.LComment" required></textarea>
-                    </div>
-                </div>
-                <div class="row" ng-show="showClickedValidation && gorgonFAForm.LComment.$invalid">
-                    <div class="help-block" for="LComment">
-                        <label>Comment is required</label>
-                    </div>
 
+                        <div ng-show="gorgonFAForm.LComment.$error.required">
+                            <div class="help-block" for="LComment">
+                                <label class="control-label">Required!</label>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
+
             </div>
             <br/>
         </div>
