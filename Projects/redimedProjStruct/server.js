@@ -12,6 +12,7 @@ var session = require('express-session');
 var config = require('config');
 var compress = require('compression');
 var db = require('./models');
+var restful = require('sequelize-restful');
 
 
 //Create application management
@@ -20,6 +21,8 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+
+app.use(restful(db.sequelize, { endpoint: '/restful',}));
 app.use(favicon());
 app.use(compress());
 app.use(logger('dev'));
