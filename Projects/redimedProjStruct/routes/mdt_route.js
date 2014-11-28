@@ -29,4 +29,4 @@ app.get("/api/meditek/v1/appointment/byId", mdtAppointmentController.postById);
 
 //MODULE COMPANY
 app.post("/api/meditek/v1/company/search", mdtCompanyController.postSearch);
-app.post("/api/meditek/v1/company/byId", mdtCompanyController.postById);
+//app.post("/api/meditek/v1/company/byId", mdtCompanyController.postById);
