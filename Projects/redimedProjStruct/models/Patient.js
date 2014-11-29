@@ -79,23 +79,17 @@ module.exports = function(sequelize, DataTypes){
         updatedAt: 'Last_update_date',
         classMethods: {
             associate: function(models) {
-                // Patient.belongsTo(models.Company, { as: 'Company', foreignKey: 'company_id'});
-                //Patient.hasMany(models.Claim, { foreignKey: 'Patient_id', as: 'Claims' });
-                //Patient.hasMany(models.OutsideReferral, { foreignKey: 'patient_id', as: 'OutsideReferrals' });
+                Patient.belongsTo(models.Company, { as: 'Company', foreignKey: 'company_id'});
+                Patient.hasMany(models.Company, {  as: 'Companies', foreignKey: 'patient_id', through: 'patient_companies' });
 
+                // Patient.hasMany(models.Claim, { foreignKey: 'Patient_id', as: 'Claims' });
+                // Patient.hasMany(models.OutsideReferral, { foreignKey: 'patient_id', as: 'OutsideReferrals' });
                 Patient.hasMany(models.Appointment, 
                     {as: 'Appointments', foreignKey: 'Patient_id'}
                 );
 
-                Patient.belongsTo(models.Company,
-                    {as: 'Company', foreignKey: 'company_id'}
-                );
             }
         }
     });
     return Patient;
 };
-
-
-
-

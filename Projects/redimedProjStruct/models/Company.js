@@ -49,8 +49,10 @@ module.exports = function(sequelize,DataTypes){
         updatedAt: 'Last_update_date',
         classMethods: {
             associate: function(models) {
-                Company.hasMany(models.Patient, { foreignKey: 'company_id', as: 'Patients' });
-                Company.hasMany(models.Insurer, {as: 'Insurers', foreignKey: 'company_id', through: 'company_insurers'});
+                Company.hasMany(models.Patient, { as: 'Workers', foreignKey: 'company_id' });
+                Company.hasMany(models.Patient, { as: 'OldWorkers', foreignKey: 'company_id',  through: 'patient_companies' });
+ 
+                Company.hasMany(models.Insurer, { as: 'Insurers', foreignKey: 'company_id', through: 'company_insurers'});
             }
         }
     });
