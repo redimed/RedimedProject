@@ -12,8 +12,17 @@
 
     <ion-content class="padding has-subheader has-header">
         <button class="button button-positive" ng-click="NFCwrite()">
-            button-positive
+           Write To Tag NFC
         </button>
+        <div>
+            <span>PatientID:{{nfcInfo.data.Patient_id}}</span><br/>
+            <span>Name:{{nfcInfo.data.Title}} {{nfcInfo.data.First_name}}{{nfcInfo.data.Sur_name}}</span><br/>
+            <span>DOB:{{nfcInfo.data.DOB| date:'dd/MM/yyyy'}}</span><br/>
+            <span>Phone:{{nfcInfo.data.Mobile}}</span><br/>
+            <span>MedicareNo:{{nfcInfo.data.Medicare_no}}</span><br/>
+            <span>PassportorDriverslicence:</span><br/>
+            <span>Address:{{nfcInfo.data.Address1}}</span>
+        </div>
         <div class="app">
             <div id="messageDiv">No tag found</div>
         </div>

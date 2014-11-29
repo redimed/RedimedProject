@@ -40,6 +40,12 @@ angular.module("starter.menu.controller",[])
             $state.go("security.login");
         }
 
+        $scope.readNFC = function(){
+            $state.go('app.NFC',null,{
+                reload:true
+            })
+        }
+
         //    popover
 
         $ionicPopover.fromTemplateUrl('my-popover.html', {

@@ -1,6 +1,7 @@
 angular.module('starter.worker', [
     'starter.worker.add.controller',
     'starter.worker.services',
+
 ])
 
     .config (function ($stateProvider) {
@@ -46,13 +47,6 @@ angular.module('starter.worker', [
                 }
             }
         })
-        .state('app.worker.readNFC',{
-            url:"/readNFC",
-            views:{
-                'content':{
-                    templateUrls:"modules/worker/views/readNFC.html"
-                }
-            }
-        })
+
 
 })

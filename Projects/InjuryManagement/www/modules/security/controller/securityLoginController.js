@@ -10,8 +10,8 @@ angular.module('starter.security.login.controller',[])
                         if(typeof response.companyInfo !== 'undefined')
                             localStorageService.set("companyInfo", response.companyInfo);
 
-                        if(response.userInfo['function_id'] != null){
-                            UserService.getFunction(response.userInfo['function_id']).then(function(data){
+                        if(response.userInfo['function_mobile'] != null){
+                            UserService.getFunction(response.userInfo['function_mobile']).then(function(data){
                                 var rs = data.definition.split('(');
                                 if(rs[0] != null)
                                 {

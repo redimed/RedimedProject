@@ -16,6 +16,7 @@ angular.module('starter', ['ionic',
   'starter.worker',
   'starter.booking',
   'ui.bootstrap',
+    'starter.NFC'
 
 
 ])
@@ -42,13 +43,13 @@ angular.module('starter', ['ionic',
 
       //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
 
-      //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
+      RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
       //RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
 
       //ip Luan
-     //RestangularProvider.setBaseUrl("http://192.168.132.39:3000");
-        RestangularProvider.setBaseUrl("http://192.168.133.84:3000");
+        //RestangularProvider.setBaseUrl("http://192.168.132.39:3000");
+       //  RestangularProvider.setBaseUrl("http://192.168.132.154:3000");
       //ip nha
       //RestangularProvider.setBaseUrl("http://192.168.1.110:3000");
 
