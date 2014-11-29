@@ -5,12 +5,12 @@ module.exports = {
 	postAdd: function(req, res){
 		var postData = req.body;
 
-		db.mdtPatient.create(postData)
+		db.Patient.create(postData)
 		.success(function(created){
 			if(!created){
 				res.json(500, {"status": "error", "message": "Database Error"});
 			}else{
-				db.mdtPatient.find({
+				db.Patient.find({
 					order: "Patient_id DESC" 
 				})
 				.success(function(patient){
@@ -28,7 +28,7 @@ module.exports = {
 		delete req.body.Patient_id;
 		var postData = req.body;
 
-		db.mdtPatient.find({ where: {Patient_id: patient_id} })
+		db.Patient.find({ where: {Patient_id: patient_id} })
 		.success(function(patient){
 			patient.updateAttributes(postData).success(function(updated){
 				if(!updated){
@@ -48,7 +48,7 @@ module.exports = {
 		var Patient_id = req.body.Patient_id;
 		// END POST
 
-		db.mdtPatient.find(Patient_id)
+		db.Patient.find(Patient_id)
 		.success(function(patient){
 			if(!patient){
 				res.json(500, {"status": "error", "message": "Database Error"});
@@ -78,7 +78,7 @@ module.exports = {
 		var sql = "";
 		sql = mdt_functions.commonSearch(post_fields);
 
-		db.mdtPatient
+		db.Patient
 		.findAndCountAll({
 			where: [sql],
 			offset: pagination.offset,
@@ -98,7 +98,7 @@ module.exports = {
 		})
 	},// end post search
 	getDropdown: function(req, res){
-		db.mdtPatient
+		db.Patient
 		.findAndCountAll({
 			where: {Isenable: 1},
 			attributes: ['Patient_id', 'First_name', 'Sur_name']

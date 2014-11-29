@@ -22,8 +22,12 @@ module.exports = function(sequelize, DataTypes){
         updatedAt: "Last_update_date",
         classMethods: {
             associate: function (models) {
-                mdtInstance.hasMany(models.Doctor, {as: 'Doctors', foreignKey: 'CLINICAL_DEPT_ID'});
-                mdtInstance.hasMany(models.InvItemHeader, {as: 'ItemLists', foreignKey: 'CLINICAL_DEPT_ID', through: 'cln_dept_item_lists'});
+                mdtInstance.hasMany(models.Doctor, {
+                    as: 'Doctors', foreignKey: 'CLINICAL_DEPT_ID'
+                });
+                mdtInstance.hasMany(models.InvItemHeader, {
+                    as: 'ItemLists', foreignKey: 'CLINICAL_DEPT_ID', through: 'cln_dept_item_lists'
+                });
             }
         }
     });

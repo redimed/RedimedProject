@@ -7,7 +7,7 @@ module.exports = {
 		var company_id = req.body.company_id;
 		// END POST
 
-		db.mdtCompany.find(company_id)
+		db.Company.find(company_id)
 		.success(function(company){
 			if(!company){
 				res.json(500, {"status": "error", "message": "Database Error"});
@@ -29,7 +29,7 @@ module.exports = {
 		var sql = "";
 		sql = mdt_functions.commonSearch(post_fields);
 
-		db.mdtCompany
+		db.Company
 		.findAndCountAll({
 			where: [sql],
 			offset: pagination.offset,

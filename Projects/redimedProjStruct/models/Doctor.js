@@ -3,7 +3,11 @@
  */
 module.exports = function (sequelize, DataTypes) {
     var Doctor = sequelize.define("Doctor", {
-        "doctor_id": {type: DataTypes.INTEGER(11), primaryKey: true},
+        "doctor_id": {
+            type: DataTypes.INTEGER(11), 
+            primaryKey: true,
+            autoIncrement: true
+        },
         "NAME": DataTypes.STRING(100),
         "Address": DataTypes.STRING(100),
         "Email": DataTypes.STRING(100),

@@ -3,7 +3,11 @@
 */
 module.exports = function(sequelize,DataTypes){
     var Company = sequelize.define('Company',{
-        id : {type:DataTypes.INTEGER(11), primaryKey: true},
+        id : {
+            type:DataTypes.INTEGER(11), 
+            primaryKey: true,
+            autoIncrement: true
+        },
         Company_name : DataTypes.STRING(100) ,
         Industry : DataTypes.STRING(50) ,
         Addr : DataTypes.STRING(100) ,

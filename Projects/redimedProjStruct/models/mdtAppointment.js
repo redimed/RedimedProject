@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-	var mdtAppointment = sequelize.define("mdtAppointment", {
+	var mdtAppointment = sequelize.define("Appointment", {
 		CAL_ID: {
 			type: DataTypes.INTEGER(11),
 			primaryKey: true,
@@ -27,12 +27,20 @@ module.exports = function(sequelize, DataTypes){
 		timestamps: false,
 		classMethods: {
 			associate: function(models){
-				mdtAppointment.belongsTo(models.mdtPatient, 
-					{as: 'Patient', foreignKey: 'Patient_id'}
-				);
+				mdtAppointment.belongsTo(models.Patient,{
+					as: 'Patient', foreignKey: 'Patient_id'
+				});
+
+				mdtAppointment.hasMany(models.InvItem, {
+					as: 'Items', foreignKey: 'cal_id', through: models.mdtApptItems
+				}); 
+
+				mdtAppointment.belongsTo(models.Patient,{
+					as: 'Patient', foreignKey: 'Patient_id'
+				});
 			}
 		}// end association
 	});
 
-	return mdtAppointment;
+return mdtAppointment;
 }
