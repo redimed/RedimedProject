@@ -1,6 +1,7 @@
 angular.module('starter.worker.add.controller',[])
 
     .controller('workerAddController', function($scope, WorkerServices, $state, $stateParams, localStorageService, $ionicPopup, $ionicLoading, $timeout, ConfigService) {
+
         var userInfoLS = localStorageService.get("userInfo");
         $scope.nfcInfo = [];
         $scope.injurySubmitNonemer = localStorageService.get("checkNonemer");
@@ -193,7 +194,7 @@ angular.module('starter.worker.add.controller',[])
                 });
                 return;
             }
-            if($scope.checkNonemerg)
+            if($scope.injurySubmitNonemer)
             {
                 //have id worker submit booking
                 $state.go('app.chooseAppointmentCalendar');
@@ -240,13 +241,10 @@ angular.module('starter.worker.add.controller',[])
                 })
             }
         }
+        init();
 
         $scope.NFCwrite = function(){
 
             writeNFC.initialize($scope.nfcInfo);
         }
-
-
-
-        init();
     })

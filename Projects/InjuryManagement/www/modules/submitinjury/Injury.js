@@ -25,7 +25,7 @@ angular.module('starter.injury', [
 
             })
             .state('app.injury.desinjury', {
-                url: "/desinjury",
+                url: "/des_injury",
                 views: {
                     'main': {
                         templateUrl: "modules/submitinjury/views/desinjury.html"
@@ -33,7 +33,7 @@ angular.module('starter.injury', [
                 }
             })
             .state('app.injury.desinjurySuccess', {
-                url: "/successINjury",
+                url: "/successInjury",
                 views: {
                     'main': {
                         templateUrl: "modules/submitinjury/views/successinjury.html"

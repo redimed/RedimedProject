@@ -16,76 +16,82 @@ angular.module('starter', ['ionic',
   'starter.worker',
   'starter.booking',
   'ui.bootstrap',
-    'starter.NFC'
-
+    'starter.NFC',
+  'ngCordova',
 
 ])
     .run(function($ionicPlatform) {
-      $ionicPlatform.ready(function() {
-        if(window.cordova && window.cordova.plugins.Keyboard) {
-          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-        if(window.StatusBar) {
-          StatusBar.styleDefault();
-        }
-      });
+        $ionicPlatform.ready(function() {
+            if(window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if(window.StatusBar) {
+                StatusBar.styleDefault();
+            }
+        });
     })
 
     .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
 
+        //RestangularProvider.setBaseUrl("http://192.168.133.84:3000");
 
-      //local
-      //RestangularProvider.setBaseUrl("http://localhost:3000");
+        //local
+        //RestangularProvider.setBaseUrl("http://localhost:3000");
 
+        //test ip local
+        //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
 
+        //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
-      //test ip local
+        //RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
 
-      //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
+    
+       // RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
+
 
       RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
-      //RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
+        $urlRouterProvider.otherwise('/');
+        $stateProvider
+            .state("init", {
+                url: "/",
+                resolve: {
 
-      //ip Luan
-        //RestangularProvider.setBaseUrl("http://192.168.132.39:3000");
-       //  RestangularProvider.setBaseUrl("http://192.168.132.154:3000");
-      //ip nha
-      //RestangularProvider.setBaseUrl("http://192.168.1.110:3000");
+                    initHome: function($timeout,$state,localStorageService){
 
-      $urlRouterProvider.otherwise('/');
-      $stateProvider
-          .state("init", {
-            url: "/",
-            resolve: {
 
-              initHome: function($timeout,$state,localStorageService){
+                        if(!localStorageService.get("userInfo")){
+                            $timeout(function(){
+                                $state.go("security.login");
+                            }, 100);
+                        }else{
 
-                if(!localStorageService.get("userInfo")){
-                  $timeout(function(){
-                    $state.go("security.login");
-                  }, 100);
-                }else{
-
-                  $timeout(function(){
-                    $state.go("app.injury.info");
-                  }, 100);
+                            $timeout(function(){
+                                $state.go("app.injury.info");
+                            }, 100);
+                        }
+                    }
                 }
-              }
-            }
-          })
+            })
 
     })
     .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate){
+        $rootScope.$on("$stateChangeSuccess", function(e, toState){
+            if(!localStorageService.get("userInfo")){
+                if(toState.name !== "security.forgot" && toState.name !== "security.login") {
+                    e.preventDefault();
+                    $state.go("security.login");
+                }
+            }
+            if( toState.name == "app.injury.desinjury" || toState.name == "app.injury.desinjurySuccess")
+            {
+                $ionicSideMenuDelegate.canDragContent(false);
+            }
+            else
+            {
+                $ionicSideMenuDelegate.canDragContent(true);
+            }
 
-      $rootScope.$on("$stateChangeSuccess", function(e, toState){
-        if(!localStorageService.get("userInfo")){
-          if(toState.name !== "security.forgot" && toState.name !== "security.login") {
-            e.preventDefault();
-            $state.go("security.login");
-            $ionicSideMenuDelegate.canDragContent(false);
-          }
-        }
-      });
+        });
     });
 

@@ -106,29 +106,13 @@
                     <span class="span-input-color">Image:</span>
                 </label>
 
-                <label class=" item col-xs-6 text-right padding-left" style="border:none; border-radius: 5px !important; padding: 0px !important;">
-                    <ion-scroll direction="x" style="height: 100px">
-                        <a ng-repeat="imgDetail in imgURI" class="button button-clear button-positive" ng-click="selectImg(imgDetail)" style="width: 80px; height: 50px;">
-                            <img ng-src="{{imgDetail.image}}" class="img-responsive"/>
+                <label class="ion-scroll-custom item col-xs-6 text-left padding-left">
+                    <ion-scroll direction="x">
+                        <a ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)">
+                            <img ng-src="{{imgDetail.image}}" class="a-img-custom img-thumbnail"/>
                         </a>
                     </ion-scroll>
                 </label>
-
-            </div>
-
-            <div class="row" style="padding-left: 35px;">
-                <label class=" item col-xs-6 text-right padding-right" style="border:none; border-radius: 5px !important">
-                    <span class="span-input-color">Location</span>
-                </label>
-                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
-                    <input type="text" ng-model="address"/>
-                </label>
-            </div>
-
-
-            <div class="col-md-12">
-
-                <div id="map" mdt-map address="address"   style="width: 100%;height: 200px"></div>
             </div>
 
             <button class="button button-block button-light" ng-click="submitInjuryAll()">

@@ -2,7 +2,9 @@
 <div class="modal image-modal transparent" ng-class="hide.bars ? 'content-dark' : 'content-light'">
 
     <div class="text-right h-descImg">
-        <a class="button button-clear margin-right-10 margin-top-20 fix-margin cssFade" ng-click="hideModal()" ng-hide="hide.bars">
+        <a class="button button-clear margin-right-10 margin-top-20 fix-margin cssFade"
+           ng-click="hideModal()"
+           ng-hide="!hide.bars">
             <span class="done-btn">Done</span>
         </a>
     </div>
@@ -10,11 +12,11 @@
     <ion-slide-box style="height: 100%;" scroll="false" active-slide="imageObj.selected" show-pager="false">
         <ion-slide ng-repeat="img in imgURI">
 
-            <ion-scroll locking="false" zooming="true" min-zoom="1" on-tap="hide.bars = !hide.bars" class="heightcs">
+            <ion-scroll locking="false" zooming="true" min-zoom="1" ng-click="hide.bars = !hide.bars" class="heightcs">
                 <img ng-src="{{img.image}}" class="fullscreen-image" />
             </ion-scroll>
 
-            <div class="bg-descImg padding cssFade" ng-hide="hide.bars">
+            <div class="bg-descImg padding cssFade" ng-hide="!hide.bars">
                <span>
                  Description: {{img.desc}}
                </span>
