@@ -1,21 +1,41 @@
 <style>
 
-
-
    .rlob-document-status-summary .booking-item{
-       width: 150px;
+        padding: 5px;
+
+       /*width: 150px;*/
+
+   }
+
+   .rlob-document-status-summary .booking-item:hover{
+       box-shadow: 1px 2px 2px 1px #888888;
+   }
+   .rlob-document-status-summary .booking-item a:hover{
+       color: white;
+       padding: 5px;
+
+       /*width: 150px;*/
+
    }
 
     .rlob-document-status-summary .document-status-not-confirmed{
-        background-color:rgba(255,255,0,0.5);
+        background-color:rgba(255,255,0,0.29);
     }
     .rlob-document-status-summary .document-status-checked{
-         background-color:rgba(0,255,0,0.5);
+         background-color:rgba(0,255,0,0.29);
     }
     .rlob-document-status-summary .document-status-no-documents{
-        background-color:rgba(255,0,0,0.5);
+        background-color:rgba(255,0,0,0.29);
     }
-
+   .rlob-document-status-summary .document-status-no-documents:hover{
+       background-color:rgba(255,0,0,0.5);
+   }
+   .rlob-document-status-summary .document-status-checked:hover{
+       background-color:rgba(0,255,0,0.6);
+   }
+   .rlob-document-status-summary .document-status-not-confirmed:hover{
+       background-color:#c5b640;
+   }
    .rlob-document-status-summary .outer {
        position:relative;
 
@@ -23,6 +43,7 @@
    }
 
    .rlob-document-status-summary .inner {
+
        overflow-x:scroll;
        overflow-y:visible;
        width:90%;
@@ -37,7 +58,11 @@
 
 
    .rlob-document-status-summary .document-status-table a{
-       color: #000000;
+       color: rgba(0, 0, 0, 0.58);
+       font-size: 10pt;
+       font-weight: bold;
+       /*font-size: 8pt;*/
+       /*color: #4ea393;*/
        /*font-weight: bold;*/
    }
 
@@ -69,8 +94,8 @@
 
 
 </style>
-
-
+<button ng-click="previousWeek();">previous</button>
+<button ng-click="nextWeek();">next</button>
 <div class="portlet light rlob-document-status-summary">
 
     <div class="portlet-title">
