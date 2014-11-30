@@ -14,6 +14,7 @@ angular.module('app.loggedIn.rlob.adminDocumentStatusSummary.controller',[])
         var dateStartWeek=rlobDate.getDateStartWeek(new Date());
         var dateEndWeek=rlobDate.getDateEndWeek(new Date());
 
+
         $scope.nextWeek=function(){
             $scope.listDaysOfWeek={};
             $scope.listHoursInDay={};
@@ -38,8 +39,10 @@ angular.module('app.loggedIn.rlob.adminDocumentStatusSummary.controller',[])
          * Get document Status in week
          * tannv.dts@gmail.com
          */
+        $scope.datesDisplay='';
         $scope.getDocumentStatusSummaryInWeek=function(dateStart,dateEnd)
         {
+            $scope.datesDisplay=dateStart.format("DD/MM/YYYY")+"-"+dateEnd.format("DD/MM/YYYY");
             rlobService.getDocumentStatusSummary(dateStart.format("YYYY/MM/DD"),dateEnd.format("YYYY/MM/DD")).then(function(data){
 
                 if(data.status=='success')
