@@ -120,3 +120,8 @@ tannv.dts@gmail.com*/
 .rlob-document-status-summary .document-status-table tr:first-child th{
     border-top: none;
 }
+
+.rlob-document-status-summary .navigator-panel{
+    font-size: 14pt;
+    display: inline;
+}

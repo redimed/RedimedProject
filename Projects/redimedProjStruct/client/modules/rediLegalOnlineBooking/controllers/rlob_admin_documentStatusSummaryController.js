@@ -40,13 +40,15 @@ angular.module('app.loggedIn.rlob.adminDocumentStatusSummary.controller',[])
          * tannv.dts@gmail.com
          */
         $scope.datesDisplay='';
+        $scope.numberOfBooking=0;
         $scope.getDocumentStatusSummaryInWeek=function(dateStart,dateEnd)
         {
             $scope.datesDisplay=dateStart.format("DD/MM/YYYY")+"-"+dateEnd.format("DD/MM/YYYY");
             rlobService.getDocumentStatusSummary(dateStart.format("YYYY/MM/DD"),dateEnd.format("YYYY/MM/DD")).then(function(data){
-
+                $scope.numberOfBooking=0;
                 if(data.status=='success')
                 {
+                    $scope.numberOfBooking=data.data.length;
                     for(var i=0;i<data.data.length;i++)
                     {
                         //get list days of weeks

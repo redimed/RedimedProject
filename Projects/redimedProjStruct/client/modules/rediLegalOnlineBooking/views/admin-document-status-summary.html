@@ -3,21 +3,26 @@
 
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-check font-green-sharp"></i>
+            <i class="fa fa-table font-green-sharp"></i>
             <span class="caption-subject font-green-sharp bold uppercase">Document Status Summary
 
             </span>
         </div>
     </div>
 
-    <div style="display: inline">
+    <div style="text-align: center;margin:20px;">
+        <div class="navigator-panel">
+            <a class="btn  " ng-click="previousWeek();"><i class="fa fa-backward font-green-sharp"></i></a>
+            <div style="display: inline;color: #439383">{{datesDisplay}}</div>
+            <a class="btn  " ng-click="nextWeek();"><i class="fa fa-forward font-green-sharp"></i></a>
+        </div>
 
-        <a class="btn btn-sm " ng-click="previousWeek();"><i class="fa fa-backward font-green-sharp"></i></a>
-        <div style="display: inline">{{datesDisplay}}</div>
-        <a class="btn btn-sm " ng-click="nextWeek();"><i class="fa fa-forward font-green-sharp"></i></a>
+    </div>
+    <div style="text-align: center;color: #439383" ng-hide="numberOfBooking>0">
+        No Data
     </div>
 
-    <div class="outer">
+    <div class="outer" ng-show="numberOfBooking>0">
         <div class="inner">
             <table class="document-status-table">
 
@@ -53,6 +58,7 @@
             </table>
         </div>
     </div>
+
     <!--<div class="actions">-->
 
 
