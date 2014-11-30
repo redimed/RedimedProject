@@ -38,6 +38,10 @@ module.exports = function(sequelize, DataTypes){
 				mdtAppointment.belongsTo(models.Patient,{
 					as: 'Patient', foreignKey: 'Patient_id'
 				});
+
+				mdtAppointment.belongsTo(models.Doctor,{
+					as: 'Doctor', foreignKey: 'DOCTOR_ID'
+				});
 			}
 		}// end association
 	});

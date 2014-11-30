@@ -660,11 +660,12 @@ angular.module("app.directive.common", [])
         scope: {
             options: '=options',
             row_click: '=rowclick',
-            row_class: '=rowclass'
+            row_class: '=rowclass',
+            num_rows: '=numrows'
         },
         controller: function ($scope, $element, $attrs) {
             var options = $scope.options;
-            console.log(options)
+            // console.log(options)
             if(!options) return;
             $scope.search = {};
             
@@ -690,7 +691,12 @@ angular.module("app.directive.common", [])
             
             var processData = function(data){
                 $scope.data.items = data.list;
-                $scope.page_data.totalItems = data.count;
+                var oldTotal =  $scope.page_data.totalItems;
+
+                if(oldTotal != data.count) {
+                    $scope.page_data.totalItems = data.count;
+                    $scope.page_data.currentPage = 1;
+                }
             }
 
             $scope.ajaxGetData = function () {
@@ -731,8 +737,12 @@ angular.module("app.directive.common", [])
                     totalItems: 0,
                     currentPage: 1,
                     maxSize: 5, // max size of pagination
-                    itemPerPage: 4
+                    itemPerPage: 5
                 };
+
+                if($scope.num_rows) {
+                   $scope.page_data.itemPerPage = $scope.num_rows;
+                }
 
                 if (options.api) {
                     $scope.ajaxGetData();

@@ -26,7 +26,18 @@ module.exports = function(sequelize, DataTypes){
         updatedAt: "Last_update_date",
         classMethods: {
             associate: function (models) {
-                mdtInstance.hasMany(models.Department, {as: 'Departments', foreignKey: 'POPULAR_HEADER_ID', through: 'cln_dept_item_lists'});
+                
+                mdtInstance.hasMany(models.Department, {
+                    as: 'Departments',
+                    foreignKey: 'POPULAR_HEADER_ID', 
+                    through: 'cln_dept_item_lists'
+                });
+
+                mdtInstance.hasMany(models.InvItem, {
+                    as: 'Items', 
+                    foreignKey: 'POPULAR_HEADER_ID', 
+                    through: models.InvItemLine
+                });
             }
         }
     });

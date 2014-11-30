@@ -3,7 +3,8 @@ module.exports = function (sequelize, DataTypes) {
         'ITEM_ID': {
             type: DataTypes.INTEGER(11),
             primaryKey: true,
-            autoIncrement: true, },
+            autoIncrement: true, 
+        },
         'ITEM_NAME': {
             type: DataTypes.STRING(5000),
         },
@@ -169,7 +170,18 @@ module.exports = function (sequelize, DataTypes) {
         updatedAt: "Last_update_date",
         classMethods: {
             associate: function (models) {
-                mdtInstance.hasMany(models.Appointment, {as: 'Appointments', foreignKey: 'CLN_ITEM_ID', through: models.mdtApptItems});
+                  mdtInstance.hasMany(models.Appointment, {
+                    as: 'Appointments', 
+                    foreignKey: 'CLN_ITEM_ID',
+                    through: models.mdtApptItems
+                });
+
+                 mdtInstance.hasMany(models.InvItemHeader, {
+                    as: 'Headers', 
+                    foreignKey: 'ITEM_ID',
+                    through: models.InvItemLine
+                });
+              
             }
         }
     });

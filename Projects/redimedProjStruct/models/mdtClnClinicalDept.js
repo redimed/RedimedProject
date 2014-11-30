@@ -26,7 +26,9 @@ module.exports = function(sequelize, DataTypes){
                     as: 'Doctors', foreignKey: 'CLINICAL_DEPT_ID'
                 });
                 mdtInstance.hasMany(models.InvItemHeader, {
-                    as: 'ItemLists', foreignKey: 'CLINICAL_DEPT_ID', through: 'cln_dept_item_lists'
+                    as: 'ItemLists', 
+                    foreignKey: 'CLINICAL_DEPT_ID', 
+                    through: 'cln_dept_item_lists'
                 });
             }
         }

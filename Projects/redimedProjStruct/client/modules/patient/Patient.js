@@ -35,7 +35,6 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-
     .state("loggedIn.patient.detail", {
         url: "/:patient_id/detail",
         views: {
