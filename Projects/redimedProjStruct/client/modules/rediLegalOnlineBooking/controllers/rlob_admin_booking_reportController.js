@@ -63,6 +63,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
         $scope.accordionStatus={
             status1:true
         }
+        $scope.isAdminUpload=true;
 
         $scope.removeSelectedBooking=function()
         {

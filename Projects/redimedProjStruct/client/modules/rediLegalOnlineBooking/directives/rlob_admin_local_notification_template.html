@@ -21,34 +21,44 @@
 <div ng-show="selectedBooking" class="action">
     <h2 style="margin:10px;">Selected Booking Info:</h2>
 
-    <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
-    <accordion >
-        <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
-            <accordion-heading>
-                <h3 class="panel-title">Documents</h3>
-            </accordion-heading>
-            <div>
-                <!--files-update-flag
-                tham chieu toi cung mot bien se giup dong bo hoa giua upload va download
-                -->
-                <rlob-file-download selected-booking="selectedBooking"
-                                    booking-type="bookingType"
-                                    is-admin-get-files="isAdminGetFiles"
-                                    files-update-flag="filesUpdateFlag"
-                        >
-                </rlob-file-download>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <rlob-change-document-status selected-document="selectedBooking"></rlob-change-document-status>
+            <accordion >
+                <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
+                    <accordion-heading>
+                        <h3 class="panel-title">Documents</h3>
+                    </accordion-heading>
+                    <div>
+                        <!--files-update-flag
+                        tham chieu toi cung mot bien se giup dong bo hoa giua upload va download
+                        -->
+                        <rlob-file-download selected-booking="selectedBooking"
+                                            booking-type="bookingType"
+                                            is-admin-get-files="isAdminGetFiles"
+                                            files-update-flag="filesUpdateFlag"
+                                >
+                        </rlob-file-download>
 
-                <rlob-upload
-                        selected-booking="selectedBooking"
-                        files-update-flag="filesUpdateFlag"
-                        is-admin-upload="isAdminUpload">
-                </rlob-upload>
+                        <rlob-upload
+                                selected-booking="selectedBooking"
+                                files-update-flag="filesUpdateFlag"
+                                is-admin-upload="isAdminUpload">
+                        </rlob-upload>
 
-            </div>
-        </accordion-group>
-    </accordion>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
+            <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
+        </div>
+    </div>
 
-    <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
+
+
+
 </div>
 
 

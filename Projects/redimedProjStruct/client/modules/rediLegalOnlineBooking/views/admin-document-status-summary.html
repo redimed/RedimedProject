@@ -1,0 +1,132 @@
+
+<div class="portlet light rlob-document-status-summary">
+
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-table font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">Document Status Summary
+
+            </span>
+        </div>
+    </div>
+
+    <div style="text-align: center;margin:20px;">
+        <div class="navigator-panel">
+            <a class="btn  " ng-click="previousWeek();"><i class="fa fa-backward font-green-sharp"></i></a>
+            <div style="display: inline;color: #439383">{{datesDisplay}}</div>
+            <a class="btn  " ng-click="nextWeek();"><i class="fa fa-forward font-green-sharp"></i></a>
+        </div>
+
+    </div>
+    <div style="text-align: center;color: #439383" ng-hide="numberOfBooking>0">
+        No Data
+    </div>
+
+    <div class="outer" ng-show="numberOfBooking>0">
+        <div class="inner">
+            <table class="document-status-table">
+
+                <tr>
+                    <th></th>
+                    <td  ng-repeat="(key,value) in listHoursInDay">
+                        {{key}}
+                    </td>
+                </tr>
+
+                <tr ng-repeat="(day_key,day_data) in listDays">
+
+                    <th >
+                        {{day_data.DISPLAY}}
+                    </th>
+                    <td ng-repeat="(time_key,time_data) in day_data.LIST">
+                        <!--{{time_key}}-->
+
+                        <div class="row" ng-repeat="(booking_key,booking_data) in time_data">
+                            <div class="col-md-12" >
+                                <a ng-class="booking_data.STYLE_CLASS" ng-click="getBookingDetail(booking_data.BOOKING_ID);">{{booking_data.WRK_SURNAME}}</a>
+
+                            </div>
+
+                            <!-- <div class="col-md-12" style=" word-wrap:normal">
+
+                            </div> -->
+                        </div>
+
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <!--<div class="actions">-->
+
+
+
+        <!--<div class="table-responsive" style="overflow-x: scroll;">-->
+            <!---->
+            <!---->
+            <!---->
+        <!--</div>-->
+
+    <!--</div>-->
+</div>
+
+<div  id="rlob-booking-detail-popup" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Booking Details</h4>
+            </div>
+
+            <div class="modal-body">
+                <div ng-show="selectedBooking" class="action">
+                    <h2 style="margin:10px;">Selected Booking Info:</h2>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <rlob-change-document-status selected-document="selectedBooking"></rlob-change-document-status>
+                            <accordion >
+                                <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
+                                    <accordion-heading>
+                                        <h3 class="panel-title">Documents</h3>
+                                    </accordion-heading>
+                                    <div>
+                                        <!--files-update-flag
+                                        tham chieu toi cung mot bien se giup dong bo hoa giua upload va download
+                                        -->
+                                        <rlob-file-download selected-booking="selectedBooking"
+                                                            booking-type="bookingType"
+                                                            is-admin-get-files="isAdminGetFiles"
+                                                            files-update-flag="filesUpdateFlag"
+                                                >
+                                        </rlob-file-download>
+
+                                        <rlob-upload
+                                                selected-booking="selectedBooking"
+                                                files-update-flag="filesUpdateFlag"
+                                                is-admin-upload="isAdminUpload">
+                                        </rlob-upload>
+
+                                    </div>
+                                </accordion-group>
+                            </accordion>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+
+                            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
+                            <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

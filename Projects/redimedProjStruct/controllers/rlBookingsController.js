@@ -188,15 +188,16 @@ module.exports =
     {
         var fromDateKey=req.query.fromDateKey;
         var toDateKey=req.query.toDateKey;
-        var doctorKey=req.query.doctorKey;
-        var workerKey=req.query.workerKey;
         var doctorId=req.query.doctorId?req.query.doctorId:null;
         var bookingType=req.query.bookingType;
+        var doctorKey=req.query.doctorKey?req.query.doctorKey:'%';
+        var workerKey=req.query.workerKey?req.query.workerKey:'%';
+        var documentStatusKey=req.query.documentStatusKey?req.query.documentStatusKey:'%';
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+doctorId);
         var sql=
             " SELECT 	booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+
             " 	booking.`RL_TYPE_ID`,`rltype`.`Rl_TYPE_NAME`,booking.`SPECIALITY_ID`,spec.`Specialties_name`,                                                "+
-            " 	booking.`DOCTOR_ID`,doctor.`NAME`,booking.`SITE_ID`,redi.`Site_name`,booking.`WRK_SURNAME`,                                                  "+
+            " 	booking.`DOCTOR_ID`,doctor.`NAME`,booking.`SITE_ID`,redi.`Site_name`,booking.`WRK_SURNAME`, booking.DOCUMENT_STATUS,                                                  "+
             " 	calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID,                                                                                               "+
             " 	CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,               "+
             " 	CONCAT(HOUR(calendar.`From_time`),':',MINUTE(calendar.`From_time`)) AS APPOINTMENT_TIME,                                                     "+
@@ -214,11 +215,11 @@ module.exports =
             "	AND                                                                                                                                          "+
             "	`doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                                       "+
             "	AND                                                                                                                                          "+
-            "	`booking`.`WRK_SURNAME` LIKE CONCAT('%',?,'%')                                                                                               "+
+            "	`booking`.`WRK_SURNAME` LIKE CONCAT('%',?,'%') and `booking`.DOCUMENT_STATUS LIKE ?                                                                                              "+
             (doctorId?" AND booking.DOCTOR_ID=? ":' ')+
             " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC                                                                 "
         req.getConnection(function(err,connection) {
-            var key_result=connection.query(sql,doctorId?[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,doctorId]:[bookingType,fromDateKey,toDateKey,doctorKey,workerKey],function(err,rows){
+            var key_result=connection.query(sql,doctorId?[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey,doctorId]:[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey],function(err,rows){
                 if(err)
                 {
                     res.json({status:"fail"});
@@ -1049,7 +1050,70 @@ module.exports =
                 }
             });
         });
-    }
+    },
 
+    /**
+     * Get document status sumary list
+     * tannv.dts@gmail.com
+     *
+     */
+    getDocumentStatusSummary:function(req,res)
+    {
+        var fromDate=req.query.fromDate?req.query.fromDate:'';
+        var toDate=req.query.toDate?req.query.toDate:'';
+        var sql=
+            " SELECT 	booking.*                                                         "+
+            " FROM `rl_bookings` booking                                                  "+
+            " WHERE booking.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)   "+
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC                                     ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[fromDate,toDate],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    },
+    //chien change document status
+    //phanquocchien.c1109g@gmail.com
+    lob_change_documents_status:function(req,res)
+    {
+        console.log(JSON.stringify(req.body));
+        var bookingId=req.body.bookingId;
+        var status=req.body.status;
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(
+                'UPDATE `rl_bookings` booking SET booking.`DOCUMENT_STATUS`=? WHERE booking.`BOOKING_ID`=?'
+                ,[status,bookingId],function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        res.json({status:'success'});
+                    }
+
+                });
+        });
+    }
 
 }

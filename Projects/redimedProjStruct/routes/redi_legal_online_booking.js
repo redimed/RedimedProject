@@ -46,6 +46,7 @@ app.post('/api/rlob/rl_bookings/list',rlBookingsController.list);//co su dung
 app.post('/api/rlob/rl_bookings/detail',rlBookingsController.detail);//co su dung
 app.post('/api/rlob/rl_bookings/get-booking-by-id',rlBookingsController.getBookingById);
 app.post('/api/rlob/rl_bookings/lob-change-status',rlBookingsController.lob_change_status);
+app.post('/api/rlob/rl_bookings/lob-change-documents-status',rlBookingsController.lob_change_documents_status);//chien change Document
 app.get('/api/rlob/rl_bookings/send-email',rlBookingsController.sendEmail);
 app.get('/api/rlob/rl_bookings/admin/filter-booking',rlBookingsController.lob_filter_booking);
 app.post('/api/rlob/rl_bookings/admin/change-appointment-calendar',rlBookingsController.changeAppointmentCalendar);
@@ -64,6 +65,7 @@ app.post('/api/rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-not-change-status',rlBookingsController.getPassBookingNotChangeStatus);
 app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document',rlBookingsController.getUpcommingBookingHaveNotClientDocument);
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);
+app.get('/api/rlob/rl_bookings/admin/get-document-status-summary',rlBookingsController.getDocumentStatusSummary);
 
 //rl_booking_files
 app.get('/api/rlob/rl_booking_files/get-new-key',rlBookingFilesController.getNewKey);

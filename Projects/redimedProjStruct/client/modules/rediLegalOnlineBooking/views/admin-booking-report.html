@@ -1,30 +1,34 @@
+<!--chien-->
+<!--phanquocchien.c1109g@gmail.com-->
 <style type="text/css">
-    /*.portlet.box > .portlet-title {*/
-        /*border-bottom: 1px solid white;*/
-        /*padding: 0px 10px;*/
-        /*margin-bottom: 0;*/
-        /*color: #fff;*/
-    /*}*/
-    /*.portlet.box.grey-cascade > .portlet-title > .caption {*/
-        /*color: white;*/
-    /*}*/
-    /*a {*/
-        /*text-shadow: none;*/
+    .portlet.box > .portlet-title {
+        border-bottom: 1px solid white;
+        padding: 0px 10px;
+        margin-bottom: 0;
+        color: #fff;
+    }
+    .portlet.box.grey-cascade > .portlet-title > .caption {
+        color: white;
+    }
+    a {
+        text-shadow: none;
         /*color: #ffffff;*/
-    /*}*/
-    /*.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {*/
-        /*color: #555;*/
-        /*cursor: default;*/
-        /*background-color: #fff;*/
-        /*border: none;*/
-        /*border-bottom-color: transparent;*/
-        /*border-top: 2px solid #f1c40f;*/
-    /*}*/
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+        color: #555;
+        cursor: default;
+        background-color: #fff;
+        border: none;
+        border-bottom-color: transparent;
+        border-top: 2px solid #F1310F;
+        font-weight: normal;
+    }
     .rlob-tab-font-color{
         color: white;
     }
-    .rlob-tab-font-color:hover{
-        color: blue;
+    .nav-tabs > li > a, .nav-pills > li > a {
+        font-size: 14px;
+        height: 46px;
     }
 
 </style>
@@ -55,7 +59,7 @@
     <h2 style="margin:10px;">Selected Booking Info:</h2>
     <div class="row">
         <div class="col-md-6 col-sm-6">
-            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
+            <rlob-change-document-status selected-document="selectedBooking"></rlob-change-document-status>
             <accordion >
                 <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
                     <accordion-heading>
@@ -83,6 +87,8 @@
             </accordion>
         </div>
         <div class="col-md-6 col-sm-6">
+
+            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
             <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
         </div>
     </div>

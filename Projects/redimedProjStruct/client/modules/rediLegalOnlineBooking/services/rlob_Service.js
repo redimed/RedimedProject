@@ -62,7 +62,12 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.all('rlob/rl_bookings/lob-change-status');
             return result.post({bookingId:bookingId,status:status});
         }
-	
+	    //chien change document status
+        rlobService.changeDocumentStatus=function(bookingId,status)
+        {
+            var result=api.all('rlob/rl_bookings/lob-change-documents-status');
+            return result.post({bookingId:bookingId,status:status});
+        }
 	    //chien Upcomming booking
         rlobService.getCountReportUpcommingBookings=function(bookingType,doctorId,filterInfo){
             var TotalBookings=api.all('rlob/rl_bookings/count-report-upcomming-bookings');
@@ -116,6 +121,12 @@ angular.module('app.loggedIn.rlob.services',[])
         rlobService.getItemsOfPageReportPassBookingHaveNotResult=function(info){
             var result=api.all('rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have-not-result');
             return result.post({bookingType:info.bookingType,doctorId:info.doctorId,pageIndex:info.pageIndex,itemsPerPage:info.itemsPerPage,searchKeys:info.searchKeys});
+        }
+
+        rlobService.getDocumentStatusSummary=function(fromDate,toDate)
+        {
+            var result=api.one('rlob/rl_bookings/admin/get-document-status-summary');
+            return result.get({fromDate:fromDate,toDate:toDate});
         }
 
 

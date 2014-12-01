@@ -1,0 +1,127 @@
+.rob-appointment-group-site
+{
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.rob-appointment-group-doctor
+{
+    margin-bottom: 10px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+
+/*Admin document status summary page
+tannv.dts@gmail.com*/
+
+.rlob-document-status-summary .booking-item{
+    padding: 5px;
+
+    /*width: 150px;*/
+
+}
+
+.rlob-document-status-summary .booking-item:hover{
+    box-shadow: 1px 2px 2px 1px #888888;
+}
+.rlob-document-status-summary .booking-item a:hover{
+    color: white;
+    padding: 5px;
+
+    /*width: 150px;*/
+
+}
+
+.rlob-document-status-summary .document-status-not-confirmed{
+    background-color:rgba(255,255,0,0.29);
+}
+.rlob-document-status-summary .document-status-checked{
+    background-color:rgba(0,255,0,0.29);
+}
+.rlob-document-status-summary .document-status-no-documents{
+    background-color:rgba(255,0,0,0.29);
+}
+.rlob-document-status-summary .document-status-no-documents:hover{
+    background-color:rgba(255,0,0,0.5);
+}
+.rlob-document-status-summary .document-status-checked:hover{
+    background-color:rgba(0,255,0,0.6);
+}
+.rlob-document-status-summary .document-status-not-confirmed:hover{
+    background-color:#c5b640;
+}
+.rlob-document-status-summary .outer {
+    position:relative;
+
+
+}
+
+.rlob-document-status-summary .inner {
+
+    overflow-x:scroll;
+    overflow-y:visible;
+    margin-left:100px;
+}
+
+.rlob-document-status-summary .document-status-table {
+    table-layout: fixed;
+    /*width: 100%;*/
+
+}
+
+
+.rlob-document-status-summary .document-status-table td{
+    background-color:rgba(78, 163, 157, 0.025);
+    width: 165px;
+    text-align:center;
+    vertical-align:middle;
+    border: 1px solid #eeeeee;
+}
+
+.rlob-document-status-summary .document-status-table td a{
+    color: rgba(0, 0, 0, 0.58);
+    font-size: 10pt;
+    font-weight: bold;
+    width: 165px;
+    overflow: hidden;
+    display: block;
+    margin: 10px;
+
+    /*font-size: 8pt;*/
+    /*color: #4ea393;*/
+    /*font-weight: bold;*/
+
+}
+
+.rlob-document-status-summary .document-status-table th {
+    border-top: 1px solid #eeeeee;
+    color: #4da292;
+    position:absolute;
+    left:0;
+    width:100px;
+}
+
+
+
+.rlob-document-status-summary .document-status-table tr:first-child td{
+    font-weight: bold;
+    color: #4da292;
+    background-color: transparent;
+    border-top: none;
+}
+
+.rlob-document-status-summary .document-status-table tr:first-child th{
+    border-top: none;
+}
+
+.rlob-document-status-summary .navigator-panel{
+    font-size: 14pt;
+    display: inline;
+}
