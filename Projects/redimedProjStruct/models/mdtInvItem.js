@@ -173,7 +173,7 @@ module.exports = function (sequelize, DataTypes) {
                   mdtInstance.hasMany(models.Appointment, {
                     as: 'Appointments', 
                     foreignKey: 'CLN_ITEM_ID',
-                    through: models.mdtApptItems
+                    through: models.ApptItems
                 });
 
                  mdtInstance.hasMany(models.InvItemHeader, {

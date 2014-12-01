@@ -32,7 +32,7 @@ module.exports = function(sequelize, DataTypes){
 				});
 
 				mdtAppointment.hasMany(models.InvItem, {
-					as: 'Items', foreignKey: 'cal_id', through: models.mdtApptItems
+					as: 'Items', foreignKey: 'cal_id', through: models.ApptItems
 				}); 
 
 				mdtAppointment.belongsTo(models.Patient,{

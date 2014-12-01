@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-    var mdtInstance = sequelize.define("mdtApptItems", {
+    var mdtInstance = sequelize.define("ApptItems", {
         'appt_item_id': { 
             type: DataTypes.INTEGER(11),  
             primaryKey: true,
