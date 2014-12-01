@@ -1,5 +1,11 @@
 angular.module('app.loggedIn.document.addPatient.controllers',[])
     .controller("addPatientController",function($scope,$filter,PatientService,ReceptionistService,toastr,$http,$cookieStore,$state,ConfigService) {
+        $scope.params = {
+            permission: {
+                create: true,
+                edit: false
+            }
+        };
         // INSERT MODULE
         // STEP
         $scope.modelObjectMap = {};
