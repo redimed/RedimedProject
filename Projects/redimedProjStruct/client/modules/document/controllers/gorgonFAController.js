@@ -52,117 +52,70 @@ angular.module('app.loggedIn.document.gorgonFA.controllers',[])
         var sex = $scope.patientInfo.Sex;
         //============================================================================
         // Math on interface
-        $scope.c_Left3 = function(){
-            if($scope.info.c_Grip3 == 1)
-            {
-                console.log($scope.info.c_Left3);
-                if($scope.info.c_Left3 > 0)
-                {
-                    if(sex === "male")
-                    {
-                        if($scope.info.c_Left3 < 40)
-                        {
-                            $scope.info.c_Result3 = 1;
-                        }else if($scope.info.c_Left3 >= 40 && $scope.info.c_Left3 <= 45)
-                        {
-                            $scope.info.c_Result3 = 2;
-                        }else if($scope.info.c_Left3 >= 46 && $scope.info.c_Left3 <= 51)
-                        {
-                            $scope.info.c_Result3 = 3;
-                        }else if($scope.info.c_Left3 >= 52 && $scope.info.c_Left3 <= 55)
-                        {
-                            $scope.info.c_Result3 = 4;
-                        }else
-                        {
-                            $scope.info.c_Result3 = 5;
-                        }
-                    }else
-                    {
-                        if($scope.info.c_Left3 < 23)
-                        {
-                            $scope.info.c_Result3 = 1;
-                        }else if($scope.info.c_Left3 >= 23 && $scope.info.c_Left3 <= 26)
-                        {
-                            $scope.info.c_Result3 = 2;
-                        }else if($scope.info.c_Left3 >= 27 && $scope.info.c_Left3 <= 29)
-                        {
-                            $scope.info.c_Result3 = 3;
-                        }else if($scope.info.c_Left3 >= 30 && $scope.info.c_Left3 <= 33)
-                        {
-                            $scope.info.c_Result3 = 4;
-                        }else
-                        {
-                            $scope.info.c_Result3 = 5;
-                        }
-                    }
-                }else if($scope.info.c_Left3 == '')
-                {
-                    $scope.info.c_Result3 = 0;
-                }else if($scope.info.c_Left3 == null)
-                {
-                    $scope.info.c_Result3 = 0;
-                }
-
-            }
-
-        };
-
         $scope.print = function(){
             $window.location.href = '/api/document/gorgonFA/print/7';
         }
 
-        $scope.c_Right3 = function(){
-            if($scope.info.c_Grip3 == 0)
+        $scope.grip = function(){
+            console.log(sex);
+            var value = 0;
+            if($scope.info.c_Right3 > 0 || $scope.info.c_Left3 > 0)
             {
-                if($scope.info.c_Right3 > 0)
+                if($scope.info.c_Right3 * 1 >= $scope.info.c_Left3)
                 {
-                    if(sex === "male")
+                    value = $scope.info.c_Right3;
+                }else if ($scope.info.c_Right3*1 < $scope.info.c_Left3) {
+                    value = $scope.info.c_Left3;
+                }
+                console.log(value);
+                if(sex == "Male")
+                {
+                    if(value < 40)
                     {
-                        if($scope.info.c_Right3 < 40)
-                        {
-                            $scope.info.c_Result3 = 1;
-                        }else if($scope.info.c_Right3 >= 40 && $scope.info.c_Right3 <= 45)
-                        {
-                            $scope.info.c_Result3 = 2;
-                        }else if($scope.info.c_Right3 >= 46 && $scope.info.c_Right3 <= 51)
-                        {
-                            $scope.info.c_Result3 = 3;
-                        }else if($scope.info.c_Right3 >= 52 && $scope.info.c_Right3 <= 55)
-                        {
-                            $scope.info.c_Result3 = 4;
-                        }else
-                        {
-                            $scope.info.c_Result3 = 5;
-                        }
+                        $scope.info.c_Result3 = 1;
+                    }else if(value >= 40 && value <= 45)
+                    {
+                        $scope.info.c_Result3 = 2;
+                    }else if(value >= 46 && value <= 51)
+                    {
+                        $scope.info.c_Result3 = 3;
+                    }else if(value >= 52 && value <= 55)
+                    {
+                        $scope.info.c_Result3 = 4;
                     }else
                     {
-                        if($scope.info.c_Right3 < 23)
-                        {
-                            $scope.info.c_Result3 = 1;
-                        }else if($scope.info.c_Right3 >= 23 && $scope.info.c_Right3 <= 26)
-                        {
-                            $scope.info.c_Result3 = 2;
-                        }else if($scope.info.c_Right3 >= 27 && $scope.info.c_Right3 <= 29)
-                        {
-                            $scope.info.c_Result3 = 3;
-                        }else if($scope.info.c_Right3 >= 30 && $scope.info.c_Right3 <= 33)
-                        {
-                            $scope.info.c_Result3 = 4;
-                        }else
-                        {
-                            $scope.info.c_Result3 = 5;
-                        }
+                        $scope.info.c_Result3 = 5;
                     }
-                }else if($scope.info.c_Right3 == '')
+                }else
                 {
-                    $scope.info.c_Result3 = 0;
-                }else if($scope.info.c_Right3 == null)
-                {
-                    $scope.info.c_Result3 = 0;
+                    if(value < 23)
+                    {
+                        $scope.info.c_Result3 = 1;
+                    }else if(value >= 23 && value <= 26)
+                    {
+                        $scope.info.c_Result3 = 2;
+                    }else if(value >= 27 && value <= 29)
+                    {
+                        $scope.info.c_Result3 = 3;
+                    }else if(value >= 30 && value <= 33)
+                    {
+                        $scope.info.c_Result3 = 4;
+                    }else
+                    {
+                        $scope.info.c_Result3 = 5;
+                    }
                 }
-
+            } else if ($scope.info.c_Left3 == '') {
+                $scope.info.c_Result3 = 0;
+            } else if ($scope.info.c_Left3 == null) {
+                $scope.info.c_Result3 = 0;
+            }else if($scope.info.c_Right3 == '')
+            {
+                $scope.info.c_Result3 = 0;
+            }else if($scope.info.c_Right3 == null)
+            {
+                $scope.info.c_Result3 = 0;
             }
-
         };
 
         $scope.d_Push_ups = function(){
