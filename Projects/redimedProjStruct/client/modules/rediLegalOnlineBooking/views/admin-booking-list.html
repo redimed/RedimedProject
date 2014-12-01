@@ -263,7 +263,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-2">
 
+            <select class="form-control" ng-model="lobAdminSearch.documentType">
+                <option value="">All</option>
+                <option value="No documents">No documents</option>
+                <option value="Checked">Checked</option>
+                <option value="Not confirmed">Not confirmed</option>
+            </select>
+        </div>
         <div class="col-md-2">
             <button type="button" class="btn btn-info" ng-click="filterBooking();">Search</button>
         </div>

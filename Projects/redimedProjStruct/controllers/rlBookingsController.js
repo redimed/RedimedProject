@@ -190,8 +190,10 @@ module.exports =
         var toDateKey=req.query.toDateKey;
         var doctorKey=req.query.doctorKey;
         var workerKey=req.query.workerKey;
+        var documentType = req.query.documentType;
         var doctorId=req.query.doctorId?req.query.doctorId:null;
         var bookingType=req.query.bookingType;
+        console.log(req.query);
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+doctorId);
         var sql=
             " SELECT 	booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+

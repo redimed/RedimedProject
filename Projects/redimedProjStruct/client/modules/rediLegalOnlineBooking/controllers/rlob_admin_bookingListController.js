@@ -11,7 +11,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.isAdminUpload=true;
         $scope.isAdminGetFiles=true;
         $scope.accordionStatus={status1:true};
-
         //-----------------------------------------------------------
 
         $scope.newAppointmentPositionFlag=false;
@@ -222,7 +221,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             fromDateKey:moment().format("DD/MM/YYYY"),
             toDateKey:moment().add(30,'d').format("DD/MM/YYYY"),
             doctorKey:null,
-            workerKey:null
+            workerKey:null,
+            documentType:''
         };
         $scope.filterBooking=function()
         {
@@ -230,6 +230,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             var toDate=moment($scope.lobAdminSearch.toDateKey,'DD/MM/YYYY');
             var doctorKey=$scope.lobAdminSearch.doctorKey!=null && $scope.lobAdminSearch.doctorKey!=undefined?$scope.lobAdminSearch.doctorKey:'';
             var workerKey=$scope.lobAdminSearch.workerKey!=null && $scope.lobAdminSearch.workerKey!=undefined?$scope.lobAdminSearch.workerKey:'';
+            var documentType = $scope.lobAdminSearch.documentType!=null && $scope.lobAdminSearch.documentType!=undefined?$scope.lobAdminSearch.documentType:'';
 
             $http({
                 method:"GET",
@@ -239,6 +240,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     toDateKey:toDate.format("YYYY-MM-DD"),
                     doctorKey:doctorKey,
                     workerKey:workerKey,
+                    documentType:documentType,
                     doctorId:$scope.doctorInfo?$scope.doctorInfo.doctor_id:null,
                     bookingType:$scope.bookingType
                 }

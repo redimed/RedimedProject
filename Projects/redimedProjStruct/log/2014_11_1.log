@@ -1,0 +1,4 @@
+Exec SQL (Mon Dec 01 2014 08:55:27 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
+Exec SQL (Mon Dec 01 2014 09:38:45 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
+Exec SQL (Mon Dec 01 2014 09:50:35 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
+Exec SQL (Mon Dec 01 2014 10:01:41 GMT+0700 (SE Asia Standard Time)): SELECT * FROM doctors WHERE (user_id = 10)
