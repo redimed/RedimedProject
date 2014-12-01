@@ -16,7 +16,7 @@ angular.module('starter', ['ionic',
   'starter.worker',
   'starter.booking',
   'ui.bootstrap',
-    'starter.NFC',
+  'starter.NFC',
   'ngCordova',
 
 ])

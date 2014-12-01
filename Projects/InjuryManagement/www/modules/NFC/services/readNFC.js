@@ -15,10 +15,6 @@ var app = {
 
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
-
-    /*
-     this runs when the device is ready for user interaction:
-     */
     onDeviceReady: function() {
 
         nfc.addTagDiscoveredListener(
@@ -31,8 +27,6 @@ var app = {
         );
         nfc.addNdefListener(
             app.onNfc
-
-
         );
         nfc.addMimeTypeListener(
             "text/plain",

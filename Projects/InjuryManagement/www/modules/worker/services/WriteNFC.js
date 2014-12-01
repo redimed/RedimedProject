@@ -17,16 +17,13 @@ var writeNFC = {
         //alert("2");
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
-
     onDeviceReady: function() {
-
         writeNFC.clear();
         nfc.addTagDiscoveredListener(
             writeNFC.onNfc, // tag successfully scanned
             function (status) { // listener successfully initialized
                 writeNFC.makeMessage();
                 writeNFC.display("Tap an NFC tag to write data");
-
             },
             function (error) { // listener fails to initialize
                 writeNFC.display("NFC reader failed to initialize "
@@ -34,7 +31,6 @@ var writeNFC = {
             }
         )
     },
-
     onNfc: function(nfcEvent) {
         //alert("4");
         writeNFC.writeTag(writeNFC.messageToWrite);
@@ -45,39 +41,30 @@ var writeNFC = {
             lineBreak = document.createElement("br");
         messageDiv.appendChild(lineBreak);
         messageDiv.appendChild(label);
-
     },
     clear: function() {
-
         messageDiv.innerHTML = "";
     },
     makeMessage: function() {
-        //alert("7");
-
-        // Put together the pieces for the NDEF message:
+        //alert("6");
         var info = {
-            PatientID:infoNFC.data.Patient_id,
-            Firstname:infoNFC.data.First_name,
-            Lastname:infoNFC.data.Sur_name,
+            Patient_id:infoNFC.data.Patient_id,
+            First_name:infoNFC.data.First_name,
+            Sur_name:infoNFC.data.Sur_name,
             DOB:infoNFC.data.DOB,
-            Phone:infoNFC.data.Mobile,
-            MedicareNo:infoNFC.data.Medicare_no,
+            Mobile:infoNFC.data.Mobile,
+            Medicare_no:infoNFC.data.Medicare_no,
             PassportorDriverslicence:"hahahahah",
-            Address:infoNFC.data.Address1
-
+            Address1:infoNFC.data.Address1
         };
-
-
         var tnf = ndef.TNF_WELL_KNOWN, // NDEF Type Name Format
             recordType = "T", // NDEF Record Type
             payload =nfc.stringToBytes(JSON.stringify(info)), // content of the record
             record, // NDEF record object
             message = []; // NDEF Message to pass to writeTag()
         record = ndef.record(tnf,recordType,[],payload);
-
         message.push(record);
         writeNFC.messageToWrite = message;
-        //writeNFC.display("made a message = " + JSON.stringify(writeNFC.messageToWrite) +"------"+ndef.RTD_TEXT);
     },
     writeTag: function(message) {
         //alert("8");
