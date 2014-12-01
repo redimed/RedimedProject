@@ -53,10 +53,9 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
         $scope.print = function(){
             $window.location.href = '/api/document/gorgonFA/print/7';
         }
-
+        var value;
         $scope.grip = function(){
-            console.log(sex);
-            var value = 0;
+            value = 0;
             if($scope.info.c_Right3 > 0 || $scope.info.c_Left3 > 0)
             {
                 if($scope.info.c_Right3 * 1 >= $scope.info.c_Left3)
@@ -65,7 +64,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                 }else if ($scope.info.c_Right3*1 < $scope.info.c_Left3) {
                     value = $scope.info.c_Left3;
                 }
-                console.log(value);
                 if(sex == "Male")
                 {
                     if(value < 40)
@@ -117,57 +115,64 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
         };
 
         $scope.d_Push_ups = function () {
-            if (sex === "male") {
-                if ($scope.info.d_Push_ups_total3 >= 1 && $scope.info.d_Push_ups_total3 <= 4) {
-                    $scope.info.d_Result3 = 1;
-                } else if ($scope.info.d_Push_ups_total3 >= 5 && $scope.info.d_Push_ups_total3 <= 8) {
-                    $scope.info.d_Result3 = 2;
-                } else if ($scope.info.d_Push_ups_total3 >= 9 && $scope.info.d_Push_ups_total3 <= 12) {
-                    $scope.info.d_Result3 = 3;
-                } else if ($scope.info.d_Push_ups_total3 >= 13 && $scope.info.d_Push_ups_total3 <= 15) {
-                    $scope.info.d_Result3 = 4;
-                } else if ($scope.info.d_Push_ups_total3 > 15) {
-                    $scope.info.d_Result3 = 5;
+            value = $scope.info.d_Push_ups_total3;
+            if(value > 0)
+            {
+                if (sex == "Male") {
+                    if (value >= 1 && value <= 4) {
+                        $scope.info.d_Result3 = 1;
+                    } else if (value >= 5 && value <= 8) {
+                        $scope.info.d_Result3 = 2;
+                    } else if (value >= 9 && value <= 12) {
+                        $scope.info.d_Result3 = 3;
+                    } else if (value >= 13 && value <= 15) {
+                        $scope.info.d_Result3 = 4;
+                    } else if (value > 15) {
+                        $scope.info.d_Result3 = 5;
+                    }
+                } else if(sex == "Female") {
+                    if (value >= 1 && value <= 2) {
+                        $scope.info.d_Result3 = 1;
+                    } else if (value >= 3 && value <= 4) {
+                        $scope.info.d_Result3 = 2;
+                    } else if (value >= 5 && value <= 6) {
+                        $scope.info.d_Result3 = 3;
+                    } else if (value >= 7 && value <= 10) {
+                        $scope.info.d_Result3 = 4;
+                    } else if (value > 10) {
+                        $scope.info.d_Result3 = 5;
+                    }
                 }
-            } else {
-                if ($scope.info.d_Push_ups_total3 >= 1 && $scope.info.d_Push_ups_total3 <= 2) {
-                    $scope.info.d_Result3 = 1;
-                } else if ($scope.info.d_Push_ups_total3 >= 3 && $scope.info.d_Push_ups_total3 <= 4) {
-                    $scope.info.d_Result3 = 2;
-                } else if ($scope.info.d_Push_ups_total3 >= 5 && $scope.info.d_Push_ups_total3 <= 6) {
-                    $scope.info.d_Result3 = 3;
-                } else if ($scope.info.d_Push_ups_total3 >= 7 && $scope.info.d_Push_ups_total3 <= 10) {
-                    $scope.info.d_Result3 = 4;
-                } else if ($scope.info.d_Push_ups_total3 > 10) {
-                    $scope.info.d_Result3 = 5;
-                }
+            }else{
+                $scope.info.d_Result3 = 0;
             }
         };
 
         $scope.aMax = function () {
-            if ($scope.info.aMax6 > 45) {
+            value = $scope.info.aMax6;
+            if (value > 45) {
                 $scope.info.aResult6 = 5;
-            } else if ($scope.info.aMax6 >= 23 && $scope.info.aMax6 <= 45) {
+            } else if (value >= 23 && value <= 45) {
                 $scope.info.aResult6 = 4;
-            } else if ($scope.info.aMax6 >= 10 && $scope.info.aMax6 <= 22) {
+            } else if (value >= 10 && value <= 22) {
                 $scope.info.aResult6 = 3;
-            } else if ($scope.info.aMax6 >= 6 && $scope.info.aMax6 <= 9) {
+            } else if (value >= 6 && value <= 9) {
                 $scope.info.aResult6 = 2;
-            } else if ($scope.info.aMax6 >= 0 && $scope.info.aMax6 <= 5) {
+            } else if (value >= 0 && value <= 5) {
                 $scope.info.aResult6 = 1;
             }
         };
 
         $scope.bMax = function () {
-            if ($scope.info.bMax6 > 23) {
+            if (value > 23) {
                 $scope.info.bResult6 = 5;
-            } else if ($scope.info.bMax6 >= 12 && $scope.info.bMax6 <= 23) {
+            } else if (value >= 12 && value <= 23) {
                 $scope.info.bResult6 = 4;
-            } else if ($scope.info.bMax6 >= 6 && $scope.info.bMax6 <= 11) {
+            } else if (value >= 6 && value <= 11) {
                 $scope.info.bResult6 = 3;
-            } else if ($scope.info.bMax6 >= 4 && $scope.info.bMax6 <= 5) {
+            } else if (value >= 4 && value <= 5) {
                 $scope.info.bResult6 = 2;
-            } else if ($scope.info.bMax6 >= 0 && $scope.info.bMax6 <= 3) {
+            } else if (value >= 0 && value <= 3) {
                 $scope.info.bResult6 = 1;
             }
         };
