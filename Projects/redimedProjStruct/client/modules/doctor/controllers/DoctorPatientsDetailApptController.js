@@ -3,6 +3,7 @@ angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
 	
 ]).controller("DoctorPatientsDetailApptController", function ($scope, $filter, $state, toastr, $cookieStore, ConfigService, DoctorService, PatientService, localStorageService) {
 
+
 	$scope.doctor_detail = {
 		permission: {create: 'no'},
 		Patient_id: localStorageService.get("patientTempInfo").Patient_id

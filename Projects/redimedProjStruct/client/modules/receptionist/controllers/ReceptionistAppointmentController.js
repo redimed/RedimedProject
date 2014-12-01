@@ -4,6 +4,13 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
 
+	$scope.params = {
+		permission: {
+			create: true,
+			edit: false
+		}
+	}
+
 	//DECLARE
 	var waitingListSelectId = "#waitingListSelectModule";
 	var appointmentPatientSearchId = "#appointmentPatientSearch";
@@ -226,9 +233,9 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 	// GO TO PATIENT
 	$scope.goToPatientDetail = function(patient, data, index){
-		localStorageService.set("apptTempInfo", {'CAL_ID': data.cals[index]});
-		localStorageService.set("patientTempInfo", patient);
-		$state.go("loggedIn.doctor.patients.detail.appt");
+		//localStorageService.set("apptTempInfo", {'CAL_ID': data.cals[index]});
+		//localStorageService.set("patientTempInfo", patient);
+		$state.go("loggedIn.patient.appointment", {cal_id: data.cals[index], patient_id: patient.Patient_id});
 	}
 	// END GO TO PATIENT
 

@@ -1,0 +1,72 @@
+<div class="portlet box red">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Item Sheet
+        </div>
+        <div class="pull-right navbar-right">
+			
+            <button ng-click="saveItemsheet()" class="btn blue"><i class="fa fa-save"></i> Save </button>
+			
+			<!-- Single button -->
+			<div class="btn-group" dropdown>
+				
+			  <button style="margin-right: 0;" type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled">
+					More <span class="caret"></span>
+			  </button>
+			  
+			  <ul class="dropdown-menu" role="menu">
+				<li><a ui-sref="loggedIn.doctor.items.add"><i class="fa fa-plus"></i> New Item </a></li>
+				<li><a ng-click="openItemSearch()"><i class="fa fa-search"></i> Search Item</a></li>
+			  </ul>
+			</div>
+        </div>
+    </div>
+    <div class="portlet-body">
+    	<!-- <pre>	{{data}}</pre> -->
+        <div class="table-scrollable">
+
+			<table class="table table-bordered items-table">
+                <tbody>
+                    <tr ng-repeat-start="cat in item_list" class="item-label">
+                        <td colspan="3" style="text-transform: uppercase;" class="text-center bold"> {{cat.cattitle}} </td>
+                    </tr>
+                    <tr ng-repeat-end ng-repeat="item in cat.list" 
+						ng-class="{success: (item.inserted && item.checked =='1'), warning: (item.inserted && item.checked =='0')} ">
+                        <td style="width: 5%">
+                            <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                        </td>
+                        <td>{{item.ITEM_CODE}}</td>
+                        <td style="width: 80%">{{item.ITEM_NAME}}</td>
+						<td style="width: 7%"><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
+                    </tr>
+					
+					<tr ng-show="extra_list.length > 0" class="item-label">
+                        <td colspan="3" style="text-transform: uppercase;" class="text-center bold"> EXTRA ITEMS </td>
+                    </tr>
+					<tr ng-repeat="item in extra_list" 
+						ng-class="{success: (!item.chosen && item.checked =='1'), warning: (!item.chosen && item.checked =='0')}">
+                        <td style="width: 5%">
+                            <input class="form-control" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                        </td>
+                        <td>{{item.ITEM_CODE}}</td>
+                        <td style="width: 85%">{{item.ITEM_NAME}}</td>
+						<td style="width: 7%"><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
+                    </tr>
+					
+                </tbody>
+            </table>
+		</div>
+	</div>
+</div>
+
+
+  <!-- POPUP SEARCH-ITEM  -->
+<div class="mdt-search" style="display: block;" ng-if="show_search_item">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="closeItemSearch()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <item-search extra="extra_list" list="item_list"></item-search>
+</div>
+ <!-- POPUP SEARCH-ITEM  -->

@@ -3,7 +3,11 @@
 */
 module.exports = function(sequelize,DataTypes){
     var Company = sequelize.define('Company',{
-        id : {type:DataTypes.INTEGER(11), primaryKey: true},
+        id : {
+            type:DataTypes.INTEGER(11), 
+            primaryKey: true,
+            autoIncrement: true
+        },
         Company_name : DataTypes.STRING(100) ,
         Industry : DataTypes.STRING(50) ,
         Addr : DataTypes.STRING(100) ,
@@ -42,7 +46,15 @@ module.exports = function(sequelize,DataTypes){
     },{
         tableName: 'companies',
         createdAt:'Creation_date',
-        updatedAt: 'Last_update_date'
+        updatedAt: 'Last_update_date',
+        classMethods: {
+            associate: function(models) {
+                Company.hasMany(models.Patient, { as: 'Workers', foreignKey: 'company_id' });
+                Company.hasMany(models.Patient, { as: 'OldWorkers', foreignKey: 'company_id',  through: 'patient_companies' });
+ 
+                Company.hasMany(models.Insurer, { as: 'Insurers', foreignKey: 'company_id', through: 'company_insurers'});
+            }
+        }
     });
 
     return Company;

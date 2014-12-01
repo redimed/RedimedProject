@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-	var mdtWaitingList = sequelize.define("mdtWaitingList", {
+	var mdtWaitingList = sequelize.define("WaitingList", {
 		id: {
 			type: DataTypes.INTEGER(11),
 			primaryKey: true,

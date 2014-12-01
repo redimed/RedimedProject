@@ -1,3 +1,5 @@
+
+
 module.exports = {
 	convertFromHoursToDateTime: function(hours){
 		date = new Date();

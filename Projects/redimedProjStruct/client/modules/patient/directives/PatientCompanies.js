@@ -1,27 +1,28 @@
 angular.module("app.loggedIn.patient.companies.directive", [])
 
-.directive("patientCompanies", function(PatientService, OutsideReferralModel){
+.directive("patientCompanies", function(PatientService, OutsideReferralModel, toastr){
 	return {
 		restrict: "EA",
 		scope: {
 			data: "@",
 		},
-		template: '<my-data-table options="data_options" rowclass="set_row_class" rowclick="">',
+		template: '<my-data-table options="data_options" rowclass="set_row_class" rowclick="row_click">',
 		controller: function($scope){
 			var data = $scope.$eval($scope.data);
 
-			console.log(data);
 			if(!data || !data.Patient_id) return;
 
-			console.log(data);
-
+			var active_item = null;
 			$scope.set_row_class = function(item) {
+				if(item.active == 'active') active_item = item;
 				return (item.active == 'active') ? 'success' : '';
 			}
 
 			$scope.row_click = function(item) {
 				PatientService.update({Patient_id: data.Patient_id, company_id: item.id}).then(function(response){
 		            if(response.status == 'success') {
+		            	item.active = 'active';
+		            	active_item.active = 'inactive';
 		                toastr.success('Save Successfully!!!', "Success");
 		            }
 		            console.log(response);

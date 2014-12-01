@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.receptionist.controller", [
     "app.loggedIn.receptionist.appointment.controller",
-    "app.loggedIn.receptionist.appointment.doctor.controller"
+    "app.loggedIn.receptionist.appointment.doctor.controller",
+    "app.loggedIn.receptionist.appointment.detail.controller"
 ])
 
 .controller("ReceptionistController", function ($scope, ConfigService) {

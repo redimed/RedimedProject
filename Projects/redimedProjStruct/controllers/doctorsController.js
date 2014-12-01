@@ -648,11 +648,18 @@ module.exports =
         var datepicker = (req.body.datepicker_map)?req.body.datepicker_map:"";
         var site = (req.body.site)?req.body.site:0;
 
+        var dept_sql = "";
+        if(dept === 0 || dept === null){
+            dept_sql = "";
+        }else{
+            dept_sql = " AND cac.clinical_dept_id="+dept;
+        }
+
         req.getConnection(function(err, connection){
             var sql = "SELECT DISTINCT cac.DOCTOR_ID, d.NAME"+
                 " FROM cln_appointment_calendar cac"+
                 " INNER JOIN doctors d ON cac.DOCTOR_ID=d.doctor_id"+
-                " AND cac.clinical_dept_id="+dept+
+                dept_sql+
                 " AND DATE(cac.FROM_TIME) LIKE '%"+datepicker+"%'"+
                 " AND cac.SITE_ID="+site+
                 " ORDER BY cac.DOCTOR_ID DESC";

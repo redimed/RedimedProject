@@ -9,6 +9,8 @@ angular.module("app.loggedIn.patient.controller", [
     "app.loggedIn.patient.detail.controller",
     
     "app.loggedIn.patient.referrals.controller",
+    "app.loggedIn.patient.appointment.controller",
+    "app.loggedIn.patient.companies.controller",
 ])
 .controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW) {
     // FOR VIEW LIST
@@ -67,16 +69,6 @@ angular.module("app.loggedIn.patient.controller", [
         Alias_First_name: '',
         Alias_Sur_name: '',
         Phone_ext: null
-    }
-
-    $scope.options = {
-        titles: ConfigService.title_option(),
-        sexes: ConfigService.sex_option(),
-        sms: ConfigService.yes_no_option(),
-        countries: ConfigService.country_option(),
-        gaps: ConfigService.yes_no_option(),
-        acc_types: ConfigService.acc_type_option(),
-        app_types: ConfigService.app_type_option()
     }
     
     $scope.mode = 'search';

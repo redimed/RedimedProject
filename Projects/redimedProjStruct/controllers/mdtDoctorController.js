@@ -12,7 +12,7 @@ module.exports = {
 		var sql = "";
 		sql = mdt_functions.commonSearch(post_fields);
 
-		db.mdtDoctor
+		db.Doctor
 		.findAndCountAll({
 			where: [sql],
 			offset: pagination.offset,
@@ -33,7 +33,7 @@ module.exports = {
 	},// end post search
 
 	getDropdown: function(req, res){
-		db.mdtDoctor
+		db.Doctor
 		.findAndCountAll({
 			where: {Isenable: 1},
 			attributes: ['doctor_id', 'NAME']

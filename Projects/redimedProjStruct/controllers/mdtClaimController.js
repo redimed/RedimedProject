@@ -2,6 +2,26 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
+	postAdd: function(req, res){
+		var postData = req.body;
+
+		db.mdtClaim.create(postData)
+		.success(function(created){
+			if(!created){
+				res.json(500, {"status": "error", "message": "Database Error"});
+			}else{
+				db.mdtClaim.find({
+					order: "Claim_id DESC" 
+				})
+				.success(function(claim){
+					res.json({"status": "success", "data": claim});
+				})
+			}
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	},
 	postById: function(req, res){
 		// POST
 		var Patient_id = req.body.Patient_id;

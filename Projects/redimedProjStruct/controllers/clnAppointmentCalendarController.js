@@ -163,6 +163,14 @@ module.exports =
         var datepicker = (req.body.datepicker_map)?req.body.datepicker_map:"";
         var dept = (req.body.dept)?req.body.dept:0;
 
+        var sql_dept;
+        if(dept === 0 || dept === null){
+            sql_dept = "";
+        }else{
+            sql_dept = " WHERE cac.CLINICAL_DEPT_ID="+dept;
+        }
+
+
         var sql = "SELECT cac.FROM_TIME, cac.TO_TIME,"+
                 " GROUP_CONCAT(cac.DOCTOR_ID ORDER BY cac.DOCTOR_ID) AS doctor,"+
                 " GROUP_CONCAT(d.NAME ORDER BY cac.DOCTOR_ID) AS doctor_name,"+
@@ -171,7 +179,7 @@ module.exports =
                 " GROUP_CONCAT(IFNULL(cac.PATIENTS, 'No Patient') ORDER BY cac.DOCTOR_ID separator '|') AS PATIENTS"+
                 " FROM cln_appointment_calendar cac"+
                 " INNER JOIN doctors d ON d.doctor_id=cac.DOCTOR_ID"+
-                " WHERE cac.CLINICAL_DEPT_ID="+dept+
+                sql_dept+
                 " AND cac.SITE_ID="+site+
                 " AND DATE(cac.FROM_TIME) LIKE '%"+datepicker+"%'"+
                 " GROUP BY cac.FROM_TIME"

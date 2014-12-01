@@ -12,6 +12,12 @@ angular.module("app.loggedIn.company.detail.directive", [])
                     var loadData = function (id) {
                         CompanyService.detail(id).then(function (data) {
                             angular.extend(scope.modelObjectMap, data.row);
+
+                            if(data.row.insurer_data) {
+                               scope.insurerInfo = {};
+                               angular.extend( scope.insurerInfo, data.row.insurer_data);
+                            }
+
                             for (var key in scope.modelObjectMap) {
                                 if (scope.modelObjectMap[key]) {
                                     if (key.indexOf("is") === 0 || key.indexOf("Is") === 0)
@@ -32,14 +38,48 @@ angular.module("app.loggedIn.company.detail.directive", [])
                         }
                     }
 
+
+                    /**
+                     *  INSURER 
+                     */
+
+                    scope.showInsurerPanel = false;
+
+                    scope.toogleInsurerPanel = function () {
+                        scope.showInsurerPanel = !scope.showInsurerPanel;
+                    }
+
+                    scope.insurer_options = {
+                        api: 'api/erm/v2/insurers/search',
+                        method: 'post',
+                        columns: [
+                            {field: 'id', is_hide: true},
+                            {field: 'insurer_name', label: 'Company Name'},
+                            {field: 'address', label: 'Address'},
+                            {field: 'suburb', label: 'Suburb'},
+                        ],
+                    };
+
+
+                    scope.clickInsurerRow = function (item) {
+                        scope.modelObjectMap.Insurer = item.id;
+                        scope.insurerInfo = item;
+                        
+                        console.log(scope.insurerInfo ,  scope.modelObjectMap);
+                        scope.toogleInsurerPanel();
+//                        console.log(item);
+                    }
+
                     var addProcess = function (postData) {
+                        delete postData.insurer_data;
                         CompanyService.insert(postData).then(function (response) {
                             if (response.status === 'success') {
                                 toastr.success("Added a new Company", "Success");
                                 scope.modelObjectMap = angular.copy(CompanyModel);
                                 scope.isSubmit = false;
                                 if (scope.on_success) {
-                                    scope.on_success();
+                                    postData.id = response.insertId;
+                                    scope.on_success(postData);
                                 }
                             }
                         })
@@ -48,6 +88,7 @@ angular.module("app.loggedIn.company.detail.directive", [])
                     var editProcess = function (postData) {
                         var id = postData.id;
                         delete postData.id;
+                        delete postData.insurer_data;
                         CompanyService.update(id, postData).then(function (response) {
                             if (response.status === 'success') {
                                 toastr.success("Edit Company Successfully", "Success");

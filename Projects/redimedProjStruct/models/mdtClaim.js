@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-	var mdtWaitingList = sequelize.define("mdtClaim", {
+	var Claim = sequelize.define("Claim", {
 		Claim_id: {
 			type: DataTypes.INTEGER(11),
 			primaryKey: true,
@@ -25,7 +25,13 @@ module.exports = function(sequelize, DataTypes){
 		tableName: "cln_claims",
 		createdAt: "Creation_date",
 		updatedAt: "Last_update_date",
+		classMethods: {
+            associate: function(models) {
+                Claim.belongsTo(models.Patient, { as: 'Patient', foreignKey: 'Patient_id'});
+                Claim.belongsTo(models.Insurer, { as: 'Insurer', foreignKey: 'insurer_site'});
+            }
+        }
 	});
 
-	return mdtWaitingList;
+	return Claim;
 }

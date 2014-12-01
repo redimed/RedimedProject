@@ -12,7 +12,7 @@ module.exports = {
 		var sql = "";
 		sql = mdt_functions.commonSearch(post_fields);
 
-		db.mdtWaitingList
+		db.WaitingList
 		.findAndCountAll({
 			where: [sql],
 			offset: pagination.offset,
@@ -38,7 +38,7 @@ module.exports = {
 		delete postData.id;
 		//END POST DUA VAO
 
-		db.mdtWaitingList
+		db.WaitingList
 		.create(postData)
 		.success(function(created){
 			if(!created){

@@ -1,0 +1,126 @@
+<h3 class="page-title">Patient Booking Overview</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+        <li>
+            <a ui-sref="loggedIn.doctor.patients">Patients</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+        	<a>{{current_patient.Title}} {{current_patient.First_name}} {{current_patient.Sur_name}}</a>
+        	<i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Appointment</a>
+        </li>
+    </ul>
+</div>
+
+<!-- PANEL INFO -->
+<div class="portlet box blue-hoki">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-bars"></i>
+			Main Information
+		</div>
+	</div>
+	<div class="portlet-body" style="padding-top: 25px;">
+		<!-- TITLE -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field">
+	            <label for="title">Title</label>
+	            <select ng-options="title.code as title.name for title in options.titles" disabled
+	                name="title" ng-model="current_patient.Title" id="title" float-label>
+	            </select>
+	        </span>
+	    </div>
+	    <!-- END TITLE -->
+	    <!-- FIRST NAME -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field">
+	            <label for="fname">First name</label>
+	            <input required type="text" id="fname" float-label disabled
+	                name="fname" ng-model="current_patient.First_name" placeholder="First Name" />
+	        </span>
+	    </div>
+	    <!-- END FIRST NAME -->
+	    <!-- SUR NAME -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field">
+	            <label for="sname">Sur name</label>
+	            <input type="text" id="sname" disabled
+	                name="sname" ng-model="current_patient.Sur_name" placeholder="Sur Name" float-label />
+	        </span>
+	    </div>
+	    <!-- END SURNAME NAME -->
+
+	    <div class="break-row"></div>
+
+	    <!-- MIDDLE NAME -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field">
+	            <label for="mname">Middle name</label>
+	            <input type="text" id="mname" disabled 
+	                name="mname" ng-model="current_patient.Middle_name" placeholder="Middle Name" float-label />
+	        </span>
+	    </div>
+	    <!-- END MIDDLE NAME -->
+	    <!-- KNOWN AS -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field">
+	            <label for="knownas">Known as</label>
+	            <input type="text" id="knownas" disabled
+	                name="knownas" ng-model="current_patient.Known_as" placeholder="Known As" float-label />
+	        </span>
+	    </div>
+	    <!-- END KNOWN AS -->
+	    <!-- BIRTHDAY -->
+	    <div class="col-md-4 col-sm-6 col-xs-12">
+	        <span class="field">
+	            <label for="dob">Date of Birth</label>
+	            <input disabled ui-date="{dateFormat: 'dd/mm/yy'}" id="dob" placeholder="Birthday" name="dob"
+	                ng-model="current_patient.DOB" float-label>
+	        </span>
+	    </div>
+	    <!-- END BIRTHDAY -->
+	    <div class="break-row"></div>
+	</div> <!-- END PANEL BODY -->
+</div>
+<!-- END PANEL INFO -->
+
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="module in patient_detail_modules">
+		<a class="dashboard-stat dashboard-stat-light {{module.color}}" style="text-decoration: none;"
+			ui-sref="{{module.state}}">
+			<div class="visual">
+				<i ng-class="module.icon"></i>
+			</div>
+			<div class="details">
+				<div class="number" style="font-size: 26px;">
+					 {{module.name}}
+				</div>
+				<div class="desc">
+					{{module.desc}}
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="module in patient_apt_modules">
+		<a class="dashboard-stat dashboard-stat-light {{module.color}}" style="text-decoration: none;"
+			ui-sref="{{module.state}}">
+			<div class="visual">
+				<i ng-class="module.icon"></i>
+			</div>
+			<div class="details">
+				<div class="number" style="font-size: 26px;">
+					 {{module.name}}
+				</div>
+				<div class="desc">
+					{{module.desc}}
+				</div>
+			</div>
+		</a>
+	</div>
+</div>

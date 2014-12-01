@@ -87,17 +87,17 @@ module.exports = {
                             res.json({status: 'fail'});
                             return false;
                         }
-                        Doctor.find({where: {doctor_id: info.DOCTOR_ID}}, {raw: true})
-                            .success(function (doctor) {
-                                if (doctor == null || doctor.length == 0) {
-                                    console.log("******************* Not found user in doctor table *******************");
+                        APPTCAL.find({where: {cal_id: info.CAL_ID}}, {raw: true})
+                            .success(function (APPT) {
+                                if (APPT == null || APPT.length == 0) {
+                                    console.log("******************* Not found appointment calendar in appt table *******************");
                                     res.json({status: 'fail'});
                                     return false;
                                 }
-                                APPTCAL.find({where: {cal_id: info.CAL_ID}}, {raw: true})
-                                    .success(function (APPT) {
-                                        if (APPT == null || APPT.length == 0) {
-                                            console.log("******************* Not found appointment calendar in appt table *******************");
+                                Doctor.find({where: {doctor_id: APPT.DOCTOR_ID}}, {raw: true})
+                                    .success(function (doctor) {
+                                        if (doctor == null || doctor.length == 0) {
+                                            console.log("******************* Not found user in doctor table *******************");
                                             res.json({status: 'fail'});
                                             return false;
                                         }

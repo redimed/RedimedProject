@@ -21,7 +21,7 @@ angular.module('app.loggedIn.user.profile.controller',[])
 			$scope.detail = {
 				id: userInfo.id,
 				img: null,
-				company_id: companyInfo[0].id,
+				company_id: companyInfo.id,
 				Booking_Person: userInfo.Booking_Person,
 				Contact_number: userInfo.Contact_number,
 				Contact_email: userInfo.Contact_email,
@@ -62,10 +62,10 @@ angular.module('app.loggedIn.user.profile.controller',[])
                    phone:userInfo.Contact_number,
                    email:userInfo.Contact_email,
                    userType: userInfo.user_type,
-                   companyName: companyInfo[0].Company_name,
-                   companyIndustry: companyInfo[0].Industry,
-                   companyAddr: companyInfo[0].Addr,
-                   companyState: companyInfo[0].State
+                   companyName: companyInfo.Company_name,
+                   companyIndustry: companyInfo.Industry,
+                   companyAddr: companyInfo.Addr,
+                   companyState: companyInfo.State
                }
            }
             else

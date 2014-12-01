@@ -1,10 +1,14 @@
 <form name="patientForm" novalidate>
 <!-- ACTION -->
 <div class="row" style="margin-bottom: 15px;">
-    <div class="col-md-2 col-sm-3 col-xs-6">
+    <div class="col-md-2 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
         <button class="btn btn-sm btn-block green" ng-click="clickAction()">
             <i class="fa fa-plus"></i>
-            Add Patient
+        </button>
+    </div>
+    <div class="col-md-2 col-sm-3 col-xs-6" ng-if="params.permission.edit !== false">
+        <button class="btn btn-sm btn-block green" ng-click="clickAction()">
+            <i class="fa fa-pencil"></i>
         </button>
     </div>
     <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center" ng-if="isClose">
@@ -16,6 +20,7 @@
 <!-- END ACTION -->
 
 <div class="row"> <!-- INFORMATION -->
+
     <!-- TITLE -->
     <div class="col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.title.$invalid && isSubmit}">
@@ -112,7 +117,7 @@
 
     <!-- SEX -->
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <input type="checkbox" class="mdt-sex" id="sex" ng-model="modelObjectMap.Sex">
+        <input type="checkbox" class="mdt-sex" id="sex" ng-model="modelObjectMap.Sex" ng-true-value="1" ng-false-value="0">
         <label for="sex"></label>
     </div>
     <!-- END SEX -->
@@ -233,6 +238,35 @@
         </span>
     </div>
     <!-- END MOBILE -->
+
+    <div class="break-row"></div>
+
+    <!-- COMPANY -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <button class="btn btn-small btn-block green" ng-click="clickCompany()">
+                {{selectedCompany.Company_name}}
+            </button>
+            <!-- ERROR -->
+            <span ng-show="selectedCompany.error && isSubmit">
+                <span class="mdt-popover above">
+                    You must select a Company
+                </span>
+            </span>
+            <!-- ERROR -->
+        </span>
+    </div>
+    <!-- END COMPANY -->
+    <!-- OCCUPATION -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="occupation">Occupation</label>
+            <input type="text" placeholder="Occupation" name="occupation" ng-model="modelObjectMap.Occupation"
+                class="form-control" id="occupation" float-label>
+        </span>
+    </div>
+    <!-- END OCCUPATION -->
+    <div class="break-row"></div>
 </div> <!-- END INFORMATION -->
 
 <accordion close-others="accordion.oneAtATime">
@@ -253,13 +287,15 @@
         <!-- END PHONE EXT -->
         <!-- NO SMS -->
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <input type="checkbox" name="nosms" id="nosms" class="mdt-checkbox" ng-model="modelObjectMap.No_SMS">
+            <input type="checkbox" name="nosms" id="nosms" class="mdt-checkbox" ng-model="modelObjectMap.No_SMS"
+                ng-true-value="1" ng-false-value="0">
             <label for="nosms">SMS</label>
         </div>
         <!-- END NOSMS -->
         <!-- IS LOCK -->
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <input type="checkbox" name="islock" id="islock" class="mdt-checkbox" ng-model="modelObjectMap.isLock">
+            <input type="checkbox" name="islock" id="islock" class="mdt-checkbox" ng-model="modelObjectMap.isLock"
+                ng-true-value="1" ng-false-value="0">
             <label for="islock">Is Lock</label>
         </div>
         <!-- END IS LOCK -->
@@ -523,6 +559,26 @@
 
         <div class="break-row"></div>
 
+        <!-- PASSPORT -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="passport">Passport</label>
+                <input type="text" placeholder="Passport" name="passport" ng-model="modelObjectMap.passport"
+                    class="form-control" id="passport" float-label>
+            </span>
+        </div>
+        <!-- END PASSPORT -->
+
+        <!-- DRIVER LICENSE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="driver_license">Driver License</label>
+                <input type="text" placeholder="Driver License" name="driver_license" ng-model="modelObjectMap.driver_license"
+                    class="form-control" id="driver_license" float-label>
+            </span>
+        </div>
+        <!-- END DRIVER LICENSE -->
+
     </accordion-group>
     <!-- END SUB INFORMATION -->
 
@@ -693,7 +749,7 @@
         <!-- DIABETIC -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="diabetic" id="diabetic" class="mdt-checkbox" 
-                ng-model="modelObjectMap.Diabetic">
+                ng-model="modelObjectMap.Diabetic" ng-true-value="1" ng-false-value="0">
             <label for="diabetic">Diabetic</label>
         </div>
         <!-- END DIABETIC -->
@@ -701,7 +757,7 @@
         <!-- INACTIVE -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="inactive" id="inactive" class="mdt-checkbox" 
-                ng-model="modelObjectMap.Inactive">
+                ng-model="modelObjectMap.Inactive" ng-true-value="1" ng-false-value="0">
             <label for="inactive">Inactive</label>
         </div>
         <!-- END INACTIVE -->
@@ -709,7 +765,7 @@
         <!-- DECEASED -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="deceased" id="deceased" class="mdt-checkbox" 
-                ng-model="modelObjectMap.Deceased">
+                ng-model="modelObjectMap.Deceased" ng-true-value="1" ng-false-value="0">
             <label for="deceased">Deceased</label>
         </div>
         <!-- END DECEASED -->
@@ -788,7 +844,7 @@
         <!-- GRADUATE STATUS -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="graduate" id="graduate" class="mdt-checkbox" 
-                ng-model="modelObjectMap.Gradudate_status">
+                ng-model="modelObjectMap.Gradudate_status" ng-true-value="1" ng-false-value="0">
             <label for="graduate">Graduate ?</label>
         </div>
         <!-- END GRADUATE STATUS -->
@@ -798,4 +854,11 @@
     </accordion>
     <!-- END SELFT INFORMATION -->
 </accordion>
+
+<!-- COMPANY MODULE -->
+<div class="mdt-search" id="PatientDetailCompany" style="width: 75%; z-index: 99999">
+    <company-search options="options" is-close="PatientDetailCompany" click-row="selectCompany(row)"></company-search>
+</div>
+<!-- END COMPANY MODULE -->
+
 </form>

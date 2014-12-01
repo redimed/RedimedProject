@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d7fd071-90c9-4b63-bffd-9ed4babcea7e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/download/report/patientID_355/calID_-1/Audiogram_1.pdf" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/download/report/patientID_355/calID_-1/Audiogram_1.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA1Controller.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA1Controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA2Controller.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA2Controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonFA.html" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonFA.html" />
     </list>
     <ignored path="RedimedProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,26 +26,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SA1Controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/SA1Controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="5168">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="headersSACLN.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/headersSACLN.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="linesSACLN.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/linesSACLN.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -68,11 +46,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SA1Controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SA1Controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA1Controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.68955225" vertical-offset="1163" max-vertical-offset="3213">
+            <state vertical-scroll-proportion="0.0" vertical-offset="704" max-vertical-offset="3213">
               <caret line="82" column="52" selection-start-line="82" selection-start-column="52" selection-end-line="82" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gorgonMH.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonMH.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1531.2307" vertical-offset="82873" max-vertical-offset="84286">
+              <caret line="2533" column="69" selection-start-line="2533" selection-start-column="69" selection-end-line="2533" selection-end-column="69" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gorgonFA.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonFA.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.54964536" vertical-offset="26722" max-vertical-offset="27829">
+              <caret line="1581" column="40" selection-start-line="1581" selection-start-column="40" selection-end-line="1581" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -81,7 +79,7 @@
       <file leaf-file-name="audiogramresults1.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="9571">
+            <state vertical-scroll-proportion="-0.0" vertical-offset="204" max-vertical-offset="9537">
               <caret line="12" column="20" selection-start-line="8" selection-start-column="16" selection-end-line="12" selection-end-column="20" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
@@ -238,6 +236,8 @@
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults2.html" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA2Controller.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA1Controller.js" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonMH.html" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonFA.html" />
       </list>
     </option>
   </component>
@@ -281,16 +281,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="RedimedProject" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RedimedProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RedimedProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -467,6 +457,40 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedimedProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedimedProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Projects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redimedProjStruct" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="document" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -557,14 +581,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1379" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38562092" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38398692" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885906" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24161074" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -572,11 +598,9 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -600,20 +624,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/security/views/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1241">
-          <caret line="2" column="55" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/node_modules/bcrypt-nodejs/bCrypt.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12121">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/UserMenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="584">
@@ -877,7 +887,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.902098" vertical-offset="1955" max-vertical-offset="8007">
           <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -892,7 +901,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="5168">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -977,6 +985,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/SA2Controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5151">
+          <caret line="85" column="14" selection-start-line="85" selection-start-column="14" selection-end-line="85" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA2Controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="789" max-vertical-offset="3247">
+          <caret line="82" column="57" selection-start-line="82" selection-start-column="57" selection-end-line="82" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA1Controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="704" max-vertical-offset="3213">
+          <caret line="82" column="52" selection-start-line="82" selection-start-column="52" selection-end-line="82" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/audiogramresults1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="9571">
@@ -1021,26 +1053,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/SA2Controller.js">
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonMH.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5151">
-          <caret line="85" column="14" selection-start-line="85" selection-start-column="14" selection-end-line="85" selection-end-column="14" />
+        <state vertical-scroll-proportion="1531.2307" vertical-offset="82873" max-vertical-offset="84286">
+          <caret line="2533" column="69" selection-start-line="2533" selection-start-column="69" selection-end-line="2533" selection-end-column="69" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA2Controller.js">
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/gorgonFA.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="789" max-vertical-offset="3247">
-          <caret line="82" column="57" selection-start-line="82" selection-start-column="57" selection-end-line="82" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA1Controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68955225" vertical-offset="1163" max-vertical-offset="3213">
-          <caret line="82" column="52" selection-start-line="82" selection-start-column="52" selection-end-line="82" selection-end-column="52" />
+        <state vertical-scroll-proportion="0.54964536" vertical-offset="26722" max-vertical-offset="27829">
+          <caret line="1581" column="40" selection-start-line="1581" selection-start-column="40" selection-end-line="1581" selection-end-column="40" />
           <folding />
         </state>
       </provider>

@@ -5,6 +5,11 @@ angular.module("app.security.login.controller",[
 
 
 
+    $scope.modelUser = {
+        username : null,
+        password : null
+    }
+
     // SUBMIT LOGIN
     $scope.login = function(){
         $scope.showClickedValidation = true;

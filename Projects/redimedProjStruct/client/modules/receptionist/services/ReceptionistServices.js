@@ -4,6 +4,12 @@ angular.module("app.loggedIn.receptionist.services", [])
 	var receptionistService = {};
 	var receptionistApi = Restangular.all("api/erm");
 
+	receptionistService.apptDetail =function(cal_id) {
+		// http://localhost:3000/api/erm/v2/appt/detail?id=23651
+		var appointmentApi = receptionistApi.one("v2/appt/detail");
+		return appointmentApi.get({id: cal_id});
+	}
+
 	receptionistService.getAppointmentList = function(options){
 		var appointmentApi = receptionistApi.all("appointment/get");
 		return appointmentApi.post(options);

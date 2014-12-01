@@ -1,6 +1,9 @@
 module.exports = function(sequelize, DataTypes){
     var Patient = sequelize.define('Patient',{
-        "Patient_id" : {type:DataTypes.INTEGER(20), primaryKey:true},
+        "Patient_id" : {
+            type:DataTypes.BIGINT(20), 
+            primaryKey:true
+        },
         "Title": DataTypes.STRING(10),
         "First_name": DataTypes.STRING(50),
         "Sur_name": DataTypes.STRING(50),
@@ -73,11 +76,20 @@ module.exports = function(sequelize, DataTypes){
     },{
         tableName: 'cln_patients', // đặt tên bảng
         createdAt: 'Creation_date',
-        updatedAt: 'Last_update_date'
+        updatedAt: 'Last_update_date',
+        classMethods: {
+            associate: function(models) {
+                Patient.belongsTo(models.Company, { as: 'Company', foreignKey: 'company_id'});
+                Patient.hasMany(models.Company, {  as: 'Companies', foreignKey: 'patient_id', through: 'patient_companies' });
+
+                // Patient.hasMany(models.Claim, { foreignKey: 'Patient_id', as: 'Claims' });
+                // Patient.hasMany(models.OutsideReferral, { foreignKey: 'patient_id', as: 'OutsideReferrals' });
+                Patient.hasMany(models.Appointment, 
+                    {as: 'Appointments', foreignKey: 'Patient_id'}
+                );
+
+            }
+        }
     });
     return Patient;
 };
-
-
-
-

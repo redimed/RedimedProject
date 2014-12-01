@@ -11,6 +11,16 @@ angular.module("app.loggedIn.patient.services", [])
         return funcApi.post(options);
     }
 
+    instanceService.mdtEdit = function(postData){
+        var funcApi = mdtApi.all("edit");
+        return funcApi.post(postData);
+    }
+
+    instanceService.mdtAdd = function(postData){
+        var funcApi = mdtApi.all("add");
+        return funcApi.post(postData);
+    }
+
     instanceService.mdtById = function(Patient_id){
         var funcApi = mdtApi.all("byId");
         return funcApi.post({'Patient_id': Patient_id});

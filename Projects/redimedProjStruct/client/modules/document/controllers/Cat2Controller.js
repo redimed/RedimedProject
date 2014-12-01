@@ -36,7 +36,6 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             //Begin value default info
             //var apptInfo = localStorageService.get('tempAppt');
             var patientInfo = localStorageService.get('tempPatient');
-            var doctorInfo = $cookieStore.get('doctorInfo');
             if (patientInfo == null || patientInfo == 'undefined') {
                 toastr.error("Load information fail!", "Error");
                 $state.go("loggedIn.home", null, {"reload": true});
@@ -410,7 +409,7 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                         r5_1: data.r5_1,
                         r5_2: data.r5_2,
                         DATE: data.DATE,
-                        DOCTOR_ID: data.DOCTOR_ID
+                        DOCTOR_ID: response[0].doctor.DOCTOR_ID
                     };
                     oriInfo = angular.copy($scope.info);
                 }

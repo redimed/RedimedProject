@@ -7,3 +7,54 @@ Error at Thu Nov 20 2014 22:57:53 GMT+0700 (SE Asia Standard Time) : {"code":"ER
 Exec SQL: INSERT INTO cln_insurers(id, insurer_name) VALUES (5, 'CAI NAY  NE')
 Error at Sat Nov 22 2014 14:31:25 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
 
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (2, 467)
+Error at Fri Nov 28 2014 16:15:35 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (5, 467)
+Error at Fri Nov 28 2014 16:15:55 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (1, 467)
+Error at Fri Nov 28 2014 16:15:56 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (5, 467)
+Error at Fri Nov 28 2014 16:15:58 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (6, 467)
+Error at Fri Nov 28 2014 16:16:05 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (1, 467)
+Error at Fri Nov 28 2014 16:21:38 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (2, 467)
+Error at Fri Nov 28 2014 16:24:59 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (5, 467)
+Error at Fri Nov 28 2014 16:25:02 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (6, 467)
+Error at Fri Nov 28 2014 16:25:13 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (2, 467)
+Error at Fri Nov 28 2014 16:25:57 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (5, 467)
+Error at Fri Nov 28 2014 16:28:03 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (2, 467)
+Error at Fri Nov 28 2014 16:28:45 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (27, 467)
+Error at Fri Nov 28 2014 16:28:49 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (214, 467)
+Error at Fri Nov 28 2014 16:29:02 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (213, 467)
+Error at Fri Nov 28 2014 16:29:28 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (2, 467)
+Error at Fri Nov 28 2014 16:29:34 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (32, 467)
+Error at Fri Nov 28 2014 16:29:37 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+

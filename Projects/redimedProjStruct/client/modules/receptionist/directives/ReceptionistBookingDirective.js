@@ -8,7 +8,8 @@ angular.module("app.loggedIn.receptionist.booking.directive", [])
 			data: "=",
 			options: "=",
 			clickPatient: "&",
-			patient: "="
+			patient: "=",
+			params: "="
 		},
 		templateUrl: "modules/receptionist/directives/templates/booking.html",
 		link: function(scope, element, attrs){

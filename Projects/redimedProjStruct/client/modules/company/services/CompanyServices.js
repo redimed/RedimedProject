@@ -2,6 +2,17 @@ angular.module("app.loggedIn.company.services", [])
 .factory("CompanyService", function(Restangular) {
     var companyService = {};
     var companyApi = Restangular.all("api/erm");
+    var mdtApi = Restangular.all("api/meditek/v1/company/");
+
+    companyService.mdtSearch = function(options){
+        var funcApi = mdtApi.all("search");
+        return funcApi.post(options);
+    }
+
+    companyService.mdtById = function(company_id){
+        var funcApi = mdtApi.all("byId");
+        return funcApi.post({company_id: company_id});
+    }
 
     companyService.detail = function(id) {
         var instanceApi = companyApi.one("v2/companies/detail");
