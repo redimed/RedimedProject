@@ -3,6 +3,8 @@ var db = require('../models');
 
 module.exports = {
     login: function(req,username,password,done) {
+        var platform = req.body.platform != null || typeof req.body.platform != 'undefined' ? req.body.platform : null;
+        var token = req.body.token != null || typeof req.body.token != 'undefined' ? req.body.token : null;
 
         if (typeof username !== 'undefined' && username &&
             typeof password !== 'undefined' && password) {
@@ -10,48 +12,61 @@ module.exports = {
                 where: {user_name: username}
             }, {raw: true}).success(function (data)
             {
-                if(data != null)
+                if(data)
                 {
-                    if(data.user_type == 'Company')
-                    {
-                        db.Company.findAll({where: {id: data.company_id}},{raw:true})
-                            .success(function(company){
-                                bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
-                                    if (compareResult == true) {
-                                        delete data["img"];
+                    bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
+                        if (compareResult == true) {
 
+                            if(platform != null && platform.toLowerCase() == 'android')
+                            {
+                                db.UserToken.findOrCreate({
+                                    user_id : data.id,
+                                    user_type: data.user_type,
+                                    android_token: token
+                                })
+                                    .success(function(data,created){console.log('Created: ',created)})
+                                    .error(function(err){console.log(err)})
+                            }
+                            else if(platform != null && platform.toLowerCase() == 'ios')
+                            {
+                                db.UserToken.findOrCreate({
+                                    user_id : data.id,
+                                    user_type: data.user_type,
+                                    ios_token: token
+                                })
+                                    .success(function(data,created){console.log('Created: ',created)})
+                                    .error(function(err){console.log(err)})
+                            }
+
+                            delete data["img"];
+
+                            if(data.user_type == 'Company')
+                            {
+                                db.Company.find({where: {id: data.company_id}},{raw:true})
+                                    .success(function(company){
                                         return done(null, {status: 'success',
                                             msg: "Login Successfully!",
                                             userInfo: data,
                                             companyInfo: company
                                         });
-                                    }
-                                    else {
-
-                                        return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
-                                    }
-                                });
-
-                            })
-                    }
-                    else
-                    {
-                        bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
-                            if (compareResult == true) {
-                                delete data["img"];
-
+                                    })
+                                    .error(function(err){
+                                        console.log(err);
+                                    })
+                            }
+                            else
+                            {
                                 return done(null, {status: 'success',
                                     msg: "Login Successfully!",
                                     userInfo: data
                                 });
                             }
-                            else {
+                        }
+                        else {
 
-                                return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
-                            }
-                        });
-                    }
-
+                            return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
+                        }
+                    });
                 }
                 else
                 {

@@ -460,7 +460,7 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                 if($cookieStore.get('companyInfo'))
                 {
-                    $scope.companyInfo=$cookieStore.get('companyInfo')[0];
+                    $scope.companyInfo=$cookieStore.get('companyInfo');
                     $scope.mailTemplate={
                         REDiLEGAL:{
                             label:'Please contact us to make an appointment',

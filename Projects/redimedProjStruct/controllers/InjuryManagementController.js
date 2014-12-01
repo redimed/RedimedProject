@@ -76,6 +76,10 @@ module.exports = {
               STATUS: imInfo.STATUS
           },{raw:true})
               .success(function(data){
+
+
+
+                  // START SEND MAIL
                   db.IMInjury.max('injury_id')
                       .success(function(max){
                           if(imInfo.cal_id != null)
@@ -87,13 +91,16 @@ module.exports = {
                                   .success(function(pData){
                                       db.sequelize.query("SELECT c.*,r.Site_name,r.Site_addr FROM cln_appointment_calendar c LEFT JOIN redimedsites r ON c.SITE_ID = r.id WHERE CAL_ID = ?",null,{raw:true},[aId])
                                           .success(function(aData){
+                                              var date = new Date(aData[0].FROM_TIME);
+                                              var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
+
                                               var mailOptions = {
                                                   from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
                                                   to: pData[0].Email, // receiver
                                                   subject: "Confirmation for appointment of "+pData[0].Company_name+" # "+pData[0].Title+'.'+pData[0].First_name+' '+pData[0].Sur_name+' '+pData[0].Middle_name, // Subject line
                                                   html: "Please see below for details regarding your Medical Assessment at RediMED<br>"+
                                                   "<br>Your medical assessment has been booked at the following:</b><br>"+
-                                                  "Date / Time: <b>" + 'aaa' +"</b> <br>" +
+                                                  "Date / Time: <b>" + dateString +"</b> <br>" +
                                                   "Location: <b>REDiMED " + aData[0].Site_name + "</b><br>" +
                                                   "<br>" +
                                                   "<b>Please ensure you arrive 15 minutes prior to your appointment time to complete any paperwork required.</b>" +
@@ -103,7 +110,6 @@ module.exports = {
                                                   "- Candidate needs to wear enclosed shoes such as sneakers and comfortable, loose fitting clothing or clothing suitable for the gym (for medical and functional assessment only).<br>" +
                                                   "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
                                                   "- For any queries, please call 92300990.<br>"
-
                                               };
 
                                               transport.sendMail(mailOptions, function(error, response){  //callback
@@ -116,7 +122,6 @@ module.exports = {
                                                   }
                                                   transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
                                               });
-
 
                                           })
                                           .error(function(err){
@@ -134,6 +139,7 @@ module.exports = {
                           res.json({status:'error'});
                           console.log(err);
                       })
+                  // END SEND MAIL
               })
               .error(function(err){
                   res.json({status:'error'});
@@ -173,9 +179,7 @@ module.exports = {
                 })
 
         });
-
-
-
     }
 };
+
 

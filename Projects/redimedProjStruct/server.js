@@ -172,26 +172,27 @@ db.sequelize
 );
 
 
-//TEST GCM Android
-var gcm = require('node-gcm');
-var message = new gcm.Message();
-var sender = new gcm.Sender('AIzaSyD6Hx6lzWEWgnGViCwW-A9aVQAIvSQuP4s'); //Google Server API Key
-var registrationIds = [];
+////TEST GCM Android
+//var gcm = require('node-gcm');
+//var message = new gcm.Message();
+//var sender = new gcm.Sender('AIzaSyD6Hx6lzWEWgnGViCwW-A9aVQAIvSQuP4s'); //Google Server API Key
+//var registrationIds = [];
+//
+//message.addData('title','Hello');
+//message.addData('message','Fuck');
+//message.addData('msgcnt','1');
+//message.collapseKey = 'demo';
+//message.delayWhileIdle = true;
+//message.timeToLive = 3;
+//
+//// At least one token is required - each app registers a different token
+//registrationIds.push('APA91bFJ2ImyQwkd83FAW2T1vQydWX7N81d8_S9GGDgVj8AWMc-LxwHrlWVJaj6UUV4KqIKV0n6LdepmT3Tknhte8RDqprSvMT6WZkqfDY2UomVa947QL3s3tURjkw1brOb6ZfrML_rwumlQQiC4wXf13u6X57dDWAk4SAKSxFvDaCeJH8GiZxM');
+///** * Parameters: message-literal, registrationIds-array, No. of retries, callback-function */
+//sender.send(message, registrationIds, 4, function (result)
+//{
+//    console.log(result);
+//});
 
-message.addData('title','My Game');
-message.addData('message','Your turn!!!!');
-message.addData('msgcnt','1');
-message.collapseKey = 'demo';
-message.delayWhileIdle = true;
-message.timeToLive = 3;
-
-// At least one token is required - each app registers a different token
-registrationIds.push('');
-/** * Parameters: message-literal, registrationIds-array, No. of retries, callback-function */
-sender.send(message, registrationIds, 4, function (result)
-{
-    console.log(result);
-});
 
 
 

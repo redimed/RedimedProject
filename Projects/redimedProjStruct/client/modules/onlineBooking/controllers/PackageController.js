@@ -16,7 +16,7 @@ angular.module('app.loggedIn.booking.package.controller',[])
             companyInfo = $cookieStore.get('companyInfo');
         }
 
-        OnlineBookingService.getPackage(companyInfo[0].id).then(function(data){
+        OnlineBookingService.getPackage(companyInfo.id).then(function(data){
             if(data.status === 'success')
             {
                 OnlineBookingService.getAssList().then(function(data){
@@ -70,10 +70,10 @@ angular.module('app.loggedIn.booking.package.controller',[])
 
         $scope.removePackage = function(p)
         {
-            OnlineBookingService.deletePackage(p.PackId,companyInfo[0].id).then(function(data){
+            OnlineBookingService.deletePackage(p.PackId,companyInfo.id).then(function(data){
                 if(data.status === 'success')
                 {
-                    OnlineBookingService.getPackage(companyInfo[0].id).then(function(d){
+                    OnlineBookingService.getPackage(companyInfo.id).then(function(d){
                         if(d.status === 'success')
                         {
                             $scope.data = d.rs;
@@ -100,12 +100,12 @@ angular.module('app.loggedIn.booking.package.controller',[])
                 size:'md',
                 resolve:{
                     comId: function(){
-                        return companyInfo[0].id;
+                        return companyInfo.id;
                     }
                 }
             });
             modalInstance.result.then(function(){
-                OnlineBookingService.getPackage(companyInfo[0].id).then(function(d){
+                OnlineBookingService.getPackage(companyInfo.id).then(function(d){
                     if(d.status === 'success')
                     {
                         $scope.data = d.rs;

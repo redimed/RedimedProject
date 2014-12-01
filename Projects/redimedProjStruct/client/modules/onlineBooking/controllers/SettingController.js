@@ -17,7 +17,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
             userInfo = $cookieStore.get('userInfo');
         }
 
-        OnlineBookingService.getUserByCompany(companyInfo[0].id).then(function(data){
+        OnlineBookingService.getUserByCompany(companyInfo.id).then(function(data){
             $scope.data = data;
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
@@ -77,7 +77,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
             phone:null,
             username:null,
             userType:'Company',
-            companyId:companyInfo[0].id,
+            companyId:companyInfo.id,
             poNum:null,
             invoiceEmail:null,
             resultEmail:null,
@@ -137,7 +137,7 @@ angular.module('app.loggedIn.booking.setting.controller',[])
             isViewAllData:"1",
             phone:null,
             username:null,
-            companyId:companyInfo[0].id,
+            companyId:companyInfo.id,
             userType:'Company'
         };
 

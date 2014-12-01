@@ -12,7 +12,7 @@ angular.module('app.loggedIn.booking.position.controller',[])
 
         $scope.data = [];
 
-        OnlineBookingService.getPositionList(companyInfo[0].id).then(function(data){
+        OnlineBookingService.getPositionList(companyInfo.id).then(function(data){
 
 
                 $scope.data = data;
@@ -39,7 +39,7 @@ angular.module('app.loggedIn.booking.position.controller',[])
 
         $scope.removePosition = function(p){
 
-            OnlineBookingService.deletePosition(p.Position_name,companyInfo[0].id).then(function(data){
+            OnlineBookingService.deletePosition(p.Position_name,companyInfo.id).then(function(data){
                 if(data.status === 'success')
                 {
                     toastr.success("Delete Successfully!","Success");
@@ -60,7 +60,7 @@ angular.module('app.loggedIn.booking.position.controller',[])
                 size:'md',
                 resolve:{
                     comId: function(){
-                        return companyInfo[0].id;
+                        return companyInfo.id;
                     }
                 }
             })

@@ -16,11 +16,11 @@ angular.module('app.loggedIn.booking.list.controller',[])
         if($cookieStore.get('companyInfo') !== 'undefined')
         {
             companyInfo = $cookieStore.get('companyInfo');
-            $scope.cId = companyInfo[0].id;
-            $scope.isExtra = companyInfo[0].isExtra == 1 ? 1 : 0;
+            $scope.cId = companyInfo.id;
+            $scope.isExtra = companyInfo.isExtra == 1 ? 1 : 0;
         }
 
-        OnlineBookingService.getBookingList(companyInfo[0].id).then(function(data){
+        OnlineBookingService.getBookingList(companyInfo.id).then(function(data){
             if(data.status === 'success')
             {
                 $scope.data=data.rs;
@@ -102,7 +102,7 @@ angular.module('app.loggedIn.booking.list.controller',[])
                 size:'md',
                 resolve:{
                     companyId: function(){
-                        return companyInfo[0].id;
+                        return companyInfo.id;
                     }
                 }
             });

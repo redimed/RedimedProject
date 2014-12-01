@@ -131,6 +131,7 @@ angular.module("app.loggedIn.controller",[
     $scope.logout = function(){
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
         $state.go("security.login",null,{reload:true});
     }
 

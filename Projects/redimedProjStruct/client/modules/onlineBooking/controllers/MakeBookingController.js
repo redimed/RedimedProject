@@ -19,7 +19,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
         }
 
       
-        $scope.companyName = companyInfo[0].Company_name === null ? '':companyInfo[0].Company_name;
+        $scope.companyName = companyInfo.Company_name === null ? '':companyInfo.Company_name;
       
         
         $scope.companyList = [];
@@ -40,7 +40,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
             Project:'',
             Comment:'',
             PackId:'',
-            isProject: companyInfo[0].isProject == null ? 0 : companyInfo[0].isProject
+            isProject: companyInfo.isProject == null ? 0 : companyInfo.isProject
         };
 
 
@@ -48,11 +48,11 @@ angular.module('app.loggedIn.booking.make.controller',[])
 
 
 
-        $scope.c = companyInfo[0];
-        mPO = companyInfo[0].PO_number;
-        mResult = companyInfo[0].result_email;
-        mInvoice = companyInfo[0].invoice_email;
-        mIsProject = companyInfo[0].isProject;
+        $scope.c = companyInfo;
+        mPO = companyInfo.PO_number;
+        mResult = companyInfo.result_email;
+        mInvoice = companyInfo.invoice_email;
+        mIsProject = companyInfo.isProject;
 
 
         if($scope.data != null)
@@ -79,14 +79,14 @@ angular.module('app.loggedIn.booking.make.controller',[])
         }
 
 
-        OnlineBookingService.getSubCompany(companyInfo[0].id).then(function(response){
+        OnlineBookingService.getSubCompany(companyInfo.id).then(function(response){
             if(response.status === 'success')
             {
                 $scope.companyList = response.rs;
             }
         })
 
-        OnlineBookingService.getPackage(companyInfo[0].id).then(function(data){
+        OnlineBookingService.getPackage(companyInfo.id).then(function(data){
             if(data.status === 'success')
             {
                 $scope.packageList = data.rs;
@@ -206,7 +206,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                     size: 'md',
                     resolve:{
                         companyId: function(){
-                            return companyInfo[0].id;
+                            return companyInfo.id;
                         },
                         editInfo: function(){
                             return null;
@@ -215,7 +215,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                             return period;
                         },
                         status: function(){
-                            return companyInfo[0].default_status == null || companyInfo[0].default_status == '' ? 'Pending' : companyInfo[0].default_status;
+                            return companyInfo.default_status == null || companyInfo.default_status == '' ? 'Pending' : companyInfo.default_status;
 
                         }
                     }
@@ -241,7 +241,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 size: 'md',
                 resolve:{
                     companyId: function(){
-                        return companyInfo[0].id;
+                        return companyInfo.id;
                     },
                     editInfo: function(){
                         return b;
@@ -250,7 +250,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                         return period;
                     },
                     status: function(){
-                        return companyInfo[0].default_status == null || companyInfo[0].default_status == '' ? 'Pending' : companyInfo[0].default_status;
+                        return companyInfo.default_status == null || companyInfo.default_status == '' ? 'Pending' : companyInfo.default_status;
 
                     }
 
@@ -299,7 +299,7 @@ angular.module('app.loggedIn.booking.make.controller',[])
                 ProjectIdentification: $scope.c.Project,
                 Comment: $scope.c.Comment,
                 PackageId: $scope.c.PackId,
-                CompanyId: companyInfo[0].father_id == null ? companyInfo[0].id : companyInfo[0].father_id,
+                CompanyId: companyInfo.father_id == null ? companyInfo.id : companyInfo.father_id,
                 Booking_Person: userInfo.Booking_Person,
                 contact_number: userInfo.Contact_number,
                 subCompany_Id: $scope.c.SubCompanyId == null ? null : $scope.c.SubCompanyId,
