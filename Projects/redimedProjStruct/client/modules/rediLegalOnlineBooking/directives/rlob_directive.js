@@ -1070,6 +1070,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                             if(data.status=='success')
                             {
                                 $scope.selectedDocument.DOCUMENT_STATUS=status;
+
                                 //var refId=bookingId;
                                 //rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
                             }
@@ -1080,6 +1081,24 @@ angular.module("app.loggedIn.rlob.directive", [])
                         });
 
                 };
+
+            }
+        };
+    })
+
+    .directive('rlobInlineMessage', function(rlobService) {
+        return {
+            restrict: 'E',
+            transclude:true,
+            required:['^ngModel'],
+            scope: {
+                message:'@',
+                type:'='
+            },
+            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_fade_in_out_template.html',
+            controller: function ($scope)
+            {
+                angular.element(".rlob_fade_in_out").fadeIn(2000);
 
             }
         };

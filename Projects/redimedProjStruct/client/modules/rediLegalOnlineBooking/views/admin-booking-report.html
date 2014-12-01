@@ -59,7 +59,7 @@
     <h2 style="margin:10px;">Selected Booking Info:</h2>
     <div class="row">
         <div class="col-md-6 col-sm-6">
-            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
+            <rlob-change-document-status selected-document="selectedBooking"></rlob-change-document-status>
             <accordion >
                 <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
                     <accordion-heading>
@@ -87,7 +87,8 @@
             </accordion>
         </div>
         <div class="col-md-6 col-sm-6">
-            <rlob-change-document-status selected-document="selectedBooking"></rlob-change-document-status>
+
+            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
             <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
         </div>
     </div>
