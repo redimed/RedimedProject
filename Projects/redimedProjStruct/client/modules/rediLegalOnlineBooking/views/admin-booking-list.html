@@ -810,22 +810,22 @@ phanquocchien.c1109g@gmail.com-->
         <i style="color: #ffffff;position: absolute;right: 10px;top: 10px;font-size: 25px;" class="fa fa-times-circle-o" ng-click="documentstatusfadeOut()"></i>
         <div class="row" style="display: table-cell;padding-top: 10px;">
             <ul style="margin-left: -30px;">
-                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS=='Not confirmed'" class="btn btn-warning" >
-                    <a ng-hide="selectedBooking.DOCUMENT_STATUS=='Not Confirmed'" class="pointer" role="menuitem" tabindex="4"
-                       ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,'Not confirmed')">
+                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.notConfirmed" class="btn btn-warning" >
+                    <a ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.notConfirmed" class="pointer" role="menuitem" tabindex="4"
+                       ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,documentStatus.notConfirmed)">
                         <span>Not confirmed</span>
                     </a>
                 </li>
 
-                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS=='Checked'" class="btn btn-success">
+                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.checked" class="btn btn-success">
                     <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
-                        ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,'Checked')">
+                        ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,documentStatus.checked)">
                         <span>Checked</span>
                     </a>
                 </li>
-                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS=='No documents'" class="btn btn-danger">
+                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.noDocuments" class="btn btn-danger">
                     <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-                       ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,'No documents')">
+                       ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,documentStatus.noDocuments)">
                         <span>No documents</span>
                     </a>
                 </li>
