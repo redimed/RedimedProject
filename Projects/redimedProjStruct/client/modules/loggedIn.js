@@ -25,7 +25,7 @@ angular.module("app.loggedIn",[
 	'app.loggedIn.referral',
 
 	/*END AUTO CREATE*/
-
+])
 .config(function($stateProvider) {
         $stateProvider
 
