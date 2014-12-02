@@ -16,12 +16,12 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
     ];
 
     $scope.patient_apt_modules = [
-        {'name': 'Appointment', 'icon': 'fa fa-bookmark-o', 'color': 'blue soft', 'desc': 'Info',
+        {'name': 'Appointment', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
             'state': 'loggedIn.receptionist.appointment.detail({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
-        {'name': 'Paperless', 'icon': 'fa fa-pencil-square-o', 'color': 'red soft', 'desc': 'Total: 12',
+        {'name': 'Paperless', 'icon': 'fa fa-pencil-square-o', 'color': 'red-soft', 'desc': 'Total: 12',
             'state': 'loggedIn.doctor.paperless({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Workcover', 'icon': 'fa fa-paper-plane-o', 'color': 'green-soft', 'desc': 'Has: 2',
-            'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patient_id + '})'},
+            'state': 'loggedIn.patient.workcover({patient_id:' + $stateParams.patient_id + ', cal_id: '+  $stateParams.cal_id +'})'},
         {'name': 'Script, Referral', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 2',
             'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patient_id + '})'}
     ];

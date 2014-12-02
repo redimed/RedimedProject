@@ -53,6 +53,15 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
+    .state("loggedIn.patient.workcover", {
+        url: "/:patient_id/workcover/:cal_id",
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/workcover.html",
+                controller: "PatientWorkcoverController"
+            }
+        }
+    })
     .state("loggedIn.patient.booking", {
         url: "/booking",
         views: {
