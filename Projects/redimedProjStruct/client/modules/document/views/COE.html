@@ -25,19 +25,17 @@
         <div class="row">
             <label class="col-md-10">Redimed completed a work cover compliant hearing test on:</label>
         </div>
-        </br>
         <div class="row">
             <label class="col-md-1 col-sm-2">Name: </label>
             <label class="col-md-5 col-sm-6">{{patientInfo.First_name + " " + patientInfo.Sur_name + " " + patientInfo.Middle_name}}</label>
             <label class="col-md-1 col-sm-1">DOB: </label>
             <label class="col-md-5 col-sm-2">{{patientInfo.DOB | date : 'dd/MM/yyyy'}}</label>
         </div>
-        </br>
         <div class="row">
-            <p class="font-blue large" >
+            <p class="font-blue large col-md-12" >
                 AT THE REDIMED CLINIC, 1 FREDERICK ST, BELMONT, WA 6104
             </p>
-            <p class="font-blue large">
+            <p class="font-blue large col-md-12">
                 In order that our Audiometric Officers may enter this 'Compliance Hearing Test' in to the WorkCover WA database within the required time frame,
                 we need to confirm if the applicant stated above is now employed.
             </p>
@@ -58,15 +56,15 @@
             </div>
         </div>
         <div class="row">
-            <label class="col-lg-1 col-md-1 col-sm-2">By: </label>
+            <label class="col-lg-1 col-md-1 col-sm-2" style="margin-top: 7px;">By: </label>
         </div>
         <div class="row">
-            <label class="col-lg-2 col-md-3 col-sm-3" style="margin-top: 10px;">In the position of:</label>
+            <label class="col-lg-2 col-md-3 col-sm-3" style="margin-top: 7px;">In the position of:</label>
             <div class="col-md-7 col-lg-6 col-sm-7">
                 <input class="form-control" ng-model="info.inPosition" type="text">
             </div>
         </div>
-        </br>
+        <!--</br>-->
         <div class="row">
             <div class="col-md-7 col-sm-7">
                 <div class="col-md-2 col-sm-2">
@@ -115,15 +113,15 @@
         </div>
         </br>
         <div class="row">
-            <p class="font-blue large">
+            <p class="font-blue large col-md-12">
                 We require the form to be emailed to Redimed (healthscreening@redimed.com.au) within one month
                 from the test date(28 days)
             </p>
-            <p class="font-blue large">
+            <p class="font-blue large col-md-12">
                 If Redimed receives this form >1 month following the hearing test date, in accordance with Work
                 Cover regulations, we will not be permitted to enter these results in to the Work Cover database.
             </p>
-            <p class="font-blue large">
+            <p class="font-blue large col-md-12">
                 Note: If a Mines Health Surveillance has been performed we will not be able to process these forms
                 and apply for registration from the Department of Mines
                 and Petroleum on behalf of the applicant unless we receive this notification in specified time frame.

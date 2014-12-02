@@ -154,7 +154,7 @@ WHERE	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<paragraph leftIndent="5"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{SCORE1}!=null?$F{SCORE1}.toString():"") +"/"+($F{LINE_SUM_MAX_SCORE}!=null?$F{LINE_SUM_MAX_SCORE}.toString():"")]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{RATING_VALUE1}!=null?$F{RATING_VALUE1}.toString():"") +"/"+($F{LINE_SUM_MAX_SCORE}!=null?$F{LINE_SUM_MAX_SCORE}.toString():"")]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement x="225" y="0" width="80" height="15" uuid="fec5edcd-f3de-4cae-bfa1-ca453ca0a677"/>
@@ -218,7 +218,7 @@ WHERE	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{RATE1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VAL2_VALUE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -60,6 +60,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         $scope.total = {};
 
         var value={},
+            totalArr={},
             age = getAge($scope.patientInfo.DOB),
             gender = $scope.patientInfo.Sex,
             val = 0,
@@ -94,27 +95,28 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         var rateTotalFunction = function(id){
             rateTotal = [];
             dem= 0;
-            for(var i in $scope.a)
+            console.log(totalArr);
+            for(var i in totalArr)
             {
                 total=0;
-                for(var j in $scope.a[i])
+                for(var j in totalArr[i])
                 {
                     if(j != 'rating')
                     {
                         if(j == id)
                         {
-                            $scope.a[i][j] = $scope.infoL.RATING_VALUE1[id];
+                            totalArr[i][j] = $scope.infoL.RATING_VALUE1[id];
                         }
-                        total = total + $scope.a[i][j]*1;
+                        total = total + totalArr[i][j]*1;
                     }
                 }
                 $scope.infoL.RATING_VALUE1[i] = total;
 
-                DocumentService.checkRating($scope.a[i].rating,age, gender, total).then(function(response){
+                DocumentService.checkRating(totalArr[i].rating,age, gender, total).then(function(response){
                     if(response['status'] != 'fail' && response.length > 0){
                         rateTotal.push(response[0].RATE);
                         dem = 0;
-                        for(var k in $scope.a)
+                        for(var k in totalArr)
                         {
                             for(var t =0;t < rateTotal.length; t++)
                             {
@@ -217,7 +219,6 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                             if(value[idL][i][0] > max)
                             {
                                 max = value[idL][i][0];
-
                             }
                         }
                         $scope.manage[idL] = max;
@@ -282,6 +283,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         }
 
         $scope.infoChanged = function () {
+            console.log(oriInfoD);
+            console.log($scope.infoD);
             if(!angular.equals(oriInfoH, $scope.infoH) == false && !angular.equals(oriInfoL,$scope.infoL) == false && !angular.equals(oriInfoD, $scope.infoD) == false && !angular.equals(oriInfoC,$scope.infoC.VALUE) == false)
             {
                 return  false;
@@ -356,6 +359,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                 $scope.infoL.RATE1[dataL.LINE_ID] = dataL.RATE1;
                                 $scope.infoL.RATE2[dataL.LINE_ID] = dataL.RATE2;
                                 value[dataL.LINE_ID] = {};
+
                                 angular.forEach(data.Detail, function(dataD){
                                     if(dataD.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                     {
@@ -366,11 +370,19 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                         $scope.infoD.VAL2_VALUE[dataD.DETAIL_ID] = dataD.VAL2_VALUE;
                                         $scope.infoD.VAL1_VALUE[dataD.DETAIL_ID] = dataD.VAL1_VALUE;
                                         value[dataL.LINE_ID][dataD.DETAIL_ID] = [dataD.VAL1_VALUE,dataD.VAL2_VALUE];
-                                        $scope.mathScore(dataD.DETAIL_ID, dataL.LINE_ID, 1, 0, null, null, 9, null, null);
+                                        if(dataL.ISSCORE1 == 1 && dataL.ISRATING1 == 0 && dataL.SCORE_TYPE1 == 9){
+                                            $scope.mathScore(dataD.DETAIL_ID, dataL.LINE_ID, 1, 0, null, null, 9, null, null);
+                                        }
+                                        if(dataD.LineTestRefer != null){
+                                            if(!totalArr[dataD.LINE_ID]){
+                                                totalArr[dataD.LINE_ID] = {};
+                                            }
+                                            totalArr[dataD.LINE_ID][dataD.LineTestRefer] = dataD.VAL1_VALUE ;
+                                            totalArr[dataD.LINE_ID]["rating"] =dataL.RATING_ID1;
+                                        }
                                     }
                                 });
                                 angular.forEach(data.Comment, function(dataC){
-
                                     if(dataC.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                     {
                                         $scope.listFA[0].section[i].line[j].comment.push({"comment_id":dataC.FA_COMMENT_ID,"comment_name": dataC.NAME, "comment_type": dataC.Comment_Type});

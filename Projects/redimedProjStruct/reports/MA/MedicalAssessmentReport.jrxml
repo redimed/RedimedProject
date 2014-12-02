@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
 	<property name="ireport.zoom" value="0.8467108950806659"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="734"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -657,7 +657,7 @@ WHERE
 			</textField>
 			<frame>
 				<reportElement x="198" y="408" width="30" height="20" uuid="d791180e-a6a7-4d1f-9e32-063ff0f93057">
-					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals( "FIT" )]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals("0")]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -669,7 +669,7 @@ WHERE
 			</frame>
 			<frame>
 				<reportElement x="294" y="408" width="42" height="20" uuid="b3cd50af-5ee3-4836-98c5-47ffcdf17f80">
-					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals( "UNFIT" )]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals("1")]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -681,7 +681,7 @@ WHERE
 			</frame>
 			<frame>
 				<reportElement x="392" y="406" width="86" height="30" uuid="4fbf2786-7c61-466f-b7a5-620abd79f8b0">
-					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals( "FitRes" )]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{cln_ma_headers_FINAL_ASS}.equals("2")]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0"/>

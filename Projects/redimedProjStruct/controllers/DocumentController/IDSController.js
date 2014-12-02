@@ -165,6 +165,34 @@ module.exports = {
                 {
                     res.json({status:'update',data: data});
                 }
+                db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
+                    .success(function (APPT) {
+                        //check appointment calendar
+                        if (APPT == null || APPT.length == 0) {
+                            console.log("******************* Not found Appointment calendar in APPT table *******************");
+                            res.json({status: 'fail'});
+                            return false;
+                        }
+                        db.Doctor.find({where: {doctor_id: APPT.DOCTOR_ID}}, {raw: true})
+                            .success(function (doctor) {
+                                //check exist doctor
+                                if (doctor == null || doctor.length == 0) {
+                                    console.log("******************* Not found doctor in doctor table *******************");
+                                    res.json({status: 'fail'});
+                                    return false;
+                                }
+
+                            }).error(function (err) {
+                                console.log("******************* ERROR:" + err + ' *******************');
+                                res.json({status: 'fail'});
+                                return false;
+                            });
+                    })
+                    .error(function (err) {
+                        console.log("******************* ERROR:" + err + ' *******************');
+                        res.json({status: 'fail'});
+                        return false;
+                    });
 
             })
             .error(function(err){

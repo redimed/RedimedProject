@@ -1,0 +1,167 @@
+<form name="scriptForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--Patient_id-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="patient_id">Patient id</label>
+			<input type="number" placeholder="Patient id" name="patient_id" ng-model="ScriptMap.Patient_id" class="form-control" id="patient_id" float-label>
+		</span>	</div>
+	<!--Patient_id-->
+
+	<!--CAL_ID-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="cal_id">Cal id</label>
+			<input type="number" placeholder="Cal id" name="cal_id" ng-model="ScriptMap.CAL_ID" class="form-control" id="cal_id" float-label>
+		</span>	</div>
+	<!--CAL_ID-->
+
+	<!--prescriber-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="prescriber">Prescriber</label>
+			<input type="text" placeholder="Prescriber" name="prescriber" ng-model="ScriptMap.prescriber" class="form-control" id="prescriber" float-label>
+		</span>	</div>
+	<!--prescriber-->
+
+
+	<div class="break-row"></div>
+	<!--scriptNum-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="scriptnum">Scriptnum</label>
+			<input type="number" placeholder="Scriptnum" name="scriptnum" ng-model="ScriptMap.scriptNum" class="form-control" id="scriptnum" float-label>
+		</span>	</div>
+	<!--scriptNum-->
+
+	<!--Medicare-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="medicare">Medicare</label>
+			<input type="text" placeholder="Medicare" name="medicare" ng-model="ScriptMap.Medicare" class="form-control" id="medicare" float-label>
+		</span>	</div>
+	<!--Medicare-->
+
+	<!--isRefNo-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isrefno" id="isrefno" class="mdt-checkbox" ng-model="ScriptMap.isRefNo" ng-true-value="1" ng-false-value="0">
+		<label for="isrefno">Isrefno</label>
+	</div>
+	<!--isRefNo-->
+
+
+	<div class="break-row"></div>
+	<!--EntitlementNo-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="entitlementno">Entitlementno</label>
+			<input type="text" placeholder="Entitlementno" name="entitlementno" ng-model="ScriptMap.EntitlementNo" class="form-control" id="entitlementno" float-label>
+		</span>	</div>
+	<!--EntitlementNo-->
+
+	<!--isSafety-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="issafety" id="issafety" class="mdt-checkbox" ng-model="ScriptMap.isSafety" ng-true-value="1" ng-false-value="0">
+		<label for="issafety">Issafety</label>
+	</div>
+	<!--isSafety-->
+
+	<!--isConcessional-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isconcessional" id="isconcessional" class="mdt-checkbox" ng-model="ScriptMap.isConcessional" ng-true-value="1" ng-false-value="0">
+		<label for="isconcessional">Isconcessional</label>
+	</div>
+	<!--isConcessional-->
+
+
+	<div class="break-row"></div>
+	<!--isPBS-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="ispbs" id="ispbs" class="mdt-checkbox" ng-model="ScriptMap.isPBS" ng-true-value="1" ng-false-value="0">
+		<label for="ispbs">Ispbs</label>
+	</div>
+	<!--isPBS-->
+
+	<!--isRPBS-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isrpbs" id="isrpbs" class="mdt-checkbox" ng-model="ScriptMap.isRPBS" ng-true-value="1" ng-false-value="0">
+		<label for="isrpbs">Isrpbs</label>
+	</div>
+	<!--isRPBS-->
+
+	<!--isBrand-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isbrand" id="isbrand" class="mdt-checkbox" ng-model="ScriptMap.isBrand" ng-true-value="1" ng-false-value="0">
+		<label for="isbrand">Isbrand</label>
+	</div>
+	<!--isBrand-->
+
+
+	<div class="break-row"></div>
+	<!--pharmacist-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="pharmacist" id="pharmacist" class="mdt-checkbox" ng-model="ScriptMap.pharmacist" ng-true-value="1" ng-false-value="0">
+		<label for="pharmacist">Pharmacist</label>
+	</div>
+	<!--pharmacist-->
+
+	<!--doctorSign-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="doctorsign">Doctorsign</label>
+			<input type="text" placeholder="Doctorsign" name="doctorsign" ng-model="ScriptMap.doctorSign" class="form-control" id="doctorsign" float-label>
+		</span>	</div>
+	<!--doctorSign-->
+
+	<!--doctordate-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="doctordate">Doctordate</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Doctordate" name="doctordate" ng-model="ScriptMap.doctordate" class="form-control" id="doctordate" float-label>
+		</span>	</div>
+	<!--doctordate-->
+
+
+	<div class="break-row"></div>
+	<!--patientSign-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="patientsign">Patientsign</label>
+			<input type="text" placeholder="Patientsign" name="patientsign" ng-model="ScriptMap.patientSign" class="form-control" id="patientsign" float-label>
+		</span>	</div>
+	<!--patientSign-->
+
+	<!--patientDate-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="patientdate">Patientdate</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Patientdate" name="patientdate" ng-model="ScriptMap.patientDate" class="form-control" id="patientdate" float-label>
+		</span>	</div>
+	<!--patientDate-->
+
+	<!--agentAddress-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="agentaddress">Agentaddress</label>
+			<input type="text" placeholder="Agentaddress" name="agentaddress" ng-model="ScriptMap.agentAddress" class="form-control" id="agentaddress" float-label>
+		</span>	</div>
+	<!--agentAddress-->
+
+
+	<div class="break-row"></div>
+</div>
+</form>

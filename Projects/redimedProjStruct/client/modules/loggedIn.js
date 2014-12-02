@@ -16,9 +16,15 @@ angular.module("app.loggedIn",[
     "app.loggedIn.patient",
     "app.loggedIn.waworkcover",
 	"app.loggedIn.certificate",
-    "app.loggedIn.insurer",
 	"app.loggedIn.item",
-])
+        "app.loggedIn.insurer",
+		
+	/*AUTO CREATE*/
+	'app.loggedIn.script',
+
+	'app.loggedIn.referral',
+
+	/*END AUTO CREATE*/
 
 .config(function($stateProvider) {
         $stateProvider

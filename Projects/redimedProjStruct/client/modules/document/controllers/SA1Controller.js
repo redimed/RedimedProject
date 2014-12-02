@@ -62,12 +62,13 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                  */
                 var data = response[0];
                 $scope.info.headers = [];
-                $scope.info.patient = data.patient[0];
+                $scope.info.patient = response[0].patient;
+                $scope.info.doctor = response[0].doctor;
+                $scope.info.appt = response[0].appt;
+                $scope.info.site = response[0].site;
+                $scope.info.company = response[0].company;
                 angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({
-                        patient: response[0].patient[0],
-                        apptInfo: [],
-                        doctorInfo: [],
                         "patient_id": Patient_ID,
                         "CAL_ID": CalID,
                         "SA_ID": dataH.SA_ID,
@@ -80,13 +81,15 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                         "tester": dataH.tester,
                         "report_type": dataH.report_type,
                         "RECIPIENT_NAME": dataH.RECIPIENT_NAME,
-                        "DOCTOR_ID": dataH.DOCTOR_ID || 1,
+                        "DOCTOR_ID": dataH.DOCTOR_ID || response[0].doctor.doctor_id,
                         "Signature": dataH.Signature,
                         "LOCATION_ID": dataH.LOCATION_ID,
                         "sections": []
                     });
                     $scope.info.Signature = $scope.info.headers[hIndex].Signature;
                     $scope.info.test_date = $scope.info.headers[hIndex].test_date;
+                    $scope.info.RECIPIENT_NAME = $scope.info.headers[hIndex].RECIPIENT_NAME;
+                    $scope.info.tester = $scope.info.headers[hIndex].tester;
                     var j = 0;
                     angular.forEach(data.sections, function (dataS) {
                         if ($scope.info.headers[hIndex].SA_ID === dataS.SA_ID) {
@@ -111,7 +114,7 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                                         "LINE_ID": dataL.LINE_ID,
                                         "SECTION_ID": dataL.SECTION_ID,
                                         "SA_ID": dataL.SA_ID,
-                                        "NAME": dataL.NAME,
+                                        "NAME": dataL.NAME || dataL.Name,
                                         "VALUE_RIGHT": dataL.VALUE_RIGHT,
                                         "VALUE_LEFT": dataL.VALUE_LEFT,
                                         "ISENABLE": dataL.ISENABLE,

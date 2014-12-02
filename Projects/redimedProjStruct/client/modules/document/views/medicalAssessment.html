@@ -7,7 +7,7 @@
         </button>
         <a href="/api/document/printMA/{{infoH.Patient_id}}/{{infoH.CAL_ID}}/{{infoH.MA_ID}}"
            type="button"
-           ng-disabled="isNew == true"
+           ng-disabled="isNew || infoChanged()"
            class="btn btn-primary blue pull-right">Print PDF
         </a>
         <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
@@ -28,14 +28,12 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <label class="control-label col-lg-2 col-md-3 col-sm-3" style="margin-top: 7px">CANDIDATE NAME:</label>
-            <label class="control-label col-md-4 col-sm-5" style="margin-top: 7px">{{patientInfo.First_name + " " + patientInfo.Sur_name + " " + patientInfo.Middle_name}}</label>
-            <label class="control-label col-md-1 col-sm-1" style="margin-top: 7px">D.O.B</label>
-            <label class="col-md-3 col-sm-3" style="margin-top: 7px">{{patientInfo.DOB | date : 'dd / MM / yyyy'}}</label>
+            <label class="control-label col-lg-2 col-md-3 col-sm-3">CANDIDATE NAME:</label>
+            <label class="control-label col-md-4 col-sm-5">{{patientInfo.First_name + " " + patientInfo.Sur_name + " " + patientInfo.Middle_name}}</label>
+            <label class="control-label col-md-1 col-sm-1">D.O.B</label>
+            <label class="col-md-3 col-sm-3">{{patientInfo.DOB | date : 'dd / MM / yyyy'}}</label>
 
         </div>
-        </br>
-
         <div class="row">
             <div ng-class="{'has-error':showClickedValidation && MAForm.HEIGHT.$error.pattern}">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">HEIGHT(cms):</label>
@@ -64,8 +62,6 @@
                 <div class="form-control"  style="background-color: #f5f5f5">{{infoH.BMI = infoH.WEIGHT / (infoH.HEIGHT * infoH.HEIGHT) | number : 1}}</div>
             </div>
         </div>
-        </br>
-
         <div class="row">
             <div class="col-md-2 col-sm-3 btn-group">
                 <label class="control-label text-info bold" >BMI</label></br>
@@ -96,10 +92,8 @@
                 <label class="control-label" style="margin-top: 10px">Unsatisfactory</label>
             </div>
         </div>
-
-
         <div class="row">
-            <label class="control-label col-md-4 col-lg-3 col-sm-4">URINALYSIS:</label>
+            <label class="control-label col-md-4 col-lg-3 col-sm-4" style="margin-top: 5px">URINALYSIS:</label>
             <div class="col-md-7 btn-group">
                 <label class="btn">
                     <input type="radio" ng-model="infoH.IS_URINALYSIS" value="1"/>NORMAL
@@ -112,22 +106,20 @@
                 </label>
             </div>
         </div>
-
-        <div ng-class="{'has-error':showClickedValidation && MAForm.URINALYSIS.$invalid && (infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2)}">
+        <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.URINALYSIS.$invalid && (infoH.IS_URINALYSIS == 2 || infoH.IS_URINALYSIS == 3)}">
             <div class="row">
-                <label class="control-label col-md-4 col-lg-3 col-sm-4">URINALYSIS COMMENT: <span ng-show="infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2" class="bold large">*</span></label>
+                <label class="control-label col-md-4 col-lg-3 col-sm-4">URINALYSIS COMMENT: <span ng-show="infoH.IS_URINALYSIS == 2 || infoH.IS_URINALYSIS == 3" class="bold large">*</span></label>
                 <div class="col-md-5 col-sm-7">
-                    <input type="text" ng-model="infoH.URINALYSIS" name="URINALYSIS" ng-required="infoH.IS_URINALYSIS == 1 || infoH.IS_URINALYSIS == 2" class="form-control">
+                    <input type="text" ng-model="infoH.URINALYSIS" name="URINALYSIS" ng-required="infoH.IS_URINALYSIS == 3 || infoH.IS_URINALYSIS == 2" class="form-control">
                 </div>
             </div>
-            <div class="row" ng-show="showClickedValidation && MAForm.URINALYSIS.$invalid && (infoH.IS_URINALYSIS == 1  || infoH.IS_URINALYSIS == 2)">
+            <div class="row" ng-show="showClickedValidation && MAForm.URINALYSIS.$invalid && (infoH.IS_URINALYSIS == 3  || infoH.IS_URINALYSIS == 2)">
                 <div class="col-md-4 col-sm-4 col-lg-3"></div>
                 <div class="col-md-5 col-sm-7 help-block"  for="URINALYSIS">
                     <label>Must be enter if ABNORMAL / DISCUSSED</label>
                 </div>
             </div>
         </div>
-        </br>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.BSL.$error.pattern}">
             <div class="row">
                 <label class="control-label col-md-4 col-lg-3 col-sm-4">BSL(MMOL/L):</label>
@@ -142,7 +134,6 @@
                 </div>
             </div>
         </div>
-        </br>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.WAIST_CIR.$error.pattern}">
             <div class="row">
                 <label class="control-label col-md-4 col-lg-3 col-sm-4">WAIST CIRCUMFERENCE(cm):</label>
@@ -157,7 +148,6 @@
                 </div>
             </div>
         </div>
-        </br>
         <div class="form-group" ng-class="{'has-error':showClickedValidation && MAForm.HIP_CIR.$error.pattern}">
             <div class="row">
                 <label class="control-label col-md-4 col-lg-3 col-sm-4">HIP CIRCUMFERENCE(cm):</label>
@@ -171,14 +161,13 @@
                     <label>HIP CIRCUMFERENCE must be number</label>
                 </div>
             </div>
-        </div></br>
+        </div>
         <div class="row">
             <label class="control-label col-md-4 col-lg-3 col-sm-4">WAIST TO HIP RATIO:</label>
             <div class="col-md-2 col-sm-4">
                 <div class="form-control"  style="background-color: #f5f5f5">{{infoH.WAIST_TO_HIP_RATE | number : 1}}</div>
             </div>
         </div>
-        </br>
         <div class="row">
             <div class="col-md-2 col-sm-3 btn-group">
                 <label class="control-label text-info bold" >RISK</label></br>
@@ -207,7 +196,6 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="portlet box grey-cascade">
         <div class="portlet-title">
@@ -295,9 +283,7 @@
                     </div>
                 </div>
             </div>
-
             </br>
-
             <div class="border" style="border-color: #808080; border-style: dotted;" >
                 <div class="row" >
                     <div class="col-md-12">
@@ -373,7 +359,6 @@
                     </div>
                 </div>
             </div>
-            </br>
             <div class="row">
                 <label class="control-label bold col-md-5 col-lg-3 col-sm-5" style="margin-top: 10px">PERIPHERAL VISION NORMAL</label>
                 <div class="col-md-7  btn-group">
@@ -428,10 +413,7 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
     </div>
 </div>
@@ -529,15 +511,15 @@
                 <label class="btn">
                     <input type="radio" ng-model="infoH.IS_CANDIDATE_CAN_UNDERTAKE" value="0"/> No
                 </label>
-                <span ng-show="infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1" class="bold large">*</span>
+                <span ng-show="infoH.IS_CANDIDATE_CAN_UNDERTAKE == 0" class="bold large">*</span>
             </div>
-            <div ng-class="{'has-error':showClickedValidation && MAForm.CANDIDATE_CAN_UNDERTAKE_COMMENT.$invalid && infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1 }">
+            <div ng-class="{'has-error':showClickedValidation && MAForm.CANDIDATE_CAN_UNDERTAKE_COMMENT.$invalid && infoH.IS_CANDIDATE_CAN_UNDERTAKE == 0 }">
                 <div class="row">
                     <div class="col-md-7">
-                        <textarea class="form-control"  name="CANDIDATE_CAN_UNDERTAKE_COMMENT" ng-required="infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1" ng-model="infoH.CANDIDATE_CAN_UNDERTAKE_COMMENT"></textarea>
+                        <textarea class="form-control"  name="CANDIDATE_CAN_UNDERTAKE_COMMENT" ng-required="infoH.IS_CANDIDATE_CAN_UNDERTAKE == 0" ng-model="infoH.CANDIDATE_CAN_UNDERTAKE_COMMENT"></textarea>
                     </div>
                 </div>
-                <div class="row" ng-show="showClickedValidation && MAForm.CANDIDATE_CAN_UNDERTAKE_COMMENT.$invalid && infoH.IS_CANDIDATE_CAN_UNDERTAKE == 1">
+                <div class="row" ng-show="showClickedValidation && MAForm.CANDIDATE_CAN_UNDERTAKE_COMMENT.$invalid && infoH.IS_CANDIDATE_CAN_UNDERTAKE == 0">
                     <div class="col-md-3 col-lg-2"></div>
                     <div class="col-md-7 help-block"  for="CANDIDATE_CAN_UNDERTAKE_COMMENT">
                         <label>Must be enter if when no</label>
@@ -556,15 +538,15 @@
                 <label class="btn">
                     <input type="radio" ng-model="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED" value="0"/> No
                 </label>
-                <span ng-show="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0" class="bold large">*</span>
+                <span ng-show="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 1" class="bold large">*</span>
             </div>
-            <div ng-class="{'has-error':showClickedValidation && MAForm.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT.$invalid && infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0 }">
+            <div ng-class="{'has-error':showClickedValidation && MAForm.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT.$invalid && infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 1 }">
                 <div class="row">
                     <div class="col-md-7">
-                        <textarea class="form-control"  name="CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT" ng-required="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0" ng-model="infoH.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT"></textarea>
+                        <textarea class="form-control"  name="CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT" ng-required="infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 1" ng-model="infoH.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT"></textarea>
                     </div>
                 </div>
-                <div class="row" ng-show="showClickedValidation && MAForm.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT.$invalid && infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 0">
+                <div class="row" ng-show="showClickedValidation && MAForm.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT.$invalid && infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED == 1">
                     <div class="col-md-3 col-lg-2"></div>
                     <div class="col-md-7 help-block"  for="CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT">
                         <label>Must be enter if when yes</label>

@@ -21,13 +21,16 @@
      cln_mh_df_line_subquestions.ORD AS cln_mh_df_line_subquestions_ORD,
      cln_mh_df_line_subquestions.QUESTION AS cln_mh_df_line_subquestions_QUESTION,
      cln_mh_df_line_subquestions.YES_NO AS cln_mh_df_line_subquestions_YES_NO,
-     cln_mh_df_line_subquestions.Comments AS cln_mh_df_line_subquestions_Comments
+     cln_mh_df_line_subquestions.Comments AS cln_mh_df_line_subquestions_Comments,
+cln_mh_df_lines.ORD AS cln_mh_df_lines_ORD
 FROM
-     cln_mh_df_line_subquestions cln_mh_df_line_subquestions
+     cln_mh_df_line_subquestions cln_mh_df_line_subquestions inner join  cln_mh_df_lines cln_mh_df_lines on cln_mh_df_lines.MH_LINE_ID = cln_mh_df_line_subquestions.MH_LINE_ID
 WHERE
      cln_mh_df_line_subquestions.MH_LINE_ID= $P{mh_line_id}
 	AND cln_mh_df_line_subquestions.PATIENT_ID = $P{patient_id}
-	AND  cln_mh_df_line_subquestions.CAL_ID = $P{cal_id}]]>
+	AND  cln_mh_df_line_subquestions.CAL_ID = $P{cal_id}
+	AND cln_mh_df_lines.PATIENT_ID = $P{patient_id}
+	AND  cln_mh_df_lines.CAL_ID = $P{cal_id}]]>
 	</queryString>
 	<field name="cln_mh_df_line_subquestions_PATIENT_ID" class="java.lang.Integer"/>
 	<field name="cln_mh_df_line_subquestions_CAL_ID" class="java.lang.Integer"/>
@@ -37,31 +40,32 @@ WHERE
 	<field name="cln_mh_df_line_subquestions_QUESTION" class="java.lang.String"/>
 	<field name="cln_mh_df_line_subquestions_YES_NO" class="java.lang.Integer"/>
 	<field name="cln_mh_df_line_subquestions_Comments" class="java.lang.String"/>
+	<field name="cln_mh_df_lines_ORD" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="44" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="527" height="44" isRemoveLineWhenBlank="true" uuid="73f6c3ad-4fd8-47fb-8bbf-b0c5f53d2856"/>
+				<reportElement x="0" y="0" width="555" height="27" isRemoveLineWhenBlank="true" uuid="73f6c3ad-4fd8-47fb-8bbf-b0c5f53d2856"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</rectangle>
 			<line>
-				<reportElement x="260" y="0" width="1" height="44" isRemoveLineWhenBlank="true" uuid="c506122d-a75a-496f-a774-54ce41ab0d20"/>
+				<reportElement x="288" y="0" width="1" height="27" isRemoveLineWhenBlank="true" uuid="c506122d-a75a-496f-a774-54ce41ab0d20"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="334" y="0" width="1" height="44" isRemoveLineWhenBlank="true" uuid="a107ec5f-a84b-4a78-a480-16d86caa5e85"/>
+				<reportElement x="362" y="0" width="1" height="27" isRemoveLineWhenBlank="true" uuid="a107ec5f-a84b-4a78-a480-16d86caa5e85"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="3" y="0" width="257" height="44" isRemoveLineWhenBlank="true" uuid="9a42bdf5-ed3c-4b40-bbdd-03e8cd6c7c7e"/>
+				<reportElement x="28" y="0" width="260" height="27" isRemoveLineWhenBlank="true" uuid="9a42bdf5-ed3c-4b40-bbdd-03e8cd6c7c7e"/>
 				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="9"/>
@@ -69,20 +73,33 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cln_mh_df_line_subquestions_QUESTION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="261" y="0" width="73" height="44" isRemoveLineWhenBlank="true" uuid="498c6ca3-32ba-4aa8-bb04-4129d2327460"/>
+				<reportElement x="288" y="0" width="74" height="27" isRemoveLineWhenBlank="true" uuid="498c6ca3-32ba-4aa8-bb04-4129d2327460"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cln_mh_df_line_subquestions_YES_NO}.intValue()==1?"Yes":"No"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="335" y="0" width="192" height="44" isRemoveLineWhenBlank="true" uuid="15248c00-fffb-49a9-9ded-fce4a9d54503"/>
+				<reportElement x="363" y="0" width="192" height="27" isRemoveLineWhenBlank="true" uuid="15248c00-fffb-49a9-9ded-fce4a9d54503"/>
 				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cln_mh_df_line_subquestions_Comments}]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="25" height="27" isRemoveLineWhenBlank="true" uuid="71cdda7b-9a32-4be1-bae3-c6b8f339fa4f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_mh_df_lines_ORD}.toString() +"."+ $F{cln_mh_df_line_subquestions_ORD}.toString()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="28" y="0" width="1" height="27" isRemoveLineWhenBlank="true" uuid="c857b3db-22a9-472b-a63a-b911b6e56e9b"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

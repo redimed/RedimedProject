@@ -1,6 +1,14 @@
 angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 .controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService) {
+	$scope.test_params = {
+		permission: {
+			create: true,
+			edit: false
+		}
+	}
+
+
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
 

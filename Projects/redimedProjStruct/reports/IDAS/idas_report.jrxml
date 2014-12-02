@@ -326,11 +326,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{doctor_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="321" y="107" width="90" height="20" uuid="348bbfcf-6568-42ff-bc4e-a1b9cc8189f7"/>
+				<reportElement x="312" y="115" width="90" height="20" uuid="348bbfcf-6568-42ff-bc4e-a1b9cc8189f7"/>
 				<text><![CDATA[Tester’s signature: ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="411" y="99" width="113" height="50" uuid="1ef3732d-f028-4ba0-b931-5f039c8f4004"/>
+				<reportElement x="414" y="115" width="113" height="50" uuid="1ef3732d-f028-4ba0-b931-5f039c8f4004"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctor_sign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField>
