@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
         "LINE_ID": {type: DataTypes.INTEGER(11), primaryKey: true},
         "SECTION_ID": DataTypes.INTEGER(11),
         "SA_ID": DataTypes.INTEGER(11),
-        "Name": DataTypes.INTEGER(11),
+        "NAME": {type: DataTypes.INTEGER(11), field: 'Name'},
         "VALUE_RIGHT": DataTypes.INTEGER(11),
         "VALUE_LEFT": DataTypes.INTEGER(11),
         "ISENABLE": DataTypes.INTEGER(11),
