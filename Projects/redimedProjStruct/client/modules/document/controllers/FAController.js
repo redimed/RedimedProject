@@ -383,7 +383,6 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                     }
                                 });
                                 angular.forEach(data.Comment, function(dataC){
-
                                     if(dataC.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                                     {
                                         $scope.listFA[0].section[i].line[j].comment.push({"comment_id":dataC.FA_COMMENT_ID,"comment_name": dataC.NAME, "comment_type": dataC.Comment_Type});
