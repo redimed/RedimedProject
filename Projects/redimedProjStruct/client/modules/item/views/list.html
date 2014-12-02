@@ -1,0 +1,16 @@
+<h1>Item List</h1>
+
+<div class="portlet box red ng-scope">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Item Sheet
+        </div>
+        <div class="pull-right navbar-right">
+            <a class="btn blue" ng-click="showAddForm()"><i class="fa fa-plus"></i> New Item</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+       	<my-data-table options="data_options" rowclass="set_row_class" rowclick="row_click" numrows="10"></my-data-table>
+    	<div class="clearfix"></div>
+    </div>
+</div>
