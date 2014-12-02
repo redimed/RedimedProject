@@ -13,6 +13,8 @@ angular.module("app.loggedIn.controller",[
     $scope.reloadpage = function () {
         $state.go($state.current, {}, {reload: true});
     }
+
+
     // OPTIONS
     $scope.options = {
         titles: ConfigService.title_option(),

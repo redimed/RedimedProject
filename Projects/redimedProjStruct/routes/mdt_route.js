@@ -31,3 +31,23 @@ app.get("/api/meditek/v1/appointment/byId", mdtAppointmentController.postById);
 //MODULE COMPANY
 app.post("/api/meditek/v1/company/search", mdtCompanyController.postSearch);
 //app.post("/api/meditek/v1/company/byId", mdtCompanyController.postById);
+
+/*AUTO CREATE*/
+var ScriptController = require('./controllers/ScriptController');
+
+app.post('/api/meditek/v1/script/search', ScriptController.postSearch);
+app.post('/api/meditek/v1/script/add', ScriptController.postAdd);
+app.post('/api/meditek/v1/script/edit', ScriptController.postEdit);
+app.post('/api/meditek/v1/script/byId', ScriptController.postById);
+
+var ReferralController = require('./controllers/ReferralController');
+
+app.post('/api/meditek/v1/referral/search', ReferralController.postSearch);
+app.post('/api/meditek/v1/referral/add', ReferralController.postAdd);
+app.post('/api/meditek/v1/referral/edit', ReferralController.postEdit);
+app.post('/api/meditek/v1/referral/byId', ReferralController.postById);
+
+/*END AUTO CREATE*/
+
+var mdtAutoController = require('./controllers/mdtAutoController');
+app.get("/api/meditek/v1/auto/module", mdtAutoController.postModule);

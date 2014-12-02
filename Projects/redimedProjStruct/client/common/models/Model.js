@@ -203,3 +203,54 @@ angular.module("app.model", [])
 	Last_updated_by: null
 })
 //END WAITING LIST
+
+/*AUTO CREATE*/
+.value('ScriptModel', {
+	Patient_id: null,
+	CAL_ID: null,
+	prescriber: '',
+	scriptNum: null,
+	Medicare: '',
+	isRefNo: null,
+	EntitlementNo: '',
+	isSafety: null,
+	isConcessional: null,
+	isPBS: null,
+	isRPBS: null,
+	isBrand: null,
+	pharmacist: '',
+	doctorSign: '',
+	doctordate: null,
+	patientSign: '',
+	patientDate: null,
+	agentAddress: '',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+.value('ReferralModel', {
+	Patient_id: null,
+	CAL_ID: null,
+	IS_CT_SCAN: null,
+	IS_X_RAY: null,
+	IS_MRI: null,
+	IS_ULTRASOUND: null,
+	IS_PATHOLOGY: null,
+	CLINICAL_DETAILS: '',
+	IS_ALLERGIES: null,
+	REQUESTING_PRACTITIONER: '',
+	IS_REPORT_URGENT: null,
+	ELECTRONIC: null,
+	FAX: null,
+	Email: '',
+	PHONE: null,
+	IS_RETURN_WITH_PATIENT: null,
+	APPOINTMENT_DATE: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	Isenable: null,
+})
+/*END AUTO CREATE*/
