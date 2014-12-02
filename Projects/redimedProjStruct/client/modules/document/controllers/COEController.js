@@ -112,11 +112,13 @@ angular.module('app.loggedIn.document.COE.controllers', [])
                 if(insert == true){
                     DocumentService.insertCOE(info).then(function(response){
                         if(response['status'] === 'success') {
-                            alert("Insert Successfully!");
+                            toastr.success("Add new success!", "Success");
+                            $scope.isNew = false;
+                            $state.go('loggedIn.COE', null, {'reload': true});
                         }
                         else
                         {
-                            alert("Insert Failed!");
+                            toastr.error("Add new fail!", "Error");
                         }
                     });
                 }else
@@ -124,11 +126,12 @@ angular.module('app.loggedIn.document.COE.controllers', [])
                     var info = $scope.info;
                     DocumentService.updateCOE(info).then(function(response){
                         if(response['status'] === 'success') {
-                            alert("Edit Successfully!");
+                            toastr.success("Edit success!", "Success");
+                            $state.go('loggedIn.COE', null, {'reload': true});
                         }
                         else
                         {
-                            alert("Edit Failed!");
+                            toastr.error("Edit fail!", "Error");
                         }
                     });
                 }
