@@ -94,41 +94,41 @@ AND cln_mh_df_lines.GROUP_ID = $P{group_id}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="46" splitType="Stretch">
+		<band height="42" splitType="Stretch">
 			<rectangle>
-				<reportElement positionType="Float" x="0" y="0" width="555" height="25" uuid="f6edc4fe-ca0f-41db-8a79-50c85c2a688a"/>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="27" uuid="f6edc4fe-ca0f-41db-8a79-50c85c2a688a"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</rectangle>
 			<line>
-				<reportElement positionType="Float" x="28" y="0" width="1" height="25" uuid="c1b0fbdb-ecf2-48f9-91c3-2238520f4a5a"/>
+				<reportElement positionType="Float" x="28" y="0" width="1" height="27" uuid="c1b0fbdb-ecf2-48f9-91c3-2238520f4a5a"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="288" y="0" width="1" height="25" uuid="7baba05c-5a44-41cc-be0c-10d60255c6c8"/>
+				<reportElement positionType="Float" x="288" y="0" width="1" height="27" uuid="7baba05c-5a44-41cc-be0c-10d60255c6c8"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="362" y="0" width="1" height="25" uuid="b0d344f9-c58b-4725-86d7-f37e4a47d2b5"/>
+				<reportElement positionType="Float" x="362" y="0" width="1" height="27" uuid="b0d344f9-c58b-4725-86d7-f37e4a47d2b5"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="0" y="-3" width="28" height="28" uuid="916f4e42-9670-4250-994f-bb4c7f50bfca"/>
+				<reportElement positionType="Float" x="0" y="0" width="28" height="27" uuid="916f4e42-9670-4250-994f-bb4c7f50bfca"/>
 				<box leftPadding="4" rightPadding="4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ORD}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="29" y="0" width="259" height="25" uuid="3710d0f6-a68c-43f4-a374-1e1986929888"/>
+				<reportElement positionType="Float" x="29" y="0" width="259" height="27" uuid="3710d0f6-a68c-43f4-a374-1e1986929888"/>
 				<box leftPadding="4" rightPadding="4"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="9"/>
@@ -136,14 +136,14 @@ AND cln_mh_df_lines.GROUP_ID = $P{group_id}]]>
 				<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="290" y="-3" width="73" height="28" uuid="595ee450-25d5-48c8-ab12-64e585d61c05"/>
+				<reportElement positionType="Float" x="289" y="0" width="73" height="27" uuid="595ee450-25d5-48c8-ab12-64e585d61c05"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{YES_NO}.intValue()==1?"Yes":"No"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="363" y="-3" width="192" height="28" uuid="56e5a5e9-028a-45f8-a019-8f7cb04c84d2"/>
+				<reportElement positionType="Float" x="362" y="0" width="193" height="27" uuid="56e5a5e9-028a-45f8-a019-8f7cb04c84d2"/>
 				<box leftPadding="4" rightPadding="4"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
@@ -151,7 +151,7 @@ AND cln_mh_df_lines.GROUP_ID = $P{group_id}]]>
 				<textFieldExpression><![CDATA[$F{comments}]]></textFieldExpression>
 			</textField>
 			<subreport runToBottom="false">
-				<reportElement style="table" positionType="Float" isPrintRepeatedValues="false" x="28" y="25" width="530" height="21" isRemoveLineWhenBlank="true" uuid="dade0cfd-abca-473a-82d4-1931899cd3b7"/>
+				<reportElement style="table" positionType="Float" isPrintRepeatedValues="false" x="0" y="27" width="555" height="15" isRemoveLineWhenBlank="true" uuid="dade0cfd-abca-473a-82d4-1931899cd3b7"/>
 				<subreportParameter name="mh_line_id">
 					<subreportParameterExpression><![CDATA[$F{MH_LINE_ID}]]></subreportParameterExpression>
 				</subreportParameter>
