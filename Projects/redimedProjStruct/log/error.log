@@ -58,3 +58,6 @@ Error at Fri Nov 28 2014 16:29:34 GMT+0700 (SE Asia Standard Time) : {"code":"ER
 Exec SQL: INSERT INTO patient_companies (company_id, patient_id) VALUES (32, 467)
 Error at Fri Nov 28 2014 16:29:37 GMT+0700 (SE Asia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
 
+Exec SQL: INSERT INTO patient_companies (company_id, patient_id, creation_date, last_update_date) VALUES (5, 474, NOW(), NOW())
+Error at Tue Dec 02 2014 11:09:21 GMT+0800 (W. Australia Standard Time) : {"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","index":0}
+
