@@ -73,9 +73,8 @@ angular.module('starter', ['ionic',
                     }
                 }
             })
-
     })
-    .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate){
+    .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate,$ionicPlatform){
         $rootScope.$on("$stateChangeSuccess", function(e, toState){
             if(!localStorageService.get("userInfo")){
                 if(toState.name !== "security.forgot" && toState.name !== "security.login") {
@@ -93,5 +92,23 @@ angular.module('starter', ['ionic',
             }
 
         });
+        $ionicPlatform.ready(function(){
+            if($window.nfc){
+                $window.nfc.addNdefListener(function(){
+                    deferred.resolve(event.tag);
+                }, function(){
+                    deferred.notify('added listner for NFC');
+                }, function(){
+                    deferred.reject('failed to attach NFC event handler');
+                });
+                alert("abc")
+            }else{
+                deferred.reject('NFC Global Object does not exist');
+                alert("cba")
+            }
+        })
+
     });
+
+
 
