@@ -9,15 +9,15 @@
 
     </ion-nav-view>
   </ion-pane>
-  <ion-side-menu side="left" class="bg-menu-left" width="350">
+  <ion-side-menu side="left" class="bg-menu-left" width="290">
     <div id="content">
       <div id="profile-info">
-        <img class="img-circle" width="100" height="100" src="http://www.mrwallpaper.com/wallpapers/nice-girl-1920x1080.jpg" title="Profile" ui-sref="app.profile">
+        <img class="img-circle" width="100" height="100" src="http://www.mrwallpaper.com/wallpapers/nice-girl-1920x1080.jpg" title="Profile" ui-sref="app.profile" menu-close>
         <h3 id="profile-name">{{userName}}</h3>
         <span id="profile-description" ng-click="logout()">Logout</span>
       </div>
       <ion-list ng-repeat="menu in Injurymenu">
-        <ion-item ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}" class="item-menu">
+        <ion-item ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}" class="item-menu" menu-close>
           {{submenu.name}}
           <i class="fa fa-angle-right" style="float: right"></i>
         </ion-item>

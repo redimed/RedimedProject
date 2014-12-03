@@ -17,17 +17,18 @@ angular.module('starter', ['ionic',
     'starter.booking',
     'ui.bootstrap',
     'ngCordova',
+    'starter.driver',
 ])
-    .run(function($ionicPlatform) {
-        $ionicPlatform.ready(function() {
-            if(window.cordova && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            }
-            if(window.StatusBar) {
-                StatusBar.styleDefault();
-            }
-        });
-    })
+    //.run(function($ionicPlatform) {
+    //    $ionicPlatform.ready(function() {
+    //        if(window.cordova && window.cordova.plugins.Keyboard) {
+    //            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    //        }
+    //        if(window.StatusBar) {
+    //            StatusBar.styleDefault();
+    //        }
+    //    });
+    //})
 
     .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
 
@@ -39,12 +40,12 @@ angular.module('starter', ['ionic',
         //test ip local
         //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
 
-        //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
+        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
         //RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
 
         //ip Luan
-        RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
+        //RestangularProvider.setBaseUrl("http://192.168.132.142:3000");
 
         //ip nha
         //RestangularProvider.setBaseUrl("http://192.168.1.110:3000");
@@ -54,9 +55,7 @@ angular.module('starter', ['ionic',
             .state("init", {
                 url: "/",
                 resolve: {
-
                     initHome: function($timeout,$state,localStorageService){
-
                         if(!localStorageService.get("userInfo")){
                             $timeout(function(){
                                 $state.go("security.login");
@@ -70,9 +69,8 @@ angular.module('starter', ['ionic',
                     }
                 }
             })
-
     })
-    .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate){
+    .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate) {
         $rootScope.$on("$stateChangeSuccess", function(e, toState){
             if(!localStorageService.get("userInfo")){
                 if(toState.name !== "security.forgot" && toState.name !== "security.login") {
