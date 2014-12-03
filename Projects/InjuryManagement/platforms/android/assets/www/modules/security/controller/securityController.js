@@ -8,6 +8,8 @@ angular.module('starter.security.controller',[
         $scope.modelUser = {
             username: "",
             password: "",
-            remember: false
+            remember: false,
+            token: "",
+            platform: ""
         }
     })

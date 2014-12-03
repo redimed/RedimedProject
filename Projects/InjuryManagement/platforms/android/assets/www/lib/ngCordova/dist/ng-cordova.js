@@ -1468,7 +1468,7 @@ angular.module('ngCordova.plugins.file', [])
             fileWriter.seek(fileWriter.length);
           }
           fileWriter.onwriteend = function (evt) {
-            if (this.error) 
+            if (this.error)
               q.reject(this.error);
             else
               q.resolve(evt);
@@ -1617,7 +1617,7 @@ angular.module('ngCordova.plugins.file', [])
       return q.promise;
     }
 
-    /* 
+    /*
      * Returns a promise that will either be resolved with a FileWriter bound to the file identified
      * in the provided path or rejected if an error occurs while attempting to initialize
      * the writer.
@@ -1646,7 +1646,7 @@ angular.module('ngCordova.plugins.file', [])
     }
 
     /*
-     * Returns a promise that will either be resolved with the File object associated with the requested 
+     * Returns a promise that will either be resolved with the File object associated with the requested
      * absolute path, or rejected if an error occurs while trying to initialize that File object.
      */
     function getAbsoluteFile(path) {
@@ -1659,7 +1659,7 @@ angular.module('ngCordova.plugins.file', [])
     }
 
     /*
-     * Returns a promise that will either be resolved with the Directory object associated with 
+     * Returns a promise that will either be resolved with the Directory object associated with
      * the requested directory or rejected if an error occurs while atempting to access that directory.
      */
     function getDirectory(dir, options) {
@@ -1679,7 +1679,7 @@ angular.module('ngCordova.plugins.file', [])
     function getFilesystem() {
       var q = $q.defer();
       try {
-        $window.requestFileSystem($window.PERSISTENT, 1024 * 1024, q.resolve, q.reject); 
+        $window.requestFileSystem($window.PERSISTENT, 1024 * 1024, q.resolve, q.reject);
       } catch (err) {
         q.reject(err);
       }

@@ -17,6 +17,8 @@ angular.module('starter', ['ionic',
     'starter.booking',
     'ui.bootstrap',
     'ngCordova',
+    'starter.driver',
+    'starter.NFC',
 ])
     //.run(function($ionicPlatform) {
     //    $ionicPlatform.ready(function() {
@@ -39,15 +41,9 @@ angular.module('starter', ['ionic',
         //test ip local
         //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
 
-        //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
+        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
         //RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
-
-        //ip Luan
-        RestangularProvider.setBaseUrl("http://192.168.133.11:3000");
-
-        //ip nha
-        //RestangularProvider.setBaseUrl("http://192.168.1.110:3000");
 
         $urlRouterProvider.otherwise('/');
         $stateProvider
@@ -60,7 +56,6 @@ angular.module('starter', ['ionic',
                                 $state.go("security.login");
                             }, 100);
                         }else{
-
                             $timeout(function(){
                                 $state.go("app.injury.info");
                             }, 100);
@@ -69,7 +64,7 @@ angular.module('starter', ['ionic',
                 }
             })
     })
-    .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate) {
+    .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate,$ionicPlatform){
         $rootScope.$on("$stateChangeSuccess", function(e, toState){
             if(!localStorageService.get("userInfo")){
                 if(toState.name !== "security.forgot" && toState.name !== "security.login") {
@@ -87,5 +82,8 @@ angular.module('starter', ['ionic',
             }
 
         });
+
     });
+
+
 

@@ -24,6 +24,14 @@ angular.module('starter.worker.services',[])
             var detailApi = workerApi.all("im/patients/checkEmail");
             return detailApi.post({email:data});
         }
+        workerServices.getInfoPatientbyID = function(data){
+            var infoPatienbyID = workerApi.all("meditek/v1/patient/byId");
+            return infoPatienbyID.post({Patient_id:data});
+        }
+        workerServices.updateInfoPatientID  = function(data){
+            var updateInfoID = workerApi.all("meditek/v1/patient/edit");
+            return updateInfoID.post(data);
+        }
 
 
         return workerServices;

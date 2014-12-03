@@ -5,31 +5,31 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic',
-  'restangular',
-  'starter.menu',
-  'starter.security',
-  'starter.user',
-  'LocalStorageModule',
-  'starter.worker',
-  'starter.injury',
-  'app.config',
-  'starter.worker',
-  'starter.booking',
-  'ui.bootstrap',
-  'starter.NFC',
-  'ngCordova',
-
+    'restangular',
+    'starter.menu',
+    'starter.security',
+    'starter.user',
+    'LocalStorageModule',
+    'starter.worker',
+    'starter.injury',
+    'app.config',
+    'starter.worker',
+    'starter.booking',
+    'ui.bootstrap',
+    'ngCordova',
+    'starter.driver',
+    'starter.NFC',
 ])
-    .run(function($ionicPlatform) {
-        $ionicPlatform.ready(function() {
-            if(window.cordova && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            }
-            if(window.StatusBar) {
-                StatusBar.styleDefault();
-            }
-        });
-    })
+    //.run(function($ionicPlatform) {
+    //    $ionicPlatform.ready(function() {
+    //        if(window.cordova && window.cordova.plugins.Keyboard) {
+    //            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    //        }
+    //        if(window.StatusBar) {
+    //            StatusBar.styleDefault();
+    //        }
+    //    });
+    //})
 
     .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
 
@@ -41,25 +41,16 @@ angular.module('starter', ['ionic',
         //test ip local
         //RestangularProvider.setBaseUrl("http://192.168.135.24:3000");
 
-        //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
+        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
         //RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
-
-    
-       // RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
-
-
-      RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
         $urlRouterProvider.otherwise('/');
         $stateProvider
             .state("init", {
                 url: "/",
                 resolve: {
-
                     initHome: function($timeout,$state,localStorageService){
-
-
                         if(!localStorageService.get("userInfo")){
                             $timeout(function(){
                                 $state.go("security.login");

@@ -28,7 +28,18 @@ angular.module('starter.security.services',[])
             var forgotMail = securityApi.one('users/forgotPassword');
             return forgotMail.get({email:email});
         }
-
-
         return securityService;
+    })
+
+    //app ready get function register get device token
+    .factory(("ionPlatform"), function( $q ){
+        var ready = $q.defer();
+
+        ionic.Platform.ready(function( device ){
+            ready.resolve( device );
+        });
+
+        return {
+            ready: ready.promise
+        }
     })

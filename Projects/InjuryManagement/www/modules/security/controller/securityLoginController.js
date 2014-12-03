@@ -4,7 +4,7 @@ angular.module('starter.security.login.controller',[])
                                                    $cordovaMedia, $cordovaToast, ionPlatform){
         $scope.notifications = [];
         ionPlatform.ready.then(function (device) {
-            //$scope.register();
+            $scope.register();
         });
 
         $scope.register = function () {
@@ -53,6 +53,7 @@ angular.module('starter.security.login.controller',[])
                 $scope.$apply(function () {
                     $scope.notifications.push(JSON.stringify(notification.message));
                     console.log("notification handleAndroid " + notification);
+                    localStorageService.set("notifications", $scope.notifications);
                 })
             }
             else if (notification.event == "error")
@@ -98,35 +99,27 @@ angular.module('starter.security.login.controller',[])
         // SUBMIT LOGIN
         $scope.login = function(){
             console.log(JSON.stringify($scope.modelUser));
-            console.log("notification handleAndroid " + $scope.notifications);
-            SecurityService.login($scope.modelUser).then(function(response) {
+            console.log("notification handleAndroid " + localStorageService.get("notifications"));
+            SecurityService.login($scope.modelUser).then(function(response){
                 UserService.detail().then(function(response){
                     if(typeof response.userInfo !== 'undefined')
                         localStorageService.set("userInfo", response.userInfo);
                     if(typeof response.companyInfo !== 'undefined')
                         localStorageService.set("companyInfo", response.companyInfo);
 
-                SecurityService.login($scope.modelUser).then(function(response){
-                    UserService.detail().then(function(response){
-                        if(typeof response.userInfo !== 'undefined')
-                            localStorageService.set("userInfo", response.userInfo);
-                        if(typeof response.companyInfo !== 'undefined')
-                            localStorageService.set("companyInfo", response.companyInfo);
+                    if(response.userInfo['function_mobile'] != null){
+                        UserService.getFunction(response.userInfo['function_mobile']).then(function(data){
+                            var rs = data.definition.split('(');
+                            if(rs[0] != null)
+                            {
+                                var r = rs[1].split(')');
+                                var params = eval("("+r[0]+")");
 
-                        if(response.userInfo['function_mobile'] != null){
-                            UserService.getFunction(response.userInfo['function_mobile']).then(function(data){
-                                var rs = data.definition.split('(');
-                                if(rs[0] != null)
-                                {
-                                    var r = rs[1].split(')');
-                                    var params = eval("("+r[0]+")");
-
-                                    $state.go(rs[0],params,{reload:true});
-                                }
-                                else
-                                {
-                                    $state.go(rs[0],{reload:true});
-                                }
+                                $state.go(rs[0],params,{reload:true});
+                            }
+                            else
+                            {
+                                $state.go(rs[0],{reload:true});
                             }
                         })
                     }
@@ -134,7 +127,7 @@ angular.module('starter.security.login.controller',[])
                     {
                         $state.go('app.injury.info');
                     }
-                });
+                })
             }, function(error){
                 alert('Error','error');
             });

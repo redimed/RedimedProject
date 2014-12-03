@@ -1,5 +1,9 @@
 #Last build type
+<<<<<<< HEAD
 #Wed, 03 Dec 2014 15:11:01 +0700
+=======
+#Wed, 03 Dec 2014 15:20:19 +0700
+>>>>>>> origin/InjuryManagement-v1.0
 
 build.last.target=debug
 

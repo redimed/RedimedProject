@@ -45,8 +45,6 @@ angular.module('starter', ['ionic',
 
         //RestangularProvider.setBaseUrl("http://192.168.135.26:3000");
 
-      //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
-
         $urlRouterProvider.otherwise('/');
         $stateProvider
             .state("init", {

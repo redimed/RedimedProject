@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="css/components.css"/>
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/profile.css"/>
-
-    <link rel="stylesheet" href="lib/ionic/css/ionic.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/ionic/css/ionic.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css"/>
 
     <!--<link rel="stylesheet" href="theme/assets/admin/pages/css/login-soft.css"/>-->
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -23,34 +22,33 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
-    <script src="plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js"></script>
 
     <!--RESTANGULAR-->
     <script src="lib/lodash/dist/lodash.compat.min.js"></script>
     <script src="lib/restangular/dist/restangular.min.js"></script>
     <script src="lib/angular-local-storage/dist/angular-local-storage.min.js"></script>
-    <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>-->
     <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="lib/jquery/jquery-1.10.2.min.js"></script>
+
     <!--//maps-->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script src="lib/hpneo-gmaps-f12b532/gmaps.js"></script>
 
-
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/Config.js"></script>
-
     <script src="modules/menu/menu.js"></script>
     <script src="modules/security/security.js"></script>
     <script src="modules/user/user.js"></script>
     <script src="modules/worker/Worker.js"></script>
     <script src="modules/submitinjury/Injury.js"></script>
     <script src="modules/onlineBooking/OnlineBooking.js"></script>
+    <script src="modules/driver/Driver.js"></script>
     <script src="modules/NFC/NFC.js"></script>
+
 
     <!--service-->
     <script src="modules/security/services/securityServices.js"></script>
@@ -59,7 +57,9 @@
     <script src="modules/submitinjury/services/SubmitInjuryServices.js"></script>
     <script src="modules/onlineBooking/services/OnlineBookingService.js"></script>
     <script src="modules/worker/services/WriteNFC.js"></script>
+    <script src="modules/driver/services/DriverServices.js"></script>
     <script src="modules/NFC/services/readNFC.js"></script>
+
 
     <!--controller-->
     <script src="modules/menu/controller/menuController.js"></script>
@@ -71,15 +71,12 @@
     <script src="modules/submitinjury/controller/InjuryAddController.js"></script>
     <script src="modules/onlineBooking/controller/rlobChooseAppointmentCalendarController.js"></script>
     <script src="modules/onlineBooking/controller/rlobDetailBookingController.js"></script>
+    <script src="modules/driver/controller/DriverController.js"></script>
     <script src="modules/NFC/controller/readNFCController.js"></script>
-
-
 </head>
-
 <body ng-app="starter" class="platform-android platform-cordova platform-webview">
-
-
 <ion-nav-view name="root" style="background-color: rgba(0, 0, 0, 0.3);" >
+
 
 </ion-nav-view>
 </body>
