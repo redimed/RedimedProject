@@ -242,9 +242,15 @@ angular.module('starter.worker.add.controller',[])
             }
         }
         init();
+       // alert(JSON.stringify(localStorageService.get('newInfo')));
 
+        if($scope.nfcInfo.length == 0){
+            $scope.nfcInfo = localStorageService.get('newInfo');
+        }
         $scope.NFCwrite = function(){
+            var mode = 'write';
 
-            writeNFC.initialize($scope.nfcInfo);
+
+            writeNFC.initialize($scope.nfcInfo,mode);
         }
     })

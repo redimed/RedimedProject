@@ -22,7 +22,6 @@ var app = {
         );
 
         nfc.addNdefFormatableListener(
-
             app.onNonNdef
         );
         nfc.addNdefListener(
@@ -35,7 +34,6 @@ var app = {
         app.display("Tap a tag to read data.");
     },
     display: function(message) {
-
         var label = document.createTextNode(message),
             lineBreak = document.createElement("br");
         messageDiv.appendChild(lineBreak);
