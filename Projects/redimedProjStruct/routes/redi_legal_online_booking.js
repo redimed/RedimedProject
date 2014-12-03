@@ -84,6 +84,7 @@ app.get('/api/rlob/sys_user_notifications/get-max-index',sysUserNotificationsCon
 app.get('/api/rlob/sys_user_notifications/get-list-notification',sysUserNotificationsController.getListNotification);
 app.get('/api/rlob/sys_user_notifications/count-total-notification',sysUserNotificationsController.countTotalNotification);
 app.get('/api/rlob/sys_user_notifications/get-items-of-paging',sysUserNotificationsController.getItemsOfPaging);
+//app.get('/api/rlob/sys_user_notifications/check-daily-notification',sysUserNotificationsController.checkNotificationExist);
 
 
 
@@ -97,3 +98,11 @@ var multipartMiddleware = multipart();
 var rlobDocumentsController=require('./controllers/rlobDocumentsController');
 app.post('/api/rlob/rl_booking_files/upload',multipartMiddleware, rlobDocumentsController.rlobUploadFile);
 app.get('/api/download/lob/document/:fileId(*)', rlobDocumentsController.rlobDowloadFile);
+
+//rl_messages
+//phanquocchien.c1109g@gmail.com
+app.get('/api/rlob/rl_messages/getListMessages', rlBookingsController.rl_messages_select_contents);
+app.get('/api/rlob/rl_messages/addNewMessages', rlBookingsController.rl_messages_insert_contents);
+app.get('/api/rlob/rl_messages/changeIsenableMessages', rlBookingsController.rl_messages_change_isenable);
+app.get('/api/rlob/rl_messages/updateMessages', rlBookingsController.rl_messages_update_message);
+

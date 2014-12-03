@@ -680,7 +680,7 @@
 </div>
 
 <div  id="lob-send-booking-message" class="modal fade">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -688,8 +688,11 @@
             </div>
 
             <div class="modal-body">
-                <textarea placeholder="Enter message" class="form-control" rows="2"
-                          ng-model="bookingMessage.message"/>
+            <textarea  id="message" placeholder="Enter message" class="form-control" rows="2" ng-model="bookingMessage.message"/>
+            <div ng-repeat="item in ListBookingMessages">
+                <!--<input type="radio" name="bookingMessage.message" ng-model="color" name="milestone" ng-value="item.CONTENTS" ng-click="check(color)" ng-model="color" ng-change="check(color)"> &nbsp; {{item.CONTENTS}}-->
+                <label style="margin-left: 10px;margin-top: 7px" ng-click="check(item.CONTENTS)"><i class="fa fa-caret-right"></i> &nbsp; {{item.CONTENTS}}</label>
+            </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>

@@ -967,18 +967,18 @@ module.exports =
         var bookingType=req.query.bookingType?req.query.bookingType:'';
         var doctorId=req.query.doctorId?req.query.doctorId:'%';
         var sql=
-            "SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
-            "	files.`FILE_NAME`                                                                           "+
-            "FROM 	`rl_bookings` booking                                                                   "+
-            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
-            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`         "+
-            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                         "+
-            "	LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`               "+
-            "WHERE 	files.`FILE_ID` IS NULL                                                                 "+
-            "	AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                            "+
-            "	AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                 "+
-            "	AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ?                                                                "+
-            "ORDER BY booking.`APPOINTMENT_DATE` ASC ";
+            " SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
+            " 	files.`FILE_NAME`                                                                           "+
+            " FROM 	`rl_bookings` booking                                                                   "+
+            " 	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
+            " 	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`         "+
+            " 	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                         "+
+            " 	LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`               "+
+            " WHERE 	files.`FILE_ID` IS NULL                                                                 "+
+            " 	AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                            "+
+            " 	AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                 "+
+            " 	AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ?                                                                "+
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC ";
 
 
         req.getConnection(function(err,connection)
@@ -1114,6 +1114,75 @@ module.exports =
 
                 });
         });
+    },
+    // chien insert-update-delete messages
+    // phanquocchien.c1109g@gmail.com
+    rl_messages_select_contents:function(req,res){
+        db.sequelize.query('SELECT * FROM rl_messages WHERE ISENABLE = 1',null,{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'});
+            })
+    },
+    rl_messages_insert_contents:function(req,res){
+        console.log(req.query);
+        var Content = req.query.messageContent;
+        db.BMessages.create({
+            CONTENTS: Content,
+            ISENABLE: 1,
+            CREATED_BY: null,
+            CREATION_DATE: null,
+            LAST_UPDATED_BY: null,
+            LAST_UPDATED_DATE: null
+        },{raw:true})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    rl_messages_change_isenable:function(req,res){
+        console.log(req.query);
+        var ID = req.query.ID;
+        //var Content = req.query.CONTENTS;
+        db.BMessages.update({
+            //CONTENTS: Content,
+            ISENABLE: 0
+            //CREATED_BY: null,
+            //CREATION_DATE: null,
+            //LAST_UPDATED_BY: null,
+            //LAST_UPDATED_DATE: null
+        },{ID:ID},{raw:true})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    rl_messages_update_message:function(req,res){
+        console.log(req.query);
+        var ID = req.query.ID;
+        var Content = req.query.CONTENTS;
+        db.BMessages.update({
+            CONTENTS: Content
+            //ISENABLE: 0
+            //CREATED_BY: null,
+            //CREATION_DATE: null,
+            //LAST_UPDATED_BY: null,
+            //LAST_UPDATED_DATE: null
+        },{ID:ID},{raw:true})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
     }
-
 }

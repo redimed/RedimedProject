@@ -88,7 +88,30 @@ angular.module('app.loggedIn.rlob.services',[])
             var getItemsBookings=api.all('rlob/rl_bookings/get-items-of-paging-report-status-bookings');
             return getItemsBookings.post({currentPage:info.currentPage,itemsPerPage:info.itemsPerPage,bookingType:info.bookingType,doctorId:info.doctorId,filterInfo:info.filterInfo});
         }
-
+        //chien list messages
+        rlobService.getListBookingMessages=function()
+        {
+            var getListMessages=api.one('rlob/rl_messages/getListMessages');
+            return getListMessages.get();
+        }
+        //chien add new message
+        rlobService.addNewBookingMessages=function(messageContent)
+        {
+            var addNewMessages=api.one('rlob/rl_messages/addNewMessages');
+            return addNewMessages.get({messageContent:messageContent});
+        }
+        //chien delete message
+        rlobService.changeIsenableMessage=function(ID)
+        {
+            var changeMessages=api.one('rlob/rl_messages/changeIsenableMessages');
+            return changeMessages.get({ID:ID});
+        }
+        // chien update message
+        rlobService.updateBookingMessage=function(ID,CONTENTS)
+        {
+            var changeMessages=api.one('rlob/rl_messages/updateMessages');
+            return changeMessages.get({ID:ID,CONTENTS:CONTENTS});
+        }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');

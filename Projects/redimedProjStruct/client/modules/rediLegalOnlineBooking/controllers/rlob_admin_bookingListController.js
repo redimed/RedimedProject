@@ -1061,5 +1061,11 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 angular.element('#bookingstatus').fadeOut();
             }
         });
-
-});
+        rlobService.getListBookingMessages().then(function(data){
+            $scope.ListBookingMessages = data;
+        });
+        
+        $scope.check = function(aa){
+            $scope.bookingMessage.message = aa;
+        }
+    });
