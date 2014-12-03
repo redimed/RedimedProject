@@ -28,8 +28,19 @@ module.exports = {
 		delete req.body.Patient_id;
 		var postData = req.body;
 
+		if(patient_id != null)
+		{
+			res.json(500, {"status": "error"});
+			return;
+		}
+
 		db.Patient.find({ where: {Patient_id: patient_id} })
 		.success(function(patient){
+			if(!patient)
+			{
+				res.json(500, {"status": "error"});
+				return;
+			}
 			patient.updateAttributes(postData).success(function(updated){
 				if(!updated){
 					res.json(500, {"status": "error", "message": "Database Error"});

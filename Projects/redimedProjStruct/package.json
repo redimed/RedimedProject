@@ -50,6 +50,6 @@
     "underscore": "^1.7.0",
     "util": "^0.10.3",
     "winston": "^0.8.3",
-	"sequelize-restful": "^0.3.0",
+	"sequelize-restful": "^0.3.0"
   }
 }
