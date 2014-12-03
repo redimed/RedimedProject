@@ -85,7 +85,9 @@ module.exports = {
                       var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
                       var message = new gcm.Message();
                       message.addData('title','EMERGENCY');
-                      message.addData('message','Fuck You');
+                      message.addData('message','You have an emergency case!');
+                      message.addData('name','AAAA');
+                      message.addData('age','20');
                       message.collapseKey = 'Test';
                       message.delayWhileIdle = true;
                       message.timeToLive = 3;
