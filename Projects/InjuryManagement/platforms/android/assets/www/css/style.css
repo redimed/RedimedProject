@@ -210,3 +210,60 @@ form i.icon.error {
     width: 165px;
     height: 150px;
 }
+/*background color sub-header*/
+
+.bar-sub-color{
+    background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.bg-info-success{
+    background: url("../img/bg-menu-left.jpg");
+    background-size: cover;
+}
+.img-infoInjury{
+    margin: auto;
+    width: 150px;
+    height: 150px;
+    color: white;
+    -webkit-animation: mymove 5s infinite; /* Chrome, Safari, Opera */
+    animation: mymove 5s infinite;
+}
+
+#mainView {
+    clear: both;
+    padding: 1em 1em;
+}
+.active-btn-info {
+    background-color: rgba(0,0,0,0.1) !important;
+    border-bottom: 2px solid #C644FC !important;
+    color: #f0f6fa;
+}
+.active-btn-info span {
+    text-shadow:0 0 10px #8E8E93;
+}
+.button-custom-info {
+    background-color: rgba(255,255,255,0.6);
+    border: none;
+}
+.button-custom-info:hover {
+    color: #f0f6fa;
+}
+
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    50% {box-shadow: 0 0 90px #C7C7CC;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+    50% {box-shadow: 0 0 90px #C644FC;}
+}
+
+.border-radius-button {
+    border-radius: 10px !important;
+}
+.bg-btn-custom {
+    background-image: linear-gradient(#898C90, #898C90);
+    color: #F5F5F5;
+}

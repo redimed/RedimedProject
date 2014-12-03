@@ -15,7 +15,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
         };
 
         $scope.backdescInjury = function() {
-            localStorageService.set("checkNonemerg", true);
+            localStorageService.set("checkNonemer", true);
             $state.go('app.injury.desinjury');
         }
 

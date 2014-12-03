@@ -3,6 +3,7 @@ angular.module('starter.worker.add.controller',[])
     .controller('workerAddController', function($scope, WorkerServices, $state, $stateParams, localStorageService, $ionicPopup, $ionicLoading, $timeout, ConfigService) {
 
         var userInfoLS = localStorageService.get("userInfo");
+        $scope.nfcInfo = [];
         $scope.injurySubmitNonemer = localStorageService.get("checkNonemer");
 
         $scope.isSubmit = false;
@@ -49,7 +50,7 @@ angular.module('starter.worker.add.controller',[])
             MemberShip_no: '',
             DVA_No: '',
             HCC_Pension_No: '',
-            Exp_pension: '',
+            //Exp_pension: '',
 
             //SECOND
             Occupation:'',
@@ -229,7 +230,8 @@ angular.module('starter.worker.add.controller',[])
 
                         alertPopup.then(function(res){
                             if(res){
-                                alert(JSON.stringify(data));
+
+                                $scope.nfcInfo = data;
                                 $state.go('app.worker.writeNFC');
                             }else{
                                 console.log("No Write");
@@ -240,9 +242,15 @@ angular.module('starter.worker.add.controller',[])
             }
         }
         init();
+       // alert(JSON.stringify(localStorageService.get('newInfo')));
 
+        if($scope.nfcInfo.length == 0){
+            $scope.nfcInfo = localStorageService.get('newInfo');
+        }
         $scope.NFCwrite = function(){
-            alert(JSON.stringify($scope.worker));
-            writeNFC.initialize()
+            var mode = 'write';
+
+
+            writeNFC.initialize($scope.nfcInfo,mode);
         }
     })

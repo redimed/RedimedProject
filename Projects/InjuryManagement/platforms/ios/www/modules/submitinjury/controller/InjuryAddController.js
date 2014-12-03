@@ -19,9 +19,28 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.hide = [{
             bars: true
         }]
+        var notification = localStorageService.get("notificationLS");
+
+        console.log(notification);
+
+        //INIT OBJECT WORKER FOR FORM
+        $scope.worker = {
+            Patient_id: -1,
+            Title: '',
+            First_name: '',
+            Sur_name: '',
+            Middle_name: '',
+            Address1: '',
+            DOB: '',
+            Sex: '',
+            Mobile: '',
+            Email: '',
+            injury_description: '',
+            injury_date: '',
+            description:''
+        };
 
         $scope.clickDate = function() {
-
             var options = {
                 date: new Date(),
                 mode: 'date'
@@ -36,7 +55,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }
 
         var i = 0;
-        var ipUpload = "192.168.133.11";
+        var ipUpload = "testapp.redimed.com.au";
         var serverUpload = "http://"+ipUpload+":3000/api/im/upload";
         var checkNonemerg = localStorageService.get("checkNonemer");
         var userInfoLS = localStorageService.get("userInfo");
@@ -67,26 +86,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             else {
                 $state.go('app.injury.desinjury');
                 $scope.worker.injury_date = $filter('date')(new Date(), "yyyy-MM-dd");
-                console.log($scope.worker.injury_date);
             }
         }
-
-        //INIT OBJECT WORKER FOR FORM
-        $scope.worker = {
-            Patient_id: -1,
-            Title: '',
-            First_name: '',
-            Sur_name: '',
-            Middle_name: '',
-            Address1: '',
-            DOB: '',
-            Sex: '',
-            Mobile: '',
-            Email: '',
-            injury_description: '',
-            injury_date: '',
-            description:''
-        };
 
         var scopeReset = angular.copy($scope.worker);
 
@@ -437,7 +438,23 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             });
         }
 
+        $scope.tabs = [{
+            title: 'Information',
+            url: 'info.html'
+        }, {
+            title: 'Injury',
+            url: 'iDesc.html'
+        }];
 
+        $scope.currentTab = 'info.html';
+
+        $scope.onClickTab = function (tab) {
+            $scope.currentTab = tab.url;
+        }
+
+        $scope.isActiveTab = function(tabUrl) {
+            return tabUrl == $scope.currentTab;
+        }
 
     })
 
@@ -450,8 +467,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             },
             link: function(scope, element, attrs){
                 var id = "#"+attrs.id;
-
-                alert(scope.address);
+                alert(id);
+                //alert(scope.address);
                 var map = new GMaps({
                     el: id,
                     lat: -12.043333,

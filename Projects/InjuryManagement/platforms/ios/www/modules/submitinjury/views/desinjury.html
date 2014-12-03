@@ -15,16 +15,15 @@
         <ion-content class="padding has-header">
             <ion-list>
                 <div style="z-index: 1; position:relative; width: 100%; top: 60px;">
-
                     <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}">
                         <span class="input-label span-input-color">Injury Date</span>
                         <input ng-required="true" type="date" ng-model="worker.injury_date" name="injury_date" />
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmitdesc && descinjury.injury_date.$invalid}"></i>
                     </label>
 
-                    <label class="item item-input" ng-class="{'has-error':isSubmitdesc && descinjury.injury_description.$invalid}">
+                    <label class="item item-input item-stacked-label" ng-class="{'has-error':isSubmitdesc && descinjury.injury_description.$invalid}">
                         <span class="input-label span-input-color">Injury Description</span>
-                        <textarea class="custom-texarea" ng-required="true" type="text" ng-model="worker.injury_description" name="injury_description" rows="5"></textarea>
+                        <textarea class="custom-texarea" ng-required="true" type="text" ng-model="worker.injury_description" name="injury_description" rows="8" cols="10"></textarea>
                     </label>
 
                     <div class="footer_injury padding-top">
