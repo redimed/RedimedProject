@@ -116,7 +116,8 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         DocumentService.checkIDS(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'new') {
                 $scope.isNew = true;
-                $scope.doctor = response['doctor'];
+                $scope.infoH.TesterSign = response['doctor'].Signature;
+                $scope.infoH.TesterName = response['doctor'].NAME;
             }else if(response['status'] === 'update')
             {
                 $scope.isNew = false;

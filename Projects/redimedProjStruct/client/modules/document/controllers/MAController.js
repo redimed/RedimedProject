@@ -68,7 +68,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             Patient_id : Patient_ID,
             HEIGHT : null,
             WEIGHT: null,
-            BMI: NaN,
+            BMI: 0,
             URINALYSIS: null,
             BSL : null,
             WAIST_CIR : null,
@@ -150,6 +150,8 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         }
 
         $scope.infoChanged = function () {
+            console.log(oriInfoH);
+            console.log($scope.infoH);
             if(!angular.equals(oriInfoH, $scope.infoH) == false && !angular.equals(oriInfoL,$scope.infoL) == false)
             {
                 return  false;
@@ -169,7 +171,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     Patient_id : response.data.Patient_id,
                     HEIGHT : response.data.HEIGHT,
                     WEIGHT: response.data.WEIGHT,
-                    BMI: response.data.BMI * 1,
+                    BMI:  response.data.BMI == null ? NaN : response.data.BMI * 1,
                     URINALYSIS: response.data.URINALYSIS,
                     BSL : response.data.BSL,
                     WAIST_CIR : response.data.WAIST_CIR,

@@ -9,7 +9,7 @@
            type="button"
            ng-disabled="isNew || infoChanged()"
            class="btn btn-primary blue pull-right">Print PDF
-        </a>
+        </a>{{isNew}}{{infoChanged()}}
         <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
     </div>
 </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div ng-class="{'has-error':showClickedValidation && MAForm.HEIGHT.$error.pattern}">
-                <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">HEIGHT(cms):</label>
+                <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">HEIGHT(cm):</label>
                 <div class="col-md-2 col-sm-2">
                     <input type="text" ng-model="infoH.HEIGHT" ng-pattern="/^[0-9]+$/" name="HEIGHT" class="form-control">
                     <div ng-show="showClickedValidation && MAForm.HEIGHT.$error.pattern">
