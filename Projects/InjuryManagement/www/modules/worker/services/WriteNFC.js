@@ -1,21 +1,14 @@
 var infoNFC ;
-var mode = '';
 var writeNFC = {
 
     messageToWrite: [],
 
     // Application Constructor
-    initialize: function(info,m) {
+    initialize: function(info) {
        if(info!= null){
            infoNFC = info;
-           mode = m;
-           if(mode == 'write') {
-               this.bindEvents();
-           }
+           this.bindEvents();
            //alert("1");
-       }
-        else{
-           alert("info null")
        }
 
     },
@@ -26,7 +19,6 @@ var writeNFC = {
     },
     onDeviceReady: function() {
         writeNFC.clear();
-
         nfc.addTagDiscoveredListener(
             writeNFC.onNfc, // tag successfully scanned
             function (status) { // listener successfully initialized
@@ -41,10 +33,7 @@ var writeNFC = {
     },
     onNfc: function(nfcEvent) {
         //alert("4");
-
-            writeNFC.writeTag(writeNFC.messageToWrite);
-
-
+        writeNFC.writeTag(writeNFC.messageToWrite);
     },
     display: function(message) {
         //alert("5");
@@ -80,13 +69,10 @@ var writeNFC = {
     writeTag: function(message) {
         //alert("8");
         // write the record to the tag:
-
         nfc.write(
             message, // write the record itself to the tag
             function () {
                 writeNFC.display("Wrote data to tag.");
-                mode = '';
-
             },
             // this function runs if the write command fails:
             function (reason) {
@@ -95,12 +81,13 @@ var writeNFC = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+        //alert("9");
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-       alert('Received Event: ' + id);
+        console.log('Received Event: ' + id);
     }
 };
 

@@ -1,5 +1,9 @@
 #Last build type
+<<<<<<< HEAD
 #Wed, 03 Dec 2014 15:46:39 +0700
+=======
+#Tue, 02 Dec 2014 15:24:05 +0700
+>>>>>>> parent of 042d007... Commit
 
 build.last.target=debug
 

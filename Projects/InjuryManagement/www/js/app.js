@@ -56,6 +56,7 @@ angular.module('starter', ['ionic',
                                 $state.go("security.login");
                             }, 100);
                         }else{
+
                             $timeout(function(){
                                 $state.go("app.injury.info");
                             }, 100);
@@ -82,6 +83,21 @@ angular.module('starter', ['ionic',
             }
 
         });
+        $ionicPlatform.ready(function(){
+            if($window.nfc){
+                $window.nfc.addNdefListener(function(){
+                    deferred.resolve(event.tag);
+                }, function(){
+                    deferred.notify('added listner for NFC');
+                }, function(){
+                    deferred.reject('failed to attach NFC event handler');
+                });
+                alert("abc")
+            }else{
+                deferred.reject('NFC Global Object does not exist');
+                alert("cba")
+            }
+        })
 
     });
 

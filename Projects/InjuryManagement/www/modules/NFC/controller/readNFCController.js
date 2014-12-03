@@ -1,5 +1,5 @@
 angular.module('starter.NFC.controller',[])
-.controller('readNFCController',function($scope,WorkerServices,localStorageService, $ionicPopup, $ionicLoading, $timeout,$state){
+.controller('readNFCController',function($scope,WorkerServices){
         $scope.receiveData='';
         $scope.info=[];
         $scope.getData = function(data){
@@ -61,43 +61,9 @@ angular.module('starter.NFC.controller',[])
                 Custom:data.data.Custom
 
             };
-
             WorkerServices.updateInfoPatientID(NewInfo).then(function(data){
-
                if(data.status =="success"){
-
-                   $ionicLoading.show({
-                       template: "<div class='icon ion-ios7-reloading'></div>"+
-                       "<br />"+
-                       "<span>Waiting...</span>",
-                       animation: 'fade-in',
-                       showBackdrop: true,
-                       maxWidth: 200,
-                       showDelay: 0
-                   });
-
-                   $timeout(function () {
-
-                       $ionicLoading.hide();
-                       var alertPopup = $ionicPopup.confirm({
-                           title: 'Update Successfully',
-                           template: 'You want write NFC to tag?'
-                       });
-
-                       alertPopup.then(function(res){
-                           if(res){
-                               var info = {
-                                   data:NewInfo
-                               }
-                                localStorageService.set('newInfo',info);
-                               $state.go('app.worker.writeNFC');
-                           }else{
-                               console.log("No Write");
-                           }
-                       })
-                   }, 2000);
-
-
+                   alert("Update Success");
                }else{
                    alert("Update Fail");
                }
