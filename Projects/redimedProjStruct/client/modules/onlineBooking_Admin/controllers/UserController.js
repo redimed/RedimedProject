@@ -284,6 +284,8 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             $scope.companyList = data;
         })
 
+
+
         OnlineBookingAdminService.getListFunction().then(function(data){
             var listWeb = [];
             var listMobile = [];
@@ -368,6 +370,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         OnlineBookingAdminService.getListCompany().then(function(data){
             $scope.companyList = data;
         })
+
 
         OnlineBookingAdminService.getListFunction().then(function(data){
             var listWeb = [];

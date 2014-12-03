@@ -1,8 +1,11 @@
 var db = require('../models');
 
+var fs = require('fs');
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
+var gcm = require('node-gcm');
+var mkdirp = require('mkdirp');
 
 var transport = nodemailer.createTransport(smtpTransport({
     host: "mail.redimed.com.au", // hostname
@@ -76,8 +79,37 @@ module.exports = {
               STATUS: imInfo.STATUS
           },{raw:true})
               .success(function(data){
+                  //Start Push GCM Android
+                  if(imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined') {
 
+                      var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                      var message = new gcm.Message();
+                      message.addData('title','EMERGENCY');
+                      message.addData('message','Fuck You');
+                      message.collapseKey = 'Test';
+                      message.delayWhileIdle = true;
+                      message.timeToLive = 3;
+                      var registrationIds = [];
 
+                      db.UserToken.findAll({where: {user_type: 'Driver'}}, {raw: true})
+                          .success(function (data) {
+                              for (var i = 0; i < data.length; i++) {
+                                  if (data[i].android_token != null)
+                                      registrationIds.push(data[i].android_token);
+                              }
+
+                              sender.send(message, registrationIds, 4, function (err,result) {
+                                  if(err)
+                                    console.log("ERROR:",err);
+                                  else
+                                    console.log("SUCCESS:",result);
+                              });
+                          })
+                          .error(function (err) {
+                              console.log(err);
+                          })
+                  }
+                  //End Push GCM Android
 
                   // START SEND MAIL
                   db.IMInjury.max('injury_id')
