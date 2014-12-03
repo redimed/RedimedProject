@@ -68,7 +68,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
             SIGNATURE: null,
             TesterName :  null,
             TesterSign: null,
-            TesterDate : null
+            TesterDate : new Date()
         };
         oriInfoH  = angular.copy($scope.infoH);
         $scope.infoL.YES_NO = [];
@@ -116,6 +116,7 @@ angular.module('app.loggedIn.document.IDS.controllers',[])
         DocumentService.checkIDS(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'new') {
                 $scope.isNew = true;
+                $scope.doctor = response['doctor'];
             }else if(response['status'] === 'update')
             {
                 $scope.isNew = false;

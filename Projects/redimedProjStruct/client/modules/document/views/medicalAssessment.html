@@ -59,7 +59,7 @@
             </div>
             <label class="control-label col-md-1 col-sm-1" style="margin-top: 7px">BMI:</label>
             <div class="col-md-2 col-sm-2">
-                <div class="form-control"  style="background-color: #f5f5f5">{{infoH.BMI = infoH.WEIGHT / (infoH.HEIGHT * infoH.HEIGHT) | number : 1}}</div>
+                <div class="form-control"  style="background-color: #f5f5f5">{{infoH.BMI = (infoH.WEIGHT * 10000) / (infoH.HEIGHT * infoH.HEIGHT) | number : 1}}</div>
             </div>
         </div>
         <div class="row">
@@ -399,15 +399,15 @@
                         <input type="radio" ng-model="infoH.COLOR_VISUAL" value="0"/> No
                     </label>
                 </div>
-                <div class="col-md-4 col-sm-4 " ng-class="{'has-error':showClickedValidation && (MAForm.COLOR_VISUAL_SCORE.$error.max || MAForm.COLOR_VISUAL_SCORE.$error.required)}">
+                <div class="col-md-4 col-sm-4 " ng-class="{'has-error':showClickedValidation && (MAForm.COLOR_VISUAL_SCORE.$error.max || MAForm.COLOR_VISUAL_SCORE.$invalid)}">
                     <label class="control-label">Color Visual Score</label>
-                    <input type="number" required  max="17" min="0" name="COLOR_VISUAL_SCORE" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 40px;margin-top: 10px">/17
+                    <input type="number"  max="17" min="0" name="COLOR_VISUAL_SCORE" ng-model="infoH.COLOR_VISUAL_SCORE" style="width: 40px;margin-top: 10px">/17
                     <div ng-show="showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.max">
                         <div class="help-block" for="COLOR_VISUAL_SCORE" >
                             <label>Score must be less than 17</label>
                         </div>
                     </div>
-                    <div ng-show="showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$error.required">
+                    <div ng-show="showClickedValidation && MAForm.COLOR_VISUAL_SCORE.$invalid">
                         <div class="help-block" for="COLOR_VISUAL_SCORE" >
                             <label>Score must be number</label>
                         </div>

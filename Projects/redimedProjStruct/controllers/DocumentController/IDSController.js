@@ -155,7 +155,37 @@ module.exports = {
                     db.sequelize.query("INSERT INTO `cln_idas_headers` (PATIENT_ID,CAL_ID,IDAS_ID,DF_CODE,ITEM_ID,ISENABLE) SELECT ?,?,h.IDAS_DF_ID,h.DF_CODE,h.ITEM_ID,h.ISENABLE FROM `sys_idas_headers` h",null,{raw:true},[Patient_Id,CalId]).success(function(){
                         db.sequelize.query("INSERT INTO `cln_idas_groups` (PATIENT_ID,CAL_ID,IDAS_GROUP_ID,IDAS_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE) SELECT ?,?,IDAS_GROUP_ID,IDAS_DF_ID,ORD,GROUP_NAME,USER_TYPE,ISENABLE FROM `sys_idas_groups`",null,{raw:true},[Patient_Id,CalId]).success(function(){
                             db.sequelize.query("INSERT INTO `cln_idas_lines` (PATIENT_ID,CAL_ID,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE) SELECT ?,?,IDAS_LINE_ID,IDAS_GROUP_ID,ORD,QUESTION,YES_NO,ISENABLE FROM `sys_idas_lines`",null,{raw:true},[Patient_Id,CalId]).success(function(){
-                                res.json({status:'new'});
+
+                                db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
+                                    .success(function (APPT) {
+                                        //check appointment calendar
+                                        if (APPT == null || APPT.length == 0) {
+                                            console.log("******************* Not found Appointment calendar in APPT table *******************");
+                                            res.json({status: 'fail'});
+                                            return false;
+                                        }
+                                        db.Doctor.find({where: {doctor_id: APPT.DOCTOR_ID}}, {raw: true})
+                                            .success(function (doctor) {
+                                                //check exist doctor
+                                                if (doctor == null || doctor.length == 0) {
+                                                    console.log("******************* Not found doctor in doctor table *******************");
+                                                    res.json({status: 'fail'});
+                                                    return false;
+                                                }else{
+                                                    res.json({status:'new',doctor:doctor});
+                                                }
+
+                                            }).error(function (err) {
+                                                console.log("******************* ERROR:" + err + ' *******************');
+                                                res.json({status: 'fail'});
+                                                return false;
+                                            });
+                                    })
+                                    .error(function (err) {
+                                        console.log("******************* ERROR:" + err + ' *******************');
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    });
                             });
                         });
                     }).error(function(err){
@@ -165,34 +195,6 @@ module.exports = {
                 {
                     res.json({status:'update',data: data});
                 }
-                db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
-                    .success(function (APPT) {
-                        //check appointment calendar
-                        if (APPT == null || APPT.length == 0) {
-                            console.log("******************* Not found Appointment calendar in APPT table *******************");
-                            res.json({status: 'fail'});
-                            return false;
-                        }
-                        db.Doctor.find({where: {doctor_id: APPT.DOCTOR_ID}}, {raw: true})
-                            .success(function (doctor) {
-                                //check exist doctor
-                                if (doctor == null || doctor.length == 0) {
-                                    console.log("******************* Not found doctor in doctor table *******************");
-                                    res.json({status: 'fail'});
-                                    return false;
-                                }
-
-                            }).error(function (err) {
-                                console.log("******************* ERROR:" + err + ' *******************');
-                                res.json({status: 'fail'});
-                                return false;
-                            });
-                    })
-                    .error(function (err) {
-                        console.log("******************* ERROR:" + err + ' *******************');
-                        res.json({status: 'fail'});
-                        return false;
-                    });
 
             })
             .error(function(err){

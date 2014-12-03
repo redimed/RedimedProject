@@ -37,16 +37,16 @@
             </div>
             <div class="row">
                 <label class="control-label col-md-3 col-lg-2 col-sm-3">Tester's name: </label>
-                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{patientInfo.Address1}}</label>
+                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{infoH.TesterName = doctor.NAME}}</label>
             </div>
             <div class="row">
                 <label class="control-label col-md-3 col-lg-2 col-sm-3">Tester's signature:</label>
                 <label class="control-label text-info col-md-9 col-lg-4 col-sm-8"
-                       ng-show="infoH.SIGNATURE!=null && infoH.SIGNATURE!='' && !isSignature">
-                    <img src="" ng-src="{{infoH.SIGNATURE}}" alt="" style="width: 200px;height: 150px;"/> </label>
-                <label class="control-label col-md-2 col-lg-1 col-sm-2">Date: </label>
+                       ng-show="infoH.TesterSign!=null && infoH.TesterSign!=''">
+                    <img src="" ng-src="{{infoH.TesterSign}}" alt="" style="width: 200px;height: 150px;"/> </label>
+                <label class="control-label col-md-2 col-lg-1 col-sm-2">Date: </label>{{doctor.Signature}}
                 <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">
-                    <input type="text" class="" ng-model="infoH.IDAS_DATE" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
+                    <input type="text" class="" ng-model="infoH.TesterDate" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
                 </label>
             </div>
             <label class="control-label">
