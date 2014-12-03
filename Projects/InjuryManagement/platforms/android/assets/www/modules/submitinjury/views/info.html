@@ -1,0 +1,147 @@
+<ion-view title="Submit Injury">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <div class="bar bar-subheader">
+
+        <button class="button button-clear button-positive" ng-click="resetFormInjury()">
+            Reset
+        </button>
+        <h1 class="title">Information</h1>
+
+        <button class="button button-clear button-positive" ng-click="nextform(info)">
+            Next
+        </button>
+    </div>
+    
+    <form name="info" novalidate>
+        <ion-content class="padding has-header has-subheader">
+            <ion-list>
+                <div style="z-index: 1; position:relative; width: 100%;">
+
+                    <label class="item item-input item-select" ng-class="{'has-error':isSubmit && info.Title.$invalid}">
+                        <span class="input-label span-input-color">Title</span>
+                        <select ng-required="true" ng-model="worker.Title" name="Title"
+                                ng-options="row.name as row.name for row in titleIndex" ng-disabled="worker.Patient_id != -1 && temp1.Title">
+                            <option value="">--Select Title--</option>
+                        </select>
+                    </label>
+
+                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.First_name.$invalid}">
+                        <span class="input-label span-input-color">First Name</span>
+                        <input ng-required="true" type="text" ng-model="worker.First_name" name="First_name" ng-disabled="worker.Patient_id != -1 && temp1.First_name" />
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.First_name.$invalid}"></i>
+                    </label>
+
+                    <ion-scroll direction="y" class="list searchform" ng-hide="!worker.First_name || !isShow">
+                        <a class="item itemsearch"
+                           ng-repeat="result in list | filter:worker.First_name" ng-click="selectWorker(result.Patient_id)">
+                            <h3 style="text-decoration: underline;">
+                                {{ (result.Title == null ? '' : result.Title + " . ") +
+                                (result.First_name == null ? '' : result.First_name) + " " +
+                                (result.Middle_name == null ? '' : result.Middle_name) + " " +
+                                (result.Sur_name == null ? '' : result.Sur_name) }}
+                            </h3>
+                            <h4 ng-hide="result.DOB == null">
+                                <i class="fa fa-calendar"></i>
+                                {{result.DOB | date:"dd/MM/yyyy"}}
+                            </h4>
+                            <h4 ng-hide="result.Mobile == null">
+                                <i class="fa fa-phone"></i>
+                                {{result.Mobile}}
+                            </h4>
+                        </a>
+                    </ion-scroll>
+
+                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.Middle_name.$invalid}">
+                        <span class="input-label span-input-color">Middle Name</span>
+                        <input ng-required="true" type="text" ng-model="worker.Middle_name" name="Middle_name" ng-disabled="worker.Patient_id != -1 && temp1.Middle_name"/>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Middle_name.$invalid}"></i>
+                    </label>
+
+                    <ion-scroll direction="y" class="list searchform" ng-hide="!worker.Middle_name || !isShow">
+                        <a class="item itemsearch"
+                           ng-repeat="result in list | filter:worker.Middle_name" ng-click="selectWorker(result.Patient_id)">
+                            <h3 style="text-decoration: underline;">
+                                {{ (result.Title == null ? '' : result.Title + " . ") +
+                                (result.First_name == null ? '' : result.First_name) + " " +
+                                (result.Middle_name == null ? '' : result.Middle_name) + " " +
+                                (result.Sur_name == null ? '' : result.Sur_name) }}
+                            </h3>
+                            <h4 ng-hide="result.DOB == null">
+                                <i class="fa fa-calendar"></i>
+                                {{result.DOB | date:"dd/MM/yyyy"}}
+                            </h4>
+                            <h4 ng-hide="result.Mobile == null">
+                                <i class="fa fa-phone"></i>
+                                {{result.Mobile}}
+                            </h4>
+                        </a>
+                    </ion-scroll>
+
+                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.Sur_name.$invalid}">
+                        <span class="input-label span-input-color">Sur Name</span>
+                        <input ng-required="true" type="text" ng-model="worker.Sur_name" name="Sur_name" ng-disabled="worker.Patient_id != -1 && temp1.Sur_name"/>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Sur_name.$invalid}"></i>
+                    </label>
+
+                    <ion-scroll direction="y" class="list searchform" ng-hide="!worker.Sur_name || !isShow">
+                        <a class="item itemsearch"
+                           ng-repeat="result in list | filter:worker.Sur_name" ng-click="selectWorker(result.Patient_id)">
+                            <h3 style="text-decoration: underline;">
+                                {{ (result.Title == null ? '' : result.Title + " . ") +
+                                (result.First_name == null ? '' : result.First_name) + " " +
+                                (result.Middle_name == null ? '' : result.Middle_name) + " " +
+                                (result.Sur_name == null ? '' : result.Sur_name) }}
+                            </h3>
+                            <h4 ng-hide="result.DOB == null">
+                                <i class="fa fa-calendar"></i>
+                                {{result.DOB | date:"dd/MM/yyyy"}}
+                            </h4>
+                            <h4 ng-hide="result.Mobile == null">
+                                <i class="fa fa-phone"></i>
+                                {{result.Mobile}}
+                            </h4>
+                        </a>
+                    </ion-scroll>
+
+                    <label class="item item-input" ng-class="{'has-error':(isSubmit && info.Mobile.$invalid) || isFailMobile}">
+                        <span class="input-label span-input-color">Mobile Phone</span>
+                        <input ng-required="true" type="tel" ng-model="worker.Mobile" name="Mobile" ng-change="Checkfield(isMobile = true)" ng-disabled="worker.Patient_id != -1 && temp1.Mobile"/>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Mobile.$invalid || isFailMobile}"></i>
+                    </label>
+
+                    <label class="item item-input" ng-class="{'has-error':(isSubmit && info.Email.$invalid) || isFailEmail}">
+                        <span class="input-label span-input-color">Email</span>
+                        <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-change="isLoading = !isLoading;Checkfield(isMobile = false)" ng-blur="isSuccess = false" ng-disabled="worker.Patient_id != -1 && temp1.Email"/>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Email.$invalid || isFailEmail}"></i>
+                        <i ng-class="{'icon ion-loading-a':isLoading}"></i>
+                        <i ng-class="{'icon ion-checkmark-round text-success':isSuccess}"></i>
+                    </label>
+
+                    <label class="item item-input item-select" ng-class="{'has-error':isSubmit && info.Sex.$invalid}">
+                        <span class="input-label span-input-color">Sex</span>
+                        <select ng-required="true" ng-model="worker.Sex" name="Sex" ng-disabled="worker.Patient_id != -1 && temp1.Sex"
+                                ng-options="row.name as row.name for row in sexIndex">
+                            <option value="">--Select Title--</option>
+                        </select>
+                    </label>
+
+                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.DOB.$invalid}">
+                        <span class="input-label span-input-color">Birthday</span>
+                        <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB"/>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.DOB.$invalid}"></i>
+                    </label>
+
+                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.Address1.$invalid}">
+                        <span class="input-label span-input-color">Address</span>
+                        <input ng-required="true" id="Address1" type="text"   ng-model="worker.Address1" name="Address1" ng-disabled="worker.Patient_id != -1 && temp1.Address1"/>
+                        <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Address1.$invalid}"></i>
+                    </label>
+                </div>
+            </ion-list>
+        </ion-content>
+    </form>
+
+</ion-view>

@@ -467,8 +467,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             },
             link: function(scope, element, attrs){
                 var id = "#"+attrs.id;
-
-                alert(scope.address);
+                alert(id);
+                //alert(scope.address);
                 var map = new GMaps({
                     el: id,
                     lat: -12.043333,

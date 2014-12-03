@@ -112,7 +112,22 @@
             </div>
         </script>
 
-        <div class="row">
+        
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="tools" style="float:left;" >
+                        <i class="fa fa-map-marker fa-2x text-danger" ng-click="isCollapsed = !isCollapsed">Show maps</i>
+                    </div>
+                </div>
+
+                <div class="row portlet-body " collapse="isCollapsed" style="height: 0px;overflow: auto;margin: 0px;padding: 0px;">
+                    <div id="map-canvas" mdt-map class="col-md-12" style="height: 200px; width: 100%"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+<div class="row">
             <div class="col-67 col-offset-20">
                 <button class="button button-block bg-btn-custom border-radius-button" ng-click="submitInjuryAll()">
                     Submit
