@@ -1,20 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
-        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
-        "clobbers": [
-            "PushNotification"
-        ]
-    },
-    {
-        "file": "plugins/com.plugin.datepicker/www/android/DatePicker.js",
-        "id": "com.plugin.datepicker.DatePicker",
-        "clobbers": [
-            "datePicker"
-        ]
-    },
-    {
         "file": "plugins/org.apache.cordova.camera/www/CameraConstants.js",
         "id": "org.apache.cordova.camera.Camera",
         "clobbers": [
@@ -40,27 +26,6 @@ module.exports = [
         "id": "org.apache.cordova.camera.CameraPopoverHandle",
         "clobbers": [
             "CameraPopoverHandle"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.device/www/device.js",
-        "id": "org.apache.cordova.device.device",
-        "clobbers": [
-            "device"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
-        "id": "org.apache.cordova.dialogs.notification",
-        "merges": [
-            "navigator.notification"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.dialogs/www/android/notification.js",
-        "id": "org.apache.cordova.dialogs.notification_android",
-        "merges": [
-            "navigator.notification"
         ]
     },
     {
@@ -224,40 +189,27 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.media/www/MediaError.js",
-        "id": "org.apache.cordova.media.MediaError",
-        "clobbers": [
-            "window.MediaError"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.media/www/Media.js",
-        "id": "org.apache.cordova.media.Media",
-        "clobbers": [
-            "window.Media"
-        ]
-    },
-    {
         "file": "plugins/org.apache.cordova.statusbar/www/statusbar.js",
         "id": "org.apache.cordova.statusbar.statusbar",
         "clobbers": [
             "window.StatusBar"
         ]
+    },
+    {
+        "file": "plugins/com.chariotsolutions.nfc.plugin/www/phonegap-nfc.js",
+        "id": "com.chariotsolutions.nfc.plugin.NFC",
+        "runs": true
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.phonegap.plugins.PushPlugin": "2.4.0",
-    "com.plugin.datepicker": "0.5.0",
     "org.apache.cordova.camera": "0.3.3",
-    "org.apache.cordova.console": "0.2.11",
-    "org.apache.cordova.device": "0.2.12",
-    "org.apache.cordova.dialogs": "0.2.10",
     "org.apache.cordova.file": "1.3.1",
     "org.apache.cordova.file-transfer": "0.4.7",
-    "org.apache.cordova.media": "0.2.14",
-    "org.apache.cordova.statusbar": "0.1.8"
+    "org.apache.cordova.geolocation": "0.3.10",
+    "org.apache.cordova.statusbar": "0.1.8",
+    "com.chariotsolutions.nfc.plugin": "0.6.0"
 }
 // BOTTOM OF METADATA
 });
