@@ -57,9 +57,9 @@ module.exports = {
         checkEmail: function(req,res){
             var email = req.body.email;
 
-            db.Patient.count({where:["Email LIKE ?",email]})
-                .success(function(c){
-                    res.json({status:'success',count:c});
+            db.Patient.findAll({where:["Email LIKE ?",email]},{raw:true})
+                .success(function(data){
+                    res.json({status:'success',data:data});
                 })
                 .error(function(err){
                     res.json({status:'success'});
