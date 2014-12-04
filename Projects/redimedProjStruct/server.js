@@ -22,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 
-app.use(restful(db.sequelize, { endpoint: '/restful',}));
+app.use(restful(db.sequelize, { endpoint: '/api/restful',}));
 app.use(favicon());
 app.use(compress());
 app.use(logger('dev'));
