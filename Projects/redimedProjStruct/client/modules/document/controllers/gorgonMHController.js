@@ -1,33 +1,37 @@
 angular.module('app.loggedIn.document.gorgonMH.controllers', [])
-    .controller("gorgonMHController", function ($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
+    .controller("gorgonMHController", function($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
         //end date
+
         $scope.today = new Date();
+
         var userInfo = $cookieStore.get('userInfo');
+
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist");
-            $state.go('loggedIn.home', null, {"reload": true});
-        }
-        else {
+            $state.go('loggedIn.home', null, {
+                "reload": true
+            });
+        } else {
             //begin signature
             var tempSignature;
             $scope.isSignature = false;
-            $scope.showSignature = function () {
+            $scope.showSignature = function() {
                 $scope.isSignature = !$scope.isSignature;
             }
 
-            $scope.cancelClick = function () {
+            $scope.cancelClick = function() {
                 $scope.isSignature = !$scope.isSignature;
                 $scope.info.Signature = tempSignature;
             };
-            $scope.clearClick = function () {
+            $scope.clearClick = function() {
                 $scope.info.Signature = '';
             };
-            $scope.okClick = function () {
+            $scope.okClick = function() {
                 $scope.isSignature = !$scope.isSignature;
                 tempSignature = $scope.info.Signature;
             }
@@ -37,10 +41,11 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             //var apptInfo = localStorageService.get('tempAppt');
             var tempPatient = localStorageService.get('tempPatient') || [];
             if (tempPatient === null || tempPatient === 'undefined') {
-                $state.go('loggedIn.home', null, {"reload": true});
+                $state.go('loggedIn.home', null, {
+                    "reload": true
+                });
                 toastr.error("Load some information fail, please try again!", "Error");
-            }
-            else {
+            } else {
                 var patient_id = tempPatient.Patient_id;
                 //var cal_id = tempAppt.CAL_ID;
                 var cal_id = -1;
@@ -272,42 +277,35 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                     Last_updated_by: null,
                     CalId: cal_id,
 
-                    DocId: null,//$cookieStore.get('doctorInfo').doctor_id,
+                    DocId: null, //$cookieStore.get('doctorInfo').doctor_id,
 
                     Q21_IsComment: null,
                     Q21Other1Comment: null,
                     PATIENT_SIGNATURE: null
                 }
                 var oriInfo;
-                $scope.totals = [
-                    {id: 0},
-                    {id: 1},
-                    {id: 2},
-                    {id: 3}
-                ];
-                $scope.check_comment = function () {
-                    if ($scope.info.Q21_IsComment == 1) {
-                        $scope.info.Q21_IsComment.checked = true;
-                    }
-                    else if ($scope.info.Q21_IsComment == 0) {
-                        $scope.info.Q21_IsComment.checked = false;
-                        $scope.info.Q21_IsComment = 0;
-                    }
-
-                }
+                $scope.totals = [{
+                    id: 0
+                }, {
+                    id: 1
+                }, {
+                    id: 2
+                }, {
+                    id: 3
+                }];
                 $scope.maxDate = new Date();
                 var info = $scope.info;
                 DocumentService.loadGGMH(info)
-                    .then(function (response) {
+                    .then(function(response) {
                         if (response['status'] === 'fail') {
-                            $state.go('loggedIn.home', null, {reload: true});
-                        }
-                        else if (response[0].status === 'findNull') {
+                            $state.go('loggedIn.home', null, {
+                                reload: true
+                            });
+                        } else if (response[0].status === 'findNull') {
                             $scope.isNew = true;
                             $scope.info.patient = response[0].patient;
                             oriInfo = angular.copy($scope.info);
-                        }
-                        else if (response[0].status === 'findFound') {
+                        } else if (response[0].status === 'findFound') {
                             $scope.isNew = false;
                             //find found
                             var data = response[0].data;
@@ -548,64 +546,64 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                             if ($scope.info.Q21_IsComment) {
                                 $scope.info.Q21_IsComment.checked = true;
                             }
-                        }
-                        else {
-                            $state.go('loggedIn.home', null, {reload: true});
+                        } else {
+                            $state.go('loggedIn.home', null, {
+                                reload: true
+                            });
                         }
                     })
 
-                $scope.resetForm = function () {
+                $scope.resetForm = function() {
                     $scope.info = angular.copy(oriInfo);
                     $scope.gorgonMHForm.$setPristine();
                 }
 
-                $scope.infoChanged = function () {
+                $scope.infoChanged = function() {
                     return !angular.equals(oriInfo, $scope.info);
                 }
 
-                $scope.submit = function (gorgonMHForm) {
+                $scope.submit = function(gorgonMHForm) {
                     //set value total score
                     $scope.info.Q23_TotalScore = $scope.info.Q23_SittingReading + $scope.info.Q23_WatchingTV + $scope.info.Q23_Inactive +
-                    $scope.info.Q23_Passenger + $scope.info.Q23_LyingDown + $scope.info.Q23_SittingTalking + $scope.info.Q23_SittingQuietly +
-                    $scope.info.Q23_InACar + 0;
+                        $scope.info.Q23_Passenger + $scope.info.Q23_LyingDown + $scope.info.Q23_SittingTalking + $scope.info.Q23_SittingQuietly +
+                        $scope.info.Q23_InACar + 0;
                     if ($scope.isNew === true) {
                         /**
                          * edit gorgon medical history
                          */
                         if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
                             toastr.error("Please Input All Required Information!", "Error");
-                        }
-                        else {
+                        } else {
                             var info = $scope.info;
                             DocumentService.insertGGMH(info)
-                                .then(function (response) {
+                                .then(function(response) {
                                     if (response['status'] === 'success') {
                                         toastr.success("Add new success!", "Success");
-                                        $state.go('loggedIn.gorgonMH', null, {"reload": true});
-                                    }
-                                    else if (response['status'] === 'fail')
+                                        $state.go('loggedIn.gorgonMH', null, {
+                                            "reload": true
+                                        });
+                                    } else if (response['status'] === 'fail')
                                         toastr.error("Add new fail!", "Error");
 
                                 })
                         }
-                    }
-                    else {
+                    } else {
                         /**
                          * add new gorgon medical history
                          */
                         if ($scope.isNew === false) {
                             if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
                                 toastr.error("Please Input All Required Information!", "Error");
-                            }
-                            else {
+                            } else {
                                 var info = $scope.info;
                                 DocumentService.editGGMH(info)
-                                    .then(function (response) {
+                                    .then(function(response) {
                                         if (response['status'] === 'success') {
                                             toastr.success("Update success!", "Success");
-                                            $state.go('loggedIn.gorgonMH', null, {"reload": true});
-                                        }
-                                        else if (response['status'] === 'fail')
+                                            $state.go('loggedIn.gorgonMH', null, {
+                                                "reload": true
+                                            });
+                                        } else if (response['status'] === 'fail')
                                             toastr.error("Update fail!", "Error");
 
                                     });
