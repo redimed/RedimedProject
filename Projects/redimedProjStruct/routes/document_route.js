@@ -50,10 +50,9 @@ app.get('/api/document/printMA/:patientId/:calId/:MA_ID', MAController.printRepo
 // End
 
 //Begin Instant Drug Screen
-//app.post('/api/document/newIDS', IDSController.newIDS);
 app.post('/api/document/loadIDS', IDSController.loadIDS);
 app.post('/api/document/insertIDS', IDSController.insertIDS);
-app.post('/api/document/checkIDS', IDSController.checkIDS);
+app.post('/api/document/updateIDS', IDSController.updateIDS);
 app.get('/api/document/printIDS/:patientId/:calId/:id', IDSController.printReport);
 // end
 

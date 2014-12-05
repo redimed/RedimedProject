@@ -89,19 +89,19 @@ angular.module('app.loggedIn.document.services', [])
         /* Instant Drug Screen
          Begin
          */
-        documentService.loadIDS = function (PATIENT_ID,CAL_ID) {
+        documentService.loadIDS = function (infoLoad) {
             var loadIDS = api.all("document/loadIDS");
-            return loadIDS.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
+            return loadIDS.post({info: infoLoad});
         }
 
-        documentService.insertIDS = function(infoL,infoH){
+        documentService.insertIDS = function(infoAdd){
             var insertIDS = api.all("document/insertIDS");
-            return insertIDS.post({infoL:infoL,infoH:infoH});
+            return insertIDS.post({info: infoAdd});
         }
 
-        documentService.checkIDS = function(PatientID, calID){
-            var checkIDS = api.all("document/checkIDS");
-            return checkIDS.post({PatientID:PatientID, calID:calID});
+        documentService.updateIDS = function(infoUp){
+            var checkIDS = api.all("document/updateIDS");
+            return checkIDS.post({info:infoUp});
         }
         /* Instant Drug Screen
          End

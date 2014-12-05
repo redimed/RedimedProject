@@ -1,16 +1,14 @@
-<form name="IDSForm" ng-submit="submitIDS(IDSForm)" method="post" novalidate>
+<form name="IDSForm" method="post" novalidate>
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <button type="submit"
-                    ng-disabled="!infoChanged()"
-                    class="btn green pull-right">{{isNew?"Add New":"Update"}}
+            <button class="btn green pull-right" ng-click="submitIDS(IDSForm)" ng-disabled="!infoChanged()">{{isNew?"Add
+                New":"Update"}}
             </button>
-            <a href="/api/document/printIDS/{{infoH.PATIENT_ID}}/{{infoH.CAL_ID}}/{{infoH.IDAS_ID}}"
-               type="button"
-               ng-disabled="isNew == true"
-               class="btn btn-primary blue pull-right">Print PDF
+            <a href="/api/document/printIDS/{{info.headers[0].PATIENT_ID}}/{{info.headers[0].CAL_ID}}/{{info.headers[0].IDAS_ID}}"
+               type="button" ng-disabled="isNew || infoChanged()" class="btn btn-primary blue pull-right">Print PDF
             </a>
-            <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
+            <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()"
+               class="btn btn-danger pull-right">Reset</a>
         </div>
     </div>
     <div class="caption">
@@ -25,73 +23,88 @@
         <div class="portlet-body">
             <div class="row">
                 <label class="control-label col-md-3 col-lg-2 col-sm-3">Candidate name: </label>
-                <label class="control-label text-info col-lg-4 col-md-9 col-sm-8">{{patientInfo.First_name + " " + patientInfo.Sur_name + " " + patientInfo.Middle_name}} </label>
-                <label class="control-label col-md-3 col-lg-2 col-sm-3">D.O.B </label>
-                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{patientInfo.DOB | date : 'dd / MM / yyyy'}} </label>
+                <label class="control-label text-info col-lg-4 col-md-9 col-sm-8">{{((patientInfo.First_name==null || patientInfo.First_name=='')?'':patientInfo.First_name) +
+                    ((patientInfo.First_name==null||patientInfo.First_name=='')?'':' ') +
+                    ((patientInfo.Middle_name==null||patientInfo.Middle_name=='')?'':patientInfo.Middle_name) +
+                    ((patientInfo.First_name==null||patientInfo.First_name=='')?'':' ') +
+                    ((patientInfo.Sur_name==null||patientInfo.Sur_name=='')?'':patientInfo.Sur_name)}} </label>
+                <label class="control-label col-md-3 col-lg-2 col-sm-3" style="width:auto;">D.O.B </label>
+                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{patientInfo.DOB|date:'dd/MM/yyyy'}} </label>
             </div>
             <div class="row">
                 <label class="control-label col-md-3 col-lg-2 col-sm-3">Address: </label>
-                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{patientInfo.Address1}}</label>
+                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">
+                    {{(patientInfo.Address1==null||patientInfo.Address1=='')?'':patientInfo.Address1}}
+                </label>
                 <label class="control-label col-md-3 col-lg-2 col-sm-3">Contact Number:</label>
-                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{patientInfo.Mobile}} </label>
+                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{(patientInfo.Mobile==null||patientInfo.Mobile=='')?'':patientInfo.Mobile}} </label>
             </div>
             <div class="row">
                 <label class="control-label col-md-3 col-lg-2 col-sm-3">Tester's name: </label>
-                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{infoH.TesterName}}</label>
+                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">{{(info.headers[0].TesterName==null||info.headers[0].TesterName=='')?'':info.headers[0].TesterName}}</label>
             </div>
             <div class="row">
-                <label class="control-label col-md-3 col-lg-2 col-sm-3">Tester's signature:</label>
+                <label class="control-label col-md-3 col-lg-2 col-sm-3" style="margin-top:5px;">Tester's
+                    signature:</label>
                 <label class="control-label text-info col-md-9 col-lg-4 col-sm-8"
-                       ng-show="infoH.TesterSign!=null && infoH.TesterSign!=''">
-                    <img src="" ng-src="{{infoH.TesterSign}}" alt="" style="width: 200px;height: 150px;"/> </label>
-                <label class="control-label col-md-2 col-lg-1 col-sm-2">Date: </label>
-                <label class="control-label text-info col-md-9 col-lg-4  col-sm-8">
-                    <input type="text" class="" ng-model="infoH.TesterDate" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
+                       ng-show="info.headers[0].TesterSign!=null && info.headers[0].TesterSign!=''">
+                    <img src="" ng-src="{{info.headers[0].TesterSign}}" alt="" style="width: 200px;height: 150px;"/>
+                </label>
+                <label class="control-label col-md-2 col-lg-1 col-sm-2"
+                       style="width:auto;margin-top:5px;">Date: </label>
+                <label class="control-label text-info col-md-3 col-lg-3  col-sm-4">
+                    <input type="text" class="form-control" ng-model="info.headers[0].TesterDate" name="consentDate"
+                           datepicker-popup="dd/MM/yyyy" is-open="openConsentDate1" ng-click="openConsentDate1 = true"
+                           datepicker-options="dateOptions" close-text="Close"/>
                 </label>
             </div>
-            <label class="control-label">
-                I,
-                <input type="text" ng-model="infoH.NAME" style="width: 220px">
-                , understand that I am required to provide a sample of my urine
-                under supervision for drug testing and/or a breath sample for alcohol
-                testing. I am aware these results will be sent to the company requesting
-                the drug and alcohol screen, and kept on record at RediMed. I declare that
-                I have taken the following medications (prescription and non-prescription) in the last 14 days:
-            </label>
             <div class="row">
-                <div class="col-md-10">
-                    <textarea class="form-control" ng-model="infoH.NAME_COMMENT"></textarea>
+                <div class="col-md-1 col-sm-1" style="width:auto;margin-top:5px;">
+                    <span class="control-label">I,</span>
+                </div>
+                <div class="col-md-2 col-sm-2" style="width:auto;">
+                    <input type="text" class="form-control" ng-model="info.headers[0].NAME" style="width: 220px;">
+                </div>
+                <span class="control-label" style="margin-top:5px;">, understand that I am required to provide a sample of my urine under supervision for drug testing and/or a breath sample for alcohol testing. I am aware these results will be sent to the company requesting the drug and alcohol screen, and kept on record at RediMed. I declare that I have taken the following medications (prescription and non-prescription) in the last 14 days:</span>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <textarea class="form-control" ng-model="info.headers[0].NAME_COMMENT"></textarea>
                 </div>
             </div>
             </br>
             <div class="row">
                 <div class="col-md-7 col-sm-7">
                     <div class="col-md-2 col-sm-2">
-                        <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
-                           class="btn green">Signature</a>
+                        <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature" class="btn green">Signature</a>
                     </div>
-                    <div class="col-md-10 col-sm-10"
-                         ng-show="infoH.SIGNATURE!=null && infoH.SIGNATURE!='' && !isSignature">
-                        <img src="" ng-src="{{infoH.SIGNATURE}}" alt=""
-                             style="width: 200px;height: 150px;"/>
+                    <div class="col-md-12 col-sm-12"
+                         ng-show="info.headers[0].SIGNATURE!=null && info.headers[0].SIGNATURE!='' && !isSignature">
+                        <img src="" ng-src="{{info.headers[0].SIGNATURE}}" alt="" style="width: 200px;height: 70px;"/>
                     </div>
                 </div>
                 <div class="col-md-5 col-sm-5">
                     <div class="form-group">
-                        <label class="control-label col-md-2 col-sm-3" style="margin-top: 5px">Date</label>
-                        <div class="col-md-3 col-sm-7">
-                            <input type="text" class="" ng-model="infoH.IDAS_DATE" name="consentDate"  datepicker-popup="dd/MM/yyyy"  is-open="openConsentDate" ng-click="openConsentDate = true"  datepicker-options="dateOptions" close-text="Close" />
+                        <label class="control-label col-md-2 col-sm-3" style="margin-top: 5px">Date:</label>
+
+                        <div class="col-md-7 col-sm-7">
+                            <input type="text" class="form-control" ng-model="info.headers[0].IDAS_DATE"
+                                   name="consentDate" datepicker-popup="dd/MM/yyyy" is-open="openConsentDate2"
+                                   ng-click="openConsentDate2 = true" datepicker-options="dateOptions"
+                                   close-text="Close"/>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row" style="text-align: center;" ng-show="isSignature">
+            <br>
+
+            <div class="row" ng-show="isSignature">
                 <div class="col-md-12 col-sm-12">
-                    <canvas width="500" height="400" id="canvas"
-                            signature ng-model="infoH.SIGNATURE" style="background-color: #8eece8">
+                    <canvas width="500" height="400" id="canvas" signature ng-model="info.headers[0].SIGNATURE"
+                            style="background-color: #8eece8">
                     </canvas>
                 </div>
-                <div class="col-md-12 col-sm-12">
+                <div class="col-md-12 col-sm-12" style="margin-left:340px;">
                     <div class="break-row"></div>
                     <div class="btn-group">
                         <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
@@ -106,34 +119,38 @@
         </div>
     </div>
 
-    <div ng-repeat="header in listIDS">
-        <div class="row" ng-repeat="group in header.group">
+    <div ng-repeat="(hIndex, header) in info.headers">
+        <div class="row" ng-repeat="(gIndex, group) in header.groups">
             <div class="portlet box grey-cascade">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-gift"></i>{{group.group_name}}
+                        <i class="fa fa-gift"></i>{{group.GROUP_NAME}}
                     </div>
                     <div class="tools">
                         <a href="javascript:;" class="collapse">
                         </a>
                     </div>
                 </div>
-                <div class="portlet-body" >
-                    <ol>
-                        <li ng-repeat="line in group.line"  class="bold">
-                            <label class="bold">{{line.line_name}}</label>
-                            <div class="row">
-                                <div class="col-md-6 btn-group" >
-                                    <label class="btn">
-                                        <input type="radio" ng-model="infoL.YES_NO[$index]" value="1"/>Negative
-                                    </label>
-                                    <label class="btn">
-                                        <input type="radio" ng-model="infoL.YES_NO[$index]" value="0"/> Non-Negative
-                                    </label>
-                                </div>
+                <div class="portlet-body">
+                    <div ng-repeat="(lIndex, line) in group.lines" class="bold">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-4" style="margin-top:5px;">
+                                <label class="bold">{{line.ORD + ". " + line.QUESTION}}</label>
                             </div>
-                        </li>
-                    </ol>
+                            <div class="col-md-6 btn-group" style="width:auto;">
+                                <label class="btn">
+                                    <input type="radio"
+                                           ng-model="info.headers[hIndex].groups[gIndex].lines[lIndex].YES_NO"
+                                           ng-value="1"/>Negative
+                                </label>
+                                <label class="btn">
+                                    <input type="radio"
+                                           ng-model="info.headers[hIndex].groups[gIndex].lines[lIndex].YES_NO"
+                                           ng-value="0"/> Non-Negative
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -143,31 +160,38 @@
         <div class="portlet-body">
             <div class="row">
                 <label class="control-label col-md-2 col-sm-2" style="margin-top: 7px">Temperature: </label>
+
                 <div class="col-md-4 col-sm-4">
-                    <input type="text" ng-model="infoH.Temperature" class="form-control">
+                    <input type="text" ng-model="info.headers[0].Temperature" class="form-control">
                 </div>
                 <label class="control-label col-md-2 col-sm-2">Time: </label>
+
                 <div class="col-md-3 col-sm-4">
-                    <input type="text" ng-model="infoH.Drug_Test_Time" class="form-control">
+                    <input type="text" ng-model="info.headers[0].Drug_Test_Time" class="form-control">
                 </div>
             </div>
             </br>
             <div class="row">
                 <label class="control-label col-md-2 col-sm-2">Creatinine: </label>
+
                 <div class="col-md-4 col-sm-4">
-                    <input type="text" ng-model="infoH.Creatinine" class="form-control">
+                    <input type="text" ng-model="info.headers[0].Creatinine" class="form-control">
                 </div>
                 <label class="control-label col-md-2 col-sm-2">Expiry Date: </label>
+
                 <div class="col-md-3 col-sm-4">
-                    <input type="text" class="form-control" ng-model="infoH.Expiry_Date" name="consentDate"  datepicker-popup="MM/yyyy"  is-open="openConsentDate1" ng-click="openConsentDate1 = true"  datepicker-options="dateOptions" close-text="Close" />
+                    <input type="text" class="form-control" ng-model="info.headers[0].Expiry_Date" name="consentDate"
+                           datepicker-popup="dd/MM/yyyy" is-open="openConsentDate3" ng-click="openConsentDate3 = true"
+                           datepicker-options="dateOptions" close-text="Close"/>
 
                 </div>
             </div>
             </br>
             <div class="row">
                 <label class="control-label col-md-2 col-sm-2">Notes: </label>
+
                 <div class="col-md-4 col-sm-6">
-                    <input type="text" ng-model="infoH.Notes" class="form-control">
+                    <input type="text" ng-model="info.headers[0].Notes" class="form-control">
                 </div>
             </div>
         </div>
@@ -184,37 +208,38 @@
                     </a>
                 </div>
             </div>
-            <div class="portlet-body" >
+            <div class="portlet-body">
                 <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-sm-1">Time: </label>
+
                     <div class="col-md-4 col-lg-4 col-sm-4">
-                        <input type="text" ng-model="infoH.Alcohol_Test_Time" class="form-control">
+                        <input type="text" ng-model="info.headers[0].Alcohol_Test_Time" class="form-control">
                     </div>
                     <div class="col-md-2 col-lg-2 col-sm-3"></div>
                     <div class="col-md-6 col-lg-4 btn-group col-sm-4">
                         <label class="btn">
-                            <input type="radio" ng-model="infoH.Positive_Negative" name='a' value="1"/> Positive
+                            <input type="radio" ng-model="info.headers[0].Positive_Negative" name='a' value="1"/>
+                            Positive
                         </label>
                         <label class="btn">
-                            <input type="radio" ng-model="infoH.Positive_Negative" name='a' value="0"/>Negative
+                            <input type="radio" ng-model="info.headers[0].Positive_Negative" name='a' value="0"/>Negative
                         </label>
                     </div>
                 </div>
                 </br>
                 <div class="row">
                     <label class="control-label col-md-2 col-sm-1">Reading: </label>
+
                     <div class="col-md-4 col-sm-4">
-                        <input type="text" ng-model="infoH.Reading" class="form-control">
+                        <input type="text" ng-model="info.headers[0].Reading" class="form-control">
                     </div>
                     <label class="control-label col-md-3 col-lg-2 col-sm-3">2nd reading (if req): </label>
+
                     <div class="col-md-3 col-sm-4">
-                        <input type="text" ng-model="infoH.Reading2" class="form-control">
+                        <input type="text" ng-model="info.headers[0].Reading2" class="form-control">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </form>
-
