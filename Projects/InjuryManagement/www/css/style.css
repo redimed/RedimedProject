@@ -230,8 +230,9 @@ form i.icon.error {
     color: white;
     position: relative;
     top: -45px;
-    -webkit-animation: mymove 1s infinite; /* Chrome, Safari, Opera */
-    animation: mymove 1s infinite;
+    box-shadow: 0 0 90px #C7C7CC;
+    /*-webkit-animation: mymove 1s infinite; *//* Chrome, Safari, Opera */
+    /*animation: mymove 1s infinite;*/
 }
 
 #mainView {
@@ -282,7 +283,7 @@ form i.icon.error {
 }
 .wrap-btn-tap-toogle{
     position: absolute;
-    top: 290px;
+    top: 293px;
     margin: auto;
     width: 100%;
 }

@@ -1,7 +1,7 @@
 angular.module('starter.security.login.controller',[])
     .controller('securityLoginController',function($scope, $state,UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
-                                                   $cordovaMedia,ionPlatform){
+                                                   $cordovaMedia, ionPlatform){
         $scope.notifications = [];
 
         ionPlatform.ready.then(function (device) {

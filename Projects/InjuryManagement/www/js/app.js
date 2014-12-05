@@ -5,19 +5,19 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic',
-  'restangular',
-  'starter.menu',
-  'starter.security',
-  'starter.user',
-  'LocalStorageModule',
-  'starter.worker',
-  'starter.injury',
-  'app.config',
-  'starter.worker',
-  'starter.booking',
-  'ui.bootstrap',
-  'starter.NFC',
-  'ngCordova',
+    'restangular',
+    'starter.menu',
+    'starter.security',
+    'starter.user',
+    'LocalStorageModule',
+    'starter.worker',
+    'starter.injury',
+    'app.config',
+    'starter.worker',
+    'starter.booking',
+    'ui.bootstrap',
+    'starter.NFC',
+    'ngCordova',
     'starter.driver',
     'starter.NFC',
 ])
@@ -36,7 +36,7 @@ angular.module('starter', ['ionic',
 
     .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
 
-       // RestangularProvider.setBaseUrl("http://192.168.132.142:3000");
+        // RestangularProvider.setBaseUrl("http://192.168.132.142:3000");
 
         RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
