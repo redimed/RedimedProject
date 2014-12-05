@@ -1,0 +1,142 @@
+<ion-view title="Submit Injury">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <div class="bar bar-subheader bar-sub-color">
+        <button class="button button-clear button-positive" ui-sref="app.injury.desinjury">
+            Back
+        </button>
+    </div>
+    <ion-content style="background-color: #F7F7F7 !important;">
+
+        <div class="bg-info-success" style="padding-top: 100px; padding-bottom: 50px; background-position-y: 480px;">
+            <img class="img-responsive img-circle img-infoInjury" src="../img/profile.png" style="padding: 1px;"/>
+            <span>{{worker.Title}}. {{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}</span>
+        </div>
+
+
+        <div style="position: absolute; top: 265px; margin: auto; width: 100%">
+            <div class="col-xs-6  text-center" ng-repeat="tab in tabs" style="padding: 0">
+                <button class="button button-custom-info button-full" ng-class="{'active-btn-info':isActiveTab(tab.url)}"
+                        ng-click="onClickTab(tab)">
+                    <span>{{tab.title}}</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="mainView">
+            <div ng-include="currentTab"></div>
+        </div>
+
+        <script type="text/ng-template" id="info.html">
+            <div class="row" style="padding-left: 35px;">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                    <span>
+                         <i class="fa fa-birthday-cake margin-right-10"></i> Birthday</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                    <span>
+                       {{worker.DOB}}
+                    </span>
+                </label>
+            </div>
+
+            <div class="row" style="padding-left: 35px;">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                    <span>
+                        <img src="../img/gender.ico" width="20px" height="20px" class="margin-right-10"/> Gender
+                    </span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                    <span>{{worker.Sex}}</span>
+                </label>
+            </div>
+
+            <div class="row" style="padding-left: 35px;">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                    <span>
+                        <i class="fa fa-mobile-phone margin-right-10"></i> Mobile</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                    <span>{{worker.Mobile}}</span>
+                </label>
+            </div>
+
+            <div class="row" style="padding-left: 35px;">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                    <span>
+                        <i class="fa fa-envelope-o margin-right-10"></i> Email</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                    <span>{{worker.Email}}</span>
+                </label>
+            </div>
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="iDesc.html">
+            <div class="row" style="padding-left: 35px;">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                    <span>
+                        <i class="fa fa-file-text-o margin-right-10"></i> Description</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                    <span>{{worker.injury_description}}</span>
+                </label>
+            </div>
+
+            <div class="row" style="padding-left: 35px;">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                    <span>
+                        <i class="fa fa-calendar-o margin-right-10"></i> Date</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                    <span>{{worker.injury_date}}</span>
+                </label>
+            </div>
+
+            <div class="row" style="padding-left: 35px;">
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                    <span>
+                        <i class="fa fa-picture-o margin-right-10"></i> Image</span>
+                </label>
+
+                <label class="ion-scroll-custom item col-xs-6 text-left padding-left">
+                    <ion-scroll direction="x">
+                        <a ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)">
+                            <img ng-src="{{imgDetail.image}}" class="a-img-custom img-thumbnail"/>
+                        </a>
+                    </ion-scroll>
+                </label>
+            </div>
+        </script>
+
+        
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="tools" style="float:left;" >
+                        <i class="fa fa-map-marker fa-2x text-danger" ng-click="isCollapsed = !isCollapsed">Show maps</i>
+                    </div>
+                </div>
+
+                <div class="row portlet-body " collapse="isCollapsed" style="height: 0px;overflow: auto;margin: 0px;padding: 0px;">
+                    <div id="map-canvas" mdt-map class="col-md-12" style="height: 200px; width: 100%"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+<div class="row">
+            <div class="col-67 col-offset-20">
+                <button class="button button-block bg-btn-custom border-radius-button" ng-click="submitInjuryAll()">
+                    Submit
+                </button>
+            </div>
+        </div>
+        </div>
+
+    </ion-content>
+
+</ion-view>
+

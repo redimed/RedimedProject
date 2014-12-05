@@ -1,0 +1,24 @@
+dependencies: \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/InjuryManagement/Plugins/com.plugin.datepicker/DatePicker.m \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/InjuryManagement/Plugins/com.plugin.datepicker/DatePicker.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDV.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVAvailability.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVAvailabilityDeprecated.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVPlugin.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVPluginResult.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/NSMutableArray+QueueAdditions.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegate.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVInvokedUrlCommand.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVViewController.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVCommandQueue.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVWhitelist.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVScreenOrientationDelegate.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVURLProtocol.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVDebug.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVLocalStorage.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVTimer.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/NSArray+Comparisons.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/NSData+Base64.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/NSDictionary+Extensions.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/UIDevice+Extensions.h \
+  /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVJSON.h

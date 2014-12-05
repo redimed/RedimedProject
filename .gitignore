@@ -1,6 +1,32 @@
 
 Projects/redimedProjStruct/.idea/workspace.xml
 Projects/InjuryManagement/.idea/workspace.xml
-Projects/InjuryManagement/www/js/app.js
 
-Projects/InjuryManagement/www/modules/user/views/profile.html
+
+Projects/InjuryManagement/platforms/android/ant-build/build.prop
+
+Projects/InjuryManagement/platforms/android/ant-build/classes/com/chariotsolutions/nfc/plugin/NfcPlugin$8.class
+
+Projects/InjuryManagement/platforms/android/ant-build/classes.dex.d
+
+*.d
+
+*.dex
+
+Projects/InjuryManagement/platforms/android/ant-build/CordovaApp-debug-unaligned.apk
+
+Projects/InjuryManagement/platforms/android/ant-build/CordovaApp-debug.apk
+
+Projects/InjuryManagement/platforms/android/ant-build/CordovaApp-debug.apk
+
+Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVAvailability.h
+
+Projects/InjuryManagement/platforms/ios/build/emulator/include/Cordova/CDVDebug.h
+
+Projects/InjuryManagement/platforms/android/CordovaLib/ant-build/build.prop
+
+Projects/InjuryManagement/platforms/android/ant-build/classes.dex
+
+Projects/InjuryManagement/platforms/android/ant-build/CordovaApp.ap_.d
+
+Projects/InjuryManagement/platforms/android/ant-build/CordovaApp.ap_
