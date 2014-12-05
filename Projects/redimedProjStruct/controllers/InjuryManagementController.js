@@ -213,6 +213,33 @@ module.exports = {
                 })
 
         });
+    },
+    deleteToken: function(req,res){
+        var data = req.body.info[0];
+
+
+        if(data.platform != null && data.platform.toLowerCase() == 'android')
+        {
+            db.UserToken.destroy({
+                user_id : data.info.id,
+                user_type: data.info.user_type,
+                android_token: data.token
+            })
+                .success(function(){console.log('Success')})
+                .error(function(err){res.json({status:'Error',error:err});})
+        }
+        else if(data.platform != null && data.platform.toLowerCase() == 'ios')
+        {
+            db.UserToken.destroy({
+                user_id : data.info.id,
+                user_type: data.info.user_type,
+                ios_token: data.token
+            })
+                .success(function(){console.log('Success')})
+                .error(function(err){res.json({status:'Error',error:err});})
+        }
+
+
     }
 };
 

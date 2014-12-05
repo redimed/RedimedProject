@@ -17,26 +17,20 @@ module.exports = {
                     bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                         if (compareResult == true) {
 
-                            if(platform != null && platform.toLowerCase() == 'android')
+                            if(platform != null)
                             {
+
                                 db.UserToken.findOrCreate({
                                     user_id : data.id,
                                     user_type: data.user_type,
-                                    android_token: token
+                                    android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
+                                    ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
                                 })
                                     .success(function(data,created){console.log('Created: ',created)})
-                                    .error(function(err){console.log(err)})
+                                    .error(function(err){res.json({status:'Error',error:err});})
+
                             }
-                            else if(platform != null && platform.toLowerCase() == 'ios')
-                            {
-                                db.UserToken.findOrCreate({
-                                    user_id : data.id,
-                                    user_type: data.user_type,
-                                    ios_token: token
-                                })
-                                    .success(function(data,created){console.log('Created: ',created)})
-                                    .error(function(err){console.log(err)})
-                            }
+
 
                             delete data["img"];
 

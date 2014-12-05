@@ -11,3 +11,4 @@ app.post('/api/im/patients/checkMobile',injuryController.checkMobile);
 app.post('/api/im/patients/checkEmail',injuryController.checkEmail);
 app.post('/api/im/submit',injuryController.submitInjury);
 app.post('/api/im/upload',multipartMiddleware,injuryController.uploadInjuryPic);
+app.post('/api/im/deleteToken',injuryController.deleteToken);
