@@ -34,4 +34,3 @@ angular.module('starter.security.services',[])
         }
         return securityService;
     })
-

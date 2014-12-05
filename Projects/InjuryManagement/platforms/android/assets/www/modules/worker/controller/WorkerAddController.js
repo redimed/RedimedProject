@@ -248,9 +248,8 @@ angular.module('starter.worker.add.controller',[])
             $scope.nfcInfo = localStorageService.get('newInfo');
         }
         $scope.NFCwrite = function(){
-            var mode = 'write';
-
-
+            localStorageService.set('mode','write');
+            var mode = localStorageService.get('mode');
             writeNFC.initialize($scope.nfcInfo,mode);
         }
     })

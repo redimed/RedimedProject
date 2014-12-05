@@ -1,5 +1,5 @@
 angular.module("starter.menu.controller",[])
-    .controller("menuController",function($scope,localStorageService,$state,UserService,$ionicPopover,SecurityService){
+    .controller("menuController",function($scope,localStorageService,$state,UserService,$ionicPopover,SecurityService, $ionicPopup){
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
         $scope.Injurymenu = [];
@@ -42,16 +42,20 @@ angular.module("starter.menu.controller",[])
                 info: userInfo,
                 token: notificationLS.regid
             })
-
-            SecurityService.logOutapp($scope.userInfoLS).then(function(result){
-                if(result.status.toLowerCase() == "success"){
-                    localStorageService.remove('userInfo');
-                    localStorageService.remove('companyInfo');
-                    localStorageService.remove("notificationLS");
-                    $state.go("security.login");
+            $ionicPopup.confirm({
+                template: 'Are you sure you want to log out?'
+            }).then(function(result){
+                if(result){
+                    SecurityService.logOutapp($scope.userInfoLS).then(function(result){
+                        if(result.status.toLowerCase() == "success"){
+                            localStorageService.remove('userInfo');
+                            localStorageService.remove('companyInfo');
+                            localStorageService.remove("notificationLS");
+                            $state.go("security.login");
+                        }
+                    })
                 }
             })
-
         }
 
         $scope.readNFC = function(){

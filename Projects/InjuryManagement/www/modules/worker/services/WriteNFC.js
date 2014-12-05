@@ -1,38 +1,43 @@
 var infoNFC ;
 var mode = '';
+var callbackF=function(data){};
 var writeNFC = {
 
     messageToWrite: [],
+    initialize: function(info,mo) {
 
-    // Application Constructor
-    initialize: function(info,m) {
        if(info!= null){
+           mode = mo;
+           if(mode=='write'){
 
-           infoNFC = info;
-           mode = m;
-           if(mode == 'write') {
-               this.bindEvents();
+               infoNFC = info;
+               this.onDeviceReadyWrite();
            }
-           //alert("1");
+           if(mode=='read'){
+               callbackF = info;
+               this.onDeviceReadyRead();
+           }
        }
         else{
            alert("info null")
        }
-
     },
-
-    bindEvents: function() {
-        //alert("2");
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+    onDeviceReadyWrite:function(){
+        document.addEventListener("deviceready", this.onWrite, false);
+        //document.addEventListener('resume', this.onResume, false);
     },
-    onDeviceReady: function() {
+    onDeviceReadyRead: function() {
+        document.addEventListener('deviceready', this.onRead, false);
+        //document.addEventListener('resume', this.onResume, false);
+    },
+    onWrite: function() {
         writeNFC.clear();
-
         nfc.addTagDiscoveredListener(
             writeNFC.onNfc, // tag successfully scanned
             function (status) { // listener successfully initialized
                 writeNFC.makeMessage();
                 writeNFC.display("Tap an NFC tag to write data");
+                alert("Tap an NFC tag to write data")
             },
             function (error) { // listener fails to initialize
                 writeNFC.display("NFC reader failed to initialize "
@@ -41,14 +46,9 @@ var writeNFC = {
         )
     },
     onNfc: function(nfcEvent) {
-        //alert("4");
-
             writeNFC.writeTag(writeNFC.messageToWrite);
-
-
     },
     display: function(message) {
-        //alert("5");
         var label = document.createTextNode(message),
             lineBreak = document.createElement("br");
         messageDiv.appendChild(lineBreak);
@@ -58,7 +58,6 @@ var writeNFC = {
         messageDiv.innerHTML = "";
     },
     makeMessage: function() {
-        //alert("6");
         var info = {
             Patient_id:infoNFC.data.Patient_id,
             First_name:infoNFC.data.First_name,
@@ -69,7 +68,7 @@ var writeNFC = {
             PassportorDriverslicence:"hahahahah",
             Address1:infoNFC.data.Address1
         };
-        alert(JSON.stringify(info));
+        //alert(JSON.stringify(info));
         var tnf = ndef.TNF_WELL_KNOWN, // NDEF Type Name Format
             recordType = "T", // NDEF Record Type
             payload =nfc.stringToBytes(JSON.stringify(info)), // content of the record
@@ -80,15 +79,11 @@ var writeNFC = {
         writeNFC.messageToWrite = message;
     },
     writeTag: function(message) {
-        //alert("8");
-        // write the record to the tag:
-
         nfc.write(
             message, // write the record itself to the tag
             function () {
-                writeNFC.display("Wrote data to tag.");
-                mode = '';
-
+                alert("Wrote data to tag.");
+                mode = 'read';
             },
             // this function runs if the write command fails:
             function (reason) {
@@ -103,6 +98,67 @@ var writeNFC = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
        alert('Received Event: ' + id);
+    },
+
+    //read
+    onRead: function() {
+        nfc.addMimeTypeListener(
+            "text/plain",
+            writeNFC.onNfcRead
+        );
+        writeNFC.display("Tap a tag to read data.");
+    },
+    onNfcRead: function(nfcEvent) {
+        writeNFC.clear();
+        if(mode == 'read'){
+            writeNFC.showTag(nfcEvent.tag);
+        }
+        if(mode=='write'){
+            writeNFC.writeTag(writeNFC.messageToWrite);
+        }
+    },
+
+    showTag: function(tag) {
+
+        var thisMessage = tag.ndefMessage;
+        if (thisMessage !== null) {
+
+            var type =  nfc.bytesToString(thisMessage[0].type);
+
+            writeNFC.showMessage(thisMessage);
+        }
+    },
+    showMessage: function(message) {
+
+        for (var i=0; i < message.length; i++) {
+            var record = message[i];
+            writeNFC.showRecord(record);
+        }
+    },
+    showRecord: function(record) {
+
+        if (nfc.bytesToString(record.type) === "Sp") {
+            var ndefMessage = ndef.decodeMessage(record.payload);
+            writeNFC.showMessage(ndefMessage);
+        } else {
+            // app.display(nfc.bytesToString(record.payload)) ;
+            callbackF(nfc.bytesToString(record.payload));
+        }
     }
+    //,
+    //onResume: function(event) {
+    //
+    //    alert("remove");
+    //    if (mode == 'write') {
+    //        infoNFC = info;
+    //        this.onNfcWrite();
+    //    }
+    //    if (mode == 'read') {
+    //        callbackF = info;
+    //        this.onNfcRead();
+    //    }
+    //}
+
+
 };
 

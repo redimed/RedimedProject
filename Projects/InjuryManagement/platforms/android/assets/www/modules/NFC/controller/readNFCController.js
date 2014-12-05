@@ -8,6 +8,7 @@ angular.module('starter.NFC.controller',[])
         $scope.fundIndex = {};
         $scope.list = [];
         $scope.isShow = true;
+
         $scope.getData = function(data){
 
             $scope.receiveData=JSON.parse(data);
@@ -24,7 +25,14 @@ angular.module('starter.NFC.controller',[])
 
             })
         };
-        app.initialize($scope.getData);
+
+       var inni = function(){
+            localStorageService.set('mode','read');
+            var mode = localStorageService.get('mode');
+           writeNFC.initialize($scope.getData,mode);
+        }
+        inni();
+
 
         $scope.updateWorker = function(data){
 
@@ -103,21 +111,7 @@ angular.module('starter.NFC.controller',[])
 
         }
 
-        $scope.getInfoPatientID = function(email){
-            InjuryServices.checkEmail(email).then(function(data){
-                var allinfo = {
-                    data:data.data[0]
-                };
-                $scope.info = allinfo;
-            })
-        }
-        $scope.$watch('info',function(newval,oldval){
-            if(newval){
-                $scope.testData = newval;
-            }
 
-
-        })
 
         $scope.getInfoPatien = function(firstName){
                 $scope.isShow = true;
@@ -137,8 +131,10 @@ angular.module('starter.NFC.controller',[])
 
         }
 
-        $scope.writeNFC = function(data){
-            var mode = 'write';
+        $scope.writeNewNFC = function(data){
+            localStorageService.set('mode','write');
+
+           var mode = localStorageService.get('mode');
             writeNFC.initialize(data,mode);
             //alert(JSON.stringify(data));
 

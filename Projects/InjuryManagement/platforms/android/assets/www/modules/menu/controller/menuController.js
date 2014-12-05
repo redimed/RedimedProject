@@ -36,22 +36,10 @@ angular.module("starter.menu.controller",[])
         }
         loadMenu();
 
-        $scope.logout = function() {
-            $scope.userInfoLS.push({
-                platform: ionic.Platform.platform(),
-                info: userInfo,
-                token: notificationLS.regid
-            })
-
-            SecurityService.logOutapp($scope.userInfoLS).then(function(result){
-                if(result.status.toLowerCase() == "success"){
-                    localStorageService.remove('userInfo');
-                    localStorageService.remove('companyInfo');
-                    localStorageService.remove("notificationLS");
-                    $state.go("security.login");
-                }
-            })
-
+        $scope.logout = function(){
+            localStorageService.remove('userInfo');
+            localStorageService.remove('companyInfo');
+            $state.go("security.login");
         }
 
         $scope.readNFC = function(){

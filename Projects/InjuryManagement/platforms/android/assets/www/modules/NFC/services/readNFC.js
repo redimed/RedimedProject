@@ -3,9 +3,14 @@ var app = {
     /*
      Application constructor
      */
-    initialize: function(func) {
-        callbackF = func;
-        this.bindEvents();
+    initialize: function(func,mode) {
+        alert(mode);
+        if(mode=='read'){
+            callbackF = func;
+            this.bindEvents();
+        }
+
+
 
     },
     /*
@@ -17,13 +22,6 @@ var app = {
     },
     onDeviceReady: function() {
 
-        nfc.addTagDiscoveredListener(
-            app.onNonNdef
-        );
-
-        nfc.addNdefFormatableListener(
-            app.onNonNdef
-        );
         nfc.addNdefListener(
             app.onNfc
         );
@@ -49,11 +47,7 @@ var app = {
 
         app.showTag(nfcEvent.tag);
     },
-    onNonNdef: function(nfcEvent) {
 
-        app.clear();
-
-    },
     showTag: function(tag) {
 
 
@@ -83,5 +77,9 @@ var app = {
 
         }
     }
+
+    //read NFC
+
+
 };     // end of app
 

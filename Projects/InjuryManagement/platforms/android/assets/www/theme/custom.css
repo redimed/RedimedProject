@@ -1,0 +1,91 @@
+a, a:active, a:focus{
+    cursor: pointer;
+}
+
+.break-row{
+    clear: both;
+    margin-bottom: 15px;
+}
+
+.page-header-fixed .page-container{
+    margin-top: 0;
+}
+
+.form-group label{
+    padding-top: 6px;
+}
+
+.page-content-wrapper .page-content{
+    min-height: 60em;
+}
+
+.form-group.detail > div{
+    margin-top: 15px;
+}
+
+/**
+* Khank Style
+*/
+.mdt-logo{
+    margin: 0 auto;
+    margin-top: 60px;
+    padding: 15px;
+}
+/**
+* End Khank Style
+*/
+
+/* Vuong Custom Timepicker */
+.ui-timepicker-table td{
+    padding: 0.2em;
+}
+.ui-timepicker-table td a{
+    padding: 3px;
+    width: auto;
+}
+/* END */
+
+/* MODAL DIALOG */
+.modal-lg{
+    width: 98%;
+}
+/* END MODAL DIALOG */
+
+/* CHART */
+div.chart{
+    font: 10px sans-serif;
+    background-color: steelblue;
+    text-align: right;
+    padding: 3px;
+    margin: 1px;
+    color: white;
+}
+
+.axis path, .axis line
+{
+    fill: none;
+    stroke: #777;
+    shape-rendering: crispEdges;
+}
+
+.axis text
+{
+    font-family: 'Arial';
+    font-size: 13px;
+}
+.tick
+{
+    stroke-dasharray: 1, 2;
+}
+.bar
+{
+    fill: FireBrick;
+}
+/* END CHART */
+
+
+/*----*/
+.nav-color{
+    background-color: #DBDDDE !important;
+    color:#FF5E3A !important;
+}

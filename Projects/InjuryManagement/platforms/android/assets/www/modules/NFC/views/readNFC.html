@@ -9,13 +9,14 @@
                 <p>NDEF Reader</p>
                 <div id="messageDiv"></div>
                 </div>
-                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Email.$invalid || isFailEmail}">
-                    <span class="input-label span-input-color">Email</span>
-                    <input ng-required="true" type="email" ng-model="testData.data.Email" name="Email" ng-blur="getInfoPatientID(testData.data.Email)" ng-change="getInfoPatien(testData.data.Email)">
+
+                <label class="item item-input" >
+                    <span class="input-label span-input-color">Search Patient</span>
+                    <input ng-required="true" type="text" ng-model="testData.data.SearchKey" name="SearchKey"  ng-change="getInfoPatien(testData.data.SearchKey)"/>
                 </label>
-                <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.Email || !isShow">
+                <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.SearchKey || !isShow">
                     <a class="item itemsearch"
-                       ng-repeat="result in list | filter:testData.data.First_name" ng-click="selectInfo(result)">
+                       ng-repeat="result in list | filter:testData.data.SearchKey" ng-click="selectInfo(result)">
                         <h3 style="text-decoration: underline;">
                             {{ (result.Title == null ? '' : result.Title + " . ") +
                             (result.First_name == null ? '' : result.First_name) + " " +
@@ -32,6 +33,12 @@
                         </h4>
                     </a>
                 </ion-scroll>
+
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Email.$invalid || isFailEmail}">
+                    <span class="input-label span-input-color">Email</span>
+                    <input ng-required="true" type="email" ng-model="testData.data.Email" name="Email" >
+                </label>
+
 
 
                 <label class="item item-input item-select" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
@@ -44,53 +51,16 @@
 
                 <label class="item item-input" ng-class="{'has-error':isSubmit && infor.First_name.$invalid}">
                     <span class="input-label span-input-color">First Name</span>
-                    <input ng-required="true" type="text" ng-model="testData.data.First_name" name="First_name"  ng-change="getInfoPatien(testData.data.First_name)"/>
+                    <input ng-required="true" type="text" ng-model="testData.data.First_name" name="First_name"  />
                     <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.First_name.$invalid}"></i>
                 </label>
-                <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.First_name || !isShow">
-                    <a class="item itemsearch"
-                       ng-repeat="result in list | filter:testData.data.First_name" ng-click="selectInfo(result)">
-                        <h3 style="text-decoration: underline;">
-                            {{ (result.Title == null ? '' : result.Title + " . ") +
-                            (result.First_name == null ? '' : result.First_name) + " " +
-                            (result.Middle_name == null ? '' : result.Middle_name) + " " +
-                            (result.Sur_name == null ? '' : result.Sur_name) }}
-                        </h3>
-                        <h4 ng-hide="result.DOB == null">
-                            <i class="fa fa-calendar"></i>
-                            {{result.DOB | date:"dd/MM/yyyy"}}
-                        </h4>
-                        <h4 ng-hide="result.Mobile == null">
-                            <i class="fa fa-phone"></i>
-                            {{result.Mobile}}
-                        </h4>
-                    </a>
-                </ion-scroll>
 
                 <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Sur_name.$invalid}">
                     <span class="input-label span-input-color">Sur Name</span>
-                    <input ng-required="true" type="text" ng-model="testData.data.Sur_name" name="Sur_name"  ng-change="getInfoPatien(testData.data.Sur_name)" />
+                    <input ng-required="true" type="text" ng-model="testData.data.Sur_name" name="Sur_name"  />
                     <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Sur_name.$invalid}"></i>
                 </label>
-                <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.Sur_name || !isShow">
-                    <a class="item itemsearch"
-                       ng-repeat="result in list | filter:testData.data.First_name" ng-click="selectInfo(result)">
-                        <h3 style="text-decoration: underline;">
-                            {{ (result.Title == null ? '' : result.Title + " . ") +
-                            (result.First_name == null ? '' : result.First_name) + " " +
-                            (result.Middle_name == null ? '' : result.Middle_name) + " " +
-                            (result.Sur_name == null ? '' : result.Sur_name) }}
-                        </h3>
-                        <h4 ng-hide="result.DOB == null">
-                            <i class="fa fa-calendar"></i>
-                            {{result.DOB | date:"dd/MM/yyyy"}}
-                        </h4>
-                        <h4 ng-hide="result.Mobile == null">
-                            <i class="fa fa-phone"></i>
-                            {{result.Mobile}}
-                        </h4>
-                    </a>
-                </ion-scroll>
+
 
                 <label class="item item-input">
                     <span class="input-label span-input-color">Middle Name</span>
@@ -280,7 +250,8 @@
 
             </ion-list>
             <button class="button button-block button-positive" ng-click="updateWorker(testData)">Update Worker</button>
-            <button class="button button-block button-positive" ng-click="writeNFC(testData)">Write NFC</button>
+            <button class="button button-block button-positive" ng-click="writeNewNFC(testData)">Write NFC</button>
+
         </ion-content>
 
 </ion-view>

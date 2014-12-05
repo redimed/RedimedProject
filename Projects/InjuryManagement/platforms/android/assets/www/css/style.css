@@ -286,3 +286,23 @@ form i.icon.error {
     margin: auto;
     width: 100%;
 }
+.custom-icon-info {
+    color: #f0f0f0;
+    position: relative;
+    left: -30px;
+    top: -40px;
+    text-shadow: 0 0 5px #f0f0f0;
+}
+.custom-icon-info:hover {
+    color: #f0f0f0 !important;
+}
+.custom-icon-power {
+    color: #f0f0f0;
+    position: relative;
+    left: 30px;
+    top: -40px;
+    text-shadow: 0 0 5px #f0f0f0;
+}
+.custom-icon-power:hover {
+    color: #f0f0f0 !important;
+}
