@@ -35,40 +35,11 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         var CalID = -1; // $scope.apptInfo.CAL_ID;
         var sex = $scope.patientInfo.Sex;
 
-        $scope.Ratio = function(){
-            $scope.infoH.WAIST_TO_HIP_RATE = $scope.infoH.WAIST_CIR / $scope.infoH.HIP_CIR;
-            if(sex == "female")
-            {
-                if($scope.infoH.WAIST_TO_HIP_RATE < 0.80)
-                {
-                    $scope.infoH.RISK = 0;
-                }else if($scope.infoH.WAIST_TO_HIP_RATE >= 0.80 && $scope.infoH.WAIST_TO_HIP_RATE <= 0.85)
-                {
-                    $scope.infoH.RISK = 1;
-                }else if($scope.infoH.WAIST_TO_HIP_RATE > 0.85)
-                {
-                    $scope.infoH.RISK = 2;
-                }
-            }else
-            {
-                if($scope.infoH.WAIST_TO_HIP_RATE < 0.90)
-                {
-                    $scope.infoH.RISK = 0;
-                }else if($scope.infoH.WAIST_TO_HIP_RATE >= 0.90 && $scope.infoH.WAIST_TO_HIP_RATE <= 0.95)
-                {
-                    $scope.infoH.RISK = 1;
-                }else if($scope.infoH.WAIST_TO_HIP_RATE > 0.95)
-                {
-                    $scope.infoH.RISK = 2;
-                }
-            }
-        };
-
         $scope.infoH ={
             Patient_id : Patient_ID,
             HEIGHT : null,
             WEIGHT: null,
-            BMI: 0,
+            BMI: NaN,
             URINALYSIS: null,
             BSL : null,
             WAIST_CIR : null,
@@ -143,6 +114,35 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         };
         oriInfoL  = angular.copy($scope.infoL);
 
+        $scope.Ratio = function(){
+            $scope.infoH.WAIST_TO_HIP_RATE = $scope.infoH.WAIST_CIR / $scope.infoH.HIP_CIR;
+            if(sex == "female")
+            {
+                if($scope.infoH.WAIST_TO_HIP_RATE < 0.80)
+                {
+                    $scope.infoH.RISK = 0;
+                }else if($scope.infoH.WAIST_TO_HIP_RATE >= 0.80 && $scope.infoH.WAIST_TO_HIP_RATE <= 0.85)
+                {
+                    $scope.infoH.RISK = 1;
+                }else if($scope.infoH.WAIST_TO_HIP_RATE > 0.85)
+                {
+                    $scope.infoH.RISK = 2;
+                }
+            }else
+            {
+                if($scope.infoH.WAIST_TO_HIP_RATE < 0.90)
+                {
+                    $scope.infoH.RISK = 0;
+                }else if($scope.infoH.WAIST_TO_HIP_RATE >= 0.90 && $scope.infoH.WAIST_TO_HIP_RATE <= 0.95)
+                {
+                    $scope.infoH.RISK = 1;
+                }else if($scope.infoH.WAIST_TO_HIP_RATE > 0.95)
+                {
+                    $scope.infoH.RISK = 2;
+                }
+            }
+        };
+
         $scope.resetForm = function () {
             $scope.infoH = angular.copy(oriInfoH);
             $scope.infoL = angular.copy(oriInfoL);
@@ -150,8 +150,6 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         }
 
         $scope.infoChanged = function () {
-            console.log(oriInfoH);
-            console.log($scope.infoH);
             if(!angular.equals(oriInfoH, $scope.infoH) == false && !angular.equals(oriInfoL,$scope.infoL) == false)
             {
                 return  false;
@@ -159,101 +157,98 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                 return true;
             }
         }
-
+        var insert = true;
         DocumentService.checkMA(Patient_ID,CalID).then(function(response){
             if(response['status'] === 'new') {
                 $scope.isNew = true;
+                insert = true;
+
             }else if(response['status'] === 'update')
             {
+                insert = false;
                 $scope.isNew = false;
-                $scope.infoH = {
-                    MA_ID : response.data.MA_ID,
-                    Patient_id : response.data.Patient_id,
-                    HEIGHT : response.data.HEIGHT,
-                    WEIGHT: response.data.WEIGHT,
-                    BMI:  response.data.BMI == null ? NaN : response.data.BMI * 1,
-                    URINALYSIS: response.data.URINALYSIS,
-                    BSL : response.data.BSL,
-                    WAIST_CIR : response.data.WAIST_CIR,
-                    HIP_CIR : response.data.HIP_CIR,
-                    WAIST_TO_HIP_RATE : response.data.WAIST_TO_HIP_RATE,
-                    RISK : response.data.RISK,
-                    DIST_RIGHT_EYE : response.data.DIST_RIGHT_EYE,
-                    DIST_RIGHT_EYE_CORRECTED : response.data.DIST_RIGHT_EYE_CORRECTED,
-                    DIST_LEFT_EYE : response.data.DIST_LEFT_EYE,
-                    DIST_LEFT_EYE_CORRECTED : response.data.DIST_LEFT_EYE_CORRECTED,
-                    NEAR_RIGHT_EYE : response.data.NEAR_RIGHT_EYE,
-                    NEAR_RIGHT_EYE_CORRECTED : response.data.NEAR_RIGHT_EYE_CORRECTED,
-                    NEAR_LEFT_EYE : response.data.NEAR_LEFT_EYE,
-                    NEAR_LEFT_EYE_CORRECTED : response.data.NEAR_LEFT_EYE_CORRECTED,
-                    PERIPHERAL_VISION : response.data.PERIPHERAL_VISION,
-                    VISUAL_AIDS : response.data.VISUAL_AIDS,
-                    VISUAL_AIDS_TYPE : response.data.VISUAL_AIDS_TYPE,
-                    COLOR_VISUAL : response.data.COLOR_VISUAL,
-                    COLOR_VISUAL_SCORE : response.data.COLOR_VISUAL_SCORE,
-                    ISWOULD : response.data.ISWOULD,
-                    COMMENTS: response.data.COMMENTS,
-                    FINAL_ASS : response.data.FINAL_ASS,
-                    COMMENTS2: response.data.COMMENTS2,
-                    DOCTOR_NAME: response.data.DOCTOR_NAME,
-                    SIGN  : response.data.SIGN,
-                    HA_DATE : response.data.HA_DATE,
-                    LOCATION_ID : response.data.LOCATION_ID,
-                    QUEST_DF_ID : response.data.QUEST_DF_ID,
-                    Created_by : response.data.Created_by,
-                    Last_updated_by : response.data.Last_updated_by,
-                    CAL_ID : response.data.CAL_ID,
-                    DF_CODE : response.data.DF_CODE,
-                    ISENABLE : response.data.ISENABLE,
-                    IS_URINALYSIS : response.data.IS_URINALYSIS,
-                    EXAMINED_COMMENT: response.data.EXAMINED_COMMENT,
-                    IS_CANDIDATE_CAN_UNDERTAKE : response.data.IS_CANDIDATE_CAN_UNDERTAKE,
-                    IS_CANDIDATE_BE_ADVERSELY_AFFECTED : response.data.IS_CANDIDATE_BE_ADVERSELY_AFFECTED,
-                    CANDIDATE_CAN_UNDERTAKE_COMMENT: response.data.CANDIDATE_CAN_UNDERTAKE_COMMENT,
-                    CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT: response.data.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT,
-                    DESCRIPTION : response.data.DESCRIPTION
-                };
-                oriInfoH  = angular.copy($scope.infoH);
+
             }else{
                 toastr.error("Fail", "Error");
                 return;
             }
 
-            DocumentService.loadMA(Patient_ID,CalID).then(function(response){
-                if(response['status'] === 'fail') {
-                    toastr.error("load fail", "Error");
-                }
-                else
+            var data = response.data[0];
+            var dataH = data.Header[0];
+            $scope.listMA.push({ "header_name": dataH.DESCRIPTION,"header_id" : dataH.MA_ID, "group":[]});
+            var i = 0;
+            angular.forEach(data.Group, function(dataG){
+                if(dataG.MA_ID ==  $scope.listMA[0].header_id)
                 {
-                    var data = response[0];
-                    var dataH = data.Header[0];
-                    $scope.listMA.push({ "header_name": dataH.DESCRIPTION,"header_id" : dataH.MA_ID, "group":[]});
-                    var i = 0;
-                    angular.forEach(data.Group, function(dataG){
-                        if(dataG.MA_ID ==  $scope.listMA[0].header_id  )
+                    $scope.listMA[0].group.push({"group_id" : dataG.GROUP_ID, "group_name": dataG.GROUP_NAME, "line":[]});
+                    angular.forEach(data.Line, function(dataL){
+                        if(dataL.GROUP_ID ==  $scope.listMA[0].group[i].group_id )
                         {
-                            $scope.listMA[0].group.push({"group_id" : dataG.GROUP_ID, "group_name": dataG.GROUP_NAME, "line":[]});
-                            angular.forEach(data.Line, function(dataL){
-                                if(dataL.GROUP_ID ==  $scope.listMA[0].group[i].group_id )
-                                {
-                                    $scope.listMA[0].group[i].line.push({ "line_id" : dataL.MA_LINE_ID,"line_name": dataL.QUESTION, "value1" : dataL.VAL1_NAME, "value2" : dataL.VAL2_NAME, "yesno" : dataL.YES_NO });
-                                    $scope.infoL.YES_NO_VAL[dataL.MA_LINE_ID]= dataL.YES_NO_VAL;
-                                    $scope.infoL.VAL1[dataL.MA_LINE_ID] = dataL.VAL1;
-                                    $scope.infoL.VAL2[dataL.MA_LINE_ID] = dataL.VAL2;
-                                    $scope.infoL.VAL3[dataL.MA_LINE_ID] = dataL.VAL3;
-                                    $scope.infoL.COMMENTS[dataL.MA_LINE_ID] = dataL.COMMENTS;
-                                }
-                            });
-                            i++;
+                            $scope.listMA[0].group[i].line.push({ "line_id" : dataL.MA_LINE_ID,"line_name": dataL.QUESTION, "value1" : dataL.VAL1_NAME, "value2" : dataL.VAL2_NAME, "yesno" : dataL.YES_NO });
+                            if(insert == false){
+                                $scope.infoL.YES_NO_VAL[dataL.MA_LINE_ID]= dataL.YES_NO_VAL;
+                                $scope.infoL.VAL1[dataL.MA_LINE_ID] = dataL.VAL1;
+                                $scope.infoL.VAL2[dataL.MA_LINE_ID] = dataL.VAL2;
+                                $scope.infoL.VAL3[dataL.MA_LINE_ID] = dataL.VAL3;
+                                $scope.infoL.COMMENTS[dataL.MA_LINE_ID] = dataL.COMMENTS;
+                            }
                         }
                     });
-                    oriInfoL  = angular.copy($scope.infoL);
+                    i++;
                 }
             });
-
+            if(insert == false){
+                $scope.infoH = {
+                    MA_ID : dataH.MA_ID,
+                    Patient_id : dataH.Patient_id,
+                    HEIGHT : dataH.HEIGHT,
+                    WEIGHT: dataH.WEIGHT,
+                    BMI:  dataH.BMI == null ? NaN : dataH.BMI * 1,
+                    URINALYSIS: dataH.URINALYSIS,
+                    BSL : dataH.BSL,
+                    WAIST_CIR : dataH.WAIST_CIR,
+                    HIP_CIR : dataH.HIP_CIR,
+                    WAIST_TO_HIP_RATE : dataH.WAIST_TO_HIP_RATE,
+                    RISK : dataH.RISK,
+                    DIST_RIGHT_EYE : dataH.DIST_RIGHT_EYE,
+                    DIST_RIGHT_EYE_CORRECTED : dataH.DIST_RIGHT_EYE_CORRECTED,
+                    DIST_LEFT_EYE : dataH.DIST_LEFT_EYE,
+                    DIST_LEFT_EYE_CORRECTED : dataH.DIST_LEFT_EYE_CORRECTED,
+                    NEAR_RIGHT_EYE : dataH.NEAR_RIGHT_EYE,
+                    NEAR_RIGHT_EYE_CORRECTED : dataH.NEAR_RIGHT_EYE_CORRECTED,
+                    NEAR_LEFT_EYE : dataH.NEAR_LEFT_EYE,
+                    NEAR_LEFT_EYE_CORRECTED : dataH.NEAR_LEFT_EYE_CORRECTED,
+                    PERIPHERAL_VISION : dataH.PERIPHERAL_VISION,
+                    VISUAL_AIDS : dataH.VISUAL_AIDS,
+                    VISUAL_AIDS_TYPE : dataH.VISUAL_AIDS_TYPE,
+                    COLOR_VISUAL : dataH.COLOR_VISUAL,
+                    COLOR_VISUAL_SCORE : dataH.COLOR_VISUAL_SCORE,
+                    ISWOULD : dataH.ISWOULD,
+                    COMMENTS: dataH.COMMENTS,
+                    FINAL_ASS : dataH.FINAL_ASS,
+                    COMMENTS2: dataH.COMMENTS2,
+                    DOCTOR_NAME: dataH.DOCTOR_NAME,
+                    SIGN  : dataH.SIGN,
+                    HA_DATE : dataH.HA_DATE,
+                    LOCATION_ID : dataH.LOCATION_ID,
+                    QUEST_DF_ID : dataH.QUEST_DF_ID,
+                    Created_by : dataH.Created_by,
+                    Last_updated_by : dataH.Last_updated_by,
+                    CAL_ID : dataH.CAL_ID,
+                    DF_CODE : dataH.DF_CODE,
+                    ISENABLE : dataH.ISENABLE,
+                    IS_URINALYSIS : dataH.IS_URINALYSIS,
+                    EXAMINED_COMMENT: dataH.EXAMINED_COMMENT,
+                    IS_CANDIDATE_CAN_UNDERTAKE : dataH.IS_CANDIDATE_CAN_UNDERTAKE,
+                    IS_CANDIDATE_BE_ADVERSELY_AFFECTED : dataH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED,
+                    CANDIDATE_CAN_UNDERTAKE_COMMENT: dataH.CANDIDATE_CAN_UNDERTAKE_COMMENT,
+                    CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT: dataH.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT,
+                    DESCRIPTION : dataH.DESCRIPTION
+                };
+                oriInfoH  = angular.copy($scope.infoH);
+                oriInfoL  = angular.copy($scope.infoL);
+            }
         });
-
-
 
         $scope.submitMA = function(MAForm){
             $scope.showClickedValidation = true;
@@ -261,16 +256,30 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                 toastr.error("Please Input All Required Information!", "Error");
             }else
             {
-                DocumentService.insertMA($scope.infoL,$scope.infoH).then(function(response){
-                    if(response['status'] === 'success') {
-                        toastr.success("Successfully","Success");
-                        $state.go('loggedIn.MA', null, {'reload': true});
-                    }
-                    else
-                    {
-                        toastr.error("Fail", "Error");
-                    }
-                });
+                if (insert == true) {
+                    DocumentService.insertMA($scope.infoL,$scope.infoH).then(function (response) {
+                        if (response['status'] === 'success') {
+                            toastr.success("Add new success!", "Success");
+                            $scope.isNew = false;
+                            $state.go('loggedIn.MA', null, {'reload': true});
+                        }
+                        else {
+                            toastr.error("Add new fail!", "Error");
+                        }
+                    });
+                } else {
+                    DocumentService.updateMA($scope.infoL,$scope.infoH).then(function(response){
+                        if(response['status'] === 'success') {
+                            toastr.success("Successfully","Success");
+                            $state.go('loggedIn.MA', null, {'reload': true});
+                        }
+                        else
+                        {
+                            toastr.error("Fail", "Error");
+                        }
+                    });
+                }
+
             }
         };
 

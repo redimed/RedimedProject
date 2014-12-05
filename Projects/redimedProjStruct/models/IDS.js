@@ -1,5 +1,3 @@
-
-
 module.exports = function(sequelize, DataTypes){
     var HeadersIDS = sequelize.define('HeadersIDS',{
         IDAS_ID : {type:DataTypes.INTEGER(11), primaryKey:true},

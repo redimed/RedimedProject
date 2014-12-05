@@ -2,7 +2,7 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button ng-disabled="!infoChanged() || gorgonMAForm.$error.required || gorgonMAForm.$error.maxlength || gorgonMAForm.$error.pattern"
+                <button ng-disabled="!infoChanged()"
                         type="submit"
                         class="btn green pull-right">{{isNew?"Add New":"Update"}}
                 </button>
@@ -998,86 +998,70 @@
         </div>
         <div class="portlet-body form">
             <div class="row">
-                <div class="col-md-7 col-sm-8">
-                    <div class="col-md-4 col-lg-3 col-sm-4" style="font-weight: bold">
-                        <label class="control-label bold">Systolic BP</label>
+                    <label class="control-label col-md-2 col-lg-2 col-sm-2 bold" style="margin-top: 7px">Systolic BP</label>
+                    <div class="col-md-2 col-lg-1 col-sm-2">
+                        <input type="text" ng-model="info.SYSTOLIC_BP" ng-pattern="/^[0-9]+$/" name="SYSTOLIC_BP" class="form-control">
                     </div>
-                    <div class="col-md-8 col-lg-8 col-sm-8">
-                        <input type="text" ng-model="info.SYSTOLIC_BP" class="form-control">
+                    <label class="control-label col-md-2 col-lg-2 col-sm-2 bold" style="margin-top: 7px">Diastolic BP</label>
+                    <div class="col-md-2 col-lg-1 col-sm-2">
+                        <input type="text" ng-model="info.DIASTOLIC_BP" ng-pattern="/^[0-9]+$/" name="DIASTOLIC_BP" class="form-control">
                     </div>
-                </div>
-            </div>
-            </br>
-            <div class="row">
-                <div class="col-md-7 col-sm-8">
-                    <div class="col-md-4 col-lg-3 col-sm-4" style="font-weight: bold">
-                        <label class="control-label bold">Diastolic BP</label>
-                    </div>
-                    <div class="col-md-8 col-lg-8 col-sm-8">
-                        <input type="text" ng-model="info.DIASTOLIC_BP" class="form-control">
+                    <label class="control-label bold col-md-1 col-lg-2 col-sm-2" style="margin-top: 7px">Pulse</label>
+                    <div class="col-md-2 col-lg-1 col-sm-2">
+                        <input type="text" ng-model="info.PULSE" ng-pattern="/^[0-9]+$/" name="PULSE" class="form-control">
                     </div>
                 </div>
-            </div>
-            </br>
-            <div class="row">
-                <div class="col-md-7 col-sm-8">
-                    <div class="col-md-4 col-lg-3 col-sm-4" style="font-weight: bold">
-                        <label class="control-label bold">Pulse</label>
-                    </div>
-                    <div class="col-md-8 col-lg-8 col-sm-8">
-                        <input type="text" ng-model="info.PULSE" class="form-control">
+                <div ng-show="showClickedValidation">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="SYSTOLIC_BP" ng-show="gorgonMAForm.SYSTOLIC_BP.$error.pattern">
+                            <label style="color: #8b0000">Systolic BP must be number</label>
+                        </div>
+                        <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="DIASTOLIC_BP" ng-show="gorgonMAForm.DIASTOLIC_BP.$error.pattern">
+                            <label style="color: #8b0000">Diastolic BP must be number</label>
+                        </div>
+                        <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="PULSE" ng-show="gorgonMAForm.PULSE.$error.pattern">
+                            <label style="color: #8b0000">Pulse must be number</label>
+                        </div>
                     </div>
                 </div>
-            </div>
             <div class="row">
-                <div class="col-md-12">
-                    <label class="control-label bold col-md-3 col-lg-2 col-sm-3" style="margin-top: 10px;">Heart
-                        Rhythm:</label>
-
-                    <div class="btn-group col-sm-9 col-md-8 ">
-                        <label class="btn">
-                            <input type="radio" ng-model="info.HEART_RHYTHM" value="1"/> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.HEART_RHYTHM" value="2"/> AF
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.HEART_RHYTHM" value="3"/> Occ.Ectopics
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.HEART_RHYTHM" value="4"/> Freq. Ectopics
-                        </label>
-                    </div>
+                <label class="control-label bold col-md-3 col-lg-2 col-sm-3" style="margin-top: 10px;">Heart Rhythm:</label>
+                <div class="btn-group col-sm-9 col-md-8 ">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.HEART_RHYTHM" value="1"/> Normal
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.HEART_RHYTHM" value="2"/> AF
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.HEART_RHYTHM" value="3"/> Occ.Ectopics
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.HEART_RHYTHM" value="4"/> Freq. Ectopics
+                    </label>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <label class="control-label bold col-md-3 col-lg-2 col-sm-3" style="margin-top: 10px;">Heart
-                        Sounds:</label>
-
-                    <div class="btn-group col-sm-6 ">
-                        <label class="btn">
-                            <input type="radio" ng-model="info.HEART_SOUNDS" value="1"/> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.HEART_SOUNDS" value="0"/> Abnormal
-                        </label>
-                    </div>
+                <label class="control-label bold col-md-3 col-lg-2 col-sm-3" style="margin-top: 10px;">Heart Sounds:</label>
+                <div class="btn-group col-sm-6 ">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.HEART_SOUNDS" value="1"/> Normal
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.HEART_SOUNDS" value="0"/> Abnormal
+                    </label>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <label class="control-label bold col-md-3 col-lg-2 col-sm-3"
+                <label class="control-label bold col-md-3 col-lg-2 col-sm-3"
                            style="margin-top: 10px;">Pacemaker:</label>
-
-                    <div class="btn-group col-sm-9 col-md-9 ">
-                        <label class="btn">
-                            <input type="radio" ng-model="info.PACEMAKER" value="1"/> Yes
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.PACEMAKER" value="0"/> No
-                        </label>
-                    </div>
+                <div class="btn-group col-sm-9 col-md-9 ">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.PACEMAKER" value="1"/> Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.PACEMAKER" value="0"/> No
+                    </label>
                 </div>
             </div>
         </div>
@@ -1136,27 +1120,30 @@
                 </div>
             </div>
             <div class="row">
-                <label class="control-label col-sm-3 col-md-12 col-lg-2 bold" style="margin-top: 5px;">Added
-                    Sounds:</label>
-
-                <div class="btn-group col-sm-12 col-md-10 ">
-                    <label class="btn">
-                        <input type="radio" ng-model="info.ADDED_SOUNDS" value="1"/> Nil
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.ADDED_SOUNDS" value="2"/> Widespread crackles
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.ADDED_SOUNDS" value="3"/> Basal crackles
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.ADDED_SOUNDS" value="4"/> Wheezes
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.ADDED_SOUNDS" value="5"/> Rub
-                    </label>
-                </div>
+                <label class="control-label col-md-3 col-lg-2 col-sm-3 bold" style="margin-top: 5px;">Added Sounds:</label>
             </div>
+            <div class="row">
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.AS_Nil"/>
+                    </div>
+                    <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px"> Nil</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.AS_Wide"/>
+                    </div>
+                    <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px"> Widespread crackles</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.AS_Basal"/>
+                    </div>
+                    <label class="control-label col-md-5 col-lg-2 col-sm-3 " style="margin-top: 10px"> Basal crackles</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.AS_Wheezes"/>
+                    </div>
+                    <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px"> Wheezes</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-model="info.AS_Rub"/>
+                    </div>
+                    <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px"> Rub</label>
+                </div>
         </div>
     </div>
     <!--Ears-->
@@ -1354,7 +1341,7 @@
                 <div class="col-md-8" style="margin-left: 15px;">
                     <textarea class="form-control" name="SKIN_EXAMINERS_COMMENTS"
                               ng-model="info.SKIN_EXAMINERS_COMMENTS"
-                              ng-required="info.ECZEMA == 2 || info.ECZEMA==3 || info.ECZEMA==4 ||
+                              ng-required="info.PACEMAKER == 1 || info.ECZEMA == 2 || info.ECZEMA==3 || info.ECZEMA==4 ||
                               info.PSORIASIS == 2 || info.PSORIASIS == 3 || info.PSORIASIS == 4 || info.TINEA==2 ||
                                info.TINEA==3 || info.TINEA==4 ||
                               info.SOLAR_DAMAGE==2 || info.SOLAR_DAMAGE==3 || info.SOLAR_DAMAGE==4 ||

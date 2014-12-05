@@ -283,8 +283,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         }
 
         $scope.infoChanged = function () {
-            console.log(oriInfoD);
-            console.log($scope.infoD);
+//            console.log(oriInfoD);
+//            console.log($scope.infoD);
             if(!angular.equals(oriInfoH, $scope.infoH) == false && !angular.equals(oriInfoL,$scope.infoL) == false && !angular.equals(oriInfoD, $scope.infoD) == false && !angular.equals(oriInfoC,$scope.infoC.VALUE) == false)
             {
                 return  false;
@@ -292,115 +292,117 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                 return true;
             }
         }
-
+        var insert = true;
         DocumentService.checkFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
             if(response['status'] === 'new')
             {
                 $scope.isNew = true;
+                insert = true;
             }else if(response['status'] === 'update')
             {
                 $scope.isNew = false;
-                $scope.infoH = {
-                    PATIENT_ID: response.data.PATIENT_ID ,
-                    CAL_ID : response.data.CAL_ID ,
-                    FA_ID: response.data.FA_ID ,
-                    ENTITY_ID: response.data.ENTITY_ID ,
-                    //FA_TYPE: response.data.FA_TYPE ,
-                    //FA_NAME : response.data.FA_NAME ,
-                    //ISENABLE: response.data.ISENABLE ,
-                    Created_by: response.data.Created_by ,
-                    Creation_date : response.data.Creation_date ,
-                    Last_updated_by: response.data.Last_updated_by ,
-                    Last_update_date : response.data.Last_update_date ,
-                    Risk: response.data.Risk ,
-                    Comments : response.data.Comments ,
-                    Recommend: response.data.Recommend ,
-                    Att_Flexibility: response.data.Att_Flexibility ,
-                    Att_Core_Stability: response.data.Att_Core_Stability ,
-                    Att_Wirst_Elbow_func: response.data.Att_Wirst_Elbow_func ,
-                    Att_Shoulder_func: response.data.Att_Shoulder_func ,
-                    Att_Lower_Limb_func: response.data.Att_Lower_Limb_func ,
-                    Att_Balance: response.data.Att_Balance ,
-                    ASSESSED_ID: response.data.ASSESSED_ID ,
-                    ASSESSED_SIGN: response.data.ASSESSED_SIGN ,
-                    ASSESSED_DATE : response.data.ASSESSED_DATE ,
-                    ASSESSED_NAME : response.data.ASSESSED_NAME ,
-                    ITEM_ID: response.data.ITEM_ID
-                };
-                oriInfoH  = angular.copy($scope.infoH);
+                insert = false;
             }else{
-                toastr.error("Failaaa", "Error");
+                toastr.error("Fail", "Error");
                 return;
             }
 
-            DocumentService.loadFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
-                if(response['status'] === 'fail') {
-                    toastr.error("Fail", "Error");
-                }
-                else
-                {
-                    var data = response[0];
-                    var dataH = data.Header[0];
-                    var dataS = data.Section;
-                    $scope.listFA.push({ "header_name": dataH.FA_NAME, "section":[]});
-                    var i = 0;
-                    angular.forEach(data.Section, function(dataS){
-                        $scope.listFA[0].section.push({"section_id" : dataS.SECTION_ID, "section_name": dataS.SECTION_NAME, "line":[]});
-                        var j = 0;
-                        angular.forEach(data.Line, function(dataL){
-                            if(dataL.SECTION_ID ==  $scope.listFA[0].section[i].section_id )
+            var data = response.data[0];
+            var dataH = data.Header[0];
+            var dataS = data.Section;
+            $scope.listFA.push({ "header_name": dataH.FA_NAME, "section":[]});
+            var i = 0;
+            angular.forEach(data.Section, function(dataS){
+                $scope.listFA[0].section.push({"section_id" : dataS.SECTION_ID, "section_name": dataS.SECTION_NAME, "line":[]});
+                var j = 0;
+                angular.forEach(data.Line, function(dataL){
+                    if(dataL.SECTION_ID ==  $scope.listFA[0].section[i].section_id )
+                    {
+                        $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"image" : dataL.PICTURE,"rating_id1" :dataL.RATING_ID1,"rating_id2" :dataL.RATING_ID2,"line_name": dataL.QUESTION,"line_type": dataL.LineType, "line_comment" : dataL.IsCommentsText, "line_isscore1" : dataL.ISSCORE1,"line_isscore2" : dataL.ISSCORE2,"line_israting1" : dataL.ISRATING1,"line_israting2" : dataL.ISRATING2,"score_type1" : dataL.SCORE_TYPE1,"score_type2" : dataL.SCORE_TYPE2, "detail":[],"comment":[]});
+                        if(insert == false){
+                            $scope.infoL.COMMENTS[dataL.LINE_ID] = dataL.COMMENTS;
+                            $scope.infoL.SCORE1[dataL.LINE_ID] = dataL.SCORE1;
+                            $scope.infoL.SCORE2[dataL.LINE_ID] = dataL.SCORE2;
+                            $scope.infoL.RATING_VALUE1[dataL.LINE_ID] = dataL.RATING_VALUE1;
+                            $scope.infoL.RATING_VALUE2[dataL.LINE_ID] = dataL.RATING_VALUE2;
+                            $scope.infoL.RATE1[dataL.LINE_ID] = dataL.RATE1;
+                            $scope.infoL.RATE2[dataL.LINE_ID] = dataL.RATE2;
+                            value[dataL.LINE_ID] = {};
+                        }
+
+                        angular.forEach(data.Detail, function(dataD){
+                            if(dataD.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
                             {
-                                $scope.listFA[0].section[i].line.push({ "line_id" : dataL.LINE_ID,"image" : dataL.PICTURE,"rating_id1" :dataL.RATING_ID1,"rating_id2" :dataL.RATING_ID2,"line_name": dataL.QUESTION,"line_type": dataL.LineType, "line_comment" : dataL.IsCommentsText, "line_isscore1" : dataL.ISSCORE1,"line_isscore2" : dataL.ISSCORE2,"line_israting1" : dataL.ISRATING1,"line_israting2" : dataL.ISRATING2,"score_type1" : dataL.SCORE_TYPE1,"score_type2" : dataL.SCORE_TYPE2, "detail":[],"comment":[]});
-                                $scope.infoL.COMMENTS[dataL.LINE_ID] = dataL.COMMENTS;
-                                $scope.infoL.SCORE1[dataL.LINE_ID] = dataL.SCORE1;
-                                $scope.infoL.SCORE2[dataL.LINE_ID] = dataL.SCORE2;
-                                $scope.infoL.RATING_VALUE1[dataL.LINE_ID] = dataL.RATING_VALUE1;
-                                $scope.infoL.RATING_VALUE2[dataL.LINE_ID] = dataL.RATING_VALUE2;
-                                $scope.infoL.RATE1[dataL.LINE_ID] = dataL.RATE1;
-                                $scope.infoL.RATE2[dataL.LINE_ID] = dataL.RATE2;
-                                value[dataL.LINE_ID] = {};
-
-                                angular.forEach(data.Detail, function(dataD){
-                                    if(dataD.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
-                                    {
-                                        $scope.listFA[0].section[i].line[j].detail.push({"detail_id": dataD.DETAIL_ID,"image" : dataD.PICTURE, "detail_name": dataD.QUESTION, "val1_yes": dataD.VAL1_ISCOMMENT_WHEN_YES, "val1_no": dataD.VAL1_ISCOMMENT_WHEN_NO, "val2_yes" : dataD.VAL2_ISCOMMENT_WHEN_YES, "val2_no" : dataD.VAL2_ISCOMMENT_WHEN_NO, "val1Validate" : dataD.VAL1_VALUE_IS_NUMBER,"val2Validate" : dataD.VAL2_VALUE_IS_NUMBER, "val1_name": dataD.VAL1_NAME, "val2_name": dataD.VAL2_NAME,"val1_isvalue": dataD.VAL1_ISVALUE,"val2_isvalue": dataD.VAL2_ISVALUE,"val1_ischeckbox": dataD.VAL1_ISCHECKBOX,"val2_ischeckbox": dataD.VAL2_ISCHECKBOX, "comment_text": dataD.IsCommentText,"summary" : dataD.LineTestRefer});
-                                        $scope.infoD.COMMENTS[dataD.DETAIL_ID]=dataD.COMMENTS;
-                                        $scope.infoD.VAL1_CHECKBOX[dataD.DETAIL_ID] = dataD.VAL1_CHECKBOX;
-                                        $scope.infoD.VAL2_CHECKBOX[dataD.DETAIL_ID] = dataD.VAL2_CHECKBOX;
-                                        $scope.infoD.VAL2_VALUE[dataD.DETAIL_ID] = dataD.VAL2_VALUE;
-                                        $scope.infoD.VAL1_VALUE[dataD.DETAIL_ID] = dataD.VAL1_VALUE;
-                                        value[dataL.LINE_ID][dataD.DETAIL_ID] = [dataD.VAL1_VALUE,dataD.VAL2_VALUE];
-                                        if(dataL.ISSCORE1 == 1 && dataL.ISRATING1 == 0 && dataL.SCORE_TYPE1 == 9){
-                                            $scope.mathScore(dataD.DETAIL_ID, dataL.LINE_ID, 1, 0, null, null, 9, null, null);
-                                        }
-                                        if(dataD.LineTestRefer != null){
-                                            if(!totalArr[dataD.LINE_ID]){
-                                                totalArr[dataD.LINE_ID] = {};
-                                            }
-                                            totalArr[dataD.LINE_ID][dataD.LineTestRefer] = dataD.VAL1_VALUE ;
-                                            totalArr[dataD.LINE_ID]["rating"] =dataL.RATING_ID1;
-                                        }
+                                $scope.listFA[0].section[i].line[j].detail.push({"detail_id": dataD.DETAIL_ID,"image" : dataD.PICTURE, "detail_name": dataD.QUESTION, "val1_yes": dataD.VAL1_ISCOMMENT_WHEN_YES, "val1_no": dataD.VAL1_ISCOMMENT_WHEN_NO, "val2_yes" : dataD.VAL2_ISCOMMENT_WHEN_YES, "val2_no" : dataD.VAL2_ISCOMMENT_WHEN_NO, "val1Validate" : dataD.VAL1_VALUE_IS_NUMBER,"val2Validate" : dataD.VAL2_VALUE_IS_NUMBER, "val1_name": dataD.VAL1_NAME, "val2_name": dataD.VAL2_NAME,"val1_isvalue": dataD.VAL1_ISVALUE,"val2_isvalue": dataD.VAL2_ISVALUE,"val1_ischeckbox": dataD.VAL1_ISCHECKBOX,"val2_ischeckbox": dataD.VAL2_ISCHECKBOX, "comment_text": dataD.IsCommentText,"summary" : dataD.LineTestRefer});
+                                if(insert == false){
+                                    $scope.infoD.COMMENTS[dataD.DETAIL_ID]=dataD.COMMENTS;
+                                    $scope.infoD.VAL1_CHECKBOX[dataD.DETAIL_ID] = dataD.VAL1_CHECKBOX;
+                                    $scope.infoD.VAL2_CHECKBOX[dataD.DETAIL_ID] = dataD.VAL2_CHECKBOX;
+                                    $scope.infoD.VAL2_VALUE[dataD.DETAIL_ID] = dataD.VAL2_VALUE;
+                                    $scope.infoD.VAL1_VALUE[dataD.DETAIL_ID] = dataD.VAL1_VALUE;
+                                    value[dataL.LINE_ID][dataD.DETAIL_ID] = [dataD.VAL1_VALUE,dataD.VAL2_VALUE];
+                                    if(dataL.ISSCORE1 == 1 && dataL.ISRATING1 == 0 && dataL.SCORE_TYPE1 == 9){
+                                        $scope.mathScore(dataD.DETAIL_ID, dataL.LINE_ID, 1, 0, null, null, 9, null, null);
                                     }
-                                });
-                                angular.forEach(data.Comment, function(dataC){
-                                    if(dataC.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
-                                    {
-                                        $scope.listFA[0].section[i].line[j].comment.push({"comment_id":dataC.FA_COMMENT_ID,"comment_name": dataC.NAME, "comment_type": dataC.Comment_Type});
-                                        $scope.infoC.VALUE[dataC.FA_COMMENT_ID] = dataC.VALUE;
+                                    if(dataD.LineTestRefer != null){
+                                        if(!totalArr[dataD.LINE_ID]){
+                                            totalArr[dataD.LINE_ID] = {};
+                                        }
+                                        totalArr[dataD.LINE_ID][dataD.LineTestRefer] = dataD.VAL1_VALUE ;
+                                        totalArr[dataD.LINE_ID]["rating"] =dataL.RATING_ID1;
                                     }
-                                });
-                                j++;
+                                }
                             }
-
                         });
-                        i++;
-                    });
+                        angular.forEach(data.Comment, function(dataC){
+                            if(dataC.LINE_ID ==  $scope.listFA[0].section[i].line[j].line_id )
+                            {
+                                $scope.listFA[0].section[i].line[j].comment.push({"comment_id":dataC.FA_COMMENT_ID,"comment_name": dataC.NAME, "comment_type": dataC.Comment_Type});
+                                if(insert == false){
+                                    $scope.infoC.VALUE[dataC.FA_COMMENT_ID] = dataC.VALUE;
+                                }
+                            }
+                        });
+                        j++;
+                    }
 
-                    oriInfoL  = angular.copy($scope.infoL);
-                    oriInfoD  = angular.copy($scope.infoD);
-                    oriInfoC  = angular.copy($scope.infoC.VALUE);
-                }
+                });
+                i++;
             });
+
+            if(insert == false){
+                $scope.infoH = {
+                    PATIENT_ID: dataH.PATIENT_ID ,
+                    CAL_ID : dataH.CAL_ID ,
+                    FA_ID: dataH.FA_ID ,
+                    ENTITY_ID: dataH.ENTITY_ID ,
+                    //FA_TYPE: dataH.FA_TYPE ,
+                    //FA_NAME : dataH.FA_NAME ,
+                    //ISENABLE: dataH.ISENABLE ,
+                    Created_by: dataH.Created_by ,
+                    Creation_date : dataH.Creation_date ,
+                    Last_updated_by: dataH.Last_updated_by ,
+                    Last_update_date : dataH.Last_update_date ,
+                    Risk: dataH.Risk ,
+                    Comments : dataH.Comments ,
+                    Recommend: dataH.Recommend ,
+                    Att_Flexibility: dataH.Att_Flexibility ,
+                    Att_Core_Stability: dataH.Att_Core_Stability ,
+                    Att_Wirst_Elbow_func: dataH.Att_Wirst_Elbow_func ,
+                    Att_Shoulder_func: dataH.Att_Shoulder_func ,
+                    Att_Lower_Limb_func: dataH.Att_Lower_Limb_func ,
+                    Att_Balance: dataH.Att_Balance ,
+                    ASSESSED_ID: dataH.ASSESSED_ID ,
+                    ASSESSED_SIGN: dataH.ASSESSED_SIGN ,
+                    ASSESSED_DATE : dataH.ASSESSED_DATE ,
+                    ASSESSED_NAME : dataH.ASSESSED_NAME ,
+                    ITEM_ID: dataH.ITEM_ID
+                };
+                oriInfoH  = angular.copy($scope.infoH);
+                oriInfoL  = angular.copy($scope.infoL);
+                oriInfoD  = angular.copy($scope.infoD);
+                oriInfoC  = angular.copy($scope.infoC.VALUE);
+            }
 
         });
 
@@ -411,19 +413,29 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                 toastr.error("Please Input All Required Information!", "Error");
             }else
             {
-                console.log($scope.infoD);
-                console.log($scope.infoC.VALUE);
-                DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC).then(function(response){
-                    console.log(response['status']);
-                    if(response['status'] === 'success') {
-                        toastr.success("Successfully","Success");
-                        $state.go('loggedIn.FA', null, {'reload': true});
-                    }
-                    else
-                    {
-                        toastr.error("Fail", "Error");
-                    }
-                });
+                if (insert == true) {
+                    DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC).then(function(response){
+                        if(response['status'] === 'success') {
+                            toastr.success("Successfully","Success");
+                            $state.go('loggedIn.FA', null, {'reload': true});
+                        }
+                        else
+                        {
+                            toastr.error("Fail", "Error");
+                        }
+                    });
+                } else {
+                    DocumentService.updateFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC).then(function(response){
+                        if(response['status'] === 'success') {
+                            toastr.success("Successfully","Success");
+                            $state.go('loggedIn.FA', null, {'reload': true});
+                        }
+                        else
+                        {
+                            toastr.error("Fail", "Error");
+                        }
+                    });
+                }
             }
         };
 

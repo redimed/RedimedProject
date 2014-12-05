@@ -37,19 +37,14 @@ angular.module('app.loggedIn.document.services', [])
             Begin
          */
 
-        documentService.newFA = function (PATIENT_ID,CAL_ID) {
-            var newFA = api.all("document/newFA");
-            return newFA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
-        }
-
-        documentService.loadFA = function (PATIENT_ID,CAL_ID) {
-            var loadFA = api.all("document/loadFA");
-            return loadFA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
-        }
-
         documentService.insertFA = function(infoH,infoL,infoD,infoC){
             var insertFA = api.all("document/insertFA");
             return insertFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC});
+        }
+
+        documentService.updateFA = function(infoH,infoL,infoD,infoC){
+            var updateFA = api.all("document/updateFA");
+            return updateFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC});
         }
 
         documentService.checkFA = function(PatientID, calID){
@@ -73,14 +68,14 @@ angular.module('app.loggedIn.document.services', [])
             return newMA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
         }
 
-        documentService.loadMA = function (PATIENT_ID,CAL_ID) {
-            var loadMA = api.all("document/loadMA");
-            return loadMA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
-        }
-
         documentService.insertMA = function(infoL,infoH){
             var insertMA = api.all("document/insertMA");
             return insertMA.post({infoL:infoL,infoH:infoH});
+        }
+
+        documentService.updateMA = function(infoL,infoH){
+            var updateMA = api.all("document/updateMA");
+            return updateMA.post({infoL:infoL,infoH:infoH});
         }
 
         documentService.checkMA = function(PatientID, calID){

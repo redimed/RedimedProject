@@ -35,18 +35,16 @@ app.get('/api/document/printCat2/:patientId/:calId/:catId', Cat2Controller.print
 
 
 // Begin funtion assessment
-//app.post('/api/document/newFA', FAController.newFA);
-app.post('/api/document/loadFA', FAController.loadFA);
 app.post('/api/document/insertFA', FAController.insertFA);
+app.post('/api/document/updateFA', FAController.updateFA);
 app.post('/api/document/checkFA', FAController.checkFA);
 app.post('/api/document/checkRating', FAController.checkRating);
 app.get('/api/document/FA/print-report/:cal_id/:patient_id/:key', FAController.printReport);
 //end
 
 // Begin Medical Assessment
-//app.post('/api/document/newMA', MAController.newMA);
-app.post('/api/document/loadMA', MAController.loadMA);
 app.post('/api/document/insertMA', MAController.insertMA);
+app.post('/api/document/updateMA', MAController.updateMA);
 app.post('/api/document/checkMA', MAController.checkMA);
 app.get('/api/document/printMA/:patientId/:calId/:MA_ID', MAController.printReport);
 // End

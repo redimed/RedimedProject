@@ -78,11 +78,11 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                     }else if(value >= 52 && value <= 55)
                     {
                         $scope.info.c_Result3 = 4;
-                    }else
+                    }else if(value > 55)
                     {
                         $scope.info.c_Result3 = 5;
                     }
-                }else
+                }else if(sex == "Female")
                 {
                     if(value < 23)
                     {
@@ -96,7 +96,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                     }else if(value >= 30 && value <= 33)
                     {
                         $scope.info.c_Result3 = 4;
-                    }else
+                    }else if(value > 33)
                     {
                         $scope.info.c_Result3 = 5;
                     }
@@ -119,9 +119,9 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             if(value > 0)
             {
                 if (sex == "Male") {
-                    if (value >= 1 && value <= 4) {
+                    if (value >= 1 && value <= 5) {
                         $scope.info.d_Result3 = 1;
-                    } else if (value >= 5 && value <= 8) {
+                    } else if (value >= 6 && value <= 8) {
                         $scope.info.d_Result3 = 2;
                     } else if (value >= 9 && value <= 12) {
                         $scope.info.d_Result3 = 3;
@@ -148,32 +148,168 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             }
         };
 
+        $scope.e_total3 = function(){
+            value = $scope.info.e_total3;
+            if(!!value){
+                if(value >= 0 && value <=30)
+                {
+                    $scope.info.e_Result3 = 1;
+                }else if(value > 30 && value <= 60)
+                {
+                    $scope.info.e_Result3 = 2;
+                }else if(value > 60 && value <= 90)
+                {
+                    $scope.info.e_Result3 = 3;
+                }else if(value > 90 && value <= 120)
+                {
+                    $scope.info.e_Result3 = 4;
+                }else if(value > 120 )
+                {
+                    $scope.info.e_Result3 = 5;
+                }
+            }else{
+                $scope.info.e_Result3 = null;
+            }
+        };
+
+        $scope.aSec4 = function(){
+            value = $scope.info.aSec4;
+            if(!!value){
+                if(value == 0){
+                    $scope.info.aResult4 = 1;
+                }else if( value >= 1 && value <= 20){
+                    $scope.info.aResult4 = 2;
+                }else if( value >= 21 && value <= 40){
+                    $scope.info.aResult4 = 3;
+                }else if( value >= 41 && value <= 60){
+                    $scope.info.aResult4 = 4;
+                }else if( value > 60){
+                    $scope.info.aResult4 = 5;
+                }
+            }else{
+                $scope.info.aResult4 = null;
+            }
+        };
+
+        $scope.bTotal4 = function(){
+            value = $scope.info.bTotal4;
+            if(!!value) {
+                if(value == 0){
+                    $scope.info.bResult4 = 1;
+                }else if( value >= 1 && value <= 9){
+                    $scope.info.bResult4 = 2;
+                }else if( value >= 10 && value <= 14){
+                    $scope.info.bResult4 = 3;
+                }else if( value >= 15 && value <= 19){
+                    $scope.info.bResult4 = 4;
+                }else if( value >= 20){
+                    $scope.info.bResult4 = 5;
+                }
+            }else{
+                $scope.info.bResult4 = null;
+            }
+        };
+
+        $scope.cKneeling4 = function(){
+            value = $scope.info.cKneeling4;
+            if(!!value){
+                if(value == 0){
+                    $scope.info.cResult4 = 1;
+                }else if( value >= 1 && value <= 10){
+                    $scope.info.cResult4 = 2;
+                }else if( value >= 11 && value <= 20){
+                    $scope.info.cResult4 = 3;
+                }else if( value >= 21 && value <= 30){
+                    $scope.info.cResult4 = 4;
+                }else if( value > 30){
+                    $scope.info.cResult4 = 5;
+                }
+            }else{
+                $scope.info.cResult4 = null;
+            }
+        };
+
         $scope.aMax = function () {
             value = $scope.info.aMax6;
-            if (value > 45) {
-                $scope.info.aResult6 = 5;
-            } else if (value >= 23 && value <= 45) {
-                $scope.info.aResult6 = 4;
-            } else if (value >= 10 && value <= 22) {
-                $scope.info.aResult6 = 3;
-            } else if (value >= 6 && value <= 9) {
-                $scope.info.aResult6 = 2;
-            } else if (value >= 0 && value <= 5) {
-                $scope.info.aResult6 = 1;
+            if(!!value)
+            {
+                if (value > 45) {
+                    $scope.info.aResult6 = 5;
+                } else if (value >= 23 && value <= 45) {
+                    $scope.info.aResult6 = 4;
+                } else if (value >= 10 && value <= 22) {
+                    $scope.info.aResult6 = 3;
+                } else if (value >= 6 && value <= 9) {
+                    $scope.info.aResult6 = 2;
+                } else if (value >= 0 && value <= 5) {
+                    $scope.info.aResult6 = 1;
+                }
+            }else
+            {
+                $scope.info.aResult6 = null;
             }
         };
 
         $scope.bMax = function () {
-            if (value > 23) {
-                $scope.info.bResult6 = 5;
-            } else if (value >= 12 && value <= 23) {
-                $scope.info.bResult6 = 4;
-            } else if (value >= 6 && value <= 11) {
-                $scope.info.bResult6 = 3;
-            } else if (value >= 4 && value <= 5) {
-                $scope.info.bResult6 = 2;
-            } else if (value >= 0 && value <= 3) {
-                $scope.info.bResult6 = 1;
+            value =  $scope.info.bMax6;
+            if(!!value)
+            {
+                if (value > 23) {
+                    $scope.info.bResult6 = 5;
+                } else if (value >= 12 && value <= 23) {
+                    $scope.info.bResult6 = 4;
+                } else if (value >= 6 && value <= 11) {
+                    $scope.info.bResult6 = 3;
+                } else if (value >= 4 && value <= 5) {
+                    $scope.info.bResult6 = 2;
+                } else if (value >= 0 && value <= 3) {
+                    $scope.info.bResult6 = 1;
+                }
+            }else
+            {
+                $scope.info.bResult6 = null;
+            }
+        };
+
+        $scope.cStrenght5 = function () {
+            value = $scope.info.cStrenght5;
+            if(!!value)
+            {
+                if (value == 0) {
+                    $scope.info.cResult5 = 1;
+                } else if (value >= 1 && value <= 20) {
+                    $scope.info.cResult5 = 2;
+                } else if (value >= 21 && value <= 40) {
+                    $scope.info.cResult5 = 3;
+                } else if (value >= 41 && value <= 60) {
+                    $scope.info.cResult5 = 4;
+                } else if (value > 60) {
+                    $scope.info.cResult5 = 5;
+                }
+            }else
+            {
+                $scope.info.cResult5 = null;
+            }
+        };
+
+        $scope.dTotal5 = function () {
+            value =  $scope.info.dTotal5;
+            if(!!value)
+            {
+                if (value == 0) {
+                    $scope.info.dResult5 = 1;
+                } else if (value >= 1 && value <= 5) {
+                    $scope.info.dResult5 = 2;
+                } else if (value > 5 && value <= 10) {
+                    $scope.info.dResult5 = 3;
+                } else if (value >= 11 && value <= 15) {
+                    $scope.info.dResult5 = 4;
+                } else if (value > 15) {
+                    $scope.info.dResult5 = 5;
+                }
+            }else
+            {
+                $scope.info.dResult5 = null;
             }
         };
         //=============================================================================
@@ -183,7 +319,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             id: null,
             patientId: Patient_ID,
             fName: $scope.patientInfo.First_name + " " + $scope.patientInfo.Sur_name + " " + $scope.patientInfo.Middle_name,
-            age: getAge($scope.patientInfo.DOB),
+            age: null,
             JAF: null,
             DOB: $scope.patientInfo.DOB,
             DOA: date,
@@ -328,148 +464,156 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
         var insert = true;
 
         DocumentService.checkGorgonFA(Patient_ID, CalID).then(function (response) {
-            if (response['status'] === 'fail') {
+            if(response['status'] == 'not'){
+                toastr.error("You have to make Pre-employment Health Assessment first", "Error");
+                $state.go('loggedIn.gorgonMA', null, {'reload': true});
+            }else if (response['status'] === 'insert') {
                 insert = true;
                 $scope.isNew = true;
-            }
-            else {
+                $scope.info.MS_Mx_Heart_Rage_1 = $scope.patientInfo.DOB != null ?  getAge($scope.patientInfo.DOB) : 0;
+                $scope.info.MS_Blood_Pressure_1=response['data'].SYSTOLIC_BP;
+                $scope.info.MS_Blood_Pressure_2 =response['data'].DIASTOLIC_BP ;
+                $scope.info.MS_Resting_Heart_Rate =response['data'].PULSE;
+                $scope.info.MS_Mx_Weight_1 = response['data'].WEIGHT;
+            }else if(response['status'] == 'update'){
                 insert = false;
                 $scope.isNew = false;
                 $scope.info = {
-                    id: response['id'],
-                    patientId: response['patientId'],
-                    fName: response['fName'],
-                    age: getAge($scope.patientInfo.DOB),
-                    JAF: response['JAF'],
-                    DOB: response['DOB'],
-                    DOA: response['DOA'],
-                    IsConsentReason: response['IsConsentReason'],
-                    fsign: response['fsign'],
-                    fsignDate: response['fsignDate'],
-                    Estimated: response['Estimated'],
-                    EstimatedComments: response['EstimatedComments'],
-                    MS_HeartConditions: response['MS_HeartConditions'],
-                    MS_HeartConditions_Comment: response['MS_HeartConditions_Comment'],
-                    MS_Lung_Asthma: response['MS_Lung_Asthma'],
-                    MS_Lung__Asthma_Comment: response['MS_Lung__Asthma_Comment'],
-                    MS_Diabetes: response['MS_Diabetes'],
-                    MS_Diabetes_Comment: response['MS_Diabetes_Comment'],
-                    MS_Fits: response['MS_Fits'],
-                    MS_Fits_Comment: response['MS_Fits_Comment'],
-                    MS_Medication: response['MS_Medication'],
-                    MS_Medication_Comment: response['MS_Medication_Comment'],
-                    MS_Other: response['MS_Other'],
-                    MS_Other_Comment: response['MS_Other_Comment'],
-                    MS_ie_Comment: response['MS_ie_Comment'],
-                    MS_Mx_Heart_Rage_1: response['MS_Mx_Heart_Rage_1'],
-                    MS_Mx_Heart_Rage_2: response['MS_Mx_Heart_Rage_2'],
-                    MS_Mx_Weight_1: response['MS_Mx_Weight_1'],
-                    MS_MX_Weight_2: response['MS_MX_Weight_2'],
-                    MS_Blood_Pressure_1: response['MS_Blood_Pressure_1'],
-                    MS_Blood_Pressure_2: response['MS_Blood_Pressure_2'],
-                    MS_Resting_Heart_Rate: response['MS_Resting_Heart_Rate'],
-                    Rom_Neck1: response['1Rom_Neck'],
-                    Rom_Thoracic1: response['1Rom_Thoracic'],
-                    Rom_Lumbar1: response['1Rom_Lumbar'],
-                    Rom_Shoulder1: response['1Rom_Shoulder'],
-                    Rom_Elbow1: response['1Rom_Elbow'],
-                    Rom_Wrist1: response['1Rom_Wrist'],
-                    Rom_Fingers1: response['1Rom_Fingers'],
-                    Rom_Hips1: response['1Rom_Hips'],
-                    Rom_Knees1: response['1Rom_Knees'],
-                    Rom_Ankles1: response['1Rom_Ankles'],
-                    Rom_Comments1: response['1Rom_Comments'],
-                    Rom_Total1: response['1Rom_Total'],
-                    Heart_Rate_30S2: response['2Heart_Rate_30S'],
-                    Heart_Rate_1M2: response['2Heart_Rate_1M'],
-                    Heart_Rate_1M_30S2: response['2Heart_Rate_1M_30S'],
-                    Heart_Rate_2M2: response['2Heart_Rate_2M'],
-                    Heart_Rate_2M_30S2: response['2Heart_Rate_2M_30S'],
-                    Heart_Rate_3M2: response['2Heart_Rate_3M'],
-                    Heart_Rate_1M_Post2: response['2Heart_Rate_1M_Post'],
-                    Step_Result2: response['2Step_Result'],
-                    Step_Correct2: response['2Step_Correct'],
-                    Comments2: response['2Comments'],
-                    Total2: response['2Total'],
-                    a_Right3: response['3a_Right'],
-                    a_Left3: response['3a_Left'],
-                    b_Right3: response['3b_Right'],
-                    b_Left3: response['3b_Left'],
-                    c_Grip3: response['3c_Grip'],
-                    c_Right3: response['3c_Right'],
-                    c_Left3: response['3c_Left'],
-                    c_Result3: response['3c_Result'],
-                    d_Push_ups_total3: response['3d_Push_ups_total'],
-                    d_Result3: response['3d_Result'],
-                    e_total3: response['3e_total'],
-                    e_Result3: response['3e_Result'],
-                    Comments3: response['3Comments'],
-                    Total3: response['3Total'],
-                    aSec4: response['4aSec'],//
-                    aResult4: response['4aResult'],//
-                    bTotal4: response['4bTotal'],
-                    bCrepitus4: response['4bCrepitus'],
-                    bResult4: response['4bResult'],//
-                    cKneeling4: response['4cKneeling'],
-                    cResult4: response['4cResult'], //
-                    Comments4: response['4Comments'],
-                    Total4: response['4Total'],
-                    aPosture5: response['5aPosture'],
-                    bHoverResult5: response['5bHoverResult'],
-                    cStrenght5: response['5cStrenght'],
-                    cResult5: response['5cResult'],//
-                    dTotal5: response['5dTotal'],
-                    dResult5: response['5dResult'],//
-                    eWaitesBow5: response['5eWaitesBow'],
-                    eResult5: response['5eResult'],//
-                    fRight5: response['5fRight'],
-                    fLeft5: response['5fLeft'],
-                    gRight5: response['5gRight'],
-                    gFloat5: response['5gFloat'],
-                    Total5: response['5Total'],
-                    aMax6: response['6aMax'],
-                    aResult6: response['6aResult'],
-                    bMax6: response['6bMax'],
-                    bResult6: response['6bResult'],
-                    c_16: response['6c_1'],
-                    c_1Comment6: response['6c_1Comment'],
-                    c_26: response['6c_2'],
-                    c_2Comment6: response['6c_2Comment'],
-                    c_36: response['6c_3'],
-                    c_3Comment6: response['6c_3Comment'],
-                    c_46: response['6c_4'],
-                    c_4Comment6: response['6c_4Comment'],
-                    c_56: response['6c_5'],
-                    c_5Comment6: response['6c_5Comment'],
-                    Comments6: response['6Comments'],
-                    Total6: response['6Total'],
-                    Score1Comment: response['Score1Comment'],
-                    Score2Comment: response['Score2Comment'],
-                    Score3Comment: response['Score3Comment'],
-                    Score4Comment: response['Score4Comment'],
-                    Score5Comment: response['Score5Comment'],
-                    Score6Comment: response['Score6Comment'],
-                    Score7Comment: response['Score7Comment'],
-                    Score8Comment: response['Score8Comment'],
-                    FCAToTal: response['FCAToTal'],
-                    FCAResult: response['FCAResult'],
-                    LEPDC: response['LEPDC'],
-                    LAPC: response['LAPC'],
-                    LComment: response['LComment'],
-                    Lsign: response['Lsign'],
-                    LDate: response['LDate'],
-                    LName: response['LName'],
-                    LPosition: response['LPosition'],
-                    Created_by: response['Created_by'],
-                    //Creation_date : response[''],
-                    Last_updated_by: response['Last_updated_by'],
-                    //Last_update_date : response[''],
-                    CalId: response['CalId'],
-                    DocId: response['DocId']
-
+                    id: response['data']['id'],
+                    patientId: response['data']['patientId'],
+                    fName: response['data']['fName'],
+                    JAF: response['data']['JAF'],
+                    DOB: response['data']['DOB'],
+                    DOA: response['data']['DOA'],
+                    IsConsentReason: response['data']['IsConsentReason'],
+                    fsign: response['data']['fsign'],
+                    fsignDate: response['data']['fsignDate'],
+                    Estimated: response['data']['Estimated'],
+                    EstimatedComments: response['data']['EstimatedComments'],
+                    MS_HeartConditions: response['data']['MS_HeartConditions'],
+                    MS_HeartConditions_Comment: response['data']['MS_HeartConditions_Comment'],
+                    MS_Lung_Asthma: response['data']['MS_Lung_Asthma'],
+                    MS_Lung__Asthma_Comment: response['data']['MS_Lung__Asthma_Comment'],
+                    MS_Diabetes: response['data']['MS_Diabetes'],
+                    MS_Diabetes_Comment: response['data']['MS_Diabetes_Comment'],
+                    MS_Fits: response['data']['MS_Fits'],
+                    MS_Fits_Comment: response['data']['MS_Fits_Comment'],
+                    MS_Medication: response['data']['MS_Medication'],
+                    MS_Medication_Comment: response['data']['MS_Medication_Comment'],
+                    MS_Other: response['data']['MS_Other'],
+                    MS_Other_Comment: response['data']['MS_Other_Comment'],
+                    MS_ie_Comment: response['data']['MS_ie_Comment'],
+                    MS_Mx_Heart_Rage_1: response['data']['MS_Mx_Heart_Rage_1'],
+                    MS_Mx_Heart_Rage_2: response['data']['MS_Mx_Heart_Rage_2'],
+                    MS_Mx_Weight_1: response['data']['MS_Mx_Weight_1'],
+                    MS_MX_Weight_2: response['data']['MS_MX_Weight_2'],
+                    MS_Blood_Pressure_1: response['data']['MS_Blood_Pressure_1'],
+                    MS_Blood_Pressure_2: response['data']['MS_Blood_Pressure_2'],
+                    MS_Resting_Heart_Rate: response['data']['MS_Resting_Heart_Rate'],
+                    Rom_Neck1: response['data']['1Rom_Neck'],
+                    Rom_Thoracic1: response['data']['1Rom_Thoracic'],
+                    Rom_Lumbar1: response['data']['1Rom_Lumbar'],
+                    Rom_Shoulder1: response['data']['1Rom_Shoulder'],
+                    Rom_Elbow1: response['data']['1Rom_Elbow'],
+                    Rom_Wrist1: response['data']['1Rom_Wrist'],
+                    Rom_Fingers1: response['data']['1Rom_Fingers'],
+                    Rom_Hips1: response['data']['1Rom_Hips'],
+                    Rom_Knees1: response['data']['1Rom_Knees'],
+                    Rom_Ankles1: response['data']['1Rom_Ankles'],
+                    Rom_Comments1: response['data']['1Rom_Comments'],
+                    Rom_Total1: response['data']['1Rom_Total'],
+                    Heart_Rate_30S2: response['data']['2Heart_Rate_30S'],
+                    Heart_Rate_1M2: response['data']['2Heart_Rate_1M'],
+                    Heart_Rate_1M_30S2: response['data']['2Heart_Rate_1M_30S'],
+                    Heart_Rate_2M2: response['data']['2Heart_Rate_2M'],
+                    Heart_Rate_2M_30S2: response['data']['2Heart_Rate_2M_30S'],
+                    Heart_Rate_3M2: response['data']['2Heart_Rate_3M'],
+                    Heart_Rate_1M_Post2: response['data']['2Heart_Rate_1M_Post'],
+                    Step_Result2: response['data']['2Step_Result'],
+                    Step_Correct2: response['data']['2Step_Correct'],
+                    Comments2: response['data']['2Comments'],
+                    Total2: response['data']['2Total'],
+                    a_Right3: response['data']['3a_Right'],
+                    a_Left3: response['data']['3a_Left'],
+                    b_Right3: response['data']['3b_Right'],
+                    b_Left3: response['data']['3b_Left'],
+                    c_Grip3: response['data']['3c_Grip'],
+                    c_Right3: response['data']['3c_Right'],
+                    c_Left3: response['data']['3c_Left'],
+                    c_Result3: response['data']['3c_Result'],
+                    d_Push_ups_total3: response['data']['3d_Push_ups_total'],
+                    d_Result3: response['data']['3d_Result'],
+                    e_total3: response['data']['3e_total'],
+                    e_Result3: response['data']['3e_Result'],
+                    Comments3: response['data']['3Comments'],
+                    Total3: response['data']['3Total'],
+                    aSec4: response['data']['4aSec'],//
+                    aResult4: response['data']['4aResult'],//
+                    bTotal4: response['data']['4bTotal'],
+                    bCrepitus4: response['data']['4bCrepitus'],
+                    bResult4: response['data']['4bResult'],//
+                    cKneeling4: response['data']['4cKneeling'],
+                    cResult4: response['data']['4cResult'], //
+                    Comments4: response['data']['4Comments'],
+                    Total4: response['data']['4Total'],
+                    aPosture5: response['data']['5aPosture'],
+                    bHoverResult5: response['data']['5bHoverResult'],
+                    cStrenght5: response['data']['5cStrenght'],
+                    cResult5: response['data']['5cResult'],//
+                    dTotal5: response['data']['5dTotal'],
+                    dResult5: response['data']['5dResult'],//
+                    eWaitesBow5: response['data']['5eWaitesBow'],
+                    eResult5: response['data']['5eResult'],//
+                    fRight5: response['data']['5fRight'],
+                    fLeft5: response['data']['5fLeft'],
+                    gRight5: response['data']['5gRight'],
+                    gFloat5: response['data']['5gFloat'],
+                    Total5: response['data']['5Total'],
+                    aMax6: response['data']['6aMax'],
+                    aResult6: response['data']['6aResult'],
+                    bMax6: response['data']['6bMax'],
+                    bResult6: response['data']['6bResult'],
+                    c_16: response['data']['6c_1'],
+                    c_1Comment6: response['data']['6c_1Comment'],
+                    c_26: response['data']['6c_2'],
+                    c_2Comment6: response['data']['6c_2Comment'],
+                    c_36: response['data']['6c_3'],
+                    c_3Comment6: response['data']['6c_3Comment'],
+                    c_46: response['data']['6c_4'],
+                    c_4Comment6: response['data']['6c_4Comment'],
+                    c_56: response['data']['6c_5'],
+                    c_5Comment6: response['data']['6c_5Comment'],
+                    Comments6: response['data']['6Comments'],
+                    Total6: response['data']['6Total'],
+                    Score1Comment: response['data']['Score1Comment'],
+                    Score2Comment: response['data']['Score2Comment'],
+                    Score3Comment: response['data']['Score3Comment'],
+                    Score4Comment: response['data']['Score4Comment'],
+                    Score5Comment: response['data']['Score5Comment'],
+                    Score6Comment: response['data']['Score6Comment'],
+                    Score7Comment: response['data']['Score7Comment'],
+                    Score8Comment: response['data']['Score8Comment'],
+                    FCAToTal: response['data']['FCAToTal'],
+                    FCAResult: response['data']['FCAResult'],
+                    LEPDC: response['data']['LEPDC'],
+                    LAPC: response['data']['LAPC'],
+                    LComment: response['data']['LComment'],
+                    Lsign: response['data']['Lsign'],
+                    LDate: response['data']['LDate'],
+                    LName: response['data']['LName'],
+                    LPosition: response['data']['LPosition'],
+                    Created_by: response['data']['Created_by'],
+                    //Creation_date : response['data'][''],
+                    Last_updated_by: response['data']['Last_updated_by'],
+                    //Last_update_date : response['data'][''],
+                    CalId: response['data']['CalId'],
+                    DocId: response['data']['DocId']
                 };
                 oriInfo = angular.copy($scope.info);
+            }else if(response['status'] == 'error'){
+                toastr.error("Fail", "Error");
             }
+
         });
         $scope.submitGorgonFA = function (gorgonFAForm) {
             $scope.showClickedValidation = true;

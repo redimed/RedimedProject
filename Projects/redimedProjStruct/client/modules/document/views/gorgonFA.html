@@ -9,16 +9,11 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button
-                        ng-disabled="!infoChanged() || gorgonFAForm.$error.required || gorgonFAForm.$error.pattern ||
-                        gorgonFAForm.$error.maxlength"
-                        class="btn green pull-right" ng-click="submitGorgonFA(gorgonFAForm)">{{isNew?"Add
-                    New":"Update"}}
+                <button ng-disabled="!infoChanged()"
+                        class="btn green pull-right" ng-click="submitGorgonFA(gorgonFAForm)">{{isNew?"Add New":"Update"}}
                 </button>
                 <a href="/api/document/printGorgonFA/{{info.id}}/{{info.CalId}}"
-
                    ng-disabled="isNew || infoChanged()"
-
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()"
@@ -37,9 +32,7 @@
             </div>
             <div class="col-md-6 col-sm-5">
                 <label class="control-label bold">Date Of Birth</label>
-                <input type="text" readonly max-date="maxDateDOB" class="form-control" name="dob" ng-model="info.DOB"
-                       datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true"
-                       datepicker-options="dateOptions" close-text="Close"/>
+                <input type="text" readonly class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="info.DOB"/>
             </div>
         </div>
         <div class="row">
@@ -103,7 +96,7 @@
 
                 </div>
                 <div class="col-md-5 col-sm-5">
-                    <label class="control-label col-md-2 col-sm-3 bold" style="margin-top: 5px">Date</label>
+                    <label class="control-label col-md-2 col-sm-3 bold" style="margin-top: 10px">Date</label>
 
                     <div class="col-md-3 col-sm-7">
                         <input style="margin-top: 10px" type="text" ng-model="info.fsignDate" name="consentDate"
@@ -296,7 +289,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3 col-lg-3 col-sm-3">
-                    <label class="control-label" style="margin-top: 7px">Others(ie Surgery,Physio)</label>
+                    <label class="control-label" style="margin-top: 7px">Others</br>(ie Surgery,Physio,MVA,Work Injury)</label>
                 </div>
                 <div class="btn-group col-sm-4 col-lg-2 col-md-3">
                     <label class="btn">
@@ -316,13 +309,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" >
                 <div class="col-md-6 col-lg-5 col-sm-5">
                     <label class="control-label" style="margin-top: 7px">Maximum Heart Rate For Assessment</label>
                 </div>
                 <div class="col-md-6 col-sm-7">
-                    <label class="control-label" style="margin-top: 7px">(220 - {{info.age}}) x 85%=
-                        {{info.MS_Mx_Heart_Rage_2=(220 - info.age) * 85 / 100}} bpm</label>
+                    <label class="control-label" style="margin-top: 7px">220 - (age)
+                    <input disabled type="text" ng-model="info.MS_Mx_Heart_Rage_1" style="width: 50px;" />
+                     x 85%={{info.MS_Mx_Heart_Rage_2=(220 - info.age) * 85 / 100}} bpm</label>
                 </div>
             </div>
             <div ng-class="{'has-error':showClickedValidation && gorgonFAForm.MS_Mx_Weight.$error.pattern}">
@@ -333,7 +327,7 @@
                     </div>
                     <div class="col-md-6 col-sm-7">
                         <label class="control-label" style="margin-top: 7px">(candidates weight)</label>
-                        <input type="text" ng-model="info.MS_Mx_Weight_1" ng-pattern="/^[0-9]+$/" name="MS_Mx_Weight"
+                        <input disabled type="text" ng-model="info.MS_Mx_Weight_1" ng-pattern="/^[0-9]+$/" name="MS_Mx_Weight"
                                style="width: 50px;"/>
                         <label>kg x 60% = </label>
                         <label>{{info.MS_MX_Weight_2 = info.MS_Mx_Weight_1 * 60 / 100}}</label>
@@ -353,10 +347,10 @@
                         <label class="control-label" style="margin-top: 7px">Blood Pressure</label>
                     </div>
                     <div class="col-md-6 col-sm-5">
-                        <input type="text" ng-model="info.MS_Blood_Pressure_1" ng-pattern="/^[0-9]+$/"
+                        <input disabled type="text" ng-model="info.MS_Blood_Pressure_1" ng-pattern="/^[0-9]+$/"
                                name="MS_Blood_Pressure_1" style="width: 50px;"/>
                         <label>/</label>
-                        <input type="text" ng-model="info.MS_Blood_Pressure_2" ng-pattern="/^[0-9]+$/"
+                        <input disabled type="text" ng-model="info.MS_Blood_Pressure_2" ng-pattern="/^[0-9]+$/"
                                name="MS_Blood_Pressure_2" style="width: 50px;"/>
                     </div>
                 </div>
@@ -374,7 +368,7 @@
                         <label class="control-label" style="margin-top: 7px">Resting Heart Rate</label>
                     </div>
                     <div class="col-md-6 col-sm-5">
-                        <input type="text" ng-model="info.MS_Resting_Heart_Rate" ng-pattern="/^[0-9]+$/"
+                        <input disabled  type="text" ng-model="info.MS_Resting_Heart_Rate" ng-pattern="/^[0-9]+$/"
                                name="MS_Resting_Heart_Rate" style="width: 50px;"/>
                         <label> bpm</label>
                     </div>
@@ -855,8 +849,9 @@
                 <div class="row">
                     <div class="col-md-10">
                         <label class="control-label">Total</label>
-                        <input type="text" ng-model="info.e_total3" ng-pattern="/^[0-9]+$/" name="e_total3"
+                        <input type="text" ng-model="info.e_total3" ng-change="e_total3()" ng-pattern="/^[0-9]+$/" name="e_total3"
                                style="width:100px;"/>
+                        <label>secs</label>
                     </div>
                     <div class="col-md-10 help-block" for="e_total3"
                          ng-show="showClickedValidation && gorgonFAForm.e_total3.$error.pattern">
@@ -867,17 +862,17 @@
             <div class="row">
                 <div class="btn-group col-md-12 col-sm-12">
                     <label class="btn">
-                        <input type="radio" ng-model="info.e_Result3" value="1"> 0 - 30 secs </label>
+                        <input disabled type="radio" ng-model="info.e_Result3" value="1"> 0 - 30 secs </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.e_Result3" value="2"> 31 secs to 1 min </label>
+                        <input disabled type="radio" ng-model="info.e_Result3" value="2"> 31 secs to 1 min </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.e_Result3" value="3"> 1 - 1.5 mins</label>
+                        <input disabled type="radio" ng-model="info.e_Result3" value="3"> 1 - 1.5 mins</label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.e_Result3" value="4"> 1.5 - 2 mins </label>
+                        <input disabled type="radio" ng-model="info.e_Result3" value="4"> 1.5 - 2 mins </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.e_Result3" value="5"> + 2 mins</label>
+                        <input disabled type="radio" ng-model="info.e_Result3" value="5"> + 2 mins</label>
                 </div>
-            </div>{{info.e_Result3}}
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <label class="control-label bold">Comments:</label>
@@ -921,7 +916,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <label class="control-label">Total</label>
-                        <input type="text" ng-model="info.aSec4" ng-pattern="/^[0-9]+$/" name="aSec4"
+                        <input type="text" ng-model="info.aSec4" ng-change="aSec4()" ng-pattern="/^[0-9]+$/" name="aSec4"
                                style="width:100px;"/>
                         <label>secs</label>
                     </div>
@@ -934,15 +929,15 @@
             <div class="row">
                 <div class="btn-group col-md-12 col-sm-12">
                     <label class="btn">
-                        <input type="radio" ng-model="info.aResult4" value="1"> Unable to Squat </label>
+                        <input  disabled type="radio" ng-model="info.aResult4" value="1"> Unable to Squat </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.aResult4" value="2"> 1 - 20 secs </label>
+                        <input disabled  type="radio" ng-model="info.aResult4" value="2"> 1 - 20 secs </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.aResult4" value="3"> 21 - 40 secs</label>
+                        <input disabled  type="radio" ng-model="info.aResult4" value="3"> 21 - 40 secs</label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.aResult4" value="4"> 41 - 60 secs </label>
+                        <input disabled  type="radio" ng-model="info.aResult4" value="4"> 41 - 60 secs </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.aResult4" value="5"> + 60 secs</label>
+                        <input disabled  type="radio" ng-model="info.aResult4" value="5"> + 60 secs</label>
                 </div>
             </div>
             <div class="row">
@@ -952,7 +947,7 @@
                 <div class="row">
                     <div class="col-md-2 col-sm-3">
                         <label class="control-label">Total</label>
-                        <input type="text" ng-model="info.bTotal4" ng-pattern="/^[0-9]+$/" name="bTotal4"
+                        <input type="text" ng-model="info.bTotal4" ng-change="bTotal4()" ng-pattern="/^[0-9]+$/" name="bTotal4"
                                style="width:100px"/>
                     </div>
                     <div class="col-md-4 col-sm-9">
@@ -976,15 +971,15 @@
             <div class="row">
                 <div class="btn-group col-md-12 col-sm-12">
                     <label class="btn">
-                        <input type="radio" ng-model="info.bResult4" value="1"> Unable to Squat</label>
+                        <input  disabled type="radio" ng-model="info.bResult4" value="1"> Unable to Squat</label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.bResult4" value="2"> 1 - 9</label>
+                        <input  disabled type="radio" ng-model="info.bResult4" value="2"> 1 - 9</label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.bResult4" value="3"> 10 - 14</label>
+                        <input  disabled type="radio" ng-model="info.bResult4" value="3"> 10 - 14</label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.bResult4" value="4"> 15 - 19 </label>
+                        <input  disabled type="radio" ng-model="info.bResult4" value="4"> 15 - 19 </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.bResult4" value="5"> + 20</label>
+                        <input  disabled type="radio" ng-model="info.bResult4" value="5"> + 20</label>
                 </div>
             </div>
             <div class="row">
@@ -994,7 +989,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <label class="control-label">Total</label>
-                        <input type="text" ng-model="info.cKneeling4" ng-pattern="/^[0-9]+$/" name="cKneeling4"
+                        <input type="text" ng-model="info.cKneeling4" ng-change="cKneeling4()" ng-pattern="/^[0-9]+$/" name="cKneeling4"
                                style="width:100px;"/>
                         <label>secs</label>
                     </div>
@@ -1007,15 +1002,15 @@
             <div class="row">
                 <div class="btn-group col-md-12 col-sm-12">
                     <label class="btn">
-                        <input type="radio" ng-model="info.cResult4" value="1"> Unable to Kneel </label>
+                        <input disabled type="radio" ng-model="info.cResult4" value="1"> Unable to Kneel </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.cResult4" value="2"> 1 - 10 secs </label>
+                        <input disabled type="radio" ng-model="info.cResult4" value="2"> 1 - 10 secs </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.cResult4" value="3"> 11 - 20 secs</label>
+                        <input  disabled type="radio" ng-model="info.cResult4" value="3"> 11 - 20 secs</label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.cResult4" value="4"> 21 - 30 secs </label>
+                        <input  disabled type="radio" ng-model="info.cResult4" value="4"> 21 - 30 secs </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.cResult4" value="5"> + 30 secs</label>
+                        <input  disabled type="radio" ng-model="info.cResult4" value="5"> + 30 secs</label>
                 </div>
             </div>
             <div class="row">
@@ -1092,7 +1087,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <label class="control-label bold">Total</label>
-                        <input type="text" ng-model="info.cStrenght5" ng-pattern="/^[0-9]+$/" name="cStrenght5"
+                        <input type="text" ng-model="info.cStrenght5" ng-change="cStrenght5()" ng-pattern="/^[0-9]+$/" name="cStrenght5"
                                style="width:100px;"/>
                         <label>secs</label>
                     </div>
@@ -1121,7 +1116,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <label class="control-label bold">Total</label>
-                        <input type="text" ng-model="info.dTotal5" ng-pattern="/^[0-9]+$/" name="dTotal5"
+                        <input type="text" ng-model="info.dTotal5" ng-change="dTotal5()" ng-pattern="/^[0-9]+$/" name="dTotal5"
                                style="width:100px;"/>
                     </div>
                 </div>
@@ -1136,7 +1131,7 @@
                 <label class="btn">
                     <input type="radio" ng-model="info.dResult5" value="2"> 1 - 5 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.dResult5" value="3"> 5 - 10 </label>
+                    <input type="radio" ng-model="info.dResult5" value="3"> 6 - 10 </label>
                 <label class="btn">
                     <input type="radio" ng-model="info.dResult5" value="4"> 11 - 15 </label>
                 <label class="btn">

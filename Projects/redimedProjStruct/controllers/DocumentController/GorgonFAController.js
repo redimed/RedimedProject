@@ -168,9 +168,9 @@ module.exports = {
                     "5gRight" : info.gRight5,
                     "5gFloat" : info.gFloat5,
                     "5Total" : info.Total5,
-                    "6aMax"  : info.aMax6,
+                    "6aMax"  : info.aMax6 == '' ? null : info.aMax6,
                     "6aResult"  : info.aResult6,
-                    "6bMax"  : info.bMax6,
+                    "6bMax"  : info.bMax6 == '' ? null : info.bMax6,
                     "6bResult"  : info.bResult6,
                     "6c_1"  : info.c_16,
                     "6c_1Comment" : info.c_1Comment6,
@@ -266,13 +266,13 @@ module.exports = {
                 "1Rom_Ankles"  : info.Rom_Ankles1,
                 "1Rom_Comments" : info.Rom_Comments1,
                 "1Rom_Total"  : info.Rom_Total1,
-                "2Heart_Rate_30S"  : info.Heart_Rate_30S2,
-                "2Heart_Rate_1M"  : info.Heart_Rate_1M2,
-                "2Heart_Rate_1M_30S"  : info.Heart_Rate_1M_30S2,
-                "2Heart_Rate_2M"  : info.Heart_Rate_2M2,
-                "2Heart_Rate_2M_30S"  : info.Heart_Rate_2M_30S2,
-                "2Heart_Rate_3M"  : info.Heart_Rate_3M2,
-                "2Heart_Rate_1M_Post"  : info.Heart_Rate_1M_Post2,
+                "2Heart_Rate_30S"  : info.Heart_Rate_30S2 == '' ? null : info.Heart_Rate_30S2,
+                "2Heart_Rate_1M"  : info.Heart_Rate_1M2 == '' ? null : info.Heart_Rate_1M2,
+                "2Heart_Rate_1M_30S"  : info.Heart_Rate_1M_30S2 == '' ? null : info.Heart_Rate_1M_30S2,
+                "2Heart_Rate_2M"  : info.Heart_Rate_2M2 == '' ? null : info.Heart_Rate_2M2,
+                "2Heart_Rate_2M_30S"  : info.Heart_Rate_2M_30S2 == '' ? null : info.Heart_Rate_2M_30S2,
+                "2Heart_Rate_3M"  : info.Heart_Rate_3M2 == '' ? null : info.Heart_Rate_3M2,
+                "2Heart_Rate_1M_Post"  : info.Heart_Rate_1M_Post2 == '' ? null : info.Heart_Rate_1M_Post2,
                 "2Step_Result"  : info.Step_Result2,
                 "2Step_Correct"  : info.Step_Correct2,
                 "2Comments" : info.Comments2,
@@ -282,29 +282,29 @@ module.exports = {
                 "3b_Right"  : info.b_Right3,
                 "3b_Left" :  info.b_Left3,
                 "3c_Grip"  : info.c_Grip3,
-                "3c_Right"  : info.c_Right3,
-                "3c_Left"  : info.c_Left3,
+                "3c_Right"  : info.c_Right3 == '' ? null : info.c_Right3,
+                "3c_Left"  : info.c_Left3 == '' ? null : info.c_Left3,
                 "3c_Result"  : info.c_Result3,
-                "3d_Push_ups_total"  : info.d_Push_ups_total3,
+                "3d_Push_ups_total"  : info.d_Push_ups_total3 == '' ? null : info.d_Push_ups_total3,
                 "3d_Result"  : info.d_Result3,
-                "3e_total"  : info.e_total3,
+                "3e_total"  : info.e_total3 == '' ? null : info.e_total3,
                 "3e_Result"  : info.e_Result3,
                 "3Comments" : info.Comments3,
                 "3Total"  : info.Total3,
-                "4aSec"  : info.aSec4,
+                "4aSec"  : info.aSec4 == '' ? null : info.aSec4,
                 "4aResult"  : info.aResult4,
-                "4bTotal"  : info.bTotal4,
+                "4bTotal"  : info.bTotal4 == '' ? null : info.bTotal4,
                 "4bCrepitus"  : info.bCrepitus4,
                 "4bResult"  : info.bResult4,
-                "4cKneeling"  : info.cKneeling4,
+                "4cKneeling"  : info.cKneeling4 == '' ? null : info.cKneeling4,
                 "4cResult"  : info.cResult4,
                 "4Comments" : info.Comments4,
                 "4Total"  : info.Total4,
                 "5aPosture"  : info.aPosture5,
                 "5bHoverResult" : info.bHoverResult5,
-                "5cStrenght"  : info.cStrenght5,
+                "5cStrenght"  : info.cStrenght5 == '' ? null : info.cStrenght5,
                 "5cResult" : info.cResult5,
-                "5dTotal"  : info.dTotal5,
+                "5dTotal"  : info.dTotal5 == '' ? null : info.dTotal5,
                 "5dResult" : info.dResult5,
                 "5eWaitesBow"  : info.eWaitesBow5,
                 "5eResult" : info.eResult5,
@@ -313,9 +313,9 @@ module.exports = {
                 "5gRight" : info.gRight5,
                 "5gFloat" : info.gFloat5,
                 "5Total" : info.Total5,
-                "6aMax"  : info.aMax6,
+                "6aMax"  : info.aMax6 == '' ? null : info.aMax6,
                 "6aResult"  : info.aResult6,
-                "6bMax"  : info.bMax6,
+                "6bMax"  : info.bMax6 == '' ? null : info.bMax6,
                 "6bResult"  : info.bResult6,
                 "6c_1"  : info.c_16,
                 "6c_1Comment" : info.c_1Comment6,
@@ -365,19 +365,40 @@ module.exports = {
 
         db.gorgonFA.find({where:{patientId:Patient_Id,CalId : CalId}})
             .success(function(data){
-                if(data == null)
-                {
-                    res.json({status:'fail'});
-                }else
-                {
-                    res.json(data);
-                }
+                getDataMA(res,Patient_Id,CalId,data);
             })
             .error(function(err){
                 res.json({status:'error'});
                 console.log(err);
             })
     }
+};
+
+var getDataMA = function(res,idP,idC,data){
+    db.gorgonMA.find({where:{PATIENT_ID:idP,CalId : idC},attribute:['SYSTOLIC_BP','DIASTOLIC_BP','PULSE','WEIGHT']})
+        .success(function(dataMA){
+            if(data == null)
+            {
+                if(dataMA == null)
+                {
+                    res.json({status:'not'});
+                }else
+                {
+                    res.json({status:'insert',data:dataMA});
+                }
+            }else
+            {
+                data.MS_Blood_Pressure_1=dataMA.SYSTOLIC_BP;
+                data.MS_Blood_Pressure_2 =dataMA.DIASTOLIC_BP ;
+                data.MS_Resting_Heart_Rate =dataMA.PULSE;
+                data.MS_Mx_Weight_1 = dataMA.WEIGHT;
+                res.json({status:'update',data:data});
+            }
+        })
+        .error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        })
 };
 
 
