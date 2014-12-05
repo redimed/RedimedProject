@@ -225,7 +225,7 @@ module.exports = {
                 user_type: data.info.user_type,
                 android_token: data.token
             })
-                .success(function(){console.log('Success')})
+                .success(function(){res.json({status:'Success'});})
                 .error(function(err){res.json({status:'Error',error:err});})
         }
         else if(data.platform != null && data.platform.toLowerCase() == 'ios')
@@ -235,7 +235,7 @@ module.exports = {
                 user_type: data.info.user_type,
                 ios_token: data.token
             })
-                .success(function(){console.log('Success')})
+                .success(function(){res.json({status:'Success'});})
                 .error(function(err){res.json({status:'Error',error:err});})
         }
 
