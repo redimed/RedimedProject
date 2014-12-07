@@ -73,8 +73,8 @@ module.exports = {
 			list.push({CLINICAL_DEPT_ID: dept_id, POPULAR_HEADER_ID: headers[i]});
 		};
 
-		var cln_dept_item_lists = db.sequelize.daoFactoryManager.getDAO('cln_dept_item_lists', { attribute: 'name' })
-		cln_dept_item_lists.bulkCreate(list)
+		// var cln_dept_item_lists = db.sequelize.daoFactoryManager.getDAO('cln_dept_item_lists', { attribute: 'name' })
+		db.DeptHeaders.bulkCreate(list)
 		.success(function(data) {
 		  	res.json({"status": "success"});
 		})

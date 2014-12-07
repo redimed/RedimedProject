@@ -8,6 +8,10 @@ module.exports = function(sequelize, DataTypes){
 		Creation_date: DataTypes.DATE,
 		Last_updated_by: DataTypes.INTEGER(11),
 		Last_update_date: DataTypes.DATE,
+		ISENABLE: {
+			type: DataTypes.INTEGER(1),
+			defaultValue: 1,
+		}
 	}, {
 		tableName: 'cln_dept_item_lists',
 		createdAt: 'Creation_date',
