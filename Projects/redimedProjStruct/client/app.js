@@ -30,7 +30,8 @@ angular.module("app", [
     'ng-context-menu',            // angular context menu (menu right click) for [admin_booking]-- tannv.dts@gmail.com
 	'LocalStorageModule',
     'ui-iconpicker',
-    'ngPDFViewer'
+    'ngPDFViewer',
+    'ngSanitize',
 ])
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {

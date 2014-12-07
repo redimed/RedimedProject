@@ -406,28 +406,12 @@ input[class^="mdt-checkbox"] + label{
 .mdt-table th:last-child {
     box-shadow: inset -1px 1px 0 #999;
 }
-
-.mdt-table td {
-    border-right: 1px solid #fff;
-    border-left: 1px solid #e8e8e8;
-    border-top: 1px solid #fff;
-    border-bottom: 1px solid #e8e8e8;
-    padding: 10px 15px;
-    position: relative;
-    transition: all 300ms;
-}
-
-.mdt-table td:first-child {
-    box-shadow: inset 1px 0 0 #fff;
-}   
-
-.mdt-table td:last-child {
-    border-right: 1px solid #e8e8e8;
-    box-shadow: inset -1px 0 0 #fff;
-}
-
 .mdt-table tr {
     background: #f1f1f1; 
+}
+.mdt-table tr.selected {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .mdt-table tr:nth-child(odd) td {
@@ -445,14 +429,28 @@ input[class^="mdt-checkbox"] + label{
 .mdt-table tr:last-of-type td:last-child {
     box-shadow: inset -1px -1px 0 #fff;
 }   
+/*.mdt-table tr:hover {
+    opacity: 0.7
+}*/
 
-.mdt-table tbody:hover tr:hover td {
-    background-color: rgb(100,160,217);
+.mdt-table td {
+    border-right: 1px solid #fff;
+    border-left: 1px solid #e8e8e8;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 10px 15px;
+    position: relative;
+    transition: all 300ms;
+    vertical-align: middle !important;
 }
 
-.mdt-table tbody:hover tr.no-hover:hover td {
-    color: #ddd;
-    background-color: #f1f1f1;
+.mdt-table td:first-child {
+    box-shadow: inset 1px 0 0 #fff;
+}   
+
+.mdt-table td:last-child {
+    border-right: 1px solid #e8e8e8;
+    box-shadow: inset -1px 0 0 #fff;
 }
 /* END MEDITEK TABLE */
 

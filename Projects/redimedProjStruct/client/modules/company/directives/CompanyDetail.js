@@ -94,7 +94,7 @@ angular.module("app.loggedIn.company.detail.directive", [])
                                 toastr.success("Edit Company Successfully", "Success");
                                 scope.isSubmit = false;
                                 if (scope.on_success) {
-                                    scope.on_success();
+                                    scope.on_success(postData);
                                 }
                             }
                         })

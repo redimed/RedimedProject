@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes){
         },
         'ISENABLE': { 
             type: DataTypes.INTEGER(11),  
+            defaultValue: 1,
         },
         'Created_by': { 
             type: DataTypes.INTEGER(11),  

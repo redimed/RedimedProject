@@ -12,7 +12,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
             'state': 'loggedIn.patient.claim.list({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 12', 'icon': 'fa fa-envelope-o',
-            'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patient_id + '})'}
+            'state': 'loggedIn.patient.outsie_referrals({patient_id:' + $stateParams.patient_id + '})'}
     ];
 
     $scope.patient_apt_modules = [

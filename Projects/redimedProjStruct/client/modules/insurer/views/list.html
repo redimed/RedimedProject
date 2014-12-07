@@ -18,7 +18,7 @@
             <i class="fa fa-medkit"></i> Insurer Companies
         </div>
         <div class="pull-right navbar-right">
-            <a class="btn blue" ng-click="toogleAddForm()"><i class="fa fa-plus"></i> New Insurer</a>
+            <a class="btn blue" ng-click="add_form.open()"><i class="fa fa-plus"></i> New Insurer</a>
         </div>
     </div>
     <div class="portlet-body">
@@ -27,9 +27,9 @@
 </div>
 
 
-<div class="mdt-search" style="display: block;" ng-if="show_edit_form">
+<div class="mdt-search" style="display: block;" ng-if="edit_form.is_show">
     <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="toogleAddForm()">
+        <button class="btn btn-sm btn-block red" ng-click="edit_form.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>
@@ -37,9 +37,9 @@
     <insurer-detail data="{id:{{insurerInfo.id}}}" onsuccess="reloadpage"></insurer-detail>
 </div>
 
-<div class="mdt-search" style="display: block;" ng-if="show_add_form">
+<div class="mdt-search" style="display: block;" ng-if="add_form.is_show">
     <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="toogleAddForm()">
+        <button class="btn btn-sm btn-block red" ng-click="add_form.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>

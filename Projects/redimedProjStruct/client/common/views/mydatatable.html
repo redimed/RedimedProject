@@ -1,4 +1,4 @@
-<div>
+<div ng-if="!static">
     <div class="pull-left">
         <pagination boundary-links="true" total-items="page_data.totalItems" ng-model="page_data.currentPage" 
                     class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="ajaxGetData()"
@@ -17,21 +17,113 @@
     <table class="mdt-table table table-bordered">
         <thead>
             <tr>
-                <th ng-repeat="col in options.columns" ng-hide="col.is_hide" width="{{col.width}}">{{col.label || col.field }}</th>
+                <th ng-repeat="col in options.columns" ng-if="!col.is_hide" width="{{col.width}}">{{col.label || col.field }}</th>
+                <th ng-if="options.use_actions">Action</th>
             </tr>
             <!-- SEARCH -->
-            <tr ng-show="options.use_filters">
+            <tr ng-if="options.use_filters && options.filters">
                 <td ng-repeat="col in options.columns" ng-init="field = options.filters[col.field]" ng-hide="col.is_hide">
-                    <input ng-if="field.type == 'text'" ng-model="search[col.field]" ng-enter="ajaxGetData()" type="text" placeholder="{{col.label || col.field}}" class="form-control input-sm" />
-                    <input ng-if="field.type == 'number'" ng-model="search[col.field]" ng-change="ajaxGetData()" type="number" placeholder="{{col.label || col.field}}"  class="form-control input-sm" />
-                    <select ng-if="field.type == 'dropdown'" ng-model="search[col.field]" ng-change="ajaxGetData()" ng-options="item.code as item.label for item in field.values" class="form-control input-sm" ></select>
+                    <div ng-switch on="field.type">
+                        <div ng-switch-when="number">
+                            <input ng-if="field.type == 'number'" ng-model="search[col.field]" ng-change="ajaxGetData()" type="number" placeholder="{{col.label || col.field}}"  class="form-control input-sm" />
+                        </div>
+                        <div ng-switch-when="dropdown">
+                            <select ng-if="field.type == 'dropdown'" ng-model="search[col.field]" ng-change="ajaxGetData()" ng-options="item.code as item.label for item in field.values" class="form-control input-sm" ></select>
+                        </div>
+                        <div ng-switch-default>
+                              <input ng-if="field.type == 'text'" ng-model="search[col.field]" ng-enter="ajaxGetData()" type="text" placeholder="{{col.label || col.field}}" class="form-control input-sm" />
+                        </div>
+                    </div>
                 </td>
             </tr>
              <!-- END SEARCH -->
         </thead>
         <tbody>
-            <tr ng-repeat="item in data.items"ng-class="row_class(item)" ng-click="row_click(item)">                
-                <td ng-repeat="col in options.columns" ng-hide="col.is_hide">{{item[col.field]}}</td>
+            <tr ng-repeat="item in data.items" ng-click="row_click(item)" ng-class="row_class(item)">                
+                <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
+                    <span ng-switch on="col.type">
+                        <span ng-switch-when="checkbox">
+                            <input ng-model="item[col.field]" type="checkbox" ng-true-value="1" ng-false-value="0" class="form-control" ng-init="item[col.field] = item[col.field] + ''" />
+                        </span>
+                        <span ng-switch-default>{{item[col.field]}}</span>
+                    </span>
+                </td>
+                <td ng-if="options.use_actions">
+                    <!-- Single button -->
+                    <div class="btn-group" dropdown>
+                        <button style="margin-right: 0;" type="button" class="btn btn-sm blue-soft dropdown-toggle" ng-disabled="disabled">
+                            More <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="action in options.actions">
+                                <a ng-click="action.callback(item)"><i ng-if="action.class" class="{{action.class}}"></i> {{action.title}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="item in data.more_items" ng-class="row_class(item)" ng-click="row_click(item)">
+                <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
+                    <span ng-switch on="col.type">
+                        <span ng-switch-when="checkbox">
+                            <input ng-model="item[col.field]" type="checkbox" ng-true-value="1" ng-false-value="0" class="form-control" ng-init="item[col.field] = item[col.field] + ''" />
+                        </span>
+                        <span ng-switch-default>{{item[col.field]}}</span>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div ng-if="static">
+    <div class="pull-left">
+        <pagination boundary-links="true" total-items="page_data.totalItems" ng-model="page_data.currentPage" 
+                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change=""
+                    items-per-page="page_data.itemPerPage" max-size="page_data.maxSize"></pagination>
+    </div>
+    <div class="clearfix"></div>
+    <table class="mdt-table table table-bordered">
+        <thead>
+            <tr>
+                <th ng-repeat="col in options.columns" ng-if="!col.is_hide" width="{{col.width}}">{{col.label || col.field }}</th>
+                <th ng-if="options.use_actions">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in data.items | startFrom: (page_data.currentPage - 1) *page_data.itemPerPage | limitTo: page_data.itemPerPage" ng-class="row_class(item)" ng-click="row_click(item)">                
+                <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
+                    <span ng-switch on="col.type">
+                        <span ng-switch-when="checkbox">
+                            <input ng-model="item[col.field]" type="checkbox" ng-true-value="1" ng-false-value="0" class="form-control" ng-init="item[col.field] = item[col.field] + ''" />
+                        </span>
+                        <span ng-switch-default>{{item[col.field]}}</span>
+                    </span>
+                </td>
+                <td ng-if="options.use_actions">
+                    <!-- Single button -->
+                    <div class="btn-group" dropdown>
+                        <button style="margin-right: 0;" type="button" class="btn btn-sm blue-soft dropdown-toggle" ng-disabled="disabled">
+                            More <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="action in options.actions">
+                                <a ng-click="action.callback(item)"><i ng-if="action.class" class="{{action.class}}"></i> {{action.title}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="item in data.more_items" ng-class="row_class(item)" ng-click="row_click(item)">
+                <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
+                    <span ng-switch on="col.type">
+                        <span ng-switch-when="checkbox">
+                            <input ng-model="item[col.field]" type="checkbox" ng-true-value="1" ng-false-value="0" class="form-control" ng-init="item[col.field] = item[col.field] + ''" />
+                        </span>
+                        <span ng-switch-default>{{item[col.field]}}</span>
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>

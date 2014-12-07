@@ -15,22 +15,34 @@ angular.module("app.loggedIn.insurer.list.controller", [])
                     {field: 'suburb', label: 'Suburb'},
                 ],
             };
-            $scope.show_add_form = false;
-            $scope.show_edit_form = false;
 
-            $scope.toogleAddForm = function () {
-                $scope.show_add_form = !$scope.show_add_form;
+            $scope.add_form = {
+                is_show: false,
+                open: function() {
+                    this.is_show = true;
+                },
+                close: function() {
+                    this.is_show = false;
+                }
             }
 
-            $scope.toogleEditForm = function () {
-                $scope.show_edit_form = !$scope.show_edit_form;
+            $scope.edit_form = {
+                is_show: false,
+                open: function() {
+                    this.is_show = true;
+                },
+                close: function() {
+                    this.is_show = false;
+                }
             }
             $scope.clickRow = function (item) {
-//        console.log(item);
-//        localStorageService.set('tempInsurerInfo', item);
-//        $state.go('loggedIn.insurer.detail');
+                if($scope.add_form.is_show) {
+                    $scope.add_form.close();
+                }
+                console.log(item);;
                 $scope.insurerInfo = item;
-                $scope.toogleEditForm();
+                // $scope.openEditForm();
+                $scope.edit_form.open();
             }
      
         })

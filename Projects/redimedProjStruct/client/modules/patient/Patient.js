@@ -3,7 +3,8 @@ angular.module("app.loggedIn.patient", [
     "app.loggedIn.patient.services",
     "app.loggedIn.patient.directives",
 
-    "app.loggedIn.patient.claim"
+    "app.loggedIn.patient.claim",
+    "app.loggedIn.patient.outside_referral",
 ])
 
 .config(function ($stateProvider) {

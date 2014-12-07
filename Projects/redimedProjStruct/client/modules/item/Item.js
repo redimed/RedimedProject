@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.item", [
     "app.loggedIn.item.controller",
     "app.loggedIn.item.services",
+    "app.loggedIn.item.directives",
 ]).config(function ($stateProvider) {
     $stateProvider
             // STRUCTURE

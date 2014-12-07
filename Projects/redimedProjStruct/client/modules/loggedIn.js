@@ -18,7 +18,7 @@ angular.module("app.loggedIn",[
 	"app.loggedIn.certificate",
 	"app.loggedIn.item",
         "app.loggedIn.insurer",
-		
+	"app.loggedIn.department",		
 	/*AUTO CREATE*/
 	'app.loggedIn.script',
 

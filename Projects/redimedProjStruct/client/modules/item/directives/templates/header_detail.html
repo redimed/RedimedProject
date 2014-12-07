@@ -1,0 +1,60 @@
+<div class="clearfix"></div>
+
+<form name="mainForm" novalidate>
+	<div class="row" >
+		<!-- HEADER CODE -->
+		<div class="break-row" style="margin-top: 15px"></div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.POPULAR_CODE.$invalid && isSubmit}">
+                <label for="POPULAR_CODE">Header code</label>
+                <input type="text" id="POPULAR_CODE" required
+                       name="POPULAR_CODE" ng-model="modelObjectMap.POPULAR_CODE" placeholder="Popular Code" float-label />
+                <!-- ERROR -->
+                <span ng-show="mainForm.POPULAR_CODE.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.POPULAR_CODE.$error.required">
+                        Popular Code is required
+                    </span>
+                </span>
+                <!-- ERROR -->
+            </span>
+        </div>
+        <!-- END HEADER CODE -->
+
+        <!-- ITEM NAME -->
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.POPULAR_NAME.$invalid && isSubmit}">
+                <label for="POPULAR_NAME">Item name</label>
+                <input type="text" id="POPULAR_NAME" required
+                       name="POPULAR_NAME" ng-model="modelObjectMap.POPULAR_NAME" placeholder="Popular Name" float-label />
+                <!-- ERROR -->
+                <span ng-show="mainForm.POPULAR_NAME.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.POPULAR_NAME.$error.required">
+                        Popular name is required
+                    </span>
+                </span>
+                <!-- ERROR -->
+            </span>
+        </div>
+        <!-- END ITEM NAME -->
+
+
+      	<!--ISENABLE-->
+		<div class="col-md-4 col-sm-6 col-xs-12">
+			<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="modelObjectMap.ISENABLE" ng-true-value="1" ng-false-value="0">
+			<label for="isenable">Is Enable</label>
+		</div>
+		<!--ISENABLE-->
+
+		<div class="clearfix"></div>
+
+         <!-- ACTION -->
+        <div class="col-sm-4 col-xs-6">
+            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+                <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
+                <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
+                {{mode.text}}
+            </button>
+        </div>
+        <!-- END ACTION -->
+	</div>
+</form>

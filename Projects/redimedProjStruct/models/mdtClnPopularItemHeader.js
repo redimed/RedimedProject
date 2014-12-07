@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes){
         },
         'POPULAR_CODE': { 
             type: DataTypes.STRING(200),  
+            unique: true,
         },
         'POPULAR_NAME': { 
             type: DataTypes.STRING(200),  
@@ -30,7 +31,8 @@ module.exports = function(sequelize, DataTypes){
                 mdtInstance.hasMany(models.Department, {
                     as: 'Departments',
                     foreignKey: 'POPULAR_HEADER_ID', 
-                    through: 'cln_dept_item_lists'
+                    // through: 'cln_dept_item_lists',
+                    through: models.DeptHeaders,
                 });
 
                 mdtInstance.hasMany(models.InvItem, {
@@ -38,6 +40,7 @@ module.exports = function(sequelize, DataTypes){
                     foreignKey: 'POPULAR_HEADER_ID', 
                     through: models.InvItemLine
                 });
+
             }
         }
     });

@@ -1178,6 +1178,18 @@ angular.module('app.config', [])
     configService.yes_no_option = function () {
         return YES_NO_OPT;
     };
+
+    configService.autoConvertData = function(data) {
+        for (var key in data) {
+            if (data[key]) {
+                if (key.toLowerCase().indexOf("is") === 0) 
+                    data[key] = data[key].toString();
+                else if (key.toLowerCase().indexOf("_date") != -1)
+                    data[key] = new Date(data[key]);
+            }
+        }
+    }
+
     /* END KHANK */
 
     configService.title_option = function(){
@@ -1236,6 +1248,15 @@ angular.module('app.config', [])
     configService.language_option = function(){
         var languageApi = configApi.one("patient/list_language");
         return languageApi.get();
+    }
+
+        
+    configService.acc_type_option = function(){
+        return ACC_TYPE;
+    }
+
+    configService.app_type_option = function(){
+        return APP_TYPE;
     }
 
     configService.system_service_by_clinical = function(clinical_dept_id){
@@ -1353,14 +1374,7 @@ angular.module('app.config', [])
 	/*
 	*	END DATE TIME FUNCTION 
 	*/
-	
-    configService.acc_type_option = function(){
-        return ACC_TYPE;
-    }
 
-    configService.app_type_option = function(){
-        return APP_TYPE;
-    }
 
     return configService;
 })

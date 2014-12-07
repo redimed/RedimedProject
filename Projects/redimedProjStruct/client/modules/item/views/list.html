@@ -6,7 +6,7 @@
             <i class="fa fa-medkit"></i> Item Sheet
         </div>
         <div class="pull-right navbar-right">
-            <a class="btn blue" ng-click="showAddForm()"><i class="fa fa-plus"></i> New Item</a>
+            <a class="btn blue" ng-click="addForm.open()"><i class="fa fa-plus"></i> New Item</a>
         </div>
     </div>
     <div class="portlet-body">
@@ -14,3 +14,15 @@
     	<div class="clearfix"></div>
     </div>
 </div>
+
+<!-- POPUP ITEM ADD FORM   -->
+<div class="mdt-search" style="display: block; width: 100%" ng-if="addForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="addForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <item-detail options="options">
+</div>
+ <!-- POPUP ITEM ADD FORM -->
+

@@ -1,0 +1,115 @@
+angular.module("app.directive.mydatatable.common", [])
+.directive("myDataTable", function (Restangular, ConfigService) {
+    return{
+        restrict: "E",
+        templateUrl: "common/views/mydatatable.html",
+        scope: {
+            options: '=options',
+            row_click: '=rowclick',
+            row_class: '=rowclass',
+            num_rows: '=numrows',
+        },
+        controller: function ($scope, $element, $attrs) {
+            var options = $scope.options;
+            // console.log(options)
+            if(!options) return;
+            $scope.search = {};
+            
+            var getFields = function () {
+                var fields = [];
+                for (var i = 0, len = options.columns.length; i < len; ++i) {
+                    var item = options.columns[i];
+                    if(item.not_submit)
+                        continue;
+                    if(!item.db_field)
+                        fields.push(item.field);
+                    else
+                        fields.push(item.db_field);
+                }
+                return fields;
+            }
+            
+            var getSearchData = function(){
+                for(var key in options.filters) {
+                    var model = $scope.search[key];
+                }
+            }
+            
+            var processData = function(data){
+                var oldTotal =  $scope.page_data.totalItems;
+
+                if(oldTotal != data.count) {
+                    $scope.page_data.totalItems = data.count;
+                    $scope.page_data.currentPage = 1;
+                }
+                $scope.data.items = data.list;
+            }
+
+            $scope.ajaxGetData = function () {
+                var limit = $scope.page_data.itemPerPage;
+                var offset = ($scope.page_data.currentPage - 1) * limit;
+                var fields = getFields();
+                var opt = {
+                    limit: limit,
+                    offset: offset,
+                    fields: fields,
+                };
+                if(options.use_filters) {
+                    opt.search = $scope.search;
+                }
+
+                if(options.search) {
+                    if(!opt.search)   opt.search = {};
+                    angular.extend(opt.search, options.search);
+                }
+                if (options.method && options.method.toLowerCase() == 'post') {
+                    Restangular.all(options.api).post(opt).then(processData);
+                } else {
+                    Restangular.one(options.api).get(opt).then(processData);
+                }
+            }
+
+            $scope.reload = function() {
+                 $scope.ajaxGetData();
+            }
+
+            $scope.displayData = function(data, col){
+                if(!col.format) return data;
+                console.log(col.format)
+                return col.format(data);
+            }
+
+            var init = function () {
+                $scope.data = {more_items: [], items: []};
+                $scope.search = {};
+                $scope.limit_opt = [
+                    {value: 5},
+                    {value: 10},
+                    {value: 20},
+                    {value: 50},
+                ];
+                $scope.page_data = {
+                    totalItems: 0,
+                    currentPage: 1,
+                    maxSize: 5, // max size of pagination
+                    itemPerPage: 5
+                };
+
+                if($scope.num_rows) {
+                   $scope.page_data.itemPerPage = $scope.num_rows;
+                }
+
+                if (!options.not_load && options.api) {
+                    $scope.ajaxGetData();
+                }
+
+                if(options.scope) {
+                    angular.extend(options.scope, $scope);
+                }
+   
+                $scope.static = options.static ? true : false;
+            }
+            init();
+        }
+    }
+})

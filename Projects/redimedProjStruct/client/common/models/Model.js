@@ -204,6 +204,75 @@ angular.module("app.model", [])
 })
 //END WAITING LIST
 
+// ITEM 
+.value('ItemModel', {
+	ITEM_NAME: '', // r 
+	ALT_NAME: '', // r
+	DESCRIPTION: '', // r 
+	UOM: '', // r
+	ITEM_TYPE: '', // r
+	TAX_ID: null,
+	ISINV: null,
+	ISASSET: null,
+	ISBOM: null,
+	LOT_OR_SERIAL: '',
+	ISEXP: null,
+	PRICE: '',
+	ISENABLE: null,
+	CREATED_BY: null,
+	CREATION_DATE: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	Prefix: '',
+	ITEM_START_DATE: null,
+	ITEM_END_DATE: null,
+	CATEGORY: '',
+	INV_GROUP: '',
+	SUB_GROUP: '',
+	SUB_HEADING: '',
+	FEE_TYPE: '',
+	PROVIDER_TYPE: '',
+	NEW_ITEM: '',
+	ITEM_CHANGE: '',
+	ANAES_CHANGE: '',
+	DESCRIPTOR_CHANGE: '',
+	FEE_CHANGE: '',
+	EMSN_CHANGE: '',
+	EMSN_CAP: '',
+	BENEFIT_TYPE: '',
+	BENEFIT_START_DATE: null,
+	EMSN_START_DATE: null,
+	EMSN_END_DATE: null,
+	EMSN_FIXED_CAP_AMOUNT: '',
+	EMSN_PERCENTAGE_CAP: '',
+	EMSN_MAXIMUM_CAP: '',
+	EMSN_DESCRIPTION: '',
+	EMSN_CHANGE_DATE: null,
+	DERIVED_FEE_START_DATE: null,
+	DERIVED_FEE: '',
+	ANAES: '',
+	DESCRIPTION_START_DATE: null,
+	QFE_START_DATE: null,
+	QFE_END_DATE: null,
+	ITEM_CODE: '', // r
+	SUB_ITEM_CODE: '',
+	DURING_TIME: null,
+	AMA_CODE: '',
+	AMA_DESC: '',
+	isPO: null, // r
+	isOM: null, // r
+})
+// END ITEM
+
+// ITEM HEADER 
+.value('ItemHeaderModel', {
+	'POPULAR_CODE': '',
+	'POPULAR_NAME': '',
+	'ISENABLE': '1',
+})
+
+// END ITEM HEADER
+
 /*AUTO CREATE*/
 .value('ScriptModel', {
 	Patient_id: null,

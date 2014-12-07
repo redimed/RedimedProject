@@ -1,0 +1,56 @@
+<h1>Department List</h1>
+
+<div class="portlet box red ng-scope">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Departments
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="pull-right navbar-right">
+                    <a class="btn btn-sm blue" ng-click="headerAddForm.open()"><i class="fa fa-plus"></i> New Department</a>
+                </div>
+       	        <my-data-table options="department.options" rowclass="department.class" rowclick="department.click" numrows="10"></my-data-table>
+            </div>
+             <div class="col-md-7">
+                <div ng-show="department.select != 0" >
+                    <div class="pull-right navbar-right">
+                        <a ng-show="header_selected != 0" class="btn btn-sm blue" ng-click="searchHeader.open()"><i class="fa fa-plus"></i> Add Items</a>
+                        <a ng-show="searchHeader.select_list.length > 0" class="btn btn-sm green" ng-click="searchHeader.save()"><i class="fa fa-save"></i> Save</a>
+                    </div>
+                    <my-data-table options="invheader.options" rowclass="invheader.class"></my-data-table>
+                </div>
+             </div>
+        </div>
+    	<div class="clearfix"></div>
+    </div>
+</div>
+
+<!-- POPUP SEARCH HEADER  -->
+<div class="mdt-search" style="display: block;" ng-if="searchHeader.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="searchHeader.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <my-data-table options="searchHeader.options" rowclick="searchHeader.click" rowclass="searchHeader.class">
+</div>
+ <!-- POPUP SEARCH HEADER  -->
+
+<!-- POPUP ADD HEADER ITEM FORM  -->
+<div class="mdt-search" style="display: block;" ng-show="headerAddForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="headerAddForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <item-header-detail onsuccess="headerAddForm.success"></item-header-detail>
+</div>
+ <!-- POPUP ADD HEADER ITEM FORM  -->
+
+
+
+
+

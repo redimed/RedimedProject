@@ -1,7 +1,44 @@
-var user_m = require('../v1_models/User');
-var doctor_m = require('../v1_models/Doctor');
+var db = require('../models');
 
 module.exports = {
+    getTestt: function(req, res) {
+        db.DeptHeaders.destroy( {CLINICAL_DEPT_ID: 1})
+        .success(function(result){
+            db.DeptHeaders.findAll()
+            .success(function(result){
+                 res.json(result);
+            })
+           
+        });
+    },
+	getDescribe: function(req, res){
+		db.Patient.describe().success(function(result){
+			console.log(result);
+			res.json(result);
+		})
+	},
+    getTest: function(req, res){
+        // console.log(db.ApptItems.DAO)
+        // res.end();
+        db.ApptItems.find({ 
+            where: {appt_item_id: 45},
+            include: [
+                { model: Appointment, as: 'Appointment' },
+                 { model: InvItem, as: 'InvItem' },
+            ]
+        }).success(function(result){
+            res.json(result)
+            
+        })
+    },
+	/*
+	getAggregate: function(req, res){
+		db.Patient.aggregate().success(function(result){
+			console.log(result);
+			res.json(result);
+		})
+	},
+	*/
     getSearch: function (req, res) {
         
         var k_sql = res.locals.k_sql;

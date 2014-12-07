@@ -72,6 +72,20 @@ angular.module("app.loggedIn.controller",[
             if(response.status === 'success')
                 $scope.options.patient_types = response.data;
         })
+
+        ConfigService.taxes_option().then(function(data){
+            $scope.options.taxes = data;
+        });
+        ConfigService.prefix_headers_option('item').then(function(data){
+            $scope.options.prefix_headers = data;
+        });
+        ConfigService.provider_types_option().then(function(data){
+            $scope.options.provider_types = data;
+        });
+        
+        ConfigService.inv_uoms_option().then(function(data){
+            $scope.options.uoms = data;
+        });
     }
 
     loadOptionsApi();

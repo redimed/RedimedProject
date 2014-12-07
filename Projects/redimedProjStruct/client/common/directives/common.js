@@ -1,5 +1,6 @@
-angular.module("app.directive.common", [])
-
+angular.module("app.directive.common", [
+    "app.directive.mydatatable.common",
+])
 .filter('offset', function () {
     return function (input, start) {
         if (input.length > 0) {
@@ -27,6 +28,14 @@ angular.module("app.directive.common", [])
     return null;
   }
 })
+.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        if(!input) return input;
+        return input.slice(start);
+    }
+})
+
 .directive("fabric", function(){
     return {
         restrict: "EA",
@@ -652,7 +661,7 @@ angular.module("app.directive.common", [])
         };
 
     })
-
+/*
 .directive("myDataTable", function (Restangular) {
     return{
         restrict: "E",
@@ -661,7 +670,7 @@ angular.module("app.directive.common", [])
             options: '=options',
             row_click: '=rowclick',
             row_class: '=rowclass',
-            num_rows: '=numrows'
+            num_rows: '=numrows',
         },
         controller: function ($scope, $element, $attrs) {
             var options = $scope.options;
@@ -723,9 +732,12 @@ angular.module("app.directive.common", [])
                 }
             }
 
+            $scope.reload = function() {
+                 $scope.ajaxGetData();
+            }
 
             var init = function () {
-                $scope.data = {};
+                $scope.data = {more_items: [], items: []};
                 $scope.search = {};
                 $scope.limit_opt = [
                     {value: 5},
@@ -744,15 +756,21 @@ angular.module("app.directive.common", [])
                    $scope.page_data.itemPerPage = $scope.num_rows;
                 }
 
-                if (options.api) {
+                if (!options.not_load && options.api) {
                     $scope.ajaxGetData();
                 }
+
+                if(options.scope) {
+                    angular.extend(options.scope, $scope);
+                }
+   
+                $scope.static = options.static ? true : false;
             }
             init();
         }
     }
 })
-
+*/
 .directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {

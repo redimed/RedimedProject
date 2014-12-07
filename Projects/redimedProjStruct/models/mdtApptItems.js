@@ -48,6 +48,19 @@ module.exports = function(sequelize, DataTypes){
         tableName: "cln_appt_items",
         createdAt: "Creation_date",
         updatedAt: "Last_update_date",
+        classMethods: {
+            associate: function(models){
+                // Project.hasOne(User, { foreignKey: 'initiator_id' })
+                mdtInstance.belongsTo(models.Appointment,{
+                    as: 'Appointment', foreignKey: 'cal_id'
+                });
+
+                mdtInstance.belongsTo(models.InvItem, {
+                    as: 'InvItem', foreignKey: 'CLN_ITEM_ID'
+                });
+
+            }
+        }// end association
     });
 return mdtInstance;
 }

@@ -1,16 +1,58 @@
-<h1>Item List</h1>
+<h1>Item Header List</h1>
 
 <div class="portlet box red ng-scope">
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-medkit"></i> Popular Header
         </div>
-        <div class="pull-right navbar-right">
-            <a class="btn blue" ng-click="showAddForm()"><i class="fa fa-plus"></i> New Item</a>
-        </div>
+
     </div>
     <div class="portlet-body">
-       	<my-data-table options="data_options" rowclick="header_click" numrows="10"></my-data-table>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="pull-right navbar-right">
+                    <a class="btn btn-sm blue" ng-click="headerAddForm.open()"><i class="fa fa-plus"></i> New Header</a>
+                </div>
+       	        <my-data-table options="header_options" rowclass="header_color" rowclick="header_click" numrows="10"></my-data-table>
+            </div>
+             <div class="col-md-7">
+                <!-- <div  ng-if="header_selected != 0" > -->
+                <div ng-show="header_selected != 0" >
+                    <div class="pull-right navbar-right">
+                        <a ng-show="header_selected != 0" class="btn btn-sm blue" ng-click="itemSearch.open()"><i class="fa fa-plus"></i> Add Items</a>
+                        <a ng-show="selectList.length > 0" class="btn btn-sm green" ng-click="itemSearch.save()"><i class="fa fa-save"></i> Save</a>
+                    </div>
+                    <my-data-table options="item_options" rowclass="itemHeaderClass"></my-data-table>
+                </div>
+             </div>
+        </div>
     	<div class="clearfix"></div>
     </div>
 </div>
+
+<!-- POPUP SEARCH ITEM  -->
+<div class="mdt-search" style="display: block;" ng-if="itemSearch.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="itemSearch.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <my-data-table options="search_item_options" rowclick="itemSearchClick" rowclass="itemSearchClass">
+</div>
+ <!-- POPUP SEARCH ITEM  -->
+
+<!-- POPUP ADD HEADER ITEM FORM  -->
+<div class="mdt-search" style="display: block;" ng-show="headerAddForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="headerAddForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <item-header-detail onsuccess="headerAddForm.success"></item-header-detail>
+</div>
+ <!-- POPUP ADD HEADER ITEM FORM  -->
+
+
+
+
+
