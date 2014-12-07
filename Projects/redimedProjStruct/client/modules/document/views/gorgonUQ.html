@@ -1,43 +1,37 @@
-﻿
 <form name="gorgonUQForm" ng-submit="submitGorgonUQ(gorgonUQForm)" method="post" novalidate>
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="submit"
-                        ng-disabled="submitGorgonUQ.$error.pattern || submitGorgonUQ.$error.maxlength || !infoChanged()"
-                        class="btn green pull-right">{{isNew?"Add New":"Update"}}
+                <button type="submit" ng-disabled="submitGorgonUQ.$error.pattern || submitGorgonUQ.$error.maxlength || !infoChanged()" class="btn green pull-right">{{isNew?"Add New":"Update"}}
                 </button>
-                <a href="/api/document/printUQ/{{info.Patient_Id}}/{{info.CalId}}/{{info.Quest_Id}}"
-                   type="button"
-                   ng-disabled="submitGorgonUQ.$error.pattern || submitGorgonUQ.$error.maxlength || isNew == true || infoChanged()"
-                   class="btn btn-primary blue pull-right">Print PDF
+                <a href="/api/document/printUQ/{{info.Patient_Id}}/{{info.CalId}}/{{info.Quest_Id}}" type="button" ng-disabled="submitGorgonUQ.$error.pattern || submitGorgonUQ.$error.maxlength || isNew == true || infoChanged()" class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
             </div>
         </div>
     </div>
-            
+
     <div class="portlet light bordered">
         <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
             Answers to questions in Section 1, and to question 9 in Section 2 of Part A, do not require medical examination.
-            </br></br>
-            To the Employee:
-            </br>
-            This questionnaire will be evaluated by a licensed health care professional in order to determine any health problems that may prevent you from, or restrict you, while wearing a respirator. The intent of these questions is to determine if the difficulty you experience, if any, is medically significant.
-            </br></br>
-            To maintain your confidentiality, you supervisor must not look at or review your answers, and your supervisor must tell you how to deliver or send this questionnaire to the health care professional who will review it.
-            </br>
+            <br>
+            <br>To the Employee:
+            <br>This questionnaire will be evaluated by a licensed health care professional in order to determine any health problems that may prevent you from, or restrict you, while wearing a respirator. The intent of these questions is to determine if the difficulty you experience, if any, is medically significant.
+            <br>
+            <br>To maintain your confidentiality, you supervisor must not look at or review your answers, and your supervisor must tell you how to deliver or send this questionnaire to the health care professional who will review it.
+            <br>
         </p>
-        <p  style="font-size: medium;font-weight: bold">
+        <p style="font-size: medium;font-weight: bold">
             Part A. Section 1. The following information must be provided by every employee who has been selected to use any type of respirator (please print).
         </p>
 
         <div class="row">
             <div class=" col-lg-3 col-md-4 col-sm-5">
-                    <label class="control-label">1. Today's date:</label>
+                <label class="control-label">1. Today's date:</label>
             </div>
             <div class="col-md-5 col-sm-7">
-                <label class="control-label">{{info.TodayDate | date:'dd / MM / yyyy'}} </label>
+                <label class="control-label"><span class="text-info">{{info.TodayDate | date:'dd / MM / yyyy'}}</span>
+                </label>
             </div>
         </div>
         <div class="row">
@@ -45,7 +39,8 @@
                 <label class="control-label">2. Your Name:</label>
             </div>
             <div class="col-md-5 col-sm-7">
-                <label class="control-label">{{info.name}}</label>
+                <label class="control-label"><span class="text-info">{{info.name}}</span>
+                </label>
             </div>
         </div>
         <div class="row">
@@ -53,7 +48,9 @@
                 <label class="control-label">3. Your Age (to nearest year):</label>
             </div>
             <div class="col-md-5  col-sm-7">
-                <label class="control-label" >{{info.age}}</label>
+                <label class="control-label">
+                    <spand class="text-info">{{info.age}}</spand>
+                </label>
             </div>
         </div>
         <div class="row">
@@ -61,81 +58,96 @@
                 <label class="control-label">4. Sex (circle one):</label>
             </div>
             <div class="col-md-5  col-sm-7">
-                <label class="control-label">{{info.sex}}</label>
+                <label class="control-label"><span class="text-info">{{info.sex}}</span>
+                </label>
             </div>
         </div>
-        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.height.$invalid}">
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-5">
-                    <label class="control-label">5. Your Height:</label>
-                </div>
-                <div class="col-md-5   col-sm-7">
-                    <label style="font-weight: bold">*</label>
-                    <input type="text" ng-pattern="/^[0-9]+$/" name="height" required ng-model="info.Height" style="width: 250px">
-                </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-5">
+                <label class="control-label">5. Your Height:</label>
             </div>
-            <div class="row" ng-show="showClickedValidation && gorgonUQForm.height.$invalid">
-                <div class="col-lg-3 col-md-4 col-sm-5"></div>
-                <div class="col-md-5 col-sm-7 help-block"  for="height">
-                    <label>Your height is required</label>
-                    <div for="height" class="help-block" ng-show="showClickedValidation && gorgonUQForm.height.$error.pattern">
-                        <label>Your height must be number</label>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.height.$error.required || 
+            gorgonUQForm.height.$error.pattern}">
+
+                <div class="col-lg-1 col-md-1 col-sm-1" style="width:auto;margin-top:5px;">
+                    <span style="font-weight: bold">*</span>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4">
+                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-required="true" name="height" ng-model="info.Height" style="width: 250px">
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3">
+                    <div for="height" class="help-block" ng-show="gorgonUQForm.height.$error.pattern">
+                        <label class="control-label">Required is number!</label>
+                    </div>
+
+                    <div for="height" class="help-block" ng-show="showClickedValidation && gorgonUQForm.height.$error.required">
+                        <label class="control-label">Required!</label>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.weight.$invalid}">
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-5">
-                    <label class="control-label">6. Your Weight:</label>
-                </div>
-                <div class="col-md-5  col-sm-7">
-                    <label style="font-weight: bold">*</label>
-                    <input type="text" ng-pattern="/^[0-9]+$/" required name="weight" ng-model="info.Weight" style="width: 250px">
-                </div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-5">
+                <label class="control-label">6. Your Weight:</label>
             </div>
-            <div class="row" ng-show="showClickedValidation && gorgonUQForm.weight.$invalid">
-                <div class="col-lg-3 col-md-4 col-sm-5"></div>
-                <div class="col-md-5 col-sm-7 help-block"  for="weight">
-                    <label>Your weight is required</label>
-                    <div for="weight" class="help-block" ng-show="showClickedValidation && gorgonUQForm.weight.$error.pattern">
-                        <label>Your weight must be number</label>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.weight.$error.required || gorgonUQForm.weight.$error.pattern}">
+                <div class="col-md-1  col-sm-1" style="width:auto;margin-top:5px;">
+                    <label style="font-weight: bold">*</label>
+                </div>
+                <div class=" col-lg-3 col-md-4 col-sm-4">
+                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" required name="weight" ng-model="info.Weight" style="width: 250px" ng-required="true">
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3">
+                    <div for="weight" class="help-block" ng-show="showClickedValidation && gorgonUQForm.weight.$error.required">
+                        <label class="cotrol-label">Required!</label>
                     </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.JobTitle.$invalid}">
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-5">
-                    <label class="control-label">7. Your job title:</label>
-                </div>
-                <div class="col-md-5  col-sm-7">
-                    <label style="font-weight: bold">*</label>
-                    <input type="text" name="JobTitle" required ng-model="info.JobTitle" style="width: 250px">
-                </div>
-            </div>
-            <div class="row" ng-show="showClickedValidation && gorgonUQForm.JobTitle.$invalid">
-                <div class="col-lg-3 col-md-4 col-sm-5"></div>
-                <div class="col-md-5 col-sm-7 help-block"  for="JobTitle">
-                    <label>Job title is required</label>
+                    <div for="weight" class="help-block" ng-show="gorgonUQForm.weight.$error.pattern">
+                        <label class="cotrol-label">Required is number!</label>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.PhoneNumber.$invalid}">
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-5">
-                    <label class="control-label">8. A phone number where you can be reached by the health care professional who reviews this questionnaire (include the Area Code)</label>
-                </div>
-                <div class="col-md-5  col-sm-7">
+        <br/>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-5">
+                <label class="control-label">7. Your job title:</label>
+            </div>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.JobTitle.$error.required}">
+                <div class="col-lg-1 col-md-1  col-sm-1" style="width:auto; margin-top:5px;">
                     <label style="font-weight: bold">*</label>
-                    <input type="text" name="PhoneNumber" ng-pattern="/^[0-9]{9,11}$/" required ng-model="info.PhoneNumber" style="width: 250px">
-                    <div ng-show="showClickedValidation && gorgonUQForm.PhoneNumber.$invalid" for="PhoneNumber" class="help-block">
-                        <label>Phone number is required</label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4">
+                    <input type="text" class="form-control" name="JobTitle" ng-required="true" ng-model="info.JobTitle" style="width: 250px">
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3">
+                    <div class="help-block" ng-show="showClickedValidation && gorgonUQForm.JobTitle.$error.required">
+                        <label class="control-label">Required!</label>
                     </div>
-                    <div for="PhoneNumber" class="help-block" ng-show="showClickedValidation && gorgonUQForm.PhoneNumber.$error.pattern">
-                        <label>Phone is invalid. Must be number and between 9-11 digits.</label>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-5">
+                <label class="control-label">8. A phone number where you can be reached by the health care professional who reviews this questionnaire (include the Area Code)</label>
+            </div>
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.PhoneNumber.$error.required || gorgonUQForm.PhoneNumber.$error.pattern}">
+                <div class="col-lg-1 col-md-1  col-sm-1" style="width:auto; margin-top:5px;">
+                    <label style="font-weight: bold">*</label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4">
+                    <input type="text" class="form-control" name="PhoneNumber" ng-pattern="/^[0-9]{9,11}$/" required ng-model="info.PhoneNumber" style="width: 250px" ng-required="true">
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3">
+                    <div class="help-block" ng-show="gorgonUQForm.PhoneNumber.$error.pattern">
+                        <label class="control-label">Invalid!</label>
+                    </div>
+                    <div class="help-block" ng-show="showClickedValidation && gorgonUQForm.PhoneNumber.$error.required">
+                        <label class="control-label">Required!</label>
                     </div>
                 </div>
             </div>
@@ -144,18 +156,18 @@
             <div class="col-lg-3 col-md-4 col-sm-5">
                 <label class="control-label">9. The best time to phone you on this number:</label>
             </div>
-            <div class="col-md-5 col-sm-7" >
-                <input type="text" name="BestTime" ng-model="info.BestTime" style="width: 250px" >
+            <div class="col-md-5 col-sm-7">
+                <input type="text" class="form-control" name="BestTime" ng-model="info.BestTime" style="width: 250px">
             </div>
         </div>
         <div class="row">
             <label class="control-label col-lg-7 col-sm-8 col-md-8" style="margin-top: 7px;">10. Has your employer told you how to contact the health care professional who will review this questionnaire (circle one):</label>
-            <div class="btn-group" >
+            <div class="btn-group">
                 <label class="btn">
-                    <input type="radio" ng-model="info.isReviewQuest" value="1"  /> Yes
+                    <input type="radio" ng-model="info.isReviewQuest" ng-value="1" />Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.isReviewQuest" value="0"  /> No
+                    <input type="radio" ng-model="info.isReviewQuest" ng-value="0" />No
                 </label>
             </div>
         </div>
@@ -165,7 +177,7 @@
                 <label class="control-label col-lg-7 col-md-10 col-sm-9 " style="margin-top: 7px;">a. N,R, or P disposable respirator (filter-mask, non-cartridge type only).
                 </label>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" ng-model="info.isNRP" ng-checked="info.isNRP == 1" ng-checked="info.isNRP == 1" type="checkbox"/>
+                    <input class="form-control" ng-model="info.isNRP" ng-checked="info.isNRP == 1" ng-checked="info.isNRP == 1" type="checkbox" />
                 </div>
             </div>
         </div>
@@ -174,39 +186,39 @@
                 <label class="control-label col-lg-7 col-md-10 col-sm-9 " style="margin-top: 7px;">b. Other type (for example, half or full-face piece type, powered-air purifying, supplied-air, self contained breathing apparatus).
                 </label>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" ng-model="info.isOtherType" ng-true-value="1" ng-false-value="0" ng-checked="info.isOtherType == 1" type="checkbox"/>
+                    <input class="form-control" ng-model="info.isOtherType" ng-true-value="1" ng-false-value="0" ng-checked="info.isOtherType == 1" type="checkbox" />
                 </div>
             </div>
         </div>
         <div class="row">
             <label class="control-label col-lg-4 col-md-5" style="margin-top: 7px;">12. Have you worn a respirator (circle one):</label>
-            <div class="btn-group " >
+            <div class="btn-group ">
                 <label class="btn">
-                    <input type="radio" ng-model="info.isRespirator" value="1" /> Yes
+                    <input type="radio" ng-model="info.isRespirator" ng-value="1" />Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.isRespirator" value="0"/> No
+                    <input type="radio" ng-model="info.isRespirator" ng-value="0" />No
                 </label>
             </div>
         </div>
-        <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.RespiratorType.$invalid && info.isRespirator == 1}">
-            <div class="row">
-                <div class="col-lg-2 col-md-3 col-sm-3">
-                    <label class="control-label">If yes, what type(s):</label>
-                </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-3 col-sm-3" style="width:auto;">
+                <label class="control-label">If yes, what type(s):</label>
+            </div>
+            <div class="form-group" ng-class="{'has-error':gorgonUQForm.RespiratorType.$error.required}">
                 <div class="col-md-5 col-sm-7">
                     <input type="text" name="RespiratorType" ng-required="info.isRespirator == 1 ? true : false" ng-model="info.RespiratorType" class="form-control">
                 </div>
-            </div>
-            <div class="row" ng-show="showClickedValidation && gorgonUQForm.RespiratorType.$invalid && info.isRespirator == 1">
-                <div class="col-lg-2 col-md-3 col-sm-5"></div>
-                <div class="col-md-5 col-sm-7 help-block"  for="RespiratorType">
-                    <label>Must be enter if yes</label>
+                <div class="row" ng-show="gorgonUQForm.RespiratorType.$error.required">
+                    <div class="col-lg-2 col-md-3 col-sm-5"></div>
+                    <div class="col-md-5 col-sm-7 help-block" for="RespiratorType">
+                        <label>Required!</label>
+                    </div>
                 </div>
             </div>
 
         </div>
-        <p  style="font-size: medium;font-weight: bold">
+        <p style="font-size: medium;font-weight: bold">
             Part A. Section 2. Questions 1 through 9 below must be answered by every employee who has been selected to use any type of respirator (please circle “yes” or “no”).
         </p>
 
@@ -214,10 +226,10 @@
             <label class="control-label col-lg-7 col-md-9 col-sm-8" style="margin-top: 7px;">1. Do you currently smoke tobacco, or have you smoked tobacco in the last month:</label>
             <div class="btn-group col-md-3">
                 <label class="btn">
-                    <input type="radio" ng-model="info.isSmoke" value="1"/> Yes
+                    <input type="radio" ng-model="info.isSmoke" ng-value="1" />Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.isSmoke" value="0"/> No
+                    <input type="radio" ng-model="info.isSmoke" ng-value="0" />No
                 </label>
             </div>
         </div>
@@ -228,10 +240,10 @@
                 <label class="control-label col-lg-5 col-md-6 col-sm-6 " style="margin-top: 7px;">a) Seizures (fits):</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSeizuresCondition" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSeizuresCondition" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSeizuresCondition" value="0"/> No
+                        <input type="radio" ng-model="info.isSeizuresCondition" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -241,10 +253,10 @@
                 <label class="control-label col-lg-5 col-md-6 col-sm-6 " style="margin-top: 7px;">b) Diabetes (sugar disease):</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDiabetes" value="1"/> Yes
+                        <input type="radio" ng-model="info.isDiabetes" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDiabetes" value="0"/> No
+                        <input type="radio" ng-model="info.isDiabetes" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -254,10 +266,10 @@
                 <label class="control-label col-lg-5 col-md-6 col-sm-6 " style="margin-top: 7px;">c) Allergic reactions that interfere with your breathing:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAllergicReactions" value="1"/> Yes
+                        <input type="radio" ng-model="info.isAllergicReactions" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAllergicReactions" value="0"/> No
+                        <input type="radio" ng-model="info.isAllergicReactions" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -267,10 +279,10 @@
                 <label class="control-label col-lg-5 col-md-6 col-sm-6 " style="margin-top: 7px;">d) Claustrophobia (fear of closed in spaces):</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isClaustrophobia" value="1"/> Yes
+                        <input type="radio" ng-model="info.isClaustrophobia" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isClaustrophobia" value="0"/> No
+                        <input type="radio" ng-model="info.isClaustrophobia" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -280,10 +292,10 @@
                 <label class="control-label col-lg-5 col-md-6 col-sm-6 " style="margin-top: 7px;">e) Trouble smelling odours:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isTrouble" value="1"/> Yes
+                        <input type="radio" ng-model="info.isTrouble" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isTrouble" value="0"/> No
+                        <input type="radio" ng-model="info.isTrouble" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -292,12 +304,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">a) Asbestosis:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAsbestosis" value="1"/> Yes
+                        <input type="radio" ng-model="info.isAsbestosis" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAsbestosis" value="0"/> No
+                        <input type="radio" ng-model="info.isAsbestosis" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -305,12 +317,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">b) Asthma:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAsthma" value="1"/> Yes
+                        <input type="radio" ng-model="info.isAsthma" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAsthma" value="0"/> No
+                        <input type="radio" ng-model="info.isAsthma" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -318,12 +330,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">c) Chronic bronchitis:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBronchitis" value="1"/> Yes
+                        <input type="radio" ng-model="info.isBronchitis" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBronchitis" value="0"/> No
+                        <input type="radio" ng-model="info.isBronchitis" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -331,12 +343,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">d) Emphysema:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isEmphysema" value="1"/> Yes
+                        <input type="radio" ng-model="info.isEmphysema" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isEmphysema" value="0"/> No
+                        <input type="radio" ng-model="info.isEmphysema" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -344,12 +356,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">e)Pneumonia:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPneumonia" value="1"/> Yes
+                        <input type="radio" ng-model="info.isPneumonia" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPneumonia" value="0"/> No
+                        <input type="radio" ng-model="info.isPneumonia" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -357,12 +369,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">f) Tuberculosis:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isTuberculosis" value="1"/> Yes
+                        <input type="radio" ng-model="info.isTuberculosis" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isTuberculosis" value="0"/> No
+                        <input type="radio" ng-model="info.isTuberculosis" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -370,12 +382,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">g) Silicosis:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSilicosis" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSilicosis" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSilicosis" value="0"/> No
+                        <input type="radio" ng-model="info.isSilicosis" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -383,12 +395,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">h) Pneumothorax (collapsed lung):</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPneumothorax" value="1"/> Yes
+                        <input type="radio" ng-model="info.isPneumothorax" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPneumothorax" value="0"/> No
+                        <input type="radio" ng-model="info.isPneumothorax" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -396,12 +408,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">i) Lung cancer:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isLungCancer" value="1"/> Yes
+                        <input type="radio" ng-model="info.isLungCancer" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isLungCancer" value="0"/> No
+                        <input type="radio" ng-model="info.isLungCancer" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -409,62 +421,62 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">j) Broken ribs:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBrokenRibs" value="1"/> Yes
+                        <input type="radio" ng-model="info.isBrokenRibs" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBrokenRibs" value="0"/> No
+                        <input type="radio" ng-model="info.isBrokenRibs" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <label class="control-label col-md-5 col-lg-3 col-sm-6 " style="margin-top: 7px;">k) Any chest injuries or surgeries:</label>
-                <div class="btn-group">
+                <label class="control-label col-md-5 col-lg-3 col-sm-6" style="margin-top: 7px;">k) Any chest injuries or surgeries:</label>
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isInjuries" value="1"/> Yes
+                        <input type="radio" ng-model="info.isInjuries" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isInjuries" value="0"/> No
+                        <input type="radio" ng-model="info.isInjuries" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-            <div class="row">
-                <div class="col-md-8 col-lg-7">
-                    <label class="control-label col-md-7 col-lg-8  " style="margin-top: 7px;">l) Any other lung problem that you’ve been told about:</label>
-                    <div class="btn-group col-md-5 col-lg-4" >
-                        <label class="btn">
-                            <input type="radio" ng-model="info.isOtherLung" value="1"/> Yes
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.isOtherLung" value="0"/> No
-                        </label>
-                    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-lg-3 col-sm-4" style="margin-top: 7px;">l) Any other lung problem that you’ve been told about:</label>
+                <div class="btn-group col-md-3 col-lg-3 col-sm-4" style="width:auto;">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherLung" ng-value="1" />Yes
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.isOtherLung" ng-value="0" />No
+                    </label>
                 </div>
-                <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.OtherLungComment.$invalid && info.isOtherLung == 1}">
-                    <div class="col-md-4 col-lg-5 col-sm-6">
-                        <input type="text" name="OtherLungComment" ng-required="info.isOtherLung == 1 ? true : false" ng-model="info.OtherLungComment"  class="form-control">
-                        <div for="OtherLungComment" ng-show="showClickedValidation && gorgonUQForm.OtherLungComment.$invalid && info.isOtherLung == 1">
-                            <label  class="help-block" >
-                                Must be enter if yes
+                <div class="col-md-4 col-lg-6 col-sm-4">
+                    <div class="form-group" ng-class="{'has-error': gorgonUQForm.OtherLungComment.$error.required}">
+                        <input type="text" name="OtherLungComment" ng-required="info.isOtherLung" ng-model="info.OtherLungComment" class="form-control" ng-required="info.isOtherLung">
+                        <div for="OtherLungComment" ng-show="gorgonUQForm.OtherLungComment.$error.required">
+                            <label class="help-block">
+                                Required!
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <label class="control-label">4. Do you currently have any of the following symptoms of pulmonary or lung illness:</label>
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">a) Shortness of breath:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOB" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSOB" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOB" value="0"/> No
+                        <input type="radio" ng-model="info.isSOB" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -472,12 +484,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">b) Shortness of breath when walking fast on level ground or walking up a slight hill or incline that may impair your ability to wear a respirator?:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOBWalkingFast" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSOBWalkingFast" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOBWalkingFast" value="0"/> No
+                        <input type="radio" ng-model="info.isSOBWalkingFast" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -485,12 +497,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">c) Shortness of breath when walking with other people at an ordinary pace on level ground:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOBWalkingOther" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSOBWalkingOther" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOBWalkingOther" value="0"/> No
+                        <input type="radio" ng-model="info.isSOBWalkingOther" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -498,12 +510,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">d) Have to stop for breath when walking at your own pace on level ground:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isStopForBreath" value="1"/> Yes
+                        <input type="radio" ng-model="info.isStopForBreath" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isStopForBreath" value="0"/> No
+                        <input type="radio" ng-model="info.isStopForBreath" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -511,12 +523,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">e) Shortness of breath when washing or dressing yourself:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOBWashing" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSOBWashing" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOBWashing" value="0"/> No
+                        <input type="radio" ng-model="info.isSOBWashing" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -524,12 +536,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">f) Shortness of breath that interferes with your job:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOBInterferes" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSOBInterferes" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSOBInterferes" value="0"/> No
+                        <input type="radio" ng-model="info.isSOBInterferes" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -537,12 +549,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">g) Coughing that produces phlegm (thick sputum):</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isCoughingPhlegm" value="1"/> Yes
+                        <input type="radio" ng-model="info.isCoughingPhlegm" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isCoughingPhlegm" value="0"/> No
+                        <input type="radio" ng-model="info.isCoughingPhlegm" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -550,12 +562,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">h) Coughing that wakes you early in the morning:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isCoughingMorning" value="1"/> Yes
+                        <input type="radio" ng-model="info.isCoughingMorning" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isCoughingMorning" value="0"/> No
+                        <input type="radio" ng-model="info.isCoughingMorning" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -563,12 +575,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">i) Coughing that occurs mostly when you are lying down:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isCoughingLyingDown" value="1"/> Yes
+                        <input type="radio" ng-model="info.isCoughingLyingDown" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isCoughingLyingDown" value="0"/> No
+                        <input type="radio" ng-model="info.isCoughingLyingDown" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -576,12 +588,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">j) Coughing up blood in the last month:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isCoughingUpBlood" value="1"/> Yes
+                        <input type="radio" ng-model="info.isCoughingUpBlood" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isCoughingUpBlood" value="0"/> No
+                        <input type="radio" ng-model="info.isCoughingUpBlood" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -589,12 +601,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">k) Wheezing:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isWheezing" value="1"/> Yes
+                        <input type="radio" ng-model="info.isWheezing" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isWheezing" value="0"/> No
+                        <input type="radio" ng-model="info.isWheezing" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -602,12 +614,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">l) Wheezing that interferes with your job:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isWheezingInterferes" value="1"/> Yes
+                        <input type="radio" ng-model="info.isWheezingInterferes" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isWheezingInterferes" value="0"/> No
+                        <input type="radio" ng-model="info.isWheezingInterferes" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -615,12 +627,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">m) Chest pain when you breathe deeply:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isChestPain" value="1"/> Yes
+                        <input type="radio" ng-model="info.isChestPain" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isChestPain" value="0"/> No
+                        <input type="radio" ng-model="info.isChestPain" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -628,12 +640,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-7 col-sm-8 " style="margin-top: 7px;">n) Any other symptoms that you think may be related to lung problems:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherSymptomsPulmonary" value="1"/> Yes
+                        <input type="radio" ng-model="info.isOtherSymptomsPulmonary" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherSymptomsPulmonary" value="0"/> No
+                        <input type="radio" ng-model="info.isOtherSymptomsPulmonary" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -642,12 +654,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">a) Heart attack:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartAttack" value="1"/> Yes
+                        <input type="radio" ng-model="info.isHeartAttack" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartAttack" value="0"/> No
+                        <input type="radio" ng-model="info.isHeartAttack" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -655,12 +667,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">b) Stroke:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isStroke" value="1"/> Yes
+                        <input type="radio" ng-model="info.isStroke" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isStroke" value="0"/> No
+                        <input type="radio" ng-model="info.isStroke" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -668,12 +680,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">c)Angina:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAngina" value="1"/> Yes
+                        <input type="radio" ng-model="info.isAngina" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAngina" value="0"/> No
+                        <input type="radio" ng-model="info.isAngina" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -681,12 +693,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">d) Heart failure:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartFailure" value="1"/> Yes
+                        <input type="radio" ng-model="info.isHeartFailure" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartFailure" value="0"/> No
+                        <input type="radio" ng-model="info.isHeartFailure" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -694,12 +706,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">e) Swelling in your legs or feet (not caused by walking):</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSwelling" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSwelling" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSwelling" value="0"/> No
+                        <input type="radio" ng-model="info.isSwelling" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -707,12 +719,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">f) Heart arrhythmia (heart beating irregularly):</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartArrhythmia" value="1"/> Yes
+                        <input type="radio" ng-model="info.isHeartArrhythmia" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartArrhythmia" value="0"/> No
+                        <input type="radio" ng-model="info.isHeartArrhythmia" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -720,35 +732,35 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">g) High blood pressure:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBloodPressureHeart" value="1"/> Yes
+                        <input type="radio" ng-model="info.isBloodPressureHeart" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBloodPressureHeart" value="0"/> No
+                        <input type="radio" ng-model="info.isBloodPressureHeart" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 col-lg-7">
-                <label class="control-label col-md-7 col-lg-8 " style="margin-top: 7px;">h) Any other heart problem that you’ve been told about:</label>
-                <div class="btn-group col-md-5 col-lg-4">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-sm-6" style="margin-top: 7px;">h) Any other heart problem that you’ve been told about:</label>
+                <div class="btn-group col-md-3 col-sm-4" style="width:auto;">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherHeart" value="1"/> Yes
+                        <input type="radio" ng-model="info.isOtherHeart" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherHeart" value="0"/> No
+                        <input type="radio" ng-model="info.isOtherHeart" ng-value="0" />No
                     </label>
                 </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error':showClickedValidation && gorgonUQForm.OtherHeartComment.$invalid && info.isOtherHeart == 1}">
-                <div class="col-md-4 col-lg-5 col-sm-6">
-                    <input type="text" name="OtherHeartComment" ng-required="info.isOtherHeart == 1 ? true : false" ng-model="info.OtherHeartComment" class="form-control">
-                    <div for="OtherHeartComment" ng-show="showClickedValidation && gorgonUQForm.OtherHeartComment.$invalid && info.isOtherHeart == 1">
-                        <label  class="help-block" >
-                            Must be enter if yes
-                        </label>
+                <div class="col-md-4 col-sm-4">
+                    <div ng-class="{'has-error':gorgonUQForm.OtherHeartComment.$error.required}">
+                        <input type="text" name="OtherHeartComment" ng-required="info.isOtherHeart" ng-model="info.OtherHeartComment" class="form-control" ng-required="info.isOtherHeart">
+                        <div ng-show="gorgonUQForm.OtherHeartComment.$error.required">
+                            <label class="help-block">
+                                Required!
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -757,12 +769,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-6 col-sm-8 " style="margin-top: 7px;">a) Frequent pain or tightness in your chest:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isFrequentPain" value="1"/> Yes
+                        <input type="radio" ng-model="info.isFrequentPain" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isFrequentPain" value="0"/> No
+                        <input type="radio" ng-model="info.isFrequentPain" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -770,12 +782,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-6 col-sm-8 " style="margin-top: 7px;">b) Pain or tightness in your chest during physical activity:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPOTPhysical" value="1"/> Yes
+                        <input type="radio" ng-model="info.isPOTPhysical" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPOTPhysical" value="0"/> No
+                        <input type="radio" ng-model="info.isPOTPhysical" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -783,12 +795,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-6 col-sm-8 " style="margin-top: 7px;">c) Pain or tightness in your chest that interferes with your job:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPOTInterferes" value="1"/> Yes
+                        <input type="radio" ng-model="info.isPOTInterferes" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPOTInterferes" value="0"/> No
+                        <input type="radio" ng-model="info.isPOTInterferes" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -796,12 +808,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-6 col-sm-8 " style="margin-top: 7px;">d) In the past two years have you noticed your heart skipping or missing a beat:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isMissingBeat" value="1"/> Yes
+                        <input type="radio" ng-model="info.isMissingBeat" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isMissingBeat" value="0"/> No
+                        <input type="radio" ng-model="info.isMissingBeat" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -809,12 +821,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-6 col-sm-8 " style="margin-top: 7px;">e) Heartburn or indigestion that is not related to eating:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartburn" value="1"/> Yes
+                        <input type="radio" ng-model="info.isHeartburn" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartburn" value="0"/> No
+                        <input type="radio" ng-model="info.isHeartburn" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -822,12 +834,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-5 col-md-6 col-sm-8 " style="margin-top: 7px;">f) Any other symptoms that you think may be related to heart or circulation problems:</label>
-                <div class="btn-group">
+                <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherSymptomsHeart" value="1"/> Yes
+                        <input type="radio" ng-model="info.isOtherSymptomsHeart" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherSymptomsHeart" value="0"/> No
+                        <input type="radio" ng-model="info.isOtherSymptomsHeart" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -838,10 +850,10 @@
                 <label class="control-label col-md-5 col-lg-3 col-sm-5 " style="margin-top: 7px;">a) Breathing or lung problems?</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBreathing" value="1"/> Yes
+                        <input type="radio" ng-model="info.isBreathing" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBreathing" value="0"/> No
+                        <input type="radio" ng-model="info.isBreathing" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -851,10 +863,10 @@
                 <label class="control-label col-md-5 col-lg-3 col-sm-5 " style="margin-top: 7px;">b) Heart trouble:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartTrouble" value="1"/> Yes
+                        <input type="radio" ng-model="info.isHeartTrouble" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHeartTrouble" value="0"/> No
+                        <input type="radio" ng-model="info.isHeartTrouble" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -864,10 +876,10 @@
                 <label class="control-label col-md-5 col-lg-3 col-sm-5 " style="margin-top: 7px;">c) Blood pressure:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBloodPressureMedication" value="1"/> Yes
+                        <input type="radio" ng-model="info.isBloodPressureMedication" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBloodPressureMedication" value="0"/> No
+                        <input type="radio" ng-model="info.isBloodPressureMedication" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -877,10 +889,10 @@
                 <label class="control-label col-md-5 col-lg-3 col-sm-5 " style="margin-top: 7px;">d) Seizures (fits):</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSeizuresMedication" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSeizuresMedication" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSeizuresMedication" value="0"/> No
+                        <input type="radio" ng-model="info.isSeizuresMedication" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -889,7 +901,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" ng-model="info.isUseRespirator" ng-change="checkUseRespirator(info.isUseRespirator)" ng-checked="info.isUseRespirator == 1" type="checkbox"  />
+                    <input class="form-control" ng-model="info.isUseRespirator" ng-change="checkUseRespirator(info.isUseRespirator)" ng-checked="info.isUseRespirator == 1" type="checkbox" />
                 </div>
                 <label class="control-label col-md-4 col-lg-3 col-sm-4 " style="margin-top: 10px;font-weight: bold">Never used a respirator
                 </label>
@@ -898,12 +910,12 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">a) Eye irritation:</label>
-                <div class="btn-group" >
+                <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isEyeIrritation"  ng-disabled="info.isUseRespirator"  value="1"/> Yes
+                        <input type="radio" ng-model="info.isEyeIrritation" ng-disabled="info.isUseRespirator" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isEyeIrritation" ng-disabled="info.isUseRespirator" value="0"/> No
+                        <input type="radio" ng-model="info.isEyeIrritation" ng-disabled="info.isUseRespirator" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -913,10 +925,10 @@
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">b) Skin allergies or rashes:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSkinAllergies"  ng-disabled="info.isUseRespirator" value="1"/> Yes
+                        <input type="radio" ng-model="info.isSkinAllergies" ng-disabled="info.isUseRespirator" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isSkinAllergies"  ng-disabled="info.isUseRespirator" value="0"/> No
+                        <input type="radio" ng-model="info.isSkinAllergies" ng-disabled="info.isUseRespirator" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -926,10 +938,10 @@
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">c) Anxiety:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAnxiety"  ng-disabled="info.isUseRespirator" value="1"/> Yes
+                        <input type="radio" ng-model="info.isAnxiety" ng-disabled="info.isUseRespirator" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isAnxiety"  ng-disabled="info.isUseRespirator" value="0"/> No
+                        <input type="radio" ng-model="info.isAnxiety" ng-disabled="info.isUseRespirator" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -939,10 +951,10 @@
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">d) General weakness or fatigue:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isGeneralWeakness"  ng-disabled="info.isUseRespirator" value="1"/> Yes
+                        <input type="radio" ng-model="info.isGeneralWeakness" ng-disabled="info.isUseRespirator" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isGeneralWeakness"  ng-disabled="info.isUseRespirator" value="0"/> No
+                        <input type="radio" ng-model="info.isGeneralWeakness" ng-disabled="info.isUseRespirator" ng-value="0" />No
                     </label>
                 </div>
             </div>
@@ -952,39 +964,37 @@
                 <label class="control-label col-md-5 col-sm-6 " style="margin-top: 7px;">e) Any other problem that interferes with your use of a respirator:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherProblem"  ng-disabled="info.isUseRespirator" value="1"/> Yes
+                        <input type="radio" ng-model="info.isOtherProblem" ng-disabled="info.isUseRespirator" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherProblem"  ng-disabled="info.isUseRespirator" value="0"/> No
+                        <input type="radio" ng-model="info.isOtherProblem" ng-disabled="info.isUseRespirator" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
         <div class="row">
-            <label class="control-label col-lg-7 col-md-9 col-sm-8"  style="margin-top: 7px;">9. Would you like to talk to the health care professional who will review this questionnaire about your answers to this questionnaire:</label>
+            <label class="control-label col-lg-7 col-md-9 col-sm-8" style="margin-top: 7px;">9. Would you like to talk to the health care professional who will review this questionnaire about your answers to this questionnaire:</label>
             <div class="btn-group">
                 <label class="btn">
-                    <input type="radio" ng-model="info.isTalk" value="1"/> Yes
+                    <input type="radio" ng-model="info.isTalk" ng-value="1" />Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.isTalk" value="0"/> No
+                    <input type="radio" ng-model="info.isTalk" ng-value="0" />No
                 </label>
             </div>
         </div>
-        <p  style="font-size: medium;font-weight: bold">
-            Questions 10 to 15 below must be answered by every employee who has been selected to use either a full-face piece respirator or a self-contained breathing apparatus (SCBA).
-            
-            For employees who have been selected to use other types or respirators, answering those questions is voluntary.
+        <p style="font-size: medium;font-weight: bold">
+            Questions 10 to 15 below must be answered by every employee who has been selected to use either a full-face piece respirator or a self-contained breathing apparatus (SCBA). For employees who have been selected to use other types or respirators, answering those questions is voluntary.
         </p>
-        
+
         <div class="row">
             <label class="control-label col-md-8 col-lg-6" style="margin-top: 7px;">10. Have you every lost vision in either eye (temporarily or permanently):</label>
             <div class="btn-group">
                 <label class="btn">
-                    <input type="radio" ng-model="info.isLostVision" value="1"/> Yes
+                    <input type="radio" ng-model="info.isLostVision" ng-value="1" />Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.isLostVision" value="0"/> No
+                    <input type="radio" ng-model="info.isLostVision" ng-value="0" />No
                 </label>
             </div>
         </div>
@@ -994,138 +1004,138 @@
                 <label class="control-label col-lg-3 col-md-5 col-sm-6 " style="margin-top: 7px;">a) Wear contact lenses:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isContactLenses" value="1"/> Yes
+                        <input type="radio" ng-model="info.isContactLenses" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isContactLenses" value="0"/> No
+                        <input type="radio" ng-model="info.isContactLenses" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-3 col-md-5 col-sm-6 " style="margin-top: 7px;">b) Wear glasses:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isWearGlasses" value="1"/> Yes
+                        <input type="radio" ng-model="info.isWearGlasses" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isWearGlasses" value="0"/> No
+                        <input type="radio" ng-model="info.isWearGlasses" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-3 col-md-5 col-sm-6 " style="margin-top: 7px;">c) Colour Blind:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isColourBlind" value="1"/> Yes
+                        <input type="radio" ng-model="info.isColourBlind" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isColourBlind" value="0"/> No
+                        <input type="radio" ng-model="info.isColourBlind" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-3 col-md-5 col-sm-6 " style="margin-top: 7px;">d) Any other eye or vision problem:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherEye" value="1"/> Yes
+                        <input type="radio" ng-model="info.isOtherEye" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherEye" value="0"/> No
+                        <input type="radio" ng-model="info.isOtherEye" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
 
         <div class="row">
             <label class="control-label col-lg-6 col-md-8" style="margin-top: 7px;">12. Have you ever had an injury to your ears, including a broken ear drum:</label>
             <div class="btn-group">
                 <label class="btn">
-                    <input type="radio" ng-model="info.isInjuryEars" value="1"/> Yes
+                    <input type="radio" ng-model="info.isInjuryEars" ng-value="1" />Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.isInjuryEars" value="0"/> No
+                    <input type="radio" ng-model="info.isInjuryEars" ng-value="0" />No
                 </label>
             </div>
         </div>
-        
+
 
         <div class="row">
             <label class="control-label col-lg-5 col-md-7" style="margin-top: 7px;">13. Do you currently have any of the following hearing problems:</label>
             <div class="btn-group">
                 <label class="btn">
-                    <input type="radio" ng-model="info.isHearingProblems" value="1"/> Yes
+                    <input type="radio" ng-model="info.isHearingProblems" ng-value="1" />Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.isHearingProblems" value="0"/> No
+                    <input type="radio" ng-model="info.isHearingProblems" ng-value="0" />No
                 </label>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-3 col-md-5 col-sm-6 " style="margin-top: 7px;">a) Difficulty hearing:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDifficultyHearing" value="1"/> Yes
+                        <input type="radio" ng-model="info.isDifficultyHearing" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDifficultyHearing" value="0"/> No
+                        <input type="radio" ng-model="info.isDifficultyHearing" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-3 col-md-5 col-sm-6 " style="margin-top: 7px;">b) Wear a hearing aid:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHearingAid" value="1"/> Yes
+                        <input type="radio" ng-model="info.isHearingAid" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isHearingAid" value="0"/> No
+                        <input type="radio" ng-model="info.isHearingAid" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-lg-3 col-md-5 col-sm-6 " style="margin-top: 7px;">c) Any other hearing or ear problems:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherHearing" value="1"/> Yes
+                        <input type="radio" ng-model="info.isOtherHearing" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherHearing" value="0"/> No
+                        <input type="radio" ng-model="info.isOtherHearing" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
 
         <div class="row">
             <label class="control-label col-lg-3 col-md-5" style="margin-top: 7px;">14. Have you ever had a back injury:</label>
             <div class="btn-group">
                 <label class="btn">
-                    <input type="radio" ng-model="info.isBackInjury" value="1"/> Yes
+                    <input type="radio" ng-model="info.isBackInjury" ng-value="1" />Yes
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.isBackInjury" value="0"/> No
+                    <input type="radio" ng-model="info.isBackInjury" ng-value="0" />No
                 </label>
             </div>
         </div>
-        
+
 
         <label class="control-label">15. Do you currently have any of the following musculoskeletal problems?</label>
         <div class="row">
@@ -1133,141 +1143,141 @@
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">a) Weakness in any of your arms, hands, legs, or feet:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isWeaknessAny" value="1"/> Yes
+                        <input type="radio" ng-model="info.isWeaknessAny" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isWeaknessAny" value="0"/> No
+                        <input type="radio" ng-model="info.isWeaknessAny" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">b) Back pain:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBackPain" value="1"/> Yes
+                        <input type="radio" ng-model="info.isBackPain" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isBackPain" value="0"/> No
+                        <input type="radio" ng-model="info.isBackPain" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">c) Difficulty fully moving your arms and legs:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDFMArmsLegs" value="1"/> Yes
+                        <input type="radio" ng-model="info.isDFMArmsLegs" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDFMArmsLegs" value="0"/> No
+                        <input type="radio" ng-model="info.isDFMArmsLegs" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">d) Difficulty fully moving your head up or down:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDFMHead" value="1"/> Yes
+                        <input type="radio" ng-model="info.isDFMHead" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDFMHead" value="0"/> No
+                        <input type="radio" ng-model="info.isDFMHead" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">e) Pain or stiffness when you lean forward or backward at the waist:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPOSLeanForward" value="1"/> Yes
+                        <input type="radio" ng-model="info.isPOSLeanForward" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPOSLeanForward" value="0"/> No
+                        <input type="radio" ng-model="info.isPOSLeanForward" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">f) Pain or difficulty fully moving your head side to side:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPODHead" value="1"/> Yes
+                        <input type="radio" ng-model="info.isPODHead" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isPODHead" value="0"/> No
+                        <input type="radio" ng-model="info.isPODHead" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">g) Difficulty bending at your knees that may impair your ability to wear a respirator:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDifficultyBending" value="1"/> Yes
+                        <input type="radio" ng-model="info.isDifficultyBending" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDifficultyBending" value="0"/> No
+                        <input type="radio" ng-model="info.isDifficultyBending" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">h) Difficulty squatting to the ground that may impair your ability to wear a respirator:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDifficultySquatting" value="1"/> Yes
+                        <input type="radio" ng-model="info.isDifficultySquatting" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isDifficultySquatting" value="0"/> No
+                        <input type="radio" ng-model="info.isDifficultySquatting" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">i) Climbing a flight of stairs or a ladder carrying more than 25 lbs. (e.g. SCBA) that may impair your ability to wear a respirator:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isClimbing" value="1"/> Yes
+                        <input type="radio" ng-model="info.isClimbing" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isClimbing" value="0"/> No
+                        <input type="radio" ng-model="info.isClimbing" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label col-md-7 col-sm-8 " style="margin-top: 7px;">j) Any other muscle or skeletal problem that interferes with using a respirator:</label>
                 <div class="btn-group">
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherMuscle" value="1"/> Yes
+                        <input type="radio" ng-model="info.isOtherMuscle" ng-value="1" />Yes
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.isOtherMuscle" value="0"/> No
+                        <input type="radio" ng-model="info.isOtherMuscle" ng-value="0" />No
                     </label>
                 </div>
             </div>
         </div>
-        
+
 
         <label class="control-label" style="font-weight: bold">
             Request for Medical Clearance for Respirator Use Questionnaire
@@ -1277,29 +1287,29 @@
 
             <div class="col-md-4 col-lg-3 col-sm-4">
                 <label class="control-label">Employee:</label>
-                <input type="text"  ng-model="info.Employee" class="form-control" >
+                <input type="text" ng-model="info.Employee" class="form-control">
             </div>
             <div class="col-md-4 col-lg-3 col-sm-4">
                 <label class="control-label">Date of Birth:</label>
-                <input type="text" max-date="maxDate"  class="form-control col-md-12" ng-model="info.DOB"  datepicker-popup="dd/MM/yyyy"  is-open="openDOB" ng-click="openDOB = true"  datepicker-options="dateOptions"  close-text="Close" />
+                <input type="text" max-date="maxDate" class="form-control col-md-12" ng-model="info.DOB" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" />
             </div>
             <div class="col-md-4 col-lg-3 col-sm-4">
                 <label class="control-label">Department:</label>
-                <input type="text"  ng-model="info.Department" class="form-control" >
+                <input type="text" ng-model="info.Department" class="form-control">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4 col-lg-3 col-sm-4">
                 <label class="control-label">Social Security:</label>
-                <input type="text"  ng-model="info.SocialSecurity" class="form-control" >
+                <input type="text" ng-model="info.SocialSecurity" class="form-control">
             </div>
             <div class="col-md-4 col-lg-3 col-sm-4">
                 <label class="control-label">Supervisor:</label>
-                <input type="text"  ng-model="info.Supervisor" class="form-control" >
+                <input type="text" ng-model="info.Supervisor" class="form-control">
             </div>
         </div>
-        </br>
+        <br>
         <label class="control-label" style="font-weight: bold">Circle type or types of respirator(s) to be used:</label>
         <div class="row">
             <div class="col-md-4 col-lg-3 col-sm-5">
@@ -1365,43 +1375,43 @@
                 <input class="form-control" ng-model="info.isAir_Pow" ng-checked="info.isAir_Pow == 1" type="checkbox" />
             </div>
         </div>
-        
+
 
         <label class="control-label" style="font-weight: bold">Level of Work Effort:</label>
         <div class="row">
             <div class="btn-group">
                 <label class="btn">
-                    <input type="radio" ng-model="info.LevelOfWE" value="0"/> Light
+                    <input type="radio" ng-model="info.LevelOfWE" ng-value="0" />Light
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.LevelOfWE" value="1"/> Moderate
+                    <input type="radio" ng-model="info.LevelOfWE" ng-value="1" />Moderate
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.LevelOfWE" value="2"/> Heavy
+                    <input type="radio" ng-model="info.LevelOfWE" ng-value="2" />Heavy
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.LevelOfWE" value="3"/> Strenuous
+                    <input type="radio" ng-model="info.LevelOfWE" ng-value="3" />Strenuous
                 </label>
             </div>
         </div>
-        
+
 
         <label class="control-label" style="font-weight: bold">Extent of Usage:</label>
         <div class="row">
             <div class="btn-group col-sm-7 col-md-7 col-lg-12">
                 <label class="btn">
-                    <input type="radio" ng-model="info.ExtentUsage" value="0"/> 1) On a daily basis
+                    <input type="radio" ng-model="info.ExtentUsage" ng-value="0" />1) On a daily basis
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.ExtentUsage" value="1"/> 2) Occasionally - but more than once per week
+                    <input type="radio" ng-model="info.ExtentUsage" ng-value="1" />2) Occasionally - but more than once per week
                 </label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.ExtentUsage" value="2"/> 3) Rarely - or for emergency situations only
+                    <input type="radio" ng-model="info.ExtentUsage" ng-value="2" />3) Rarely - or for emergency situations only
                 </label>
             </div>
         </div>
-        
-        
+
+
 
 
 
@@ -1411,119 +1421,114 @@
                     <label class="control-label " style="font-weight: bold">Length of Time anticipated Effort in Hours:</label>
                 </div>
                 <div class="col-md-5" style="margin-left: 10px">
-                    <input type="text" name="LengthOfTime"  ng-model="info.LengthOfTime" ng-pattern="/^[0-9]+$/"  class="form-control">
+                    <input type="text" name="LengthOfTime" ng-model="info.LengthOfTime" ng-pattern="/^[0-9]+$/" class="form-control">
                 </div>
             </div>
             <div class="row" ng-show="showClickedValidation && gorgonUQForm.LengthOfTime.$error.pattern">
                 <div class="col-md-6 col-lg-4"></div>
-                <div class="col-md-5 help-block"  for="LengthOfTime">
+                <div class="col-md-5 help-block" for="LengthOfTime">
                     <label>Length of time must be number</label>
                 </div>
             </div>
         </div>
-        
-            <p class="" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                Special Work Considerations (i.e., high places, temperature, hazardous material, protective clothing, etc.)
-            </p>
-            <div class="row">
-                <div class="col-md-8" style="margin-left: 15px;">
-                    <textarea class="form-control" ng-model="info.WorkCons"></textarea>
-                </div>
+
+        <p class="" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+            Special Work Considerations (i.e., high places, temperature, hazardous material, protective clothing, etc.)
+        </p>
+        <div class="row">
+            <div class="col-md-8" style="margin-left: 15px;">
+                <textarea class="form-control" ng-model="info.WorkCons"></textarea>
             </div>
+        </div>
 
 
-            <p class="" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                Safety Representative/Supervisor:
-            </p>
-            <div class="row">
-                <div class="col-md-8" style="margin-left: 15px;">
-                    <textarea class="form-control" ng-model="info.Safety"></textarea>
-                </div>
+        <p class="" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
+            Safety Representative/Supervisor:
+        </p>
+        <div class="row">
+            <div class="col-md-8" style="margin-left: 15px;">
+                <textarea class="form-control" ng-model="info.Safety"></textarea>
             </div>
-        
-        </br>
+        </div>
+
+        <br>
         <div class="row">
             <label class="control-label col-md-10 col-lg-4 bold" style="margin-top: 7px;">HEALTH CARE PROFESSIONAL’S EVALUATION OF:</label>
             <div class="col-md-5 col-sm-9">
-                <input type="text"  ng-model="info.HealthCare"  class="form-control">
+                <input type="text" ng-model="info.HealthCare" class="form-control">
             </div>
             <div class="col-md-1 col-sm-3">
                 <label class="bold" style="margin-top: 7px;">(EMPLOYEE)</label>
             </div>
         </div>
-        
+
 
         <label class="control-label" style="font-weight: bold">CLASS (Circle):</label>
         <div class="row">
             <div class="col-md-12" style="margin-left: 30px">
                 <div class="btn-group col-sm-6 col-md-6 col-lg-12">
                     <label class="btn bold">
-                        <input type="radio" ng-model="info.Class" value="0"/> 1) No restriction on respirator usage
+                        <input type="radio" ng-model="info.Class" ng-value="0" />1) No restriction on respirator usage
                     </label>
                     <label class="btn bold">
-                        <input type="radio" ng-model="info.Class" value="1"/> 2) Some specific use restrictions
+                        <input type="radio" ng-model="info.Class" ng-value="1" />2) Some specific use restrictions
                     </label>
                     <label class="btn bold">
-                        <input type="radio" ng-model="info.Class" value="2"/> 3) No respirator use permitted
+                        <input type="radio" ng-model="info.Class" ng-value="2" />3) No respirator use permitted
                     </label>
                 </div>
             </div>
         </div>
-        
-
-            <p  style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                Restrictions:
-            </p>
-            <div class="row">
-                <div class="col-md-8" style="margin-left: 15px;">
-                    <textarea class="form-control" ng-model="info.Restrictions"></textarea>
-                </div>
-            </div>
 
 
-        </br>
+        <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+            Restrictions:
+        </p>
         <div class="row">
-            <div class="col-md-5 col-lg-4 col-sm-6">
+            <div class="col-md-8" style="margin-left: 15px;">
+                <textarea class="form-control" ng-model="info.Restrictions"></textarea>
+            </div>
+        </div>
+
+
+        <br>
+        <div class="row">
+            <div class="col-md-4 col-lg-4 col-sm-4" style="width:auto;margin-top:5px;">
                 <label class="control-label " style="font-weight: bold">Examining Health Care Professional:</label>
             </div>
-            <div class="col-md-5 col-sm-6">
-                <input type="text"  ng-model="info.HealthCarePro" style="width: 150px">
-                <label class="">Date</label>
-                <label>{{info.TodayDate}} </label>
+            <div class="col-md-4 col-lg-4 col-sm-5" style="width:auto;">
+                <input type="text" class="form-control" ng-model="info.HealthCarePro" style="width: 250px">
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-4" style="margin-top:5px;">
+                                <label class="control-label">Date:
+<span>{{info.TodayDate|date:'dd/MM/yyyy'}}</span></label>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-7 col-sm-7">
-                <div class="col-md-2 col-sm-2">
-                    <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
-                       class="btn green">Signature</a>
-                </div>
-                <div class="col-md-10 col-sm-10"
-                     ng-show="info.SIGNATURE!=null && info.SIGNATURE!='' && !isSignature">
-                    <img src="" ng-src="{{info.SIGNATURE}}" alt=""
-                         style="width: 200px;height: 150px;"/>
-                </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-2">
+            <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature" class="btn green">Signature</a>
+        </div>
+        <div class="col-md-10 col-sm-10" ng-show="info.SIGNATURE!=null && info.SIGNATURE!='' && !isSignature">
+            <img src="" ng-src="{{info.SIGNATURE}}" alt="" style="width: 200px;height: 150px;" />
+        </div>
 
-            </div>
+    </div>
+    <div class="row" style="text-align: center;" ng-show="isSignature">
+        <div class="col-md-12 col-sm-12">
+            <canvas width="500" height="400" id="canvas" signature ng-model="info.SIGNATURE" style="background-color: #8eece8">
+            </canvas>
         </div>
-        <div class="row" style="text-align: center;" ng-show="isSignature">
-            <div class="col-md-12 col-sm-12">
-                <canvas width="500" height="400" id="canvas"
-                        signature ng-model="info.SIGNATURE" style="background-color: #8eece8">
-                </canvas>
-            </div>
-            <div class="col-md-12 col-sm-12">
-                <div class="break-row"></div>
-                <div class="btn-group">
-                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
-                        Cancel
-                    </button>
-                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
-                    </button>
-                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
-                </div>
+        <div class="col-md-12 col-sm-12">
+            <div class="break-row"></div>
+            <div class="btn-group">
+                <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+                    Cancel
+                </button>
+                <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+                </button>
+                <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
             </div>
         </div>
     </div>
+    </div>
 </form>
-
