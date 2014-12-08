@@ -636,7 +636,7 @@
                 <div class="col-md-8 col-sm-8">
                     <div ng-class="{'has-error': gorgonMHForm.Q1_ExaminersComments.$error.required ||
          gorgonMHForm.Q1_ExaminersComments.$error.maxlength }">
-                        <textarea class="form-control" name="Q1_ExaminersComments" ng-model="info.Q1_ExaminersComments" ng-required="info.Q1_WorkPast||info.Q1_TypeOfWork || info.Q1_AnyProblems ||
+                        <textarea class="form-control" name="Q1_ExaminersComments" ng-model="info.Q1_ExaminersComments" ng-required="info.Q1_WorkPast || info.Q1_AnyProblems ||
                                        info.Q1_CauseProblems ||info.Q1_SafetyEquipment ==0||
                        info.Q1_Underground || info.Q1_WetConditions || info.Q1_GrainDust || info.Q1_Nickel ||
                        info.Q1_RemoteEnv || info.Q1_HumidConditions || info.Q1_AtHeights || info.Q1_FIFOProblems ||
@@ -3578,7 +3578,7 @@
                     <div class="col-md-1 col-sm-1" style="width:auto;margin-top:10px;">
                         <label class="control-label bold">Nil</label>
                     </div>
-                    <div class="col-md-1 col-sm-1" style="width:auto;">
+                    <div class="col-md-1 col-sm-1">
                         <input type="checkbox" class="form-control" ng-model="info.checkAllergic" ng-true-value="1" ng-false-value="0" />
                     </div>
 
