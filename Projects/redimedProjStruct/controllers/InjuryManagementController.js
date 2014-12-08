@@ -1,6 +1,8 @@
 var db = require('../models');
 
 var fs = require('fs');
+var util = require("util");
+var mime = require("mime");
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
@@ -79,42 +81,41 @@ module.exports = {
               STATUS: imInfo.STATUS
           },{raw:true})
               .success(function(data){
-                  //Start Push GCM Android
-                  if(imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined') {
+                  db.IMInjury.find({where:data.dataValues},{raw:true})
+                      .success(function(rs){
+                          //Start Push GCM Android
+                          if(imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined') {
 
-                      var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
-                      var message = new gcm.Message();
-                      message.addData('title','EMERGENCY');
-                      message.addData('message','You have an emergency case!');
-                      message.addData('patient_id',imInfo.Patient_id);
-                      message.collapseKey = 'EMERGENCY';
-                      message.delayWhileIdle = true;
-                      message.timeToLive = 3;
-                      var registrationIds = [];
+                              var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                              var message = new gcm.Message();
+                              message.addData('title','EMERGENCY');
+                              message.addData('message','You have an emergency case!');
+                              message.addData('injury_id',rs.injury_id);
+                              message.collapseKey = 'EMERGENCY';
+                              message.delayWhileIdle = true;
+                              message.timeToLive = 3;
+                              var registrationIds = [];
 
-                      db.UserToken.findAll({where: {user_type: 'Driver'}}, {raw: true})
-                          .success(function (data) {
-                              for (var i = 0; i < data.length; i++) {
-                                  if (data[i].android_token != null)
-                                      registrationIds.push(data[i].android_token);
-                              }
+                              db.UserToken.findAll({where: {user_type: 'Driver'}}, {raw: true})
+                                  .success(function (data) {
+                                      for (var i = 0; i < data.length; i++) {
+                                          if (data[i].android_token != null)
+                                              registrationIds.push(data[i].android_token);
+                                      }
 
-                              sender.send(message, registrationIds, 4, function (err,result) {
-                                  if(err)
-                                    console.log("ERROR:",err);
-                                  else
-                                    console.log("SUCCESS:",result);
-                              });
-                          })
-                          .error(function (err) {
-                              console.log(err);
-                          })
-                  }
-                  //End Push GCM Android
+                                      sender.send(message, registrationIds, 4, function (err,result) {
+                                          if(err)
+                                              console.log("ERROR:",err);
+                                          else
+                                              console.log("SUCCESS:",result);
+                                      });
+                                  })
+                                  .error(function (err) {
+                                      console.log(err);
+                                  })
+                          }
+                          //End Push GCM Android
 
-                  // START SEND MAIL
-                  db.IMInjury.max('injury_id')
-                      .success(function(max){
                           if(imInfo.cal_id != null)
                           {
                               var pId = imInfo.Patient_id;
@@ -166,13 +167,14 @@ module.exports = {
                                   })
                           }
 
-                          res.json({status:'success',injury_id:max});
+                          res.json({status:'success',injury_id:rs.injury_id});
+
                       })
                       .error(function(err){
                           res.json({status:'error'});
                           console.log(err);
                       })
-                  // END SEND MAIL
+
               })
               .error(function(err){
                   res.json({status:'error'});
@@ -239,7 +241,51 @@ module.exports = {
         }
 
 
+    },
+    injuryList: function(req,res){
+        db.IMInjury.findAll({raw:true})
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+    },
+    injuryById: function(req,res){
+        var injury_id = req.body.injury_id;
+
+        db.sequelize.query("SELECT i.*,p.* FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+    },
+    injuryImageById: function(req,res) {
+        var injury_id = req.body.injury_id;
+
+        db.IMInjuryImage.findAll({where: {injury_id: injury_id}}, {raw: true})
+            .success(function(data){
+                var arr = [];
+
+                for(var i=0; i<data.length; i++)
+                {
+                    arr.push({image:base64Image(data[i].image),description:data[i].description});
+                }
+
+                res.json({status:'success',data:arr});
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
     }
 };
+
+function base64Image(src) {
+    var data = fs.readFileSync(src).toString("base64");
+    return util.format("data:%s;base64,%s", mime.lookup(src), data);
+}
+
 
 
