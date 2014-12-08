@@ -112,18 +112,29 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
             VF_LEFT: null,
             VF_RIGHT: null,
             ISHIHARA_RESPONSE: null,
-            SYSTOLIC_BP: null,
-            DIASTOLIC_BP: null,
-            PULSE: null,
+            AS_Nil : 0,
+            AS_Wide : 0,
+            AS_Basal : 0,
+            AS_Wheezes : 0,
+            AS_Rub : 0,
+            EC_normal : 0,
+            EC_dermatitis : 0,
+            EC_fungal : 0,
+            EC_structural : 0,
+            EC_wax : 0,
+            TM_normal : 0,
+            TM_effusion : 0,
+            TM_wet : 0,
+            TM_dry : 0,
+            SYSTOLIC_BP : null,
+            DIASTOLIC_BP : null,
+            PULSE : null,
             HEART_RHYTHM: null,
             HEART_SOUNDS: null,
             PACEMAKER: null,
             CHEST: null,
             UPPER_ZONES: null,
             LOWER_ZONES: null,
-            ADDED_SOUNDS: null,
-            EXTERNAL_CANALS: null,
-            TYMPANIC_MEMBRANES: null,
             ECZEMA: null,
             PSORIASIS: null,
             TINEA: null,
@@ -162,15 +173,10 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
             BACK_ROTATION: null,
             BACK_EXAMINERS_COMMENTS: null,
             SHOULDER: null,
-            SHOULDER_PAINFUL: 0,
             ELBOWS: null,
-            ELBOWS_PAINFUL: 0,
             WRISTS: null,
-            WRISTS_PAINFUL: 0,
             KNEES: null,
-            KNEES_PAINFUL: 0,
             ANKLES: null,
-            ANKLES_PAINFUL: 0,
             GRIP_STRENGTH: null,
             EPICONDYLES: null,
             HEEL_WALK: null,
@@ -231,8 +237,6 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
         }
 
         $scope.infoChanged = function () {
-            console.log(oriInfo);
-            console.log($scope.info);
             return !angular.equals(oriInfo, $scope.info);
         }
 
@@ -277,7 +281,6 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                         if (response['status'] === 'success') {
                             toastr.success("Edit success!", "Success");
                             $state.go('loggedIn.gorgonMA', null, {'reload': true});
-
                         }
                         else {
                             toastr.error("Edit fail!", "Error");

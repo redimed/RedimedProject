@@ -1013,11 +1013,11 @@
                 </div>
                 <div ng-show="showClickedValidation">
                     <div class="row">
-                        <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="SYSTOLIC_BP" ng-show="gorgonMAForm.SYSTOLIC_BP.$error.pattern">
-                            <label style="color: #8b0000">Systolic BP must be number</label>
+                        <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="SYSTOLIC_BP">
+                            <label style="color: #8b0000" ng-show="gorgonMAForm.SYSTOLIC_BP.$error.pattern">Systolic BP must be number</label>
                         </div>
-                        <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="DIASTOLIC_BP" ng-show="gorgonMAForm.DIASTOLIC_BP.$error.pattern">
-                            <label style="color: #8b0000">Diastolic BP must be number</label>
+                        <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="DIASTOLIC_BP">
+                            <label style="color: #8b0000" ng-show="gorgonMAForm.DIASTOLIC_BP.$error.pattern">Diastolic BP must be number</label>
                         </div>
                         <div class="col-md-4 col-lg-3 col-sm-4 help-block" for="PULSE" ng-show="gorgonMAForm.PULSE.$error.pattern">
                             <label style="color: #8b0000">Pulse must be number</label>
@@ -1120,30 +1120,30 @@
                 </div>
             </div>
             <div class="row">
-                <label class="control-label col-md-3 col-lg-2 col-sm-3 bold" style="margin-top: 5px;">Added Sounds:</label>
-            </div>
-            <div class="row">
+                <label class="control-label col-md-3 col-lg-12 col-sm-3 bold" style="margin-top: 5px;">Added Sounds:</label>
+                <div class="col-md-9 col-lg-12 col-sm-9">
+                    <label class="control-label col-md-2 col-lg-1 col-sm-2 " style="margin-top: 10px"> Nil</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-model="info.AS_Nil"/>
+                        <input class="form-control" type="checkbox" ng-checked="info.AS_Nil == 1" ng-model="info.AS_Nil"/>
                     </div>
-                    <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px"> Nil</label>
+                    <label class="control-label col-md-4 col-lg-2 col-sm-4 " style="margin-top: 10px"> Widespread crackles</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-model="info.AS_Wide"/>
+                        <input class="form-control" type="checkbox" ng-checked="info.AS_Wide == 1" ng-model="info.AS_Wide"/>
                     </div>
-                    <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px"> Widespread crackles</label>
+                    <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px"> Basal crackles</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-model="info.AS_Basal"/>
+                        <input class="form-control" type="checkbox" ng-checked="info.AS_Basal == 1" ng-model="info.AS_Basal"/>
                     </div>
-                    <label class="control-label col-md-5 col-lg-2 col-sm-3 " style="margin-top: 10px"> Basal crackles</label>
+                    <label class="control-label col-md-2 col-lg-1 col-sm-2 " style="margin-top: 10px"> Wheezes</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-model="info.AS_Wheezes"/>
+                        <input class="form-control" type="checkbox" ng-checked="info.AS_Wheezes == 1" ng-model="info.AS_Wheezes"/>
                     </div>
-                    <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px"> Wheezes</label>
+                    <label class="control-label col-md-4 col-lg-1 col-sm-4 " style="margin-top: 10px"> Rub</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-model="info.AS_Rub"/>
+                        <input class="form-control" type="checkbox" ng-checked="info.AS_Rub == 1" ng-model="info.AS_Rub"/>
                     </div>
-                    <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px"> Rub</label>
                 </div>
+            </div>
         </div>
     </div>
     <!--Ears-->
@@ -1160,44 +1160,49 @@
         </div>
         <div class="portlet-body form">
             <div class="row">
-                <label class="control-label col-md-12 col-lg-3  col-sm-3" style="margin-top: 10px;font-weight: bold">External
-                    Canals:</label>
-
-                <div class="btn-group col-sm-3 col-md-12 col-lg-9">
-                    <label class="btn">
-                        <input type="radio" ng-model="info.EXTERNAL_CANALS" value="1"/> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.EXTERNAL_CANALS" value="2"/> Dermatitis
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.EXTERNAL_CANALS" value="3"/> Fungal infection
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.EXTERNAL_CANALS" value="4"/> Structural abnormality
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.EXTERNAL_CANALS" value="5"/> Wax
-                    </label>
+                <label class="control-label col-md-3 col-lg-12  col-sm-12" style="margin-top: 10px;font-weight: bold">External Canals:</label>
+                <div class="col-sm-12 col-md-9 col-lg-12">
+                    <label class="control-label col-md-4 col-lg-1 col-sm-4 " style="margin-top: 10px">Normal</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.EC_normal == 1" ng-model="info.EC_normal"/>
+                    </div>
+                    <label class="control-label col-md-2 col-lg-1 col-sm-2 " style="margin-top: 10px">Dermatitis</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.EC_dermatitis == 1" ng-model="info.EC_dermatitis"/>
+                    </div>
+                    <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px">Fungal infection</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.EC_fungal == 1" ng-model="info.EC_fungal"/>
+                    </div>
+                    <label class="control-label col-md-4 col-lg-2 col-sm-4 " style="margin-top: 10px">Structural abnormality</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.EC_structural == 1" ng-model="info.EC_structural"/>
+                    </div>
+                    <label class="control-label col-md-2 col-lg-1 col-sm-2 " style="margin-top: 10px">Wax</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.EC_wax == 1" ng-model="info.EC_wax"/>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <label class="control-label col-md-12 col-lg-3 col-sm-4" style="margin-top: 10px;font-weight: bold">Tympanic
-                    Membranes:</label>
-
-                <div class="btn-group col-sm-3 col-lg-9 col-md-12">
-                    <label class="btn">
-                        <input type="radio" ng-model="info.TYMPANIC_MEMBRANES" value="1"/> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.TYMPANIC_MEMBRANES" value="2"/> Effusion
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.TYMPANIC_MEMBRANES" value="3"/> Wet perforation
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.TYMPANIC_MEMBRANES" value="4"/> Dry perforation
-                    </label>
+                <label class="control-label col-md-12 col-lg-12 col-sm-12" style="margin-top: 10px;font-weight: bold">Tympanic Membranes:</label>
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px">Normal</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.TM_normal == 1" ng-model="info.TM_normal"/>
+                    </div>
+                    <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px">Effusion</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.TM_effusion == 1" ng-model="info.TM_effusion"/>
+                    </div>
+                    <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px">Wet perforation</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.TM_wet == 1" ng-model="info.TM_wet"/>
+                    </div>
+                    <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px">Dry perforation</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input class="form-control" type="checkbox" ng-checked="info.TM_dry == 1" ng-model="info.TM_dry"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1341,7 +1346,10 @@
                 <div class="col-md-8" style="margin-left: 15px;">
                     <textarea class="form-control" name="SKIN_EXAMINERS_COMMENTS"
                               ng-model="info.SKIN_EXAMINERS_COMMENTS"
-                              ng-required="info.PACEMAKER == 1 || info.ECZEMA == 2 || info.ECZEMA==3 || info.ECZEMA==4 ||
+                              ng-required="
+                              info.TM_dry == 1 || info.TM_wet == 1 || info.TM_effusion == 1 ||
+                              info.EC_dermatitis == 1 || info.EC_fungal == 1 || info.EC_structural == 1 || info.EC_wax == 1 ||
+                              info.PACEMAKER == 1 || info.ECZEMA == 2 || info.ECZEMA==3 || info.ECZEMA==4 ||
                               info.PSORIASIS == 2 || info.PSORIASIS == 3 || info.PSORIASIS == 4 || info.TINEA==2 ||
                                info.TINEA==3 || info.TINEA==4 ||
                               info.SOLAR_DAMAGE==2 || info.SOLAR_DAMAGE==3 || info.SOLAR_DAMAGE==4 ||
@@ -1553,18 +1561,29 @@
                     </div>
                 </div>
             </div>
-            <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                Detail
-            </p>
-
-            <div class="row">
-                <div class="col-md-8">
-                    <textarea class="form-control" ng-model="info.CNS_COMMENTS"></textarea>
-                </div>
-            </div>
-
 
         </div>
+    </div>
+    <!--Examiner Comment-->
+    <div class="portlet light bordered">
+        <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                Detail
+            </p>
+            <div class="row">
+                <div ng-class="{'has-error': gorgonMAForm.CNS_COMMENTS.$error.required}">
+                <div class="col-md-8">
+                    <textarea class="form-control" name="CNS_COMMENTS"
+                              ng-model="info.CNS_COMMENTS"
+                              ng-required="info.LOWER_RIGHT == 0 || info.LOWER_LEFT == 0 || info.GAIT == 0 || info.TREMOR == 0 ||
+                              info.MUSCLE_WASTING == 0 || info.MUSCLE_POWER == 0 || info.MUSCLE_TONE == 0  ||
+                              info.SCARS_APPENDIX == 1 || info.SCARS_GALLBLADDER == 1 || info.SCARS_HERNIA == 1 ||
+                              info.SCARS_OTHER == 1  || info.HERNIAL == 0 || info.RECTUS == 0"></textarea>
+                    <div class="help-block" ng-show="gorgonMAForm.CNS_COMMENTS.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
+                </div>
+            </div>
+            </div>
     </div>
     <!--Neck Function-->
     <div class="portlet light bordered">
@@ -1824,10 +1843,25 @@
         <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
             Examiners Commments
         </p>
-
         <div class="row">
-            <div class="col-md-8" style="margin-left: 15px;">
-                <textarea class="form-control" ng-model="info.BACK_EXAMINERS_COMMENTS"></textarea>
+            <div ng-class="{'has-error': gorgonMAForm.BACK_EXAMINERS_COMMENTS.$error.required}">
+                <div class="col-md-8">
+                    <textarea class="form-control" name="BACK_EXAMINERS_COMMENTS"
+                              ng-model="info.BACK_EXAMINERS_COMMENTS"
+                              ng-required="info.NECK_POSTURE == 0 || info.NECK_RHYTHM == 0 ||  info.BACK_POSTURE == 2 ||
+                              info.BACK_POSTURE ==3 || info.BACK_RHYTHM == 2 || info.NECK_FLEXION ==2 || info.NECK_FLEXION == 3 ||
+                              info.NECK_FLEXION == 4 || info.NECK_FLEXION == 5 || info.NECK_EXTENSION == 2 || info.NECK_EXTENSION == 3 ||
+                              info.NECK_EXTENSION == 4 || info.NECK_EXTENSION == 5 || info.NECK_LATERAL == 2 || info.NECK_LATERAL == 3 ||
+                              info.NECK_LATERAL == 4 || info.NECK_LATERAL == 5 || info.BACK_FLEXION == 2 || info.BACK_FLEXION == 3 ||
+                              info.BACK_FLEXION == 4 || info.BACK_FLEXION == 5 || info.BACK_EXTENSION == 2 || info.BACK_EXTENSION == 3 ||
+                              info.BACK_EXTENSION == 4 || info.BACK_EXTENSION == 5 || info.NECK_ROTATION == 2 || info.NECK_ROTATION == 3 ||
+                              info.NECK_ROTATION == 4  || info.NECK_ROTATION == 5 || info.BACK_ROTATION == 2 || info.BACK_ROTATION == 3 ||
+                              info.BACK_ROTATION == 4 || info.BACK_ROTATION == 5 || info.BACK_LATERAL == 2 || info.BACK_LATERAL == 3 ||
+                              info.BACK_LATERAL == 4 || info.BACK_LATERAL == 5 "></textarea>
+                    <div class="help-block" ng-show="gorgonMAForm.BACK_EXAMINERS_COMMENTS.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1852,10 +1886,10 @@
                         <input type="radio" ng-model="info.SHOULDER" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.SHOULDER" ng-value="0"/>Reduced
+                        <input type="radio" ng-model="info.SHOULDER" ng-value="2"/>Reduced
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.SHOULDER" ng-value="2"/>Painful
+                        <input type="radio" ng-model="info.SHOULDER" ng-value="3"/>Painful
                     </label>
                 </div>
             </div>
@@ -1867,10 +1901,10 @@
                         <input type="radio" ng-model="info.ELBOWS" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.ELBOWS" ng-value="0"/>Reduced
+                        <input type="radio" ng-model="info.ELBOWS" ng-value="2"/>Reduced
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.ELBOWS" ng-value="2"/>Painful
+                        <input type="radio" ng-model="info.ELBOWS" ng-value="3"/>Painful
                     </label>
                 </div>
             </div>
@@ -1882,10 +1916,10 @@
                         <input type="radio" ng-model="info.WRISTS" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.WRISTS" ng-value="0"/>Reduced
+                        <input type="radio" ng-model="info.WRISTS" ng-value="2"/>Reduced
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.WRISTS" ng-value="2"/>Painful
+                        <input type="radio" ng-model="info.WRISTS" ng-value="3"/>Painful
                     </label>
                 </div>
             </div>
@@ -1897,10 +1931,10 @@
                         <input type="radio" ng-model="info.KNEES" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.KNEES" ng-value="0"/>Reduced
+                        <input type="radio" ng-model="info.KNEES" ng-value="2"/>Reduced
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.KNEES" ng-value="2"/>Painful
+                        <input type="radio" ng-model="info.KNEES" ng-value="3"/>Painful
                     </label>
                 </div>
             </div>
@@ -1912,10 +1946,10 @@
                         <input type="radio" ng-model="info.ANKLES" ng-value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.ANKLES" ng-value="0"/>Reduced
+                        <input type="radio" ng-model="info.ANKLES" ng-value="2"/>Reduced
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.ANKLES" ng-value="2"/>Painful
+                        <input type="radio" ng-model="info.ANKLES" ng-value="3"/>Painful
                     </label>
                 </div>
             </div>
@@ -2011,8 +2045,8 @@
             <div ng-class="{'has-error':gorgonMAForm.FUTHER_COMMENTS.$error.required}">
                 <div class="col-md-8" style="margin-left: 15px;">
                     <textarea class="form-control" ng-model="info.FUTHER_COMMENTS" name="FUTHER_COMMENTS" ng-required="
-                        info.SHOULDER == 0 || info.SHOULDER == 2 || info.ELBOWS == 0 || info.ELBOWS == 2 || info.WRISTS == 0 ||
-                        info.WRISTS == 2 || info.KNEE == 0 || info.KNEES == 2 || info.ANKLES == 0 || info.ANKLES == 2||
+                        info.SHOULDER == 3 || info.SHOULDER == 2 || info.ELBOWS == 3 || info.ELBOWS == 2 || info.WRISTS == 3 ||
+                        info.WRISTS == 2 || info.KNEES == 3 || info.KNEES == 2 || info.ANKLES == 3 || info.ANKLES == 2||
                         info.GRIP_STRENGTH == 0 || info.EPICONDYLES==0 || info.HEEL_WALK == 0 || info.DUCK_WALK ==0 ||
                         info.TOE_WALK == 0 || info.RHOMBERGS == 0"></textarea>
 
