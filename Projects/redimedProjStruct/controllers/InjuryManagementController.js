@@ -86,9 +86,8 @@ module.exports = {
                       var message = new gcm.Message();
                       message.addData('title','EMERGENCY');
                       message.addData('message','You have an emergency case!');
-                      message.addData('name','AAAA');
-                      message.addData('age','20');
-                      message.collapseKey = 'Test';
+                      message.addData('patient_id',imInfo.Patient_id);
+                      message.collapseKey = 'EMERGENCY';
                       message.delayWhileIdle = true;
                       message.timeToLive = 3;
                       var registrationIds = [];
