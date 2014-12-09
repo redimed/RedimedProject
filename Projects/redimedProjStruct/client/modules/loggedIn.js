@@ -23,7 +23,7 @@ angular.module("app.loggedIn",[
 	'app.loggedIn.script',
 
 	'app.loggedIn.referral',
-
+    'app.loggedIn.sysservices',
 	/*END AUTO CREATE*/
 ])
 .config(function($stateProvider) {

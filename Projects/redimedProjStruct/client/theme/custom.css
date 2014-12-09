@@ -547,3 +547,7 @@ ul.mdt-list-booking-patient{
     background-position: right center;
     background-image: none;
 }
+
+.tabbable-custom {
+overflow: visible;
+}

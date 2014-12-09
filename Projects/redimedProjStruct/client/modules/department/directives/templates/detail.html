@@ -1,1 +1,34 @@
-<h1> DETAIL CONTENT </h1>
+<form name="mainForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;"></div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--CLINICAL_DEPT_NAME-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="clinical_dept_name">Clinical dept name</label>
+			<input type="text" placeholder="Clinical dept name" name="clinical_dept_name" ng-model="modelObjectMap.CLINICAL_DEPT_NAME" class="form-control" id="clinical_dept_name" float-label>
+		</span>	</div>
+	<!--CLINICAL_DEPT_NAME-->
+
+	<!--ISENABLE-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="modelObjectMap.ISENABLE" ng-true-value="1" ng-false-value="0">
+		<label for="isenable">Isenable</label>
+	</div>
+	<!--ISENABLE-->
+	<div class="clearfix"></div>
+	<!-- ACTION -->
+    <div class="col-sm-4 col-xs-6">
+        <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+            <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
+            <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
+            {{mode.text}}
+        </button>
+    </div>
+    <!-- END ACTION -->
+
+</div>
+</form>

@@ -70,7 +70,8 @@ angular.module("app.directive.mydatatable.common", [])
             }
 
             $scope.reload = function() {
-                 $scope.ajaxGetData();
+                $scope.ajaxGetData();
+                $scope.data.more_items = [];
             }
 
             $scope.displayData = function(data, col){

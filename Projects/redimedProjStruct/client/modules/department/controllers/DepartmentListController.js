@@ -6,6 +6,7 @@ angular.module("app.loggedIn.department.list.controller",[
 	
 	$scope.header_panel = {};
     $scope.dept_panel = {};
+    $scope.service_panel = {};
     /*
 	*	DEPARTMENT FUNCTION
 	*/
@@ -33,6 +34,7 @@ angular.module("app.loggedIn.department.list.controller",[
             		callback: function(item){
 						$scope.department.select = item.CLINICAL_DEPT_ID;
 						$scope.invheader.show(item.CLINICAL_DEPT_ID);
+                        $scope.services.show(item.CLINICAL_DEPT_ID);
 					}
 				},
 				{class: 'fa fa-pencil', title: 'Edit'},
@@ -42,8 +44,96 @@ angular.module("app.loggedIn.department.list.controller",[
         }
 	};
 
+    /*
+    *   DEPARTMENT ADD FORM
+    */
+    $scope.formAddDept = {
+        is_show: false,
+        open: function(){
+            this.is_show = true;
+        },
+        close: function() {
+            this.is_show = false;
+        },
+        success: function(response){
+            console.log(response)
+            if(response.status == 'success')
+                $scope.reloadpage();
+        }
+    }
+
+
+    /*
+    *   DEPARTMENT SERVICE 
+    */
+
+    $scope.services = {
+        show: function(dept_id){
+            $scope.services.options.search = {CLINICAL_DEPT_ID: dept_id} ;
+            $scope.service_panel.reload();
+            $scope.searchService.select_list = []; // reset 
+        },
+        class:  function(item){    
+            if(item.just_add) 
+                return 'info';
+
+            if(item.clnDeptService.ISENABLE == 0) 
+                return 'danger';
+        },
+        options: {
+            scope: $scope.service_panel,
+            api: 'api/erm/v2/dept/dept_service',
+            method: 'post',
+            columns: [
+                {field: 'SERVICE_ID', is_hide: true},
+                {field: 'SERVICE_NAME', label: 'Service Name'},
+                {field: 'DESCRIPTION', label: 'Description'},      
+                {field: 'SERVICE_COLOR', label: 'Color', type: 'color'},    
+            ],
+            use_filters: true,
+            search: {CLINICAL_DEPT_ID: 0} ,
+            not_load: true,
+            static: true,
+            use_actions: true, 
+            actions: [
+                {
+                    class: 'fa fa-check',
+                    title: 'Enable',
+                    callback: function(item){
+                        if (item.clnDeptService.ISENABLE == 1) {
+                            toastr.info('Header is enable !!!', 'Information');
+                            return;
+                        }
+                        DepartmentService.enableDeptService($scope.department.select, item.SERVICE_ID).then(function(response){
+                            if(response.status == 'success') {
+                                toastr.success('Save Successfully!!!', "Success");
+                                item.clnDeptService.ISENABLE = 1;
+                            }
+                        });
+                    }
+                },
+                {
+                    class: 'fa fa-times', 
+                    title: 'Disable',
+                    callback: function(item){
+                        if (item.clnDeptService.ISENABLE == 0) {
+                            toastr.info('Header is disable !!!', 'Information');
+                            return;
+                        }
+                        DepartmentService.disableDeptService($scope.department.select, item.SERVICE_ID).then(function(response){
+                            if(response.status == 'success') {
+                                toastr.success('Save Successfully!!!', "Success");
+                                item.clnDeptService.ISENABLE = 0;
+                            }
+                        });
+                    }
+                },
+            ],
+        }
+    }
+
 	/*
-	*	DEPENDENCE HEADER 
+	*	DEPARTMENT HEADER 
 	*/
 	$scope.invheader = {
 		show: function(dept_id){
@@ -52,7 +142,11 @@ angular.module("app.loggedIn.department.list.controller",[
         	$scope.searchHeader.select_list = []; // reset 
 		},
 		class: function(item){
-		    if(item.just_add) return 'info';
+		    if(item.just_add) 
+                return 'info';
+
+            if(item.clnDeptItemList.ISENABLE == 0) 
+                return 'danger';
 		},
 		options: {
 			scope: $scope.header_panel,
@@ -69,16 +163,39 @@ angular.module("app.loggedIn.department.list.controller",[
             static: true,
             use_actions: true, 
             actions: [
-            	{class: 'fa fa-check', title: 'Enable'},
+            	{
+                    class: 'fa fa-check',
+                    title: 'Enable',
+                    callback: function(item){
+                        if (item.clnDeptItemList.ISENABLE == 1) {
+                            toastr.info('Header is enable !!!', 'Information');
+                            return;
+                        }
+                        DepartmentService.enableDeptHeader($scope.department.select, item.POPULAR_HEADER_ID).then(function(response){
+                            if(response.status == 'success') {
+                                toastr.success('Save Successfully!!!', "Success");
+                                item.clnDeptItemList.ISENABLE = 1;
+                            }
+                        });
+                    }
+                },
             	{
             		class: 'fa fa-times', 
             		title: 'Disable',
             		callback: function(item){
-						console.log(item)
+                        if (item.clnDeptItemList.ISENABLE == 0) {
+                            toastr.info('Header is disable !!!', 'Information');
+                            return;
+                        }
+                        DepartmentService.disableDeptHeader($scope.department.select, item.POPULAR_HEADER_ID).then(function(response){
+                            if(response.status == 'success') {
+                                toastr.success('Save Successfully!!!', "Success");
+                                item.clnDeptItemList.ISENABLE = 0;
+                            }
+                        });
 					}
             	},
             ],
-
         }
 	}
 
@@ -87,6 +204,12 @@ angular.module("app.loggedIn.department.list.controller",[
 	*/
 	$scope.searchHeader = {
 		is_show: false,
+         open: function(){
+            this.is_show = true;
+        },
+        close: function() {
+            this.is_show = false;
+        },
 		select_list: [],
 		class: function(item){
 			var t_item = arrGetBy($scope.header_panel.data.items, 'POPULAR_HEADER_ID', item.POPULAR_HEADER_ID);  
@@ -104,14 +227,7 @@ angular.module("app.loggedIn.department.list.controller",[
 	        item.just_add = true;
 	        $scope.searchHeader.select_list.push(item);
 	        $scope.header_panel.data.more_items.push(item);
-	        console.log($scope.header_panel.data)
 		},
-        open: function(){
-            this.is_show = true;
-        },
-        close: function() {
-            this.is_show = false;
-        },
         save: function(){
             DepartmentService.saveDeptHeaders($scope.department.select, $scope.searchHeader.select_list).then(function(response){
                 if(response.status === 'success') {
@@ -132,5 +248,43 @@ angular.module("app.loggedIn.department.list.controller",[
         }
 	}
 
-  
+    /*
+    *   SEARCH SERVICE 
+    */  
+    $scope.searchService = {
+        is_show: false,
+        select_list: [],
+        class: function(item){
+            // var t_item = arrGetBy($scope.header_panel.data.items, 'POPULAR_HEADER_ID', item.POPULAR_HEADER_ID);  
+            // if(t_item) return 'success';
+
+            // var t_item = arrGetBy($scope.searchHeader.select_list, 'POPULAR_HEADER_ID', item.POPULAR_HEADER_ID);
+            // if(t_item) return 'info';
+        },
+        click: function(item) {
+            var t_item = arrGetBy($scope.service_panel.data.items, 'SERVICE_ID', item.SERVICE_ID);
+            if(t_item) return;
+
+            var t_item = arrGetBy($scope.searchService.select_list, 'SERVICE_ID', item.SERVICE_ID);
+            if(t_item) return;
+
+            item.just_add = true;
+            $scope.searchService.select_list.push(item);
+            $scope.service_panel.data.more_items.push(item);
+        },
+        open: function(){
+            this.is_show = true;
+        },
+        close: function() {
+            this.is_show = false;
+        },
+        save: function(){
+            DepartmentService.saveDeptServices($scope.department.select, $scope.searchService.select_list).then(function(response){
+                if(response.status === 'success') {
+                    toastr.success('Save Successfully!!!', "Success");
+                    $scope.reloadpage();
+                }
+            });
+        },
+    }
 })
