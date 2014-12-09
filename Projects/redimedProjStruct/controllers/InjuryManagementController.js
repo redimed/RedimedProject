@@ -145,6 +145,7 @@ module.exports = {
                                                   "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
                                                   "- For any queries, please call 92300990.<br>"
                                               };
+											  console.log(mailOptions);
 
                                               transport.sendMail(mailOptions, function(error, response){  //callback
                                                   if(error){
@@ -243,7 +244,7 @@ module.exports = {
 
     },
     injuryList: function(req,res){
-        db.IMInjury.findAll({raw:true})
+        db.sequelize.query("SELECT i.*,p.* FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id`",null,{raw:true})
             .success(function(data){
                 res.json({status:'success',data:data})
             })
