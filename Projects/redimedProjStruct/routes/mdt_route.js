@@ -47,6 +47,14 @@ app.post('/api/meditek/v1/referral/add', ReferralController.postAdd);
 app.post('/api/meditek/v1/referral/edit', ReferralController.postEdit);
 app.post('/api/meditek/v1/referral/byId', ReferralController.postById);
 
+
+var SysServicesController = require('./controllers/SysServicesController');
+
+app.post('/api/meditek/v1/sysservices/search', SysServicesController.postSearch);
+app.post('/api/meditek/v1/sysservices/add', SysServicesController.postAdd);
+app.post('/api/meditek/v1/sysservices/edit', SysServicesController.postEdit);
+app.post('/api/meditek/v1/sysservices/byId', SysServicesController.postById);
+
 /*END AUTO CREATE*/
 
 var mdtAutoController = require('./controllers/mdtAutoController');

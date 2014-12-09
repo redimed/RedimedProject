@@ -170,18 +170,29 @@ module.exports = function (sequelize, DataTypes) {
         updatedAt: "Last_update_date",
         classMethods: {
             associate: function (models) {
-                  mdtInstance.hasMany(models.Appointment, {
+                mdtInstance.hasMany(models.Appointment, {
                     as: 'Appointments', 
                     foreignKey: 'CLN_ITEM_ID',
                     through: models.ApptItems
                 });
 
-                 mdtInstance.hasMany(models.InvItemHeader, {
+                mdtInstance.hasMany(models.InvItemHeader, {
                     as: 'Headers', 
                     foreignKey: 'ITEM_ID',
                     through: models.InvItemLine
                 });
-              
+                
+                mdtInstance.hasMany(models.FeeType, {
+                    as: 'FeeTypes', 
+                    foreignKey: 'CLN_ITEM_ID',
+                    through: models.mdtClnItemFee
+                });
+
+                mdtInstance.hasMany(models.PrivateFund, {
+                    as: 'PrivateFunds', 
+                    foreignKey: 'CLN_ITEM_ID',
+                    through: models.mdtClnItemHealthFundFee
+                });
             }
         }
     });
