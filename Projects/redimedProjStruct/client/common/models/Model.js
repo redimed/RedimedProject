@@ -273,6 +273,29 @@ angular.module("app.model", [])
 
 // END ITEM HEADER
 
+// SERVICE 
+.value('SysServicesModel', {
+	SERVICE_NAME: '',
+	DESCRIPTION: '',
+	SERVICE_COLOR: '',
+	Isenable: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+
+.value('DepartmentModel', {
+	CLINICAL_DEPT_ID: '',
+	CLINICAL_DEPT_NAME: '',
+	ISENABLE: '1',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+// END SERVICE 
+
 /*AUTO CREATE*/
 .value('ScriptModel', {
 	Patient_id: null,
