@@ -280,6 +280,42 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error',error:err})
             })
+    },
+    testNotification: function(req,res)
+    {
+        var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+        var message = new gcm.Message();
+        message.addData('title','EMERGENCY');
+        message.addData('message','You have an emergency case!');
+        message.collapseKey = 'EMERGENCY';
+        message.delayWhileIdle = true;
+        message.timeToLive = 3;
+        var registrationIds = [];
+
+        db.UserToken.findAll({where: {user_type: 'Driver'}}, {raw: true})
+            .success(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].android_token != null)
+                        registrationIds.push(data[i].android_token);
+                }
+
+                sender.send(message, registrationIds, 4, function (err,result) {
+                    if(err)
+                    {
+                        console.log("ERROR:",err);
+                        res.json({status:'error'});
+                    }
+                    else
+                    {
+                        console.log("SUCCESS:",result);
+                        res.json({status:'success'});
+                    }
+
+                });
+            })
+            .error(function (err) {
+                console.log(err);
+            })
     }
 };
 

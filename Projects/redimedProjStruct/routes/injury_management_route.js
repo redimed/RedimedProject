@@ -15,3 +15,4 @@ app.post('/api/im/deleteToken',injuryController.deleteToken);
 app.get('/api/im/list',injuryController.injuryList);
 app.post('/api/im/getById',injuryController.injuryById);
 app.post('/api/im/images',injuryController.injuryImageById);
+app.post('/api/testPushGCM',injuryController.testNotification);
