@@ -31,3 +31,6 @@ eval(fs.readFileSync('./routes/injury_management_route.js')+'');
 
 //meditek
 eval(fs.readFileSync('./routes/mdt_route.js')+'');
+
+//tannv.dts@gmail.com
+eval(fs.readFileSync('./routes/iso_route.js')+'');
