@@ -20,64 +20,11 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             bars: true
         }];
 
-        $scope.notifications = [];
-
-        $scope.$on('pushNotificationReceived', function (event, notification) {
-            if (ionic.Platform.isAndroid()) {
-                handleAndroid(notification);
-            }
-            else if (ionic.Platform.isIOS()) {
-                handleIOS(notification);
-                $scope.$apply(function () {
-                    $scope.notifications.push(JSON.stringify(notification.alert));
-                })
-            }
-        });
-
-        //Android.
-        function handleAndroid(notification) {
-            if (notification.event == "registered") {
-                $scope.regId = notification.regid;
-            }
-            else if (notification.event == "message") {
-                $cordovaDialogs.alert(notification.message, "Push Notification Received");
-                $scope.$apply(function () {
-                    $scope.notifications.push(JSON.stringify(notification.message));
-                })
-            }
-            else if (notification.event == "error")
-                $cordovaDialogs.alert(notification.msg, "Push notification error event");
-            else $cordovaDialogs.alert(notification.event, "Push notification handler - Unprocessed Event");
-        }
-
-        //iOS.
-        function handleIOS(notification) {
-            if (notification.foreground == "1") {
-                if (notification.sound) {
-                    var mediaSrc = $cordovaMedia.newMedia(notification.sound);
-                    mediaSrc.promise.then($cordovaMedia.play(mediaSrc.media));
-                }
-
-                if (notification.body && notification.messageFrom) {
-                    $cordovaDialogs.alert(notification.body, notification.messageFrom);
-                }
-                else $cordovaDialogs.alert(notification.alert, "Push Notification Received");
-
-                if (notification.badge) {
-                    $cordovaPush.setBadgeNumber(notification.badge).then(function (result) {
-                        console.log("Set badge success " + result)
-                    }, function (err) {
-                        console.log("Set badge error " + err)
-                    });
-                }
-            }
-            else {
-                if (notification.body && notification.messageFrom) {
-                    $cordovaDialogs.alert(notification.body, "(RECEIVED WHEN APP IN BACKGROUND) " + notification.messageFrom);
-                }
-                else $cordovaDialogs.alert(notification.alert, "(RECEIVED WHEN APP IN BACKGROUND) Push Notification Received");
-            }
-        }
+        var i = 0;
+        var ipUpload = "testapp.redimed.com.au";
+        var serverUpload = "http://"+ipUpload+":3000/api/im/upload";
+        var checkNonemerg = localStorageService.get("checkNonemer");
+        var userInfoLS = localStorageService.get("userInfo");
 
 
         //INIT OBJECT WORKER FOR FORM
@@ -97,13 +44,13 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             description:''
         };
 
+        //INPUT DATE ANDROID VER == 4.3
         $scope.clickDate = function() {
             var options = {
                 date: new Date(),
                 mode: 'date'
             };
-
-            if(ionic.Platform.isAndroid() && ionic.Platform.version() < '4.4') {
+            if(ionic.Platform.isAndroid() && ionic.Platform.version() == '4.3') {
                 datePicker.show(options, function(date){
                     $scope.worker.DOB = date;
                     $scope.worker.DOB = $filter('date')(new Date($scope.worker.DOB),'yyyy-MM-dd');
@@ -111,19 +58,15 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             }
         }
 
-        var i = 0;
-        var ipUpload = "testapp.redimed.com.au";
-        var serverUpload = "http://"+ipUpload+":3000/api/im/upload";
-        var checkNonemerg = localStorageService.get("checkNonemer");
-        var userInfoLS = localStorageService.get("userInfo");
-
-        //CONFIG MODAL
+        //CONFIG MODAL TAKE PHOTO AND SELECT GALLERRY
         $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/imageDetail.html', function(modal) {
             $scope.InjuryImgControllerModal = modal;
         },{
             scope: $scope,
             animation: 'slide-in-up'
         });
+
+        //CONFIG MODAL DETAIL PICTURE
         $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/modalPicture.html', function(modal) {
             $scope.pictureModal = modal;
         },{
@@ -163,6 +106,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     $scope.isSubmitdesc = false;
                     $scope.worker = angular.copy(scopeReset);
                     $scope.isShow = true;
+                    $scope.imgURI = [];
                     //$scope.isShow = !$scope.isShow;
                 }
             })
@@ -175,7 +119,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             $scope.isFailEmail = false;
             $scope.isSubmitdesc = false;
             $scope.worker = angular.copy(scopeReset);
-            $scope.isShow = !$scope.isShow;
+            $scope.isShow = true;
+            //$scope.isShow = !$scope.isShow;
         }
 
         //SELECT A ROW WORKER WHEN WRITE
@@ -220,12 +165,12 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
         //SHOW MODAL IMAGE DETAIL
         $scope.selectImg = function(selected) {
-            $cordovaStatusbar.hide();
-            $scope.imageObj.selected = selected.id;
+            //$cordovaStatusbar.hide();
+            //$scope.imageObj.selected = selected.id;
             $scope.InjuryImgControllerModal.show();
         };
         $scope.hideModal = function() {
-            $cordovaStatusbar.show();
+            //$cordovaStatusbar.show();
             $scope.hide.bars = false;
             $scope.InjuryImgControllerModal.hide();
         };
@@ -420,16 +365,16 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
         //SUBMIT END INSERT INJURY LAST
         $scope.submitInjuryAll = function () {
+            $ionicLoading.show({
+                template: "<div class='icon ion-ios7-reloading'></div>"+
+                "<br />"+
+                "<span>Waiting...</span>",
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
             InjuryServices.insertInjury($scope.worker).then(function(data) {
-                $ionicLoading.show({
-                    template: "<div class='icon ion-ios7-reloading'></div>"+
-                    "<br />"+
-                    "<span>Waiting...</span>",
-                    animation: 'fade-in',
-                    showBackdrop: true,
-                    maxWidth: 200,
-                    showDelay: 0
-                });
                 $timeout(function () {
                     if(data.status == 'success')
                     {
@@ -447,9 +392,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         });
                         alertPopup.then(function (res){
                             if(res){
-                                $state.go('app.injury.info');
                                 $scope.imgURI = [];
                                 resetField();
+                                $state.go('app.injury.info');
                             }
                         });
                         $ionicLoading.hide();
@@ -462,7 +407,6 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         });
                     }
                 }, 1000);
-
             })
         }
 
@@ -484,20 +428,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
             }
         }
+
         initForm();
 
 
-        $scope.isCollapsed = false;
-        //maps
-        //Google map
-        $scope.testMap = function(){
-
-            new GMaps({
-                div: '#map',
-                lat: -12.043333,
-                lng: -77.028333
-            });
-        }
 
         $scope.tabs = [{
             title: 'Information',
@@ -515,6 +449,25 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
         $scope.isActiveTab = function(tabUrl) {
             return tabUrl == $scope.currentTab;
+        }
+
+
+
+
+
+
+
+
+        $scope.isCollapsed = false;
+        //maps
+        //Google map
+        $scope.testMap = function(){
+
+            new GMaps({
+                div: '#map',
+                lat: -12.043333,
+                lng: -77.028333
+            });
         }
 
     })

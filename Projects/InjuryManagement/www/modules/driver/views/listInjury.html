@@ -4,28 +4,44 @@
     </ion-nav-buttons>
 
     <ion-content>
+        <ion-refresher
+                on-refresh="doRefreshList()">
+        </ion-refresher>
         <div class="item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios7-search placeholder-icon"></i>
-                <input type="search" placeholder="Search">
+                <input type="search" placeholder="Search" ng-model="searchText">
             </label>
         </div>
+
         <div class="list">
-            <a class="item item-avatar">
-                <img width="100px" src="img/profile.png">
-                <div>
-                    <h2>Patient 1</h2>
+            <a ng-click="selectPatient(listPatient.injury_id)"
+               ui-sref="app.driver.detailInjury" class="item item-avatar"
+               style="padding: 0;" ng-repeat="listPatient in lstPatient | orderBy:'injury_date':true | filter: searchText" >
+
+
+                    <div style="float: left" class="padding">
+                        <div ng-class="{'img-image-name': listPatient}" ng-style={"background-color":listPatient.background}>
+                            {{listPatient.letter}}
+                        </div>
+                    </div>
+                    <div class="padding">
+                        <div>
+                            <h2>{{listPatient.Title}}. {{listPatient.First_name}} {{listPatient.Sur_name}} {{listPatient.Middle_name}}</h2>
                     <span class="text-right" style="float: right">
                         <i class="icon ion-ios7-arrow-right"></i>
                     </span>
-                </div>
+                        </div>
 
-                <p style="padding: 10px 0 5px 0">
-                    <i class="icon ion-ios7-location-outline"></i> - 101/3910 KOALA BARK DR NEW CANBERRA WA 1234 AUSTRALIA
-                </p>
-                <p>
-                    <i class="icon ion-ios7-telephone-outline"></i> - 001 999-000-89988
-                </p>
+                        <p style="padding: 0px; margin: 0px;">
+                            <i class="icon ion-ios7-location-outline"></i> - {{listPatient.Address1}}
+                        </p>
+
+                        <p>
+                            <i class="icon ion-ios7-telephone-outline"></i> - {{listPatient.Mobile}}
+                        </p>
+                    </div>
+
 
             </a>
         </div>

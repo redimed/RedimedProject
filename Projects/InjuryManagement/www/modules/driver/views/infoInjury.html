@@ -4,16 +4,19 @@
     </ion-nav-buttons>
 
     <div class="bar bar-subheader bar-sub-color">
-        <!--<button class="button button-clear button-positive" ui-sref="app.injury.desinjury">-->
-            <!--Back-->
-        <!--</button>-->
+        <button class="button button-clear button-positive" ui-sref="app.driver.list">
+            Back
+        </button>
     </div>
     <ion-content style="background-color: #F7F7F7 !important;">
-        <div class="bg-info-success" style="padding-top: 100px; padding-bottom: 50px; background-position-y: 480px;">
-            <img class="img-responsive img-circle img-infoInjury" ng-src="../img/profile.png" style="padding: 1px;"/>
-            <span>{{worker.Title}}. {{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}</span>
+        <div class="bg-info-success text-center">
+            <img class="img-responsive img-circle img-infoInjury" src="img/profile.png"/>
+            <span class="name-info-injury">
+                {{worker.Title}}. {{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}
+            </span>
         </div>
-        <div style="position: absolute; top: 265px; margin: auto; width: 100%">
+
+        <div class="wrap-btn-tap-toogle">
             <div class="col-xs-6  text-center" ng-repeat="tab in tabs" style="padding: 0">
                 <button class="button button-custom-info button-full" ng-class="{'active-btn-info':isActiveTab(tab.url)}"
                         ng-click="onClickTab(tab)">
@@ -27,22 +30,22 @@
         </div>
 
         <script type="text/ng-template" id="info.html">
-            <div class="row" style="padding-left: 35px;">
+            <div class="row">
                 <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
                     <span>
                          <i class="fa fa-birthday-cake margin-right-10"></i> Birthday</span>
                 </label>
                 <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
                     <span>
-                       {{worker.DOB}}
+                       {{worker.DOB | date:'yyyy-MM-dd'}}
                     </span>
                 </label>
             </div>
 
-            <div class="row" style="padding-left: 35px;">
+            <div class="row">
                 <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
                     <span>
-                        <img src="../img/gender.ico" width="20px" height="20px" class="margin-right-10"/> Gender
+                        <img src="img/gender.ico" width="20px" height="20px" class="margin-right-10"/> Gender
                     </span>
                 </label>
                 <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
@@ -50,7 +53,7 @@
                 </label>
             </div>
 
-            <div class="row" style="padding-left: 35px;">
+            <div class="row">
                 <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
                     <span>
                         <i class="fa fa-mobile-phone margin-right-10"></i> Mobile</span>
@@ -60,7 +63,7 @@
                 </label>
             </div>
 
-            <div class="row" style="padding-left: 35px;">
+            <div class="row">
                 <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
                     <span>
                         <i class="fa fa-envelope-o margin-right-10"></i> Email</span>
@@ -69,11 +72,20 @@
                     <span>{{worker.Email}}</span>
                 </label>
             </div>
+
+            <div class="row">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                    <span>
+                        <i class="icon ion-ios7-location-outline margin-right-10" style="font-size: 20px;"></i> Address</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                    <span>{{worker.Address1}}</span>
+                </label>
             </div>
         </script>
 
         <script type="text/ng-template" id="iDesc.html">
-            <div class="row" style="padding-left: 35px;">
+            <div class="row">
                 <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
                     <span>
                         <i class="fa fa-file-text-o margin-right-10"></i> Description</span>
@@ -83,39 +95,38 @@
                 </label>
             </div>
 
-            <div class="row" style="padding-left: 35px;">
+            <div class="row">
                 <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
                     <span>
                         <i class="fa fa-calendar-o margin-right-10"></i> Date</span>
                 </label>
                 <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
-                    <span>{{worker.injury_date}}</span>
+                    <span>{{worker.injury_date | date:'yyyy-MM-dd'}}</span>
                 </label>
             </div>
 
-            <div class="row" style="padding-left: 35px;">
-                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
-                    <span>
-                        <i class="fa fa-picture-o margin-right-10"></i> Image</span>
-                </label>
+            <!--<div class="row">-->
+            <!--<label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">-->
+            <!--<span>-->
+            <!--<i class="fa fa-picture-o margin-right-10"></i> Image</span>-->
+            <!--</label>-->
 
-                <label class="ion-scroll-custom item col-xs-6 text-left padding-left">
-                    <ion-scroll direction="x">
-                        <a ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)">
-                            <img ng-src="{{imgDetail.image}}" class="a-img-custom img-thumbnail"/>
-                        </a>
-                    </ion-scroll>
-                </label>
-            </div>
+            <!--<label class="ion-scroll-custom item col-xs-6 text-left padding-left">-->
+            <!--<ion-scroll direction="x">-->
+            <!--<a ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)">-->
+            <!--<img ng-src="{{imgDetail.image}}" class="a-img-custom img-thumbnail"/>-->
+            <!--</a>-->
+            <!--</ion-scroll>-->
+            <!--</label>-->
+            <!--</div>-->
         </script>
 
         <div class="row">
-            <div class="col-67 col-offset-20">
-                <button class="button button-block bg-btn-custom border-radius-button">
+            <div class="col col-50 col-offset-25 padding-bottom">
+                <button class="button button-block bg-btn-custom border-radius-button" ng-click="pickUp()">
                     Pickup
                 </button>
             </div>
-        </div>
         </div>
 
     </ion-content>

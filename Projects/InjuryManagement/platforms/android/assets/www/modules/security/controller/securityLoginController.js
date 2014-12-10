@@ -1,31 +1,8 @@
 angular.module('starter.security.login.controller',[])
     .controller('securityLoginController',function($scope, $state,UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
-                                                   $cordovaMedia, ionPlatform){
+                                                   $cordovaMedia){
         $scope.notifications = [];
-
-        ionPlatform.ready.then(function (device) {
-            var config = null;
-
-            if (ionic.Platform.isAndroid()) {
-                config = {
-                    "senderID": "137912318312"
-                };
-            }
-            else if (ionic.Platform.isIOS()) {
-                config = {
-                    "badge": "true",
-                    "sound": "true",
-                    "alert": "true"
-                }
-            }
-
-            $cordovaPush.register(config).then(function (result) {
-                console.log("Register success Push Notification " + result)
-            }, function (err) {
-                console.log("Register error Push Notification " + err)
-            });
-        });
 
         $scope.$on('pushNotificationReceived', function (event, notification) {
             localStorageService.set("notificationLS", notification);
@@ -46,15 +23,6 @@ angular.module('starter.security.login.controller',[])
                 $scope.modelUser.token = notification.regid;
                 $scope.modelUser.platform = ionic.Platform.platform();
             }
-            else if (notification.event == "message") {
-                $cordovaDialogs.alert(notification.message, "Push Notification Received");
-                $scope.$apply(function () {
-                    $scope.notifications.push(JSON.stringify(notification.message));
-                })
-            }
-            else if (notification.event == "error")
-                $cordovaDialogs.alert(notification.msg, "Push notification error event");
-            else $cordovaDialogs.alert(notification.event, "Push notification handler - Unprocessed Event");
         }
 
         //iOS.
@@ -116,7 +84,12 @@ angular.module('starter.security.login.controller',[])
                     }
                     else
                     {
-                        $state.go('app.injury.info');
+                        if(localStorageService.get("userInfo").user_type == "Driver")
+                        {
+                            $state.go('app.driver.list');
+                        } else {
+                            $state.go('app.injury.info');
+                        }
                     }
                 });
             }, function(error){

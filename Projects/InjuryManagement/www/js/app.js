@@ -36,7 +36,7 @@ angular.module('starter', ['ionic',
 
     .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
 
-        // RestangularProvider.setBaseUrl("http://192.168.132.142:3000");
+        //RestangularProvider.setBaseUrl("http://192.168.135.157:3000");
 
         RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
@@ -50,9 +50,14 @@ angular.module('starter', ['ionic',
                             $timeout(function(){
                                 $state.go("security.login");
                             }, 100);
-                        }else{
-                            $timeout(function(){
-                                $state.go("app.injury.info");
+                        }else {
+                            $timeout(function() {
+                                if(localStorageService.get("userInfo").user_type == "Driver")
+                                {
+                                    $state.go('app.driver.list');
+                                } else {
+                                    $state.go('app.injury.info');
+                                }
                             }, 100);
                         }
                     }
@@ -76,32 +81,29 @@ angular.module('starter', ['ionic',
             {
                 $ionicSideMenuDelegate.canDragContent(true);
             }
+            ionPlatform.ready.then(function (device) {
+                var config = null;
 
-        });
-        ionPlatform.ready.then(function (device) {
-            var config = null;
-
-            if (ionic.Platform.isAndroid()) {
-                config = {
-                    "senderID": "137912318312"
-                };
-            }
-            else if (ionic.Platform.isIOS()) {
-                config = {
-                    "badge": "true",
-                    "sound": "true",
-                    "alert": "true"
+                if (ionic.Platform.isAndroid()) {
+                    config = {
+                        "senderID": "137912318312"
+                    };
                 }
-            }
+                else if (ionic.Platform.isIOS()) {
+                    config = {
+                        "badge": "true",
+                        "sound": "true",
+                        "alert": "true"
+                    }
+                }
 
-            $cordovaPush.register(config).then(function (result) {
-                console.log("Register success Push Notification " + result)
-            }, function (err) {
-                console.log("Register error Push Notification " + err)
+                $cordovaPush.register(config).then(function (result) {
+                    console.log("Register success Push Notification " + result)
+                }, function (err) {
+                    console.log("Register error Push Notification " + err)
+                });
             });
         });
-
-
     });
 
 

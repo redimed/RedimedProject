@@ -22,7 +22,7 @@ angular.module('starter.driver',[
                 }
             })
             .state('app.driver.detailInjury',{
-                url:"/detail_injury/:idDriver",
+                url:"/detail_injury",
                 views: {
                     'structure' : {
                         templateUrl: "modules/driver/views/infoInjury.html"

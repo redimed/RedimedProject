@@ -1,5 +1,5 @@
 angular.module('starter.security.services',[])
-    .factory("SecurityService", function(Restangular){
+    .factory("SecurityService", function(Restangular, ionPlatform, $cordovaPush){
         var securityService = {};
         var securityApi = Restangular.all("api");
 

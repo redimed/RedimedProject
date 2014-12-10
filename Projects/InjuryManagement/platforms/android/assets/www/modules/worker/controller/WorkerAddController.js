@@ -136,9 +136,9 @@ angular.module('starter.worker.add.controller',[])
             else
             {
                 WorkerServices.checkEmail($scope.worker.Email).then(function (data) {
-                    if (data.status == 'success') {
-                        if (data.count == 0) {
-                            console.log("pass")
+                    if (data.status == 'success')
+                    {
+                        if (data.data.length == 0) {
                             $scope.isFailEmail = false;
                         }
                         else {
@@ -242,7 +242,7 @@ angular.module('starter.worker.add.controller',[])
             }
         }
         init();
-       // alert(JSON.stringify(localStorageService.get('newInfo')));
+        // alert(JSON.stringify(localStorageService.get('newInfo')));
 
         if($scope.nfcInfo.length == 0){
             $scope.nfcInfo = localStorageService.get('newInfo');

@@ -7239,7 +7239,8 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   display: -ms-flexbox;
   display: flex;
   padding: 5px;
-  width: 100%; }
+  width: 100%;
+  margin-left: 0px !important;}
 
 .row-wrap {
   -webkit-flex-wrap: wrap;

@@ -4,6 +4,16 @@ angular.module('starter.driver.services',[])
         var driverServices = {};
         var driverApi = Restangular.all("api");
 
-        return driverServices;
+        driverServices.getPatientID = function (patientID) {
+            var patient = driverApi.all("im/getById ");
+            return patient.post({injury_id: patientID});
+        }
 
-})
+        driverServices.getListPatient = function () {
+            var lstPatient = driverApi.one("im/list");
+            return lstPatient.get();
+        }
+
+        return driverServices;
+    })
+

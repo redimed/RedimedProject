@@ -230,8 +230,9 @@ form i.icon.error {
     color: white;
     position: relative;
     top: -45px;
-    -webkit-animation: mymove 1s infinite; /* Chrome, Safari, Opera */
-    animation: mymove 1s infinite;
+    box-shadow: 0 0 90px #C7C7CC;
+    /*-webkit-animation: mymove 1s infinite; *//* Chrome, Safari, Opera */
+    /*animation: mymove 1s infinite;*/
 }
 
 #mainView {
@@ -269,7 +270,7 @@ form i.icon.error {
     border-radius: 10px !important;
 }
 .bg-btn-custom {
-    background-image: linear-gradient(#898C90, #898C90);
+    background-color:#898C90;
     color: #F5F5F5;
 }
 .name-info-injury {
@@ -278,11 +279,11 @@ form i.icon.error {
     top: -20px;
     font-size: 25px;
     color: #fff;
-    font-family: fantasy;
+    font-weight: 100;
 }
 .wrap-btn-tap-toogle{
     position: absolute;
-    top: 290px;
+    top: 293px;
     margin: auto;
     width: 100%;
 }
@@ -305,4 +306,23 @@ form i.icon.error {
 }
 .custom-icon-power:hover {
     color: #f0f0f0 !important;
+}
+.custom-canvas {
+    position: absolute;
+    top: -5px;
+    left: -30px;
+    margin: auto;
+    width: 170px;
+    bottom: 0;
+}
+.img-image-name{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    color: white;
+    font-size: 60px;
+    font-weight: lighter;
 }

@@ -1,5 +1,5 @@
 angular.module("starter.menu.controller",[])
-    .controller("menuController",function($scope,localStorageService,$state,UserService,$ionicPopover,SecurityService, $ionicPopup){
+    .controller("menuController",function($scope, localStorageService, $state, UserService, $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs, $ionicLoading, $timeout){
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
         $scope.Injurymenu = [];
@@ -11,10 +11,7 @@ angular.module("starter.menu.controller",[])
         })
         $scope.userInfoLS = [];
 
-        var loadMenu = function(){
-            // MENU
-
-
+        var loadMenu = function() {
             UserService.menu(userInfo.id).then(function(response){
                 var i = 0;
                 angular.forEach(response, function(menu){
@@ -34,6 +31,7 @@ angular.module("starter.menu.controller",[])
             });
             // END MENU
         }
+
         loadMenu();
 
         $scope.logout = function() {
@@ -46,26 +44,38 @@ angular.module("starter.menu.controller",[])
                 template: 'Are you sure you want to log out?'
             }).then(function(result){
                 if(result){
-                    SecurityService.logOutapp($scope.userInfoLS).then(function(result){
-                        if(result.status.toLowerCase() == "success"){
-                            localStorageService.remove('userInfo');
-                            localStorageService.remove('companyInfo');
-                            localStorageService.remove("notificationLS");
-                            $state.go("security.login");
-                        }
-                    })
+                    $ionicLoading.show({
+                        template: "<div class='icon ion-ios7-reloading'></div>"+
+                        "<br />"+
+                        "<span>Waiting...</span>",
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
+                    });
+                    $timeout(function () {
+                        SecurityService.logOutapp($scope.userInfoLS).then(function (result) {
+                            if (result.status.toLowerCase() == "success") {
+                                localStorageService.remove('userInfo');
+                                localStorageService.remove('companyInfo');
+                                localStorageService.remove("notificationLS");
+                                localStorageService.remove("idpatient_notice");
+                                $state.go("security.login");
+                                $ionicLoading.hide();
+                            }
+                        })
+                    },1500 )
                 }
             })
         }
 
-        $scope.readNFC = function(){
+        $scope.readNFC = function() {
             $state.go('app.NFC',null,{
                 reload:true
             })
         }
 
-        //    popover
-
+        // popover
         $ionicPopover.fromTemplateUrl('my-popover.html', {
             scope: $scope
         }).then(function(popover) {
@@ -91,4 +101,65 @@ angular.module("starter.menu.controller",[])
         });
         //    end Popover
 
+
+
+        $scope.notifications = [];
+
+        $scope.$on('pushNotificationReceived', function (event, notification) {
+            if (ionic.Platform.isAndroid()) {
+                handleAndroid(notification);
+            }
+            else if (ionic.Platform.isIOS()) {
+                handleIOS(notification);
+                $scope.$apply(function () {
+                    $scope.notifications.push(JSON.stringify(notification.alert));
+                })
+            }
+        });
+
+        //Android.
+        function handleAndroid(notification) {
+            if (notification.event == "message" && userInfo.user_type == "Driver") {
+                $cordovaDialogs.alert(notification.message, "Push Notification Received").then(function (){
+                    localStorageService.set("idpatient_notice", notification.payload.injury_id)
+                    $state.go('app.driver.detailInjury', {}, {reload: true});
+                });
+                $scope.$apply(function () {
+                    $scope.notifications.push(JSON.stringify(notification.message));
+                })
+            }
+            else if (notification.event == "error")
+                console.log(notification.msg, "Push notification error event");
+
+            else console.log(notification.event, "Push notification handler - Unprocessed Event");
+        }
+
+        //iOS.
+        function handleIOS(notification) {
+            if (notification.foreground == "1") {
+                if (notification.sound) {
+                    var mediaSrc = $cordovaMedia.newMedia(notification.sound);
+                    mediaSrc.promise.then($cordovaMedia.play(mediaSrc.media));
+                }
+
+                if (notification.body && notification.messageFrom) {
+                    $cordovaDialogs.alert(notification.body, notification.messageFrom);
+                }
+                else $cordovaDialogs.alert(notification.alert, "Push Notification Received");
+
+                if (notification.badge) {
+                    $cordovaPush.setBadgeNumber(notification.badge).then(function (result) {
+                        console.log("Set badge success " + result)
+                    }, function (err) {
+                        console.log("Set badge error " + err)
+                    });
+                }
+            }
+            else {
+                if (notification.body && notification.messageFrom) {
+                    $cordovaDialogs.alert(notification.body, "(RECEIVED WHEN APP IN BACKGROUND) " + notification.messageFrom);
+                }
+                else $cordovaDialogs.alert(notification.alert, "(RECEIVED WHEN APP IN BACKGROUND) Push Notification Received");
+            }
+        }
     })

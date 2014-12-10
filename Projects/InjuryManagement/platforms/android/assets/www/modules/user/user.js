@@ -2,7 +2,7 @@ angular.module("starter.user",[
     'starter.user.services',
     'starter.user.controller'
 ])
-.config(function($stateProvider){
+    .config(function($stateProvider){
         $stateProvider
             .state('app.profile',{
                 url:"/profile",
