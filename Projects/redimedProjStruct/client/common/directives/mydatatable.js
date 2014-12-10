@@ -104,6 +104,8 @@ angular.module("app.directive.mydatatable.common", [])
                     $scope.ajaxGetData();
                 }
 
+                options.not_paging = !options.not_paging ? false: true;
+
                 if(options.scope) {
                     angular.extend(options.scope, $scope);
                 }

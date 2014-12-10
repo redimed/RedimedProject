@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="portlet-body">
-       	<my-data-table options="data_options" rowclass="set_row_class" rowclick="row_click" numrows="10"></my-data-table>
+       	<my-data-table options="items.options" numrows="10"></my-data-table>
     	<div class="clearfix"></div>
     </div>
 </div>
@@ -26,3 +26,13 @@
 </div>
  <!-- POPUP ITEM ADD FORM -->
 
+<!-- POPUP ITEM PRICE   -->
+<div class="mdt-search" style="display: block; width: 85%" ng-show="itemFees.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="itemFees.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <item_fees id="items.select" panel="itemFees.panel"></item_fees>
+</div>
+ <!-- POPUP ITEM PRICE-->

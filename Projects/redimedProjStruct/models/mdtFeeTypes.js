@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes){
 			primaryKey: true,
 			autoIncrement: true
 		},
-		FEE_TYPE_NAME: DataTypes.INTEGER(11),
+		FEE_TYPE_NAME: DataTypes.STRING(11),
 		ISENABLE: DataTypes.INTEGER(11),
 		Creation_date: DataTypes.DATE,
 		Created_by: DataTypes.INTEGER(11),

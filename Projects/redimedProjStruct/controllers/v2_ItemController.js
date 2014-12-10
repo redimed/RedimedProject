@@ -40,7 +40,6 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		});
-
 	},
 
 	postInsert : function(req, res) {
@@ -133,11 +132,7 @@ module.exports = {
 	},
 
 	postUpdateHeaderItem: function(req, res){
-
-		
 	},
-
-
 
 	anyHeaderSearch: function(req, res){
 		var limit = (req.body.limit) ? req.body.limit : 10;
@@ -172,7 +167,6 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		});
- 
 	},
 
 	
