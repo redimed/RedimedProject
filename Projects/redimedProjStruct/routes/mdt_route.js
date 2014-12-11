@@ -8,13 +8,11 @@ var mdtCompanyController = require('./controllers/mdtCompanyController');
 
 //MODULE DOCTOR
 app.post("/api/meditek/v1/doctor/search", mdtDoctorController.postSearch);
-app.get("/api/meditek/v1/doctor/dropdown", mdtDoctorController.getDropdown);
 
 //MODULE PATIENT
 app.post("/api/meditek/v1/patient/search", mdtPatientController.postSearch);
 app.post("/api/meditek/v1/patient/add", mdtPatientController.postAdd);
 app.post("/api/meditek/v1/patient/edit", mdtPatientController.postEdit);
-app.get("/api/meditek/v1/patient/dropdown", mdtPatientController.getDropdown);
 app.post("/api/meditek/v1/patient/byId", mdtPatientController.postById);
 
 //MODULE WAITING LIST
