@@ -41,17 +41,15 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
             }
             else {
 
-                var PATIENT_ID = patientInfo.Patient_id;
+                var patient_id = patientInfo.Patient_id;
                 //var CAL_ID = $scope.apptInfo.CAL_ID;
-                var CAL_ID = -1; //set default cal_id
-                //var sex = $scope.patientInfo.Sex;
+                var cal_id = -1; //set default cal_id
+                //set value default
 
                 $scope.info = {
-                    PATIENT_ID: PATIENT_ID,
-                    CAL_ID: CAL_ID
+                    patient_id: patient_id,
+                    cal_id: cal_id
                 };
-
-
                 /**
                  * exist cookies
                  */
@@ -71,85 +69,49 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                     /**
                      * load data to input
                      */
-                    $scope.info.headers = [];
-                    var data = response[0];
-
-                    angular.forEach(data.headers, function (dataH, hIndex) {
-                        $scope.info.headers.push({
-                            "MRS_DF_ID": dataH.MRS_DF_ID,
-                            "PATIENT_ID": PATIENT_ID,
-                            "CAL_ID": CAL_ID,
-                            "DF_CODE": dataH.DF_CODE,
-                            "ITEM_ID": dataH.ITEM_ID,
-                            "DESCRIPTION": dataH.DESCRIPTION,
-                            "ISENABLE": dataH.ISENABLE,
-                            "Created_by": dataH.Created_by,
-                            "Last_updated_by": dataH.Last_updated_by,
-                            "practitioner": dataH.practitioner,
-                            "practitionSign": dataH.practitionSign,
-                            "practitionDate": dataH.practitionDate || new Date(),
-                            "isReview": dataH.isReview, "group": []
-                        })
-
-                        $scope.info.practitionSign = $scope.info.headers[hIndex].practitionSign;
-                        $scope.info.practitionDate = $scope.info.headers[hIndex].practitionDate;
-                        $scope.info.isReview = $scope.info.headers[hIndex].isReview;
-                        $scope.info.practitioner = $scope.info.headers[hIndex].practitioner;
-
-                        angular.forEach(data.groups, function (dataG, gIndex) {
-                            if (dataG.MRS_DF_ID === $scope.info.headers[hIndex].MRS_DF_ID) {
-                                $scope.info.headers[hIndex].group.push({
-                                    "MRS_GROUP_ID": dataG.MRS_GROUP_ID,
-                                    "MRS_DF_ID": dataG.MRS_DF_ID,
-                                    "PATIENT_ID": PATIENT_ID,
-                                    "CAL_ID": CAL_ID,
-                                    "ORD": dataG.ORD,
-                                    "GROUP_NAME": dataG.GROUP_NAME,
-                                    "USER_TYPE": dataG.USER_TYPE,
-                                    "ISENABLE": dataG.ISENABLE,
-                                    "Created_by": dataG.Created_by,
-                                    "Last_updated_by": dataG.Last_updated_by,
-                                    "line": []
-                                })
-                            }
-                            angular.forEach(data.lines, function (dataL, lIndex) {
-                                if (dataL.MRS_GROUP_ID === $scope.info.headers[hIndex].group[gIndex].MRS_GROUP_ID) {
-                                    $scope.info.headers[hIndex].group[gIndex].line.push({
-                                        "MRS_LINE_ID": dataL.MRS_LINE_ID,
-                                        "MRS_GROUP_ID": dataL.MRS_GROUP_ID,
-                                        "MRS_DF_ID": dataL.MRS_DF_ID,
-                                        "PATIENT_ID": PATIENT_ID,
-                                        "CAL_ID": CAL_ID,
-                                        "ORD": dataL.ORD,
-                                        "COMP_TYPE": dataL.COMP_TYPE,
-                                        "QUEST_LABEL": dataL.QUEST_LABEL,
-                                        "QUEST_VALUE": dataL.QUEST_VALUE,
-                                        "ISCOMMENT": dataL.ISCOMMENT,
-                                        "COMMENT_LABEL": dataL.COMMENT_LABEL,
-                                        "comments": dataL.comments,
-                                        "ISREQ_COMMENT": dataL.ISREQ_COMMENT,
-                                        "ISENABLE": dataL.ISENABLE,
-                                        "Created_by": dataL.Created_by,
-                                        "Last_updated_by": dataL.Last_updated_by
-                                    });
-                                }
-                            });
-                        });
-                    });
-                    $scope.info.patient = response[0].patient;
-
-
+                    var data = response[0].data;
+                    //set value load
+                    $scope.patient = response[0].patient;
+                    $scope.doctor = response[0].doctor;
+                    $scope.appt = response[0].appt;
+                    $scope.info = {
+                        mrs_id: data.mrs_id,
+                        patient_id: patient_id,
+                        cal_id: cal_id,
+                        sticker_here: data.sticker_here,
+                        proposed: data.proposed,
+                        as_height: data.as_height,
+                        as_weight: data.as_weight,
+                        as_whr: data.as_whr,
+                        as_bmi: data.as_bmi,
+                        as_height_weight: data.as_height_weight,
+                        as_medical_history: data.as_medical_history,
+                        as_medical_assessment: data.as_medical_assessment,
+                        as_functional_assessment: data.as_functional_assessment,
+                        as_hearing_test: data.as_hearing_test,
+                        as_spirometry: data.as_spirometry,
+                        as_drug_test: data.as_drug_test,
+                        as_other: data.as_other,
+                        ac_any_existing_or_active: data.ac_any_existing_or_active,
+                        ac_any_history: data.ac_any_history,
+                        ac_cardiovascular: data.ac_cardiovascular,
+                        ac_any_current_or_work_related: data.ac_any_current_or_work_related,
+                        ac_any_medical_or_functional: data.ac_any_medical_or_functional,
+                        ac_any_diagnosed_or_previous: data.ac_any_diagnosed_or_previous,
+                        ac_examiner_comment: data.ac_examiner_comment,
+                        rr_screen: data.rr_screen,
+                        rr_amber: data.rr_amber,
+                        rr_amber_comment: data.rr_amber_comment,
+                        rr_red: data.rr_red,
+                        rr_red_comment: data.rr_red_comment,
+                        mrs_review: data.mrs_review,
+                        mrs_doc_date: data.mrs_doc_date || new Date(),
+                        doctor_id: $scope.doctor.doctor_id,
+                        created_by: data.created_by,
+                        last_updated_by: data.last_updated_by
+                    };
                     oriInfo = angular.copy($scope.info);
                 });
-                $scope.checkChange = function (hIndex, gIndex, lIndex) {
-                    if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 1) {
-                        $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = true;
-                    }
-                    else if ($scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments == 0) {
-                        $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments.checked = false;
-                        $scope.info.headers[hIndex].group[gIndex].line[lIndex].checkComments = 0;
-                    }
-                }
                 $scope.resetForm = function () {
                     $scope.info = angular.copy(oriInfo);
                     $scope.mrsForm.$setPristine();
@@ -159,13 +121,12 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                     return !angular.equals(oriInfo, $scope.info);
                 }
                 $scope.submit = function (mrsForm) {
-                    if (mrsForm.$error.pattern || mrsForm.$error.maxlength) {
+                    if (mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required) {
                         toastr.error("Please Input All Required Information!", "Error");
                     }
                     else {
                         var info = $scope.info;
-                        console.log(info);
-                        if ($scope.isNew == true) {
+                        if ($scope.isNew === true) {
                             //add new mrs
                             DocumentService.insertMRS(info).then(function (response) {
                                 if (response['status'] === 'fail') {
@@ -182,7 +143,7 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                                 }
                             })
                         }
-                        else if ($scope.isNew == false) {
+                        else if ($scope.isNew === false) {
                             //edit old mrs
                             DocumentService.editMRS(info).then(function (response) {
                                 if (response['status'] === 'fail') {

@@ -6,7 +6,7 @@
                         ng-disabled="mrsForm.$error.pattern||mrsForm.$error.required||mrsForm.$error.maxlength || !infoChanged()"
                         ng-click="submit(mrsForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="/api/document/printMRS/{{info.PATIENT_ID}}/{{info.CAL_ID}}/{{info.headers[0].MRS_DF_ID}}"
+                <a href="/api/document/printMRS/{{info.patient_id}}/{{info.cal_id}}/{{info.mrs_id}}"
                    type="button"
                    ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required || infoChanged() || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
@@ -16,408 +16,602 @@
             </div>
         </div>
     </div>
-    <br/>
 
-    <div ng-repeat="(hIndex,header) in info.headers">
-        <div class="caption">
+    <div class="caption">
+        <div class="row">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.DESCRIPTION}}</p>
+                    <p style="font-size: xx-large;font-weight: bolder;text-align: center;">Medical Summary</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <!-- BEGIN FORM-->
-                <form class="form-horizontal form-bordered">
-                    <div class="form-body">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-body">
+                <div class="portlet-body form">
+                    <div class="portlet box grey-cascade">
                         <div class="portlet-body form">
-                            <div class="portlet box grey-cascade">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="fa fa-user"></i>Applicant Details
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="col-md-6 col-sm-6" style="margin-top: 10px;">
+                                        <label class="control-label">Sticker Here:</label>
+                                        <textarea class="form-control" ng-model="info.sticker_here">
+                                        </textarea>
                                     </div>
-                                    <div class="tools">
-                                        <a href="javascript:;" class="collapse">
-                                        </a>
+                                    <div class="col-md-6 col-sm-6" style="margin-top:70px;">
+                                        <div class="col-md-4 col-sm-4" style="width:auto; margin-top: 5px;">
+                                            <label class="control-label">Proposed Occupation:</label>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" ng-model="info.proposed"/>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="portlet-body">
-                                    <div class="row" style="text-align: left;">
-                                        <div class="col-md-12 col-sm-12">
-                                            <div class="col-md-12 col-sm-12" style="width: auto;">
-                                                <label class="control-label">Applicant Name:&nbsp;<span
-                                                        class="text-info">
-                                        {{((info.patient.First_name==null||info.patient.First_name=='')?'':info.patient.First_name) +
-                                        ((info.patient.First_name==null||info.patient.First_name=='')?'':' ') +
-                                        ((info.patient.Middle_name==null||info.patient.Middle_name=='')?'':info.patient.Middle_name) +
-                                        ((info.patient.First_name==null||info.patient.First_name=='')?'':' ') +
-                                        ((info.patient.Sur_name==null||info.patient.Sur_name=='')?'':info.patient.Sur_name)}}</span></label>
-                                            </div>
+                            </div>
+                            <br/>
+
+                            <div style="background-color: lightgrey; vertical-align: middle;width:auto;">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label class="control-label col-md-12 col-sm-12 bold">Assessment Summary</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="col-md-1 col-sm-1" style="text-align: center;margin-top: 10px;">
+                                        <label class="control-label">Height</label>
+                                        <input type="text" class="form-control" ng-model="info.as_height"/>
+                                    </div>
+                                    <div class="col-md-1 col-sm-1"
+                                         style="text-align:center; margin-top: 10px;">
+                                        <label class="control-label">Weight</label>
+                                        <input type="text" class="form-control" ng-model="info.as_weight"/>
+                                    </div>
+                                    <div class="col-md-1 col-sm-1" style="text-align:center;margin-top: 10px;;">
+                                        <label class="control-label">
+                                            WHR
+                                        </label>
+                                        <input type="text" class="form-control" ng-model="info.as_whr"/>
+                                    </div>
+                                    <div class="col-md-1 col-sm-1" style="text-align:center; margin-top: 10px;">
+                                        <label class="control-label">
+                                            BMI
+                                        </label>
+                                        <input type="text" class="form-control" ng-model="info.as_bmi"/>
+                                    </div>
+                                    <div class="col-md-8 col-sm-8" style="text-align:center; margin-top: 30px;">
+                                        <div class="btn-group">
+                                            <label class="btn">
+                                                <input type="radio" ng-model="info.as_height_weight" ng-value="0"/>&nbsp;Underweight
+                                            </label>
+                                            <label class="btn">
+                                                <input type="radio" ng-model="info.as_height_weight" ng-value="1"/>&nbsp;Normal
+                                            </label>
+                                            <label class="btn">
+                                                <input type="radio" ng-model="info.as_height_weight" ng-value="2"/>&nbsp;Overweight
+                                            </label>
+                                            <label class="btn">
+                                                <input type="radio" ng-model="info.as_height_weight" ng-value="3"/>&nbsp;Obese
+                                            </label>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <hr>
 
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12">
-                                            <div class="col-md-12 col-sm-12" style="width: auto;">
-                                                <label class="control-label">Date of Birth:&nbsp;<span
-                                                        class="text-info">{{info.patient.DOB|date:'dd/MM/yyyy'}}</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet-body form">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
                                             <div class="col-md-12 col-sm-12">
-                                                <label class="control-label">Gender:&nbsp;<span class="text-info">{{(info.patient.Sex==null||info.patient.Sex=='')?'':info.patient.Sex}}</span></label>
-                                            </div>
-                                            <div class="col-md-10 col-sm-9">
-
+                                                <div class="col-md-6 col-sm-6">
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <label class="control-label bold">
+                                                        Met Requirement
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
                                             <div class="col-md-12 col-sm-12">
-                                                <label class="control-label">Address:&nbsp;<span class="text-info">{{((info.patient.Address1==null || info.patient.Address1=='')?'':info.patient.Address1)||((info.patient.Address2==null||info.patient.Address2=='')?'':info.patient.Address2)}}</span></label>
+                                                <div class="col-md-6 col-sm-6">
+
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <label class="control-label bold">
+                                                        Met Requirement
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label class="control-label" style="margin-top:10px;">
+                                                        Medical History
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <div class="btn-group">
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_medical_history"
+                                                                   ng-value="1"/>&nbsp;Yes
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_medical_history"
+                                                                   ng-value="0"/>&nbsp;No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-md-6 col-sm-6" style="margin-top:10px;">
+                                                    <label class="control-label">
+                                                        Hearing Test
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <div class="btn-group">
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_hearing_test"
+                                                                   ng-value="1"/>&nbsp;Yes
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_hearing_test"
+                                                                   ng-value="0"/>&nbsp;No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label class="control-label" style="margin-top:10px;">
+                                                        Medical Assessment
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <div class="btn-group">
+                                                        <label class="btn">
+                                                            <input type="radio"
+                                                                   ng-model="info.as_medical_assessment"
+                                                                   ng-value="1"/>&nbsp;Yes
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio"
+                                                                   ng-model="info.as_medical_assessment"
+                                                                   ng-value="0"/>&nbsp;No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label class="control-label" style="margin-top:10px;">
+                                                        Spirometry
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <div class="btn-group">
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_spirometry"
+                                                                   ng-value="1"/>&nbsp;Yes
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_spirometry"
+                                                                   ng-value="0"/>&nbsp;No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-md-6 col-sm-6" sss>
+                                                    <label class="control-label" style="margin-top:10px;">
+                                                        Functional Capacity Assessment
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <div class="btn-group">
+                                                        <label class="btn">
+                                                            <input type="radio"
+                                                                   ng-model="info.as_functional_assessment"
+                                                                   ng-value="1"/>&nbsp;Yes
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio"
+                                                                   ng-model="info.as_functional_assessment"
+                                                                   ng-value="0"/>&nbsp;No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label class="control-label" style="margin-top:10px;">
+                                                        Drug Test
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <div class="btn-group">
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_drug_test"
+                                                                   ng-value="1"/>&nbsp;Yes
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_drug_test"
+                                                                   ng-value="0"/>&nbsp;No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label class="control-label" style="margin-top:10px;">
+                                                        Other
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6" style="text-align:center;">
+                                                    <div class="btn-group">
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_other"
+                                                                   ng-value="1"/>&nbsp;Yes
+                                                        </label>
+                                                        <label class="btn">
+                                                            <input type="radio" ng-model="info.as_other"
+                                                                   ng-value="0"/>&nbsp;No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                    </div>
+                                </div>
+                                <div style="background-color: lightgrey; vertical-align: middle;width:auto;">
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12">
-                                            <div class="col-md-12 col-sm-12" style="width: auto;">
-                                                <label class="control-label">Suburb / State / PC:&nbsp;<span
-                                                        class="text-info">
-                                                    {{((info.patient.Surburb==null||info.patient.Surburb=='')?'':info.patient.Surburb) +
-                                                    ' / '+ ((info.patient.State==null||info.patient.State=='')?'':info.patient.State) +
-                                                    ' / ' + ((info.patient.Post_code==null||info.patient.Post_code=='')?'':info.patient.Post_code)}}
-                                                </span>
+                                            <label class="control-label col-md-12 col-sm-12 bold">Active or Past
+                                                Medical Conditions</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-6 col-sm-6" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                Does the candidate have any existing or active medical condition?
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="btn-group" style="text-align:center;">
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_any_existing_or_active"
+                                                           ng-value="1"/>&nbsp;Yes
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_any_existing_or_active"
+                                                           ng-value="0"/>&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12">
-                                            <div class="col-md-12 col-sm-12">
-                                                <label class="control-label">Contact No:&nbsp;<span class="text-info">{{(info.patient.Mobile==null || info.patient.Mobile=='')?'':info.patient.Mobile}}</span></label>
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-6 col-sm-6" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                Does the candidate have any history of overuse or repetitive strain
+                                                injury?
+                                            </label>
                                         </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12">
-                                            <div class="col-md-12 col-sm-12" style="width: auto;">
-                                                <label class="control-label">Proposed Position:&nbsp;<span
-                                                        class="text-info">{{(info.patient.Occupation==null||info.patient.Occupation=='')?'':info.patient.Occupation}}</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="btn-group" style="text-align:center;">
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_any_history"
+                                                           ng-value="1"/>&nbsp;Yes
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_any_history"
+                                                           ng-value="0"/>&nbsp;No
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-
-                            <br/>
-
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12">
-                                    <div class="portlet box grey-cascade" ng-repeat="(gIndex,group) in header.group">
-                                        <div class="portlet-title">
-                                            <div class="caption">
-                                                <i class="fa fa-gift"></i> {{group.GROUP_NAME}}
-                                            </div>
-                                            <div class="tools">
-                                                <a href="javascript:;" class="collapse">
-                                                </a>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-6 col-sm-6" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                What is the candidate's cadiorvascular risk rating?
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="btn-group" style="text-align:center;">
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_cardiovascular"
+                                                           ng-value="0"/>&nbsp;Low
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_cardiovascular"
+                                                           ng-value="1"/>&nbsp;Medium
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_cardiovascular"
+                                                           ng-value="2"/>&nbsp;High
+                                                </label>
                                             </div>
                                         </div>
-                                        <div class="portlet-body form">
-                                            <div style="background-color: lightgrey; vertical-align: middle;">
-                                                <div class="row">
-                                                    <div class="col-md-12 col-sm-12">
-                                                        <div class="col-md-5 col-sm-3" style="text-align: center;">
-                                                            <label class="control-label bold"
-                                                                   style="text-align: center;">Component
-                                                                of Medical (as applicabel)</label>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-5" style="text-align: center;">
-                                                            <label class="control-label bold"
-                                                                   style="text-align: center;">Satisfactory
-                                                                (S) Conditional (C)
-                                                                Unsatisfactory (US)</label>
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-4" style="text-align: center;">
-                                                            <label class="control-label bold"
-                                                                   style="text-align: center;">Comments/Further
-                                                                information</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br/>
-
-                                            <div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
-                                                <ng-form name="lineForm">
-                                                    <div ng-if="line.COMP_TYPE == 3">
-                                                        <div class="row">
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="col-md-5 col-sm-3">
-                                                                    <label class="control-label bold"
-                                                                           style="text-align: left;">{{line.QUEST_LABEL}}</label>
-                                                                </div>
-                                                                <div class="col-md-5 col-sm-5" style="width: auto;">
-                                                                    <div class="btn-group" style="margin-left: 12%;">
-                                                                        <label class="btn">
-                                                                            <input type="radio"
-                                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"
-                                                                                   ng-value="0"/> S
-                                                                        </label>
-                                                                        <label class="btn">
-                                                                            <input type="radio"
-                                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"
-                                                                                   ng-value="1"/> C
-                                                                        </label>
-                                                                        <label class="btn">
-                                                                            <input type="radio"
-                                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"
-                                                                                   ng-value="2"/> US
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3 col-sm-4">
-                                                                    <div ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT">
-                                                                        <div ng-class="{'has-error': lineForm.comments.$error.required}">
-                                                                            <input type="text" class="form-control"
-                                                                                   name="comments"
-                                                                                   ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"
-                                                                                   ng-required="info.headers[hIndex].group[gIndex].line[lIndex].QUEST_VALUE"/>
-
-                                                                            <div ng-show="lineForm.comments.$error.required">
-                                                                                <label class="control-label">Required!</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <hr/>
-                                                    </div>
-                                                    <div ng-if="line.COMP_TYPE == 1">
-                                                        <div ng-if="line.ORD == 8">
-                                                            <div class="row">
-                                                                <div class="col-md-12 col-sm-12">
-                                                                    <div class="col-md-12 col-sm-12">
-                                                                        <label class="control-label bold"
-                                                                               style="text-align: left;">{{line.QUEST_LABEL}}</label>
-                                                                        <textarea class="form-control"
-                                                                                  ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr/>
-                                                        </div>
-                                                        <div ng-if="line.ORD == 9">
-                                                            <div class="row">
-                                                                <div class="col-md-12 col-sm-12">
-                                                                    <div class="col-md-3 col-sm-4"
-                                                                         style="margin-top: 5px;width: auto;">
-                                                                        <label class="control-label"
-                                                                               style="text-align: left;">
-                                                                            {{line.QUEST_LABEL}}</label>
-                                                                    </div>
-                                                                    <div class="col-md-4 col-sm-6">
-                                                                        <input type="text" class="form-control"
-                                                                               ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"/>
-                                                                    </div>
-                                                                    <div class="col-md-5 col-sm-7"
-                                                                         style="margin-top:5px;">
-                                                                        <label class="control-label">(name) is given the
-                                                                            below
-                                                                            rating for the proposed job.</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </ng-form>
-                                            </div>
-                                            <br/>
-
-                                            <div class="portlet-body form">
-                                                <div style="background-color: lightgrey; vertical-align: middle;">
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-sm-12">
-                                                            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                                                                <label class="control-label bold">Rating</label>
-                                                            </div>
-                                                            <div class="col-md-2 col-sm-2" style="text-align: center;">
-                                                                <label class="control-label bold">Please Tick</label>
-                                                            </div>
-                                                            <div class="col-md-8 col-sm-8" style="text-align: center;">
-                                                                <label class="control-label bold">Comments</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br/>
-                                            </div>
-                                            <div class="portlet-body form" ng-repeat="(lIndex,line) in group.line">
-                                                <ng-form name="lineForm">
-                                                    <div ng-if="line.COMP_TYPE == 2">
-                                                        <div class="row">
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="col-md-2 col-sm-2"
-                                                                     style="text-align: center;">
-                                                                    <label class="control-label bold"
-                                                                           style="text-align: center;">{{line.QUEST_LABEL}}</label>
-                                                                </div>
-                                                                <div class="col-md-2 col-sm-2" style="margin-top: 1%;">
-                                                                    <input type="checkbox" class="form-control"
-                                                                           ng-model="info.headers[hIndex].group[gIndex].line[lIndex].checkComments"
-                                                                           ng-true-value="1"
-                                                                           ng-false-value="0"
-                                                                           ng-change="checkChange(hIndex,gIndex,lIndex)"
-                                                                           ng-checked="info.headers[hIndex].group[gIndex].line[lIndex].comments"/>
-                                                                </div>
-                                                                <div class="col-md-8 col-sm-8">
-                                                                    <label class="control-label"
-                                                                           style="text-align: left;">{{line.COMMENT_LABEL}}</label>
-
-                                                                    <div ng-show="info.headers[hIndex].group[gIndex].line[lIndex].ISREQ_COMMENT">
-                                                                        <div ng-class="{'has-error': lineForm.comments.$error.required}">
-                                                                            <textarea class="form-control"
-                                                                                      name="comments"
-                                                                                      ng-model="info.headers[hIndex].group[gIndex].line[lIndex].comments"
-                                                                                      ng-required="info.headers[hIndex].group[gIndex].line[lIndex].checkComments"></textarea>
-
-                                                                            <div ng-show="lineForm.comments.$error.required">
-                                                                                <label class="control-label">Required!</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div ng-if="line.MRS_LINE_ID != group.line[group.line.length - 1].MRS_LINE_ID">
-                                                            <hr/>
-                                                        </div>
-                                                    </div>
-                                                </ng-form>
-                                            </div>
-                                            <br/>
-                                        </div>
-                                    </div>
-
-                                    <div class="portlet-body form">
-                                        <div class="row">
-                                            <div class="col-md-12 col-sm-12">
-                                                <div class="col-md-5 col-sm-7" style="width: auto;margin-top: 10px;">
-                                                    <label class="control-label bold">REVIEW REQUIRED BY INJURY
-                                                        MANAGEMENT TEAM</label>
-                                                </div>
-                                                <div class="col-md-7 col-sm-5">
-                                                    <div class="btn-group" style="margin-left: 12%;">
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="info.isReview" ng-value="1"/>
-                                                            Yes
-                                                        </label>
-                                                        <label class="btn">
-                                                            <input type="radio" ng-model="info.isReview" ng-value="0"/>
-                                                            No
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br/>
-
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="col-md-4 col-sm-5" style="margin-top: 5px;width: auto;">
-                                                    <label class="control-label">Name:</label>
-                                                </div>
-                                                <div ng-class="{'has-error': mrsForm.practitioner.$error.maxlength}">
-                                                    <div class="col-md-8 col-sm-7">
-                                                        <input type="text" class="form-control" name="practitioner"
-                                                               ng-model="info.practitioner"
-                                                               ng-maxlength="50"/>
-
-                                                        <div class="help-block"
-                                                             ng-show="mrsForm.practitioner.$error.maxlength">
-                                                            <label class="control-label">Too long!</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="col-md-2 col-sm-2">
-                                                    <a href="javascript:;" class="btn green" ng-click="showSignature()"
-                                                       ng-show="!isSignature">Sign</a>
-                                                </div>
-                                                <div class="col-md-10 col-sm-10"
-                                                     ng-show="info.practitionSign!=null && info.practitionSign!='' && !isSignature">
-                                                    <img src="" ng-src="{{info.practitionSign}}" alt=""
-                                                         style="width: 200px;height: 40px;margin-left: 10px;"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="col-md-2 col-sm-3" style="margin-top: 5px;width: auto;">
-                                                    <label class="control-label">Date:</label>
-                                                </div>
-                                                <div class="col-md-7 col-sm-8">
-                                                    <input type="text" class="form-control col-md-12"
-                                                           name="practitionDate"
-                                                           datepicker-popup="dd/MM/yyyy"
-                                                           data-ng-model="info.practitionDate"
-                                                           is-open="openDOB" ng-click="openDOB = true"
-                                                           datepicker-options="dateOptions3"
-                                                           close-text="Close"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--begin-->
-                                        <br/>
-
-                                        <div class="row" style="text-align: left;margin-left: 10px;"
-                                             ng-show="isSignature">
-                                            <div class="col-md-12 col-sm-12">
-                                                <div class="col-md-3 col-sm-3"></div>
-                                                <div class="col-md-9 col-sm-9">
-                                                    <canvas width="500" height="400" id="canvas"
-                                                            signature ng-model="info.practitionSign"
-                                                            style="background-color: #8eece8">
-                                                    </canvas>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 col-sm-12" style="margin-left: 340px;">
-                                                <div class="col-md-3 col-sm-3"></div>
-                                                <div class="col-md-9 col-sm-9">
-                                                    <div class="break-row"></div>
-                                                    <div class="btn-group">
-                                                        <button type="button" ng-click="cancelClick()"
-                                                                class="btn btn-danger btn-sm">
-                                                            Cancel
-                                                        </button>
-                                                        <button type="button" ng-click="clearClick()"
-                                                                class="btn btn-warning btn-sm">Clear
-                                                        </button>
-                                                        <button type="button" ng-click="okClick()"
-                                                                class="btn green btn-sm">Ok
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--begin-->
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-6 col-sm-6" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                Does the candidate have any current or past work-related injuries or
+                                                conditions?
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="btn-group" style="text-align:center;">
+                                                <label class="btn">
+                                                    <input type="radio"
+                                                           ng-model="info.ac_any_current_or_work_related"
+                                                           ng-value="1"/>&nbsp;Yes
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio"
+                                                           ng-model="info.ac_any_current_or_work_related"
+                                                           ng-value="0"/>&nbsp;No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-6 col-sm-6" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                Does the candidate have any medical or functional impairment
+                                                requires further assessment or management?
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="btn-group" style="text-align:center;">
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_any_medical_or_functional"
+                                                           ng-value="1"/>&nbsp;Yes
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_any_medical_or_functional"
+                                                           ng-value="0"/>&nbsp;No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-6 col-sm-6" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                Does the candidate have any diagnosed or previous mental health
+                                                conditions?
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="btn-group" style="text-align:center;">
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_any_diagnosed_or_previous"
+                                                           ng-value="1"/>&nbsp;Yes
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.ac_any_diagnosed_or_previous"
+                                                           ng-value="0"/>&nbsp;No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-12 col-sm-12">
+                                            <label class="control-label bold">
+                                                Examiner Comments
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8">
+                                            <textarea class="form-control"
+                                                      ng-model="info.ac_examiner_comment"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div style="background-color: lightgrey; vertical-align: middle;width:auto;">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <label class="control-label col-md-12 col-sm-12 bold">Risk
+                                                Rating</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-3" style="margin-top:10px;text-align:center;">
+                                            <label class="control-label bold">
+                                                GREEN
+                                                <br>(Fit)
+                                                <br>Low Risk
+                                            </label>
+                                        </div>
+                                        <div class="col-md-1 col-sm-1">
+                                            <input type="checkbox" class="form-control" ng-model="info.rr_screen"
+                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_screen"/>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                The candidate is currently fit for the proposed position
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-3" style="margin-top:10px;text-align:center;">
+                                            <label class="control-label bold">
+                                                AMBER
+                                                <br>(Fit Condition)
+                                                <br>Medium Risk
+                                            </label>
+                                        </div>
+                                        <div class="col-md-1 col-sm-1">
+                                            <input type="checkbox" class="form-control" ng-model="info.rr_amber"
+                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_amber"/>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                The candidate is fit to perform the proposed position: further
+                                                discussion regarding the candidate's medical management with the
+                                                CKJV Injury Management team is required. It is strongly recommended
+                                                the below is addressed to minimise the risk of medical complications
+                                                and/or injury:
+                                            </label>
+                                            <textarea class="form-control"
+                                                      ng-model="info.rr_amber_comment"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-3" style="margin-top:10px;text-align:center;">
+                                            <label class="control-label bold">
+                                                RED
+                                                <br>(Unfit)
+                                                <br>High Risk
+                                            </label>
+                                        </div>
+                                        <div class="col-md-1 col-sm-1">
+                                            <input type="checkbox" class="form-control" ng-model="info.rr_red"
+                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_red"/>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8" style="margin-top:10px;">
+                                            <label class="control-label">
+                                                Candidate is currently not fit to perform the inherent requirements
+                                                of the proposed occupation and is unlikely to be able to perform
+                                                these requirements in the foreseeable future, due to:
+                                            </label>
+                                            <textarea class="form-control"
+                                                      ng-model="info.rr_red_comment"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-8 col-sm-8" style="width:auto;margin-top:10px;">
+                                            <label class="control-label bold uppercase">
+                                                review required by injury management team?
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="btn-group">
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.mrs_review" ng-value="1"/>&nbsp;YES
+                                                </label>
+                                                <label class="btn">
+                                                    <input type="radio" ng-model="info.mrs_review" ng-value="0"/>&nbsp;NO
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-4 col-sm-4">
+                                            <label class="control-label bold uppercase">
+                                                Doctor:&nbsp;<span class="text-info">{{doctor.NAME}}</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <label class="control-label bold">
+                                                Signature:
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="col-md-2 col-sm-2" style="margin-top:5px;">
+                                                <label class="control-label bold">
+                                                    Date:
+                                                </label>
+                                            </div>
+                                            <div class="col-md-7 col-sm-7">
+                                                <input type="text" class="form-control" name="DATE"
+                                                       datepicker-popup="dd/MM/yyyy" data-ng-model="info.mrs_doc_date"
+                                                       is-open="openDOB1" ng-click="openDOB1 = true"
+                                                       datepicker-options="dateOptions"
+                                                       close-text="Close"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="cil-md-12 col-sm-12">
+                                            <div class="col-md-4 col-sm-4">
+
+                                            </div>
+                                            <div class="col-md-8 col-sm-8">
+                                                <img ng-src="{{doctor.Signature}}" alt=""
+                                                     style="height: 70px; width: 200px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

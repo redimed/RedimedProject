@@ -2,13 +2,11 @@
  * Created by thanh on 10/8/2014.
  */
 var db = require('../../models');
-var headersMRSCLN = db.headersMRSCLN;
-var groupsMRSCLN = db.groupsMRSCLN;
-var linesMRSCLN = db.linesMRSCLN;
-var headersMRSSYS = db.headersMRSSYS;
-var groupsMRSSYS = db.groupsMRSSYS;
-var linesMRSSYS = db.linesMRSSYS;
 var Patient = db.Patient;
+var Doctor = db.Doctor;
+var MedicalSummary = db.MedicalSummary;
+var APPTCAL = db.APPTCAL;
+
 
 var mkdirp = require('mkdirp');
 
@@ -63,8 +61,7 @@ module.exports = {
                     if (err) {
                         console.log('******************* ERROR:' + err + ' *******************');
                         return;
-                    }
-                    else {
+                    } else {
 
                         res.download(filePath, 'MRS.pdf', function (err) {
                             if (err) {
@@ -82,282 +79,178 @@ module.exports = {
     },
     loadMRS: function (req, res) {
         var info = req.body.info;
-        var PATIENT_ID = info.PATIENT_ID;
-        var CAL_ID = info.CAL_ID;
-        /**
-         * search in cln table
-         */
-        db.headersMRSCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
-            .success(function (dataH) {
-                //check exist headers cln
-                if (dataH == null || dataH.length == 0) return LoadSYS(req, res, info);
-                db.groupsMRSCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
-                    .success(function (dataG) {
-                        //check exist groups cln
-                        if (dataG == null || dataG.length == 0) return LoadSYS(req, res, info);
-                        db.linesMRSCLN.findAll({where: {PATIENT_ID: PATIENT_ID, CAL_ID: CAL_ID}}, {raw: true})
-                            .success(function (dataL) {
-                                //check exist lines cln
-                                if (dataL == null || dataL == 0) return LoadSYS(req, res, info);
-                                Patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
-                                    .success(function (patient) {
-                                        //check exist user in patient table
-                                        if (patient == null || patient.length == 0) {
-                                            console.log("******************* Not found user in table patient *******************");
-                                            res.json({status: 'fail'});
+        var patient_id = info.patient_id;
+        var cal_id = info.cal_id;
+        //load doc
+        MedicalSummary.find({where: {patient_id: patient_id, cal_id: cal_id}}, {raw: true})
+            .success(function (data) {
+                //load patient
+                Patient.find({where: {patient_id: patient_id}}, {raw: true})
+                    .success(function (patient) {
+                        //check patient
+                        if (patient === null || patient.length === 0) {
+                            console.log('******************* Find not found patient in cln_patient *******************');
+                            res.json({status: 'fail'});
+                            return false;
+                        }
+                        //load appt
+                        APPTCAL.find({where: {cal_id: cal_id}}, {raw: true})
+                            .success(function (appt) {
+                                //check appt
+                                if (appt === null || appt.length === 0) {
+                                    console.log('******************* Find not found appt in appt table')
+                                    res.json({status: 'fail'});
+                                    return false;
+                                }
+                                ;
+                                //load doctor
+                                Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
+                                    .success(function (doctor) {
+                                        //check doctor
+                                        if (doctor === null || doctor.length === 0) {
+                                            console.log('******************* Find not found doctor in doctor table *******************');
+                                            res.json({
+                                                status: 'fail'
+                                            });
                                             return false;
                                         }
-                                        var data = [{
-                                            "headers": dataH,
-                                            "groups": dataG,
-                                            "lines": dataL,
+                                        ;
+                                        //check status
+                                        var status = "findFound";
+                                        if (data == null || data.length == 0) {
+                                            status = "findNull";
+                                        }
+
+                                        var response = [{
+                                            "data": data || [],
                                             "patient": patient,
-                                            "status": 'findFound'
+                                            "appt": appt,
+                                            "doctor": doctor,
+                                            "status": status
                                         }];
-                                        res.json(data);
+                                        res.json(response);
                                         return true;
                                     })
                                     .error(function (err) {
-                                        console.log("******************* ERROR:" + err + '*******************');
+                                        console.log('*******************' + err + '*******************');
                                         res.json({status: 'fail'});
                                         return false;
                                     });
                             })
                             .error(function (err) {
-                                console.log("******************* ERROR:" + err + ' *******************');
+                                console.log('*******************' + err + '*******************');
                                 res.json({status: 'fail'});
                                 return false;
                             });
                     })
                     .error(function (err) {
-                        console.log("******************* ERROR:" + err + ' *******************');
+                        console.log("*******************" + err + "*******************");
                         res.json({status: 'fail'});
                         return false;
                     });
             })
             .error(function (err) {
-                console.log("******************* ERROR:" + err + ' *******************');
+                console.log("*******************" + err + "*******************");
                 res.json({status: 'fail'});
                 return false;
             });
     },
     insertMRS: function (req, res) {
-        var info = req.body.info;
-        var practitionSign = info.practitionSign;
-        var practitionDate = info.practitionDate;
-        var isReview = info.isReview;
-        var practitioner = info.practitioner;
-
-        info.headers.forEach(function (infoH, hIndex) {
-            db.headersMRSCLN.create({
-                MRS_DF_ID: infoH.MRS_DF_ID,
-                PATIENT_ID: infoH.PATIENT_ID,
-                CAL_ID: infoH.CAL_ID,
-                DF_CODE: infoH.DF_CODE,
-                ITEM_ID: infoH.ITEM_ID,
-                DESCRIPTION: infoH.DESCRIPTION,
-                ISENABLE: infoH.ISENABLE,
-                Created_by: infoH.Created_by,
-                Last_updated_by: infoH.Last_updated_by,
-                practitioner: practitioner,
-                practitionSign: practitionSign,
-                practitionDate: practitionDate,
-                isReview: isReview
-            }, {raw: true})
-                .success(function () {
-                    info.headers[hIndex].group.forEach(function (infoG, gIndex) {
-                        db.groupsMRSCLN.create({
-                            MRS_GROUP_ID: infoG.MRS_GROUP_ID,
-                            MRS_DF_ID: infoG.MRS_DF_ID,
-                            PATIENT_ID: infoG.PATIENT_ID,
-                            CAL_ID: infoG.CAL_ID,
-                            ORD: infoG.ORD,
-                            GROUP_NAME: infoG.GROUP_NAME,
-                            USER_TYPE: infoG.USER_TYPE,
-                            ISENABLE: infoG.ISENABLE,
-                            Created_by: infoG.Created_by,
-                            Last_updated_by: infoG.Last_updated_by
-                        }, {raw: true})
-                            .success(function () {
-                                info.headers[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
-                                    db.linesMRSCLN.create({
-                                        MRS_LINE_ID: infoL.MRS_LINE_ID,
-                                        MRS_GROUP_ID: infoL.MRS_GROUP_ID,
-                                        MRS_DF_ID: infoL.MRS_DF_ID,
-                                        PATIENT_ID: infoL.PATIENT_ID,
-                                        CAL_ID: infoL.CAL_ID,
-                                        ORD: infoL.ORD,
-                                        COMP_TYPE: infoL.COMP_TYPE,
-                                        QUEST_LABEL: infoL.QUEST_LABEL,
-                                        QUEST_VALUE: infoL.QUEST_VALUE,
-                                        ISCOMMENT: infoL.ISCOMMENT,
-                                        COMMENT_LABEL: infoL.COMMENT_LABEL,
-                                        comments: infoL.comments,
-                                        ISREQ_COMMENT: infoL.ISREQ_COMMENT,
-                                        ISENABLE: infoL.ISENABLE,
-                                        Created_by: infoL.Created_by,
-                                        Last_updated_by: infoL.Last_updated_by
-                                    }, {raw: true})
-                                        .success(function () {
-                                            res.json({status: 'success'});
-                                            return true;
-                                        })
-                                        .error(function (err) {
-                                            console.log("******************* ERROR:" + err + ' *******************');
-                                            res.json({status: 'fail'});
-                                            return false;
-                                        });
-                                })
-                            })
-                            .error(function (err) {
-                                console.log("******************* ERROR:" + err + ' *******************');
-                                res.json({status: 'fail'});
-                                return false;
-                            });
-                    })
-                })
-                .error(function (err) {
-                    console.log("******************* ERROR:" + err + ' *******************');
-                    res.json({status: 'fail'});
-                    return false;
-                });
+        var info = req.body.info || [];
+        MedicalSummary.create({
+            patient_id: info.patient_id,
+            cal_id: info.cal_id,
+            sticker_here: info.sticker_here,
+            proposed: info.proposed,
+            as_height: info.as_height,
+            as_weight: info.as_weight,
+            as_whr: info.as_whr,
+            as_bmi: info.as_bmi,
+            as_height_weight: info.as_height_weight,
+            as_medical_history: info.as_medical_history,
+            as_medical_assessment: info.as_medical_assessment,
+            as_functional_assessment: info.as_functional_assessment,
+            as_hearing_test: info.as_hearing_test,
+            as_spirometry: info.as_spirometry,
+            as_drug_test: info.as_drug_test,
+            as_other: info.as_other,
+            ac_any_existing_or_active: info.ac_any_existing_or_active,
+            ac_any_history: info.ac_any_history,
+            ac_cardiovascular: info.ac_cardiovascular,
+            ac_any_current_or_work_related: info.ac_any_current_or_work_related,
+            ac_any_medical_or_functional: info.ac_any_medical_or_functional,
+            ac_any_diagnosed_or_previous: info.ac_any_diagnosed_or_previous,
+            ac_examiner_comment: info.ac_examiner_comment,
+            rr_screen: info.rr_screen,
+            rr_amber: info.rr_amber,
+            rr_amber_comment: info.rr_amber_comment,
+            rr_red: info.rr_red,
+            rr_red_comment: info.rr_red_comment,
+            mrs_review: info.mrs_review,
+            mrs_doc_date: info.mrs_doc_date,
+            doctor_id: info.doctor_id,
+            created_by: info.created_by,
+            last_updated_by: info.last_updated_by
+        }, {
+            raw: true
         })
-    },
-    editMRS: function (req, res) {
-        var info = req.body.info;
-        var practitionSign = info.practitionSign;
-        var practitionDate = info.practitionDate;
-        var practitioner = info.practitioner;
-        var isReview = info.isReview;
-        info.headers.forEach(function (infoH, hIndex) {
-            db.headersMRSCLN.update({
-                DF_CODE: infoH.DF_CODE,
-                ITEM_ID: infoH.ITEM_ID,
-                DESCRIPTION: infoH.DESCRIPTION,
-                ISENABLE: infoH.ISENABLE,
-                Created_by: infoH.Created_by,
-                Last_updated_by: infoH.Last_updated_by,
-                practitioner: practitioner,
-                practitionSign: practitionSign,
-                practitionDate: practitionDate,
-                isReview: isReview
-            }, {MRS_DF_ID: infoH.MRS_DF_ID, PATIENT_ID: infoH.PATIENT_ID, CAL_ID: infoH.CAL_ID})
-                .success(function () {
-                    info.headers[hIndex].group.forEach(function (infoG, gIndex) {
-                        db.groupsMRSCLN.update({
-                            MRS_DF_ID: infoG.MRS_DF_ID,
-                            ORD: infoG.ORD,
-                            GROUP_NAME: infoG.GROUP_NAME,
-                            USER_TYPE: infoG.USER_TYPE,
-                            ISENABLE: infoG.ISENABLE,
-                            Created_by: infoG.Created_by,
-                            Last_updated_by: infoG.Last_updated_by
-                        }, {MRS_GROUP_ID: infoG.MRS_GROUP_ID, PATIENT_ID: infoG.PATIENT_ID, CAL_ID: infoG.CAL_ID})
-                            .success(function () {
-                                info.headers[hIndex].group[gIndex].line.forEach(function (infoL, lIndex) {
-                                    db.linesMRSCLN.update({
-                                        MRS_GROUP_ID: infoL.MRS_GROUP_ID,
-                                        MRS_DF_ID: infoL.MRS_DF_ID,
-                                        ORD: infoL.ORD,
-                                        COMP_TYPE: infoL.COMP_TYPE,
-                                        QUEST_LABEL: infoL.QUEST_LABEL,
-                                        QUEST_VALUE: infoL.QUEST_VALUE,
-                                        ISCOMMENT: infoL.ISCOMMENT,
-                                        COMMENT_LABEL: infoL.COMMENT_LABEL,
-                                        comments: infoL.comments,
-                                        ISREQ_COMMENT: infoL.ISREQ_COMMENT,
-                                        ISENABLE: infoL.ISENABLE,
-                                        Created_by: infoL.Created_by,
-                                        Last_updated_by: infoL.Last_updated_by
-                                    }, {
-                                        MRS_LINE_ID: infoL.MRS_LINE_ID, PATIENT_ID: infoL.PATIENT_ID,
-                                        CAL_ID: infoL.CAL_ID
-                                    })
-                                        .success(function () {
-                                            res.json({status: 'success'});
-                                            return true;
-                                        })
-                                        .error(function (err) {
-                                            console.log("******************* ERROR:" + err + ' *******************');
-                                            res.json({status: 'fail'});
-                                            return false;
-                                        });
-                                })
-                            })
-                            .error(function (err) {
-                                console.log("******************* ERROR:" + err + ' *******************');
-                                res.json({status: 'fail'});
-                                return false;
-                            });
-                    })
-                })
-                .error(function (err) {
-                    console.log("******************* ERROR:" + err + ' *******************');
-                    res.json({status: 'fail'});
-                    return false;
-                });
-        })
-    }
-};
-var LoadSYS = function (req, res, info) {
-    var PATIENT_ID = info.PATIENT_ID;
-    headersMRSSYS.findAll({}, {raw: true})
-        .success(function (dataH) {
-            //check exist headers in sys table
-            if (dataH == null || dataH.length == 0) {
-                console.log("******************* Not found headers in headers table *******************");
+            .success(function () {
+                res.json({status: 'success'});
+                return true;
+            })
+            .error(function (err) {
+                console.log('*******************' + err + '*******************');
                 res.json({status: 'fail'});
                 return false;
-            }
-            groupsMRSSYS.findAll({}, {raw: true})
-                .success(function (dataG) {
-                    //check exist groups in groups table
-                    if (dataG == null || dataG.length == 0) {
-                        console.log("******************* Not found groups in groups table *******************");
-                        res.json({status: 'fail'});
-                        return false;
-                    }
-                    linesMRSSYS.findAll({}, {raw: true})
-                        .success(function (dataL) {
-                            //check exist lines in lines table
-                            if (dataL == null || dataL.length == 0) {
-                                console.log("******************* Not found lines in lines table *******************");
-                                res.json({status: 'fail'});
-                                return false;
-                            }
-                            Patient.find({where: {Patient_id: PATIENT_ID}}, {raw: true})
-                                .success(function (patient) {
-                                    //check exist patient
-                                    if (patient == null || patient.length == 0) {
-                                        console.log("******************* Not found user in patient table *******************");
-                                        res.json({status: 'fail'});
-                                        return false;
-                                    }
-                                    var response = [{
-                                        "headers": dataH,
-                                        "groups": dataG,
-                                        "lines": dataL,
-                                        "patient": patient,
-                                        "status": "findNull"
-
-                                    }];
-                                    res.json(response);
-                                    return true;
-                                })
-                                .error(function (err) {
-                                    console.log("******************* ERROR:" + err + '*******************');
-                                    return false;
-                                });
-                        }).error(function (err) {
-                            console.log("******************* ERROR:" + err + ' *******************');
-                            return false;
-                        });
-                }).error(function (err) {
-                    console.log("******************* ERROR:" + err + ' *******************');
-                    return false;
-                });
-        }).error(function (err) {
-            console.log("******************* ERROR:" + err + ' *******************');
-            return false;
-        });
+            });
+    },
+    editMRS: function (req, res) {
+        var info = req.body.info || [];
+        MedicalSummary.update({
+            patient_id: info.patient_id,
+            cal_id: info.cal_id,
+            sticker_here: info.sticker_here,
+            proposed: info.proposed,
+            as_height: info.as_height,
+            as_weight: info.as_weight,
+            as_whr: info.as_whr,
+            as_bmi: info.as_bmi,
+            as_height_weight: info.as_height_weight,
+            as_medical_history: info.as_medical_history,
+            as_medical_assessment: info.as_medical_assessment,
+            as_functional_assessment: info.as_functional_assessment,
+            as_hearing_test: info.as_hearing_test,
+            as_spirometry: info.as_spirometry,
+            as_drug_test: info.as_drug_test,
+            as_other: info.as_other,
+            ac_any_existing_or_active: info.ac_any_existing_or_active,
+            ac_any_history: info.ac_any_history,
+            ac_cardiovascular: info.ac_cardiovascular,
+            ac_any_current_or_work_related: info.ac_any_current_or_work_related,
+            ac_any_medical_or_functional: info.ac_any_medical_or_functional,
+            ac_any_diagnosed_or_previous: info.ac_any_diagnosed_or_previous,
+            ac_examiner_comment: info.ac_examiner_comment,
+            rr_screen: info.rr_screen,
+            rr_amber: info.rr_amber,
+            rr_amber_comment: info.rr_amber_comment,
+            rr_red: info.rr_red,
+            rr_red_comment: info.rr_red_comment,
+            mrs_review: info.mrs_review,
+            mrs_doc_date: info.mrs_doc_date,
+            doctor_id: info.doctor_id,
+            created_by: info.created_by,
+            last_updated_by: info.last_updated_by
+        }, {
+            mrs_id: info.mrs_id
+        })
+            .success(function () {
+                res.json({status: 'success'});
+                return true;
+            })
+            .error(function (err) {
+                console.log('*******************' + err + '*******************');
+                res.json({status: 'fail'});
+                return false;
+            });
+    }
 };
