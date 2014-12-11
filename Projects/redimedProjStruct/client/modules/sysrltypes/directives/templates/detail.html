@@ -1,0 +1,33 @@
+<form name="sysrltypesForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--Rl_TYPE_NAME-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="rl_type_name">Rl type name</label>
+			<input type="text" placeholder="Rl type name" name="rl_type_name" ng-model="sysrlTypesMap.Rl_TYPE_NAME" class="form-control" id="rl_type_name" float-label>
+		</span>	</div>
+	<!--Rl_TYPE_NAME-->
+
+	<!--ISENABLE-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="sysrlTypesMap.ISENABLE" ng-true-value="1" ng-false-value="0">
+		<label for="isenable">Isenable</label>
+	</div>
+	<!--ISENABLE-->
+
+</div>
+</form>

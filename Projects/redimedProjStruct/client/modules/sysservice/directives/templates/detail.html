@@ -1,0 +1,43 @@
+<form name="sysserviceForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--SERVICE_NAME-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="service_name">Service name</label>
+			<input type="text" placeholder="Service name" name="service_name" ng-model="sysServiceMap.SERVICE_NAME" class="form-control" id="service_name" float-label>
+		</span>	</div>
+	<!--SERVICE_NAME-->
+
+	<!--DESCRIPTION-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="description">Description</label>
+			<input type="text" placeholder="Description" name="description" ng-model="sysServiceMap.DESCRIPTION" class="form-control" id="description" float-label>
+		</span>	</div>
+	<!--DESCRIPTION-->
+
+	<!--Isenable-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="sysServiceMap.Isenable" ng-true-value="1" ng-false-value="0">
+		<label for="isenable">Isenable</label>
+	</div>
+	<!--Isenable-->
+
+
+	<div class="break-row"></div>
+</div>
+</form>

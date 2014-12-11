@@ -204,23 +204,29 @@ angular.module("app.model", [])
 })
 //END WAITING LIST
 
-// ITEM 
-.value('ItemModel', {
-	ITEM_NAME: '', // r 
-	ALT_NAME: '', // r
-	DESCRIPTION: '', // r 
-	UOM: '', // r
-	ITEM_TYPE: '', // r
-	TAX_ID: null,
-	ISINV: null,
-	ISASSET: null,
-	ISBOM: null,
-	LOT_OR_SERIAL: '',
-	ISEXP: null,
-	PRICE: '',
-	ISENABLE: null,
-	CREATED_BY: null,
-	CREATION_DATE: null,
+/*AUTO CREATE*/
+.value('mdtRedimedsitesModel', {
+	Site_name: '',
+	Site_addr: '',
+	postcode: null,
+	State: '',
+	latitude: '',
+	longitude: '',
+	country: '',
+	Available_def: null,
+	booking_status: '',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	isPreEmpBK: null,
+})
+.value('sysServiceModel', {
+	SERVICE_NAME: '',
+	DESCRIPTION: '',
+	Isenable: null,
+	Created_by: null,
+	Creation_date: null,
 	Last_updated_by: null,
 	Last_update_date: null,
 	Prefix: '',
@@ -262,31 +268,32 @@ angular.module("app.model", [])
 	isPO: null, // r
 	isOM: null, // r
 })
-// END ITEM
-
-// ITEM HEADER 
-.value('ItemHeaderModel', {
-	'POPULAR_CODE': '',
-	'POPULAR_NAME': '',
-	'ISENABLE': '1',
+.value('sysrlTypesModel', {
+	Rl_TYPE_NAME: '',
+	ISENABLE: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
 })
-
-// END ITEM HEADER
-
-// SERVICE 
-.value('SysServicesModel', {
-	SERVICE_NAME: '',
-	DESCRIPTION: '',
-	SERVICE_COLOR: '',
+.value('mdtSpecialtyModel', {
+	Specialties_name: '',
+	Isenable: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	RL_TYPE_ID: null,
+})
+.value('sysQualificationModel', {
+	name: '',
 	Isenable: null,
 	Created_by: null,
 	Creation_date: null,
 	Last_updated_by: null,
 	Last_update_date: null,
 })
-
-.value('DepartmentModel', {
-	CLINICAL_DEPT_ID: '',
+.value('mdtDeptModel', {
 	CLINICAL_DEPT_NAME: '',
 	ISENABLE: '1',
 	Created_by: null,
@@ -294,9 +301,68 @@ angular.module("app.model", [])
 	Last_updated_by: null,
 	Last_update_date: null,
 })
-// END SERVICE 
-
-/*AUTO CREATE*/
+.value('mdtProviderModel', {
+	Provider_types_name: '',
+	Isenable: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+.value('sysTitleModel', {
+	name: '',
+	Isenable: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+.value('mdtDoctorModel', {
+	NAME: '',
+	Address: '',
+	Email: '',
+	User_id: null,
+	Provider_no: '',
+	Phone: '',
+	Signature: '',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	isReceiveEmailAfterHour: null,
+	Title: '',
+	First_name: '',
+	Middle_name: '',
+	Sur_name: '',
+	Qualification_id: null,
+	Prescriber_no: null,
+	Sign_off: '',
+	Payee_provider_no: null,
+	ABN_no: null,
+	Provider_type: null,
+	Specialty_id: null,
+	Default_bank_account_id: null,
+	Medical_Reg_no: null,
+	OSHC_ID: null,
+	isAppointmentBook: null,
+	isMonday: null,
+	isTuesday: null,
+	isWednesday: null,
+	isThursday: null,
+	isFriday: null,
+	isSaturday: null,
+	isSunday: null,
+	Appt_interval: null,
+	Isenable: '1',
+	CLINICAL_DEPT_ID: null,
+	isNewCalendarSlot: null,
+})
+.value('DepartmentModel', {
+	departmentid: null,
+	departmentName: '',
+	locationID: null,
+	managerId: null,
+})
 .value('ScriptModel', {
 	Patient_id: null,
 	CAL_ID: null,

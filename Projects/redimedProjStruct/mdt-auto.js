@@ -123,6 +123,9 @@ module.exports = {
 					if(num != 0) type_field += num+')';
 					else type_field += ')';
 					break;
+				case 'float':
+					type_field = 'FLOAT';
+					break;
 				case 'datetime':
 					type_field = 'DATE';
 					break;
@@ -248,7 +251,7 @@ module.exports = {
 		text += "\treturn {"+os.EOL;
 		text += "\t\trestrict: 'EA',"+os.EOL;
 		text += "\t\tscope: {"+os.EOL;
-		text += "\t\t\tclickRow: '=',"+os.EOL;
+		text += "\t\t\tclickRow: '&',"+os.EOL;
 		text += "\t\t},"+os.EOL;
 		text += "\t\ttemplateUrl: 'modules/"+module_name.toLowerCase()+"/directives/templates/search.html',"+os.EOL;
 		text += "\t\tlink: function(scope, element, attrs){"+os.EOL;
@@ -323,6 +326,9 @@ module.exports = {
 				case 'int':
 					value = '<input type="number" placeholder="'+placeholder+'" name="'+fields[i].Field.toLowerCase()+'" ng-model="'+module_name+'Map.'+fields[i].Field+'" class="form-control" id="'+fields[i].Field.toLowerCase()+'" float-label>'+os.EOL;
 					break;
+				case 'float':
+					value = '<input type="number" placeholder="'+placeholder+'" name="'+fields[i].Field.toLowerCase()+'" ng-model="'+module_name+'Map.'+fields[i].Field+'" class="form-control" id="'+fields[i].Field.toLowerCase()+'" float-label>'+os.EOL;
+					break;
 				case 'varchar':
 					value = '<input type="text" placeholder="'+placeholder+'" name="'+fields[i].Field.toLowerCase()+'" ng-model="'+module_name+'Map.'+fields[i].Field+'" class="form-control" id="'+fields[i].Field.toLowerCase()+'" float-label>'+os.EOL;
 					break;
@@ -368,7 +374,7 @@ module.exports = {
 		text += "\t</div>"+os.EOL;
 		text += "</div>"+os.EOL;
 
-		text = "<div class='row'>"+os.EOL;
+		text += "<div class='row'>"+os.EOL;
 		text += "\t<div class='col-md-12'>"+os.EOL;
 		text += "\t\t<table class='mdt-table'>"+os.EOL;
 		text += "\t\t\t<thead>"+os.EOL;

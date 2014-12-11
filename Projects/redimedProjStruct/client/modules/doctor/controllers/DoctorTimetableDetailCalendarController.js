@@ -1,6 +1,9 @@
 angular.module("app.loggedIn.doctor.timetable.detail.calendar.controller",[])
 
 .controller("DoctorTimetableDetailCalendarController", function($scope, $state, $stateParams, toastr, DoctorService, ConfigService){
+	$scope.doctor_id = $stateParams.doctorId;
+
+
 	//LOAD DETAIL
 	$scope.modelDetail = {};
 
@@ -49,11 +52,11 @@ angular.module("app.loggedIn.doctor.timetable.detail.calendar.controller",[])
 	//END GO TO TIMETABLE WEEK
 
 	//CONFIG
-	$scope.options = {
+	/*$scope.options = {
         day_of_week_option: ConfigService.day_of_week_option(),
         number_of_week_option: ConfigService.number_of_week_option(),
        	sites_option: []
-    }
+    }*/
 
     var loadConfig = function(){
     	ConfigService.redimed_sites_option().then(function(list){
@@ -61,7 +64,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.calendar.controller",[])
 		});
     }
 
-    loadConfig();
+    //loadConfig();
 	//END CONFIG
 
 	// ACTION

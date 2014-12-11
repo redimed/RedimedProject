@@ -1,0 +1,41 @@
+<form name="mdtspecialtyForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--Specialties_name-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="specialties_name">Specialties name</label>
+			<input type="text" placeholder="Specialties name" name="specialties_name" ng-model="mdtSpecialtyMap.Specialties_name" class="form-control" id="specialties_name" float-label>
+		</span>	</div>
+	<!--Specialties_name-->
+
+	<!--Isenable-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="mdtSpecialtyMap.Isenable" ng-true-value="1" ng-false-value="0">
+		<label for="isenable">Isenable</label>
+	</div>
+	<!--Isenable-->
+
+	<!--RL_TYPE_ID-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="rl_type_id">Rl type id</label>
+			<input type="number" placeholder="Rl type id" name="rl_type_id" ng-model="mdtSpecialtyMap.RL_TYPE_ID" class="form-control" id="rl_type_id" float-label>
+		</span>	</div>
+	<!--RL_TYPE_ID-->
+
+</div>
+</form>

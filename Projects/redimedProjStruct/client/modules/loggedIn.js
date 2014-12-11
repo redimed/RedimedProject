@@ -21,12 +21,35 @@ angular.module("app.loggedIn",[
         "app.loggedIn.insurer",
 	"app.loggedIn.department",		
 	/*AUTO CREATE*/
+	'app.loggedIn.mdtredimedsites',
+
+	'app.loggedIn.sysservice',
+
+	'app.loggedIn.sysrltypes',
+
+
+	'app.loggedIn.mdtspecialty',
+
+	'app.loggedIn.sysqualification',
+
+	'app.loggedIn.mdtdept',
+
+	'app.loggedIn.mdtprovider',
+
+	'app.loggedIn.systitle',
+
+	'app.loggedIn.mdtdoctor',
+
+	'app.loggedIn.department',
+
 	'app.loggedIn.script',
 
 	'app.loggedIn.referral',
     'app.loggedIn.sysservices',
 	/*END AUTO CREATE*/
+    'app.loggedIn.timetable'
 ])
+
 .config(function($stateProvider) {
         $stateProvider
 

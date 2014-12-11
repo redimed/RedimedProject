@@ -208,15 +208,12 @@
                         </label>
                         <div class="col-md-10 col-sm-9 col-xs-6">
                             <span>
-                                <canvas width="600" height="400" id="canvas" 
+                                <canvas width="300" height="300" id="canvas" style="background-color: green;"
                                     signature ng-model="modelObjectMap.Signature">
                                 </canvas>
                                 <div class="break-row"></div>
                                 <button class="btn btn-sm btn-warning" ng-click="resetSignature()">Reset</button>
                                 <button class="btn btn-sm green" ng-click="clearSignature()">Clear</button>
-                                <button class="btn btn-sm green" ng-click="getImage(modelObjectMap.Signature)">
-                                    Get Skin Image
-                                </button>
                             </span>
                         </div>
                     </div>

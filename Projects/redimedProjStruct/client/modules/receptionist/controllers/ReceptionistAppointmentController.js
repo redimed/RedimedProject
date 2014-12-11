@@ -1,14 +1,6 @@
 angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 .controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService) {
-	$scope.test_params = {
-		permission: {
-			create: true,
-			edit: false
-		}
-	}
-
-
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
 
@@ -17,6 +9,10 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			create: true,
 			edit: false
 		}
+	}
+
+	$scope.extra = {
+		service_id: 
 	}
 
 	//DECLARE
@@ -31,7 +27,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	// LEFT CLICK BOOKING
 	$scope.chooseBooking = function($event, option){
 		var slotId = "#status"+option.overId+option.docId;
-		angular.element(slotId).css({"background-color": "yellow"});
+		//angular.element(slotId).css({"background-color": "yellow"});
 	}
 	// END LEFT CLICK BOOKING
 
@@ -184,8 +180,8 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 				ReceptionistService.getAppointmentOverview(modelObjectMap_map).then(function(data){
 					for(var i = 0; i < data.length; i++){
-						var from_time_map = ConfigService.convertToTimeString(data[i].FROM_TIME);
-						var to_time_map = ConfigService.convertToTimeString(data[i].TO_TIME);
+						var from_time_map = ConfigService.convertToTimeStringApp(data[i].FROM_TIME);
+						var to_time_map = ConfigService.convertToTimeStringApp(data[i].TO_TIME);
 						$scope.overviewAppointment.push(
 							{
 								from_time: data[i].FROM_TIME, 
@@ -197,11 +193,15 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 						var doctors = data[i].doctor.split(",");
 						var cals = data[i].CAL_ID.split(",");
+						if(data[i].SERVICE_COLORS !== null)
+							service_colors = data[i].SERVICE_COLORS.split(",");
+
 						var patients = data[i].PATIENTS.split("|");
 
 						$scope.overviewAppointment[i].doctors = [];
 						$scope.overviewAppointment[i].cals = [];
 						$scope.overviewAppointment[i].patients = [];
+						$scope.overviewAppointment[i].service_colors = [];
 						for(var j = 0; j < $scope.options.doctors.length; j++){
 							var flag = false;
 							for(var k = 0; k < doctors.length; k++){
@@ -212,6 +212,10 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 							if(flag !== false){
 								$scope.overviewAppointment[i].doctors.push(doctors[flag]);
 								$scope.overviewAppointment[i].cals.push(cals[flag]);
+								if(data[i].SERVICE_COLORS !== null)
+									$scope.overviewAppointment[i].service_colors.push(service_colors[flag]);
+								else
+									$scope.overviewAppointment[i].service_colors.push("#ffffff");
 								if(patients[flag] !== 'No Patient'){
 									var tempPatient = angular.element.parseJSON(patients[flag]);
 									$scope.overviewAppointment[i].patients.push(tempPatient);
@@ -222,8 +226,11 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 								$scope.overviewAppointment[i].doctors.push("");
 								$scope.overviewAppointment[i].cals.push("");
 								$scope.overviewAppointment[i].patients.push("");
+								$scope.overviewAppointment[i].service_colors.push("");
 							}
 						}
+
+						console.log($scope.overviewAppointment);
 					}// end for
 				})
 			}else{
@@ -257,6 +264,10 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.bookingPatient = function(data, parentIndex, index){
 		var bookingPopupId="#bookingModule";
 
+		$scope.rightSelectedBooking.data = data;
+		$scope.rightSelectedBooking.overId = parentIndex;
+		$scope.rightSelectedBooking.docId = index;
+
 		angular.element(bookingPopupId).fadeOut();
 		angular.element(bookingPopupId).fadeIn();
 
@@ -266,7 +277,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			CAL_ID: $scope.selectedCalId,
 			DOCTOR: $scope.options.doctors[index],
 			MAIN_INFO: $scope.modelObjectMap,
-			patients: $scope.rightSelectedBooking.data.patients[index],
+			patients: data.patients[index],
 			FROM_TIME: data.from_time_map,
 			TO_TIME: data.to_time_map
 		}
@@ -379,7 +390,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.showUnavailable = function(){
 		if($scope.list_of_booking.length > 0){
 			for(var i = 0; i < $scope.list_of_booking.length; i++){
-				angular.element($scope.list_of_booking[i].id).css("background", "rgb(61,74,83)");
+				//angular.element($scope.list_of_booking[i].id).css("background", "rgb(61,74,83)");
 				$scope.list_of_booking[i].isenable = false;
 			}
 
