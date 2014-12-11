@@ -12,7 +12,6 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	}
 
 	$scope.extra = {
-		service_id: 
 	}
 
 	//DECLARE
