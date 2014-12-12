@@ -1,0 +1,332 @@
+<form name="wafinalform">
+    <accordion close-others="oneAtATime">
+        <accordion-group heading="WORKER'S DETAILS">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="first_name">First name</label>
+                            <input class="form-control" name="first_name" ng-model="patient.First_name" placeholder="First name" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="last_name">Last name</label>
+                            <input class="form-control" name="last_name" ng-model="patient.Sur_name" placeholder="Last name" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="DOB">Date of birth</label>
+                            <input class="form-control" readonly="readonly" name="DOB" ng-model="patient.DOB" placeholder="Date of birth" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Email">Email</label>
+                            <input class="form-control" name="Email" ng-model="patient.Email" placeholder="Email" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Phone">Phone</label>
+                            <input class="form-control" name="Phone" ng-model="patient.Phone" placeholder="Phone" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="claim_no">Claim No.</label>
+                            <input class="form-control" name="claim_no" ng-model="patient.claim_no" placeholder="Claim No." float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <span class="field">
+                            <label class="control-label" for="Address">Address</label>
+                            <input class="form-control" name="Address" ng-model="patient.Address" placeholder="Address" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+        </accordion-group>
+        <accordion-group heading="EMPLOYMENT DETAILS">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Industry">Worker's job title</label>
+                            <input class="form-control" name="Industry" ng-model="company.Industry" placeholder="Worker's job title" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Company_name">Employer's name</label>
+                            <input class="form-control" name="Company_name" ng-model="company.Company_name" placeholder="Employer's name" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <span class="field">
+                            <label class="control-label" for="Addr">Employer's address</label>
+                            <input class="form-control" name="Addr" ng-model="company.Addr" placeholder="Employer's address" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+        </accordion-group>
+        <accordion-group heading="MEDICAL ASSESSMENT">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="ass_examDate">Date of this assessment</label>
+                            <input type="text" class="form-control" name="ass_examDate" ng-model="wafinal.examDate" placeholder="Date of this assessment" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="ass_injuryDate">Date of injury</label>
+                            <input type="text" class="form-control" name="ass_injuryDate" ng-model="wafinal.injuryDate" placeholder="Date of injury" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isCondition" id="isCondition" ng-model="wafinal.isCondition">
+                        <label for="isCondition"><b>The worker's condition is unlikely to change substantially in the next 12 months</b>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </accordion-group>
+        <accordion-group heading="WORK CAPACITY">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class=" col-md-12 col-sm-12 control-label">
+                        Having considered the health benefits of work, I find this worker to have:
+                    </label>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isFullCapacity" id="isFullCapacity" ng-model="wafinal.isFullCapacity">
+                        <label for="isFullCapacity"><b>full capacity for work</b>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row" ng-show="wafinal.isFullCapacity==1">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-6 col-sm-6">
+                            <span class="field">
+                            <label class="control-label" for="fullCapaFrom">Full capacity from</label>
+                            <input class="form-control" name="fullCapaFrom" readonly="readonly" ng-model="wafinal.fullCapaFrom" placeholder="Full capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isRequireTreat" id="isRequireTreat" ng-model="wafinal.isRequireTreat">
+                            <label for="isRequireTreat">but requires further treatment</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isCpacityForWork" id="isCpacityForWork" ng-model="wafinal.isCpacityForWork">
+                        <label for="isCpacityForWork"><b>capacity for work</b>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="wafinal.isCpacityForWork==1">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-4 col-sm-4">
+                            <span class="field">
+                                <label class="control-label" for="capaHours">perform hrs/day</label>
+                                <input class="form-control" type="number" name="capaHours" ng-model="wafinal.capaHours" placeholder="perform hrs/day" float-label>
+                            </span>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <span class="field">
+                                <label class="control-label" for="capaDays">perform days/week</label>
+                                <input class="form-control" type="number" name="capaDays" ng-model="wafinal.capaDays" placeholder="perform days/week" float-label>
+                            </span>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <span class="field">
+                                <label class="control-label" for="capaFrom">capacity for work from</label>
+                                <input class="form-control" name="capaFrom" readonly="readonly" ng-model="wafinal.capaFrom" placeholder="capacity for work from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="wafinal.isCpacityForWork==1">
+                <div class="col-md-12 col-sm-12">
+                    <label class="control-label col-md-12 col-sm-12">as outlined below:</label>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <label class="control-label col-md-12 col-sm-12"><i>(Please outline the worker physical and/or psychosocial capacity - refer to explanatory notes for examples. Where there is no capacity for work, please provide clinical reasoning)</i>
+                    </label>
+                </div>
+            </div>
+            <div class="break-row"></div>
+
+            <div class="row" ng-show="wafinal.isCpacityForWork==1">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-4 col-sm-4">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isLiftUp" id="isLiftUp" ng-model="wafinal.isLiftUp">
+                        <label for="isLiftUp">lift up to
+                            <input type="text" class="form-control input-mini inline" ng-model="wafinal.liftUpKg">kg</label>
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isSitUp" id="isSitUp" ng-model="wafinal.isSitUp">
+                        <label for="isSitUp">sit up to
+                            <input type="text" class="form-control input-mini inline" ng-model="wafinal.sitUpMins">mins</label>
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isLiftUp" id="isStandUp" ng-model="wafinal.isStandUp">
+                        <label for="isStandUp">stand up to
+                            <input type="text" class="form-control input-mini inline" ng-model="wafinal.standUpMins">mins</label>
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isWalkUp" id="isWalkUp" ng-model="wafinal.isWalkUp">
+                        <label for="isWalkUp">walk up to
+                            <input type="text" class="form-control input-mini inline" ng-model="wafinal.walkUpMeter">kg</label>
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isWorkBelow" id="isWorkBelow" ng-model="wafinal.isWorkBelow">
+                        <label for="isWorkBelow">work below shoulder height</label>
+                    </div>
+                    <div class="col-md-8 col-sm-8">
+                        <textarea class="textarea-custom-style form-control" rows="11" ng-model="capaCmt"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="break-row-alt" ng-show="wafinal.isCpacityForWork==1"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isIncapacity" id="isIncapacity" ng-model="wafinal.isIncapacity">
+                        <label for="isIncapacity"><b>The worker's in capacity is no longer a result of the injury</b>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </accordion-group>
+        <accordion-group heading="REASON FOR CAPACITY/INCAPACITY">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class="control-label">
+                        <b>Please outline your clinical reason for the worker's capacity/incapacity</b>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <textarea class="textarea-custom-style form-control" rows="11" ng-model="capaCmt"></textarea>
+                </div>
+            </div>
+        </accordion-group>
+        <accordion-group heading="MEDICAL PRACTITIONER'S DETAILS">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_name">Name</label>
+                            <input class="form-control" name="doc_name" ng-model="doctor.NAME" placeholder="Name" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Provider_no">AHPRA no. MED</label>
+                            <input class="form-control" name="Provider_no" ng-model="doctor.Provider_no" placeholder="AHPRA no. MED" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_Address">Address</label>
+                            <input class="form-control" name="doc_Address" ng-model="doctor.Address" placeholder="Address" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_email">Email</label>
+                            <input class="form-control" name="doc_email" ng-model="doctor.Email" placeholder="Email" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_Phone">Phone</label>
+                            <input class="form-control" name="doc_Phone" ng-model="doctor.Phone" placeholder="Phone" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <img src="{{doctor.Signature}}" style="width:100%" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_Fax">Fax</label>
+                            <input class="form-control" name="doc_Fax" ng-model="doctor.Fax" placeholder="Fax" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="examDate">Date</label>
+                            <input class="form-control" name="examDate" ng-model="wafinal.examDate" placeholder="Date" readonly="readonly"  ui-date="{dateFormat: 'dd/mm/yy'}"  float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </accordion-group>
+        <div class="break-row-alt"></div>
+        <div class="row">
+            <div class="col-md-offset-10 col-sm-offset-10 col-md-2 col-sm-2">
+                <button type="button" class="btn-lg btn green" ng-show="params.edit===false" ng-click="clickAction()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Submit
+                </button>
+                <button type="button" class="btn-lg btn green" ng-show="params.edit===true" ng-click="clickAction()">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Update
+                </button>
+            </div>
+        </div>
+    </accordion>
+</form>

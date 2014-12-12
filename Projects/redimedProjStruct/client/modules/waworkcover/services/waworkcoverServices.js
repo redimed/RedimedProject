@@ -1,67 +1,63 @@
-/**
- * Created by Minh on 11/5/2014.
- */
-angular.module('app.loggedIn.waworkcover.services',[
+angular.module('app.loggedIn.waworkcover.service', [])
+    .factory('WaWorkCoverService', function (Restangular) {
+        var mdtService = {}
+        var mdtApi = Restangular.all('api/meditek/v1/')
 
-])
-    .factory('waworkcoverService',function(Restangular){
-        var waworkcoverService = {};
-        var waworkcoverapi = Restangular.all("api/erm");
-
-        waworkcoverService.insertFirst = function(data){
-            var insertFirstapi = waworkcoverapi.all("v1/wa/workcover/first/insert_as");
-            return insertFirstapi.post(data);
+        //For WA
+        mdtService.firstadd = function (postData) {
+            var funcApi = mdtApi.all('wa/workcover/first/add');
+            return funcApi.post({
+                add_data: postData
+            });
+        };
+        mdtService.firstsearch = function (option) {
+            var funcApi = mdtApi.all('wa/workcover/first/search');
+            return funcApi.post(option);
         };
 
-        waworkcoverService.editFirst = function(data){
-            var editFirstapi = waworkcoverapi.all("v1/wa/workcover/first/edit_as");
-            return editFirstapi.post(data);
+        mdtService.firstedit = function (id, postData) {
+            var funcApi = mdtApi.all('wa/workcover/first/edit');
+            return funcApi.post({
+                edit_data: postData,
+                edit_id: id
+            });
+        }
+        mdtService.progressadd = function (postData) {
+            var funcApi = mdtApi.all('wa/workcover/progress/add');
+            return funcApi.post({
+                add_data: postData
+            });
+        };
+        mdtService.progresssearch = function (option) {
+            var funcApi = mdtApi.all('wa/workcover/progress/search');
+            return funcApi.post(option);
         };
 
-        waworkcoverService.test = function(){
-            console.log('Testing completed! Service is running!');
-
+        mdtService.progressedit = function (id, postData) {
+            var funcApi = mdtApi.all('wa/workcover/progress/edit');
+            return funcApi.post({
+                edit_data: postData,
+                edit_id: id
+            });
+        }
+        mdtService.finaladd = function (postData) {
+            var funcApi = mdtApi.all('wa/workcover/final/add');
+            return funcApi.post({
+                add_data: postData
+            });
+        };
+        mdtService.finalsearch = function (option) {
+            var funcApi = mdtApi.all('wa/workcover/final/search');
+            return funcApi.post(option);
         };
 
-        waworkcoverService.getCompanyFromPatient = function(company_id){
-            var getCompany = waworkcoverapi.all("company/getDetail");
-            return getCompany.post({'company_id': company_id});
+        mdtService.finaledit = function (id, postData) {
+            var funcApi = mdtApi.all('wa/workcover/final/edit');
+            return funcApi.post({
+                edit_data: postData,
+                edit_id: id
+            });
         }
 
-        waworkcoverService.getFirstAssess = function(data){
-           var getFirstAsessapi = waworkcoverapi.all("v1/wa/workcover/first/select_as");
-            return getFirstAsessapi.post(data);
-        };
-
-        waworkcoverService.insertProgress = function(data){
-            var insertProgressapi = waworkcoverapi.all("v1/wa/workcover/progress/insert_as");
-            return insertProgressapi.post(data);
-        };
-
-        waworkcoverService.getProgressAssess = function(data){
-            var getProgressAssessapi = waworkcoverapi.all("v1/wa/workcover/progress/select_as");
-            return getProgressAssessapi.post(data);
-        };
-
-        waworkcoverService.editProgress = function(data){
-            var editProgressapi = waworkcoverapi.all("v1/wa/workcover/progress/edit_as");
-            return editProgressapi.post(data);
-        };
-
-        waworkcoverService.insertFinal = function(data){
-            var insertFinalapi = waworkcoverapi.all("v1/wa/workcover/final/insert_as");
-            return insertFinalapi.post(data);
-        };
-
-        waworkcoverService.getFinalAssess = function(data){
-            var getFinalAssessapi = waworkcoverapi.all("v1/wa/workcover/final/select_as");
-            return getFinalAssessapi.post(data);
-        };
-        waworkcoverService.editFinal = function(data){
-            var editFinalapi = waworkcoverapi.all("v1/wa/workcover/final/edit_as");
-            return editFinalapi.post(data);
-        };
-
-        return waworkcoverService;
-    })
-;
+        return mdtService;
+    });

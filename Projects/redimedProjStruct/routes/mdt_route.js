@@ -28,7 +28,7 @@ app.get("/api/meditek/v1/appointment/byId", mdtAppointmentController.postById);
 
 //MODULE COMPANY
 app.post("/api/meditek/v1/company/search", mdtCompanyController.postSearch);
-//app.post("/api/meditek/v1/company/byId", mdtCompanyController.postById);
+app.post("/api/meditek/v1/company/byId", mdtCompanyController.postById);
 
 //MODULE TIMETABLE
 var mdtTimetableController = require('./controllers/mdtTimetableController');
@@ -134,6 +134,23 @@ app.post('/api/meditek/v1/referral/add', ReferralController.postAdd);
 app.post('/api/meditek/v1/referral/edit', ReferralController.postEdit);
 app.post('/api/meditek/v1/referral/byId', ReferralController.postById);
 
+var mdtWaWorkCoverFirstController = require('./controllers/WaWorkCoverFirstController');
+
+app.post('/api/meditek/v1/wa/workcover/first/add', mdtWaWorkCoverFirstController.postAdd);
+app.post('/api/meditek/v1/wa/workcover/first/search', mdtWaWorkCoverFirstController.postSearch);
+app.post('/api/meditek/v1/wa/workcover/first/edit', mdtWaWorkCoverFirstController.postEdit);
+
+var mdtWaWorkCoverProgressController = require('./controllers/WaWorkCoverProgressController');
+
+app.post('/api/meditek/v1/wa/workcover/progress/add', mdtWaWorkCoverProgressController.postAdd);
+app.post('/api/meditek/v1/wa/workcover/progress/search', mdtWaWorkCoverProgressController.postSearch);
+app.post('/api/meditek/v1/wa/workcover/progress/edit', mdtWaWorkCoverProgressController.postEdit);
+
+var mdtWaWorkCoverFinalController = require('./controllers/WaWorkCoverFinalController');
+
+app.post('/api/meditek/v1/wa/workcover/final/add', mdtWaWorkCoverFinalController.postAdd);
+app.post('/api/meditek/v1/wa/workcover/final/search', mdtWaWorkCoverFinalController.postSearch);
+app.post('/api/meditek/v1/wa/workcover/final/edit', mdtWaWorkCoverFinalController.postEdit);
 
 var SysServicesController = require('./controllers/SysServicesController');
 

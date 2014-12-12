@@ -1,0 +1,703 @@
+<form name="waprogressform">
+    <accordion close-others="oneAtATime">
+        <accordion-group heading="WORKER'S DETAILS">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="first_name">First name</label>
+                            <input class="form-control" name="first_name" ng-model="patient.First_name" placeholder="First name" float-label readonly="readonly">
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="last_name">Last name</label>
+                            <input class="form-control" name="last_name" ng-model="patient.Sur_name" placeholder="Last name" float-label readonly="readonly">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="DOB">Date of birth</label>
+                            <input class="form-control" readonly="readonly" name="DOB" ng-model="patient.DOB" placeholder="Date of birth" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Email">Email</label>
+                            <input class="form-control" name="Email" ng-model="patient.Email" placeholder="Email" float-label readonly="readonly">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Phone">Phone</label>
+                            <input class="form-control" name="Phone" ng-model="patient.Phone" placeholder="Phone" float-label readonly="readonly">
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="claim_no">Claim No.</label>
+                            <input class="form-control" name="claim_no" ng-model="patient.claim_no" placeholder="Claim No." float-label readonly="readonly">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <span class="field">
+                            <label class="control-label" for="Address">Address</label>
+                            <input class="form-control" name="Address" ng-model="patient.Address" placeholder="Address" float-label readonly="readonly">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+        </accordion-group>
+        <accordion-group heading="EMPLOYER'S DETAILS">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Company_name">Employer's name</label>
+                            <input class="form-control" name="Company_name" ng-model="company.Company_name" placeholder="Employer's name" float-label readonly="readonly">
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Company_phone">Employer's phone</label>
+                            <input class="form-control" name="Company_phone" ng-model="company.Phone" placeholder="Employer's phone" float-label readonly="readonly">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <span class="field">
+                            <label class="control-label" for="Addr">Employer's address</label>
+                            <input class="form-control" name="Addr" ng-model="company.Addr" placeholder="Employer's address" float-label readonly="readonly">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+        </accordion-group>
+        <accordion-group heading="MEDICAL ASSESSMENT">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="ass_examDate">Date of this assessment</label>
+                            <input type="text" class="form-control" name="ass_examDate" ng-model="waprogress.examDate" placeholder="Date of this assessment" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="ass_injuryDate">Date of injury</label>
+                            <input type="text" class="form-control" name="ass_injuryDate" ng-model="waprogress.injuryDate" placeholder="Date of injury" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <span class="field">
+                            <label class="control-label" for="diagnosis">Diagnosis</label>
+                            <input class="form-control" name="diagnosis" ng-model="waprogress.diagnosis" placeholder="Diagnosis" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+        </accordion-group>
+        <accordion-group heading="PROGRESS REPORT">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="table-scrollable">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width:20% !important">
+                                        Activities/interventions
+                                    </th>
+                                    <th scope="col" style="width: 70% !important;">
+                                        Actual outcome <i>(change in symptoms, function, activity and work participation)</i>
+                                    </th>
+                                    <th scope="col" style="width: 10% !important;">
+                                        Still Required? *
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.activities_1">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.outcome_1">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" class="mdt-radio" value="1" id="isRequired_1_YES" name="isRequired_1_YES" ng-model="waprogress.isRequired_1">
+                                        <label class="control-label" for="isRequired_1_YES">Yes</label>
+                                        <input type="radio" class="mdt-radio" value="0" id="isRequired_1_NO" name="isRequired_1_NO" ng-model="waprogress.isRequired_1">
+                                        <label class="control-label" for="isRequired_1_NO">No</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.activities_2">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.outcome_2">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" class="mdt-radio" value="2" id="isRequired_2_YES" name="isRequired_2_YES" ng-model="waprogress.isRequired_2">
+                                        <label class="control-label" for="isRequired_2_YES">Yes</label>
+                                        <input type="radio" class="mdt-radio" value="0" id="isRequired_2_NO" name="isRequired_2_NO" ng-model="waprogress.isRequired_2">
+                                        <label class="control-label" for="isRequired_2_NO">No</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.activities_3">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.outcome_3">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" class="mdt-radio" value="3" id="isRequired_3_YES" name="isRequired_3_YES" ng-model="waprogress.isRequired_3">
+                                        <label class="control-label" for="isRequired_3_YES">Yes</label>
+                                        <input type="radio" class="mdt-radio" value="0" id="isRequired_3_NO" name="isRequired_3_NO" ng-model="waprogress.isRequired_3">
+                                        <label class="control-label" for="isRequired_3_NO">No</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.activities_4">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.outcome_4">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" class="mdt-radio" value="4" id="isRequired_4_YES" name="isRequired_4_YES" ng-model="waprogress.isRequired_4">
+                                        <label class="control-label" for="isRequired_4_YES">Yes</label>
+                                        <input type="radio" class="mdt-radio" value="0" id="isRequired_4_NO" name="isRequired_4_NO" ng-model="waprogress.isRequired_4">
+                                        <label class="control-label" for="isRequired_4_NO">No</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.activities_5">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.outcome_5">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" class="mdt-radio" value="5" id="isRequired_5_YES" name="isRequired_5_YES" ng-model="waprogress.isRequired_5">
+                                        <label class="control-label" for="isRequired_5_YES">Yes</label>
+                                        <input type="radio" class="mdt-radio" value="0" id="isRequired_5_NO" name="isRequired_5_NO" ng-model="waprogress.isRequired_5">
+                                        <label class="control-label" for="isRequired_5_NO">No</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.activities_6">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input type="text" ng-model="waprogress.outcome_6">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" class="mdt-radio" value="6" id="isRequired_6_YES" name="isRequired_6_YES" ng-model="waprogress.isRequired_6">
+                                        <label class="control-label" for="isRequired_6_YES">Yes</label>
+                                        <input type="radio" class="mdt-radio" value="0" id="isRequired_6_NO" name="isRequired_6_NO" ng-model="waprogress.isRequired_6">
+                                        <label class="control-label" for="isRequired_6_NO">No</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class="col-md-12 col-sm-12 control-label"><i>(If management activities/interventions are still required, please also list them in "Injury Management Plan" section)</i>
+                    </label>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" id="isOtherFactor" name="isOtherFactor" ng-model="waprogress.isOtherFactor">
+                        <label class="control-label" for="isOtherFactor">Other factors appear to be impacting recovery and return to work</label>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <span class="field">
+                            <label class="control-label" for="progressCmt">Comment</label>
+                            <input class="form-control" name="progressCmt" ng-model="waprogress.progressCmt" placeholder="Comment" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </accordion-group>
+        <accordion-group heading="WORK CAPACITY">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <span class="field">
+                            <label class="control-label" for="usualDuties">Worker's usual duties</label>
+                            <input class="form-control" name="usualDuties" ng-model="waprogress.usualDuties" placeholder="Worker's usual duties" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class=" col-md-12 col-sm-12 control-label">
+                        Having considered the health benefits of work, I find this worker to have:
+                    </label>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isFullCapacity" id="isFullCapacity" ng-model="waprogress.isFullCapacity">
+                        <label for="isFullCapacity"><b>full capacity for work</b>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row" ng-show="waprogress.isFullCapacity==1">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-6 col-sm-6">
+                            <span class="field">
+                            <label class="control-label" for="fullCapaFrom">Full capacity from</label>
+                            <input class="form-control" name="fullCapaFrom" readonly="readonly" ng-model="waprogress.fullCapaFrom" placeholder="Full capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isRequireTreat" id="isRequireTreat" ng-model="waprogress.isRequireTreat">
+                            <label for="isRequireTreat">but requires further treatment</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isSomeCapacity" id="isSomeCapacity" ng-model="waprogress.isSomeCapacity">
+                        <label for="isSomeCapacity"><b>some capacity for work</b>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row" ng-show="waprogress.isSomeCapacity == 1">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-5 col-sm-5">
+                            <span class="field">
+                            <label class="control-label" for="someCapaFrom">Some capacity from</label>
+                            <input class="form-control" name="someCapaFrom" readonly="readonly" ng-model="waprogress.someCapaFrom" placeholder="Some capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <span class="field">
+                            <label class="control-label" for="someCapaTo">Some capacity to</label>
+                            <input class="form-control" name="someCapaTo" readonly="readonly" ng-model="waprogress.someCapaTo" placeholder="Some capacity to" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                        </div>
+                        <label class="col-md-2 col-sm-2 control-label">performing:</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row" ng-show="waprogress.isSomeCapacity == 1">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-4 col-sm-4">
+                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isPreDuties" id="isPreDuties" ng-model="waprogress.isPreDuties">
+                            <label for="isPreDuties">pre-injury duties</label>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isModiDuties" id="isModiDuties" ng-model="waprogress.isModiDuties">
+                            <label for="isModiDuties">modified or alternative duties</label>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isWorkModifi" id="isWorkModifi" ng-model="waprogress.isWorkModifi">
+                            <label for="isWorkModifi">workplace modifications</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" ng-show="waprogress.isSomeCapacity == 1">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-4 col-sm-4">
+                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isPreHours" id="isPreHours" ng-model="waprogress.isPreHours">
+                            <label for="isPreHours">pre-injury hours</label>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isModiHrs" id="isModiHrs" ng-model="waprogress.isModiHrs">
+                            <label for="isModiHrs">modified hours of
+                                <input type="text" class="form-control input-mini inline" ng-model="waprogress.modiHrs">hrs/day
+                                <input type="text" class="form-control input-mini inline" ng-model="waprogress.modiDays">days/week
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row-alt" ng-show="waprogress.isSomeCapacity == 1"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isNoCapacity" id="isNoCapacity" ng-model="waprogress.isNoCapacity">
+                        <label for="isNoCapacity"><b>no capacity for work</b>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row" ng-show="waprogress.isNoCapacity == 1">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-4 col-sm-4">
+                            <span class="field">
+                            <label class="control-label" for="noCapaFrom">No capacity from</label>
+                            <input class="form-control" name="noCapaFrom" readonly="readonly" ng-model="waprogress.noCapaFrom" placeholder="No capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <span class="field">
+                            <label class="control-label" for="noCapaTo">No capacity to</label>
+                            <input class="form-control" name="noCapaTo" readonly="readonly" ng-model="waprogress.noCapaTo" placeholder="No capacity to" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                        </div>
+                        <label class="col-md-4 col-sm-4 control-label"> <i>(outline clinical reason below)</i> 
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class="control-label col-md-12 col-sm-12">Worker has capacity to:</label>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <label class="control-label col-md-12 col-sm-12"><i>(Please outline the worker physical and/or psychosocial capacity - refer to explanatory notes for examples. Where there is no capacity for work, please provide clinical reasoning)</i>
+                    </label>
+                </div>
+            </div>
+            <div class="break-row"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-4 col-sm-4">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isLiftUp" id="isLiftUp" ng-model="waprogress.isLiftUp">
+                        <label for="isLiftUp">lift up to
+                            <input type="text" class="form-control input-mini inline" ng-model="waprogress.liftUpKg">kg</label>
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isSitUp" id="isSitUp" ng-model="waprogress.isSitUp">
+                        <label for="isSitUp">sit up to
+                            <input type="text" class="form-control input-mini inline" ng-model="waprogress.sitUpMins">mins</label>
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isLiftUp" id="isStandUp" ng-model="waprogress.isStandUp">
+                        <label for="isStandUp">stand up to
+                            <input type="text" class="form-control input-mini inline" ng-model="waprogress.standUpMins">mins</label>
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isWalkUp" id="isWalkUp" ng-model="waprogress.isWalkUp">
+                        <label for="isWalkUp">walk up to
+                            <input type="text" class="form-control input-mini inline" ng-model="waprogress.walkUpMeter">kg</label>
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isWorkBelow" id="isWorkBelow" ng-model="waprogress.isWorkBelow">
+                        <label for="isWorkBelow">work below shoulder height</label>
+                    </div>
+                    <div class="col-md-8 col-sm-8">
+                        <textarea class="textarea-custom-style form-control" rows="11" ng-model="capaCmt"></textarea>
+                    </div>
+                </div>
+            </div>
+        </accordion-group>
+        <accordion-group heading="INJURY MANAGEMENT PLAN">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="table-scrollable">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width:20% !important">
+                                        Activities/interventions
+                                    </th>
+                                    <th scope="col">
+                                        Purpose/goal <i>(likely change in symptoms, function, activity and work participation)</i>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.activities_B1">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.goal_1">
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.activities_B2">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.goal_2">
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.activities_B3">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.goal_3">
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.activities_B4">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.goal_4">
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.activities_B5">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.goal_5">
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.activities_B6">
+                                    </span>
+                                    </td>
+                                    <td>
+                                        <span class="field">
+                                        <input class="form-control" type="text" ng-model="waprogress.goal_6">
+                                    </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" id="isSupportRTW" name="isSupportRTW" ng-model="waprogress.isSupportRTW">
+                    <label class="control-label" for="isSupportRTW">I support the RTW program established bythe employer/insurer/WRP dated
+                        <input type="text" class="form-control input-small inline" ng-model="waprogress.supportDate" readonly="readonly" style="background: #ffffff;" ui-date="{dateFormat: 'dd/mm/yy'}">
+                    </label>
+                    <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" id="isMoreInfo" name="isMoreInfo" ng-model="waprogress.isMoreInfo">
+                    <label class="control-label" for="isMoreInfo">
+                        I would like more information about available duties
+                    </label>
+                    <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" id="isInvolved" name="isInvolved" ng-model="waprogress.isInvolved">
+                    <label class="control-label" for="isInvolved">
+                        I would like to be involved in developing the RTW program
+                    </label>
+                    <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" id="isEngage" name="isEngage" ng-model="waprogress.isEngage">
+                    <label class="control-label" for="isEngage">
+                        Please engege a workplace rehabilitation provider <i>(If you have made a referral, provide name and contact details below)</i>
+                    </label>
+                    <span class="field">
+                        <label class="control-label" for="engageDetail">Referral details</label>
+                        <input type="text" class="form-control" name="engageDetail" placeholder="Referral details" ng-model="waprogress.engageDetail" float-label >
+                    </span>
+
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class="control-label">
+                        <i>
+                            <ul>Examples of injury management activities/interventions include:
+                                <li>further assessment - dianostic imaging, medical specialist consults, worksite assessment.</li>
+                                <li>intervention - physiotherapy, clinical psychology, exercise psychology, prescribed medications, workplace mediation</li>
+                                <li>return to work planning - identify suitable duties, establish return to work program</li>
+                            </ul>
+                        </i>
+                    </label>
+                </div>
+            </div>
+        </accordion-group>
+        <accordion-group heading="NEXT REVIEW DATE">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" id="isReview" name="isReview" ng-model="waprogress.isReview">
+                    <label class="control-label" for="isReview">
+                        I will review worker again on
+                        <input type="text" class="form-control input-small inline" readonly="readonly" style="background: #ffffff;" ng-model="waprogress.reviewOn" ui-date="{dateFormat: 'dd/mm/yy'}">
+                        <i>(If greater than 28 days, please provide clinical reasoning)</i>
+                    </label>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <span class="field">
+                        <label class="control-label" for="reviewCmt">Comments</label>
+                        <input type="text" name="reviewCmt" class="form-control" placeholder="Comments" ng-model="waprogress.reviewCmt" float-label>
+                    </span>
+                </div>
+            </div>
+        </accordion-group>
+        <accordion-group heading="MEDICAL PRACTITIONER'S DETAILS">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_name">Name</label>
+                            <input class="form-control" name="doc_name" ng-model="doctor.NAME" placeholder="Name" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="Provider_no">AHPRA no. MED</label>
+                            <input class="form-control" name="Provider_no" ng-model="doctor.Provider_no" placeholder="AHPRA no. MED" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_Address">Address</label>
+                            <input class="form-control" name="doc_Address" ng-model="doctor.Address" placeholder="Address" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_email">Email</label>
+                            <input class="form-control" name="doc_email" ng-model="doctor.Email" placeholder="Email" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_Phone">Phone</label>
+                            <input class="form-control" name="doc_Phone" ng-model="doctor.Phone" placeholder="Phone" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <img src="{{doctor.Signature}}" style="width:100%" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="doc_Fax">Fax</label>
+                            <input class="form-control" name="doc_Fax" ng-model="doctor.Fax" placeholder="Fax" float-label>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <span class="field">
+                            <label class="control-label" for="examDate">Date</label>
+                            <input class="form-control" name="examDate" ng-model="waprogress.examDate" placeholder="Date" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </accordion-group>
+        <div class="break-row-alt"></div>
+        <div class="row">
+            <div class="col-md-offset-10 col-sm-offset-10 col-md-2 col-sm-2">
+                <button type="button" class="btn-lg btn green" ng-show="params.edit===false" ng-click="clickAction()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Submit
+                </button>
+                <button type="button" class="btn-lg btn green" ng-show="params.edit===true" ng-click="clickAction()">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Update
+                </button>
+            </div>
+        </div>
+
+    </accordion>
+
+</form>
