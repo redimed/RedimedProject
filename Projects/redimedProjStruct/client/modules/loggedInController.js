@@ -20,7 +20,7 @@ angular.module("app.loggedIn.controller",[
         titles: ConfigService.title_option(),
         sexes: ConfigService.sex_option(),
         sms: ConfigService.yes_no_option(),
-        countries: ConfigService.country_option(),
+        //countries: ConfigService.country_option(),
         gaps: ConfigService.yes_no_option(),
         acc_types: ConfigService.acc_type_option(),
         app_types: ConfigService.app_type_option(),
@@ -91,7 +91,7 @@ angular.module("app.loggedIn.controller",[
                 $scope.options.language_types = response.list;
         })
 
-        ConfigService.doctors_option().then(function(response){
+        /*ConfigService.doctors_option().then(function(response){
             if(response.status === 'success')
                 $scope.options.doctor_types = response.data;
         })
@@ -99,7 +99,7 @@ angular.module("app.loggedIn.controller",[
         ConfigService.patients_option().then(function(response){
             if(response.status === 'success')
                 $scope.options.patient_types = response.data;
-        })
+        })*/
 
         ConfigService.taxes_option().then(function(data){
             $scope.options.taxes = data;
@@ -107,9 +107,9 @@ angular.module("app.loggedIn.controller",[
         ConfigService.prefix_headers_option('item').then(function(data){
             $scope.options.prefix_headers = data;
         });
-        ConfigService.provider_types_option().then(function(data){
+        /*ConfigService.provider_types_option().then(function(data){
             $scope.options.provider_types = data;
-        });
+        });*/
         
         ConfigService.inv_uoms_option().then(function(data){
             $scope.options.uoms = data;
