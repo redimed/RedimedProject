@@ -11,16 +11,10 @@
 }
 
 #content {
-    /*position: relative;*/
     margin-top: 90px;
-    /*padding-top: 100px;*/
 }
 
 #profile-info {
-    /*position: absolute;*/
-    /*top: -95px;*/
-    /*width: 100%;*/
-    /*z-index: 2;*/
     text-align: center;
 }
 #profile-name {

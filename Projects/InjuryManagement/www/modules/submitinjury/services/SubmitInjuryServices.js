@@ -44,7 +44,10 @@ angular.module('starter.injury.services',[])
             return q.promise;
         }
 
-
+        injuryServices.pushGCM = function() {
+            var detailApi = injuryApi.all("testPushGCM");
+            return detailApi.post();
+        }
         return injuryServices;
 
     })

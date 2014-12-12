@@ -4,7 +4,7 @@
     </ion-nav-buttons>
 
     <div class="bar bar-subheader bar-sub-color">
-        <button class="button button-clear button-positive" ui-sref="app.driver.list">
+        <button class="button button-clear button-positive" ng-click="backbtnList()">
             Back
         </button>
     </div>
@@ -123,7 +123,7 @@
 
         <div class="row">
             <div class="col col-50 col-offset-25 padding-bottom">
-                <button class="button button-block bg-btn-custom border-radius-button" ng-click="pickUp()">
+                <button class="button button-block bg-btn-custom border-radius-button" ng-click="pickUp(worker.injury_id)">
                     Pickup
                 </button>
             </div>

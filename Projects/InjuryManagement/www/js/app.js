@@ -86,13 +86,14 @@ angular.module('starter', ['ionic',
 
                 if (ionic.Platform.isAndroid()) {
                     config = {
-                        "senderID": "137912318312"
+                        "senderID": "137912318312",
+                         sound: '/www/alert.mp3'
                     };
                 }
                 else if (ionic.Platform.isIOS()) {
                     config = {
                         "badge": "true",
-                        "sound": "true",
+                        "sound": "alert.mp3",
                         "alert": "true"
                     }
                 }

@@ -51,15 +51,12 @@ angular.module('starter.driver.controller',[])
                 {
                     $scope.lstPatient = result.data;
                     for(var i = 0 ; i < $scope.lstPatient.length; i++) {
+                        //alert(result.data[i].STATUS);
                         $scope.lstPatient[i].background = colors[Math.floor(Math.random() * colors.length)];
                         $scope.lstPatient[i].letter = String($scope.lstPatient[i].First_name).substr(0,1).toUpperCase();
                     }
                 }
             })
-        }
-
-        $scope.pickUp = function() {
-            alert(JSON.stringify($scope.worker));
         }
 
         $scope.doRefreshList = function() {
@@ -77,47 +74,70 @@ angular.module('starter.driver.controller',[])
             });
         };
 
-        $scope.selectPatient = function (injuryID){
+        $scope.selectPatient = function (injuryID, status){
+            if(status == "New")
+            {
+                var jsonStatus = {STATUS:'Waiting'};
+                DriverServices.editPatient(jsonStatus, injuryID).then(function (result){
+                    if(result.status.toLocaleLowerCase('success')){
+                        console.log("success");
+                    }
+                });
+            }
             DriverServices.getPatientID(injuryID).then(function (result){
-                if(result.status.toLocaleLowerCase() == "success")
-                {
-                    $scope.worker = result.data[0];
-                }
+                $scope.worker = result.data[0];
             })
+            $state.go('app.driver.detailInjury');
+        }
+
+        $scope.pickUp = function(injuryID) {
+            var jsonStatus = {STATUS:'Done'};
+            DriverServices.editPatient(jsonStatus,injuryID).then(function (result) {
+                if(result.status.toLocaleLowerCase('success')){
+                    console.log("success");
+                }
+            });
+            $state.go('app.driver.list');
+            $scope.doRefreshList();
+        }
+
+        $scope.backbtnList = function() {
+            $state.go('app.driver.list');
+            $scope.doRefreshList();
         }
 
         init();
     })
 
-    .directive('drawCircle', function($timeout, $parse) {
-        return {
-            restrict: 'E',
-            replace:true,
-            scope:{
-                letter: '=',
-                background:'=',
-                width:'=',
-                height:'=',
-                font:'=',
-                num:'@'
-            },
-            template:'<div id="dCircle_{{num}}">{{letter}}</div>',
-            link: function(scope, element, attrs) {
-                var circle = angular.element(document.getElementById('dCircle_{{num}}'));
-                //Draw Circle
-                circle.css('background',scope.background);
-                circle.css('width',scope.width);
-                circle.css('height',scope.height);
-                circle.css('border-radius','50%');
-                circle.css('text-align','center');
-                circle.css('vertical-align','middle');
-                circle.css('display','table-cell');
-                circle.css('color','white');
-                circle.css('font-size',scope.font);
-                circle.css('font-weight','lighter');
-            }
-        }
-    })
+//.directive('drawCircle', function($timeout, $parse) {
+//    return {
+//        restrict: 'E',
+//        replace:true,
+//        scope:{
+//            letter: '=',
+//            background:'=',
+//            width:'=',
+//            height:'=',
+//            font:'=',
+//            num:'@'
+//        },
+//        template:'<div id="dCircle_{{num}}">{{letter}}</div>',
+//        link: function(scope, element, attrs) {
+//            var circle = angular.element(document.getElementById('dCircle_{{num}}'));
+//            //Draw Circle
+//            circle.css('background',scope.background);
+//            circle.css('width',scope.width);
+//            circle.css('height',scope.height);
+//            circle.css('border-radius','50%');
+//            circle.css('text-align','center');
+//            circle.css('vertical-align','middle');
+//            circle.css('display','table-cell');
+//            circle.css('color','white');
+//            circle.css('font-size',scope.font);
+//            circle.css('font-weight','lighter');
+//        }
+//    }
+//})
 
 
 //DIRECTIVE CANVAS CUSTOM

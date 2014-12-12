@@ -1,10 +1,10 @@
 <ion-view>
     <ion-content class="">
-    <div class="logo">
-        <a ui-sref="login">
-            <img src="img/logo.png">
-        </a>
-    </div>
+        <div class="logo">
+            <a ui-sref="login">
+                <img src="img/logo.png">
+            </a>
+        </div>
         <!-- CONTENT -->
         <div class="content">
             <form class="login-form" novalidate name="loginForm" ng-submit="login()">
@@ -12,9 +12,9 @@
 
                 <div class="form-group">
                     <label class="item item-input item-floating-label">
-                             <span class="input-label">Username</span>
-                            <input type="text" name="username" ng-model="modelUser.username" required
-                                   placeholder="Username" autocomplete="off" >
+                        <span class="input-label">Username</span>
+                        <input type="text" name="username" ng-model="modelUser.username" required
+                               placeholder="Username" autocomplete="off" >
                     </label>
                     <label class="item item-input item-floating-label">
                         <span class="input-label">Password</span>
@@ -23,11 +23,11 @@
                     </label>
 
                 </div>
-                <div class="form-actions">
-                    <button class="button button-block button-positive" type="submit" >
-                        Login
-                    </button>
-                </div>
+
+                <button class="button button-block button-positive" type="submit" >
+                    Login
+                </button>
+
                 <div class="forget-password">
                     <h4>Forgot your password ?</h4>
                     <p>
@@ -37,8 +37,8 @@
             </form>
         </div>
         <!-- END CONTENT -->
-    <div class="copyright ">
-        2014 &copy; REDIMED Dashboard
-    </div>
+        <div class="copyright">
+            2014 &copy; REDIMED Dashboard
+        </div>
     </ion-content>
 </ion-view>

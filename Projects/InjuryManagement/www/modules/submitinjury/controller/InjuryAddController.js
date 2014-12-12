@@ -429,6 +429,17 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             }
         }
 
+        $scope.pushNotificationbutton = function() {
+            InjuryServices.pushGCM().then(function(res){
+                if(res.status.toLocaleLowerCase() == "success"){
+                    alert("push success");
+                }
+                else {
+                    alert("push error");
+                }
+            });
+        }
+
         initForm();
 
 
