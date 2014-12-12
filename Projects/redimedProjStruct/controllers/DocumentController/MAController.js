@@ -44,11 +44,8 @@ module.exports = {
 
                 var paramMap = new HashMap();
 
-                paramMap.putSync("cal_id",parseInt(calId));
-                paramMap.putSync("patient_id",parseInt(patientId));
-                paramMap.putSync("key",parseInt(MA_ID));
+                paramMap.putSync("id",parseInt(MA_ID));
                 paramMap.putSync("real_path","./reports/MA");
-                paramMap.putSync("SUBREPORT_DIR","./reports/MA");
 
                 var filePath = '.\\download\\report\\'+'patientID_'+patientId+'\\calID_'+calId+'\\MA.pdf';
 
@@ -82,38 +79,199 @@ module.exports = {
 
     insertMA : function(req, res)
     {
-        var infoL = req.body.infoL;
-        var infoH = req.body.infoH;
-
-        db.sequelize.query("INSERT INTO `cln_ma_headers` (Patient_id,CAL_ID,MA_ID,DF_CODE,ISENABLE, DESCRIPTION, Creation_date) SELECT ?,?,h.QUEST_DF_ID,h.`DF_CODE`,h.`ISENABLE`,h.DESCRIPTION,?  FROM `sys_ma_df_headers` h;",null,{raw:true},[infoH.Patient_id,infoH.CAL_ID, new Date()]).success(function(){
-            db.sequelize.query("INSERT INTO `cln_ma_group` (PATIENT_ID, CAL_ID, GROUP_ID, GROUP_NAME, MA_ID,USER_TYPE,ISENABLE) SELECT ?,?,g.`GROUP_ID`, g.`GROUP_NAME`,g.`QUEST_DF_ID`,g.`USER_TYPE`,g.`ISENABLE` FROM `sys_ma_df_group` g;",null,{raw:true},[infoH.Patient_id,infoH.CAL_ID]).success(function(){
-                db.sequelize.query("INSERT INTO `cln_ma_lines` (PATIENT_ID,CAL_ID,MA_LINE_ID,QUESTION,VAL1_NAME,VAL2_NAME,YES_NO,ORD,GROUP_ID,ISENABLE, Creation_date) SELECT ?,?,l.MA_LINE_ID, l.QUESTION, l.VAL1_NAME, l.VAL2_NAME, l.YES_NO, l.ORD, l.GROUP_ID,l.ISENABLE,? FROM `sys_ma_df_lines` l;",null,{raw:true},[infoH.Patient_id,infoH.CAL_ID, new Date()]).success(function(){
-                    submitMA(res,infoH,infoL);
-                });
-            });
-        }).error(function(err){
-            res.json({status:"fail"});
-        });
+        var info = req.body.info;
+        db.docMA.create({
+            PATIENT_ID: info.PATIENT_ID,
+            CAL_ID: info.CAL_ID,
+            HEIGHT: info.HEIGHT == '' ? null : info.HEIGHT,
+            WEIGHT: info.WEIGHT == '' ? null : info.WEIGHT,
+            BMI : info.BMI == '' ? null : info.BMI,
+            WAIST: info.WAIST == '' ? null : info.WAIST,
+            HIP: info.HIP == '' ? null : info.HIP,
+            WHR: info.WHR == '' ? null : info.WHR,
+            IS_BMI: info.IS_BMI,
+            IS_BLOOD: info.IS_BLOOD,
+            BLOOD_SEC1: info.BLOOD_SEC1 == '' ? null : info.BLOOD_SEC1,
+            IS_RESTING_HEART_RATE: info.IS_RESTING_HEART_RATE,
+            RESTING_HEART_RATE: info.RESTING_HEART_RATE == '' ? null : info.RESTING_HEART_RATE,
+            HEART_SOUNDS: info.HEART_SOUNDS,
+            PERIPHERAL: info.PERIPHERAL,
+            VEINS_OTHER: info.VEINS_OTHER,
+            COMMENT_SEC1 : info.COMMENT_SEC1,
+            RIGHT_DIST: info.RIGHT_DIST == '' ? null : info.RIGHT_DIST,
+            RIGHT_DIST_CORRECT: info.RIGHT_DIST_CORRECT == '' ? null : info.RIGHT_DIST_CORRECT,
+            LEFT_DIST: info.LEFT_DIST == '' ? null : info.LEFT_DIST,
+            LEFT_DIST_CORRECT: info.LEFT_DIST_CORRECT == '' ? null : info.LEFT_DIST_CORRECT,
+            RIGHT_NEAR: info.RIGHT_NEAR == '' ? null : info.RIGHT_NEAR,
+            RIGHT_NEAR_CORRECT: info.RIGHT_NEAR_CORRECT == '' ? null : info.RIGHT_NEAR_CORRECT,
+            LEFT_NEAR: info.LEFT_NEAR == '' ? null : info.LEFT_NEAR,
+            LEFT_NEAR_CORRECT: info.LEFT_NEAR_CORRECT == '' ? null : info.LEFT_NEAR_CORRECT,
+            COLOUR_SEC2: info.COLOUR_SEC2,
+            SCORE_SEC2: info.SCORE_SEC2 == '' ? null : info.SCORE_SEC2,
+            PERIPHERAL_SEC2: info.PERIPHERAL_SEC2,
+            VISUAL_AIDS: info.VISUAL_AIDS,
+            COMMENT_SEC2 : info.COMMENT_SEC2,
+            PROTEIN: info.PROTEIN,
+            GLUCOSE: info.GLUCOSE,
+            BLOOD: info.BLOOD,
+            BLOOD_SUGAR_LEVEL: info.BLOOD_SUGAR_LEVEL == '' ? null : info.BLOOD_SUGAR_LEVEL,
+            COMMENT_SEC3 : info.COMMENT_SEC3,
+            SPIROMETRY: info.SPIROMETRY,
+            SYMMETRICAL: info.SYMMETRICAL,
+            AUSCULTATION: info.AUSCULTATION,
+            EARS: info.EARS,
+            HEARING: info.HEARING,
+            NOSE: info.NOSE,
+            THROAT: info.THROAT,
+            TEETH_GUMS: info.TEETH_GUMS,
+            SKIN: info.SKIN,
+            DRUG: info.DRUG,
+            NAIL: info.NAIL,
+            SCAR: info.SCAR,
+            ABDOMEN: info.ABDOMEN,
+            HERNIAL: info.HERNIAL,
+            LIVER: info.LIVER,
+            SPLEEN: info.SPLEEN,
+            KIDNEYS: info.KIDNEYS,
+            BALANCE: info.BALANCE,
+            COORDINATION: info.COORDINATION,
+            LYMPH: info.LYMPH,
+            THYROID: info.THYROID,
+            COMMENT_SEC9 : info.COMMENT_SEC9,
+            AGE: info.AGE == '' ? null : info.AGE,
+            HYPER: info.HYPER,
+            SMOKER: info.SMOKER,
+            KNOW: info.KNOW,
+            SEDENTARY: info.SEDENTARY,
+            FAMILY: info.FAMILY,
+            HISTORY: info.HISTORY,
+            OBESITY: info.OBESITY,
+            RISK: info.RISK,
+            ECG: info.ECG,
+            ECG_RESULT: info.ECG_RESULT,
+            GP: info.GP,
+            COMMENT_SEC10 : info.COMMENT_SEC10,
+            DOCTOR_NAME : info.DOCTOR_NAME,
+            SIGN: info.SIGN,
+            Created_by: info.Created_by,
+            Creation_date: info.Creation_date,
+            Last_updated_by: info.Last_updated_by,
+            Last_update_date: info.Last_update_date,
+            DF_CODE  : info.DF_CODE,
+            ISENABLE: info.ISENABLE
+        },{raw:true})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
     },
 
-    updateMA : function(req, res)
+    editMA : function(req, res)
     {
-        var infoL = req.body.infoL;
-        var infoH = req.body.infoH;
-        submitMA(res,infoH,infoL);
+        var info = req.body.info;
+        db.docMA.update({
+            HEIGHT: info.HEIGHT == '' ? null : info.HEIGHT,
+            WEIGHT: info.WEIGHT == '' ? null : info.WEIGHT,
+            BMI : info.BMI == '' ? null : info.BMI,
+            WAIST: info.WAIST == '' ? null : info.WAIST,
+            HIP: info.HIP == '' ? null : info.HIP,
+            WHR: info.WHR == '' ? null : info.WHR,
+            IS_BMI: info.IS_BMI,
+            IS_BLOOD: info.IS_BLOOD,
+            BLOOD_SEC1: info.BLOOD_SEC1 == '' ? null : info.BLOOD_SEC1,
+            IS_RESTING_HEART_RATE: info.IS_RESTING_HEART_RATE,
+            RESTING_HEART_RATE: info.RESTING_HEART_RATE == '' ? null : info.RESTING_HEART_RATE,
+            HEART_SOUNDS: info.HEART_SOUNDS,
+            PERIPHERAL: info.PERIPHERAL,
+            VEINS_OTHER: info.VEINS_OTHER,
+            COMMENT_SEC1 : info.COMMENT_SEC1,
+            RIGHT_DIST: info.RIGHT_DIST == '' ? null : info.RIGHT_DIST,
+            RIGHT_DIST_CORRECT: info.RIGHT_DIST_CORRECT == '' ? null : info.RIGHT_DIST_CORRECT,
+            LEFT_DIST: info.LEFT_DIST == '' ? null : info.LEFT_DIST,
+            LEFT_DIST_CORRECT: info.LEFT_DIST_CORRECT == '' ? null : info.LEFT_DIST_CORRECT,
+            RIGHT_NEAR: info.RIGHT_NEAR == '' ? null : info.RIGHT_NEAR,
+            RIGHT_NEAR_CORRECT: info.RIGHT_NEAR_CORRECT == '' ? null : info.RIGHT_NEAR_CORRECT,
+            LEFT_NEAR: info.LEFT_NEAR == '' ? null : info.LEFT_NEAR,
+            LEFT_NEAR_CORRECT: info.LEFT_NEAR_CORRECT == '' ? null : info.LEFT_NEAR_CORRECT,
+            COLOUR_SEC2: info.COLOUR_SEC2,
+            SCORE_SEC2: info.SCORE_SEC2 == '' ? null : info.SCORE_SEC2,
+            PERIPHERAL_SEC2: info.PERIPHERAL_SEC2,
+            VISUAL_AIDS: info.VISUAL_AIDS,
+            COMMENT_SEC2 : info.COMMENT_SEC2,
+            PROTEIN: info.PROTEIN,
+            GLUCOSE: info.GLUCOSE,
+            BLOOD: info.BLOOD,
+            BLOOD_SUGAR_LEVEL: info.BLOOD_SUGAR_LEVEL == '' ? null : info.BLOOD_SUGAR_LEVEL,
+            COMMENT_SEC3 : info.COMMENT_SEC3,
+            SPIROMETRY: info.SPIROMETRY,
+            SYMMETRICAL: info.SYMMETRICAL,
+            AUSCULTATION: info.AUSCULTATION,
+            EARS: info.EARS,
+            HEARING: info.HEARING,
+            NOSE: info.NOSE,
+            THROAT: info.THROAT,
+            TEETH_GUMS: info.TEETH_GUMS,
+            SKIN: info.SKIN,
+            DRUG: info.DRUG,
+            NAIL: info.NAIL,
+            SCAR: info.SCAR,
+            ABDOMEN: info.ABDOMEN,
+            HERNIAL: info.HERNIAL,
+            LIVER: info.LIVER,
+            SPLEEN: info.SPLEEN,
+            KIDNEYS: info.KIDNEYS,
+            BALANCE: info.BALANCE,
+            COORDINATION: info.COORDINATION,
+            LYMPH: info.LYMPH,
+            THYROID: info.THYROID,
+            COMMENT_SEC9 : info.COMMENT_SEC9,
+            AGE: info.AGE == '' ? null : info.AGE,
+            HYPER: info.HYPER,
+            SMOKER: info.SMOKER,
+            KNOW: info.KNOW,
+            SEDENTARY: info.SEDENTARY,
+            FAMILY: info.FAMILY,
+            HISTORY: info.HISTORY,
+            OBESITY: info.OBESITY,
+            RISK: info.RISK,
+            ECG: info.ECG,
+            ECG_RESULT: info.ECG_RESULT,
+            GP: info.GP,
+            COMMENT_SEC10 : info.COMMENT_SEC10,
+            DOCTOR_NAME : info.DOCTOR_NAME,
+            SIGN: info.SIGN,
+            Created_by: info.Created_by,
+            Creation_date: info.Creation_date,
+            Last_updated_by: info.Last_updated_by,
+            Last_update_date: info.Last_update_date,
+            DF_CODE  : info.DF_CODE,
+            ISENABLE: info.ISENABLE
+        },{MA_ID : info.MA_ID})
+            .success(function(data){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+
     },
 
     checkMA: function(req,res){
         var Patient_Id = req.body.PatientID;
         var CalId = req.body.calID;
-        db.HeaderMA.find({where:{Patient_id:Patient_Id,CAL_ID : CalId}})
+
+        db.docMA.find({where:{PATIENT_ID:Patient_Id,CAL_ID : CalId}})
             .success(function(data){
                 if(data == null)
                 {
-                    loadNewMA(res);
+                    res.json({status:'fail'});
                 }else
                 {
-                    loadMA(res,Patient_Id,CalId);
+                    res.json(data);
                 }
             })
             .error(function(err){
@@ -122,122 +280,5 @@ module.exports = {
             })
     }
 
-};
-
-var loadNewMA = function(res){
-    var data = [];
-    sequelize.transaction(function(t) {
-        db.sysHeaderMA.findAll({where : {ISENABLE : 1}},{transaction: t})
-            .success(function(dataH){
-                db.sysGroupMA.findAll({where : {ISENABLE : 1}},{transaction: t})
-                    .success(function(dataG){
-                        db.sysLineMA.findAll({where : {ISENABLE : 1}, order : 'ORD'},{transaction: t})
-                            .success(function(dataL){
-                                data = [{"Header": dataH, "Group" : dataG,"Line": dataL}];
-                                res.json({status:"new",data:data});
-                            })
-                    })
-            })
-            .error(function(err){
-                t.rollback().success(function() {
-                    res.json({status:'error'});
-                })
-                console.log(err);
-            })})
-};
-
-var loadMA = function(res,idP, idC){
-    var data = [];
-    sequelize.transaction(function(t) {
-        db.HeaderMA.findAll({where : {ISENABLE : 1,Patient_id : idP,CAL_ID: idC}},{transaction: t})
-            .success(function(dataH){
-                db.GroupMA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC}},{transaction: t})
-                    .success(function(dataG){
-                        db.LineMA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC}, order : 'ORD'},{transaction: t})
-                            .success(function(dataL){
-                                data = [{"Header": dataH, "Group" : dataG,"Line": dataL}];
-                                res.json({status:"update",data:data});
-                            })
-                    })
-            })
-            .error(function(err){
-                t.rollback().success(function() {
-                    res.json({status:'error'});
-                })
-                console.log(err);
-            })})
-};
-
-var submitMA = function(res,infoH,infoL){
-    db.HeaderMA.update({
-        HEIGHT : infoH.HEIGHT,
-        WEIGHT: infoH.WEIGHT,
-        BMI: infoH.BMI,
-        URINALYSIS: infoH.URINALYSIS,
-        BSL : infoH.BSL,
-        WAIST_CIR : infoH.WAIST_CIR,
-        HIP_CIR : infoH.HIP_CIR,
-        WAIST_TO_HIP_RATE : infoH.WAIST_TO_HIP_RATE,
-        RISK : infoH.RISK,
-        DIST_RIGHT_EYE : infoH.DIST_RIGHT_EYE,
-        DIST_RIGHT_EYE_CORRECTED : infoH.DIST_RIGHT_EYE_CORRECTED,
-        DIST_LEFT_EYE : infoH.DIST_LEFT_EYE,
-        DIST_LEFT_EYE_CORRECTED : infoH.DIST_LEFT_EYE_CORRECTED,
-        NEAR_RIGHT_EYE : infoH.NEAR_RIGHT_EYE,
-        NEAR_RIGHT_EYE_CORRECTED : infoH.NEAR_RIGHT_EYE_CORRECTED,
-        NEAR_LEFT_EYE : infoH.NEAR_LEFT_EYE,
-        NEAR_LEFT_EYE_CORRECTED : infoH.NEAR_LEFT_EYE_CORRECTED,
-        PERIPHERAL_VISION : infoH.PERIPHERAL_VISION,
-        VISUAL_AIDS : infoH.VISUAL_AIDS,
-        VISUAL_AIDS_TYPE : infoH.VISUAL_AIDS_TYPE,
-        COLOR_VISUAL : infoH.COLOR_VISUAL,
-        COLOR_VISUAL_SCORE : infoH.COLOR_VISUAL_SCORE,
-        ISWOULD : infoH.ISWOULD,
-        COMMENTS: infoH.COMMENTS,
-        FINAL_ASS : infoH.FINAL_ASS,
-        COMMENTS2: infoH.COMMENTS2,
-        DOCTOR_NAME: infoH.DOCTOR_NAME,
-        SIGN  : infoH.SIGN,
-        HA_DATE : infoH.HA_DATE,
-        LOCATION_ID : infoH.LOCATION_ID,
-        QUEST_DF_ID : infoH.QUEST_DF_ID,
-        Created_by : infoH.Created_by,
-        Last_updated_by : infoH.Last_updated_by,
-        CAL_ID : infoH.CAL_ID,
-        DF_CODE : infoH.DF_CODE,
-        ISENABLE : infoH.ISENABLE,
-        IS_URINALYSIS : infoH.IS_URINALYSIS,
-        EXAMINED_COMMENT: infoH.EXAMINED_COMMENT,
-        IS_CANDIDATE_CAN_UNDERTAKE : infoH.IS_CANDIDATE_CAN_UNDERTAKE,
-        IS_CANDIDATE_BE_ADVERSELY_AFFECTED : infoH.IS_CANDIDATE_BE_ADVERSELY_AFFECTED,
-        CANDIDATE_CAN_UNDERTAKE_COMMENT: infoH.CANDIDATE_CAN_UNDERTAKE_COMMENT,
-        CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT: infoH.CANDIDATE_BE_ADVERSELY_AFFECTED_COMMENT,
-        DESCRIPTION : infoH.DESCRIPTION
-    },{Patient_id : infoH.Patient_id,CAL_ID : infoH.CAL_ID},{raw:true})
-        .success(function(data){
-            db.LineMA.max('MA_LINE_ID').success(function(maxL) {
-                for(var i = 36; i <= maxL ; i++ )
-                {
-                    db.LineMA.update({
-                        YES_NO_VAL: infoL.YES_NO_VAL[i],
-                        VAL1: infoL.VAL1[i],
-                        VAL2: infoL.VAL2[i],
-                        VAL3: infoL.VAL3[i],
-                        COMMENTS: infoL.COMMENTS[i]
-                    },{PATIENT_ID : infoH.Patient_id,CAL_ID : infoH.CAL_ID, MA_LINE_ID : i},{raw:true})
-                        .success(function(data){
-                            res.json({status:'success'});
-                        })
-                        .error(function(err){
-                            res.json({status:'error'});
-                            console.log(err);
-                        })
-                }
-            })
-        })
-        .error(function(err){
-            res.json({status:'error'});
-            console.log(err);
-        })
 };
 

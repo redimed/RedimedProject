@@ -262,9 +262,8 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
             if (gorgonMAForm.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
             } else {
-                var info = $scope.info;
                 if (insert == true) {
-                    DocumentService.insertGorgonMA(info).then(function (response) {
+                    DocumentService.insertGorgonMA($scope.info).then(function (response) {
                         if (response['status'] === 'success') {
                             toastr.success("Add new success!", "Success");
                             $scope.isNew = false;
@@ -276,8 +275,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                         }
                     });
                 } else {
-                    var info = $scope.info;
-                    DocumentService.editGorgonMA(info).then(function (response) {
+                    DocumentService.editGorgonMA($scope.info).then(function (response) {
                         if (response['status'] === 'success') {
                             toastr.success("Edit success!", "Success");
                             $state.go('loggedIn.gorgonMA', null, {'reload': true});

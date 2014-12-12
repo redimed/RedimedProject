@@ -63,19 +63,14 @@ angular.module('app.loggedIn.document.services', [])
         /* Medical Assessment
             Begin
          */
-        documentService.newMA = function (PATIENT_ID,CAL_ID) {
-            var newMA = api.all("document/newMA");
-            return newMA.post({PATIENT_ID:PATIENT_ID,CAL_ID:CAL_ID});
-        }
-
-        documentService.insertMA = function(infoL,infoH){
+        documentService.insertMA = function(info){
             var insertMA = api.all("document/insertMA");
-            return insertMA.post({infoL:infoL,infoH:infoH});
+            return insertMA.post({info:info});
         }
 
-        documentService.updateMA = function(infoL,infoH){
-            var updateMA = api.all("document/updateMA");
-            return updateMA.post({infoL:infoL,infoH:infoH});
+        documentService.editMA = function(info){
+            var editMA = api.all('document/editMA');
+            return editMA.post({info:info});
         }
 
         documentService.checkMA = function(PatientID, calID){

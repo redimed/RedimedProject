@@ -44,7 +44,7 @@ app.get('/api/document/FA/print-report/:cal_id/:patient_id/:key', FAController.p
 
 // Begin Medical Assessment
 app.post('/api/document/insertMA', MAController.insertMA);
-app.post('/api/document/updateMA', MAController.updateMA);
+app.post('/api/document/editMA', MAController.editMA);
 app.post('/api/document/checkMA', MAController.checkMA);
 app.get('/api/document/printMA/:patientId/:calId/:MA_ID', MAController.printReport);
 // End
