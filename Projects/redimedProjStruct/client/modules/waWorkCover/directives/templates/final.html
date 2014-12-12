@@ -1,6 +1,6 @@
 <form name="wafinalform">
     <accordion close-others="oneAtATime">
-        <accordion-group heading="WORKER'S DETAILS">
+        <accordion-group heading="WORKER'S DETAILS" is-open="true">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
@@ -64,7 +64,7 @@
             </div>
             <div class="break-row"></div>
         </accordion-group>
-        <accordion-group heading="EMPLOYMENT DETAILS">
+        <accordion-group heading="EMPLOYMENT DETAILS" is-open="true">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
@@ -94,7 +94,7 @@
             </div>
             <div class="break-row"></div>
         </accordion-group>
-        <accordion-group heading="MEDICAL ASSESSMENT">
+        <accordion-group heading="MEDICAL ASSESSMENT" is-open="true">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </accordion-group>
-        <accordion-group heading="WORK CAPACITY">
+        <accordion-group heading="WORK CAPACITY" is-open="true">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <label class=" col-md-12 col-sm-12 control-label">
@@ -161,13 +161,13 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isCpacityForWork" id="isCpacityForWork" ng-model="wafinal.isCpacityForWork">
+                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isCpacityForWork" id="isCpacityForWork" ng-model="wafinal.isCapacityForWork">
                         <label for="isCpacityForWork"><b>capacity for work</b>
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="row" ng-show="wafinal.isCpacityForWork==1">
+            <div class="row" ng-show="wafinal.isCapacityForWork==1">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-4 col-sm-4">
@@ -192,7 +192,7 @@
                 </div>
             </div>
 
-            <div class="row" ng-show="wafinal.isCpacityForWork==1">
+            <div class="row" ng-show="wafinal.isCapacityForWork==1">
                 <div class="col-md-12 col-sm-12">
                     <label class="control-label col-md-12 col-sm-12">as outlined below:</label>
                 </div>
@@ -203,7 +203,7 @@
             </div>
             <div class="break-row"></div>
 
-            <div class="row" ng-show="wafinal.isCpacityForWork==1">
+            <div class="row" ng-show="wafinal.isCapacityForWork==1">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-4 col-sm-4">
                         <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isLiftUp" id="isLiftUp" ng-model="wafinal.isLiftUp">
@@ -227,7 +227,7 @@
                 </div>
             </div>
 
-            <div class="break-row-alt" ng-show="wafinal.isCpacityForWork==1"></div>
+            <div class="break-row-alt" ng-show="wafinal.isCapacityForWork==1"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
@@ -238,7 +238,7 @@
                 </div>
             </div>
         </accordion-group>
-        <accordion-group heading="REASON FOR CAPACITY/INCAPACITY">
+        <accordion-group heading="REASON FOR CAPACITY/INCAPACITY" is-open="true">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <label class="control-label">
@@ -248,11 +248,11 @@
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <textarea class="textarea-custom-style form-control" rows="11" ng-model="capaCmt"></textarea>
+                    <textarea class="textarea-custom-style form-control" rows="11" ng-model="wafinal.capaCmt"></textarea>
                 </div>
             </div>
         </accordion-group>
-        <accordion-group heading="MEDICAL PRACTITIONER'S DETAILS">
+        <accordion-group heading="MEDICAL PRACTITIONER'S DETAILS" is-open="true">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">

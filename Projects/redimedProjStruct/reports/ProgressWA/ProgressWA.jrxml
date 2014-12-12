@@ -1,75 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eece4994-d7fd-4e72-be00-9be9ebf6c4c2">
 	<property name="ireport.zoom" value="1.3660269107301437"/>
-	<property name="ireport.x" value="19"/>
-	<property name="ireport.y" value="1861"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1862"/>
 	<parameter name="real_path" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="teleid" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select t.`Family_name` , t.`Given_name` , concat(ifnull(t.`Family_name`,'') , ' ', ifnull(t.`Given_name`,'' )) as fullname , t.`DOB` , t.`Address` , t.`Home_phone` , t.`Mobile_phone` ,t.`Work_phone`, t.`signature` ,t.`Occupation` , t.`claimNo` , t.`Workplace` , t.`Creation_date` , t.`Accident_Date` ,  t.`Cause` , t.`isInjury` , t.`email` as pEmail , t.`jobTitle` ,
-p.`injuryDate` ,p.`activities_1` ,p.`activities_2` ,p.`activities_3` ,p.`activities_4` ,p.`activities_5` ,p.`activities_6` ,p.`outcome_1` ,p.`outcome_2` ,p.`outcome_3` ,
+		<![CDATA[SELECT
+p.`examDate`,p.`diagnosis`, p.`injuryDate` ,p.`activities_1` ,p.`activities_2` ,p.`activities_3` ,p.`activities_4` ,p.`activities_5` ,p.`activities_6` ,p.`outcome_1` ,p.`outcome_2` ,p.`outcome_3` ,
 p.`outcome_4` ,p.`outcome_5` ,p.`outcome_6` ,p.`isRequired_1` ,p.`isRequired_2` ,p.`isRequired_3` ,p.`isRequired_4` ,p.`isRequired_5` ,p.`isRequired_6` ,p.`isOtherFactor` ,
 p.`progressCmt` ,p.`usualDuties` ,p.`isFullCapacity` ,p.`fullCapaFrom` ,p.`isRequireTreat` ,p.`isSomeCapacity` ,p.`someCapaFrom` ,p.`someCapaTo` ,p.`isPreDuties` ,
 p.`isModiDuties` ,p.`isWorkModifi` ,p.`isPreHours` ,p.`isModiHours` ,p.`modiHrs` ,p.`modiDays` ,p.`isNoCapacity` ,p.`noCapaFrom` ,p.`noCapaTo` ,p.`isLiftUp` ,
 p.`liftUpKg` ,p.`isSitUp` ,p.`sitUpMins` ,p.`isStandUp` ,p.`standUpMins` ,p.`isWalkUp` ,p.`walkUpMeter` ,p.`isWorkBelow` ,p.`capaCmt` ,p.`activities_B1` ,
 p.`activities_B2` ,p.`activities_B3` ,p.`activities_B4` ,p.`activities_B5` ,p.`activities_B6` ,p.`goal_1` ,p.`goal_2` ,p.`goal_3` ,p.`goal_4` ,p.`goal_5` ,p.`goal_6` ,
-p.`isSupportRTW` ,p.`supportDate` ,p.`isMoreInfo` ,p.`isInvolved` ,p.`isEngage` ,p.`engageDetail` ,p.`isReview` ,p.`reviewOn` ,p.`reviewCmt` ,
-p.`diagnosis` ,p.`Name` , p.`Address` as docAddress , p.`Phone` , p.`faxNumber` , p.`Email` , p.`signature` as docSign , p.`examDate` ,
-c.`Company_name`, c.`Addr`, c.`Phone` as cPhone
-from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p.`telehealth_id` inner join `companies` c on c.`id` = t.`company_id` where p.progress_id = $P{teleid}]]>
+p.`isSupportRTW` ,p.`supportDate` ,p.`isMoreInfo` ,p.`isInvolved` ,p.`isEngage` ,p.`engageDetail` ,p.`isReview` ,p.`reviewOn` ,p.`reviewCmt`,
+
+pa.`First_name`, pa.`Sur_name`, pa.`DOB`, pa.`Email`, pa.`Mobile`, pa.`Home_phone`, CONCAT(pa.`Address1`, pa.`Address2`) AS patientAddress,
+
+c.`Company_name`, c.`Addr`, c.`Phone` AS cPhone, c.`Industry`,
+
+d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone`, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign,CONCAT(d.`First_name`, d.`Middle_name`, d.`Sur_name`) AS FullName
+FROM `th_progress_assessment` p INNER JOIN `cln_appointment_calendar` a ON p.`cal_id` = a.`CAL_ID`
+	INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
+	INNER JOIN `cln_patients` pa ON a.`Patient_id` = pa.`Patient_id`
+	INNER JOIN `companies` c ON pa.`company_id` = c.`id`
+
+	WHERE p.`progress_id`= $P{id}
+	]]>
 	</queryString>
-	<field name="Family_name" class="java.lang.String">
+	<field name="examDate" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Given_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="fullname" class="java.lang.String"/>
-	<field name="DOB" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Address" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Home_phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Mobile_phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Work_phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="signature" class="java.awt.Image">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Occupation" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="claimNo" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Workplace" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Creation_date" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Accident_Date" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Cause" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="isInjury" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="pEmail" class="java.lang.String"/>
-	<field name="jobTitle" class="java.lang.String">
+	<field name="diagnosis" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="injuryDate" class="java.sql.Timestamp">
@@ -279,26 +248,25 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 	<field name="reviewCmt" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="diagnosis" class="java.lang.String">
+	<field name="First_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Name" class="java.lang.String">
+	<field name="Sur_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="docAddress" class="java.lang.String"/>
-	<field name="Phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="faxNumber" class="java.lang.String">
+	<field name="DOB" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Email" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="docSign" class="java.awt.Image"/>
-	<field name="examDate" class="java.sql.Timestamp">
+	<field name="Mobile" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="Home_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="patientAddress" class="java.lang.String"/>
 	<field name="Company_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -306,6 +274,19 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="cPhone" class="java.lang.String"/>
+	<field name="Industry" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ABN_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="docAddress" class="java.lang.String"/>
+	<field name="docEmail" class="java.lang.String"/>
+	<field name="Phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="docSign" class="java.lang.String"/>
+	<field name="FullName" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -318,12 +299,12 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 			<textField isBlankWhenNull="true">
 				<reportElement x="97" y="151" width="164" height="18" uuid="900a79bc-d74d-45e6-b337-6763c7c32774"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Family_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{First_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="341" y="151" width="190" height="18" uuid="bce79b91-357d-491b-b0df-b4d64d523068"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Given_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Sur_name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="97" y="175" width="164" height="19" uuid="41c142dd-4f82-43e2-8c43-2f72b27d6f71"/>
@@ -338,7 +319,7 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 			<textField isBlankWhenNull="true">
 				<reportElement x="342" y="200" width="190" height="20" uuid="a3266004-9276-4590-8ec8-e188e091e500"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{pEmail}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="130" y="272" width="141" height="20" uuid="c84f003f-5766-48e6-9e44-101c0e327b42"/>
@@ -350,7 +331,7 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Address}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{patientAddress}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="130" y="297" width="390" height="20" uuid="ef5292ab-099f-48d0-b9f1-f545c07b5359"/>
@@ -494,7 +475,7 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="362" y="350" width="170" height="20" uuid="69784be3-2596-4254-bb8c-91c182e36800"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Accident_Date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{injuryDate}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="82" y="372" width="449" height="20" uuid="c7740ea6-6dca-45e9-b1a0-a9c7460a2706"/>
@@ -614,7 +595,7 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 			<textField isBlankWhenNull="true">
 				<reportElement x="342" y="175" width="187" height="20" uuid="74d95377-1cba-4513-9dca-46b9c6f7b5a5"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{claimNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="395" y="271" width="134" height="20" uuid="370d106b-e8e7-46bc-aecc-fd92d8e88e65"/>
@@ -782,7 +763,7 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 			<textField isBlankWhenNull="true">
 				<reportElement x="62" y="610" width="198" height="20" uuid="e4a29764-a881-4fcb-9bf1-904cd2a3968e"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{FullName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="56" y="638" width="214" height="61" uuid="d454fca9-b200-49b6-8f65-a10af5acbdf3"/>
@@ -791,7 +772,7 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 			<textField isBlankWhenNull="true">
 				<reportElement x="342" y="635" width="179" height="20" uuid="4f21bc45-bcf5-45c2-a923-3ad5d30637fa"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{docEmail}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="341" y="705" width="178" height="20" uuid="8b2969dd-e6d0-49b4-966f-9c7547337dc5"/>
@@ -810,7 +791,7 @@ from `th_progress_assessment` p inner join `th_telehealth_form` t on  t.`Id` = p
 			<textField isBlankWhenNull="true">
 				<reportElement x="62" y="730" width="198" height="20" uuid="8b91f1b3-cda7-4b17-be9c-fa8c743f8be9"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{faxNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

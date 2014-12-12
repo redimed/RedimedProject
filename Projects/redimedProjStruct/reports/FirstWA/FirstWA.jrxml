@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FirstWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c1bde60-6e00-4470-a6cb-d8f3a613e87f">
 	<property name="ireport.zoom" value="1.2722928551174548"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="851"/>
+	<property name="ireport.y" value="534"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -13,16 +13,22 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-f.`Creation_date` , f.`clinicFind` , f.`diagnosis` , f.`isConsistent` , f.`isCondition` , f.`usualDuties` , f.`isFullCapacity` , f.`fullCapaFrom` , f.`isRequireTreat` ,
+f.`examDate`, f.`AssessmentName`,f.`Creation_date` , f.`clinicFind` , f.`diagnosis` , f.`isConsistent` , f.`isCondition` , f.`usualDuties` , f.`isFullCapacity` , f.`fullCapaFrom` , f.`isRequireTreat` ,
 f.`isSomeCapacity` , f.`someCapaFrom` , f.`someCapaTo` , f.`isPreDuties`, f.`isModiDuties` , f.`isWorkModifi` , f.`isPreHours` , f.`isModiHours` , f.`modiHrs` , f.`modiDays`, f.`isNoCapacity` ,
 f.`noCapaFrom` , f.`noCapaTo` , f.`isLiftUp` , f.`liftUpKg` , f.`isSitUp` , f.`sitUpMins` , f.`isStandUp`, f.`standUpMins` , f.`sitUpMins` , f.`isWalkUp` , f.`walkUpMeter`, f.`isWorkBelow`, f.`capaCmt` , f.`activities_1` , f.`activities_2`, f.`activities_3` , f.`activities_4` , f.`activities_5` , f.`activities_6` , f.`goal_1`, f.`goal_2` , f.`goal_3` , f.`goal_4` , f.`goal_5` , f.`goal_6` ,
-f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` , f.`Name` , f.`Address` AS docAddress , f.`Phone` , f.`faxNumber` , f.`Email` ,SUBSTRING_INDEX(f.`signature`, ',', -1) AS signature , f.`Creation_date` AS injuryDate, f.`examDate`,
-p.`First_name`, p.`Sur_name`, p.`DOB`, p.`Email`, p.`Mobile`, p.`Home_phone`, CONCAT(p.`Address1`, p.`Address2`) AS Address,
+f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` ,
+p.`First_name`, p.`Sur_name`, p.`DOB`, p.`Email`, p.`Mobile`, p.`Home_phone`, CONCAT(p.`Address1`, p.`Address2`) AS patientAddress,
 c.`Company_name`, c.`Addr`, c.`Phone` AS cPhone, c.`Industry`,
-CONCAT(d.`First_name`, d.`Middle_name`, d.`Sur_name`) AS FullName, d.`ABN_no`, d.`Address`, d.`Email`, d.`Phone`, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign
+d.`ABN_no`, d.`Address` as docAddress, d.`Email` AS docEmail, d.`Phone`, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign,CONCAT(d.`First_name`, d.`Middle_name`, d.`Sur_name`) AS FullName
 FROM `th_first_assessment` f INNER JOIN `cln_appointment_calendar` a ON f.`cal_id` = a.`CAL_ID` INNER JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` INNER JOIN `companies` c ON p.`company_id` = c.`id` INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
 WHERE f.`Ass_id` = $P{id}]]>
 	</queryString>
+	<field name="examDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AssessmentName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="Creation_date" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -176,26 +182,6 @@ WHERE f.`Ass_id` = $P{id}]]>
 	<field name="reviewCmt" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="docAddress" class="java.lang.String"/>
-	<field name="Phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="faxNumber" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Email" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="signature" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="injuryDate" class="java.sql.Timestamp"/>
-	<field name="examDate" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="First_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -205,15 +191,16 @@ WHERE f.`Ass_id` = $P{id}]]>
 	<field name="DOB" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="Email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="Mobile" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Home_phone" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Address" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="patientAddress" class="java.lang.String"/>
 	<field name="Company_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -224,11 +211,16 @@ WHERE f.`Ass_id` = $P{id}]]>
 	<field name="Industry" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FullName" class="java.lang.String"/>
 	<field name="ABN_no" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="docAddress" class="java.lang.String"/>
+	<field name="docEmail" class="java.lang.String"/>
+	<field name="Phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="docSign" class="java.lang.String"/>
+	<field name="FullName" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -273,7 +265,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Address}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{patientAddress}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="130" y="337" width="390" height="20" uuid="ef5292ab-099f-48d0-b9f1-f545c07b5359"/>
@@ -289,7 +281,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="347" y="470" width="173" height="18" uuid="636448de-5632-43d4-9e13-1403a76dbbe2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Creation_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{examDate}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="130" y="518" width="137" height="20" uuid="de81b638-996f-402a-a78b-1f98193b4267"/>
@@ -330,31 +322,31 @@ WHERE f.`Ass_id` = $P{id}]]>
 			</textField>
 			<image>
 				<reportElement x="365" y="725" width="11" height="11" uuid="0c7a6950-800c-497c-bfaa-2242ee63de25">
-					<printWhenExpression><![CDATA[$F{isConsistent}.intValue()==0]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA[$P{real_path} + "images/check.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="403" y="725" width="11" height="11" uuid="f2a235c4-f91b-477f-b305-7cd97bce34b3">
 					<printWhenExpression><![CDATA[$F{isConsistent}.intValue()==1]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{real_path} + "images/check.png"]]></imageExpression>
 			</image>
 			<image>
+				<reportElement x="403" y="725" width="11" height="11" uuid="f2a235c4-f91b-477f-b305-7cd97bce34b3">
+					<printWhenExpression><![CDATA[$F{isConsistent}.intValue()==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path} + "images/check.png"]]></imageExpression>
+			</image>
+			<image>
 				<reportElement x="434" y="726" width="11" height="11" uuid="49c69b37-283d-4508-a382-113642ee48bb">
-					<printWhenExpression><![CDATA[$F{isConsistent}.intValue()==2]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{isConsistent}.intValue()==-1]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{real_path} + "images/check.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="137" y="748" width="11" height="11" uuid="df1159ac-9b48-4882-ae47-86167a24783d">
-					<printWhenExpression><![CDATA[$F{isCondition}.intValue()==0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{isCondition}.intValue()==1]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{real_path} + "images/check.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="260" y="748" width="11" height="11" uuid="2e6b87a9-b2a2-4474-acf3-3872a5aa8733">
-					<printWhenExpression><![CDATA[$F{isCondition}.intValue()==1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{isCondition}.intValue()==0]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{real_path} + "images/check.png"]]></imageExpression>
 			</image>
@@ -366,7 +358,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 			<textField isBlankWhenNull="true">
 				<reportElement x="350" y="448" width="167" height="20" uuid="c87de640-d303-4a2b-bfa3-e2e97c732d19"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{AssessmentName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="330" y="194" width="190" height="18" uuid="4534b5dc-b383-4809-abc5-fbe6f7b74838"/>
@@ -595,7 +587,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 			</image>
 			<image>
 				<reportElement x="34" y="586" width="11" height="11" uuid="f6cf156a-a271-4758-80b9-697b09666828">
-					<printWhenExpression><![CDATA[$F{isNotReview}.intValue()==1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{isReview}.intValue()==0]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{real_path} + "images/check.png"]]></imageExpression>
 			</image>
@@ -616,7 +608,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="78" y="669" width="198" height="15" uuid="e4a29764-a881-4fcb-9bf1-904cd2a3968e"/>
-				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{FullName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="73" y="691" width="203" height="36" uuid="d454fca9-b200-49b6-8f65-a10af5acbdf3"/>
@@ -624,7 +616,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="340" y="691" width="179" height="16" uuid="4f21bc45-bcf5-45c2-a923-3ad5d30637fa"/>
-				<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{docEmail}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="340" y="756" width="178" height="17" uuid="8b2969dd-e6d0-49b4-966f-9c7547337dc5"/>
@@ -642,7 +634,6 @@ WHERE f.`Ass_id` = $P{id}]]>
 			<textField isBlankWhenNull="true">
 				<reportElement x="78" y="756" width="198" height="17" uuid="8b91f1b3-cda7-4b17-be9c-fa8c743f8be9"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{faxNumber}]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="340" y="474" width="11" height="11" uuid="b9ac90d9-1b13-445a-b600-55b2035771ca">
