@@ -78,7 +78,10 @@ module.exports = {
               cal_id: imInfo.cal_id,
               injury_date: imInfo.injury_date,
               injury_description: imInfo.injury_description,
-              STATUS: imInfo.STATUS
+              STATUS: "New",
+              pickup_address: imInfo.infoMaps.format_address,
+              latitude: imInfo.infoMaps.lat,
+              longitude: imInfo.infoMaps.lng
           },{raw:true})
               .success(function(data){
                   db.IMInjury.find({where:data.dataValues},{raw:true})
@@ -244,7 +247,7 @@ module.exports = {
 
     },
     injuryList: function(req,res){
-        db.sequelize.query("SELECT i.*,p.* FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id`",null,{raw:true})
+        db.sequelize.query("SELECT i.*,p.* FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` WHERE i.`cal_id` IS NULL ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true})
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -281,15 +284,25 @@ module.exports = {
                 res.json({status:'error',error:err})
             })
     },
-    testNotification: function(req,res)
+    editInjury: function(req,res)
     {
-        var date = new Date();
-        var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
-
+        var info = req.body.info;
+        var id = req.body.injury_id;
+        db.IMInjury.update(info,{injury_id:id})
+            .success(function(){
+                res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    testPushGCM: function(req,res)
+    {
         var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
         var message = new gcm.Message();
         message.addData('title','EMERGENCY');
-        message.addData('message','You have an emergency case! - Time: '+dateString);
+        message.addData('message','You have an emergency case!');
         message.collapseKey = 'EMERGENCY';
         message.delayWhileIdle = true;
         message.timeToLive = 3;
@@ -304,16 +317,9 @@ module.exports = {
 
                 sender.send(message, registrationIds, 4, function (err,result) {
                     if(err)
-                    {
                         console.log("ERROR:",err);
-                        res.json({status:'error'});
-                    }
                     else
-                    {
                         console.log("SUCCESS:",result);
-                        res.json({status:'success'});
-                    }
-
                 });
             })
             .error(function (err) {
