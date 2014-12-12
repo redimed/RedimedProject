@@ -2,91 +2,30 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FirstWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c1bde60-6e00-4470-a6cb-d8f3a613e87f">
 	<property name="ireport.zoom" value="1.2722928551174548"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1513"/>
+	<property name="ireport.y" value="851"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="teleid" class="java.lang.String">
+	<parameter name="id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select t.id,t.`Family_name` , t.`Given_name`, concat( ifnull(t.`Family_name`,'') , ' ', ifnull(t.`Given_name`,'' )) as fullname  , t.`DOB` , t.`Address` , t.`Home_phone` , t.`Mobile_phone` , t.`signature` ,t.`Occupation` , t.`Workplace` , t.`Creation_date` , t.`Accident_Date` ,  t.`Cause` , t.`isInjury` , t.`email` as pEmai, t.`jobTitle`,
-concat(
-if(t.`isHeadache` = 1 , concat('Headache ', case  ifnull(t.`symtom_value_1` ,'0') when '0' then ' ' else  concat(' - ',  t.`symtom_value_1` ) end ), '')
-,if(t.`isNausea` = 1 , concat(', Nausea ', case  ifnull( t.`symtom_value_2`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_2` ) end ), '')
-,if(t.`isFatigue` = 1 , concat(', Fatigue ', case  ifnull(t.`symtom_value_3` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_3` ) end ), '')
-,if(t.`isFever` = 1 , concat(', Fever ', case  ifnull(t.`symtom_value_4` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_4` ) end ), '')
-,if(t.`isSoreThroat` = 1 , concat(', SoreThroat ', case  ifnull(t.`symtom_value_5` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_5` ) end ), '')
-,if(t.`isCough` = 1 , concat(', Cough ', case  ifnull(t.`symtom_value_6` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_6` ) end ), '')
-,if(t.`isSinusCongestion` = 1 , concat(', Sinus Congestion ', case  ifnull(t.`symtom_value_7` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_7` ) end ), '')
-,if(t.`isBodyAches` = 1 , concat(', Body Aches ', case  ifnull(t.`symtom_value_8` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_8` ) end ), '')
-,if(t.`isVomiting` = 1 , concat(', Vomiting ', case  ifnull(t.`symtom_value_9` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_9` ) end ), '')
-,if(t.`isLightHeadedness` = 1 , concat('Light Headedness ', case  ifnull(t.`symtom_value_10`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_10` ) end ), '')
-,if(t.`isDiarrhea` = 1 , concat(', Diarrhea ', case  ifnull( t.`symtom_value_11`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_11` ) end ), '')
-,if(t.`isShortnessOfBreath` = 1 , concat(', Shortness Of Breath ', case  ifnull(t.`symtom_value_12`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_12` ) end ), '')
-,if(t.`isChestPain` = 1 , concat(', Chest Pain ', case  ifnull(t.`symtom_value_13`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_13` ) end ), '')
-,if(t.`isAbdomenPain` = 1 , concat(', Abdomen Pain ', case  ifnull(t.`symtom_value_14`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_14` ) end ), '')
-,if(t.`isBackPain` = 1 , concat(', Back Pain ', case  ifnull(t.`symtom_value_15`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_15` ) end ), '')
-,if(t.`isEarPain` = 1 , concat(', Ear Pain ', case  ifnull(t.`symtom_value_16`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_16` ) end ), '')
-,if(t.`isLowMood` = 1 , concat(', Low Mood ', case  ifnull(t.`symtom_value_17`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_17` ) end ), '')
-,if(t.`isDecreasedAppetite` = 1 , concat(', Decreased Appetite ', case  ifnull( t.`symtom_value_18`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_18` ) end ), '')
-,if(t.`isFeelingDepressed` = 1 , concat(', Feeling Depressed ', case  ifnull(t.`symtom_value_19`,'0')  when '0' then ' ' else  concat(' - ', t.`symtom_value_19` ) end ), '')
-,if(t.`isToothPain` = 1 , concat(', Tooth Pain ', case ifnull(t.`symtom_value_20` ,'0') when '0' then ' ' else  concat(' - ', t.`symtom_value_20`,' ' ) end ),'')
-) as worker_symptoms  , f.`Creation_date` , f.`clinicFind` , f.`diagnosis` , f.`isConsistent` , f.`isCondition` , f.`usualDuties` , f.`isFullCapacity` , f.`fullCapaFrom` , f.`isRequireTreat` ,
+		<![CDATA[SELECT
+f.`Creation_date` , f.`clinicFind` , f.`diagnosis` , f.`isConsistent` , f.`isCondition` , f.`usualDuties` , f.`isFullCapacity` , f.`fullCapaFrom` , f.`isRequireTreat` ,
 f.`isSomeCapacity` , f.`someCapaFrom` , f.`someCapaTo` , f.`isPreDuties`, f.`isModiDuties` , f.`isWorkModifi` , f.`isPreHours` , f.`isModiHours` , f.`modiHrs` , f.`modiDays`, f.`isNoCapacity` ,
 f.`noCapaFrom` , f.`noCapaTo` , f.`isLiftUp` , f.`liftUpKg` , f.`isSitUp` , f.`sitUpMins` , f.`isStandUp`, f.`standUpMins` , f.`sitUpMins` , f.`isWalkUp` , f.`walkUpMeter`, f.`isWorkBelow`, f.`capaCmt` , f.`activities_1` , f.`activities_2`, f.`activities_3` , f.`activities_4` , f.`activities_5` , f.`activities_6` , f.`goal_1`, f.`goal_2` , f.`goal_3` , f.`goal_4` , f.`goal_5` , f.`goal_6` ,
-f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` , f.`Name` , f.`Address` as docAddress , f.`Phone` , f.`faxNumber` , f.`Email` , f.`signature` as docSign , f.`Creation_date` as injuryDate, f.`examDate`,
-c.`Company_name`, c.`Addr`, c.`Phone` as cPhone
-from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`telehealth_id` inner join `companies` c on c.`id` = t.`company_id` where f.`Ass_id` = $P{teleid}]]>
+f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` , f.`Name` , f.`Address` AS docAddress , f.`Phone` , f.`faxNumber` , f.`Email` ,SUBSTRING_INDEX(f.`signature`, ',', -1) AS signature , f.`Creation_date` AS injuryDate, f.`examDate`,
+p.`First_name`, p.`Sur_name`, p.`DOB`, p.`Email`, p.`Mobile`, p.`Home_phone`, CONCAT(p.`Address1`, p.`Address2`) AS Address,
+c.`Company_name`, c.`Addr`, c.`Phone` AS cPhone, c.`Industry`,
+CONCAT(d.`First_name`, d.`Middle_name`, d.`Sur_name`) AS FullName, d.`ABN_no`, d.`Address`, d.`Email`, d.`Phone`, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign
+FROM `th_first_assessment` f INNER JOIN `cln_appointment_calendar` a ON f.`cal_id` = a.`CAL_ID` INNER JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` INNER JOIN `companies` c ON p.`company_id` = c.`id` INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
+WHERE f.`Ass_id` = $P{id}]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Family_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Given_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="fullname" class="java.lang.String"/>
-	<field name="DOB" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Address" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Home_phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Mobile_phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="signature" class="java.awt.Image">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Occupation" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Workplace" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="Creation_date" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Accident_Date" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Cause" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="isInjury" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="pEmai" class="java.lang.String"/>
-	<field name="jobTitle" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="worker_symptoms" class="java.lang.String"/>
 	<field name="clinicFind" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -250,9 +189,29 @@ from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`t
 	<field name="Email" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="docSign" class="java.awt.Image"/>
+	<field name="signature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="injuryDate" class="java.sql.Timestamp"/>
 	<field name="examDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="First_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sur_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOB" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Mobile" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Home_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Address" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Company_name" class="java.lang.String">
@@ -262,6 +221,14 @@ from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`t
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="cPhone" class="java.lang.String"/>
+	<field name="Industry" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FullName" class="java.lang.String"/>
+	<field name="ABN_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="docSign" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -274,12 +241,12 @@ from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`t
 			<textField isBlankWhenNull="true">
 				<reportElement x="104" y="169" width="140" height="18" uuid="900a79bc-d74d-45e6-b337-6763c7c32774"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Family_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{First_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="330" y="169" width="190" height="18" uuid="bce79b91-357d-491b-b0df-b4d64d523068"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Given_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Sur_name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="104" y="193" width="140" height="19" uuid="41c142dd-4f82-43e2-8c43-2f72b27d6f71"/>
@@ -294,12 +261,12 @@ from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`t
 			<textField isBlankWhenNull="true">
 				<reportElement x="330" y="218" width="190" height="20" uuid="a3266004-9276-4590-8ec8-e188e091e500"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Mobile_phone}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Mobile}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="130" y="313" width="141" height="20" uuid="c84f003f-5766-48e6-9e44-101c0e327b42"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Occupation}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Industry}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="104" y="241" width="416" height="20" uuid="61c5da4d-dd5e-4a22-9d34-9cf0e90a705f"/>
@@ -317,7 +284,7 @@ from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`t
 			</textField>
 			<image>
 				<reportElement x="130" y="449" width="137" height="39" uuid="4a442dd0-5596-45f0-b920-47b65974e439"/>
-				<imageExpression><![CDATA[$F{signature}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{signature}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="347" y="470" width="173" height="18" uuid="636448de-5632-43d4-9e13-1403a76dbbe2"/>
@@ -404,7 +371,7 @@ from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`t
 			<textField isBlankWhenNull="true">
 				<reportElement x="330" y="194" width="190" height="18" uuid="4534b5dc-b383-4809-abc5-fbe6f7b74838"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{pEmai}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="802" splitType="Stretch">
@@ -665,7 +632,7 @@ from `th_first_assessment` f inner join `th_telehealth_form` t on  t.`Id` = f.`t
 			</textField>
 			<image>
 				<reportElement x="381" y="714" width="100" height="38" uuid="8175263c-f74d-4ed1-9bc2-c04671b3601e"/>
-				<imageExpression><![CDATA[$F{docSign}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{docSign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="78" y="732" width="198" height="20" uuid="2673e543-f68b-4fbd-8818-8de1f7ec8f0a"/>
