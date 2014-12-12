@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <!--    begin section 1-->
+    <!--begin section 1-->
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="portlet box grey-cascade">
@@ -190,7 +190,7 @@
                                         <input type="text" class="form-control" style="text-align:left;" />
                                     </div>
                                     <div class="col-md-3 col-sm-3" style="text-align: center;">
-                                        <input type="text" class="form-control" style="text-align:left;" ng-model="info.s2_startdate[wIndex]" />
+                                        <input type="text" class="form-control" style="text-align:left;" ng-model="info.s2_startdate_[wIndex]" />
                                     </div>
                                     <div class="col-md-2 col-sm-2" style="text-align: center;">
                                         <input type="text" class="form-control" style="text-align:left;" ng-model="info.s2_enddate[wIndex]" />
@@ -212,10 +212,10 @@
                                 <div class="col-md-6 col-sm-6">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s2_samework" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s2_samework" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -230,10 +230,10 @@
                                 <div class="col-md-6 col-sm-6">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s2_sameworkenvironment" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s2_sameworkenvironment" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -245,7 +245,7 @@
                                 <div class="col-md-8 col-sm-8">
                                     <label class="control-label bold">Examiner Comments: (Please comment on all YES answers)
                                     </label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" ng-model="info.s2_comments"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +328,7 @@
                                 <div class="col-md-8 col-sm-8">
                                     <label class="control-label bold">Examiner Comments: (Please comment on all YES answers)
                                     </label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" ng-model="info.s3_comments"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -363,10 +363,10 @@
                                 <div class="col-md-6 col-sm-6">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s4_concerning" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s4_concerning" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -384,10 +384,10 @@
                                 <div class="col-md-6 col-sm-6">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s4_weight_altered" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s4_weight_altered" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -405,10 +405,10 @@
                                 <div class="col-md-6 col-sm-6">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s4_medicaltreatment" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s4_medicaltreatment" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -426,10 +426,10 @@
                                 <div class="col-md-6 col-sm-6">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s4_hospital" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s4_hospital" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -447,10 +447,10 @@
                                 <div class="col-md-6 col-sm-6">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s4_stranfustion" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s4_stranfustion" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -482,10 +482,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_diabetes" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_diabetes" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -501,10 +501,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_concussion_or_headinjury" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_concussion_or_headinjury" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -527,10 +527,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_pressure" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_pressure" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -546,10 +546,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_migraine" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_migraine" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -572,10 +572,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_asthma" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_asthma" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -591,10 +591,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_eczema" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_eczema" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -617,10 +617,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_emphysema" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_emphysema" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -636,10 +636,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_hepatitis" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_hepatitis" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -662,10 +662,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_veins" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_veins" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -681,10 +681,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_desease" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_desease" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -707,10 +707,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_epilepsy" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_epilepsy" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -726,10 +726,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_hormonal" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_hormonal" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -752,10 +752,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_episodes" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_episodes" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -771,10 +771,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_allergies" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_allergies" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -797,10 +797,10 @@
                                         <div class="col-md-5 col-sm-5">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s4_cancer_or_tumour" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s4_cancer_or_tumour" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -816,7 +816,7 @@
                                     <label class="control-label bold">
                                         Examiner Comments: (Please comment on all YES answers)
                                     </label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" ng-model="info.s4_comments"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -850,10 +850,10 @@
                                 <div class="col-md-5 col-sm-5">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s5_disease" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s5_disease" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -868,10 +868,10 @@
                                 <div class="col-md-5 col-sm-5">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s5_claim" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s5_claim" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -892,7 +892,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-5 col-sm-5">
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" ng-model="info.s5_claim_comment" />
                                 </div>
                             </div>
                         </div>
@@ -905,7 +905,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" ng-model="info.s5_lodged" />
                                 </div>
                             </div>
                         </div>
@@ -918,7 +918,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" ng-model="info.s5_closed" />
                                 </div>
                             </div>
                         </div>
@@ -933,10 +933,10 @@
                                 <div class="col-md-5 col-sm-5">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s5_duties" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s5_duties" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -953,10 +953,10 @@
                                 <div class="col-md-5 col-sm-5">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s5_sickness" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s5_sickness" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -973,10 +973,10 @@
                                 <div class="col-md-5 col-sm-5">
                                     <div class="btn-group">
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                            <input type="radio" ng-model="info.s5_equipment" ng-value="1" />&nbsp;Yes
                                         </label>
                                         <label class="btn">
-                                            <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                            <input type="radio" ng-model="info.s5_equipment" ng-value="0" />&nbsp;No
                                         </label>
                                     </div>
                                 </div>
@@ -1004,10 +1004,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s5_chermicals" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s5_chermicals" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1023,10 +1023,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s5_radiation" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s5_radiation" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1042,10 +1042,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s5_asbestos" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s5_asbestos" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1065,10 +1065,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s5_noise" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s5_noise" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1084,10 +1084,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s5_dust" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s5_dust" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1103,10 +1103,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s5_solvents" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s5_solvents" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1126,10 +1126,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s5_other" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s5_other" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1144,7 +1144,7 @@
                                     <label class="control-label bold">
                                         Examiner Comments: (Please comment on all YES answers)
                                     </label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" ng-model="info.s5_comments"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1191,10 +1191,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_neck" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_neck" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1211,10 +1211,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_lower_black" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_lower_black" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1235,10 +1235,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_shoulder" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_shoulder" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1255,10 +1255,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_hip" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_hip" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1279,10 +1279,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_elbow" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_elbow" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1299,10 +1299,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_knee" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_knee" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1323,10 +1323,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_wrist_or_hand" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_wrist_or_hand" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1343,10 +1343,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_ankle_or_foot" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_ankle_or_foot" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1360,7 +1360,7 @@
                                     <label class="control-label bold">
                                         Examiner Comments: (Please comment on all YES answers)
                                     </label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" ng-model="info.s6_comments1"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1388,10 +1388,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_cervical" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_cervical" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1408,10 +1408,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_pins_needles" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_pins_needles" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1432,10 +1432,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_lower" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_lower" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1452,10 +1452,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_muscle_aches_pains" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_muscle_aches_pains" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1476,10 +1476,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_sciatica" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_sciatica" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1496,10 +1496,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_joint_aches_pains" ng-value="1" />&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_joint_aches_pains" ng-value="0" />&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -1513,7 +1513,7 @@
                                     <label class="control-label bold">
                                         Examiner Comments: (Please comment on all YES answers)
                                     </label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" ng-model="info.s6_comments2"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1542,10 +1542,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_rsi" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_rsi" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1562,10 +1562,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_arthritis" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_arthritis" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1586,10 +1586,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_tennis" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_tennis" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1606,10 +1606,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_osteoporosis" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_osteoporosis" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1630,10 +1630,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_carpal" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_carpal" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1650,10 +1650,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_fibromyalgia" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_fibromyalgia" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1674,10 +1674,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_hernia" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_hernia" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1694,10 +1694,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_fractured_bones" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_fractured_bones" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1716,10 +1716,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_osteoporosis" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_osteoporosis" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1736,10 +1736,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s6_joint_or_bones" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s6_joint_or_bones" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1753,7 +1753,7 @@
                                 <label class="control-label bold">
                                     Examiner Comments: (Please comment on all YES answers)
                                 </label>
-                                <textarea class="form-control"></textarea>
+                                <textarea class="form-control" ng-model="info.s6_comments3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -1787,10 +1787,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s7_directfamily" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s7_directfamily" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1804,10 +1804,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s7_undergone" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s7_undergone" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -1833,10 +1833,10 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s7_conditions" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s7_conditions" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -1852,10 +1852,10 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s7_angina" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s7_angina" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -1873,10 +1873,10 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s7_murmurs" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s7_murmurs" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -1892,10 +1892,10 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s7_blood_presure" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s7_blood_presure" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -1913,10 +1913,10 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s7_palpitations" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s7_palpitations" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -1930,7 +1930,7 @@
                                     <div class="col-md-8 col-sm-8">
                                         <label class="control-label bold">Examiner Comments: (Please comment on all YES answers)
                                         </label>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" ng-model="info.s7_comments"></textarea>
                                     </div>
 
                                 </div>
@@ -1978,10 +1978,10 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s8_exercise" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s8_exercise" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -1998,10 +1998,10 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s8_tuberculosis" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s8_tuberculosis" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -2022,10 +2022,10 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s8_emphysema" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s8_emphysema" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -2042,10 +2042,10 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s8_obstructive" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s8_obstructive" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -2066,10 +2066,10 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s8_hay_fever" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s8_hay_fever" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -2086,10 +2086,10 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s8_rheumatic_fever" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s8_rheumatic_fever" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
@@ -2103,26 +2103,6 @@
                                         <div class="row">
                                             <div class="col-md-8 col-sm-8" style="margin-top:10px;">
                                                 <label class="control-label">
-                                                    Wrist or hand
-                                                </label>
-
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="btn-group">
-                                                    <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
-                                                    </label>
-                                                    <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="row">
-                                            <div class="col-md-8 col-sm-8" style="margin-top:10px;">
-                                                <label class="control-label">
                                                     Bronchitis
                                                 </label>
 
@@ -2130,14 +2110,17 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="btn-group">
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                        <input type="radio" ng-model="info.s8_bronchitis" ng-value="1" />&nbsp;Yes
                                                     </label>
                                                     <label class="btn">
-                                                        <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                        <input type="radio" ng-model="info.s8_bronchitis" ng-value="0" />&nbsp;No
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
@@ -2149,10 +2132,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s8_coughed_blood" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s8_coughed_blood" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -2166,10 +2149,10 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="1" />&nbsp;Yes
+                                                <input type="radio" ng-model="info.s8_shortness" ng-value="1" />&nbsp;Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.as_medical_history" ng-value="0" />&nbsp;No
+                                                <input type="radio" ng-model="info.s8_shortness" ng-value="0" />&nbsp;No
                                             </label>
                                         </div>
                                     </div>
@@ -2179,7 +2162,7 @@
                                         <label class="control-label bold">
                                             Examiner Comments: (Please comment on all YES answers)
                                         </label>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" ng-model="info.s8_comments"></textarea>
                                     </div>
                                 </div>
                             </div>
