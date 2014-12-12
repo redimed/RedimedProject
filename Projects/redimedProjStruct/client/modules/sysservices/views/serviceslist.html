@@ -1,0 +1,26 @@
+<h3 class="page-title">Services</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Services</a>
+        </li>
+    </ul>
+</div>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <label class="control-label" ng-show="params.permission.create===true">Add service</label>
+            <label class="control-label" ng-show="params.permission.create===false">Edit service</label>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <sysservices-detail params="params" is-action="isAction"></sysservices-detail>
+    </div>
+</div>
+
+<sysservices-search is-load="isLoad" click-row="getRow(row)"></sysservices-search>

@@ -1,0 +1,107 @@
+<div class="row">
+	<div class="col-md-12">
+		<button class="btn btn-sm green" ng-click="generate()">Generate Timetable</button>
+	</div>
+</div>
+
+<div class="row" ng-show="selectedCalHeader.length > 0">
+	<div class="col-md-12">
+		<!-- TABLE SITE -->
+		<table style="width: 100%">
+			<tbody>
+				<tr ng-repeat="site in selectedCalHeader">
+					<td>
+						<select ng-model="site.week_ord_of_month" class="mdt-input-mask"
+							ng-options="week.code as week.name for week in options.weeks_of_month">
+							<option value="" selected disabled>Week Of Month</option>
+						</select>
+					</td>
+					<td>
+						<select ng-model="site.site_id" class="mdt-input-mask"
+							ng-options="s.id as s.Site_name for s in options.redimedsites">
+							<option value="" selected disabled>Redimed Sites</option>
+						</select>
+					</td>
+					<td>
+						<span ng-show="$index === 0">
+							<a ng-click="clickInputCalHeader({type: 'add', index: $index})">
+								<i class="fa fa-plus"></i>
+							</a>
+							&nbsp
+							<a>
+								<i class="fa fa-save" ng-click="saveCalHeader()"></i>
+							</a>
+						</span>
+						<span ng-show="$index !== 0">
+							<a ng-click="clickInputCalHeader({type: 'remove', index: $index})" 
+								style="color: #F3565D;">
+								<i class="fa fa-minus"></i>
+							</a>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- END TABLE SITE -->
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- TABLE -->
+		<table class="timetable-table">
+			<tbody>
+				<tr ng-repeat="timetable in timetable_list" ng-init="timetableIndex = $index">
+					<td>
+						{{timetable.dow}}
+					</td>
+					<td>
+						<table style="width: 100%;">
+							<tbody>
+								<tr ng-repeat="data in timetable.data" ng-init="dataIndex = $index">
+									<td>
+										<input type="text" class="mdt-input-mask" custom-timepicker readonly
+											ng-model="data.from_time_display" placeholder="From Time">
+									</td>
+									<td>
+										<input type="text" class="mdt-input-mask" custom-timepicker readonly
+											ng-model="data.to_time_display" placeholder="To Time">
+									</td>
+									<td>
+										<select ng-model="data.service_id" class="mdt-input-mask" 
+											ng-options="service.SERVICE_ID as service.SERVICE_NAME 
+												for service in options.clinical_depts">
+											<option value="" selected disabled>Service</option>
+										</select>
+									</td>
+									<td>
+										<span ng-show="dataIndex === 0">
+											<a ng-click="clickInput({type: 'add', pindex: timetableIndex, index: $index})">
+												<i class="fa fa-plus"></i>
+											</a>
+											&nbsp
+											<a ng-click="saveTimetable({pindex: timetableIndex, index: $index})">
+												<i class="fa fa-save"></i>
+											</a>
+											&nbsp
+											<a ng-click="showState(data)">
+												<i class="fa fa-search"></i>
+											</a>
+										</span>
+										<span ng-show="dataIndex !== 0">
+											<a ng-click="clickInput({type: 'remove', pindex: timetableIndex, index: $index})" 
+												style="color: #F3565D;">
+												<i class="fa fa-minus"></i>
+											</a>
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- END TABLE -->
+	</div>
+</div>

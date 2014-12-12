@@ -172,12 +172,15 @@ module.exports =
 
 
         var sql = "SELECT cac.FROM_TIME, cac.TO_TIME,"+
+                " GROUP_CONCAT(cac.SERVICE_ID ORDER BY cac.DOCTOR_ID) AS SERVICE_ID,"+
                 " GROUP_CONCAT(cac.DOCTOR_ID ORDER BY cac.DOCTOR_ID) AS doctor,"+
                 " GROUP_CONCAT(d.NAME ORDER BY cac.DOCTOR_ID) AS doctor_name,"+
+                " GROUP_CONCAT(ss.Color ORDER BY cac.DOCTOR_ID) AS SERVICE_COLORS,"+
                 " GROUP_CONCAT(cac.STATUS ORDER BY cac.DOCTOR_ID) AS status,"+
                 " GROUP_CONCAT(cac.CAL_ID ORDER BY cac.DOCTOR_ID) AS CAL_ID,"+
                 " GROUP_CONCAT(IFNULL(cac.PATIENTS, 'No Patient') ORDER BY cac.DOCTOR_ID separator '|') AS PATIENTS"+
                 " FROM cln_appointment_calendar cac"+
+                " LEFT OUTER JOIN sys_services ss ON ss.SERVICE_ID=cac.SERVICE_ID"+
                 " INNER JOIN doctors d ON d.doctor_id=cac.DOCTOR_ID"+
                 sql_dept+
                 " AND cac.SITE_ID="+site+

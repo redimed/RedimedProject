@@ -1,0 +1,72 @@
+<form name="sysservicesForm" class="form-horizontal" novalidate>
+    <!--ACTION-->
+    <div class="form-body">
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-block red" ng-click="cancelUpdate()" ng-show="params.permission.edit">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <!--END ACTION -->
+
+        <div class="row">
+
+            <!--SERVICE_NAME-->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <span class="field" ng-class="{'has-error': sysservicesForm.service_name.$invalid && isSubmit}">
+                <label for="service_name">Service name</label>
+                <input type="text" placeholder="Service name" name="service_name" ng-model="SysServicesMap.SERVICE_NAME" class="form-control" id="service_name" float-label required>
+            </span>
+            <span ng-show="sysservicesForm.service_name.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="sysservicesForm.service_name.$error.required">
+                    Service name is required
+                    </span>
+                </span>
+            	
+            </div>
+            <!--SERVICE_NAME-->
+
+            <!--DESCRIPTION-->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <span class="field">
+                <label for="description">Description</label>
+                <input type="text" placeholder="Description" name="description" ng-model="SysServicesMap.DESCRIPTION" class="form-control" id="description" float-label>
+            </span>	
+            </div>
+            <!--DESCRIPTION-->
+
+            <!--SERVICE_COLOR-->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <span class="field">
+                <label for="service_color">Service color</label>
+                <input type="text" placeholder="Service color" name="service_color" ng-model="SysServicesMap.SERVICE_COLOR" class="form-control" id="service_color" float-label>
+            </span>	
+            </div>
+            <!--SERVICE_COLOR-->
+
+
+            <div class="break-row"></div>
+            <!--Isenable-->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="SysServicesMap.Isenable" ng-true-value="1" ng-false-value="0">
+                <label for="isenable">Enable</label>
+            </div>
+            <!--Isenable-->
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#service_color").minicolors({
+                control: 'wheel'
+            });
+        });
+    </script>
+</form>

@@ -6,8 +6,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
-        }
-        else {
+        } else {
             //Set value default
             $scope.today = new Date();
             $scope.info = [];
@@ -77,148 +76,82 @@ angular.module('app.loggedIn.document.MH.controllers', [])
             //var tempAppt = localStorageService.get('tempAppt');
             var tempPatient = localStorageService.get('tempPatient') || [];
             if (tempPatient == null || tempPatient === 'undefined') {
-                $state.go('loggedIn.home', null, {"reload": true});
+                $state.go('loggedIn.home', null, {
+                    "reload": true
+                });
                 toastr.error("Load information fail, please try again!", "Error");
-            }
-            else {
+            } else {
                 var patient_id = tempPatient.Patient_id;
                 //var cal_id = tempAppt.CAL_ID;
                 var cal_id = -1; //Set default cal_id
                 $scope.info = {
-                    PATIENT_ID: patient_id,
-                    CAL_ID: cal_id
+                    patient_id: patient_id,
+                    cal_id: cal_id
                 };
                 var oriInfo;
                 var info = $scope.info;
                 DocumentService.loadMH(info).then(function (response) {
                     if (response['status'] === 'fail') {
-                        $state.go('loggedIn.home', null, {"reload": true});
-                    }
-                    else if (response[0].status === 'findNull') {
+                        $state.go('loggedIn.home', null, {
+                            "reload": true
+                        });
+                    } else if (response[0].status === 'findNull') {
                         //Add new document MH.
                         $scope.isNew = true;
-                    }
-                    else if (response[0].status === 'findFound') {
+                    } else if (response[0].status === 'findFound') {
                         //Edit document MH
                         $scope.isNew = false;
-                    }
-                    else {
+                    } else {
                         //Throw exception
-                        $state.go('loggedIn.home', null, {"reload": true});
+                        $state.go('loggedIn.home', null, {
+                            "reload": true
+                        });
                     }
                     /**
                      * Load data normal input
                      */
                     var data = response[0];
-                    $scope.info.headers = [];
-                    angular.forEach(data.headers, function (dataH, hIndex) {
-                        $scope.info.headers.push({
-                            "PATIENT_ID": patient_id,
-                            "CAL_ID": cal_id,
-                            "MH_DF_ID": dataH.MH_DF_ID,
-                            "DF_CODE": dataH.DF_CODE,
-                            "DESCRIPTION": dataH.DESCRIPTION,
-                            "ISENABLE": dataH.ISENABLE,
-                            "CREATED_BY": dataH.CREATED_BY,
-                            "Last_updated_by": dataH.Last_updated_by,
-                            "Sign": dataH.Sign,
-                            "Date": dataH.Date,
-                            "Release_of_medical_info_sign": dataH.Release_of_medical_info_sign,
-                            "Release_of_medical_info_witness_sign": dataH.Release_of_medical_info_witness_sign,
-                            "Declaration_sign": dataH.Declaration_sign,
-                            "Declaration_witness_sign": dataH.Declaration_witness_sign,
-                            "Statement_sign": dataH.Statement_sign,
-                            "Statement_Date": dataH.Statement_Date,
-                            "group": []
-                        });
-                        $scope.info.Sign = dataH.Sign;
-                        $scope.info.Date = dataH.Date || new Date();
-                        $scope.info.Declaration_sign = dataH.Declaration_sign;
-                        $scope.info.Declaration_witness_sign = dataH.Declaration_witness_sign;
-                        $scope.info.Statement_sign = dataH.Statement_sign;
-                        $scope.info.Statement_Date = dataH.Statement_Date || new Date();
-
-
-                        var g = 0;
-                        angular.forEach(data.groups, function (dataG, gIndex) {
-                            if (dataG.MH_DF_ID === $scope.info.headers[hIndex].MH_DF_ID) {
-                                $scope.info.headers[hIndex].group.push({
-                                    "PATIENT_ID": patient_id,
-                                    "CAL_ID": cal_id,
-                                    "GROUP_ID": dataG.GROUP_ID,
-                                    "MH_DF_ID": dataG.MH_DF_ID,
-                                    "ORD": dataG.ORD,
-                                    "GROUP_NAME": dataG.GROUP_NAME,
-                                    "ISENABLE": dataG.ISENABLE,
-                                    "CREATED_BY": dataG.CREATED_BY,
-                                    "Last_updated_by": dataG.Last_updated_by,
-                                    "USER_TYPE": dataG.USER_TYPE,
-                                    "line": []
-                                });
-                                var l = 0;
-                                angular.forEach(data.lines, function (dataL, lIndex) {
-                                    if ($scope.info.headers[hIndex].group[g].GROUP_ID === dataL.GROUP_ID) {
-                                        $scope.info.headers[hIndex].group[g].line.push({
-                                            "PATIENT_ID": patient_id,
-                                            "CAL_ID": cal_id,
-                                            "MH_LINE_ID": dataL.MH_LINE_ID,
-                                            "GROUP_ID": dataL.GROUP_ID,
-                                            "MH_DF_ID": dataL.MH_DF_ID,
-                                            "ORD": dataL.ORD,
-                                            "QUESTION": dataL.QUESTION,
-                                            "YES_NO": dataL.YES_NO,
-                                            "ISCOMMENT_WHEN_YES": dataL.ISCOMMENT_WHEN_YES,
-                                            "ISCOMMENT_WHEN_NO": dataL.ISCOMMENT_WHEN_NO,
-                                            "Comments": dataL.Comments,
-                                            "ISDETAILS_ANSWER_ONLY": dataL.ISDETAILS_ANSWER_ONLY,
-                                            "ISENABLE": dataL.ISENABLE,
-                                            "CREATED_BY": dataL.CREATED_BY,
-                                            "Last_updated_by": dataL.Last_updated_by,
-                                            "ISDetails_Answer_IfYes": dataL.ISDetails_Answer_IfYes,
-                                            "subquestion": []
-                                        });
-                                        angular.forEach(data.subquestions, function (dataS) {
-                                            if (dataS.MH_LINE_ID === $scope.info.headers[hIndex].group[g].line[l].MH_LINE_ID) {
-                                                $scope.info.headers[hIndex].group[g].line[l].subquestion.push({
-                                                    "PATIENT_ID": patient_id,
-                                                    "CAL_ID": cal_id,
-                                                    "MH_LINE_SUB_ID": dataS.MH_LINE_SUB_ID,
-                                                    "MH_LINE_ID": dataS.MH_LINE_ID,
-                                                    "ORD": dataS.ORD,
-                                                    "QUESTION": dataS.QUESTION,
-                                                    "YES_NO": dataS.YES_NO,
-                                                    "ISCOMMENT_WHEN_YES": dataS.ISCOMMENT_WHEN_YES,
-                                                    "ISCOMMENT_WHEN_NO": dataS.ISCOMMENT_WHEN_NO,
-                                                    "Comments": dataS.Comments,
-                                                    "ISENABLE": dataS.ISENABLE,
-                                                    "CREATED_BY": dataS.CREATED_BY,
-                                                    "Last_updated_by": dataS.Last_updated_by
-                                                });
-                                            }
-                                        });
-                                        l++;
-                                    }
-                                });
-                                g++;
-                            }
-                        });
-                    });
-                    $scope.info.doctorInfo = response[0].doctor;
-                    $scope.info.apptInfo = response[0].appt;
                     $scope.info.patient = response[0].patient;
-                    oriInfo = angular.copy($scope.info);
                 });
 
                 $scope.resetForm = function () {
                     $scope.info = angular.copy(oriInfo);
                     $scope.mhForm.$setPristine();
                 };
-
+                //begin section 2
+                $scope.works = [1];
+                $scope.add_sec2 = function (index) {
+                    if (index == $scope.works.length - 1 && index != 4) {
+                        $scope.works.push({
+                            "index": $scope.works.length
+                        });
+                    }
+                };
+                $scope.delete_sec2 = function (index) {
+                    if (index != 0) {
+                        $scope.works.splice(index, 1);
+                    };
+                }
+                //end section 2
+                //begin section 3
+                $scope.medications = [1];
+                $scope.add_sec3 = function (index) {
+                    if (index == $scope.medications.length - 1 && index != 4) {
+                        $scope.medications.push({
+                            "index": $scope.medications.length
+                        });
+                    }
+                };
+                $scope.delete_sec3 = function (index) {
+                    if (index != 0) {
+                        $scope.medications.splice(index, 1);
+                    };
+                }
+                //end section 3
                 $scope.checkAbove = function () {
                     if ($scope.info.asAbove == 1) {
                         $scope.info.Above = ($scope.info.patient.Address1 == null ? "" : $scope.info.patient.Address1);
-                    }
-                    else {
+                    } else {
                         $scope.info.Above = '';
                         $scope.info.asAbove == 0;
                     }
@@ -229,10 +162,10 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 };
                 $scope.submit = function (mhForm) {
                     //check validate
+                    console.log($scope.info);
                     if (mhForm.$error.required || mhForm.$error.maxlength || mhForm.$error.pattern) {
                         toastr.error("Please Input All Required Information!", "Error");
-                    }
-                    else {
+                    } else {
                         var info = angular.copy($scope.info);
                         if ($scope.isNew) {
                             /**
@@ -241,24 +174,24 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                             DocumentService.insertMH(info).then(function (response) {
                                 if (response['status'] === 'success') {
                                     toastr.success("Add new success!", "Success");
-                                    $state.go('loggedIn.MH', null, {"reload": true});
-                                }
-                                else if (response['status'] === 'fail') {
+                                    $state.go('loggedIn.MH', null, {
+                                        "reload": true
+                                    });
+                                } else if (response['status'] === 'fail') {
                                     toastr.error("Add new fail!", "Error");
                                 }
                             })
-                        }
-
-                        else {
+                        } else {
                             /**
                              * edit document MH
                              */
                             DocumentService.editMH(info).then(function (response) {
                                 if (response['status'] === 'success') {
                                     toastr.success("Update success!", "Success");
-                                    $state.go('loggedIn.MH', null, {"reload": true});
-                                }
-                                else if (response['status'] === 'fail') {
+                                    $state.go('loggedIn.MH', null, {
+                                        "reload": true
+                                    });
+                                } else if (response['status'] === 'fail') {
                                     toastr.error("Update fail!", "Error");
                                 }
                             });
@@ -268,6 +201,3 @@ angular.module('app.loggedIn.document.MH.controllers', [])
             }
         }
     });
-
-
-

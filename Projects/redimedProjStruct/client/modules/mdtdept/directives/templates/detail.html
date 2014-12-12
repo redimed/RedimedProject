@@ -1,0 +1,33 @@
+<form name="mdtdeptForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--CLINICAL_DEPT_NAME-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="clinical_dept_name">Clinical dept name</label>
+			<input type="text" placeholder="Clinical dept name" name="clinical_dept_name" ng-model="mdtDeptMap.CLINICAL_DEPT_NAME" class="form-control" id="clinical_dept_name" float-label>
+		</span>	</div>
+	<!--CLINICAL_DEPT_NAME-->
+
+	<!--ISENABLE-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="mdtDeptMap.ISENABLE" ng-true-value="1" ng-false-value="0">
+		<label for="isenable">Isenable</label>
+	</div>
+	<!--ISENABLE-->
+
+</div>
+</form>

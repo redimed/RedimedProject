@@ -31,6 +31,12 @@ module.exports = function(sequelize, DataTypes){
                     // through: 'cln_dept_item_lists'
                     through: models.DeptHeaders
                 });
+                mdtInstance.hasMany(models.SysServices, {
+                    as: 'Services', 
+                    foreignKey: 'CLINICAL_DEPT_ID',
+                    through: models.DeptServices, 
+                    // through: 'cln_dept_services'
+                });
             }
         }
     });

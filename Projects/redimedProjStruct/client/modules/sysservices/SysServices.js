@@ -1,0 +1,32 @@
+angular.module('app.loggedIn.sysservices', [
+	'app.loggedIn.sysservices.directives',
+	'app.loggedIn.sysservices.services',
+    'app.loggedIn.sysservices.controller'
+])
+.config(function($stateProvider){
+    $stateProvider
+    .state('loggedIn.sysservices',{
+        abstract:true,
+        templateUrl:'modules/sysservices/views/structure.html',
+        controller:"SysServicesController"
+        
+    })
+    .state('loggedIn.sysservices.list',{
+        url:'/services',
+        views:{
+            'main-content':{
+                templateUrl:'modules/sysservices/views/serviceslist.html',
+                controller:'SysServicesListController'
+            }
+        }
+    })
+    .state('loggedIn.sysservices.add',{
+        url:'/services/add',
+        views:{
+            'main-content':{
+                templateUrl:'modules/sysservices/views/serviceadd.html',
+                controller:'SysServicesAddController'
+            }
+        }
+    })
+});

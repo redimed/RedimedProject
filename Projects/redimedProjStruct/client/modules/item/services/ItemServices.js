@@ -24,5 +24,36 @@ angular.module("app.loggedIn.item.services", [])
             return detailApi.post(data);
         }
 
+        instanceService.getItemFees = function(item_id) {
+             var detailApi = appApi.one("v2/fees/get_item_fees");
+            return detailApi.get({item_id: item_id});
+        }
+
+        instanceService.insertItemFees = function(item_id, fee_list) {
+            var list = [];
+            console.log(fee_list);
+            for (var i = fee_list.length - 1; i >= 0; i--) {
+                if(fee_list[i].SCHEDULE_FEE !== undefined)
+                    list.push(fee_list[i]);
+            };
+            var data = {item_id: item_id, fees: list};
+
+            var detailApi = appApi.all("v2/fees/insert_item_fees");
+            return detailApi.post(data);
+        }
+
+        instanceService.insertItemFundFees = function(item_id, fee_list) {
+            var list = [];
+            for (var i = fee_list.length - 1; i >= 0; i--) {
+                if(fee_list[i].FEE !== undefined || fee_list[i].PERCENT_FEE !== undefined)
+                    list.push(fee_list[i]);
+            };
+            var data = {item_id: item_id, fees: list};
+
+            var detailApi = appApi.all("v2/fees/insert_item_fund_fees");
+            return detailApi.post(data);
+
+        }
+
         return instanceService;
     })

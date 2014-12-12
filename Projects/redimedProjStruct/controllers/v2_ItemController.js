@@ -30,23 +30,43 @@ module.exports = {
 		});
 	},
 
-	anyHeaderSearch: function(req, res){
-		var limit = (req.body.limit) ? req.body.limit : 10;
-        var offset = (req.body.offset) ? req.body.offset : 0;
-		var fields = req.body.fields;
-		// InvItemHeader
+	postDetail: function(req, res){
+		var id = req.body.ITEM_ID;
 
-		db.InvItemHeader.findAndCountAll({
-			offset: offset,
-			limit: limit,
-			attributes: fields,
-			order: 'POPULAR_NAME DESC'
-		}).success(function(result){
-			res.json({"status": "success", "list": result.rows, "count": result.count});
+		db.InvItem.find(id)
+		.success(function(data){
+			res.json({"status": "success", "data": data});
 		})
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
-		})	
+		});
+	},
+
+	postInsert : function(req, res) {
+		var postData = req.body;
+
+		db.InvItem.create(postData)
+		.success(function(data, created){
+			res.json({"status": "success", "data": data});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	},
+
+	postUpdate: function(req, res) {
+		var postData = req.body;
+
+		var item_id = postData.ITEM_ID;
+		delete postData.ITEM_ID;
+
+		db.InvItem.update(postData, {where: {ITEM_ID: item_id}})
+		.success(function(data){
+			res.json({"status": "success", "data": data});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		})
 	},
 
 	anyHeaderItem: function(req, res) {
@@ -82,64 +102,6 @@ module.exports = {
 		})	
 	},
 
-	postDetail: function(req, res){
-		var id = req.body.ITEM_ID;
-
-		db.InvItem.find(id)
-		.success(function(data){
-			res.json({"status": "success", "data": data});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		});
-
-	},
-
-	postInsert : function(req, res) {
-		var postData = req.body;
-
-		db.InvItem.create(postData)
-		.success(function(data, created){
-			res.json({"status": "success", "data": data});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		});
- 
-	},
-
-	postUpdate: function(req, res) {
-		var postData = req.body;
-
-		var item_id = postData.ITEM_ID;
-		delete postData.ITEM_ID;
-
-		db.InvItem.update(postData, {where: {ITEM_ID: item_id}})
-		.success(function(data){
-			res.json({"status": "success", "data": data});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		})
-	},
-
-	postInsertHeader: function(req, res) {
-		var postData = req.body;
-
-		db.InvItemHeader.findOrCreate(postData)
-		.success(function(data, created){
-			if(!created){
-				res.json({"status": "warning", "data": data, message: 'Duplicate Popular code'});
-				return;
-			}
-			res.json({"status": "success", "data": data});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		});
- 
-	},
-
 	postInsertHeaderItems: function(req, res) {
 		var header_id = req.body.header_id; // 2  
 		var items = req.body.items;  //  [6225, 6224] 
@@ -167,6 +129,45 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		})
-		// res.json(db.InvItemLine)
-	}
+	},
+
+	postUpdateHeaderItem: function(req, res){
+	},
+
+	anyHeaderSearch: function(req, res){
+		var limit = (req.body.limit) ? req.body.limit : 10;
+        var offset = (req.body.offset) ? req.body.offset : 0;
+		var fields = req.body.fields;
+		// InvItemHeader
+
+		db.InvItemHeader.findAndCountAll({
+			offset: offset,
+			limit: limit,
+			attributes: fields,
+			order: 'POPULAR_NAME DESC'
+		}).success(function(result){
+			res.json({"status": "success", "list": result.rows, "count": result.count});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		})	
+	},
+	
+	postInsertHeader: function(req, res) {
+		var postData = req.body;
+
+		db.InvItemHeader.findOrCreate(postData)
+		.success(function(data, created){
+			if(!created){
+				res.json({"status": "warning", "data": data, message: 'Duplicate Popular code'});
+				return;
+			}
+			res.json({"status": "success", "data": data});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	},
+
+	
 }

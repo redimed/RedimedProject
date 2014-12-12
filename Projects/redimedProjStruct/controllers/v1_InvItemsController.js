@@ -28,6 +28,8 @@ var model_sql = {
                 .field('ITEM_NAME').field('AMA_CODE').field('AMA_DESC').field('ITEM_CODE')
                 .field('item_headers.POPULAR_HEADER_ID').field('POPULAR_NAME');
 
+        querybuilder.group("ITEM_ID");
+
         return querybuilder.toString();
     },
     sql_get_by_appt: function (appt_id) {

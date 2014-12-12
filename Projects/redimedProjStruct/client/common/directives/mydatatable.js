@@ -70,7 +70,8 @@ angular.module("app.directive.mydatatable.common", [])
             }
 
             $scope.reload = function() {
-                 $scope.ajaxGetData();
+                $scope.ajaxGetData();
+                $scope.data.more_items = [];
             }
 
             $scope.displayData = function(data, col){
@@ -102,6 +103,8 @@ angular.module("app.directive.mydatatable.common", [])
                 if (!options.not_load && options.api) {
                     $scope.ajaxGetData();
                 }
+
+                options.not_paging = !options.not_paging ? false: true;
 
                 if(options.scope) {
                     angular.extend(options.scope, $scope);

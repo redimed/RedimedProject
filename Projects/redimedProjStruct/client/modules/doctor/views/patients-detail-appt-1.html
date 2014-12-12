@@ -1,0 +1,225 @@
+<h3 class="page-title">Patient Detail</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.doctor.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.patients">Patients</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.doctor.patients.detail">{{(patient.Title != null ? patient.Title + ' ' : '') + patient.Sur_name}}</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Appointment</a>
+        </li>
+    </ul>
+</div>
+
+
+<tabset id="appt_tab">
+	<tab heading="Patient Profile">
+		<div class="portlet grey-cascade box">
+			<div class="portlet-body">
+				<patient-module options="options" params="doctor_detail"></patient-module>
+			</div>
+		</div>
+	</tab>
+	<tab heading="Claim">
+		<div class="portlet grey-cascade box">
+			<div class="portlet-body">
+				<button class="btn btn-sm" ui-sref="loggedIn.patient.claim.list({patient_id: 1})">Go to Claim</button>
+			</div>
+		</div>
+	</tab>
+	<tab heading="Documents">
+		<div class="portlet box grey-cascade" id="appt_paperless">
+			<div class="portlet-body">
+				<div ng-include="views.paperless"></div>	
+			</div>
+		</div>
+	</tab>
+	<tab heading="Workcover">
+		<div class="portlet box grey-cascade">
+			<div class="portlet-body">
+				<div class="break-row"></div>
+				<div class="row">
+					<!-- NO CERTIFICATE -->
+					<span ng-show="!isCertificate">
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm purple" ng-click="isCertificate=!isCertificate">
+								Certificate Functions
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm yellow">General Assessment</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm blue" 
+								ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.first">First Assessment</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm blue" 
+								ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.progress">Process Assessment</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm blue" 
+								ui-sref="loggedIn.doctor.patients.detail.appt.waworkcover.final">Final Assessment</a>
+						</div>
+					</span>
+					<!-- END NO CERTIFICATE -->
+					<!-- CERTIFICATE -->
+					<span ng-show="isCertificate">
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm purple" ui-sref="loggedIn.certificate.scripts">
+								Write Script
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm yellow" ui-sref="loggedIn.certificate.referral">
+								Referral
+							</a>
+						</div>
+						<div class="col-md-2">
+							<a class="btn btn-block btn-sm red" ng-click="isCertificate=!isCertificate">
+								Back
+							</a>
+						</div>
+					</span>
+					<!-- END CERTIFICATE -->
+				</div>
+				<div class="break-row"></div>
+			</div>
+		</div>
+	</tab>
+	<tab heading="Appointment Info">
+		<div class="portlet grey-cascade box">
+			 <div class="portlet-body">
+				<div class="break-row"></div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Patient Name: </strong></div>
+						<div class="col-sm-8">{{patient.First_name}} {{patient.Middle_name}} {{patient.Sur_name}} 
+						</div>
+					</div>
+					
+				</div>
+				<div class="break-row"></div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Site: </strong></div>
+						<div class="col-sm-8">{{apptInfo.SITE_NAME}}</div>
+					</div>
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Department: </strong></div>
+						<div class="col-sm-8">{{apptInfo.CLINICAL_DEPT_NAME}}</div>
+					</div>
+				</div>
+				<div class="break-row"></div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>From time: </strong></div>
+						<div class="col-sm-8">{{apptInfo.FROM_TIME}}</div>
+					</div>
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>To time: </strong></div>
+						<div class="col-sm-8">{{apptInfo.TO_TIME}}</div>
+					</div>
+				</div>
+				<div class="break-row"></div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Status: </strong></div>
+						<div class="col-sm-8">
+							<select class="form-control"
+								ng-model="apptChange.APP_TYPE"
+								ng-options="item.code as item.title for item in options.app_status">
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="col-sm-4"><strong>Notes: </strong></div>
+						<div class="col-sm-8">
+							<textarea class="form-control" ng-model="apptChange.NOTES" placeholder="Appointment Notes"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="break-row"></div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="pull-right">
+							<button  ng-click="saveAppt()" class="btn blue"><i class="fa fa-save"></i> Save </button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</tab>
+</tabset>
+
+<div class="portlet box red">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Item Sheet
+        </div>
+        <div class="pull-right navbar-right">
+			
+            <button ng-click="saveItemsheet()" class="btn blue"><i class="fa fa-save"></i> Save </button>
+			
+			<!-- Single button -->
+			<div class="btn-group" dropdown>
+				
+			  <button style="margin-right: 0;" type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled">
+					More <span class="caret"></span>
+			  </button>
+			  
+			  <ul class="dropdown-menu" role="menu">
+				<li><a ui-sref="loggedIn.doctor.items.add"><i class="fa fa-plus"></i> New Item </a></li>
+				<li><a ui-sref="loggedIn.doctor.patients.detail.appt.more"><i class="fa fa-search"></i> Search Item</a></li>
+			  </ul>
+			</div>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable">
+
+            <table class="table table-bordered items-table">
+                <tbody>
+                    <tr ng-repeat-start="cat in item_list" class="item-label">
+                        <td colspan="3" style="text-transform: uppercase;" class="text-center bold"> {{cat.cattitle}} </td>
+                    </tr>
+                    <tr ng-repeat-end ng-repeat="item in cat.list" 
+						ng-class="{success: (item.inserted && item.checked =='1'), warning: (item.inserted && item.checked =='0')} ">
+                        <td style="width: 5%">
+                            <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                        </td>
+                        <td>{{item.ITEM_CODE}}</td>
+                        <td style="width: 80%">{{item.ITEM_NAME}}</td>
+						<td style="width: 7%"><input type="number" class="form-control" ng-model="item.QUANTITY"></td>
+                    </tr>
+					
+					<tr ng-show="extra_list.length > 0" class="item-label">
+                        <td colspan="3" style="text-transform: uppercase;" class="text-center bold"> EXTRA ITEMS </td>
+                    </tr>
+					<tr ng-repeat="item in extra_list" 
+						ng-class="{success: (!item.chosen && item.checked =='1'), warning: (!item.chosen && item.checked =='0')}">
+                        <td style="width: 5%">
+                            <input class="form-control" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                        </td>
+                        <td>{{item.ITEM_CODE}}</td>
+                        <td style="width: 85%">{{item.ITEM_NAME}}</td>
+						<td style="width: 7%"><input type="number" class="form-control" ng-model="item.QUANTITY"></td>
+                    </tr>
+					
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

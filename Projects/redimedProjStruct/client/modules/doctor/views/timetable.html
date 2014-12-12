@@ -1,18 +1,43 @@
 <h3 class="page-title">Timetable</h3>
-<div class="page-bar">
-	<ul class="page-breadcrumb">
-		<li>
-			<i class="fa fa-home"></i>
-			<a ui-sref="loggedIn.doctor.home">Home</a>
-			<i class="fa fa-angle-right"></i>
-		</li>
-		<li>
-			<a>Doctors</a>
-		</li>
-	</ul>
+
+<div class="row">
+    <div class="col-md-2">
+        <button class="btn green btn-sm btn-block" ng-click="openPopup({type: 'add', module: 'doctor'})">
+            <i class="fa fa-plus"></i> Doctor
+        </button>
+    </div>
 </div>
 
 <div class="row">
+    <div class="col-md-12">
+        <mdtdoctor-search click-row="selectDoctor(row)"></mdt-search>
+    </div>
+</div>
+
+<!-- ADD DOCTOR -->
+<div class="mdt-search" id="TimetableDoctorAdd" style="width: 100%;">
+    <mdtdoctor-detail options="options" params="params_doctor_add"></mdt-detail>
+</div>
+<!-- END ADD DOCTOR -->
+
+<div class="break-row" style="margin-bottom: 15px;"></div>
+
+<accordion close-others="accordion.oneAtATime" ng-show="relationships.specialties.count > 0">
+    <!-- SPECIALTY -->
+    <accordion-group class="panel-primary" is-open="accordion.specialties">
+        <accordion-heading>
+            <i class="fa fa-bars"></i>
+            &nbsp{{selectedDoctor.NAME}}'s Specialties
+        </accordion-heading>
+        <!-- Specialities -->
+        <mdtspecialty-searchbydoctor doctor="selectedDoctor" count="relationships.specialties.count" options="options">
+        </mdtspecialty-searchbydoctor>
+        <!-- END Specialities -->
+    </accordion-group>
+    <!-- END SPECIALTY -->
+</accordion>
+
+<!--<div class="row">
     <div class="col-md-12">
         <button class="btn btn-primary" ng-click="goToDoctor()">Add Doctor</button>
     </div>
@@ -27,7 +52,7 @@
         </div>
     </div>
     <div class="portlet-body">
-        <!-- PAGINATION -->
+        
         <div style="float: left;">
             <pagination boundary-links="true" total-items="list.count" ng-model="searchObjectMap.currentPage" 
             class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
@@ -40,7 +65,7 @@
             	ng-change="loadList()">
             </select>
         </div>
-        <!-- END PAGINATION -->
+        
         <table class="table table-responsive table-hover">
             <thead>
                 <tr>
@@ -49,7 +74,7 @@
                     <th>Phone</th>
                 </tr>
                 <tr>
-                    <!-- SEARCH -->
+                    
                     <td>
                         <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.NAME" 
                         	ng-change="loadList()">
@@ -62,7 +87,7 @@
                         <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Phone" 
                         	ng-change="loadList()">
                     </td>
-                    <!-- END SEARCH -->
+                    
                 </tr>
             </thead>
             <tbody>
@@ -74,4 +99,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</div>-->

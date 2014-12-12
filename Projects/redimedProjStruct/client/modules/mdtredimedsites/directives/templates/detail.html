@@ -1,0 +1,103 @@
+<form name="mdtredimedsitesForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--Site_name-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="site_name">Site name</label>
+			<input type="text" placeholder="Site name" name="site_name" ng-model="mdtRedimedsitesMap.Site_name" class="form-control" id="site_name" float-label>
+		</span>	</div>
+	<!--Site_name-->
+
+	<!--Site_addr-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="site_addr">Site addr</label>
+			<input type="text" placeholder="Site addr" name="site_addr" ng-model="mdtRedimedsitesMap.Site_addr" class="form-control" id="site_addr" float-label>
+		</span>	</div>
+	<!--Site_addr-->
+
+	<!--postcode-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="postcode">Postcode</label>
+			<input type="number" placeholder="Postcode" name="postcode" ng-model="mdtRedimedsitesMap.postcode" class="form-control" id="postcode" float-label>
+		</span>	</div>
+	<!--postcode-->
+
+
+	<div class="break-row"></div>
+	<!--State-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="state">State</label>
+			<input type="text" placeholder="State" name="state" ng-model="mdtRedimedsitesMap.State" class="form-control" id="state" float-label>
+		</span>	</div>
+	<!--State-->
+
+	<!--latitude-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="latitude">Latitude</label>
+			<input type="number" placeholder="Latitude" name="latitude" ng-model="mdtRedimedsitesMap.latitude" class="form-control" id="latitude" float-label>
+		</span>	</div>
+	<!--latitude-->
+
+	<!--longitude-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="longitude">Longitude</label>
+			<input type="number" placeholder="Longitude" name="longitude" ng-model="mdtRedimedsitesMap.longitude" class="form-control" id="longitude" float-label>
+		</span>	</div>
+	<!--longitude-->
+
+
+	<div class="break-row"></div>
+	<!--country-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="country">Country</label>
+			<input type="text" placeholder="Country" name="country" ng-model="mdtRedimedsitesMap.country" class="form-control" id="country" float-label>
+		</span>	</div>
+	<!--country-->
+
+	<!--Available_def-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="available_def">Available def</label>
+			<input type="number" placeholder="Available def" name="available_def" ng-model="mdtRedimedsitesMap.Available_def" class="form-control" id="available_def" float-label>
+		</span>	</div>
+	<!--Available_def-->
+
+	<!--booking_status-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="booking_status">Booking status</label>
+			<input type="text" placeholder="Booking status" name="booking_status" ng-model="mdtRedimedsitesMap.booking_status" class="form-control" id="booking_status" float-label>
+		</span>	</div>
+	<!--booking_status-->
+
+
+	<div class="break-row"></div>
+	<!--isPreEmpBK-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="ispreempbk" id="ispreempbk" class="mdt-checkbox" ng-model="mdtRedimedsitesMap.isPreEmpBK" ng-true-value="1" ng-false-value="0">
+		<label for="ispreempbk">Ispreempbk</label>
+	</div>
+	<!--isPreEmpBK-->
+
+</div>
+</form>

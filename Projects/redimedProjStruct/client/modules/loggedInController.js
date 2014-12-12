@@ -20,14 +20,47 @@ angular.module("app.loggedIn.controller",[
         titles: ConfigService.title_option(),
         sexes: ConfigService.sex_option(),
         sms: ConfigService.yes_no_option(),
-        countries: ConfigService.country_option(),
+        //countries: ConfigService.country_option(),
         gaps: ConfigService.yes_no_option(),
         acc_types: ConfigService.acc_type_option(),
         app_types: ConfigService.app_type_option(),
-        priorities: ConfigService.priority_option()
+        priorities: ConfigService.priority_option(),
+        timetable_dow: ConfigService.timetable_dow_option(),
+        weeks_of_month: ConfigService.number_of_week_option()
     }
 
     var loadOptionsApi = function(){
+        ConfigService.redimedsite_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.redimedsites = response.data;
+        })
+
+        ConfigService.rl_type_option().then(function(response){
+            if(response.status === 'success'){
+                $scope.options.rl_types = response.data;
+            }
+        })
+
+        ConfigService.title_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.titles = response.data;
+        })
+
+        ConfigService.provider_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.providers = response.data;
+        })
+
+        ConfigService.department_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.departments = response.data;
+        })
+
+        ConfigService.qualification_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.qualifications = response.data;
+        })
+
         ConfigService.account_type_option().then(function(response){
             if(response.status === 'success')
                 $scope.options.account_types = response.list;
@@ -36,11 +69,6 @@ angular.module("app.loggedIn.controller",[
         ConfigService.private_type_option().then(function(response){
             if(response.status === 'success')
                 $scope.options.private_types = response.list;
-        })
-
-        ConfigService.provider_type_option().then(function(response){
-            if(response.status === 'success')
-                $scope.options.provider_types = response.list;
         })
 
         ConfigService.referral_source_option().then(function(response){
@@ -63,7 +91,7 @@ angular.module("app.loggedIn.controller",[
                 $scope.options.language_types = response.list;
         })
 
-        ConfigService.doctors_option().then(function(response){
+        /*ConfigService.doctors_option().then(function(response){
             if(response.status === 'success')
                 $scope.options.doctor_types = response.data;
         })
@@ -71,7 +99,7 @@ angular.module("app.loggedIn.controller",[
         ConfigService.patients_option().then(function(response){
             if(response.status === 'success')
                 $scope.options.patient_types = response.data;
-        })
+        })*/
 
         ConfigService.taxes_option().then(function(data){
             $scope.options.taxes = data;
@@ -79,9 +107,9 @@ angular.module("app.loggedIn.controller",[
         ConfigService.prefix_headers_option('item').then(function(data){
             $scope.options.prefix_headers = data;
         });
-        ConfigService.provider_types_option().then(function(data){
+        /*ConfigService.provider_types_option().then(function(data){
             $scope.options.provider_types = data;
-        });
+        });*/
         
         ConfigService.inv_uoms_option().then(function(data){
             $scope.options.uoms = data;

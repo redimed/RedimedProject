@@ -1,12 +1,5 @@
 <span id="appointment">
 
-<div class="row">
-	<div class="col-md-12">
-		<!--<referral-detail params="test_params"></referral-detail>-->
-		<script-detail params="test_params"></script-detail>
-	</div>
-</div>
-
 <h3 class="page-title">Appointment</h3>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
@@ -77,14 +70,18 @@
 					id="overview{{overviewIndex}}">
 					<td class="time-booking"><b>{{data.from_time_map}}</b></td>
 					<td ng-repeat="status in data.patients track by $index" ng-init="doctorIndex=$index"
-						id="status{{overviewIndex}}{{doctorIndex}}"
+						id="status{{overviewIndex}}{{doctorIndex}}" ng-style="{'background': data.service_colors[doctorIndex]}"
 						ng-right-click="chooseBookingAction($event, {docId: doctorIndex, overId: overviewIndex, data: data})"
 						ng-click="chooseBooking($event, {docId: doctorIndex, overId: overviewIndex, 
 							status: status, type: 'one'})">
 
 						<ul class="mdt-list-booking-patient">
 							<li ng-repeat="p in status track by $index">
-								<a ng-click="goToPatientDetail(p, data, doctorIndex)">
+								<a ng-click="bookingPatient(data, overviewIndex, doctorIndex)" 
+									ng-if="p.Patient_name === 'No Patient'">
+									No Patient
+								</a>
+								<a ng-click="goToPatientDetail(p, data, doctorIndex)" ng-if="p.Patient_name !== 'No Patient'">
 									{{p.Patient_name}}
 								</a>
 							</li>
@@ -114,8 +111,8 @@
 
 <!-- BOOKING MODULE -->
 <div class="mdt-search" id="bookingModule">
-	<calendar-booking is-close="bookingModule" data="dataBooking" options="options" 
-		click-patient="clickPatient(type)" patient="patient">
+	<calendar-booking is-close="bookingModule" data="dataBooking" options="options" params="params"
+		click-patient="clickPatient(type)" extra="extra">
 	</calendar-booking>
 </div>
 <!-- END BOOKING MODULE -->
