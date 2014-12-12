@@ -79,9 +79,9 @@ module.exports = {
               injury_date: imInfo.injury_date,
               injury_description: imInfo.injury_description,
               STATUS: "New",
-              pickup_address: imInfo.infoMaps.format_address,
-              latitude: imInfo.infoMaps.lat,
-              longitude: imInfo.infoMaps.lng
+              pickup_address: imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address == 'undefined' ? null : imInfo.infoMaps.format_address,
+              latitude:  imInfo.infoMaps.lat == null || typeof imInfo.infoMaps.lat == 'undefined' ? null : imInfo.infoMaps.lat,
+              longitude: imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng == 'undefined' ? null : imInfo.infoMaps.lng
           },{raw:true})
               .success(function(data){
                   db.IMInjury.find({where:data.dataValues},{raw:true})
