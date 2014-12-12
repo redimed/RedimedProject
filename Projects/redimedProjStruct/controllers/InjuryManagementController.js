@@ -299,10 +299,14 @@ module.exports = {
     },
     testPushGCM: function(req,res)
     {
+        var date = new Date();
+        var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
+
         var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
         var message = new gcm.Message();
         message.addData('title','EMERGENCY');
         message.addData('message','You have an emergency case!');
+        message.addData('message','You have an emergency case! - Time: '+dateString);
         message.collapseKey = 'EMERGENCY';
         message.delayWhileIdle = true;
         message.timeToLive = 3;
@@ -317,9 +321,16 @@ module.exports = {
 
                 sender.send(message, registrationIds, 4, function (err,result) {
                     if(err)
+                    {
                         console.log("ERROR:",err);
+                        res.json({status:'error'});
+                    }
                     else
+                    {
                         console.log("SUCCESS:",result);
+                        res.json({status:'success'});
+                    }
+
                 });
             })
             .error(function (err) {
