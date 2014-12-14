@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
-	<property name="ireport.zoom" value="0.8467108950806665"/>
+	<property name="ireport.zoom" value="1.126972201352368"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="384"/>
+	<property name="ireport.y" value="18"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -182,28 +182,76 @@ doc_ma.`MA_ID` = $P{id}]]>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<detail>
-		<band height="794" splitType="Stretch">
+	<pageHeader>
+		<band height="77">
 			<image>
-				<reportElement x="0" y="0" width="555" height="110" uuid="81201d9c-1bc9-4c12-9004-babab4d99242"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\pic1.PNG"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="0" y="110" width="555" height="252" uuid="f5bb7a1f-bed8-496e-bbc1-3bae4549bddf"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\pic2.PNG"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="0" y="351" width="555" height="260" uuid="3f3873e3-b397-413f-a28e-54debe26db81"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\pic3.PNG"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="0" y="601" width="555" height="160" uuid="73c91762-c6d9-4ec1-a345-57172b1a83f3"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\pic4.PNG"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="77" uuid="5eade9f0-9968-4d76-81df-ecc8ec855156"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/header.png"]]></imageExpression>
 			</image>
 		</band>
-		<band height="607" splitType="Prevent"/>
+	</pageHeader>
+	<detail>
+		<band height="725">
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="0" width="555" height="264" uuid="01099329-d9cc-4adb-9717-56a6966f8f49"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA1.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="244" width="555" height="265" uuid="5752702c-2183-470a-91cc-4603d39b36d3"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA2.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="490" width="555" height="235" uuid="90d90388-f5c6-4387-923a-b8948c863157"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA3.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="63" y="23" width="100" height="20" uuid="3b5692c1-4603-48b4-9b84-5f540fe65097"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_HEIGHT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="23" width="100" height="20" uuid="0e70333d-9b95-4e7c-baaf-504ae8aead89"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_WEIGHT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="23" width="100" height="20" uuid="4204d347-b6aa-4230-8a89-b413ad2b84df"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_BMI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="63" y="43" width="100" height="20" uuid="7ca2356b-083e-4b24-8ca8-acc17728ccdd"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_WAIST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="73" width="69" height="11" uuid="7144030f-83c4-4ef7-9471-708bd877623e"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_BLOOD_SEC1}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="725">
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="0" width="555" height="298" uuid="b4dd2985-5e0b-46c8-99dc-b4529b7c5557"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA4.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="207" width="555" height="273" uuid="425f4c5e-e246-4e90-914e-171f6cf1142c"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA5.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="434" width="555" height="279" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA6.PNG"]]></imageExpression>
+			</image>
+		</band>
+		<band height="725">
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="0" width="555" height="298" uuid="b4dd2985-5e0b-46c8-99dc-b4529b7c5557"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA7.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="239" width="555" height="317" uuid="425f4c5e-e246-4e90-914e-171f6cf1142c"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA8.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="523" width="555" height="169" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
+				<imageExpression><![CDATA[$P{real_path}+"images/MA9.PNG"]]></imageExpression>
+			</image>
+		</band>
 	</detail>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
 </jasperReport>
