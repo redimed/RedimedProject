@@ -6,6 +6,9 @@ module.exports = function(sequelize, DataTypes){
 			autoIncrement: true
 		},
 		FEE_TYPE_NAME: DataTypes.STRING(11),
+		PRICE_SOURCE: DataTypes.STRING(200),
+		FEE_GROUP_ID: DataTypes.INTEGER(11),
+		FEE_GROUP_ORDER: DataTypes.INTEGER(11),
 		ISENABLE: DataTypes.INTEGER(11),
 		Creation_date: DataTypes.DATE,
 		Created_by: DataTypes.INTEGER(11),
@@ -22,7 +25,9 @@ module.exports = function(sequelize, DataTypes){
                     foreignKey: 'FEE_TYPE_ID',
                     through: models.mdtClnItemFee
                 });
-            }
+                FeeType.belongsTo(models.FeeGroup, { as: 'FeeGroup', foreignKey: 'FEE_GROUP_ID'});
+            },
+			getUploadPath: function(){ return 'uploadFile/ItemFee/'; }
         }
 	});
 
