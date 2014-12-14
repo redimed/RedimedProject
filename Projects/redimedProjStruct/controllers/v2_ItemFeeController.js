@@ -115,7 +115,7 @@ var general_process = function(req, res){
 					source_arr = item_fees_model.process_content_file(data);
 				} else {
 					source_arr = fund_fees_model.process_content_file(data);
-					process_data.step_num = parseInt((source_arr.length * process_group.length) / 500); 
+					process_data.step_num = parseInt(process_data.step_num  / process_group.length); 
 					// res.json('PREPARE TO INSERT NUM RECORDS: ' + (source_arr.length * process_group.length));
 				}	
 				if(!source_arr) {
@@ -240,9 +240,9 @@ module.exports = {
 		})
 	},
 
-	getUpdateGroupPriceSource: function(req, res) {
-		// var group_id = req.body.FEE_GROUP_ID;
-		var group_id = req.query.id;
+	postUpdateGroupPriceSource: function(req, res) {
+		var group_id = req.body.FEE_GROUP_ID;
+		// var group_id = req.query.id;
 
 		db.FeeGroup.find(group_id)
 		.success(function(groupInstance){
@@ -250,6 +250,8 @@ module.exports = {
 				res.json(500, {"status": "error", "message": 'No Group / Source Availabel !!!'});
 				return;
 			}
+
+			req.setTimeout(300000 , function(){ res.end(); })
 
 			var processInstance = new general_process(req, res);
 			processInstance.set_file_name(groupInstance.PRICE_SOURCE);
@@ -407,7 +409,7 @@ module.exports = {
 				return;
 			}
 			req.setTimeout(300000 , function(){ res.end(); })
-			
+
 			var processInstance = new general_process(req, res);
 			processInstance.set_file_name(typeInstance.PRICE_SOURCE);
 			

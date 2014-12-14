@@ -59,5 +59,10 @@ angular.module("app.loggedIn.item.services", [])
             return detailApi.post({FEE_TYPE_ID: type_id});
         }
 
+        instanceService.updateGroupPriceSource = function(group_id) {
+            var detailApi = appApi.all("v2/fees/update_group_price_source");
+            return detailApi.post({FEE_GROUP_ID: group_id});
+        }
+
         return instanceService;
     })

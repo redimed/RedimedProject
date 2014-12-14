@@ -90,6 +90,22 @@ angular.module("app.loggedIn.item.fee.controller",[
                         $('#fee_type_upload').click();
                     }
                 }, 
+                {
+                    class: 'fa fa-check-circle', title: 'Update Price Source',
+                    callback: function(item){
+                        if(!item.PRICE_SOURCE) {
+                            toastr.warning('Needed a price source', 'Warning');
+                            return;
+                        }
+                        $scope.fee_groups.select_item = item;
+                        ItemService.updateGroupPriceSource(item.FEE_GROUP_ID).then(function(response){
+                            if(response.status == 'success') {
+                                toastr.success('Upload successfully !', 'Success');
+                            }
+                        })
+                        console.log(item);
+                    }
+                },
             ]
         }
     }
