@@ -52,7 +52,11 @@ angular.module("app.loggedIn.item.services", [])
 
             var detailApi = appApi.all("v2/fees/insert_item_fund_fees");
             return detailApi.post(data);
+        }
 
+        instanceService.updateTypePriceSource = function (type_id) {
+            var detailApi = appApi.all("v2/fees/update_type_price_source");
+            return detailApi.post({FEE_TYPE_ID: type_id});
         }
 
         return instanceService;

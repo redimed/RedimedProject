@@ -7,6 +7,11 @@ angular.module("app.loggedIn.item.list.controller",[
     */
     $scope.items = {
         select: 0,
+        class: function(item) {
+            return {
+                selected: (item.ITEM_ID == $scope.items.select)
+            };
+        },
         options : {
             api: 'api/erm/v2/items/search',
             method: 'post',

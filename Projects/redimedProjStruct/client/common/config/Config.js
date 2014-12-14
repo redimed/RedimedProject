@@ -142,6 +142,11 @@ angular.module('app.config', [])
         return siteApi.get({is_option: 1, form_code: form_code});
     };
 	
+	configService.provider_types_option = function(){
+        var siteApi = configApi.one("v1/system/list_provider_types");
+        return siteApi.get({is_option: 1});
+    };
+	
 	configService.inv_uoms_option = function(){
         var siteApi = configApi.one("v1/inv/list_uoms");
         return siteApi.get({is_option: 1});
@@ -154,6 +159,18 @@ angular.module('app.config', [])
     configService.yes_no_option = function () {
         return YES_NO_OPT;
     };
+
+    configService.autoConvertData = function(data) {
+        for (var key in data) {
+            if (data[key]) {
+                if (key.toLowerCase().indexOf("is") === 0) 
+                    data[key] = data[key].toString();
+                else if (key.toLowerCase().indexOf("_date") != -1)
+                    data[key] = new Date(data[key]);
+            }
+        }
+    }
+
     /* END KHANK */
 
     configService.user_option = function () {

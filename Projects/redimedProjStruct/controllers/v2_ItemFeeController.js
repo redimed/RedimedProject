@@ -406,6 +406,8 @@ module.exports = {
 				res.json(500, {"status": "error", mesage: 'No type / source Availabel'});
 				return;
 			}
+			req.setTimeout(300000 , function(){ res.end(); })
+			
 			var processInstance = new general_process(req, res);
 			processInstance.set_file_name(typeInstance.PRICE_SOURCE);
 			

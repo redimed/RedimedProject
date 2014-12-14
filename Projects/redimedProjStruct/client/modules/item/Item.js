@@ -20,6 +20,16 @@ angular.module("app.loggedIn.item", [
                     }
                 }
             })
+            // FEE
+            .state("loggedIn.item.fee", {
+                url: "/item/fee",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/item/views/fee.html",
+                        controller: "ItemFeeController"
+                    }
+                }
+            })
             // HEADER
             .state("loggedIn.item.header", {
                 url: "/item/header",

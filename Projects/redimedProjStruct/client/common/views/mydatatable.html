@@ -51,6 +51,7 @@
                         <span ng-switch-when="number">
                             <input ng-disabled="col.disabled" ng-model="item[col.field]" type="number" />
                         </span>
+                        <span ng-switch-when="custom">{{col.fn(item)}}</span>
                         <span ng-switch-default>{{item[col.field]}}</span>
                     </span>
                     <!-- END TYPE INPUT -->

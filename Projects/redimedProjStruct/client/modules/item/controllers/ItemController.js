@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.item.controller", [
     "app.loggedIn.item.list.controller",
     "app.loggedIn.item.header.controller",
+    "app.loggedIn.item.fee.controller",
 ])
 .controller("ItemController", function ($scope, ConfigService) {
     $scope.data_options = {

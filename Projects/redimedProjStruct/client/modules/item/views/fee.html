@@ -1,0 +1,46 @@
+<h1>Item Fees</h1>
+<div class="portlet box red ng-scope">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Fees
+        </div>
+    </div>
+    <div class="portlet-body">
+		<div class="tabbable-custom" ng-init="fees.tab = 1">
+            <ul class="nav nav-tabs ">
+                <li ng-class="{active: (fees.tab == 1)}" ng-click="fees.tab = 1"><a> Groups </a></li>
+                <li ng-class="{active: (fees.tab == 2)}" ng-click="fees.tab = 2"><a> Fee Types </a></li>
+                <li ng-class="{active: (fees.tab == 3)}" ng-click="fees.tab = 3"><a> Private Funds </a></li>
+            </ul>
+            <div class="tab-content">
+                <!-- FEE GROUPS  -->
+                <div ng-class="{active: (fees.tab == 1)}" class="tab-pane">
+                    <div class="pull-right navbar-right">
+                        <a class="btn btn-sm blue" ng-click="searchHeader.open()"><i class="fa fa-plus"></i> Add Group</a>
+                    </div>
+                    <my-data-table options="fee_groups.options" rowclass="fee_groups.class"></my-data-table>
+                </div>
+                <!-- END GROUPS  -->
+                <!-- FEE TYPES  -->
+                <div ng-class="{active: (fees.tab == 2)}" class="tab-pane">
+                    <div class="pull-right navbar-right">
+                        <a class="btn btn-sm blue" ng-click="searchHeader.open()"><i class="fa fa-plus"></i> Add Fee Type</a>
+                    </div>
+                    <my-data-table options="fee_types.options" rowclass="fee_types.class"></my-data-table>
+                </div>
+                <!-- END FEE TYPES  -->
+
+                <!-- PRIVATE FUNDS  -->
+                <div ng-class="{active: (fees.tab == 3)}" class="tab-pane">
+                    <div class="pull-right navbar-right">
+                        <a class="btn btn-sm blue" ng-click="searchService.open()"><i class="fa fa-plus"></i> Add Private Fund</a>
+                    </div>
+                    <my-data-table options="private_funds.options" rowclass="private_funds.class"></my-data-table>
+                </div>
+                <!-- END PRIVATE FUNDS  -->
+            </div>    
+        </div>    
+    </div>
+</div>
+
+<input id="fee_type_upload" ng-hide="true" type="file" nv-file-select uploader="uploader"/>

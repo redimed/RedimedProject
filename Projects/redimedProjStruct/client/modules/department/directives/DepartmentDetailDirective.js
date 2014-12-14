@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.department.detail.directive", [])
-.directive("departmentDetail", function (DepartmentModel, DepartmentService, ConfigService, toastr) {
+.directive("departmentDetail", function (ClnDepartmentModel, DepartmentService, ConfigService, toastr) {
     return{
         restrict: "EA",
         scope: {
@@ -15,7 +15,7 @@ angular.module("app.loggedIn.department.detail.directive", [])
                     ConfigService.autoConvertData(scope.modelObjectMap);
                 });
             };
-            scope.modelObjectMap = angular.copy(DepartmentModel);
+            scope.modelObjectMap = angular.copy(ClnDepartmentModel);
             scope.mode = {type: 'add', text: 'Add Department'};
             
             if (scope.data) {
@@ -30,7 +30,7 @@ angular.module("app.loggedIn.department.detail.directive", [])
                 DepartmentService.insert(postData).then(function (response) {
                     if (response.status === 'success') {
                         toastr.success("Added a new Department", "Success");
-                        scope.modelObjectMap = angular.copy(DepartmentModel);
+                        scope.modelObjectMap = angular.copy(ClnDepartmentModel);
                         scope.isSubmit = false;
                         if (scope.on_success) {
                             scope.on_success();
