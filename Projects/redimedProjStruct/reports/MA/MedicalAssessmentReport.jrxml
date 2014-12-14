@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
-	<property name="ireport.zoom" value="0.7697371773460604"/>
+	<property name="ireport.zoom" value="0.8467108950806665"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="384"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -182,35 +182,26 @@ doc_ma.`MA_ID` = $P{id}]]>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="131" splitType="Stretch">
-			<image>
-				<reportElement x="330" y="0" width="225" height="131" uuid="2713ae37-df4e-42c2-a1a0-2e874ddcab24"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\header1.PNG"]]></imageExpression>
-			</image>
-		</band>
-	</pageHeader>
 	<detail>
-		<band height="489" splitType="Stretch">
-			<image scaleImage="RetainShape">
-				<reportElement x="0" y="21" width="555" height="386" uuid="43df5634-76f6-45fc-a6c5-4be74e5bd01b"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\section1.png"]]></imageExpression>
+		<band height="794" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="110" uuid="81201d9c-1bc9-4c12-9004-babab4d99242"/>
+				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\pic1.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="253" y="157" width="15" height="15" uuid="b56b2095-7dd1-42b4-8f11-aa5d080f67f8"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\checked.png"]]></imageExpression>
+				<reportElement x="0" y="110" width="555" height="252" uuid="f5bb7a1f-bed8-496e-bbc1-3bae4549bddf"/>
+				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\pic2.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="56" y="216" width="510" height="0" uuid="cf1e5e1b-34bf-4e86-9fcd-26f8b4b595d7"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\section2.png"]]></imageExpression>
+				<reportElement x="0" y="351" width="555" height="260" uuid="3f3873e3-b397-413f-a28e-54debe26db81"/>
+				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\pic3.PNG"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="601" width="555" height="160" uuid="73c91762-c6d9-4ec1-a345-57172b1a83f3"/>
+				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\pic4.PNG"]]></imageExpression>
 			</image>
 		</band>
-		<band height="607" splitType="Prevent">
-			<image>
-				<reportElement x="0" y="0" width="555" height="443" uuid="6fdafd30-342b-4723-8d85-72054c8bc8b7"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MA\\images\\section456.png"]]></imageExpression>
-			</image>
-		</band>
+		<band height="607" splitType="Prevent"/>
 	</detail>
 	<pageFooter>
 		<band splitType="Stretch"/>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <button type="button"
-                        ng-disabled="mrsForm.$error.pattern||mrsForm.$error.required||mrsForm.$error.maxlength || !infoChanged()"
+                        ng-disabled="!infoChanged()"
                         ng-click="submit(mrsForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
                 <a href="/api/document/printMRS/{{info.patient_id}}/{{info.cal_id}}/{{info.mrs_id}}"
@@ -35,10 +35,11 @@
                         <div class="portlet-body form">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
-                                    <div class="col-md-6 col-sm-6" style="margin-top: 10px;">
+                                    <div class="col-md-6 col-sm-6" style="margin-top: 10px;"  ng-class="{'has-error':mrsForm.sticker_here.$error.maxlength}">
                                         <label class="control-label">Sticker Here:</label>
-                                        <textarea class="form-control" ng-model="info.sticker_here">
+                                        <textarea class="form-control" ng-model="info.sticker_here" ng-maxlength="500" name="sticker_here">
                                         </textarea>
+                                        <label class="control-label help-block col-md-12 col-sm-12" ng-show="mrsForm.sticker_here.$error.maxlength">Sticker here 500</label>
                                     </div>
                                     <div class="col-md-6 col-sm-6" style="margin-top:70px;">
                                         <div class="col-md-4 col-sm-4" style="width:auto; margin-top: 5px;">
@@ -61,26 +62,26 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
-                                    <div class="col-md-1 col-sm-1" style="text-align: center;margin-top: 10px;">
+                                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':mrsForm.as_height.$error.pattern}" style="text-align: center;margin-top: 10px;">
                                         <label class="control-label">Height</label>
-                                        <input type="text" class="form-control" ng-model="info.as_height"/>
+                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" name="as_height" ng-model="info.as_height"/>
                                     </div>
-                                    <div class="col-md-1 col-sm-1"
+                                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':mrsForm.as_weight.$error.pattern}"
                                          style="text-align:center; margin-top: 10px;">
                                         <label class="control-label">Weight</label>
-                                        <input type="text" class="form-control" ng-model="info.as_weight"/>
+                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" name="as_weight" ng-model="info.as_weight" />
                                     </div>
-                                    <div class="col-md-1 col-sm-1" style="text-align:center;margin-top: 10px;;">
+                                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':mrsForm.as_whr.$error.pattern}" style="text-align:center;margin-top: 10px;;">
                                         <label class="control-label">
                                             WHR
                                         </label>
-                                        <input type="text" class="form-control" ng-model="info.as_whr"/>
+                                        <input type="text" class="form-control" ng-model="info.as_whr" ng-pattern="/^[0-9]+$/" name="as_whr"/>
                                     </div>
-                                    <div class="col-md-1 col-sm-1" style="text-align:center; margin-top: 10px;">
+                                    <div class="col-md-1 col-sm-1" ng-class="{'has-error':mrsForm.as_bmi.$error.pattern}" style="text-align:center; margin-top: 10px;">
                                         <label class="control-label">
                                             BMI
                                         </label>
-                                        <input type="text" class="form-control" ng-model="info.as_bmi"/>
+                                        <input type="text" class="form-control" ng-model="info.as_bmi" ng-pattern="/^[0-9]+$/" name="as_bmi"/>
                                     </div>
                                     <div class="col-md-8 col-sm-8" style="text-align:center; margin-top: 30px;">
                                         <div class="btn-group">
@@ -99,7 +100,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 col-sm-12 help-block"  ng-show="mrsForm.as_bmi.$error.pattern || mrsForm.as_whr.$error.pattern || mrsForm.as_weight.$error.pattern || mrsForm.as_height.$error.pattern">
+                                    <label class="col-md-12 col-sm-12" style="color: #8b0000;">Height/Weight/WHR/BMI must be number</label>
+                                </div>
                             </div>
+
                             <hr>
 
                             <div class="portlet-body form">
@@ -485,7 +490,7 @@
                                         </div>
                                         <div class="col-md-1 col-sm-1">
                                             <input type="checkbox" class="form-control" ng-model="info.rr_screen"
-                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_screen"/>
+                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_screen==1"/>
                                         </div>
                                         <div class="col-md-8 col-sm-8" style="margin-top:10px;">
                                             <label class="control-label">
@@ -506,9 +511,9 @@
                                         </div>
                                         <div class="col-md-1 col-sm-1">
                                             <input type="checkbox" class="form-control" ng-model="info.rr_amber"
-                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_amber"/>
+                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_amber==1"/>
                                         </div>
-                                        <div class="col-md-8 col-sm-8" style="margin-top:10px;">
+                                        <div class="col-md-8 col-sm-8" style="margin-top:10px;"  ng-class="{'has-error':mrsForm.rr_amber_comment.$error.required}">
                                             <label class="control-label">
                                                 The candidate is fit to perform the proposed position: further
                                                 discussion regarding the candidate's medical management with the
@@ -516,8 +521,8 @@
                                                 the below is addressed to minimise the risk of medical complications
                                                 and/or injury:
                                             </label>
-                                            <textarea class="form-control"
-                                                      ng-model="info.rr_amber_comment"></textarea>
+                                            <textarea class="form-control" ng-model="info.rr_amber_comment" ng-required="info.rr_amber == 1" name="rr_amber_comment"></textarea>
+                                            <label class="control-label help-block" ng-show="mrsForm.rr_amber_comment.$error.required">Required</label>
                                         </div>
                                     </div>
                                 </div>
@@ -533,16 +538,16 @@
                                         </div>
                                         <div class="col-md-1 col-sm-1">
                                             <input type="checkbox" class="form-control" ng-model="info.rr_red"
-                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_red"/>
+                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_red==1"/>
                                         </div>
-                                        <div class="col-md-8 col-sm-8" style="margin-top:10px;">
+                                        <div class="col-md-8 col-sm-8" style="margin-top:10px;"  ng-class="{'has-error':mrsForm.rr_red_comment.$error.required}">
                                             <label class="control-label">
                                                 Candidate is currently not fit to perform the inherent requirements
                                                 of the proposed occupation and is unlikely to be able to perform
                                                 these requirements in the foreseeable future, due to:
                                             </label>
-                                            <textarea class="form-control"
-                                                      ng-model="info.rr_red_comment"></textarea>
+                                            <textarea class="form-control" ng-model="info.rr_red_comment" ng-required="info.rr_red == 1" name="rr_red_comment"></textarea>
+                                            <label class="control-label help-block" ng-show="mrsForm.rr_red_comment.$error.required">Required</label>
                                         </div>
                                     </div>
                                 </div>
