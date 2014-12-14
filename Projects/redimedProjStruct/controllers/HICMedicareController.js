@@ -16,12 +16,18 @@ java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
 java.classpath.push('./lib/Medicare.jar');
 
+var Medicare = java.import('com.claim.BulkBillClaim');
+
 module.exports = {
     verify:function(req,res)
     {
         var info = req.body.info;
 
-        var rs = java.callStaticMethodSync('com.claim.BulkBillClaim', 'medicarePatientVerify', JSON.stringify(info));
+        var medi = new Medicare();
+
+        var rs = medi.getSessionIdSync();
+
+        console.log(rs);
 
         res.json(rs);
     }

@@ -162,4 +162,13 @@ app.get('/api/document/printgorgonMH/:Patient_Id/:CalId/:Gorgon_Id', gorgonMHCon
  * end gorgon medical history
  */
 
+//=================================== State WA  ========================================
+var FirstWAController= require('./controllers/WaWorkCoverFirstController');
+var ProgressWAController = require('./controllers/WaWorkCoverProgressController');
+var FinalWAController = require('./controllers/WaWorkCoverFinalController');
+
+app.get('/api/wa/first/print/:id',FirstWAController.printReport);
+app.get('/api/wa/progress/print/:id',ProgressWAController.printReport);
+app.get('/api/wa/final/print/:id',FinalWAController.printReport);
+
 

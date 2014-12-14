@@ -35,6 +35,8 @@ var Driver = java.import('com.mysql.jdbc.Driver');
 var InputStream = java.import('java.io.InputStream');
 var FileInputStream = java.import('java.io.FileInputStream');
 
+
+
 module.exports = {
     printReport: function (req, res, next) {
         var calId = req.params.calId;

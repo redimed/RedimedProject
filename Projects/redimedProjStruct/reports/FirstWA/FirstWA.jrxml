@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FirstWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c1bde60-6e00-4470-a6cb-d8f3a613e87f">
 	<property name="ireport.zoom" value="1.2722928551174548"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="534"/>
+	<property name="ireport.y" value="1768"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -16,7 +16,7 @@
 f.`examDate`, f.`AssessmentName`,f.`Creation_date` , f.`clinicFind` , f.`diagnosis` , f.`isConsistent` , f.`isCondition` , f.`usualDuties` , f.`isFullCapacity` , f.`fullCapaFrom` , f.`isRequireTreat` ,
 f.`isSomeCapacity` , f.`someCapaFrom` , f.`someCapaTo` , f.`isPreDuties`, f.`isModiDuties` , f.`isWorkModifi` , f.`isPreHours` , f.`isModiHours` , f.`modiHrs` , f.`modiDays`, f.`isNoCapacity` ,
 f.`noCapaFrom` , f.`noCapaTo` , f.`isLiftUp` , f.`liftUpKg` , f.`isSitUp` , f.`sitUpMins` , f.`isStandUp`, f.`standUpMins` , f.`sitUpMins` , f.`isWalkUp` , f.`walkUpMeter`, f.`isWorkBelow`, f.`capaCmt` , f.`activities_1` , f.`activities_2`, f.`activities_3` , f.`activities_4` , f.`activities_5` , f.`activities_6` , f.`goal_1`, f.`goal_2` , f.`goal_3` , f.`goal_4` , f.`goal_5` , f.`goal_6` ,
-f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` ,
+f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` , SUBSTRING_INDEX(f.`signature`, ',', -1) AS signature,
 p.`First_name`, p.`Sur_name`, p.`DOB`, p.`Email`, p.`Mobile`, p.`Home_phone`, CONCAT(p.`Address1`, p.`Address2`) AS patientAddress,
 c.`Company_name`, c.`Addr`, c.`Phone` AS cPhone, c.`Industry`,
 d.`ABN_no`, d.`Address` as docAddress, d.`Email` AS docEmail, d.`Phone`, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign,CONCAT(d.`First_name`, d.`Middle_name`, d.`Sur_name`) AS FullName
@@ -180,6 +180,9 @@ WHERE f.`Ass_id` = $P{id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="reviewCmt" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="signature" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="First_name" class="java.lang.String">

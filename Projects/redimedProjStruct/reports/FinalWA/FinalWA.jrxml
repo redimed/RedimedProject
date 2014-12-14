@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FinalWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="65ddcd00-ad5f-408f-b9e4-cdd2bd5fe60c">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
-	<property name="ireport.x" value="211"/>
-	<property name="ireport.y" value="956"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="995"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -278,7 +280,7 @@ WHERE f.`id`=$P{id}]]>
 			</textField>
 			<image>
 				<reportElement x="339" y="710" width="175" height="46" uuid="8175263c-f74d-4ed1-9bc2-c04671b3601e"/>
-				<imageExpression><![CDATA[$F{docSign}]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{docSign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="80" y="734" width="191" height="16" uuid="2673e543-f68b-4fbd-8818-8de1f7ec8f0a"/>
