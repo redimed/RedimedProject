@@ -1,6 +1,8 @@
 var db = require('../models');
 var fs = require('fs');
 
+var parseString = require('xml2js').parseString;
+
 var item_fees_model = require('../v1_models/Cln_item_fees.js');
 var fund_fees_model = require('../v1_models/Cln_item_health_fund_fees.js');
 var type_fees_model = require('../v1_models/Cln_fee_types.js');
@@ -60,7 +62,10 @@ var general_process = function(req, res){
 		if(!file_name) {
 			throw 'File name is null !!!';
 		}
-		var is_fee_type = (!group_type || group_type != 'fund') ? true : false; // FUND OR TYPE
+
+		var is_fund_type = (group_type && group_type == 'fund') ? true : false;
+		var is_item_fee_type = (group_type && group_type == 'item_fee') ? true: false;
+		var is_fee_type = (!is_fund_type && !is_item_fee_type);
 
 		var process_group = list_group_types; // FEE TYPES OF GROUP
 		var source_arr = []; // ARRAY FEES AFTER READ SOURCE FILE
@@ -86,8 +91,11 @@ var general_process = function(req, res){
 
 			if(is_fee_type)
 				var sql = item_fees_model.sql_insert_group_fees(process_group, process_arr);
-			else 
+			else if (is_fund_type)
 				var sql = fund_fees_model.sql_insert_fund_fees(process_group, process_arr);
+			else if (is_item_fee_type)
+				var sql = item_fees_model.sql_insert_xml_group_fees(process_group, process_arr);
+
 
 			db.sequelize.query(sql)
         	.success(function(data){
@@ -104,6 +112,7 @@ var general_process = function(req, res){
 	        });
 		}
 
+		
 		var processPriceSource = function(file){
 			fs.readFile(file, "utf-8", function(err, data){
 				if(err){
@@ -111,12 +120,33 @@ var general_process = function(req, res){
 					res.json(500, {"status": "error"});
 					return;
 				}
+
+				if(is_item_fee_type) {
+					if(file.indexOf('.xml') > 0) { // CHECK FILE XML 
+						console.log('PROCESS XML HERE ', Date.now());
+
+						parseString(data, function (err, xml_result) {
+							if(err) {
+								console.log(err);
+								res.json(500, {"status": "error"});
+								return;
+							}
+							console.log('PROCESS XML DONE ', Date.now());
+
+							source_arr = xml_result.MBS_XML.Data;  // ASSIGN GLOBAL
+							process_data.total_num =  source_arr.length; // ASSIGN GLOBAL
+							process_data.left_num = source_arr.length; // ASSIGN GLOBAL
+							checksumHandle();
+						});
+					} 
+					return;
+				}
+
 				if(is_fee_type) {
-					source_arr = item_fees_model.process_content_file(data);
+					source_arr = item_fees_model.process_content_file(data); // ASSIGN GLOBAL
 				} else {
-					source_arr = fund_fees_model.process_content_file(data);
-					process_data.step_num = parseInt(process_data.step_num  / process_group.length); 
-					// res.json('PREPARE TO INSERT NUM RECORDS: ' + (source_arr.length * process_group.length));
+					source_arr = fund_fees_model.process_content_file(data); // ASSIGN GLOBAL
+					process_data.step_num = parseInt(process_data.step_num  / process_group.length);  // ASSIGN GLOBAL
 				}	
 				if(!source_arr) {
 					res.json('File is invalid format');
@@ -256,14 +286,16 @@ module.exports = {
 			var processInstance = new general_process(req, res);
 			processInstance.set_file_name(groupInstance.PRICE_SOURCE);
 
-			if(groupInstance.FEE_GROUP_TYPE == 'fee_type') { // PROCESS FEETYPE
+			if(groupInstance.FEE_GROUP_TYPE == 'fee_type' || groupInstance.FEE_GROUP_TYPE == 'item_fee_type' ) { // PROCESS FEETYPE
 				groupInstance.getFeeTypes({fields: ['FEE_TYPE_ID']}).success(function(feeTypes){
 					if(feeTypes.length == 0) {
 						res.json(500, {"status": "error", "message": 'No Type in group'});
 						return;
 					}
-					// res.json(feeTypes)
-					processInstance.update_type_fee_from_source(feeTypes);
+					if(groupInstance.FEE_GROUP_TYPE == 'fee_type')
+						processInstance.update_type_fee_from_source(feeTypes);
+					else 
+						processInstance.update_type_fee_from_source(feeTypes, 'item_fee');
 				}).error(function(err){
 					console.log(err);
 					res.json(500, {"status": "error", "message": error});
@@ -415,7 +447,7 @@ module.exports = {
 			
 			// PROCESS TYPE HAS NO GROUP 
 			if(!typeInstance.FEE_GROUP_ID || typeInstance.FEE_GROUP_ID < 0) {
-				processInstance.update_type_fee_from_source([{FEE_TYPE_ID: typeObj.FEE_TYPE_ID}]);
+				processInstance.update_type_fee_from_source([{FEE_TYPE_ID: typeInstance.FEE_TYPE_ID}]);
 				return;
 			} 
 

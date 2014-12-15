@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.item.fee.controller",[
 ])
-.controller("ItemFeeController", function($scope, $state, toastr, FileUploader, ItemService){
+.controller("ItemFeeController", function($scope, $state, $timeout, toastr, FileUploader, ItemService){
     $scope.fee_types_panel = {};
     $scope.private_funds_panel = {};
     $scope.fee_groups_panel = {};
@@ -13,7 +13,8 @@ angular.module("app.loggedIn.item.fee.controller",[
     uploader.filters.push({
         name: 'checkTail',
         fn: function(item) {
-            if(item.name.indexOf('.txt') > 0) {
+			var name = item.name;
+            if(name.indexOf('.txt') > 0 || name.indexOf('.xml')) {
                 return true;
             }
             return false;
@@ -86,8 +87,22 @@ angular.module("app.loggedIn.item.fee.controller",[
                         $scope.fee_groups.select_item = item;
                         uploader.url = 'api/erm/v2/fees/upload_group_price_source';
                         uploader.formData[0]={};
-                        uploader.formData[0].FEE_GROUP_ID = item.FEE_GROUP_ID;
-                        $('#fee_type_upload').click();
+                        uploader.formData[0].FEE_GROUP_ID = item.FEE_GROUP_ID
+						
+						$timeout(function(){
+							$('#fee_type_upload').click();
+						}, 100);
+						
+						/*
+						angular.element('#fee_type_upload').bind('click', function(){
+							this.click();
+						});
+						*/
+						/*
+						if(!$scope.$$phase) {
+							//$digest or $apply
+							$('#fee_type_upload').click();
+						}*/
                     }
                 }, 
                 {
@@ -99,11 +114,11 @@ angular.module("app.loggedIn.item.fee.controller",[
                         }
                         $scope.fee_groups.select_item = item;
                         ItemService.updateGroupPriceSource(item.FEE_GROUP_ID).then(function(response){
+							console.log(response);
                             if(response.status == 'success') {
                                 toastr.success('Upload successfully !', 'Success');
                             }
-                        })
-                        console.log(item);
+                        });
                     }
                 },
             ]
@@ -143,7 +158,10 @@ angular.module("app.loggedIn.item.fee.controller",[
                         uploader.url = 'api/erm/v2/fees/upload_type_price_source';
                         uploader.formData[0]={};
                         uploader.formData[0].FEE_TYPE_ID = item.FEE_TYPE_ID;
-                        $('#fee_type_upload').click();
+                        
+						$timeout(function(){
+							$('#fee_type_upload').click();
+						}, 100);
                     }
                 }, 
                 {
