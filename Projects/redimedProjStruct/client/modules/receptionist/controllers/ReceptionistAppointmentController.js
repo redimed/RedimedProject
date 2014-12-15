@@ -12,6 +12,11 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	}
 
 	$scope.extra = {
+		service_id: 0
+	}
+
+	$scope.refreshPopup = {
+		booking: false
 	}
 
 	//DECLARE
@@ -80,14 +85,12 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			dataBooking.PATIENTS = JSON.stringify([{Patient_id: dataBooking.Patient_id, Patient_name: row.First_name+" "+row.Sur_name}]);
 		}
 
-		ReceptionistService.booking(dataBooking).then(function(data){
-            if(data.status === 'success'){
-            	angular.element("#bookingModule").fadeOut();
-            	angular.element(appointmentPatientSearch).fadeOut();
-            	$scope.refreshAppointment();
-            }
-            
-        })
+		$scope.patient = {};
+		$scope.patient = row;
+				$scope.patient.Patient_name = row.First_name+" "+row.Sur_name;
+
+		angular.element("#bookingModule").fadeOut();
+        angular.element(appointmentPatientSearch).fadeOut();
 	}
 	// END GET CLICK ADD OR SELECT PATIENT
 
@@ -175,9 +178,10 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 				$scope.options.doctors = doctors;
 				$scope.modelObjectMap.doctor = parseInt(doctors[0].DOCTOR_ID);
 
-				$scope.overviewAppointment = [];
-
 				ReceptionistService.getAppointmentOverview(modelObjectMap_map).then(function(data){
+
+					$scope.overviewAppointment = [];
+
 					for(var i = 0; i < data.length; i++){
 						var from_time_map = ConfigService.convertToTimeStringApp(data[i].FROM_TIME);
 						var to_time_map = ConfigService.convertToTimeStringApp(data[i].TO_TIME);
@@ -192,8 +196,10 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 						var doctors = data[i].doctor.split(",");
 						var cals = data[i].CAL_ID.split(",");
-						if(data[i].SERVICE_COLORS !== null)
-							service_colors = data[i].SERVICE_COLORS.split(",");
+						if(data[i].SERVICE_COLORS !== null){
+							var services = data[i].SERVICES.split(",");
+							var service_colors = data[i].SERVICE_COLORS.split(",");
+						}
 
 						var patients = data[i].PATIENTS.split("|");
 
@@ -201,6 +207,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 						$scope.overviewAppointment[i].cals = [];
 						$scope.overviewAppointment[i].patients = [];
 						$scope.overviewAppointment[i].service_colors = [];
+						$scope.overviewAppointment[i].services = [];
 						for(var j = 0; j < $scope.options.doctors.length; j++){
 							var flag = false;
 							for(var k = 0; k < doctors.length; k++){
@@ -211,10 +218,14 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 							if(flag !== false){
 								$scope.overviewAppointment[i].doctors.push(doctors[flag]);
 								$scope.overviewAppointment[i].cals.push(cals[flag]);
-								if(data[i].SERVICE_COLORS !== null)
+								if(data[i].SERVICE_COLORS !== null){
 									$scope.overviewAppointment[i].service_colors.push(service_colors[flag]);
-								else
+									$scope.overviewAppointment[i].services.push(services[flag]);
+								}
+								else{
 									$scope.overviewAppointment[i].service_colors.push("#ffffff");
+									$scope.overviewAppointment[i].services.push("");
+								}
 								if(patients[flag] !== 'No Patient'){
 									var tempPatient = angular.element.parseJSON(patients[flag]);
 									$scope.overviewAppointment[i].patients.push(tempPatient);
@@ -226,10 +237,9 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 								$scope.overviewAppointment[i].cals.push("");
 								$scope.overviewAppointment[i].patients.push("");
 								$scope.overviewAppointment[i].service_colors.push("");
+								$scope.overviewAppointment[i].services.push("");
 							}
 						}
-
-						console.log($scope.overviewAppointment);
 					}// end for
 				})
 			}else{
@@ -261,11 +271,17 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 	/* BOOKING */
 	$scope.bookingPatient = function(data, parentIndex, index){
+		//EXTRA
+		$scope.extra.service_id = data.services[index];
+		//END EXTRA
+
 		var bookingPopupId="#bookingModule";
 
 		$scope.rightSelectedBooking.data = data;
 		$scope.rightSelectedBooking.overId = parentIndex;
 		$scope.rightSelectedBooking.docId = index;
+
+		$scope.refreshPopup.booking = false;
 
 		angular.element(bookingPopupId).fadeOut();
 		angular.element(bookingPopupId).fadeIn();

@@ -24,8 +24,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				}
 
 				scope.selectedCompany = {
-					Company_name: "Select Company",
-					error: true
+					Company_name: "Select Company"
 				} // end scope
 
 				scope.modelObjectMap = angular.copy(PatientModel);
@@ -44,7 +43,6 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							}
 
 							angular.extend(scope.selectedCompany, response.company);
-							scope.selectedCompany.error = false;
 						}// end if
 					})
 				}
@@ -60,7 +58,6 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			scope.selectCompany = function(row){
 				angular.element(idPatientDetailCompany).fadeOut();
 				angular.extend(scope.selectedCompany, row);
-				scope.selectedCompany.error = false;
 			}
 			// END DECLARE
 

@@ -26,12 +26,4 @@ angular.module("app.loggedIn.doctor.timetable.detail.controller",[
 		}
 	}
 	// END ACTIVE
-
-	// OPTIONS
-	$scope.options = {
-		titles: ConfigService.title_option(),
-		clinicals: [],
-		providers: []
-	}
-	// END OPTIONS
 })

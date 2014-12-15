@@ -24,18 +24,11 @@
     <!-- TITLE -->
     <div class="col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.title.$invalid && isSubmit}">
-            <label for="title">Title *</label>
-            <select required ng-options="title.code as title.name for title in options.titles" 
+            <label for="title">Title</label>
+            <select ng-options="title.id as title.name for title in options.titles" 
                 name="title" ng-model="modelObjectMap.Title" id="title" float-label>
                 <option value="" disabled selected>Title</option>
             </select>
-            <!-- ERROR -->
-            <span ng-show="patientForm.title.$invalid && isSubmit">
-                <span class="mdt-popover above" ng-show="patientForm.title.$error.required">
-                    Title is required
-                </span>
-            </span>
-            <!-- ERROR -->
         </span>
     </div>
     <!-- END TITLE -->
@@ -100,7 +93,10 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.dob.$invalid && isSubmit}">
             <label for="dob">Date of Birth *</label>
-            <input readonly="" ui-date="{dateFormat: 'dd/mm/yy'}" id="dob" placeholder="Birthday" name="dob" required 
+            <input readonly="" ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" 
+                id="dob" 
+                placeholder="Birthday" 
+                name="dob" required 
                 ng-model="modelObjectMap.DOB" float-label>
             <!-- ERROR -->
             <span ng-show="patientForm.dob.$invalid && isSubmit">
@@ -247,13 +243,6 @@
             <button class="btn btn-small btn-block green" ng-click="clickCompany()">
                 {{selectedCompany.Company_name}}
             </button>
-            <!-- ERROR -->
-            <span ng-show="selectedCompany.error && isSubmit">
-                <span class="mdt-popover above">
-                    You must select a Company
-                </span>
-            </span>
-            <!-- ERROR -->
         </span>
     </div>
     <!-- END COMPANY -->

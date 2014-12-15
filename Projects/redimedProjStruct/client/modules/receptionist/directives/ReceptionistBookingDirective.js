@@ -10,7 +10,8 @@ angular.module("app.loggedIn.receptionist.booking.directive", [])
 			clickPatient: "&",
 			patient: "=",
 			params: "=",
-			extra: "="
+			extra: "=",
+			refresh: "="
 		},
 		templateUrl: "modules/receptionist/directives/templates/booking.html",
 		link: function(scope, element, attrs){
@@ -18,8 +19,6 @@ angular.module("app.loggedIn.receptionist.booking.directive", [])
 			if(scope.isClose){
 				var idClose = "#"+scope.isClose;
 			}
-
-			scope.modelObjectMap = angular.copy(ClnAppointmentCalendarModel);
 			//END DECLARE
 
 			//POPUP
@@ -28,9 +27,33 @@ angular.module("app.loggedIn.receptionist.booking.directive", [])
 			}
 			//END POPUP
 
+			scope.modelObjectMap = angular.copy(ClnAppointmentCalendarModel);
+
+			//REFRESH
+			scope.$watch("refresh.booking", function(newRefresh){
+				if(typeof newRefresh !== 'undefined'){
+					scope.refresh.booking = (scope.refresh.booking)?false:true;
+					scope.modelObjectMap = angular.copy(ClnAppointmentCalendarModel);
+				}
+			})
+			//END REFRESH
+
+			//EXTRA
+			scope.$watch('extra.service_id', function(newServiceId, oldServiceId){
+				if(typeof newServiceId !== 'undefined'){
+					if(newServiceId === '')
+						scope.modelObjectMap.SERVICE_ID = 1;
+					else
+						scope.modelObjectMap.SERVICE_ID = parseInt(newServiceId);
+					scope.modelObjectMap.ACC_TYPE = 'PUBLIC';
+					scope.modelObjectMap.APP_TYPE = 'NotYet';
+				}
+			});
+			//END EXTRA
+
 			//ACTION PATIENT ID
 			scope.$watch("patient", function(newPatient){
-				if(typeof newPatient !== 'undefined'){
+				if(typeof newPatient !== 'undefined' && newPatient !== null){
 					scope.modelObjectMap.CAL_ID = scope.data.CAL_ID;
 					scope.modelObjectMap.Patient_id = newPatient.Patient_id;
 
@@ -48,6 +71,8 @@ angular.module("app.loggedIn.receptionist.booking.directive", [])
                         toastr.success("Insert Booking Info Successfully", "Success");
                         scope.modelObjectMap = ClnAppointmentCalendarModel;
                     })
+
+                    scope.patient = null;
 				}
 			})
 			//END ACTION PATIENT ID
