@@ -25,8 +25,8 @@ module.exports = {
 
         var medi = new Medicare();
 
-        var rs = medi.getSessionIdSync();
-
+        //var rs = medi.medicarePatientVerifySync(JSON.stringify(info));
+        var rs = medi.getSessionIdSync("C:/Program Files/Online Claiming/hic.psi","1234");
         console.log(rs);
 
         res.json(rs);

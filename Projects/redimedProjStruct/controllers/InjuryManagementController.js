@@ -96,6 +96,7 @@ module.exports = {
                               message.addData('title','EMERGENCY');
                               message.addData('message','You have an emergency case! - Time: '+dateString);
                               message.addData('injury_id',rs.injury_id);
+                              message.addData('soundname','beep.wav');
                               message.collapseKey = 'EMERGENCY';
                               message.delayWhileIdle = true;
                               message.timeToLive = 3;
@@ -314,6 +315,7 @@ module.exports = {
         message.addData('title','EMERGENCY');
         message.addData('message','You have an emergency case!');
         message.addData('message','You have an emergency case! - Time: '+dateString);
+        message.addData('soundname','beep.wav');
         message.collapseKey = 'EMERGENCY';
         message.delayWhileIdle = true;
         message.timeToLive = 3;
@@ -350,6 +352,7 @@ function base64Image(src) {
     var data = fs.readFileSync(src).toString("base64");
     return util.format("data:%s;base64,%s", mime.lookup(src), data);
 }
+
 
 
 
