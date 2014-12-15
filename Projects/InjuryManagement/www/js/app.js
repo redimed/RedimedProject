@@ -87,17 +87,16 @@ angular.module('starter', ['ionic',
                 if (ionic.Platform.isAndroid()) {
                     config = {
                         "senderID": "137912318312",
-                         sound: '/www/alert.mp3'
+                        "sound": "true"
                     };
                 }
                 else if (ionic.Platform.isIOS()) {
                     config = {
                         "badge": "true",
-                        "sound": "alert.mp3",
+                        "sound": "true",
                         "alert": "true"
                     }
                 }
-
                 $cordovaPush.register(config).then(function (result) {
                     console.log("Register success Push Notification " + result)
                 }, function (err) {

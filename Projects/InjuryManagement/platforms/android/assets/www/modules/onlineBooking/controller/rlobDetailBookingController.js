@@ -76,6 +76,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
         var mapOptions = {
             zoom: 16,
             center: latlng
+
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         function codeAddress() {
@@ -85,7 +86,8 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                     map.setCenter(results[0].geometry.location);
                     var marker = new google.maps.Marker({
                         map: map,
-                        position: results[0].geometry.location
+                        position: results[0].geometry.location,
+                        icon:'img/icon/hospital-building.png'
                     });
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);

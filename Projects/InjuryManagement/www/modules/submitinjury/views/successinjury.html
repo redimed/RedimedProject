@@ -124,7 +124,15 @@
             </div>
 
             <div class="row portlet-body " collapse="isCollapsed" style="height: 0px;overflow: auto;margin: 0px;padding: 0px;">
-                <div id="map-canvas" mdt-map class="col-md-12" style="height: 200px; width: 100%"></div>
+                <div class="list list-inset" >
+
+                    <label class="item item-input col-xs-8" style="float:left">
+                        <i class="icon ion-search placeholder-icon"></i>
+                        <input type="text" class="" placeholder="Search" ng-model="infoMaps.format_address" ng-autocomplete="infoMaps.format_address" details="details1" options="options1">
+                    </label>
+                    <button class="button button-positive"  ng-click="test=!test"><i class="fa fa-search"></i></button>
+                </div>
+                <div id="map-canvas" mdt-map address="infoMaps.format_address" ad="ad" class="col-md-12" lo="test"  style="height: 200px; width: 100%"></div>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -136,6 +144,8 @@
                 </button>
             </div>
         </div>
+        </div>
+
     </ion-content>
 </ion-view>
 

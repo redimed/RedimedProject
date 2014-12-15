@@ -29,7 +29,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/res/drawable-xhdpi/icon.png \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/_where-is-www.txt \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/alert.mp3 \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/beep.wav \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/cordova.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/cordova_plugins.js \
@@ -44,9 +43,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/css/login.css \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/css/profile.css \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/css/style.css \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/img/avatar1.jpg \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/img/avatar2.jpg \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/img/avatar3.jpg \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/img/bg-blur-list.jpg \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/img/bg-menu-left.jpg \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/img/gender.ico \
@@ -67,6 +63,7 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/font-awesome \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/hpneo-gmaps-f12b532 \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/ionic \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/jquery \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/lodash \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/ng-cordova.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/restangular \
@@ -209,6 +206,8 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/ionic/scss/ionicons/_ionicons-icons.scss \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/ionic/scss/ionicons/_ionicons-variables.scss \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/ionic/scss/ionicons/ionicons.scss \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/jquery/jquery-1.10.2.min.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/jquery/jquery.min.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/lodash/bower.json \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/lodash/dist \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/lodash/LICENSE.txt \

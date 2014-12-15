@@ -131,6 +131,15 @@ angular.module('starter.NFC.controller',[])
 
         }
 
+        $scope.$watch('info',function(info){
+            if(typeof  info !== undefined){
+                $scope.testData = info;
+            }
+
+        })
+
+
+
         $scope.writeNewNFC = function(data){
             localStorageService.set('mode','write');
 
@@ -140,6 +149,16 @@ angular.module('starter.NFC.controller',[])
 
         }
 
+        $scope.Inapp = function(data){
+
+            if(data == undefined){
+                alert("please read tag NFC!")
+            }else{
+                app.initialize(data.data.Patient_id);
+            }
+
+
+        }
 
 
 

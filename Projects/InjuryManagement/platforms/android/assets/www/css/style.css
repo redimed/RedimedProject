@@ -328,6 +328,7 @@ form i.icon.error {
 }
 .custom-item-listpatient {
     padding: 0;
+    background-color: transparent;
 }
 .item-input-wrapper input {
     color: floralwhite;
@@ -349,6 +350,7 @@ form i.icon.error {
 }
 .new * {
     font-weight: 900 !important;
+    font-size: 25px;
 }
 .waiting  {
     background-color: rgba(255, 149, 0, 0.6) !important;
