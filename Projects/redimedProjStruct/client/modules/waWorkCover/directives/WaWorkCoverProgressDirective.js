@@ -118,6 +118,11 @@ angular.module('app.loggedIn.waworkcover.progress.directive', [])
                         toastr.error('Please fix the red field!', 'Invalid information');
                     }
                 }
+
+                scope.printAssessment = function () {
+                    var printId = scope.waprogress.progress_id;
+                    WaWorkCoverService.progressprint(printId).then(function (result) {})
+                }
             }
         }
     });

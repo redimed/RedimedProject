@@ -117,6 +117,11 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                         toastr.error('Please fix the red field!', 'Invalid information');
                     }
                 }
+
+                scope.printAssessment = function () {
+                    var printId = scope.wafinal.id;
+                    WaWorkCoverService.finalprint(printId).then(function (result) {})
+                }
             }
         }
     });

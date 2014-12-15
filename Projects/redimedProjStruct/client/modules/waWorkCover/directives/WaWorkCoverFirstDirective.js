@@ -122,13 +122,18 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                     }
                 }
 
+                scope.printAssessment = function () {
+                    var printId = scope.wafirst.Ass_id;
+                    WaWorkCoverService.firstprint(printId).then(function (result) {})
+                }
+
                 //Data dependencies
-                scope.$watch('wafirst.isFullCapacity', function (fullCapa) {
-                    if (fullCapa !== 1) {
-                        scope.wafirst.fullCapaFrom = null;
-                        scope.wafirst.isRequireTreat = null;
-                    }
-                })
+                //                scope.$watch('wafirst.isFullCapacity', function (fullCapa) {
+                //                    if (fullCapa !== 1) {
+                //                        scope.wafirst.fullCapaFrom = null;
+                //                        scope.wafirst.isRequireTreat = null;
+                //                    }
+                //                })
             }
         }
     });

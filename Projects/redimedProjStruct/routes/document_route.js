@@ -163,12 +163,11 @@ app.get('/api/document/printgorgonMH/:Patient_Id/:CalId/:Gorgon_Id', gorgonMHCon
  */
 
 //=================================== State WA  ========================================
-var FirstWAController= require('./controllers/WaWorkCoverFirstController');
+var FirstWAController = require('./controllers/WaWorkCoverFirstController');
 var ProgressWAController = require('./controllers/WaWorkCoverProgressController');
 var FinalWAController = require('./controllers/WaWorkCoverFinalController');
 
-app.get('/api/wa/first/print/:id',FirstWAController.printReport);
-app.get('/api/wa/progress/print/:id',ProgressWAController.printReport);
-app.get('/api/wa/final/print/:id',FinalWAController.printReport);
-
+app.get('/api/meditek/v1/wa/workcover/first/print/:id', FirstWAController.printReport);
+app.get('/api/meditek/v1/wa/workcover/progress/print/:id', ProgressWAController.printReport);
+app.get('/api/meditek/v1/wa/workcover/final/print/:id', FinalWAController.printReport);
 
