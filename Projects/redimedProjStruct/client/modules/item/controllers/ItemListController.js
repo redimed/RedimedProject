@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.item.list.controller",[
 ])
-.controller("ItemListController", function($scope, $state){
+.controller("ItemListController", function($scope, $state, toastr, ItemService){
 
     /*
     *   ITEM
@@ -79,6 +79,15 @@ angular.module("app.loggedIn.item.list.controller",[
         }
     }
 
-   
+   /*
+   *    IMPORT ITEMS FROM SOURCE
+   */
+   $scope.importItemsFromSource = function(){
+        ItemService.insertFromSource().then(function(response){
+            if(response.status == 'success')
+                toastr.success('Update successfully !!!');
+            // console.log(response);
+        });
+   }
 
 })

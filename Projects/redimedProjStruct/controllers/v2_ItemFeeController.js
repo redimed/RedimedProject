@@ -335,7 +335,10 @@ module.exports = {
 			// offset: offset,
 			// limit: limit,
 			attributes: fields,
-			order: 'FEE_GROUP_ID DESC',
+			order: [
+				['FEE_GROUP_ID', 'DESC'],
+				['FEE_GROUP_ORDER', 'ASC'],
+			],
 			include: [
 				{ 
 					model: db.FeeGroup , as: 'FeeGroup',

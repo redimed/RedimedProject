@@ -24,6 +24,11 @@ angular.module("app.loggedIn.item.services", [])
             return detailApi.post(data);
         }
 
+        instanceService.insertFromSource = function(){
+            var detailApi = appApi.all("v2/items/insert_from_source");
+            return detailApi.post(data);
+        }
+
         instanceService.getItemFees = function(item_id) {
              var detailApi = appApi.one("v2/fees/get_item_fees");
             return detailApi.get({item_id: item_id});

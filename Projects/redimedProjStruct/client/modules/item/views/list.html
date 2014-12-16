@@ -6,7 +6,18 @@
             <i class="fa fa-medkit"></i> Item Sheet
         </div>
         <div class="pull-right navbar-right">
-            <a class="btn blue" ng-click="addForm.open()"><i class="fa fa-plus"></i> New Item</a>
+            <!-- Single button -->
+            <div class="btn-group" dropdown>
+                
+              <button style="margin-right: 0;" type="button" class="btn btn-default dropdown-toggle">
+                    Action <span class="caret"></span>
+              </button>
+              
+              <ul class="dropdown-menu" role="menu">
+                    <li><a ng-click="addForm.open()"><i class="fa fa-plus-circle"></i> Add new Item</a></li>
+                    <li><a ng-click="importItemsFromSource()"><i class="fa fa-check-circle"></i> Import Items from source</a></li>
+              </ul>
+            </div>
         </div>
     </div>
     <div class="portlet-body">
