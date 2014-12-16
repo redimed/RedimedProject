@@ -122,6 +122,91 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                     var printId = scope.wafinal.id;
                     WaWorkCoverService.finalprint(printId).then(function (result) {})
                 }
+
+
+                //Data dependencies
+                scope.$watch('wafinal.isFullCapacity', function (fullCapa) {
+                    if (fullCapa !== '1') {
+                        scope.wafinal.fullCapaFrom = null;
+                        scope.wafinal.isRequireTreat = null;
+                    }
+                })
+
+                scope.$watch('wafinal.isCapacityForWork', function (isCapacityForWork) {
+                    if (isCapacityForWork !== '1') {
+                        scope.wafinal.capaFrom = null;
+                        scope.wafinal.capaHours = null;
+                        scope.wafinal.capaDays = null;
+                        scope.wafinal.isLiftUp = null;
+                        scope.wafinal.isStandUp = null;
+                        scope.wafinal.isSitUp = null;
+                        scope.wafinal.isWalkUp = null;
+                        scope.wafinal.liftUpKg = null;
+                        scope.wafinal.standUpMins = null;
+                        scope.wafinal.sitUpMins = null;
+                        scope.wafinal.walkUpMeter = null;
+                        scope.wafinal.isWorkBelow = null;
+                        scope.wafinal.capaCmt = null;
+                    }
+                })
+
+                scope.$watch('wafinal.isLiftUp', function (isLiftUp) {
+                    if (isLiftUp !== '1') {
+                        scope.wafinal.liftUpKg = null;
+                    }
+                })
+                scope.$watch('wafinal.liftUpKg', function (liftUpKg) {
+                    if (liftUpKg !== undefined && liftUpKg !== null && liftUpKg !== '') {
+                        scope.wafinal.isLiftUp = '1';
+                    } else {
+                        scope.wafinal.isLiftUp = '0';
+                    }
+                })
+
+                scope.$watch('wafinal.isSitUp', function (isSitUp) {
+                    if (isSitUp !== '1') {
+                        scope.wafinal.sitUpMins = null;
+                    }
+                })
+                scope.$watch('wafinal.sitUpMins', function (sitUpMins) {
+                    if (sitUpMins !== undefined && sitUpMins !== null && sitUpMins !== '') {
+                        scope.wafinal.isSitUp = '1';
+                    } else {
+                        scope.wafinal.isSitUp = '0';
+                    }
+
+                })
+
+                scope.$watch('wafinal.isStandUp', function (isStandUp) {
+                    if (isStandUp !== '1') {
+                        scope.wafinal.standUpMins = null;
+                    }
+                })
+                scope.$watch('wafinal.standUpMins', function (standUpMins) {
+                    if (standUpMins !== undefined && standUpMins !== null && standUpMins !== '') {
+                        scope.wafinal.isStandUp = '1';
+                    } else {
+                        scope.wafinal.isStandUp = '0';
+                    }
+                })
+
+
+                scope.$watch('wafinal.isWalkUp', function (isWalkUp) {
+                    if (isWalkUp !== '1') {
+                        scope.wafinal.walkUpMeter = null;
+                    }
+                })
+                scope.$watch('wafinal.walkUpMeter', function (walkUpMeter) {
+                    if (walkUpMeter !== undefined && walkUpMeter !== null && walkUpMeter !== '') {
+                        scope.wafinal.isWalkUp = '1';
+                    } else {
+                        scope.wafinal.isWalkUp = '0';
+                    }
+                })
+
+
+
+
             }
         }
     });

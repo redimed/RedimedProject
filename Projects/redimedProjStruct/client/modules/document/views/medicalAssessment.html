@@ -30,15 +30,15 @@
                 <div class="row">
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">Height</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.HEIGHT" ng-pattern="/^[0-9]+$/" name="HEIGHT">
+                        <input type="text" class="form-control" ng-model="info.HEIGHT" ng-change="mathBMI()" ng-pattern="/^[0-9]+$/" name="HEIGHT">
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">Weight</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.WEIGHT" ng-pattern="/^[0-9]+$/" name="WEIGHT">
+                        <input type="text" class="form-control" ng-model="info.WEIGHT" ng-change="mathBMI()" ng-pattern="/^[0-9]+$/" name="WEIGHT">
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">BMI</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.BMI" disabled>
+                        <div class="form-control"  style="background-color: #f5f5f5">{{info.BMI| number : 1}}</div>
                     </div>
                 </div>
                 <div ng-show="showClickedValidation">
@@ -54,15 +54,15 @@
                 <div class="row" style="margin-top: 5px">
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">Waist</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.WAIST" ng-pattern="/^[0-9]+$/" name="WAIST">
+                        <input type="text" class="form-control" ng-model="info.WAIST" ng-change="Ratio()" ng-pattern="/^[0-9]+$/" name="WAIST">
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">Hip</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.HIP" ng-pattern="/^[0-9]+$/" name="HIP">
+                        <input type="text" class="form-control" ng-model="info.HIP" ng-change="Ratio()" ng-pattern="/^[0-9]+$/" name="HIP">
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">WHR</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.WHR" ng-pattern="/^[0-9]+$/" name="WHR">
+                        <div class="form-control"  style="background-color: #f5f5f5">{{info.WHR | number : 2}}</div>
                     </div>
                 </div>
                 <div ng-show="showClickedValidation">
@@ -73,22 +73,19 @@
                         <div class="col-md-3 col-lg-2 col-sm-3 help-block" for="HIP">
                             <label style="color: #8b0000" ng-show="MAForm.HIP.$error.pattern">Hip must be number</label>
                         </div>
-                        <div class="col-md-3 col-lg-2 col-sm-3 help-block" for="WHR">
-                            <label style="color: #8b0000" ng-show="MAForm.WHR.$error.pattern">WHR must be number</label>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <label class="col-lg-2 col-md-12 col-sm-12" style="margin-top: 10px"> BMI Classification</label>
                     <div class="btn-group col-lg-10 col-md-12 col-sm-12">
                         <label class="btn">
-                            <input type="radio" ng-model="info.IS_BMI" ng-value="0"> Underweight (<18.5) </label>
+                            <input type="radio" ng-model="info.IS_BMI" disabled  ng-value="0"> Underweight (<18.5) </label>
                         <label class="btn">
-                            <input type="radio" ng-model="info.IS_BMI" ng-value="1"> Normal (18.5-24.9) </label>
+                            <input type="radio" ng-model="info.IS_BMI" disabled ng-value="1"> Normal (18.5-24.9) </label>
                         <label class="btn">
-                            <input type="radio" ng-model="info.IS_BMI" ng-value="2"> Overweight (25.0-29.9) </label>
+                            <input type="radio" ng-model="info.IS_BMI" disabled ng-value="2"> Overweight (25.0-29.9) </label>
                         <label class="btn">
-                            <input type="radio" ng-model="info.IS_BMI" ng-value="3"> Obese (>30)</label>
+                            <input type="radio" ng-model="info.IS_BMI" disabled ng-value="3"> Obese (>30)</label>
                     </div>
                 </div>
                 <div class="row">
@@ -232,13 +229,13 @@
                     <label class="btn">
                         <input type="radio" ng-model="info.COLOUR_SEC2" ng-value="0"> Abnormal </label>
                 </div>
-                <label class="col-lg-2 col-md-2 col-sm-3" style="margin-top: 7px">
-                    Score: <input type="text" style="width: 30px" ng-model="info.SCORE_SEC2" ng-pattern="/^[0-9]+$/" name="SCORE_SEC2">/17
+                <label class="col-lg-2 col-md-3 col-sm-3" style="margin-top: 7px">
+                    Score: <input type="number" style="width: 50px" ng-model="info.SCORE_SEC2" max="17" name="SCORE_SEC2">/17
                 </label>
             </div>
-            <div class="row" ng-show="showClickedValidation && MAForm.SCORE_SEC2.$error.pattern">
+            <div class="row" ng-show="showClickedValidation && (MAForm.SCORE_SEC2.$invalid || MAForm.SCORE_SEC2.$error.max)">
                 <div class="col-lg-6 col-md-8 col-sm-9"></div>
-                <label class="control-label col-lg-2 col-md-4 col-sm-3" style="color: #8b0000">Score must be number</label>
+                <label class="control-label col-lg-4 col-md-4 col-sm-3" style="color: #8b0000">Score Must be in number format and less than 17</label>
             </div>
             <div class="row">
                 <label class="col-lg-3 col-md-4 col-sm-4" style="margin-top: 7px">Peripheral Vision</label>
@@ -775,17 +772,17 @@
         <div class="portlet-body">
             <div class="row">
                 <label class="col-lg-2 col-md-2 col-sm-3 bold">Doctor's Name</label>
-                <label class="col-lg-2 col-md-2 col-sm-3"></label>
+                <label class="col-lg-3 col-md-4 col-sm-3">{{info.DOCTOR_NAME}}</label>
                 <label class="col-lg-2 col-md-2 col-sm-3 bold">Signature</label>
-                <label class="col-lg-2 col-md-2 col-sm-3">
-                    <img src="" ng-src="{{info.headers[0].TesterSign}}" alt="" style="width: 200px;height: 150px;"/>
+                <label class="col-lg-3 col-md-4 col-sm-3" ng-show="info.SIGN != null && info.SIGN != '' ">
+                    <img src="" ng-src="{{info.SIGN}}" alt="" style="width: 200px;height: 150px;"/>
                 </label>
             </div>
             <div class="row">
                 <label class="col-lg-2 col-md-2 col-sm-3 bold">Date</label>
-                <label class="col-lg-2 col-md-2 col-sm-3"></label>
+                <label class="col-lg-3 col-md-4 col-sm-3">{{info.Creation_date | date : 'dd / MM / yyyy'}}</label>
                 <label class="col-lg-2 col-md-2 col-sm-3 bold">Location</label>
-                <label class="col-lg-2 col-md-2 col-sm-3"></label>
+                <label class="col-lg-3 col-md-4 col-sm-3"></label>
             </div>
         </div>
     </div>

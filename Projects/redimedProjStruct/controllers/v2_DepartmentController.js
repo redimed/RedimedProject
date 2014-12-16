@@ -2,82 +2,116 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
-	postSearch: function(req, res) {
-		var limit = (req.body.limit) ? req.body.limit : 10;
+    postSearch: function (req, res) {
+        var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
-		var fields = req.body.fields;
-		var search_data = req.body.search;
-		// console.log(search_data)
-		var agrs = [];
-		for (var key in search_data) {
-			if(search_data[key])
-			agrs.push(key + " LIKE '%"+ search_data[key] +"%'");
-		};
+        var fields = req.body.fields;
+        var search_data = req.body.search;
+        // console.log(search_data)
+        var agrs = [];
+        for (var key in search_data) {
+            if (search_data[key])
+                agrs.push(key + " LIKE '%" + search_data[key] + "%'");
+        };
 
-		var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
+        var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
 
-		db.Department.findAndCountAll({
-			where: whereOpt,
-			offset: offset,
-			limit: limit,
-			attributes: fields,
-			order: 'Creation_date DESC'
-		}).success(function(result){
-			res.json({"status": "success", "list": result.rows, "count": result.count});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		});
-	},
-	postDetail: function(req, res){
-		var id = req.body.CLINICAL_DEPT_ID;
+        db.Department.findAndCountAll({
+            where: whereOpt,
+            offset: offset,
+            limit: limit,
+            attributes: fields,
+            order: 'CLINICAL_DEPT_ID DESC'
+        }).success(function (result) {
+            res.json({
+                "status": "success",
+                "list": result.rows,
+                "count": result.count
+            });
+        })
+            .error(function (error) {
+                res.json(500, {
+                    "status": "error",
+                    "message": error
+                });
+            });
+    },
+    postDetail: function (req, res) {
+        var id = req.body.CLINICAL_DEPT_ID;
+        db.Department.find(id)
+            .success(function (data) {
+                res.json({
+                    "status": "success",
+                    "data": data
+                });
+            })
+            .error(function (error) {
+                res.json(500, {
+                    "status": "error",
+                    "message": error
+                });
+            });
 
-		db.Department.find(id)
-		.success(function(data){
-			res.json({"status": "success", "data": data});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		});
+    },
+    postInsert: function (req, res) {
+        var postData = req.body;
+        delete postData.CLINICAL_DEPT_ID;
+        db.Department.create(postData)
+            .success(function (created) {
+                if (!created) res.json(500, {
+                    'status': 'error',
+                    'message': 'Cannot Insert'
+                });
+                res.json({
+                    'status': 'success',
+                    'data': created
+                });
+            })
+            .error(function (error) {
+                res.json(500, {
+                    'status': 'error',
+                    'message': error
+                });
+            })
+    },
+    postUpdate: function (req, res) {
+        var postData = req.body;
+        console.log('this is post data', postData);
+        var item_id = postData.CLINICAL_DEPT_ID;
+        delete postData.CLINICAL_DEPT_ID;
 
-	},
-	postInsert: function(req, res){
-		var postData = req.body;
+        db.Department.update(postData, {
+            CLINICAL_DEPT_ID: item_id
+        })
+            .success(function (data) {
+                res.json({
+                    "status": "success",
+                    "data": data
+                });
+            })
+            .error(function (error) {
+                res.json(500, {
+                    "status": "error",
+                    "message": error
+                });
+            })
+    },
+    postDelete: function (req, res) {
+        var dept_id = req.body.CLINICAL_DEPT_ID;
 
-		db.Department.create(postData)
-		.success(function(created){
-			if(!created) res.json(500, {'status': 'error', 'message': 'Cannot Insert'});
-			res.json({'status': 'success', 'data': created});
-		})
-		.error(function(error){
-			res.json(500, {'status': 'error', 'message': error});
-		})
-	},
-	postUpdate: function(req, res) {
-		var postData = req.body;
-
-		var item_id = postData.CLINICAL_DEPT_ID;
-		delete postData.CLINICAL_DEPT_ID;
-
-		db.Department.update(postData, {where: {CLINICAL_DEPT_ID: item_id}})
-		.success(function(data){
-			res.json({"status": "success", "data": data});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		})
-	},
-	postDelete: function(req, res) {
-		var dept_id = req.body.CLINICAL_DEPT_ID;
-
-		db.Department.destroy({
-			CLINICAL_DEPT_ID: dept_id,
-		}).success(function(result){
-			res.json({"status": "success"});
-		}).error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		});
-	},
+        db.Department.destroy({
+            CLINICAL_DEPT_ID: dept_id,
+        }).success(function (result) {
+            res.json({
+                "status": "success"
+            });
+        }).error(function (error) {
+            res.json(500, {
+                "status": "error",
+                "message": error
+            });
+        });
+    },
 
 
 	postDeptHeader: function(req, res) {

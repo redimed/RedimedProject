@@ -10,23 +10,41 @@ angular.module("app.loggedIn.item.fee.controller",[
         autoUpload: true,
         removeAfterUpload: true,
     });
-    uploader.filters.push({
-        name: 'checkTail',
-        fn: function(item) {
-			var name = item.name;
-            if(name.indexOf('.txt') > 0 || name.indexOf('.xml')) {
-                return true;
-            }
-            return false;
-        }
-    });
 
     uploader.isUploadOnGroup = function(){
         return uploader.url == 'api/erm/v2/fees/upload_group_price_source';
     }
 
+    uploader.filters.push({
+        name: 'checkTail',
+        fn: function(item) {
+			var name = item.name;
+            return (name.toLowerCase().indexOf('.txt') > 0 || name.indexOf('.xml') > 0 );
+        }
+    });
+
+    uploader.filters.push({
+        name: 'checkGroup',
+        fn: function(item) {
+            var name = item.name;
+            
+            if(uploader.isUploadOnGroup()) {
+                if($scope.fee_groups.select_item.FEE_GROUP_TYPE == 'item_fee_type') {
+                    return (name.toLowerCase().indexOf('.xml') > 0 );
+                } 
+            } 
+            return (name.toLowerCase().indexOf('.txt') > 0 );
+        }
+    });
+
+    
+
     uploader.onWhenAddingFileFailed = function(item, filter, options) {
-        toastr.error('File invalid', 'Error');
+        console.log(filter);
+        if(filter.name == 'checkTail')
+            toastr.error('File invalid', 'Error');
+        else if (filter.name == 'checkGroup')
+            toastr.error('Group file invalid', 'Error');
     }
 
     uploader.onCompleteItem = function(item, response, status, headers) {
@@ -144,6 +162,11 @@ angular.module("app.loggedIn.item.fee.controller",[
                 {field: 'ISENABLE', is_hide: true},    
             ],
             use_actions: true, 
+            action_show: function(item) {
+                if(item.feeGroup == null) return true;
+                if(item.feeGroup.FEE_GROUP_TYPE != 'item_fee_type') return true;
+                return false;
+            },
             actions: [
                 {
                     class: 'fa fa-pencil', title: 'Edit',

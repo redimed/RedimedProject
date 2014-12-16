@@ -11,6 +11,7 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
             },
             templateUrl: "modules/waWorkCover/directives/templates/first.html",
             link: function (scope, element, attrs) {
+
                 var init = function () {
                     scope.oneAtATime = false;
                     scope.isSubmit = false;
@@ -128,12 +129,121 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                 }
 
                 //Data dependencies
-                //                scope.$watch('wafirst.isFullCapacity', function (fullCapa) {
-                //                    if (fullCapa !== 1) {
-                //                        scope.wafirst.fullCapaFrom = null;
-                //                        scope.wafirst.isRequireTreat = null;
-                //                    }
-                //                })
+                scope.$watch('wafirst.isFullCapacity', function (fullCapa) {
+                    if (fullCapa !== '1') {
+                        scope.wafirst.fullCapaFrom = null;
+                        scope.wafirst.isRequireTreat = null;
+                    }
+                })
+
+                scope.$watch('wafirst.isSomeCapacity', function (someCapa) {
+                    if (someCapa !== '1') {
+                        scope.wafirst.someCapaFrom = null;
+                        scope.wafirst.someCapaTo = null;
+                        scope.wafirst.isPreDuties = null;
+                        scope.wafirst.isModiDuties = null;
+                        scope.wafirst.isWorkModifi = null;
+                        scope.wafirst.isPreHours = null;
+                        scope.wafirst.isModiHours = null;
+                    }
+                })
+
+                scope.$watch('wafirst.isModiHours', function (isModi) {
+                    if (isModi !== '1') {
+                        scope.wafirst.modiHrs = null;
+                        scope.wafirst.modiDays = null;
+                    }
+                })
+
+                scope.$watch('wafirst.modiHrs', function (modiHrs) {
+                    if (modiHrs !== undefined && modiHrs !== null && modiHrs !== '' && scope.wafirst.modiDays !== undefined && scope.wafirst.modiDays !== null && scope.wafirst.modiDays !== '') {
+                        if (scope.wafirst.isModiHours !== '1')
+                            scope.wafirst.isModiHours = '1';
+                    }
+                })
+
+                scope.$watch('wafirst.modiDays', function (modiDays) {
+                    if (modiDays !== undefined && modiDays !== null && modiDays !== '' && scope.wafirst.modiHrs !== undefined && scope.wafirst.modiHrs !== null && scope.wafirst.modiHrs !== '') {
+                        if (scope.wafirst.isModiHours !== '1')
+                            scope.wafirst.isModiHours = '1';
+                    }
+                })
+
+                scope.$watch('wafirst.isNoCapacity', function (noCapa) {
+                    if (noCapa !== '1') {
+                        scope.wafirst.noCapaFrom = null;
+                        scope.wafirst.noCapaTo = null;
+                    }
+                })
+
+                scope.$watch('wafirst.isLiftUp', function (isLiftUp) {
+                    if (isLiftUp !== '1') {
+                        scope.wafirst.liftUpKg = null;
+                    }
+                })
+                scope.$watch('wafirst.liftUpKg', function (liftUpKg) {
+                    if (liftUpKg !== undefined && liftUpKg !== null && liftUpKg !== '') {
+                        scope.wafirst.isLiftUp = '1';
+                    } else {
+                        scope.wafirst.isLiftUp = '0';
+                    }
+                })
+
+                scope.$watch('wafirst.isSitUp', function (isSitUp) {
+                    if (isSitUp !== '1') {
+                        scope.wafirst.sitUpMins = null;
+                    }
+                })
+                scope.$watch('wafirst.sitUpMins', function (sitUpMins) {
+                    if (sitUpMins !== undefined && sitUpMins !== null && sitUpMins !== '') {
+                        scope.wafirst.isSitUp = '1';
+                    } else {
+                        scope.wafirst.isSitUp = '0';
+                    }
+
+                })
+
+                scope.$watch('wafirst.isStandUp', function (isStandUp) {
+                    if (isStandUp !== '1') {
+                        scope.wafirst.standUpMins = null;
+                    }
+                })
+                scope.$watch('wafirst.standUpMins', function (standUpMins) {
+                    if (standUpMins !== undefined && standUpMins !== null && standUpMins !== '') {
+                        scope.wafirst.isStandUp = '1';
+                    } else {
+                        scope.wafirst.isStandUp = '0';
+                    }
+                })
+
+
+                scope.$watch('wafirst.isWalkUp', function (isWalkUp) {
+                    if (isWalkUp !== '1') {
+                        scope.wafirst.walkUpMeter = null;
+                    }
+                })
+                scope.$watch('wafirst.walkUpMeter', function (walkUpMeter) {
+                    if (walkUpMeter !== undefined && walkUpMeter !== null && walkUpMeter !== '') {
+                        scope.wafirst.isWalkUp = '1';
+                    } else {
+                        scope.wafirst.isWalkUp = '0';
+                    }
+                })
+
+                scope.$watch('wafirst.isReview', function (isReview) {
+                    if (isReview !== '1') {
+                        scope.wafirst.reviewOn = null;
+                    }
+                })
+
+                scope.$watch('wafirst.reviewOn', function (reviewOn) {
+                    if (reviewOn !== undefined && reviewOn !== null && reviewOn !== '') {
+                        scope.wafirst.isReview = '1';
+                    }
+                })
+
+
+
             }
         }
     });
