@@ -33,9 +33,21 @@
             <i class="fa fa-times"></i>
         </button>
     </div>
-    <item-detail options="options">
+    <item-detail options="options" onsuccess="addForm.success">
 </div>
- <!-- POPUP ITEM ADD FORM -->
+<!-- POPUP ITEM ADD FORM -->
+
+
+<!-- POPUP ITEM ADD FORM   -->
+<div class="mdt-search" style="display: block; width: 100%" ng-if="editForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="editForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <item-detail onsuccess="editForm.success" data="{id: '{{itemInfo.ITEM_ID}}'}">
+</div>
+<!-- POPUP ITEM ADD FORM -->
 
 <!-- POPUP ITEM PRICE   -->
 <div class="mdt-search" style="display: block; width: 85%" ng-show="itemFees.is_show">

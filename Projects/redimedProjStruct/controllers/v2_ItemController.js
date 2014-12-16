@@ -144,7 +144,7 @@ module.exports = {
 		var item_id = postData.ITEM_ID;
 		delete postData.ITEM_ID;
 
-		db.InvItem.update(postData, {where: {ITEM_ID: item_id}})
+		db.InvItem.update(postData, {ITEM_ID: item_id})
 		.success(function(data){
 			res.json({"status": "success", "data": data});
 		})

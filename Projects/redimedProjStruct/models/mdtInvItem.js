@@ -40,6 +40,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         'PRICE': {
             type: DataTypes.FLOAT,
+            defaultValue: 0,
         },
         'ISENABLE': {
             type: DataTypes.INTEGER(11),
@@ -118,6 +119,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         'EMSN_MAXIMUM_CAP': {
             type: DataTypes.FLOAT,
+            defaultValue: 0,
         },
         'EMSN_DESCRIPTION': {
             type: DataTypes.STRING(5000),
@@ -171,25 +173,25 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 mdtInstance.hasMany(models.Appointment, {
-                    as: 'Appointments', 
+                    as: 'Appointments',
                     foreignKey: 'CLN_ITEM_ID',
                     through: models.ApptItems
                 });
 
                 mdtInstance.hasMany(models.InvItemHeader, {
-                    as: 'Headers', 
+                    as: 'Headers',
                     foreignKey: 'ITEM_ID',
                     through: models.InvItemLine
                 });
-                
+
                 mdtInstance.hasMany(models.FeeType, {
-                    as: 'FeeTypes', 
+                    as: 'FeeTypes',
                     foreignKey: 'CLN_ITEM_ID',
                     through: models.mdtClnItemFee
                 });
 
                 mdtInstance.hasMany(models.PrivateFund, {
-                    as: 'PrivateFunds', 
+                    as: 'PrivateFunds',
                     foreignKey: 'CLN_ITEM_ID',
                     through: models.mdtClnItemHealthFundFee
                 });

@@ -1,7 +1,7 @@
 <form name="mainForm" novalidate>
-	<div class="row" >
-		<!-- ITEM CODE -->
-		<div class="break-row" style="margin-top: 15px"></div>
+    <div class="row">
+        <!-- ITEM CODE -->
+        <div class="break-row" style="margin-top: 15px"></div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.ITEM_CODE.$invalid && isSubmit}">
                 <label for="ITEM_CODE">Item code</label>
@@ -12,8 +12,8 @@
                     <span class="mdt-popover above" ng-show="mainForm.ITEM_CODE.$error.required">
                         Item Code is required
                     </span>
-                </span>
-                <!-- ERROR -->
+            </span>
+            <!-- ERROR -->
             </span>
         </div>
         <!-- END ITEM CODE -->
@@ -29,14 +29,14 @@
                     <span class="mdt-popover above" ng-show="mainForm.ITEM_NAME.$error.required">
                         Item Name is required
                     </span>
-                </span>
-                <!-- ERROR -->
+            </span>
+            <!-- ERROR -->
             </span>
         </div>
         <!-- END ITEM NAME -->
 
 
-         <!-- ALT NAME -->
+        <!-- ALT NAME -->
         <div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.ALT_NAME.$invalid && isSubmit}">
                 <label for="ALT_NAME">Alt name</label>
@@ -47,8 +47,8 @@
         <!-- END ALT NAME -->
 
         <!--ITEM_TYPE-->
-		<div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.ITEM_TYPE.$invalid && isSubmit}">
 				<label for="item_type">Item type</label>
 				<!-- <input type="text" placeholder="Item type" name="item_type" ng-model="modelObjectMap.ITEM_TYPE" class="form-control" id="item_type" float-label> -->
 				<select class="form-control" name="ITEM_TYPE"
@@ -57,14 +57,20 @@
 						required>
 						<option value="">-- Select Item Type --</option>
 					</select>
-			</span>	
-		</div>
+					<span ng-show="mainForm.ITEM_TYPE.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.ITEM_TYPE.$error.required">
+                        Item Type is required
+                    </span>
+            </span>
+            </span>
+
+        </div>
 
 
-		<!--ITEM_TYPE-->
+        <!--ITEM_TYPE-->
 
-		<!--PREFIX-->
-		<!-- div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <!--PREFIX-->
+        <!-- div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 			<span class="field">
 				<label for="fee_type">Prefix</label>
 
@@ -76,14 +82,14 @@
 					</select>
 			</span>	
 		</div> -->
-		<!--PREFIX-->
+        <!--PREFIX-->
 
 
         <div class="break-row"></div>
 
         <!--TAX_ID-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="tax_id">Tax id</label>
 				<select class="form-control" name="TAX_ID"
 					ng-model="modelObjectMap.TAX_ID"
@@ -92,13 +98,13 @@
 				</select>
 				<!-- <input type="number" placeholder="Tax id" name="tax_id" ng-model="modelObjectMap.TAX_ID" class="form-control" id="tax_id" float-label> -->
 			</span>	
-		</div>
-		<!--TAX_ID-->
+        </div>
+        <!--TAX_ID-->
 
-		
-		<!--UOM-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+
+        <!--UOM-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="uom">Uom</label>
 				<!-- <input type="text" placeholder="Uom" name="uom" ng-model="modelObjectMap.UOM" class="form-control" id="uom" float-label> -->
 				<select class="form-control" name="UOM"
@@ -107,8 +113,8 @@
 						<option value="">-- Select UOM --</option>
 					</select>
 			</span>
-		</div>
-		<!--UOM-->
+        </div>
+        <!--UOM-->
 
 
         <!-- PRICE -->
@@ -122,17 +128,17 @@
         <!-- END PRICE -->
 
         <!--CATEGORY-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="category">Category</label>
 				<input type="text" placeholder="Category" name="category" ng-model="modelObjectMap.CATEGORY" class="form-control" id="category" float-label>
 			</span>
-		</div>
-		<!--CATEGORY-->
+        </div>
+        <!--CATEGORY-->
 
         <div class="break-row"></div>
 
-		<!-- DESCRIPTION -->
+        <!-- DESCRIPTION -->
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.DESCRIPTION.$invalid && isSubmit}">
                 <label for="Description">Description</label>
@@ -143,17 +149,18 @@
         <!-- END DESCRIPTION -->
 
         <!--DESCRIPTION_START_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="description_start_date">Description start date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Description start date" name="description_start_date" ng-model="mdtItemMap.DESCRIPTION_START_DATE" class="form-control" id="description_start_date" float-label>
-			</span>	</div>
-		<!--DESCRIPTION_START_DATE-->
+			</span>	
+        </div>
+        <!--DESCRIPTION_START_DATE-->
 
-      
+
         <!--FEE_TYPE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="fee_type">Fee type</label>
 				<!-- input type="text" placeholder="Fee type" name="fee_type" ng-model="modelObjectMap.FEE_TYPE" class="form-control" id="fee_type" float-label> -->
 				<select class="form-control" name="FEE_TYPE"
@@ -162,108 +169,116 @@
 						<option value="">-- Select Fee Type --</option>
 					</select
 			</span>	
-		</div>
-		<!--FEE_TYPE-->
+        </div>
+        <!--FEE_TYPE-->
 
-		<!--FEE_CHANGE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--FEE_CHANGE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="fee_change">Fee change</label>
 				<input type="text" placeholder="Fee change" name="fee_change" ng-model="mdtItemMap.FEE_CHANGE" class="form-control" id="fee_change" float-label>
-			</span>	</div>
-		<!--FEE_CHANGE-->
+			</span>	
+        </div>
+        <!--FEE_CHANGE-->
 
-		
-		<div class="break-row" style="margin-top: 15px"></div>
-		
 
-		<!--INV_GROUP-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="break-row" style="margin-top: 15px"></div>
+
+
+        <!--INV_GROUP-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="inv_group">Inv group</label>
 				<input type="text" placeholder="Inv group" name="inv_group" ng-model="modelObjectMap.INV_GROUP" class="form-control" id="inv_group" float-label>
-			</span>	</div>
-		<!--INV_GROUP-->
+			</span>	
+        </div>
+        <!--INV_GROUP-->
 
-		<!--SUB_GROUP-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--SUB_GROUP-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="sub_group">Sub group</label>
 				<input type="text" placeholder="Sub group" name="sub_group" ng-model="modelObjectMap.SUB_GROUP" class="form-control" id="sub_group" float-label>
-			</span>	</div>
-		<!--SUB_GROUP-->
+			</span>	
+        </div>
+        <!--SUB_GROUP-->
 
-		<!--SUB_HEADING-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--SUB_HEADING-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="sub_heading">Sub heading</label>
 				<input type="text" placeholder="Sub heading" name="sub_heading" ng-model="modelObjectMap.SUB_HEADING" class="form-control" id="sub_heading" float-label>
-			</span>	</div>
-		<!--SUB_HEADING-->
+			</span>	
+        </div>
+        <!--SUB_HEADING-->
 
-		<div class="break-row" style="margin-top: 15px"></div>
+        <div class="break-row" style="margin-top: 15px"></div>
 
-		<!--LOT_OR_SERIAL-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--LOT_OR_SERIAL-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="lot_or_serial">Lot or serial</label>
 				<input type="text" placeholder="Lot or serial" name="lot_or_serial" ng-model="modelObjectMap.LOT_OR_SERIAL" class="form-control" id="lot_or_serial" float-label>
 			</span>	
-		</div>
-		<!--LOT_OR_SERIAL-->
+        </div>
+        <!--LOT_OR_SERIAL-->
 
 
-		<!--BENEFIT_TYPE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--BENEFIT_TYPE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="benefit_type">Benefit type</label>
 				<input type="text" placeholder="Benefit type" name="benefit_type" ng-model="modelObjectMap.BENEFIT_TYPE" class="form-control" id="benefit_type" float-label>
-			</span>	</div>
-		<!--BENEFIT_TYPE-->
+			</span>	
+        </div>
+        <!--BENEFIT_TYPE-->
 
-		<!--BENEFIT_START_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--BENEFIT_START_DATE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="benefit_start_date">Benefit start date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Benefit start date" name="benefit_start_date" ng-model="modelObjectMap.BENEFIT_START_DATE" class="form-control" id="benefit_start_date" float-label>
-			</span>	</div>
-		<!--BENEFIT_START_DATE-->
+			</span>	
+        </div>
+        <!--BENEFIT_START_DATE-->
 
 
 
         <div class="break-row" style="margin-top: 15px"></div>
 
-		<!--ITEM_CHANGE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--ITEM_CHANGE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="item_change">Item change</label>
 				<input type="text" placeholder="Item change" name="item_change" ng-model="modelObjectMap.ITEM_CHANGE" class="form-control" id="item_change" float-label>
 			</span>	
-		</div>
-		<!--ITEM_CHANGE-->
+        </div>
+        <!--ITEM_CHANGE-->
 
-	
-		<!--SUB_ITEM_CODE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+
+        <!--SUB_ITEM_CODE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="sub_item_code">Sub item code</label>
 				<input type="text" placeholder="Sub item code" name="sub_item_code" ng-model="modelObjectMap.SUB_ITEM_CODE" class="form-control" id="sub_item_code" float-label>
-			</span>	</div>
-		<!--SUB_ITEM_CODE-->
+			</span>	
+        </div>
+        <!--SUB_ITEM_CODE-->
 
-		<!--DURING_TIME-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--DURING_TIME-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="during_time">During time</label>
 				<input type="number" placeholder="During time" name="during_time" ng-model="modelObjectMap.DURING_TIME" class="form-control" id="during_time" float-label>
-			</span>	</div>
-		<!--DURING_TIME-->
+			</span>	
+        </div>
+        <!--DURING_TIME-->
 
 
-		<div class="break-row"></div>
-		 <!--PROVIDER_TYPE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="break-row"></div>
+        <!--PROVIDER_TYPE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="provider_type">Provider type</label>
 				<!-- <input type="text" placeholder="Provider type" name="provider_type" ng-model="modelObjectMap.PROVIDER_TYPE" class="form-control" id="provider_type" float-label> -->
 				<select class="form-control" name="PROVIDER_TYPE"
@@ -272,252 +287,260 @@
 						<option value="">-- Select Provider --</option>
 				</select>
 			</span>	
-		</div>
-		<!--PROVIDER_TYPE-->
+        </div>
+        <!--PROVIDER_TYPE-->
 
-		<!--DESCRIPTOR_CHANGE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--DESCRIPTOR_CHANGE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="descriptor_change">Descriptor change</label>
 				<input type="text" placeholder="Descriptor change" name="descriptor_change" ng-model="modelObjectMap.DESCRIPTOR_CHANGE" class="form-control" id="descriptor_change" float-label>
-			</span>	</div>
-		<!--DESCRIPTOR_CHANGE-->
+			</span>	
+        </div>
+        <!--DESCRIPTOR_CHANGE-->
 
-		<!--AMA_CODE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--AMA_CODE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="ama_code">Ama code</label>
 				<input type="text" placeholder="Ama code" name="ama_code" ng-model="mdtItemMap.AMA_CODE" class="form-control" id="ama_code" float-label>
-			</span>	</div>
-		<!--AMA_CODE-->
+			</span>	
+        </div>
+        <!--AMA_CODE-->
 
-		<!--AMA_DESC-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--AMA_DESC-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="ama_desc">Ama desc</label>
 				<input type="text" placeholder="Ama desc" name="ama_desc" ng-model="mdtItemMap.AMA_DESC" class="form-control" id="ama_desc" float-label>
-			</span>	</div>
-		<!--AMA_DESC-->
+			</span>	
+        </div>
+        <!--AMA_DESC-->
 
-		<div class="break-row"></div>
+        <div class="break-row"></div>
 
-		<!--DERIVED_FEE_START_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--DERIVED_FEE_START_DATE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="derived_fee_start_date">Derived fee start date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Derived fee start date" name="derived_fee_start_date" ng-model="modelObjectMap.DERIVED_FEE_START_DATE" class="form-control" id="derived_fee_start_date" float-label>
-			</span>	</div>
-		<!--DERIVED_FEE_START_DATE-->
+			</span>	
+        </div>
+        <!--DERIVED_FEE_START_DATE-->
 
-		<!--DERIVED_FEE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--DERIVED_FEE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="derived_fee">Derived fee</label>
 				<input type="text" placeholder="Derived fee" name="derived_fee" ng-model="modelObjectMap.DERIVED_FEE" class="form-control" id="derived_fee" float-label>
 			</span>
-		</div>
-		<!--DERIVED_FEE-->
+        </div>
+        <!--DERIVED_FEE-->
 
 
         <!--QFE_START_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="qfe_start_date">Qfe start date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Qfe start date" name="qfe_start_date" ng-model="mdtItemMap.QFE_START_DATE" class="form-control" id="qfe_start_date" float-label>
-			</span>	</div>
-		<!--QFE_START_DATE-->
+			</span>	
+        </div>
+        <!--QFE_START_DATE-->
 
-		<!--QFE_END_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--QFE_END_DATE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="qfe_end_date">Qfe end date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Qfe end date" name="qfe_end_date" ng-model="mdtItemMap.QFE_END_DATE" class="form-control" id="qfe_end_date" float-label>
-			</span>	</div>
-		<!--QFE_END_DATE-->
+			</span>	
+        </div>
+        <!--QFE_END_DATE-->
 
 
-		
+
 
         <div class="break-row" style="margin-top: 15px"></div>
         <!--EMSN_CHANGE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_change">Emsn change</label>
 				<input type="text" placeholder="Emsn change" name="emsn_change" ng-model="modelObjectMap.EMSN_CHANGE" class="form-control" id="emsn_change" float-label>
 			</span>	
-		</div>
-		<!--EMSN_CHANGE-->
+        </div>
+        <!--EMSN_CHANGE-->
 
-		<!--EMSN_CAP-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--EMSN_CAP-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_cap">Emsn cap</label>
 				<input type="text" placeholder="Emsn cap" name="emsn_cap" ng-model="modelObjectMap.EMSN_CAP" class="form-control" id="emsn_cap" float-label>
 			</span>	
-		</div>
-		<!--EMSN_CAP-->
+        </div>
+        <!--EMSN_CAP-->
 
-		<!--EMSN_FIXED_CAP_AMOUNT-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--EMSN_FIXED_CAP_AMOUNT-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_fixed_cap_amount">Emsn fixed cap amount</label>
 				<input type="text" placeholder="Emsn fixed cap amount" name="emsn_cap" ng-model="modelObjectMap.EMSN_FIXED_CAP_AMOUNT" class="form-control" id="emsn_fixed_cap_amount" float-label>
-			</span>			
-		</div>
-		<!--EMSN_FIXED_CAP_AMOUNT-->
+			</span>	
+        </div>
+        <!--EMSN_FIXED_CAP_AMOUNT-->
 
-		<!--EMSN_PERCENTAGE_CAP-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--EMSN_PERCENTAGE_CAP-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_percentage_cap">Emsn percentage cap</label>
 				<input type="number" placeholder="Emsn cap" name="emsn_percentage_cap" ng-model="modelObjectMap.EMSN_PERCENTAGE_CAP" class="form-control" id="emsn_percentage_cap" float-label>
 			</span>	
-						
-		</div>
-		<!--EMSN_PERCENTAGE_CAP-->
+
+        </div>
+        <!--EMSN_PERCENTAGE_CAP-->
 
 
-		<!--EMSN_MAXIMUM_CAP-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--EMSN_MAXIMUM_CAP-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_maximum_cap">Emsn maximum cap</label>
 				<input type="number" placeholder="Emsn maximum cap" name="emsn_maximum_cap" ng-model="modelObjectMap.EMSN_MAXIMUM_CAP" class="form-control" id="emsn_maximum_cap" float-label>
 			</span>	
-		</div>
-		<!--EMSN_MAXIMUM_CAP-->
+        </div>
+        <!--EMSN_MAXIMUM_CAP-->
 
-		<!--EMSN_DESCRIPTION-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--EMSN_DESCRIPTION-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_description">Emsn description</label>
 				<input type="text" placeholder="Emsn description" name="emsn_description" ng-model="mdtItemMap.EMSN_DESCRIPTION" class="form-control" id="emsn_description" float-label>
 			</span>	
-		</div>
-		<!--EMSN_DESCRIPTION-->
+        </div>
+        <!--EMSN_DESCRIPTION-->
 
-		<!--EMSN_CHANGE_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--EMSN_CHANGE_DATE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_change_date">Emsn change date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Emsn change date" name="emsn_change_date" ng-model="mdtItemMap.EMSN_CHANGE_DATE" class="form-control" id="emsn_change_date" float-label>
-			</span>	</div>
-		<!--EMSN_CHANGE_DATE-->
+			</span>	
+        </div>
+        <!--EMSN_CHANGE_DATE-->
 
         <!--EMSN_START_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_start_date">Emsn start date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Emsn start date" name="emsn_start_date" ng-model="modelObjectMap.EMSN_START_DATE" class="form-control" id="emsn_start_date" float-label>
 			</span>	
-		</div>
-		<!--EMSN_START_DATE-->
+        </div>
+        <!--EMSN_START_DATE-->
 
 
-		<!--EMSN_END_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <!--EMSN_END_DATE-->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="emsn_end_date">Emsn end date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Emsn end date" name="emsn_end_date" ng-model="modelObjectMap.EMSN_END_DATE" class="form-control" id="emsn_end_date" float-label>
 			</span>
-		</div>
-		<!--EMSN_END_DATE-->
-		
-		<div class="break-row"></div>
+        </div>
+        <!--EMSN_END_DATE-->
+
+        <div class="break-row"></div>
 
         <!--ANAES-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="anaes">Anaes</label>
 				<input type="text" placeholder="Anaes" name="anaes" ng-model="modelObjectMap.ANAES" class="form-control" id="anaes" float-label>
 			</span>	
-		</div>
-		<!--ANAES-->
+        </div>
+        <!--ANAES-->
 
 
         <!--ANAES_CHANGE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="anaes_change">Anaes change</label>
 				<input type="text" placeholder="Anaes change" name="anaes_change" ng-model="modelObjectMap.ANAES_CHANGE" class="form-control" id="anaes_change" float-label>
-			</span>	</div>
-		<!--ANAES_CHANGE-->
+			</span>	
+        </div>
+        <!--ANAES_CHANGE-->
 
 
 
         <!--ITEM_START_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="item_start_date">Item start date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Item start date" name="item_start_date" ng-model="modelObjectMap.ITEM_START_DATE" class="form-control" id="item_start_date" float-label>
 			</span>	
-		</div>
-		<!--ITEM_START_DATE-->
-       
+        </div>
+        <!--ITEM_START_DATE-->
+
         <!--ITEM_END_DATE-->
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
 				<label for="item_end_date">Item end date</label>
 				<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Item end date" name="item_end_date" ng-model="modelObjectMap.ITEM_END_DATE" class="form-control" id="item_end_date" float-label>
 			</span>	
-		</div>
-		<!--ITEM_END_DATE-->
-		
-		
+        </div>
+        <!--ITEM_END_DATE-->
+
+
 
 
         <div class="break-row" style="margin-top: 15px"></div>
-         <!--ISEXP-->
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<input type="checkbox" name="isexp" id="isexp" class="mdt-checkbox" ng-model="modelObjectMap.ISEXP" ng-true-value="1" ng-false-value="0">
-			<label for="isexp">Is Exp</label>
-		</div>
-		<!--ISEXP-->
+        <!--ISEXP-->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isexp" id="isexp" class="mdt-checkbox" ng-model="modelObjectMap.ISEXP" ng-true-value="1" ng-false-value="0">
+            <label for="isexp">Is Exp</label>
+        </div>
+        <!--ISEXP-->
 
-		<!--ISINV-->
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<input type="checkbox" name="isinv" id="isinv" class="mdt-checkbox" ng-model="modelObjectMap.ISINV" ng-true-value="1" ng-false-value="0">
-			<label for="isinv">Is Inv</label>
-		</div>
-		<!--ISINV-->
+        <!--ISINV-->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isinv" id="isinv" class="mdt-checkbox" ng-model="modelObjectMap.ISINV" ng-true-value="1" ng-false-value="0">
+            <label for="isinv">Is Inv</label>
+        </div>
+        <!--ISINV-->
 
-		<!--ISASSET-->
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<input type="checkbox" name="isasset" id="isasset" class="mdt-checkbox" ng-model="modelObjectMap.ISASSET" ng-true-value="1" ng-false-value="0">
-			<label for="isasset">Is Asset</label>
-		</div>
-		<!--ISASSET-->
+        <!--ISASSET-->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isasset" id="isasset" class="mdt-checkbox" ng-model="modelObjectMap.ISASSET" ng-true-value="1" ng-false-value="0">
+            <label for="isasset">Is Asset</label>
+        </div>
+        <!--ISASSET-->
 
-		
+
 
 
         <div class="break-row" style="margin-top: 15px"></div>
 
         <!--ISBOM-->
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<input type="checkbox" name="isbom" id="isbom" class="mdt-checkbox" ng-model="modelObjectMap.ISBOM" ng-true-value="1" ng-false-value="0">
-			<label for="isbom">Is BOM</label>
-		</div>
-		<!--ISBOM-->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isbom" id="isbom" class="mdt-checkbox" ng-model="modelObjectMap.ISBOM" ng-true-value="1" ng-false-value="0">
+            <label for="isbom">Is BOM</label>
+        </div>
+        <!--ISBOM-->
         <!--isPO-->
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<input type="checkbox" name="ispo" id="ispo" class="mdt-checkbox" ng-model="modelObjectMap.isPO" ng-true-value="1" ng-false-value="0">
-			<label for="ispo">Is PO</label>
-		</div>
-		<!--isPO-->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <input type="checkbox" name="ispo" id="ispo" class="mdt-checkbox" ng-model="modelObjectMap.isPO" ng-true-value="1" ng-false-value="0">
+            <label for="ispo">Is PO</label>
+        </div>
+        <!--isPO-->
 
-		<!--isOM-->
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<input type="checkbox" name="isom" id="isom" class="mdt-checkbox" ng-model="modelObjectMap.isOM" ng-true-value="1" ng-false-value="0">
-			<label for="isom">Is OM</label>
-		</div>
-		<!--isOM-->
+        <!--isOM-->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isom" id="isom" class="mdt-checkbox" ng-model="modelObjectMap.isOM" ng-true-value="1" ng-false-value="0">
+            <label for="isom">Is OM</label>
+        </div>
+        <!--isOM-->
 
-		<!--ISENABLE-->
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="modelObjectMap.ISENABLE" ng-true-value="1" ng-false-value="0">
-			<label for="isenable">Is Enable</label>
-		</div>
-		<!--ISENABLE-->
+        <!--ISENABLE-->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="modelObjectMap.ISENABLE" ng-true-value="1" ng-false-value="0">
+            <label for="isenable">Is Enable</label>
+        </div>
+        <!--ISENABLE-->
 
 
 

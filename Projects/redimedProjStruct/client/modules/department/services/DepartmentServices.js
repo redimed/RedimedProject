@@ -4,8 +4,10 @@ angular.module("app.loggedIn.department.services", [])
         var appApi = Restangular.all("api/erm");
 
         instanceService.detail = function (department_id) {
-            var detailApi = appApi.one("v2/dept/detail");
-            return detailApi.get();
+            var detailApi = appApi.all("v2/dept/detail");
+            return detailApi.post({
+                CLINICAL_DEPT_ID: department_id
+            });
         }
 
         instanceService.insert = function (data) {
@@ -15,7 +17,7 @@ angular.module("app.loggedIn.department.services", [])
         
         instanceService.update = function (department_id, data) {
             var detailApi = appApi.all("v2/dept/update");
-            return detailApi.post(department_id, data);
+            return detailApi.post(data);
         }
         
         instanceService.delete = function (department_id) {
