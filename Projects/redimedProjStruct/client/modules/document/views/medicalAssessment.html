@@ -13,7 +13,16 @@
             <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
         </div>
     </div>
-    <p class="ng-binding" style="font-size: xx-large;text-align: center;font-weight: bolder">Medical Assessment</p>
+    <div class="row">
+        <div class="col-md-4 col-sm-6" style="margin-bottom: 10px"  ng-class="{'has-error':mrsForm.sticker_here.$error.maxlength}">
+            <label class="control-label">Sticker Here:</label>
+            <textarea class="form-control" ng-model="info.STICKER" style="height: 100px" ng-maxlength="500" name="sticker_here"></textarea>
+            <label class="control-label help-block col-md-12 col-sm-12" ng-show="mrsForm.sticker_here.$error.maxlength">Sticker here 500</label>
+        </div>
+        <div  class="col-md-8 col-sm-6">
+            <p class="ng-binding" style="font-size: xx-large;text-align: center;font-weight: bolder;margin-top: 40px">Medical Assessment</p>
+        </div>
+    </div>
 <!--SECTION 1: Cardiovascular System-->
         <div class="portlet light bordered">
             <div class="portlet-title">

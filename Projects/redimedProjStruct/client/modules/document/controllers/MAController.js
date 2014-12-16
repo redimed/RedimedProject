@@ -100,6 +100,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                 $scope.info ={
                     PATIENT_ID: Patient_ID,
                     CAL_ID: CalID,
+                    STICKER : null,
                     HEIGHT: null,
                     WEIGHT: null,
                     BMI : null,
@@ -167,6 +168,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     ECG_RESULT: null,
                     GP: null,
                     COMMENT_SEC10 : null,
+                    DOCTOR_ID : response['docID'],
                     DOCTOR_NAME : response['docName'],
                     SIGN: response['docSign'],
                     Created_by: null,
@@ -183,10 +185,12 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             }else if(response['status'] === 'error'){
                 toastr.error("Error!", "Error");
                 $state.go('loggedIn.demo', null, {'reload': true});
-            }else {
+            }else if(response['status'] === 'update') {
                 insert = false;
                 $scope.isNew = false;
-                $scope.info = angular.copy(response);
+                $scope.info = angular.copy(response['data']);
+                $scope.info.DOCTOR_NAME = response['docName'];
+                $scope.info.SIGN = response['docSign'];
                 oriInfo = angular.copy($scope.info);
             }
         });
