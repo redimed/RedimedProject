@@ -25,7 +25,7 @@ java.classpath.push('./lib/iText-2.1.7.js2.jar');
 java.classpath.push('./lib/jasperreports-5.6.0.jar');
 java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
-java.classpath.push('./lib/Audio.jar');
+//java.classpath.push('./lib/Audio.jar');
 
 var HashMap = java.import('java.util.HashMap');
 var JRException = java.import('net.sf.jasperreports.engine.JRException');
@@ -37,7 +37,7 @@ var Driver = java.import('com.mysql.jdbc.Driver');
 var InputStream = java.import('java.io.InputStream');
 var FileInputStream = java.import('java.io.FileInputStream');
 
-var AudioBean = java.import('com.au.AudioBean');
+//var AudioBean = java.import('com.au.AudioBean');
 
 module.exports = {
     printReport: function (req, res, next) {

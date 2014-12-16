@@ -44,5 +44,6 @@ angular.module('app.loggedIn.menu.services',[])
             var a = api.all('menu/delete');
             return a.post({id:id,isRoot:false});
         }
+
         return menuService;
     });
