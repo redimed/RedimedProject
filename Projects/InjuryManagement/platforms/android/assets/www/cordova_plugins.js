@@ -59,13 +59,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.device/www/device.js",
-        "id": "org.apache.cordova.device.device",
-        "clobbers": [
-            "device"
-        ]
-    },
-    {
         "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
         "id": "org.apache.cordova.dialogs.notification",
         "merges": [
@@ -240,6 +233,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
+        "id": "org.apache.cordova.inappbrowser.inappbrowser",
+        "clobbers": [
+            "window.open"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.media/www/MediaError.js",
         "id": "org.apache.cordova.media.MediaError",
         "clobbers": [
@@ -270,12 +270,12 @@ module.exports.metadata =
     "nl.x-services.plugins.toast": "2.0.2",
     "org.apache.cordova.camera": "0.3.3",
     "org.apache.cordova.console": "0.2.11",
-    "org.apache.cordova.device": "0.2.12",
     "org.apache.cordova.dialogs": "0.2.10",
     "org.apache.cordova.file": "1.3.1",
     "org.apache.cordova.file-transfer": "0.4.7",
     "org.apache.cordova.geolocation": "0.3.10",
-    "org.apache.cordova.media": "0.2.14",
+    "org.apache.cordova.inappbrowser": "0.5.3",
+    "org.apache.cordova.media": "0.2.15",
     "org.apache.cordova.statusbar": "0.1.8"
 }
 // BOTTOM OF METADATA

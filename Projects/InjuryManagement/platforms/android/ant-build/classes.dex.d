@@ -16,6 +16,7 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/Manifest.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$attr.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$drawable.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$raw.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$string.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$xml.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R.class \
@@ -39,7 +40,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/camera/CameraLauncher.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/camera/ExifHelper.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/camera/FileHelper.class \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/device/Device.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/dialogs/Notification$1.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/dialogs/Notification$2$1.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/dialogs/Notification$2$2.class \
@@ -113,6 +113,20 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileTransfer$TrackingInputStream.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileTransfer.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileUploadResult.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$1.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$2.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$3.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$4$1.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$4.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$5$1.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$5$2.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$5$3.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$5$4.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$5.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser$InAppBrowserClient.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowser.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppBrowserDialog.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/inappbrowser/InAppChromeClient.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/media/AudioHandler.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/media/AudioPlayer$1.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/media/AudioPlayer$MODE.class \

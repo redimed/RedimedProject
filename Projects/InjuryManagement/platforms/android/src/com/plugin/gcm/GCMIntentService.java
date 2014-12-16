@@ -12,6 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Vibrator;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
@@ -57,6 +60,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 	@Override
 	protected void onMessage(Context context, Intent intent) {
+
+		MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.parse("http://fsa.zedge.net/dl/ringtone/c0acf8ad86f74ea7a09dadd64e336e65/notification_sound.mp3?ref=www&type=mc"));
 		Log.d(TAG, "onMessage - context: " + context);
 
 		// Extract the payload from the message
@@ -67,9 +72,16 @@ public class GCMIntentService extends GCMBaseIntentService {
             if (PushPlugin.isInForeground()) {
 				extras.putBoolean("foreground", true);
                 PushPlugin.sendExtras(extras);
+                mediaPlayer.stop();
 			}
 			else {
 				extras.putBoolean("foreground", false);
+
+				Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+				v.vibrate(1000);
+
+                mediaPlayer.start();
+                mediaPlayer.setLooping(true);
 
                 // Send a notification if there is a message
                 if (extras.getString("message") != null && extras.getString("message").length() != 0) {
@@ -97,10 +109,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 				defaults = Integer.parseInt(extras.getString("defaults"));
 			} catch (NumberFormatException e) {}
 		}
-		
+
 		NotificationCompat.Builder mBuilder =
 			new NotificationCompat.Builder(context)
-				.setDefaults(defaults)
 				.setSmallIcon(context.getApplicationInfo().icon)
 				.setWhen(System.currentTimeMillis())
 				.setContentTitle(extras.getString("title"))

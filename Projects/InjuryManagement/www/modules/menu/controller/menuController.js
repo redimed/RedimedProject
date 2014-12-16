@@ -105,6 +105,11 @@ angular.module("starter.menu.controller",[])
 
 
         $scope.$on('pushNotificationReceived', function (event, notification) {
+            var mediaSource = $cordovaMedia.newMedia("/android_asset/www/beep.wav");
+            var promise = mediaSource.promise;
+            var mediaStatus = mediaSource.mediaStatus;
+            var media = mediaSource.media;
+            $cordovaMedia.play(media);
             if (ionic.Platform.isAndroid()) {
                 handleAndroid(notification);
             }
@@ -115,20 +120,11 @@ angular.module("starter.menu.controller",[])
 
         //Android.
         function handleAndroid(notification) {
-            alert(JSON.stringify(notification));
             if (notification.event == "message" && userInfo.user_type == "Driver") {
                 $cordovaDialogs.alert(notification.message, "Emergency").then(function (){
                     localStorageService.set("idpatient_notice", notification.payload.injury_id)
                     $state.go('app.driver.detailInjury', {}, {reload: true});
-                });
-                var mediaSrc = $cordovaMedia.newMedia(notification.sound);
-                mediaSrc.promise.then($cordovaMedia.play(mediaSrc.media));
-
-                //var soundfile = notification.soundname || notification.payload.sound;
-                //
-                //var my_media = new Media("/android_asset/www/"+ soundfile);
-                //
-                //my_media.play();
+                })
             }
             else if (notification.event == "error")
                 console.log(notification.msg, "Push notification error event");

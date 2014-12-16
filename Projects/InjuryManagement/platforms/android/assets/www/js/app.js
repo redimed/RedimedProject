@@ -36,9 +36,9 @@ angular.module('starter', ['ionic',
 
     .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
 
-        //RestangularProvider.setBaseUrl("http://192.168.135.157:3000");
+        RestangularProvider.setBaseUrl("http://192.168.135.254:3000");
 
-        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
+        //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
         $urlRouterProvider.otherwise('/');
         $stateProvider
@@ -64,7 +64,7 @@ angular.module('starter', ['ionic',
                 }
             })
     })
-    .run(function($state, $rootScope,localStorageService,$ionicSideMenuDelegate,$cordovaPush,ionPlatform){
+    .run(function($state, $rootScope, localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, $cordovaLocalNotification){
         localStorageService.set('mode','read');
         $rootScope.$on("$stateChangeSuccess", function(e, toState) {
             if(!localStorageService.get("userInfo")){
@@ -86,8 +86,7 @@ angular.module('starter', ['ionic',
 
                 if (ionic.Platform.isAndroid()) {
                     config = {
-                        "senderID": "137912318312",
-                        "sound": "true"
+                        "senderID": "137912318312"
                     };
                 }
                 else if (ionic.Platform.isIOS()) {
@@ -102,6 +101,17 @@ angular.module('starter', ['ionic',
                 }, function (err) {
                     console.log("Register error Push Notification " + err)
                 });
+
+                //$cordovaLocalNotification.add({
+                //    id:         '1',
+                //    title       : "Android App Tes Local Notification",
+                //    message       : "This is a new local notification.",
+                //    repeat        : "daily",
+                //    sound: 'http://cd.textfiles.com/10000soundssongs/WAV/ALARM.WAV',
+                //    autoCancel: false
+                //}).then(function () {
+                //    console.log('callback for adding background notification');
+                //});
             });
         });
     });
