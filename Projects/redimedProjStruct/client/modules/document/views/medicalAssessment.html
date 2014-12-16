@@ -774,7 +774,7 @@
                 <label class="col-lg-2 col-md-2 col-sm-3 bold">Doctor's Name</label>
                 <label class="col-lg-3 col-md-4 col-sm-3">{{info.DOCTOR_NAME}}</label>
                 <label class="col-lg-2 col-md-2 col-sm-3 bold">Signature</label>
-                <label class="col-lg-3 col-md-4 col-sm-3">
+                <label class="col-lg-3 col-md-4 col-sm-3" ng-show="info.SIGN != null && info.SIGN != '' ">
                     <img src="" ng-src="{{info.SIGN}}" alt="" style="width: 200px;height: 150px;"/>
                 </label>
             </div>
