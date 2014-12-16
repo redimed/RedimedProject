@@ -268,7 +268,35 @@ module.exports = {
             .success(function(data){
                 if(data == null)
                 {
-                    res.json({status:'fail'});
+                    db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
+                        .success(function (appt) {
+                            if (appt === null || appt.length === 0) {
+                                console.log("Not found APPTCAL in table");
+                                res.json({status: 'fail'});
+                                return false;
+                            }
+                            db.Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
+                                .success(function (doctor) {
+                                    if (doctor === null || doctor.length === 0) {
+                                        console.log("Not found doctor in table");
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    }else
+                                    {
+                                        res.json({status:'insert',docName:doctor.NAME,docSign:doctor.Signature});
+                                    }
+                                })
+                                .error(function (err) {
+                                    console.log("ERROR:" + err);
+                                    res.json({status: 'error'});
+                                    return false;
+                                });
+                        })
+                        .error(function (err) {
+                            console.log("ERROR:" + err);
+                            res.json({status: 'error'});
+                            return false;
+                        });
                 }else
                 {
                     res.json(data);
@@ -279,6 +307,5 @@ module.exports = {
                 console.log(err);
             })
     }
-
 };
 
