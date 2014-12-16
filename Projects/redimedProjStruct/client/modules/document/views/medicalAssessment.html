@@ -229,13 +229,13 @@
                     <label class="btn">
                         <input type="radio" ng-model="info.COLOUR_SEC2" ng-value="0"> Abnormal </label>
                 </div>
-                <label class="col-lg-2 col-md-2 col-sm-3" style="margin-top: 7px">
-                    Score: <input type="text" style="width: 30px" ng-model="info.SCORE_SEC2" ng-pattern="/^[0-9]+$/" name="SCORE_SEC2">/17
+                <label class="col-lg-2 col-md-3 col-sm-3" style="margin-top: 7px">
+                    Score: <input type="number" style="width: 50px" ng-model="info.SCORE_SEC2" max="17" name="SCORE_SEC2">/17
                 </label>
             </div>
-            <div class="row" ng-show="showClickedValidation && MAForm.SCORE_SEC2.$error.pattern">
+            <div class="row" ng-show="showClickedValidation && (MAForm.SCORE_SEC2.$invalid || MAForm.SCORE_SEC2.$error.max)">
                 <div class="col-lg-6 col-md-8 col-sm-9"></div>
-                <label class="control-label col-lg-2 col-md-4 col-sm-3" style="color: #8b0000">Score must be number</label>
+                <label class="control-label col-lg-4 col-md-4 col-sm-3" style="color: #8b0000">Score Must be in number format and less than 17</label>
             </div>
             <div class="row">
                 <label class="col-lg-3 col-md-4 col-sm-4" style="margin-top: 7px">Peripheral Vision</label>

@@ -179,8 +179,10 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                 oriInfo = angular.copy($scope.info);
             }else if(response['status'] === 'fail'){
                 toastr.error("Fail!", "Error");
+                $state.go('loggedIn.demo', null, {'reload': true});
             }else if(response['status'] === 'error'){
                 toastr.error("Error!", "Error");
+                $state.go('loggedIn.demo', null, {'reload': true});
             }else {
                 insert = false;
                 $scope.isNew = false;
