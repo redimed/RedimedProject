@@ -35,6 +35,17 @@ angular.module('app.loggedIn.rlob.services',[])
 
 })
 
+.factory('timeoutService',function(){
+        var timeoutService={};
+        var stackFunc=[];
+        function unshiftFunc(func){
+            stackFunc.unshift(func);
+        }
+
+        return timeoutService;
+
+})
+
 .factory('rlobService',function(Restangular,$http,$q){
         var rlobService = {};
         var api = Restangular.all('api');
@@ -111,6 +122,12 @@ angular.module('app.loggedIn.rlob.services',[])
         {
             var changeMessages=api.one('rlob/rl_messages/updateMessages');
             return changeMessages.get({ID:ID,CONTENTS:CONTENTS});
+        }
+        //chien get list date Appoiment Calendar
+        rlobService.getListDateAppoinmentCalendar=function(rlTypeId,specialityId,doctorId,locationId,startDate,endDate,bookingType)
+        {
+            var result=api.one('rlob/appointment-calendar/get-list-date-appointment-calendar');
+            return result.get({RL_TYPE_ID:rlTypeId,Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,STARTDATE:startDate,ENDDATE:endDate,sourceType:bookingType});
         }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
@@ -239,8 +256,20 @@ angular.module('app.loggedIn.rlob.services',[])
             }).show();
         }
 
+        rlobService.checkNotificationExist=function(bookingId,bookingType,appearance)
+        {
+            var result=api.one('rlob/sys_user_notifications/check-notification-exist');
+            return result.get({bookingType:bookingType,bookingId:bookingId,appearance:appearance});
+        }
+//        recreateNotification
 
+        rlobService.recreateNotification=function(bookingId,appearance)
+        {
+            var result=api.one('rlob/sys_user_notifications/recreate-notification');
+            return result.get({bookingId:bookingId,appearance:appearance});
+        }
 
         return rlobService;
-});
+})
+
 

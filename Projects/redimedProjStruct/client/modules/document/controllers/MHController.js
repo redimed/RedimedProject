@@ -119,45 +119,53 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                             {
                                 "col1": dataTemp.s3_name1 || null,
                                 "col2": dataTemp.s3_reason1 || null,
-                                "col3": dataTemp.s3_regularly1 || null,
+                                "col3": dataTemp.s3_regularly1,
                                 "stt": dataTemp.s3_name1 == null ? false : true
                             },
                             {
                                 "col1": dataTemp.s3_name2 || null,
                                 "col2": dataTemp.s3_reason2 || null,
-                                "col3": dataTemp.s3_regularly2 || null,
+                                "col3": dataTemp.s3_regularly2,
                                 "stt": dataTemp.s3_name2 == null ? false : true
                             },
                             {
                                 "col1": dataTemp.s3_name3 || null,
                                 "col2": dataTemp.s3_reason3 || null,
-                                "col3": dataTemp.s3_regularly3 || null,
+                                "col3": dataTemp.s3_regularly3,
                                 "stt": dataTemp.s3_name3 == null ? false : true
                             },
                             {
                                 "col1": dataTemp.s3_name4 || null,
                                 "col2": dataTemp.s3_reason4 || null,
-                                "col3": dataTemp.s3_regularly4 || null,
+                                "col3": dataTemp.s3_regularly4,
                                 "stt": dataTemp.s3_name4 == null ? false : true
                             },
                             {
                                 "col1": dataTemp.s3_name5 || null,
                                 "col2": dataTemp.s3_reason5 || null,
-                                "col3": dataTemp.s3_regularly5 || null,
+                                "col3": dataTemp.s3_regularly5,
                                 "stt": dataTemp.s3_name5 == null ? false : true
+                            },
+                            {
+                                "col1": dataTemp.s3_name6 || null,
+                                "col2": dataTemp.s3_reason6 || null,
+                                "col3": dataTemp.s3_regularly6,
+                                "stt": dataTemp.s3_name6 == null ? false : true
                             }];
                         //check again value works
-                        angular.forEach(works, function (w, wIndex) {
-                            if (w.stt == false) {
-                                works.splice(wIndex, 1);
+                        for (var i = 0; i <= works.length - 1; i++) {
+                            if (works[i].stt == false) {
+                                works.splice(i, 1);
+                                i--;
                             }
-                        });
+                        }
                         //check again value works
-                        angular.forEach(medications, function (m, mIndex) {
-                            if (m.stt == false) {
-                                medications.splice(mIndex, 1);
+                        for (var j = 0; j <= medications.length - 1; j++) {
+                            if (medications[j].stt == false) {
+                                medications.splice(j, 1);
+                                j--;
                             }
-                        });
+                        }
                         $scope.count_sec2 = works.length - 1;
                         $scope.count_sec3 = medications.length - 1;
                     } else {
@@ -348,7 +356,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         s12_stones_or_renal: data.s12_stones_or_renal,
                         s12_comments: data.s12_comments,
                         s13_ever_smoked: data.s13_ever_smoked,
-                        many_cigarettes: data.many_cigarettes,
+                        s13_many_cigarettes: data.s13_many_cigarettes,
                         s13_start_stop_smoked: data.s13_start_stop_smoked,
                         s13_exercise: data.s13_exercise,
                         s13_aspect: data.s13_aspect,
@@ -364,7 +372,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         dec_signed: data.dec_signed,
                         dec_witness: data.dec_witness,
                         dec_date: data.dec_date || new Date(),
-                        doctor_id: data.doctor_id,
+                        doctor_id: response[0].doctor.doctor_id,
                         created_by: data.created_by,
                         last_updated_by: data.last_updated_by,
                         patient: response[0].patient,
@@ -373,7 +381,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         works: works,
                         medications: medications
                     };
-
+                    oriInfo = angular.copy($scope.info);
                 });
                 //begin sec 2
                 //click add
@@ -399,7 +407,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 //begin sec 3
                 //click add
                 $scope.add_sec3 = function () {
-                    if ($scope.count_sec3 < 4) {
+                    if ($scope.count_sec3 < 5) {
                         $scope.info.medications.push({
                             "col1": null,
                             "col2": null,

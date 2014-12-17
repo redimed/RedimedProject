@@ -20,7 +20,7 @@
                     <div class="caption">
                         <i class="fa fa-cogs"></i>
                         <span class="file-control pointer underline" ng-click="uploadPanel = false">Download</span>
-                        <span ng-show="selectedBooking.STATUS=='Confirmed'" class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>
+                        <span ng-show="selectedBooking.STATUS==bookingStatus.confirmed" class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>
                     </div>
                 </div>
                 <div class="portlet-body">
@@ -32,7 +32,7 @@
                             </rlob-file-download>
                         </div>
                         <div class="row form-group" ng-show="uploadPanel" id="file-upload-panel">
-                            <rlob-upload selected-booking="selectedBooking">
+                            <rlob-upload selected-booking="selectedBooking" files-update-flag="filesUpdateFlag">
                             </rlob-upload>
                         </div>
                     </div>

@@ -11,5 +11,20 @@ module.exports =
     sourceType:{
         REDiLEGAL:'REDiLEGAL',
         Vaccination:'Vaccination'
-    }
+    },
+
+    notificationAppearance:{
+        once:'ONCE',
+        whenAccess:'WHEN ACCESS'
+    },
+
+    bookingStatus:{
+        confirmed:'Confirmed',
+        arrived:'Arrived',
+        notArrived:'Not Arrived',
+        completed:'Completed',
+        canel:'Cancel'
+    },
+
+    
 }

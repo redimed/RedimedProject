@@ -3,13 +3,13 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="button" ng-disabled="mhForm.$error.pattern || mhForm.$error.maxlength|| mhForm.$error.required
-                    || !infoChanged()" ng-click="submit(mhForm)" class="btn green pull-right">{{isNew?"Add
+                <button type="button" ng-disabled="!infoChanged()" ng-click="submit(mhForm)"
+                        class="btn green pull-right">{{isNew?"Add
                     new":"Update"}}
                 </button>
-                <a href="/api/document/printMH/{{info.headers[0].PATIENT_ID}}/{{info.headers[0].CAL_ID}}/{{info.headers[0].MH_DF_ID}}"
-                   ng-disabled="mhForm.$error.pattern || mhForm.$error.maxlength|| mhForm.$error.required || infoChanged() || isNew"
-                   class="btn btn-primary blue pull-right">Print PDF
+                <a href="/api/document/printMH/{{info.patient_id}}/{{info.cal_id}}/{{info.mh_id}}"
+
+                   class="btn btn-primary blue pull-right" ng-disabled="infoChanged() || isNew">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
                 </button>
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <div class="col-md-3 col-sm-3" style="margin-top: 7px;">
-                                    <label class="control-label">Given Names:&nbsp;<span class="text-info">
+                                    <label class="control-label">DOB:&nbsp;<span class="text-info">
                                     {{info.patient.DOB|date:'dd/MM/yyyy'}}
                                 </span>
                                     </label>
@@ -426,7 +426,7 @@
                                        ng-show="(info.medications[count_sec3].col1!=null && info.medications[count_sec3].col1!='' &&
                                        info.medications[count_sec3].col2!=null && info.medications[count_sec3].col2!='' &&
                                        (info.medications[count_sec3].col3==0 || info.medications[count_sec3].col3==1) &&
-                                        count_sec3!=4) || count_sec3==-1">Add
+                                        count_sec3!=5) || count_sec3==-1">Add
                                         (+)</a>
                                 </div>
                             </div>
@@ -444,7 +444,8 @@
                                         <textarea class="form-control" name="s3_comments" ng-model="info.s3_comments"
                                                   ng-maxlength="500" ng-required="info.medications[0].col3==1 ||
                                                   info.medications[1].col3==1 || info.medications[2].col3==1 ||
-                                                  info.medications[3].col3==1 || info.medications[4].col3==1"></textarea>
+                                                  info.medications[3].col3==1 || info.medications[4].col3==1 ||
+                                                  info.medications[5].col3==1"></textarea>
 
                                         <div class="help-block" ng-show="mhForm.s3_comments.$error.maxlength">
                                             <label class="control-label">Too long!</label>
@@ -2014,10 +2015,10 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="btn-group">
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.s6_joint_or_bones" ng-value="1"/>&nbsp;Yes
+                                                    <input type="radio" ng-model="info.s6_affects" ng-value="1"/>&nbsp;Yes
                                                 </label>
                                                 <label class="btn">
-                                                    <input type="radio" ng-model="info.s6_joint_or_bones" ng-value="0"/>&nbsp;No
+                                                    <input type="radio" ng-model="info.s6_affects" ng-value="0"/>&nbsp;No
                                                 </label>
                                             </div>
                                         </div>
@@ -2034,17 +2035,10 @@
 
                                     <div ng-class="{'has-error': mhForm.s6_comments3.$error.required || mhForm.s6_comments3.$error.maxlength}">
                                         <textarea class="form-control" ng-model="info.s6_comments3" name="s6_comments3"
-                                                  ng-maxlength="500" ng-required="info.s6_rsi==1||
-            info.s6_tennis==1||
-            info.s6_carpal==1||
-            info.s6_hernia==1||
-            info.s6_osteoarthritis==1||
-            info.s6_arthritis==1||
-            info.s6_osteoporosis==1||
-            info.s6_fibromyalgia==1||
-            info.s6_fractured_bones==1||
-            info.s6_affects==1||
-            info.s6_joint_or_bones==1"></textarea>
+                                                  ng-maxlength="500" ng-required="info.s6_rsi==1||info.s6_tennis==1||
+                                                  info.s6_carpal==1||info.s6_hernia==1||info.s6_osteoarthritis==1||
+                                                  info.s6_arthritis==1||info.s6_osteoporosis==1||info.s6_fibromyalgia==1||
+                                                  info.s6_fractured_bones==1||info.s6_affects==1"></textarea>
 
                                         <div class="help-block" ng-show="mhForm.s6_comments3.$error.required">
                                             <label class="control-label">Required!</label>
@@ -2136,11 +2130,11 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="btn-group">
                                                         <label class="btn">
-                                                            <input type="radio" ng-model="info.s7_conditions"
+                                                            <input type="radio" ng-model="info.s7_disease"
                                                                    ng-value="1"/>&nbsp;Yes
                                                         </label>
                                                         <label class="btn">
-                                                            <input type="radio" ng-model="info.s7_conditions"
+                                                            <input type="radio" ng-model="info.s7_disease"
                                                                    ng-value="0"/>&nbsp;No
                                                         </label>
                                                     </div>
@@ -3403,18 +3397,17 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-6 col-sm-6">
-                                                <div ng-class="{'has-error': mhForm.many_cigarettes.$error.required || mhForm.many_cigarettes.$error.maxlength}">
-                                                    <input type="text" class="form-control" name="many_cigarettes"
-                                                           ng-maxlength="200" ng-model="info.many_cigarettes"
-                                                           ng-required="info.s13_ever_smoked"/>
-
+                                                <div ng-class="{'has-error': mhForm.s13_many_cigarettes.$error.required || mhForm.s13_many_cigarettes.$error.pattern}">
+                                                    <input type="text" class="form-control" name="s13_many_cigarettes"
+                                                           ng-model="info.s13_many_cigarettes"
+                                                           ng-required="info.s13_ever_smoked" ng-pattern="/^[0-9]+$/"/>
                                                     <div class="help-block"
-                                                         ng-show="mhForm.many_cigarettes.$error.required">
+                                                         ng-show="mhForm.s13_many_cigarettes.$error.required">
                                                         <label class="control-label">Required!</label>
                                                     </div>
                                                     <div class="help-block"
-                                                         ng-show="mhForm.many_cigarettes.$error.maxlength">
-                                                        <label class="control-label">Too long!</label>
+                                                         ng-show="mhForm.s13_many_cigarettes.$error.pattern">
+                                                        <label class="control-label">Required is number!</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3652,7 +3645,7 @@
 
                                     </div>
                                     <div class="col-md-12 col-sm-12">
-                                        <div class="col-md-1 col-sm-1" style="width:auto;">
+                                        <div class="col-md-1 col-sm-1">
                                             <input type="checkbox" class="form-control" ng-model="info.rmi_physical"
                                                    ng-true-value="1"
                                                    ng-false-value="0" ng-checked="info.rmi_physical==1"/>
@@ -3677,7 +3670,7 @@
 
                                     </div>
                                     <div class="col-md-12 col-sm-12">
-                                        <div class="col-md-1 col-sm-1" style="width:auto;">
+                                        <div class="col-md-1 col-sm-1">
                                             <input type="checkbox" class="form-control" ng-model="info.rmi_mental"
                                                    ng-true-value="1"
                                                    ng-false-value="0" ng-checked="info.rmi_mental==1"/>

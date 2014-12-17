@@ -69,6 +69,8 @@ var general_process = function(req, res){
 		var is_fund_type = (group_type && group_type == 'fund') ? true : false;
 		var is_item_fee_type = (group_type && group_type == 'item_fee') ? true: false;
 		var is_fee_type = (!is_fund_type && !is_item_fee_type);
+		
+		console.log(is_fund_type, is_item_fee_type, is_fee_type);
 
 		var process_group = list_group_types; // FEE TYPES OF GROUP
 		var source_arr = []; // ARRAY FEES AFTER READ SOURCE FILE
@@ -144,17 +146,20 @@ var general_process = function(req, res){
 					} 
 					return;
 				}
-
+		
+				
+		
 				if(is_fee_type) {
 					source_arr = item_fees_model.process_content_file(data); // ASSIGN GLOBAL
 				} else {
 					source_arr = fund_fees_model.process_content_file(data); // ASSIGN GLOBAL
 					process_data.step_num = parseInt(process_data.step_num  / process_group.length);  // ASSIGN GLOBAL
-				}	
-				if(!source_arr) {
+				}
+				if(!source_arr || source_arr.length == 0){
 					res.json('File is invalid format');
 					return;
 				}
+				
 				process_data.total_num =  source_arr.length; // ASSIGN GLOBAL
 				process_data.left_num = source_arr.length; // ASSIGN GLOBAL
 
@@ -313,6 +318,9 @@ module.exports = {
 					fields: ['PF_id'],
 					where: where_opt
 				}).success(function(feeTypes){
+					if(feeTypes.length == 0) {
+						res.json(200, {"status": "warning", "message": 'No fund in '+ groupInstance.FEE_GROUP_NAME.toUpperCase()});
+					}
 					processInstance.update_type_fee_from_source(feeTypes, 'fund');
 				}).error(function(err){
 					console.log(err);

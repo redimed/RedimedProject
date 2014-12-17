@@ -41,7 +41,7 @@ var FileInputStream = java.import('java.io.FileInputStream');
 module.exports = {
     printReport: function (req, res, next) {
         var calId = req.params.CAL_ID;
-        var MH_ID = req.params.MH_DF_ID;
+        var MH_ID = req.params.MH_ID;
         var patientId = req.params.PATIENT_ID;
 
         mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
@@ -51,9 +51,9 @@ module.exports = {
 
                 var paramMap = new HashMap();
 
-                paramMap.putSync("cal_id", parseInt(calId));
-                paramMap.putSync("patient_id", parseInt(patientId));
-                paramMap.putSync("key", parseInt(MH_ID));
+                //paramMap.putSync("cal_id", parseInt(calId));
+                //paramMap.putSync("patient_id", parseInt(patientId));
+                paramMap.putSync("id", parseInt(MH_ID));
                 paramMap.putSync("real_path", "./reports/MH/");
 
                 var filePath = '.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId + '\\MedicalHistory.pdf';
@@ -216,6 +216,10 @@ module.exports = {
             s3_reason5: info.medications[4] != undefined ? info.medications[4].col2 : null,
             s3_regular5: info.medications[4] != undefined ? info.medications[4].col3 : null,
 
+            s3_name6: info.medications[5] != undefined ? info.medications[5].col1 : null,
+            s3_reason6: info.medications[5] != undefined ? info.medications[5].col2 : null,
+            s3_regular6: info.medications[5] != undefined ? info.medications[5].col3 : null,
+
             s3_comments: info.s3_comments,
             s4_concerning: info.s4_concerning,
             s4_weight_altered: info.s4_weight_altered,
@@ -340,7 +344,7 @@ module.exports = {
             s12_stones_or_renal: info.s12_stones_or_renal,
             s12_comments: info.s12_comments,
             s13_ever_smoked: info.s13_ever_smoked,
-            many_cigarettes: info.many_cigarettes,
+            s13_many_cigarettes: info.s13_many_cigarettes,
             s13_start_stop_smoked: info.s13_start_stop_smoked,
             s13_exercise: info.s13_exercise,
             s13_aspect: info.s13_aspect,
@@ -431,6 +435,10 @@ module.exports = {
             s3_reason5: info.medications[4] != undefined ? info.medications[4].col2 : null,
             s3_regular5: info.medications[4] != undefined ? info.medications[4].col3 : null,
 
+            s3_name6: info.medications[5] != undefined ? info.medications[5].col1 : null,
+            s3_reason6: info.medications[5] != undefined ? info.medications[5].col2 : null,
+            s3_regular6: info.medications[5] != undefined ? info.medications[5].col3 : null,
+
             s3_comments: info.s3_comments,
             s4_concerning: info.s4_concerning,
             s4_weight_altered: info.s4_weight_altered,
@@ -555,7 +563,7 @@ module.exports = {
             s12_stones_or_renal: info.s12_stones_or_renal,
             s12_comments: info.s12_comments,
             s13_ever_smoked: info.s13_ever_smoked,
-            many_cigarettes: info.many_cigarettes,
+            s13_many_cigarettes: info.s13_many_cigarettes,
             s13_start_stop_smoked: info.s13_start_stop_smoked,
             s13_exercise: info.s13_exercise,
             s13_aspect: info.s13_aspect,

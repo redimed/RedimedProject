@@ -1,7 +1,7 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-.controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q, ConfigService){
+.controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout){
 
     // DATE
     $scope.dateOptions = {
@@ -294,6 +294,13 @@ angular.module("app.loggedIn.controller",[
             });
         }
         $scope.updateNotificationManual();
+        $scope.functionTimeout=function()
+        {
+            $scope.updateNotificationManual();
+        }
+        $timeout($scope.functionTimeout,4000);
+
+
 
 
         /***
@@ -462,7 +469,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 3000);
+            }, 5000);
         };
 
 
@@ -722,19 +729,21 @@ angular.module("app.loggedIn.controller",[
          * content: content of message (if bellType=message)
          * tannv.dts@gmail.com
          */
-        $scope.add_notification=function(assId,refId,sourceName,bellType,notificationType,content)
+        $scope.add_notification=function(assId,refId,sourceName,bellType,notificationType,content,appearance)
         {
             var deferred=$q.defer();
             var promise=deferred.promise;
             promise.then(function(data){
                 var msg="";
+                var claimNo=(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"");
+                var employeeNumber=(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"");
                 if(notificationType==rlobConstant.notificationType.letter)
                 {
                     msg="["+sourceName+"] - "
                         +data.Rl_TYPE_NAME+" - "
                         +data.WRK_SURNAME+" - "
-                        +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")
-                        +(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"")
+                        +claimNo
+                        +employeeNumber
                         +" - "
                         +moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY");
                 }
@@ -742,17 +751,19 @@ angular.module("app.loggedIn.controller",[
                 {
                     msg="["+sourceName+"] - "
                         +data.WRK_SURNAME+ " - "
-                        +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")+
-                        +(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"")
+                        +claimNo
+                        +employeeNumber
                         +" - "
                         +bellType+(content!=undefined &&content!=null && content!=""?(":"+content):'')
                         +" - "
                         +moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY");
+
                 }
+
                 $http({
                     method:"POST",
                     url:"/api/rlob/sys_user_notifications/add-notification",
-                    data:{assId:assId,refId:refId,sourceName:sourceName,type:notificationType,msg:msg}
+                    data:{assId:assId,refId:refId,sourceName:sourceName,type:notificationType,msg:msg,appearance:appearance}
                 })
                     .success(function(data) {
                         if(data.status=='success')
@@ -832,6 +843,50 @@ angular.module("app.loggedIn.controller",[
 	
 			}
 		}
-		
-		
+
+        /**
+         * tannv.dts@gmail.com
+         * REDiLEGAL online booking
+         *
+         */
+        $scope.updateDailyNotificationRlobBooking=function(){
+            rlobService.getUpcommingBookingHaveNotClientDocument(rlobConstant.bookingType.REDiLEGAL.name)
+                .then(function(data){
+                    if(data.status=='success'){
+                        for(var i=0;i<data.data.length;i++)
+                        {
+                            rlobService.checkNotificationExist(data.data[i].BOOKING_ID,rlobConstant.bookingType.REDiLEGAL.name,rlobConstant.notificationAppearance.whenAccess)
+                                .then(function(data){
+
+                                    if(data.status=='success')
+                                    {
+                                        if(data.data.NOTIFICATION_COUNT<=0)
+                                        {
+                                            $scope.add_notification($scope.userInfo.id,data.data.BOOKING_ID,rlobConstant.bookingType.REDiLEGAL.name,rlobConstant.bellType.notification,rlobConstant.notificationType.bell,'Please send documents before appointment',rlobConstant.notificationAppearance.whenAccess);
+                                        }
+                                        else
+                                        {
+                                            //UPDATE
+                                            rlobService.recreateNotification(data.data.BOOKING_ID,rlobConstant.notificationAppearance.whenAccess)
+                                                .then(function(result){
+                                                    $scope.showNotificationPopup(".lob_notification_popup",result.data.msg,$scope.notificationColor.warning);
+                                                },function(err){
+
+                                                })
+                                        }
+                                    }
+                                },function(err){
+
+                                })
+                        }
+                    }
+
+                },function(err){
+
+                })
+
+        }
+        $scope.updateDailyNotificationRlobBooking();
+
+
 	})

@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.detail.directive", [])
 
-.directive("patientDetail", function(PatientService, CompanyService, ConfigService, toastr, PatientModel){
+.directive("patientDetail", function($http, PatientService, CompanyService, ConfigService, toastr, PatientModel){
 	return{
 		restrict: "EA",
 		scope: {
@@ -15,7 +15,45 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				var idClose = "#"+scope.isClose;
 			}
 
+			// VERIFIED MEDICARE
+			scope.verifiedMedicare = function(){
+				if(!isNaN(parseFloat(scope.modelObjectMap.Medicare_no)) && isFinite(scope.modelObjectMap.Medicare_no)){
+					if(scope.modelObjectMap.Medicare_no.toString().length === 10){
+						var dob = "";
+						if(scope.modelObjectMap.DOB !== null){
+							var time = new Date(scope.modelObjectMap.DOB);
+
+							var date = time.getDate().toString();
+							if(date < 10) date = "0"+date;
+
+							var month = (time.getMonth()+1).toString();
+							if(month < 10) month = "0"+month;
+
+							var year = time.getFullYear().toString();
+
+							dob = date+month+year;
+						}
+
+						var options = {
+							firstName: scope.modelObjectMap.First_name,
+							lastName: scope.modelObjectMap.Sur_name,
+							dob: dob,
+							medicareNo: scope.modelObjectMap.Medicare_no,
+							refNo: scope.modelObjectMap.Ref
+						}
+
+						PatientService.mdtVerifiedMedicare(options).then(function(response){
+							if(response.status.code == '0')
+								scope.isMedicare = true;
+						})
+					}//end medicare length
+				}//end isNaN
+			}
+
+			//END VERIFIED MEDICARE
+
 			var initObject = function(){
+				scope.isMedicare = false;
 				scope.isSubmit = false;
 				scope.accordion = {
 					oneAtATime: false,

@@ -34,7 +34,12 @@ angular.module("app", [
     'ngSanitize',
 ])
 
-.config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {
+.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {
+    // CORS PROXY
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    // END CORS PROXY
+
     //IDLE TIME
     $idleProvider.idleDuration(15*60);
     $idleProvider.warningDuration(30);
@@ -42,7 +47,6 @@ angular.module("app", [
 
     // RESTANGULAR DEFAULT
     RestangularProvider.setBaseUrl("");
-
 
     $urlRouterProvider.otherwise('/');
 

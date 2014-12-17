@@ -29,7 +29,7 @@ java.classpath.push('./lib/jasperreports-5.6.0.jar');
 java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
 java.classpath.push('./lib/org-apache-commons-codec.jar');
 //java.classpath.push('./lib/Audio.jar');
-java.classpath.push('./lib/Medicare.jar');
+//java.classpath.push('./lib/Medicare.jar');
 
 
 //var ImageIO = java.import('javax.imageio.ImageIO');

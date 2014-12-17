@@ -404,14 +404,22 @@
                                     </p>
                                     <!--chien-->
                                     <!--phanquocchien.c1109g@gmail.com-->
-                                    <!--<p>-->
-                                        <!--REDiLEGAL to contact the case manager to arrange a time for the worker-->
-                                        <!--<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTMANAGER">-->
-                                    <!--</p>-->
-                                    <!--<p>-->
-                                        <!--Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment-->
-                                        <!--<input title="sdfasdfadsf" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.isUrgent">-->
-                                    <!--</p>-->
+                                    <p>
+                                        Can this assessment be rescheduled by the claimant
+                                        <!-- <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISCONTACTMANAGER"> -->
+                                        <input style="" type="radio" ng-model="newBooking.ISCONTACTMANAGER" value="1">
+                                        <span>YES</span>
+                                        <input style="" type="radio" ng-model="newBooking.ISCONTACTMANAGER" value="0">
+                                        <span>NO</span>
+                                    </p>
+                                    <p>
+                                        Is an interpreter required for this appointment
+                                        <!-- <input title="sdfasdfadsf" type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.isUrgent"> -->
+                                        <input style="" type="radio" ng-model="newBooking.isUrgent" value="1">
+                                        <span>YES</span>
+                                        <input style="" type="radio" ng-model="newBooking.isUrgent" value="0">
+                                        <span>NO</span>
+                                    </p>
 
                                     <div class="row form-group" ng-class="{'has-error':bookingForm.NOTES.$invalid  && hadForcused}">
                                         <div class="col-md-12 col-sm-12">

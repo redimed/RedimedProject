@@ -1,0 +1,96 @@
+
+<script type="text/ng-template" id="iso_create_folder_template.html">
+    <form role="form">
+        <div class="form-group">
+            <label >Folder name:
+                <small class="has-error">
+                    {{newFolderBackError.name}}
+                </small>
+            </label>
+            
+            <input type="text" ng-model="newFolder.nodeName" class="form-control" placeholder="Folder name">
+        </div>
+        <div class="form-group">
+            <label >Description:</label>
+            <input type="text" ng-model="newFolder.description" class="form-control" placeholder="Description">
+        </div>
+        <button class="btn btn-default" ng-click="beforeCreateFolder();">Create</button>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="iso_create_document_template.html">
+    <form role="form">
+        <div class="form-group">
+            <label >Document name:
+                <small class="has-error">
+                    {{newDocumentBackError.name}}
+                </small>
+            </label>
+            <input type="text" ng-model="newDocument.nodeName" class="form-control" placeholder="Document name">
+        </div>
+        <div class="form-group">
+            <label >Document code:
+                <small class="has-error">
+                    {{newDocumentBackError.docCode}}
+                </small>
+            </label>
+            <input type="text" ng-model="newDocument.docCode" class="form-control" placeholder="Document code">
+        </div>
+        <div class="form-group">
+            <label >Description:</label>
+            <input type="text" ng-model="newDocument.description" class="form-control" placeholder="Description">
+        </div>
+
+        <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+            <input style="background-color: burlywood" type="file" nv-file-select="" uploader="uploader"  /><br/>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="50%">Name</th>
+                    <th ng-show="uploader.isHTML5">Size</th>
+                    <th ng-show="uploader.isHTML5">Progress</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in uploader.queue">
+                    <td><strong>{{ item.file.name}}</strong></td>
+                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size / 1024 / 1024|number:2 }} MB</td>
+                    <td ng-show="uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar" ng-style="{
+                                                                        'width': item.progress + '%' }"></div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+                    
+                </tr>
+                </tbody>
+            </table>
+
+            <div
+                <button type="button" class="btn btn-success btn-s" ng-click="beforeCreateDocument();" ng-disabled="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Create Documents
+                </button>
+                <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
+                <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
+                <!--</button>-->
+                <!-- <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Clear file
+                </button> -->
+            </div>
+        </div>
+
+    </form>
+</script>
+
+
+<iso-msg-popup style-class="msgPopupInfo.styleClass" header="msgPopupInfo.header" type="msgPopupInfo.type" content="msgPopupInfo.content">
+
+</iso-msg-popup>
+

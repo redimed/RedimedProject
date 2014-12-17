@@ -6,7 +6,7 @@
                 <i ng-if="node.nodes" class="fa fa-minus"></i>
                 <i ng-if="node.NODE_TYPE==nodeType.folder" class="fa fa-folder-open"></i>
                 <i ng-if="node.NODE_TYPE==nodeType.document" class="fa fa-leaf"></i>
-                {{node.NODE_TYPE==nodeType.folder?node.DIRECTORY_NAME:node.DOC_NAME}}
+                {{node.NODE_NAME}}
                 <!-- ____{{node.relativePath}} -->
         </span>
         <a ng-click="showTreeActionsMenuPopup(node);">actions </a>    
@@ -71,34 +71,8 @@
     </div>
 </div>
 
-<script type="text/ng-template" id="iso_create_folder_template.html">
-    <form role="form">
-        <div class="form-group">
-            <label >Folder name:</label>
-            <input type="text" ng-model="newFolder.folderName" class="form-control" placeholder="Folder name">
-        </div>
-        <div class="form-group">
-            <label >Description:</label>
-            <input type="text" ng-model="newFolder.description" class="form-control" placeholder="Description">
-        </div>
-        <button class="btn btn-default" ng-click="createFolder();">Create</button>
-    </form>
-</script>
+<div ng-include="'modules/iso/views/templates/iso.html/iso_page_template.html'">
 
-<script type="text/ng-template" id="iso_create_document_template.html">
-    <form role="form">
-        <div class="form-group">
-            <label >Document name:</label>
-            <input type="text" ng-model="newDocument.docName" class="form-control" placeholder="Document name">
-        </div>
-        <div class="form-group">
-            <label >Document code:</label>
-            <input type="text" ng-model="newDocument.docCode" class="form-control" placeholder="Document code">
-        </div>
-        <div class="form-group">
-            <label >Description:</label>
-            <input type="text" ng-model="newDocument.description" class="form-control" placeholder="Description">
-        </div>
-        <button class="btn btn-default" ng-click="createDocument();">Create</button>
-    </form>
-</script>
+</div>
+
+<button ng-click='test();'>test</button>   

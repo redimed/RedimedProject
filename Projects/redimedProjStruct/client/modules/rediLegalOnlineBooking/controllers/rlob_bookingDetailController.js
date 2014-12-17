@@ -6,7 +6,7 @@ angular.module('app.loggedIn.rlob.bookingDetail.controller',[])
     $scope.isAdminGetFiles=true;
     $scope.isAdminUpload=true;
     $scope.loginInfo = $cookieStore.get('userInfo');
-
+    $scope.bookingStatus=rlobConstant.bookingStatus;
     $http({
         method: "POST",
         url: "/api/rlob/rl_bookings/get-booking-by-id",

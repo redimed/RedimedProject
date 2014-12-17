@@ -5,17 +5,22 @@
 
 
 var db = require('../models');
+var rlobUtil=require('./rlobUtilsController');
+
+
+
+
+
 module.exports =
 {
     getListNotification:function(req,res)
     {
         var assId=req.query.userId;
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+assId);
         var sql=
             " SELECT 	*                            "+
             " FROM 	`sys_user_notifications` n       "+
             " WHERE 	n.`user_id`=?                "+
-            " ORDER BY n.`time_created` DESC         ";
+            " ORDER BY n.`time_created` DESC, n.id DESC         ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,assId,function(err,rows)
@@ -40,28 +45,30 @@ module.exports =
         var sourceName=req.body.sourceName;
         var type=req.body.type;
         var msg=req.body.msg;
+        var appearance=req.body.appearance?req.body.appearance:rlobUtil.notificationAppearance.once;
         var insertRow={
             user_id:assId,
             ref_id:refId,
             source_name:sourceName,
             type:type,
-            msg:msg
+            msg:msg,
+            APPEARANCE:appearance
         };
         var sql=" INSERT INTO `sys_user_notifications` set ?  ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,insertRow,function(err,rows)
+            {
+                if(err)
                 {
-                    if(err)
-                    {
-                        console.log("Error Selecting : %s ",err );
-                        res.json({status:'fail'});
-                    }
-                    else
-                    {
-                        res.json({status:'success',data:insertRow});
-                    }
-                });
+                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:insertRow});
+                }
+            });
         });
     },
 
@@ -72,7 +79,7 @@ module.exports =
         var sql=    " SELECT 	*                        "+
                     " FROM 	`sys_user_notifications` n   "+
                     " WHERE	n.`STATUS`=0 AND             "+
-                    " 	n.`user_id`=? AND n.`id`>?       ";
+                    " n.`user_id`=? AND n.`id`>?  ORDER BY n.`time_created` DESC, id DESC      ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[userId,currentIndex],function(err,rows)
@@ -96,8 +103,7 @@ module.exports =
         var sql=    " SELECT 	*                              "+
                     " FROM 	`sys_user_notifications` n         "+
                     " WHERE	n.`STATUS`=0 AND n.`user_id`=?     "+
-                    " ORDER BY n.`time_created` DESC           ";
-
+                    " ORDER BY n.`time_created` DESC, n.id DESC           ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,userId,function(err,rows)
@@ -193,7 +199,7 @@ module.exports =
             " SELECT  n.*                        "+
             " FROM 	`sys_user_notifications` n   "+
             " WHERE	n.`user_id`=? and type=?     "+
-            " ORDER BY n.`time_created` DESC     "+
+            " ORDER BY n.`time_created` DESC, n.id DESC     "+
             " LIMIT	? , ?                        ";
         req.getConnection(function(err,connection)
         {
@@ -210,7 +216,81 @@ module.exports =
                 }
             });
         });
+    },
+
+
+    checkNotificationExist:function(req,res)
+    {
+        var bookingId=req.query.bookingId;
+        var bookingType=req.query.bookingType?req.query.bookingType:'%';
+        var appearance=req.query.appearance?req.query.appearance:'%';
+        var sql=
+            " SELECT COUNT(notification.`id`) AS NOTIFICATION_COUNT FROM `sys_user_notifications` notification                                 "+
+            " WHERE `notification`.`ref_id`=? AND `notification`.`source_name`=? AND notification.`APPEARANCE`=?";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[bookingId,bookingType,appearance],function(err,rows)
+            {
+                if(err)
+                {
+                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    rows[0].BOOKING_ID=bookingId;
+                    res.json({status:'success',data:rows[0]});
+                }
+            });
+        });
+    },
+
+    recreateNotification:function(req,res)
+    {
+        var bookingId=req.query.bookingId;
+        var appearance=req.query.appearance;
+        var sql=
+            " UPDATE `sys_user_notifications` notification SET notification.`STATUS`=0    "+
+            " WHERE notification.`ref_id`=? AND notification.`APPEARANCE`=?               ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[bookingId,appearance],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    var sql2=
+                        " SELECT notification.*                                            "+
+                        " FROM `sys_user_notifications` notification                       "+
+                        " WHERE notification.`ref_id`=? AND notification.`APPEARANCE`=?    ";
+                    req.getConnection(function(err,connection)
+                    {
+                        var query = connection.query(sql2,[bookingId,appearance],function(err,rows)
+                        {
+                            if(err)
+                            {
+                                res.json({status:'fail'});
+                            }
+                            else
+                            {
+                                if(rows.length<=0)
+                                    res.json({status:'fail'});
+                                else
+                                    res.json({status:'success',data:rows[0]});
+                            }
+                        });
+                    });
+
+
+                }
+            });
+        });
     }
+
+
 
 
 }

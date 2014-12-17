@@ -1,0 +1,45 @@
+
+/*
+//tannv.dts@gmail.com
+//Trigger khi booking
+- Khi insert 1 booking moi thi trigger after_rl_bookings_insert se chay de cap nhat cln_appointment_calendar, nham xac dinh rang mot appointment da duoc booking.
+- Khi update 1 booking status= Cancel thi trigger after_rl_bookings_update_status se chay de cap nhat cln_appointment_calendar, nham xac dinh rang mot appointment se duoc cho phep booking tro lai
+*/
+
+//tannv.dts@gmail.com
+//Document Status:
+documentStatus:{
+        notConfirmed:'Not confirmed',
+        checked:'Checked',
+        noDocuments:'No documents'
+	},
+
+/*
+//phanquocchien.c1109g@gmail.com
+//Trigger khi client upload document phai tu cap nhap lai document status
+- khi client upload document(insert 1 rl_booking_files) thi trigger after_rlbooking_files_insert se chay de cap nhap document status (change DOCUMENT_STATUS trong bang rl_bookings sang 'Not confirmed' khi DOCUMENT_STATUS la 'No documents')
+*/
+
+/*
+//phanquocchien.c1109g@gmail.com
+//quy dinh mau sac trang admin-booking-list.html
+- yellow : 'Not confirmed',
+- red : 'No documents',
+- blue : 'Checked'
+*/
+
+/*
+//phanquocchien.c1109g@gmail.com
+//quy dinh mau sac trang admin-booking-report-type1.html
+- yellow : 'Not confirmed',
+- red : 'No documents',
+- blue : 'Checked'
+*/
+
+/*
+//phanquocchien.c1109g@gmail.com
+//quy dinh mau sac trang admin-booking-report-type2.html
+- yellow : nhung booking khong co file va booking status la 'Completed',
+- red : nhung booking chua change status(status la 'Confirmed'),
+- blue : nhung booking co status khac 'Confirmed'
+*/

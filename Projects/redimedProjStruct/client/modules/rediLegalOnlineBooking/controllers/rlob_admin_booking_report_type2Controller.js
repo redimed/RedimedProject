@@ -77,11 +77,18 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
                     if(data.status == 'success')
                     {
                         for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].STATUS == $scope.status){
-                                data.data[i].style_class = "danger";
+                            if(data.data[i].STTTABLE == 1){
+                                data.data[i].style_class = "warning";
                             }
                             else{
-                                data.data[i].style_class = "success";
+                                if(data.data[i].STTTABLE == 2){
+                                    if(data.data[i].STATUS == $scope.status){
+                                        data.data[i].style_class = "danger";
+                                    }
+                                    else{
+                                        data.data[i].style_class = "info";
+                                    }
+                                }
                             }
                         }
                         $scope.reportStatusBookingsList= data.data;
@@ -93,7 +100,12 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
         }
         $scope.pagingHandlerStatusBookingHaveNotResult=function()
         {
-            $scope.removeSelectedBooking();
+            if(!$scope.isChangingBookingStatus)
+            {
+                $scope.removeSelectedBooking();
+            }
+            $scope.isChangingBookingStatus=false;
+
             var info={
                 bookingType:$scope.bookingType,
                 doctorId:$scope.doctorId,
@@ -114,11 +126,18 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
                     if(data.status == 'success')
                     {
                         for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].STATUS == $scope.status){
-                                data.data[i].style_class = "danger";
+                            if(data.data[i].STTTABLE == 1){
+                                data.data[i].style_class = "warning";
                             }
                             else{
-                                data.data[i].style_class = "success";
+                                if(data.data[i].STTTABLE == 2){
+                                    if(data.data[i].STATUS == $scope.status){
+                                        data.data[i].style_class = "danger";
+                                    }
+                                    else{
+                                        data.data[i].style_class = "info";
+                                    }
+                                }
                             }
                         }
                         $scope.reportStatusBookingsList= data.data;
@@ -137,4 +156,12 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
                 $scope.doctorId=$scope.doctorInfo?$scope.doctorInfo.doctor_id:'';
                 $scope.initPagingReportStatusBookingHaveNotResult();
             });
+        $scope.isChangingBookingStatus=false;
+        $scope.$watch('bookingStatusChangedFlag',function(newValue,oldValue){
+            if($scope.bookingStatusChangedFlag && $scope.bookingStatusChangedFlag>0)
+            {
+                $scope.isChangingBookingStatus=true;
+                $scope.pagingHandlerStatusBookingHaveNotResult();
+            }
+        })
     })

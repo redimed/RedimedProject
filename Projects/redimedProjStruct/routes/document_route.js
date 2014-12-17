@@ -112,7 +112,7 @@ app.get('/api/document/printForm18/:gorgonId/:patientId/:calId', form18Controlle
 app.post('/api/document/loadMH', MHController.loadMH);
 app.post('/api/document/insertMH', MHController.insertMH);
 app.post('/api/document/editMH', MHController.editMH);
-app.get('/api/document/printMH/:PATIENT_ID/:CAL_ID/:MH_DF_ID', MHController.printReport);
+app.get('/api/document/printMH/:PATIENT_ID/:CAL_ID/:MH_ID', MHController.printReport);
 /**
  * end medical history
  */

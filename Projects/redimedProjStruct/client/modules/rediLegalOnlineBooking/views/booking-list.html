@@ -198,7 +198,7 @@
                                 <div class="caption">
                                     <i class="fa fa-cogs"></i>
                                     <span class="file-control pointer underline" ng-click="uploadPanel = false">Download</span>
-                                    <span ng-show="selectedBooking.STATUS=='Confirmed'" class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>
+                                    <span ng-show="selectedBooking.STATUS==bookingStatus.confirmed" class="file-control pointer underline" ng-click="uploadPanel = true">Upload</span>
                                     <span class="file-control pointer underline" ng-click="printContent();">Print Summary</span>
                                 </div>
                             </div>

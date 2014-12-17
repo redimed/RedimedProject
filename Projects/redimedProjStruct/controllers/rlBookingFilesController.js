@@ -2,6 +2,10 @@
  * Created by meditech on 9/26/2014.
  */
 var db = require('../models');
+var rlBookingsController=require('./rlBookingsController');
+var rlobUtil=require('./rlobUtilsController');
+
+ // var gmaps=require('gmaps');
 module.exports =
 {
     getNewKey:function(req,res)
@@ -19,6 +23,7 @@ module.exports =
             });
         });
     },
+
     change_role_download:function(req,res){
         var fileId=req.body.fileId;
         var role=req.body.role;
@@ -49,8 +54,14 @@ module.exports =
 
                                         })
                                 }
+
+                                //send email notification
+                                req.body.bookingId=data[0].BOOKING_ID;
+                                rlBookingsController.sendResultNotificationEmail(req,res);
                             });
+
                     }
+                    
 
                     res.json({status:'success'});
                 }

@@ -13,21 +13,21 @@ module.exports =
 {
     sendEmail: function (req,res,emailInfo) {
 
-//        var transport = nodemailer.createTransport({
-//            service: 'Gmail',
-//            auth: {
-//                user:'tannv.solution@gmail.com',//test
-//                pass:'redimed123'//test
-//            }
-//        });
+       // var transport = nodemailer.createTransport({
+       //     service: 'Gmail',
+       //     auth: {
+       //         user:'tannv.solution@gmail.com',//test
+       //         pass:'redimed123'//test
+       //     }
+       // });
 
-//        var mailOptions = {
-//            from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
-//            to: emailInfo.recipients, // receiver
-//            subject: emailInfo.subject, // Subject line
-//            html: emailInfo.htmlBody
-//
-//        }
+       // var mailOptions = {
+       //     from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
+       //     to: emailInfo.recipients, // receiver
+       //     subject: emailInfo.subject, // Subject line
+       //     html: emailInfo.htmlBody
+
+       // }
 
         var transport = nodemailer.createTransport(smtpTransport({
             host: "mail.redimed.com.au", // hostname
