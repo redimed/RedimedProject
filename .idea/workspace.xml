@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3d7fd071-90c9-4b63-bffd-9ed4babcea7e" name="Default" comment="" />
+    <list default="true" id="3d7fd071-90c9-4b63-bffd-9ed4babcea7e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MRS/images/checked.png" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MRS/images/checked.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MRS/result_summary.jasper" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MRS/result_summary.jasper" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MRS/images/uncheck.png" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MRS/images/uncheck.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MRS/result_summary.jrxml" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MRS/result_summary.jrxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="RedimedProject.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,10 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="document_route.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="document_route.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35584843" vertical-offset="1722" max-vertical-offset="3043">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1722" max-vertical-offset="3043">
               <caret line="114" column="55" selection-start-line="114" selection-start-column="55" selection-end-line="114" selection-end-column="55" />
               <folding />
             </state>
@@ -104,21 +111,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SA1Controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/SA1Controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="3264">
-              <caret line="103" column="35" selection-start-line="103" selection-start-column="35" selection-end-line="103" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="medicalhistory.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="57902" max-vertical-offset="65654">
-              <caret line="3406" column="58" selection-start-line="3406" selection-start-column="58" selection-end-line="3406" selection-end-column="58" />
+            <state vertical-scroll-proportion="-40.53846" vertical-offset="5916" max-vertical-offset="65654">
+              <caret line="410" column="66" selection-start-line="410" selection-start-column="66" selection-end-line="410" selection-end-column="66" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
@@ -190,6 +187,67 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="medicalresultsummary.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.50880283" vertical-offset="9129" max-vertical-offset="11356">
+              <caret line="554" column="50" selection-start-line="554" selection-start-column="50" selection-end-line="554" selection-end-column="50" />
+              <folding>
+                <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#4;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#3;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#4;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#5;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#6;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#6;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#7;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#7;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#8;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#8;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#9;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#9;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#10;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#10;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#11;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#11;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#13;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#14;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#14;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#15;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#15;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#16;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#16;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#17;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#18;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#1;n#div#18;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -205,10 +263,11 @@
       <list>
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MHController.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js" />
-        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/FAController.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html" />
       </list>
     </option>
   </component>
@@ -538,10 +597,14 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/le/Desktop/RedimedProject/Projects/redimedProjStruct/client/modules/document/views/form18.html" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -549,10 +612,6 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -597,7 +656,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="1" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -886,14 +945,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2703" max-vertical-offset="10676">
-          <caret line="159" column="54" selection-start-line="149" selection-start-column="52" selection-end-line="158" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/Cat2Controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.872054" vertical-offset="5171" max-vertical-offset="9197">
@@ -953,10 +1004,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/FAController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7684">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/FAController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="6069">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/HICMedicareController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="3502">
+          <caret line="28" column="20" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="10319">
+          <caret line="54" column="70" selection-start-line="53" selection-start-column="18" selection-end-line="54" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1722" max-vertical-offset="3043">
+          <caret line="114" column="55" selection-start-line="114" selection-start-column="55" selection-end-line="114" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="57902" max-vertical-offset="65654">
-          <caret line="3406" column="58" selection-start-line="3406" selection-start-column="58" selection-end-line="3406" selection-end-column="58" />
+        <state vertical-scroll-proportion="-40.53846" vertical-offset="5916" max-vertical-offset="65654">
+          <caret line="410" column="66" selection-start-line="410" selection-start-column="66" selection-end-line="410" selection-end-column="66" />
           <folding>
             <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
@@ -1027,51 +1126,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/FAController.js">
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7684">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/FAController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="6069">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/HICMedicareController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="3502">
-          <caret line="28" column="20" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="10319">
-          <caret line="54" column="70" selection-start-line="53" selection-start-column="18" selection-end-line="54" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35584843" vertical-offset="1722" max-vertical-offset="3043">
-          <caret line="114" column="55" selection-start-line="114" selection-start-column="55" selection-end-line="114" selection-end-column="55" />
-          <folding />
+        <state vertical-scroll-proportion="0.50880283" vertical-offset="9129" max-vertical-offset="11356">
+          <caret line="554" column="50" selection-start-line="554" selection-start-column="50" selection-end-line="554" selection-end-column="50" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#3;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#4;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#5;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#6;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#6;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#7;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#7;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#8;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#8;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#9;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#9;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#10;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#10;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#11;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#11;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#13;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#14;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#14;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#15;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#15;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#16;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#16;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#17;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#18;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#1;n#div#18;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
