@@ -320,6 +320,7 @@ module.exports = {
 				}).success(function(feeTypes){
 					if(feeTypes.length == 0) {
 						res.json(200, {"status": "warning", "message": 'No fund in '+ groupInstance.FEE_GROUP_NAME.toUpperCase()});
+						return;
 					}
 					processInstance.update_type_fee_from_source(feeTypes, 'fund');
 				}).error(function(err){
