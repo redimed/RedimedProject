@@ -197,10 +197,6 @@ module.exports = {
                     LEPDC : info.LEPDC ,
                     LAPC : info.LAPC ,
                     LComment : info.LComment ,
-                    Lsign : info.Lsign ,
-                    LDate : info.LDate ,
-                    LName : info.LName ,
-                    LPosition : info.LPosition ,
                     Created_by : info.Created_by ,
                     //Creation_date : info.Creation_date ,
                     Last_updated_by : info.Last_updated_by,
@@ -342,10 +338,6 @@ module.exports = {
                 LEPDC : info.LEPDC ,
                 LAPC : info.LAPC ,
                 LComment : info.LComment ,
-                Lsign : info.Lsign ,
-                LDate : info.LDate ,
-                LName : info.LName ,
-                LPosition : info.LPosition ,
                 Created_by : info.Created_by ,
                 //Creation_date : info.Creation_date ,
                 Last_updated_by : info.Last_updated_by// ,
@@ -365,40 +357,79 @@ module.exports = {
 
         db.gorgonFA.find({where:{patientId:Patient_Id,CalId : CalId}})
             .success(function(data){
-                getDataMA(res,Patient_Id,CalId,data);
+                db.gorgonMA.find({where:{PATIENT_ID:Patient_Id,CalId : CalId},attribute:['SYSTOLIC_BP','DIASTOLIC_BP','PULSE','WEIGHT']})
+                    .success(function(dataMA){
+                        if(data == null)
+                        {
+                            if(dataMA == null)
+                            {
+                                res.json({status:'not'});
+                            }else
+                            {
+                                db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
+                                    .success(function (appt) {
+                                        if (appt === null || appt.length === 0) {
+                                            console.log("Not found APPTCAL in table");
+                                            res.json({status: 'fail'});
+                                            return false;
+                                        }
+                                        db.Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
+                                            .success(function (doctor) {
+                                                if (doctor === null || doctor.length === 0) {
+                                                    console.log("Not found doctor in table");
+                                                    res.json({status: 'fail'});
+                                                    return false;
+                                                }else
+                                                {
+                                                    res.json({status:'insert',data:dataMA,docID : doctor.doctor_id,docName:doctor.NAME,docSign:doctor.Signature});
+                                                }
+                                            })
+                                            .error(function (err) {
+                                                console.log("ERROR:" + err);
+                                                res.json({status: 'error'});
+                                                return false;
+                                            });
+                                    })
+                                    .error(function (err) {
+                                        console.log("ERROR:" + err);
+                                        res.json({status: 'error'});
+                                        return false;
+                                    });
+                            }
+                        }else
+                        {
+                            db.Doctor.find({where: {doctor_id: data.DocId}}, {raw: true})
+                                .success(function (doctor) {
+                                    if (doctor === null || doctor.length === 0) {
+                                        console.log("Not found doctor in table");
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    }else
+                                    {
+                                        data.MS_Blood_Pressure_1=dataMA.SYSTOLIC_BP;
+                                        data.MS_Blood_Pressure_2 =dataMA.DIASTOLIC_BP ;
+                                        data.MS_Resting_Heart_Rate =dataMA.PULSE;
+                                        data.MS_Mx_Weight_1 = dataMA.WEIGHT;
+                                        res.json({status:'update',data : data,docName:doctor.NAME,docSign:doctor.Signature});
+                                    }
+                                })
+                                .error(function (err) {
+                                    console.log("ERROR:" + err);
+                                    res.json({status: 'error'});
+                                    return false;
+                                });
+                        }
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
             })
             .error(function(err){
                 res.json({status:'error'});
                 console.log(err);
             })
     }
-};
-
-var getDataMA = function(res,idP,idC,data){
-    db.gorgonMA.find({where:{PATIENT_ID:idP,CalId : idC},attribute:['SYSTOLIC_BP','DIASTOLIC_BP','PULSE','WEIGHT']})
-        .success(function(dataMA){
-            if(data == null)
-            {
-                if(dataMA == null)
-                {
-                    res.json({status:'not'});
-                }else
-                {
-                    res.json({status:'insert',data:dataMA});
-                }
-            }else
-            {
-                data.MS_Blood_Pressure_1=dataMA.SYSTOLIC_BP;
-                data.MS_Blood_Pressure_2 =dataMA.DIASTOLIC_BP ;
-                data.MS_Resting_Heart_Rate =dataMA.PULSE;
-                data.MS_Mx_Weight_1 = dataMA.WEIGHT;
-                res.json({status:'update',data:data});
-            }
-        })
-        .error(function(err){
-            res.json({status:'error'});
-            console.log(err);
-        })
 };
 
 

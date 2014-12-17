@@ -6,6 +6,17 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             startingDay: 1
         };
 
+        function getAge(dateString) {
+            var now = new Date();
+            var birthDate = new Date(dateString);
+            var age = now.getFullYear() - birthDate.getFullYear();
+            var m = now.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
         var isEdit = true,
             Patient_ID,
             CalID,
@@ -155,7 +166,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     LYMPH: null,
                     THYROID: null,
                     COMMENT_SEC9 : null,
-                    AGE: null,
+                    AGE: getAge($scope.patientInfo.DOB),
                     HYPER: 0,
                     SMOKER: 0,
                     KNOW: 0,
