@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d7fd071-90c9-4b63-bffd-9ed4babcea7e" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\le\Desktop\RedimedProject\Projects\redimedProjStruct\reports\MH\Image\checked.jpg" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\le\Desktop\RedimedProject\Projects\redimedProjStruct\reports\MH\Image\MH2.PNG" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MH/Image/MH2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MH/Image/MH21.PNG" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MH/Image/MH21.PNG" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MH/mh_report.jasper" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MH/mh_report.jasper" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/FAController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/FAController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MHController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MHController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MH/mh_report.jrxml" afterPath="$PROJECT_DIR$/Projects/redimedProjStruct/reports/MH/mh_report.jrxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="RedimedProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,11 +37,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MHController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MHController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1430976" vertical-offset="8977" max-vertical-offset="10183">
-              <caret line="568" column="31" selection-start-line="568" selection-start-column="31" selection-end-line="568" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="10319">
+              <caret line="54" column="70" selection-start-line="53" selection-start-column="18" selection-end-line="54" selection-end-column="70" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="document_route.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.35584843" vertical-offset="1722" max-vertical-offset="3043">
+              <caret line="114" column="55" selection-start-line="114" selection-start-column="55" selection-end-line="114" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FAController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/FAController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="7684">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FAController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/FAController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="6069">
+              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HICMedicareController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/HICMedicareController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -41,8 +90,8 @@
       <file leaf-file-name="medicalhistory.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2640" max-vertical-offset="3451">
-              <caret line="170" column="28" selection-start-line="170" selection-start-column="9" selection-end-line="170" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="3502">
+              <caret line="28" column="20" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -61,7 +110,7 @@
       <file leaf-file-name="MHController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MHController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1972" max-vertical-offset="8058">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1972" max-vertical-offset="8194">
               <caret line="116" column="27" selection-start-line="116" selection-start-column="27" selection-end-line="116" selection-end-column="27" />
               <folding />
             </state>
@@ -81,8 +130,8 @@
       <file leaf-file-name="medicalhistory.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.692308" vertical-offset="57416" max-vertical-offset="65705">
-              <caret line="3406" column="117" selection-start-line="3406" selection-start-column="117" selection-end-line="3406" selection-end-column="117" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="57902" max-vertical-offset="65654">
+              <caret line="3406" column="58" selection-start-line="3406" selection-start-column="58" selection-end-line="3406" selection-end-column="58" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
@@ -154,16 +203,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="medicalresultsummary.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalresultsummary.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2703" max-vertical-offset="10676">
-              <caret line="159" column="54" selection-start-line="149" selection-start-column="52" selection-end-line="158" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -179,8 +218,10 @@
       <list>
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/MHController.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js" />
-        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js" />
         <option value="$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/FAController.js" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js" />
+        <option value="$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js" />
       </list>
     </option>
   </component>
@@ -219,6 +260,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -242,6 +284,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="redimedProjStruct" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedimedProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedimedProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Projects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redimedProjStruct" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="routes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -473,11 +537,10 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../thanh-merge/RedimedProject" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="FullScreen" value="false" />
@@ -488,14 +551,10 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/le/Desktop/RedimedProject/Projects/redimedProjStruct/client/modules/document/views/form18.html" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -503,6 +562,10 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -556,8 +619,6 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24524158" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -565,7 +626,9 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
@@ -591,27 +654,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0770547" vertical-offset="1326" max-vertical-offset="4641">
-          <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/user_route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
-          <caret line="19" column="67" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/rlBookingsController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5165" max-vertical-offset="7259">
-          <caret line="322" column="59" selection-start-line="322" selection-start-column="18" selection-end-line="322" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/node_modules/nodemailer/src/nodemailer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4199">
@@ -822,13 +864,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1790" max-vertical-offset="2907">
-          <caret line="122" column="55" selection-start-line="122" selection-start-column="55" selection-end-line="122" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/services/DocumentService.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3366" max-vertical-offset="6205">
@@ -931,18 +966,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2640" max-vertical-offset="3451">
-          <caret line="170" column="28" selection-start-line="170" selection-start-column="9" selection-end-line="170" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/views/medicalhistory.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.692308" vertical-offset="57416" max-vertical-offset="65705">
-          <caret line="3406" column="117" selection-start-line="3406" selection-start-column="117" selection-end-line="3406" selection-end-column="117" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="57902" max-vertical-offset="65654">
+          <caret line="3406" column="58" selection-start-line="3406" selection-start-column="58" selection-end-line="3406" selection-end-column="58" />
           <folding>
             <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
@@ -1013,10 +1040,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/client/modules/document/controllers/FAController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7684">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/FAController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="6069">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/HICMedicareController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/models/medicalhistory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="3502">
+          <caret line="28" column="20" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/controllers/DocumentController/MHController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1430976" vertical-offset="8977" max-vertical-offset="10183">
-          <caret line="568" column="31" selection-start-line="568" selection-start-column="31" selection-end-line="568" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="10319">
+          <caret line="54" column="70" selection-start-line="53" selection-start-column="18" selection-end-line="54" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projects/redimedProjStruct/routes/document_route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35584843" vertical-offset="1722" max-vertical-offset="3043">
+          <caret line="114" column="55" selection-start-line="114" selection-start-column="55" selection-end-line="114" selection-end-column="55" />
           <folding />
         </state>
       </provider>
