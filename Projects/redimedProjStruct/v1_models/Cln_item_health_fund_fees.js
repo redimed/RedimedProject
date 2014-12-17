@@ -12,6 +12,7 @@ install_model.process_content_file = function(content) {
 
 		line = line.replace(/[$",%]/g, "");
 		
+		
 		var spices = line.split('\t');
 		spices = spices.filter(function(element){
 			return !!element;
@@ -26,7 +27,7 @@ install_model.process_content_file = function(content) {
 
 		arr.push({
 			ITEM_CODE: parseInt(item_code[0]),
-			FEE: spices[0],
+			FEE: parseFloat(spices[0]),
 			PERCENT_FEE: percent,
 		})
 
