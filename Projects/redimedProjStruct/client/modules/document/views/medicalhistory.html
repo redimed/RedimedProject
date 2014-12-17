@@ -3401,6 +3401,7 @@
                                                     <input type="text" class="form-control" name="s13_many_cigarettes"
                                                            ng-model="info.s13_many_cigarettes"
                                                            ng-required="info.s13_ever_smoked" ng-pattern="/^[0-9]+$/"/>
+
                                                     <div class="help-block"
                                                          ng-show="mhForm.s13_many_cigarettes.$error.required">
                                                         <label class="control-label">Required!</label>
@@ -3705,7 +3706,8 @@
                                         <label class="control-label bold">
                                             Signed:
                                         </label>
-                                        <img ng-src="{{info.doctor.Signature}}" style="height:70px;width:200px;"/>
+                                        <img ng-show="info.doctor.Signature!=null && info.doctor.Signature!=''"
+                                             ng-src="{{info.doctor.Signature}}" style="height:70px;width:200px;"/>
                                     </div>
                                     <div class="col-md-12 col-sm-12">
                                         <label class="control-label bold">
