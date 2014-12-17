@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="result_summary" pageWidth="595" pageHeight="900" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d23aca8a-126b-409e-a28e-0c3c45a44d8f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="621"/>
+	<property name="ireport.y" value="288"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="fb71c9c0-58bf-4055-b248-f597c5a711f9"/>
@@ -144,205 +144,205 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<reportElement x="283" y="18" width="18" height="18" uuid="b08f2e3d-96dd-4eb5-872f-163f38bc82ef">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_height_weight}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="480" y="18" width="18" height="18" uuid="a457f8bc-02c5-4b98-bf51-2ed5c87f3e45">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_height_weight}.intValue() == 3]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="410" y="18" width="18" height="18" uuid="3f778cd4-ed37-44ef-b83e-987df780a42d">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_height_weight}.intValue() == 2]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="356" y="18" width="18" height="18" uuid="4f3e8d36-55ce-42d9-acdf-779139b99301">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_height_weight}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="184" y="55" width="18" height="18" uuid="273ec6d7-9cc7-4c70-ba03-4c87cd1d0c17">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_medical_history}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="408" y="282" width="18" height="18" uuid="391c5b1c-20cb-4a37-90eb-ae9255c620c2">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_diagnosed_or_previous}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="408" y="185" width="18" height="18" uuid="a5538322-4d8f-4d82-aa3d-ed9b66ef4091">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_history}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="473" y="210" width="18" height="18" uuid="3329498d-539a-4fb0-8d4b-c56842b2631b">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_cardiovascular}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="408" y="160" width="18" height="18" uuid="4464df3a-0916-43b6-92c3-37c23b8b247c">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_existing_or_active}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="184" y="80" width="18" height="18" uuid="1b54efaf-6e68-4289-8af3-f147e05b1946">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_medical_assessment}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="184" y="104" width="18" height="18" uuid="3a2a88bd-5976-410f-9a25-d2322a09bd39">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_functional_assessment}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="184" y="123" width="18" height="18" uuid="a317a969-ecaf-48eb-822d-bd722d20db79">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_other}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="108" y="512" width="18" height="18" uuid="e8f69c53-e9e6-492b-a897-f5bab2272d17">
 					<printWhenExpression><![CDATA[$F{medical_summary_rr_amber}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="108" y="452" width="18" height="18" uuid="cc384540-33d8-4a65-b65c-318f19e4b77d">
 					<printWhenExpression><![CDATA[$F{medical_summary_rr_screen}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="408" y="258" width="18" height="18" uuid="c16ce802-82c8-46a0-93c3-0d0f40a08f55">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_medical_or_functional}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="407" y="234" width="18" height="18" uuid="867969a8-fd0c-4182-9f34-686042270320">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_current_or_work_related}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="108" y="585" width="18" height="18" uuid="d65bb21c-f442-4fa3-8b15-48b5d96e001a">
 					<printWhenExpression><![CDATA[$F{medical_summary_rr_red}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="398" y="104" width="18" height="18" uuid="dbf0ccd0-863b-46ef-8910-57dd012f9a54">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_drug_test}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="398" y="80" width="18" height="18" uuid="3f88e5e3-3fc4-4602-9cf6-0978a7066d52">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_spirometry}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="398" y="55" width="18" height="18" uuid="2d3a05aa-b692-4147-bbee-d4b720556b05">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_hearing_test}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="433" y="55" width="18" height="18" uuid="2955c679-90eb-45db-9d5f-c6a2d04249c6">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_hearing_test}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="443" y="282" width="18" height="18" uuid="89b664f1-ffa0-498a-9fee-4b92d527ea5a">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_diagnosed_or_previous}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="443" y="258" width="18" height="18" uuid="7ba3044c-4012-4837-9ac5-a9ff70eb6f17">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_medical_or_functional}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="443" y="234" width="18" height="18" uuid="d140bdbe-abee-4b4e-b81b-c34a0e0c7dcb">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_current_or_work_related}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="412" y="210" width="18" height="18" uuid="c0510592-b066-44cc-ab41-9f937921b76c">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_cardiovascular}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="443" y="185" width="18" height="18" uuid="08da8a7e-2fab-4631-9011-97b1a4b69f4a">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_history}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="443" y="160" width="18" height="18" uuid="97726e67-f85d-4916-99b4-cbc62890fb78">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_any_existing_or_active}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="433" y="104" width="18" height="18" uuid="9164d13e-cbc7-4395-9365-7385af906ba2">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_drug_test}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="433" y="80" width="18" height="18" uuid="66bcad94-e7fa-477e-b56d-ac0b7354c156">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_spirometry}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="218" y="123" width="18" height="18" uuid="8b03762a-27fa-491b-803b-b512a588f0c8">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_other}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="218" y="104" width="18" height="18" uuid="2f474d4c-6ade-4b64-87d5-5e7bd554dc37">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_functional_assessment}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="218" y="80" width="18" height="18" uuid="2e79f77a-fbac-4a7a-b928-7361d60aba6f">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_medical_assessment}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="218" y="55" width="18" height="18" uuid="678c45f0-d2bf-4ae5-85e6-fe0bb78a4f84">
 					<printWhenExpression><![CDATA[$F{medical_summary_as_medical_history}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="514" y="210" width="18" height="18" uuid="001e1e0f-d3d4-46b5-9af3-9a595a0bcc0e">
 					<printWhenExpression><![CDATA[$F{medical_summary_ac_cardiovascular}.intValue() == 2]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="491" y="640" width="59" height="17" uuid="4d679ce6-0ad5-44cd-a816-4f6990471520"/>
@@ -358,19 +358,19 @@ medical_summary.`mrs_id` = $P{id}]]>
 			</image>
 			<image>
 				<reportElement x="369" y="620" width="82" height="14" uuid="25d4d571-abd6-4317-8118-3e1d1d92fca7"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\yesno.PNG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\yesno.PNG"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="386" y="620" width="16" height="16" uuid="026f9fcb-ecc6-42ba-a487-2a43f76fb773">
 					<printWhenExpression><![CDATA[$F{medical_summary_mrs_review}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="422" y="620" width="16" height="16" uuid="e6b590c6-d382-4232-a294-b4592505ec04">
 					<printWhenExpression><![CDATA[$F{medical_summary_mrs_review}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MRS\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"images\\checked.png"]]></imageExpression>
 			</image>
 		</band>
 	</detail>
