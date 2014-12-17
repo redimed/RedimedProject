@@ -1072,7 +1072,7 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_change_status_template.html',
             controller: function ($scope)
             {
-                $scope.bookingStatusChangedFlag =0;
+                //$scope.bookingStatusChangedFlag =0;
                 $scope.rlob_change_status=function(assId,bookingId,bookingType,status)
                 {
                     rlobService.changeBookingStatus(bookingId,status)
@@ -1080,6 +1080,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                             if(data.status=='success')
                             {
                                 $scope.selectedBooking.STATUS=status;
+                                if(!$scope.bookingStatusChangedFlag)
+                                    $scope.bookingStatusChangedFlag=0;
                                 $scope.bookingStatusChangedFlag = $scope.bookingStatusChangedFlag +1;
                                 var refId=bookingId;
                                 rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
@@ -1229,7 +1231,7 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_document_change_status_template.html',
             controller: function ($scope)
             {
-                $scope.documentStatusChangedFlag=0;
+                //$scope.documentStatusChangedFlag=0;
                 $scope.documentStatus=rlobConstant.documentStatus;
                 $scope.rlob_document_change_status=function(bookingId,status)
                 {
@@ -1238,6 +1240,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                             if(data.status=='success')
                             {
                                 $scope.selectedDocument.DOCUMENT_STATUS=status;
+                                if(!$scope.documentStatusChangedFlag)
+                                    $scope.documentStatusChangedFlag=0;
                                 $scope.documentStatusChangedFlag=$scope.documentStatusChangedFlag+1;
                                 //var refId=bookingId;
                                 //rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
