@@ -31,9 +31,9 @@
                 <tbody>
                 <tr ng-repeat="item in ListBookingMessages">
                     <td style="font-size: 14px;color: #666;" class="highlight">
-                        <div class="success" ng-if="item.ID % 2 == 0">
+                        <div class="success" ng-if="!$odd">
                         </div>
-                        <div class="danger" ng-if="item.ID % 2 != 0">
+                        <div class="danger" ng-if="$odd">
                         </div>
                         <a>{{item.ID}}</a>
                     </td>

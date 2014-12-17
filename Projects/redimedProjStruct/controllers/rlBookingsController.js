@@ -457,7 +457,6 @@ module.exports =
         var sql=
             " SELECT COUNT( DISTINCT booking.`BOOKING_ID`) AS count_bookings      	               "+
             " FROM `rl_bookings` booking                                                   "+
-            " LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`"+
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`     "+
             " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP                           "+
             " AND booking.`BOOKING_TYPE`= ?                                                "+
@@ -523,9 +522,8 @@ module.exports =
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,files.FILE_ID,rltype.`Rl_TYPE_NAME`     	                   "+
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`     	                   "+
             " FROM `rl_bookings` booking                                                   "+
-            " LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`"+
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`     "+
             " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP                           "+
             " AND booking.`BOOKING_TYPE`= ?                                                "+
@@ -593,19 +591,48 @@ module.exports =
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
         var sql=
-            " SELECT COUNT( DISTINCT booking.`BOOKING_ID`) AS count_bookings_status     "+
-            " FROM `rl_bookings` booking                                                "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`"+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                        "+
-            " AND booking.`BOOKING_TYPE`= ?                                   "+
-            " AND booking.DOCTOR_ID LIKE ?                                              "+
-            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")+
-            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                        "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                        "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)    ";
+            "SELECT COUNT(tablesum.`BOOKING_ID`) AS count_bookings_status  FROM (                           "+
+            "SELECT table1.* FROM ( SELECT booking.*,rltype.`Rl_TYPE_NAME`, rlfile.`FILE_ID`, 1 AS STTTABLE " +
+            " FROM `rl_bookings` booking                                                                    "+
+            " LEFT JOIN `rl_booking_files` rlfile ON `booking`.`BOOKING_ID` = rlfile.BOOKING_ID             "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                    "+
+            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                            "+
+            " AND rlfile.`FILE_ID` IS NULL                                                                  "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                 "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                  "+
+            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")               +
+            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")        +
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                            "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                            "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                     "+
+            " AND booking.`STATUS` = 'Completed'                                                            "+
+            " GROUP BY booking.`BOOKING_ID`                                                                 "+
+            " ORDER BY booking.`APPOINTMENT_DATE` DESC ) AS table1                                          "+
+            " UNION                                                                                         "+
+            " SELECT table2.* FROM ( SELECT booking.*,rltype.`Rl_TYPE_NAME`,NULL AS id , 2 AS STTTABLE      "+
+            " FROM `rl_bookings` booking                                                                    "+
+            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`            "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                    "+
+            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                            "+
+            " AND !(rlfile.`FILE_ID` IS NULL AND booking.`STATUS` = 'Completed')                            "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                 "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                  "+
+            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")               +
+            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")        +
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                            "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                            "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                     "+
+            " ORDER BY booking.`APPOINTMENT_DATE` DESC ) AS table2 )AS tablesum                             ";
         console.log(sql);
         var params=[];
+        params.push(bookingType);
+        params.push(doctorId);
+        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
+        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
+        params.push(Surname);
+        params.push(Type);
+        params.push(FromAppointmentDate);
+        params.push(ToAppointmentDate);
         params.push(bookingType);
         params.push(doctorId);
         if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
@@ -660,20 +687,47 @@ module.exports =
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`                                    "+
-            " FROM `rl_bookings` booking                                                "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`"+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                        "+
-            " AND booking.`BOOKING_TYPE`= ?                                             "+
-            " AND booking.DOCTOR_ID LIKE ?                                              "+
-            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")+
-            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                        "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                        "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)    "+
-            " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                           ";
+            "SELECT tablesum.* FROM (SELECT table1.* FROM ( SELECT booking.*,rltype.`Rl_TYPE_NAME`, rlfile.`FILE_ID`, 1 AS STTTABLE"+
+            " FROM `rl_bookings` booking                                                                    "+
+            " LEFT JOIN `rl_booking_files` rlfile ON `booking`.`BOOKING_ID` = rlfile.BOOKING_ID             "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                    "+
+            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                            "+
+            " AND rlfile.`FILE_ID` IS NULL                                                                  "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                 "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                  "+
+            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")               +
+            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")        +
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                            "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                            "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                     "+
+            " AND booking.`STATUS` = 'Completed'                                                            "+
+            " GROUP BY booking.`BOOKING_ID`                                                                 "+
+            " ORDER BY booking.`APPOINTMENT_DATE` DESC ) AS table1                                "+
+            " UNION                                                                                         "+
+            " SELECT table2.* FROM ( SELECT booking.*,rltype.`Rl_TYPE_NAME`,NULL AS id , 2 AS STTTABLE      "+
+            " FROM `rl_bookings` booking                                                                    "+
+            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`            "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                    "+
+            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                            "+
+            " AND !(rlfile.`FILE_ID` IS NULL AND booking.`STATUS` = 'Completed')                            "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                 "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                  "+
+            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")               +
+            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")        +
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                            "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                            "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                     "+
+            " ORDER BY booking.`APPOINTMENT_DATE` DESC ) AS table2 )AS tablesum LIMIT ?,?        ";
         console.log(sql);
         var params=[];
+        params.push(bookingType);
+        params.push(doctorId);
+        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
+        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
+        params.push(Surname);
+        params.push(Type);
+        params.push(FromAppointmentDate);
+        params.push(ToAppointmentDate);
         params.push(bookingType);
         params.push(doctorId);
         if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
@@ -977,7 +1031,7 @@ module.exports =
             " WHERE 	files.`FILE_ID` IS NULL                                                                 "+
             " 	AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                            "+
             " 	AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                 "+
-            " 	AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ?                                                                "+
+            " 	AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ? and booking.STATUS='"+rlobUtil.bookingStatus.confirmed+"' "+
             " ORDER BY booking.`APPOINTMENT_DATE` ASC ";
 
 
@@ -1184,5 +1238,81 @@ module.exports =
                 res.json({status:'error'});
                 console.log(err);
             })
+    },
+
+    sendResultNotificationEmail:function(req,res)
+    {
+        var bookingId=req.body.bookingId;
+        var siteAddress=req.body.siteAddress;
+        var mapUrl=req.body.mapUrl?req.body.mapUrl:'';
+        var sql=
+            " SELECT    u.`user_name`,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
+            "   booking.`WRK_SURNAME`,booking.`CLAIM_NO`,                                                     "+
+            "   booking.`APPOINTMENT_DATE`,rlType.`Rl_TYPE_NAME`,doctor.`NAME`,redi.`Site_addr`               "+
+            " FROM  `rl_bookings` booking                                                                     "+
+            "   INNER JOIN `users` u ON booking.`ASS_ID`=u.`id`                                               "+
+            "   INNER JOIN `rl_types` rlType ON booking.`RL_TYPE_ID`=rlType.`RL_TYPE_ID`                      "+
+            "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                         "+
+            "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=redi.`id`                                 "+
+            " WHERE     booking.`BOOKING_ID`=?                                                                ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql ,[bookingId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length<=0)
+                    {
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        var row=rows[0];
+                        var emailInfo={
+                            subject:'',
+                            senders:'',
+                            recipients:'',
+                            htmlBody:'',
+                            textBody:''
+                        };
+                        emailInfo.subject='Redilegal Result';
+                        emailInfo.senders="tannv.solution@gmail.com";
+                        emailInfo.recipients=row.Contact_email;
+
+                        emailInfo.htmlBody=
+                            " <p>                                                                                                    "+
+                            "   Hi <span style='font-weight: bold'>"+row.user_name+"</span>,                                                    "+
+                            " </p>                                                                                                   "+
+                            " <p>                                                                                                    "+
+                            "     The "+row.Rl_TYPE_NAME+" completed by "+row.NAME+" on the "+moment(new Date(row.APPOINTMENT_DATE)).format("HH:mm DD/MM/YYYY")+" has been uploaded to your REDiLEGAL login.     "+
+                            " </p>                                                                                                   "+
+                            " <p>                                                                                                    "+
+                            "     The original of the report will also be posted through to your office along with the invoice.      "+
+                            " </p>                                                                                                   "+
+                            " <p>                                                                                                    "+
+                            "   Thank you                                                                                            "+
+                            " </p>                                                                                                   "+
+                            " <p>                                                                                                    "+
+                            "     Kind Regards                                                                                       "+
+                            " </p>                                                                                                   "+
+                            " <p>                                                                                                    "+
+                            "     REDiLEGAL Team                                                                                     "+
+                            " </p>                                                                                                   "+
+                            " <div style='width:400px;height:300px'>                                                                 "+
+                            "   <img src='"+mapUrl+"'/>                                                                                        "+
+                            " <div> Site address: "+siteAddress+" <div> "+
+                            " </div>                                                                                                 "
+                        rlobEmailController.sendEmail(req,res,emailInfo);
+                    }
+
+
+                }
+            });
+
+        });
     }
 }

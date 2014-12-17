@@ -226,10 +226,11 @@
 
                 <div class="row form-group">
                     <div class="col-md-12">
-                        <label for="ISNEW">Is the patient new to REDiMED:</label>
-                        <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
+                        <label for="ISNEW">Is the patient new to REDiMED : </label>
+                        <!-- <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
                                ng-checked="selectedBooking.ISNEW==1"
-                               ng-model="selectedBooking.ISNEW" id="ISNEW">
+                               ng-model="selectedBooking.ISNEW" id="ISNEW"> -->
+                        <span class="rlob-print-value">{{selectedBooking.ISNEW==1?'YES':'NO'}}</span> 
                     </div>
                 </div>
 
@@ -261,26 +262,29 @@
                 </label>
 
                 <p>
-                    REDiLEGAL to contact the patient and arrage a time
-                    <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
+                    REDiLEGAL to contact the patient and arrage a time : 
+                    <!-- <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
                            ng-checked="selectedBooking.ISCONTACTPATIENT==1"
-                           ng-model="selectedBooking.ISCONTACTPATIENT">
+                           ng-model="selectedBooking.ISCONTACTPATIENT"> -->
+                    <span class="rlob-print-value">{{selectedBooking.ISCONTACTPATIENT==1?'YES':'NO'}}</span>        
                 </p>
                 <!--chien-->
                 <!--phanquocchien.c1109g@gmail.com-->
-                <!--<p>-->
-                    <!--REDiLEGAL to contact the case manager to arrange a time for the worker-->
-                    <!--<input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"-->
-                           <!--ng-checked="selectedBooking.ISCONTACTMANAGER==1"-->
-                           <!--ng-model="selectedBooking.ISCONTACTMANAGER">-->
-                <!--</p>-->
+                <p>
+                    Can this assessment be rescheduled by the claimant : 
+                    <!-- <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
+                           ng-checked="selectedBooking.ISCONTACTMANAGER==1"
+                           ng-model="selectedBooking.ISCONTACTMANAGER"> -->
+                    <span class="rlob-print-value">{{selectedBooking.ISCONTACTMANAGER==1?'YES':'NO'}}</span>
+                </p>
 
-                <!--<p>-->
-                    <!--Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment-->
-                    <!--<input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"-->
-                           <!--ng-checked="selectedBooking.isUrgent==1"-->
-                           <!--ng-model="selectedBooking.isUrgent">-->
-                <!--</p>-->
+                <p>
+                    Is an interpreter required for this appointment : 
+                    <!-- <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
+                           ng-checked="selectedBooking.isUrgent==1"
+                           ng-model="selectedBooking.isUrgent"> -->
+                    <span class="rlob-print-value">{{selectedBooking.isUrgent==1?'YES':'NO'}}</span>
+                </p>
 
                 <div class="row form-group">
                     <div class="col-md-5">

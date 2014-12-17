@@ -1,3 +1,29 @@
+<style type="text/css">
+<style type="text/css">
+    .setColorDatePicker{
+        background-color: #5bbd72 !important;
+        color: #fff !important;
+        text-shadow: none !important;
+        background-image: none !important;
+        border: 1px solid rgb(241, 243, 250) !important;
+    }
+    .setColorDatePicker:hover{
+        background-color: rgba(102, 193, 123, 0.5) !important;
+        color: #fff !important;
+        text-shadow: none !important;
+    }
+    .ablue{
+        background-color: #00b5ad;
+        color: #fff;
+        text-shadow: none;
+        background-image: none;
+    }
+    .ablue:hover{
+        background-color: rgba(0, 196, 188, 0.5);
+        color: #fff;
+        text-shadow: none;
+    }
+</style>
 <div class="modal-body">
     <div class="actions">
         <div class="row">
@@ -61,30 +87,30 @@
                 <a ng-show="mailtoLink" ng-click="sendEmail()">Please contact us to make an appointment</a>
             </div>
 
-            <div ng-repeat="location in appointmentsFilter">
+            <div ng-repeat="type in appointmentsFilter">
                 <div class="row">
                     <div class="col-md-2" >
-                        {{location.SITE_NAME}}
+                        {{type.Rl_TYPE_NAME}}
                     </div>
                     <div class="col-md-10" >
-                        <div ng-repeat="doctor in location.DOCTOR_ITEMS">
+                        <div ng-repeat="spec in type.SPEC_ITEMS">
                             <div class="row">
                                 <div class="col-md-2">
-                                    {{doctor.DOCTOR_NAME}}
+                                    {{spec.Specialties_name}}
                                 </div>
                                 <div class="col-md-10">
-                                    <div ng-repeat="type in doctor.TYPE_ITEMS">
+                                    <div ng-repeat="doctor in spec.DOCTOR_ITEMS">
                                         <div class="col-md-2">
-                                            {{type.Rl_TYPE_NAME}}
+                                            {{doctor.DOCTOR_NAME}}
                                         </div>
                                         <div class="col-md-10">
-                                            <div ng-repeat="spec in type.SPEC_ITEMS">
+                                            <div ng-repeat="location in doctor.LOCATION_ITEMS">
                                                 <div class="col-md-2">
-                                                    {{spec.Specialties_name}}
+                                                    {{location.SITE_NAME}}
                                                 </div>
                                                 <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px;padding-bottom: 20px">
-                                                    <a ng-repeat="appointment in spec.APPOINTMENT_ITEMS"
-                                                       class="btn btn-sm yellow filter-submit margin-bottom"
+                                                    <a ng-repeat="appointment in location.APPOINTMENT_ITEMS"
+                                                       class="btn btn-sm ablue filter-submit margin-bottom"
                                                        style="margin-left: 10px;margin-bottom: 10px; width: 70px"
                                                        ng-click="selectAppointmentCalendar(appointment,type.RL_TYPE_ID,spec.Specialties_id)">
                                                         {{ appointment.APPOINTMENT_TIME }}

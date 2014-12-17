@@ -182,7 +182,7 @@
 
                     <tr>
                         <td colspan='2'>
-                            <span class="rlob-print-label">Is the patient new to REDiMED :</span>
+                            <span class="rlob-print-label">Is the patient new to REDiMED : </span>
                             <span class="rlob-print-value">{{selectedBooking.ISNEW==1?'YES':'NO'}}</span>
                         </td>
                     </tr>
@@ -212,24 +212,24 @@
                 <table>
                     <tr>
                         <td colspan='2'>
-                            <span class="rlob-print-label">REDiLEGAL to contact the patient and arrage a time:</span>
+                            <span class="rlob-print-label">REDiLEGAL to contact the patient and arrage a time : </span>
                             <span class="rlob-print-value">{{selectedBooking.ISCONTACTPATIENT==1?'YES':'NO'}}</span>
                         </td>
                     </tr>
                     <!--chien-->
                     <!--phanquocchien.c1109g@gmail.com-->
-                    <!--<tr>-->
-                        <!--<td colspan='2'>-->
-                            <!--<span class="rlob-print-label">REDiLEGAL to contact the case manager to arrange a time for the worker:</span>-->
-                            <!--<span class="rlob-print-value">{{selectedBooking.ISCONTACTMANAGER==1?'YES':'NO'}}</span>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td colspan='2'>-->
-                            <!--<span class="rlob-print-label">Is this booking urgent ? Need REDiMED contacts immediately to arrage the appointment:</span>-->
-                            <!--<span class="rlob-print-value">{{selectedBooking.isUrgent==1?'YES':'NO'}}</span>-->
-                        <!--</td>-->
-                    <!--</tr>-->
+                    <tr>
+                        <td colspan='2'>
+                            <span class="rlob-print-label">Can this assessment be rescheduled by the claimant : </span>
+                            <span class="rlob-print-value">{{selectedBooking.ISCONTACTMANAGER==1?'YES':'NO'}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>
+                            <span style="font-size: 17px;" class="rlob-print-label">Is an interpreter rescheduled by the claimant : </span>
+                            <span class="rlob-print-value">{{selectedBooking.isUrgent==1?'YES':'NO'}}</span>
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             <span class="rlob-print-label">Notes:</span>
@@ -245,3 +245,12 @@
         </td>
     </tr>
 </table>
+<br/>
+<!-- <div id="chien-map-canvas" class="col-md-12" style="height: 200px;"></div> -->
+
+
+<img style="width:100%;height:380px" id="imgMapPrint" src=""/>
+
+
+
+

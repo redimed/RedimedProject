@@ -35,6 +35,7 @@ app.get('/api/rlob/doctors/get-doctors-for-source-type',doctorsController.getDoc
 
 //cln_appointment-calendar
 app.get('/api/rlob/appointment-calendar/list',clnAppointmentCalendarController.list);
+app.get('/api/rlob/appointment-calendar/get-list-date-appointment-calendar',clnAppointmentCalendarController.getListDateAppointmentCalendar);
 app.get('/api/rlob/appointment-calendar/get-appointment-calendar',clnAppointmentCalendarController.getAppointmentCalendar);
 app.get('/api/rlob/appointment-calendar/check-same-doctor',clnAppointmentCalendarController.checkSameDoctor);
 app.get('/api/rlob/appointment-calendar/get-by-id',clnAppointmentCalendarController.getAppointmentCalendarById);
@@ -66,6 +67,7 @@ app.get('/api/rlob/rl_bookings/admin/get-pass-booking-not-change-status',rlBooki
 app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document',rlBookingsController.getUpcommingBookingHaveNotClientDocument);
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);
 app.get('/api/rlob/rl_bookings/admin/get-document-status-summary',rlBookingsController.getDocumentStatusSummary);
+app.get('/api/rlob/rl_bookings/admin/sendResultNotificationEmail',rlBookingsController.sendResultNotificationEmail);
 
 //rl_booking_files
 app.get('/api/rlob/rl_booking_files/get-new-key',rlBookingFilesController.getNewKey);
@@ -84,7 +86,8 @@ app.get('/api/rlob/sys_user_notifications/get-max-index',sysUserNotificationsCon
 app.get('/api/rlob/sys_user_notifications/get-list-notification',sysUserNotificationsController.getListNotification);
 app.get('/api/rlob/sys_user_notifications/count-total-notification',sysUserNotificationsController.countTotalNotification);
 app.get('/api/rlob/sys_user_notifications/get-items-of-paging',sysUserNotificationsController.getItemsOfPaging);
-//app.get('/api/rlob/sys_user_notifications/check-daily-notification',sysUserNotificationsController.checkNotificationExist);
+app.get('/api/rlob/sys_user_notifications/check-notification-exist',sysUserNotificationsController.checkNotificationExist);
+app.get('/api/rlob/sys_user_notifications/recreate-notification',sysUserNotificationsController.recreateNotification);
 
 
 

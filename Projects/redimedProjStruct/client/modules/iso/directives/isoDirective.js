@@ -42,3 +42,21 @@ angular.module("app.loggedIn.iso.directive", [])
             }
         };
     })
+
+
+    .directive('isoMsgPopup', function() {
+        return {
+            restrict: 'E',
+            transclude:true,
+            scope: {
+                styleClass:   '=',
+                header:     '=',
+                type:     '=',
+                content:        '='
+            },
+            templateUrl: 'modules/iso/directives/isoMsgPopup.html',
+            controller:function($scope){
+                $scope.msgPopupType=isoConst.msgPopupType;
+            }
+        };
+    })

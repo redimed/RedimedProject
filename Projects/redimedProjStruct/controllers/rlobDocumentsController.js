@@ -81,24 +81,23 @@ module.exports =
 
 
     rlobDowloadFile:function(req, res, next){
-
-        console.log("VVVVVVVVVVVVVVVVVVVVV:"+req.params.fileId);
         req.getConnection(function(err,connection){
             var lob_file_id=req.params.fileId;
             var query=connection.query('select * from rl_booking_files where FILE_ID=?',lob_file_id,function(err,rows){
                 if (err)
                 {
-                    console.log("Error inserting : %s ",err );
                     res.json({status:"fail"});
                 }
                 else
                 {
-                    console.log("success");
                     var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
                     var path=prefix+rows[0].FILE_PATH;
                     console.log(">>>>>>>>>>>>>downloadFile:"+path);
                     res.download(path,function(err){
-                        res.json({status:'fail',message:'no file exist!'});
+                        // if(err)
+                        //     res.json({status:'fail',message:'no file exist!'});
+                        // else
+                        //     res.json({status:'success',message:'download succes!'});
                     });
                 }
             })

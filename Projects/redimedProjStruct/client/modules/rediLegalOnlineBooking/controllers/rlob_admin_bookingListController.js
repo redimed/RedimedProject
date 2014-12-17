@@ -185,7 +185,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             {
                 var date_item=dateMaker.DATE_ITEMS[i];
                 //mydata.push(dateMaker.DATE_ITEMS[i]);
-                var node= {APPOINTMENT_DATETIME:date_item.APPOINTMENT_DATETIME,APPOINTMENT_DATE:date_item.APPOINTMENT_DATE,DISPLAY:date_item.DISPLAY,nodes:[],style_class:'lob_admin_date_node'};
+                var node= {APPOINTMENT_DATETIME:date_item.APPOINTMENT_DATETIME,APPOINTMENT_DATE:date_item.APPOINTMENT_DATE,DISPLAY:date_item.DISPLAY,nodes:[],style_class:'lob_admin_date_node',IS_DATE_ITEM:'1'};
                 node.nodes=dateMaker[date_item.APPOINTMENT_DATE].DOCTOR_ITEMS;
                 for(var j=0;j<dateMaker[date_item.APPOINTMENT_DATE].DOCTOR_ITEMS.length;j++)
                 {
@@ -575,6 +575,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.lob_change_booking_file_role=function(assId,fileId,role,scope)
         {
+            //exlog.alert($scope.selectedBooking)   ;
             $http({
                 method:"POST",
                 url:"/api/rlob/rl_booking_files/change-role-download",

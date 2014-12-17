@@ -11,11 +11,21 @@ var rlobHelper={
 }
 
 var rlobConstant={
+    bookingStatus:{
+        confirmed:'Confirmed',
+        arrived:'Arrived',
+        notArrived:'Not Arrived',
+        completed:'Completed',
+        canel:'Cancel'
+    },
+    
     bellType:{
         'changeStatus':"Change Booking Status",
         'result': 'Result',
         'message': 'Message',
-        'changeCalendar':'Change Appointment Calendar'},
+        'changeCalendar':'Change Appointment Calendar',
+        'notification':'Notification'
+    },
 
     letterType:{
         'result':'Result'
@@ -50,6 +60,11 @@ var rlobConstant={
         notConfirmed:'booking-item document-status-not-confirmed',
         checked:'booking-item document-status-checked',
         noDocuments:'booking-item document-status-no-documents'
+    },
+
+    notificationAppearance:{
+        once:'ONCE',
+        whenAccess:'WHEN ACCESS'
     }
 }
 

@@ -161,6 +161,10 @@
     .rlob_document_status_no_document:hover{
         background-color: rgba(255, 138, 128, 0.35);
     }
+    /*chien message*/
+    .message:hover{
+        color: #01b070;
+    }
 </style>
 
 
@@ -420,6 +424,18 @@
                     <a>
                             <span ng-if="!node.BOOKING_ID">
                                 {{node.DISPLAY}}
+                                <!-- chien
+                                phanquocchien.c1109g@gmail.com
+                                show doctor name and booking -->
+                                <span ng-if="node.IS_DATE_ITEM">
+                                    <br/>
+                                    <span style="font-size: 10px;" ng-repeat="item in node.nodes">
+                                        <span ng-show="$first">{{item.NAME}}({{item.nodes.length}})</span>
+                                        <span ng-show="!$first"><color style="color:rgb(129, 126, 126)">|</color> {{item.NAME}}({{item.nodes.length}})</span>
+                                    </span>
+
+                                </span>
+
                             </span>
 
                             <span ng-if="node.BOOKING_ID" ng-click="getBookingDetailWhenClick(node.BOOKING_ID,this);">
@@ -684,19 +700,46 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Enter message</h4>
+                <!--<h4 class="modal-title">Enter message</h4>-->
+                <div class="caption">
+                    <i class="fa fa-plus-square font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
+                    <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
+                </div>
             </div>
 
             <div class="modal-body">
-            <textarea  id="message" placeholder="Enter message" class="form-control" rows="2" ng-model="bookingMessage.message"/>
-            <div ng-repeat="item in ListBookingMessages">
-                <!--<input type="radio" name="bookingMessage.message" ng-model="color" name="milestone" ng-value="item.CONTENTS" ng-click="check(color)" ng-model="color" ng-change="check(color)"> &nbsp; {{item.CONTENTS}}-->
-                <label style="margin-left: 10px;margin-top: 7px" ng-click="check(item.CONTENTS)"><i class="fa fa-caret-right"></i> &nbsp; {{item.CONTENTS}}</label>
+            <textarea style="margin-bottom: 20px;" placeholder="Enter message" class="form-control" rows="2" ng-model="bookingMessage.message"/>
+            <!--<div ng-repeat="item in ListBookingMessages">-->
+                <!--&lt;!&ndash;<input type="radio" name="bookingMessage.message" ng-model="color" name="milestone" ng-value="item.CONTENTS" ng-click="check(color)" ng-model="color" ng-change="check(color)"> &nbsp; {{item.CONTENTS}}&ndash;&gt;-->
+                <!--<label style="margin-left: 15px;margin-top: 3px color:red" ng-click="check(item.CONTENTS)"><i class="fa fa-bars"></i> &nbsp; {{item.CONTENTS}}</label>-->
+            <!--</div>-->
+            <div  style="width: 98%;margin-left: 10px;overflow-y: scroll;min-height: 300px;max-height: 310px;}" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2" data-initialized="1">
+            <ul class="feeds">
+            <li ng-repeat="item in ListBookingMessages" class="message" ng-click="check(item.CONTENTS)">
+                <div class="col1">
+                    <div class="cont">
+                        <div class="cont-col1">
+							<div class="label label-sm label-danger">
+								<i class="fa fa-envelope-o"></i>
+							</div>
+						</div>
+                        <div class="cont-col2">
+                            <div class="desc" style="min-height: 25px">
+                                {{item.CONTENTS}}.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            </ul>
             </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                <button type="submit" class="btn red" ng-click="sendBookingMessage()">OK</button>
+                <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
 
                 <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
             </div>

@@ -78,11 +78,18 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
                     if(data.status == 'success')
                     {
                         for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].FILE_ID == null){
-                                data.data[i].style_class = "danger";
+                            if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                                data.data[i].style_class = 'warning'
                             }
                             else{
-                                data.data[i].style_class = "success";
+                                if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                                    data.data[i].style_class = 'info'
+                                }
+                                else{
+                                    if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                                        data.data[i].style_class = 'danger'
+                                    }
+                                }
                             }
                         }
                         $scope.reportUpcommingBookingsList= data.data;
@@ -94,7 +101,13 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
         }
         $scope.pagingHandlerUpcommingBookingHaveNotResult=function()
         {
-            $scope.removeSelectedBooking();
+            //$scope.isChangingDocumentStatus
+            if(!$scope.isChangingDocumentStatus)
+            {
+                $scope.removeSelectedBooking();
+            }
+            $scope.isChangingDocumentStatus=false;
+
             var info={
                 bookingType:$scope.bookingType,
                 doctorId:$scope.doctorId,
@@ -114,11 +127,18 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
                     if(data.status == 'success')
                     {
                         for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].FILE_ID == null){
-                                data.data[i].style_class = "danger";
+                            if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                                data.data[i].style_class = 'warning'
                             }
                             else{
-                                data.data[i].style_class = "success";
+                                if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                                    data.data[i].style_class = 'info'
+                                }
+                                else{
+                                    if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                                        data.data[i].style_class = 'danger'
+                                    }
+                                }
                             }
                         }
                         $scope.reportUpcommingBookingsList= data.data;
@@ -136,4 +156,16 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
                 $scope.doctorId=$scope.doctorInfo?$scope.doctorInfo.doctor_id:'';
                 $scope.initPagingReportUpcommingBookingHaveNotResult();
             });
-    })
+        //chien set rlobhelper
+        //phanquocchien.c1109g@gmail.com
+        $scope.rlobDocumentStatus=rlobConstant.documentStatus;
+
+        $scope.isChangingDocumentStatus=false;
+        $scope.$watch('documentStatusChangedFlag',function(newValue,oldValue){
+            if($scope.documentStatusChangedFlag && $scope.documentStatusChangedFlag>0)
+            {
+                $scope.isChangingDocumentStatus=true;
+                $scope.pagingHandlerUpcommingBookingHaveNotResult();
+            }
+        })
+    });

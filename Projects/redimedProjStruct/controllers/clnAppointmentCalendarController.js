@@ -224,6 +224,45 @@ module.exports =
                 });
         })
     },
+    //phanquochien
+    //add
+    getListDateAppointmentCalendar: function(req,res){
+        var DOCTOR_ID=req.query.DOCTOR_ID;
+        var SITE_ID=req.query.SITE_ID;
+        var STARTDATE=req.query.STARTDATE;
+        var ENDDATE=req.query.ENDDATE;
+        var Specialties_id=req.query.Specialties_id?req.query.Specialties_id:'%';
+        var RL_TYPE_ID=req.query.RL_TYPE_ID?req.query.RL_TYPE_ID:'%';
+        var sourceType=req.query.sourceType?req.query.sourceType:'%';
+        console.log("*************************************>"+JSON.stringify(req.query));
+        var sql = 
+            "  SELECT  DISTINCT DATE(h.`FROM_TIME`) AS APPOINTMENT_DATE                                                       "+
+            "  FROM      `cln_appointment_calendar` h                                                                         "+
+            "    INNER JOIN `doctor_specialities` d ON h.`DOCTOR_ID`=d.`doctor_id`                                            "+
+            "    INNER JOIN `cln_specialties` spec ON d.`Specialties_id`=spec.`Specialties_id`                                "+
+            "    INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                        "+
+            "    INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                        "+
+            "    INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                              "+
+            "  WHERE     h.`NOTES` IS NULL                                                                                    "+
+            "    AND                                                                                                          "+
+            "    rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND d.`Specialties_id` LIKE ?                      "+
+            "    AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND h.`FROM_TIME` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)   "+
+            "ORDER BY APPOINTMENT_DATE ASC                                                                                    ";
+            req.getConnection(function(err,connection)
+            {
+                var query = connection.query(sql,[sourceType,RL_TYPE_ID,Specialties_id,DOCTOR_ID,SITE_ID,STARTDATE,ENDDATE],function(err,rows)
+                    {
+                        if(err){
+                            console.log("Error Selecting : %s ",err );
+                            res.json({status:'fail'});
+                        }
+                        else{
+                            res.json({status: 'success', data: rows});
+                        }
+                    });
+            });
+    },
+    
     getAppointmentCalendar: function(req,res)
     {
         var DOCTOR_ID=req.query.DOCTOR_ID;

@@ -6,22 +6,32 @@ angular.module('app.loggedIn.iso.service',[])
         var isoService = {};
         var api = Restangular.all('api');
 
-        isoService.getTreeDir=function()
-        {
-            var result = api.one('iso/iso-tree-dir/get-tree-dir');
-            return result.get();
-        }
+        /**
+         * Tannv.dts@gmail.com
+         * list api for iso_tree_dir
+         */
+        isoService.treeDir={
+            //lay thong tin toan bo tree dir
+            //tannv.dts@gmail.com
+            getTreeDir:function()
+            {
+                var result = api.one('iso/iso-tree-dir/get-tree-dir');
+                return result.get();
+            },
+            //tao mot folder
+            //tannv.dts@gmail.com
+            createFolder:function(newFolder)
+            {
+                var result=api.all("iso/iso-tree-dir/create-folder");
+                return result.post({info:newFolder});
+            },
 
-        isoService.createFolder=function(newFolder)
-        {
-            var result=api.all("iso/iso-tree-dir/create-folder");
-            return result.post({info:newFolder});
-        }
+            checkDupEntry:function(fatherNodeId,nodeName,docCode)
+            {
+                var result=api.all("iso/iso-tree-dir/check-dup-entry");
+                return result.post({fatherNodeId:fatherNodeId,nodeName:nodeName,docCode:docCode});
+            }
+        };
 
-        isoService.createDocument=function(newDocument)
-        {
-            var result=api.all("iso/iso-tree-dir/create-document");
-            return result.post({info:newDocument});
-        }
         return isoService;
     })

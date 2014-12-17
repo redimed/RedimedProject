@@ -2,7 +2,7 @@
  * Created by tannv.dts@gmail.com on 12/2/2014.
  */
 angular.module('app.loggedIn.iso.controller',[])
-    .controller("isoController", function($scope,$state,$cookieStore,toastr,isoService) {
+    .controller("isoController", function($scope,$state,$cookieStore,FileUploader,toastr,isoService) {
 
     	/***
     	//Khoi tao cac bien can thiet
@@ -12,7 +12,10 @@ angular.module('app.loggedIn.iso.controller',[])
     	$scope.userInfo=$cookieStore.get('userInfo');
     	//dinh nghia cac kieu node
     	$scope.nodeType=isoConst.nodeType;
-    	//tao ham xuat cac thong bao
+    	/**
+    	 * Ham suat cac thong bao dang the, tren goc tren ben phai
+    	 * tannv.dts@gmail.com
+    	 */
     	var msg={
     		success:function(msg)
     		{
@@ -23,6 +26,24 @@ angular.module('app.loggedIn.iso.controller',[])
     			toastr.error(msg, 'ISO Message');
     		}
     	}
+    	/**
+    	 * Ham hien thi thong bao duoi dang dialog popup
+    	 * tannv.dts@gmail.com
+    	 */
+    	$scope.msgPopupInfoBlank={
+    		styleClass:'iso-msg-popup-style-class',
+    		header:'',
+    		type:'',
+    		content:''
+    	}
+    	$scope.msgPopupInfo=angular.copy($scope.msgPopupInfoBlank);
+    	var msgPopup=function(header,type,content)
+        {
+            $scope.msgPopupInfo.header=header;
+            $scope.msgPopupInfo.type=type;
+            $scope.msgPopupInfo.content=content;
+            $("."+$scope.msgPopupInfo.styleClass).modal({show:true,backdrop:'static'});
+        };
 
 
 	    /***
@@ -32,7 +53,7 @@ angular.module('app.loggedIn.iso.controller',[])
 	    $scope.tempData={};
 	    $scope.tempData[-1]={};
 	    $scope.treeData={};
-	    isoService.getTreeDir()
+	    isoService.treeDir.getTreeDir()
 	    	.then(function(data){
     			if(data.status=='success')
     			{
@@ -55,16 +76,13 @@ angular.module('app.loggedIn.iso.controller',[])
 							if(!$scope.tempData[data.data[i].FATHER_NODE_ID].relativePath)
 							{
 								$scope.tempData[data.data[i].FATHER_NODE_ID].relativePath=
-									'\\'+$scope.tempData[data.data[i].FATHER_NODE_ID].DIRECTORY_NAME;
+									'\\'+$scope.tempData[data.data[i].FATHER_NODE_ID].NODE_NAME;
 							}
 						}
 						
 						$scope.tempData[data.data[i].NODE_ID].relativePath=
 							$scope.tempData[data.data[i].FATHER_NODE_ID].relativePath+
-							'\\'+
-							($scope.tempData[data.data[i].NODE_ID].NODE_TYPE==$scope.nodeType.folder?
-							$scope.tempData[data.data[i].NODE_ID].DIRECTORY_NAME
-							:$scope.tempData[data.data[i].NODE_ID].DOC_NAME);
+							'\\'+$scope.tempData[data.data[i].NODE_ID].NODE_NAME;
 					}
 					//----------------------------------------------
 
@@ -106,15 +124,16 @@ angular.module('app.loggedIn.iso.controller',[])
 	    $scope.newFolderBlank={
 			    	fatherNodeId:'',
 			    	nodeType:$scope.nodeType.folder,
-			    	folderName:'',
+			    	nodeName:'',
 			    	description:'',
 			    	createdBy:$scope.userInfo.id,
 			    	relativePath:''
 	    }
+	    //new document template
 	    $scope.newDocumentBlank={
 	    	fatherNodeId:'',
 	    	nodeType:$scope.nodeType.document,
-	    	docName:'',
+	    	nodeName:'',
 	    	docCode:'',
 	    	description:'',
 	    	createdBy:$scope.userInfo.id,
@@ -130,6 +149,7 @@ angular.module('app.loggedIn.iso.controller',[])
 	    			$scope.newFolder=angular.copy($scope.newFolderBlank);
 	    			break;
 	    		case $scope.treeActions.createDocument.name:
+
 	    			$scope.currentTreeAction=$scope.treeActions.createDocument;
 	    			$scope.newDocument=angular.copy($scope.newDocumentBlank);
 	    			break;
@@ -143,59 +163,176 @@ angular.module('app.loggedIn.iso.controller',[])
 	    //Ham tao thu muc
 	    //tann.dts@gmail.com
 	    */
-	    $scope.createFolder=function()
-	    {
-    		$scope.newFolder.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
-    		$scope.newFolder.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newFolder.folderName;
-    		isoService.createFolder($scope.newFolder)
+	   $scope.newFolderBackErrorTemplate={
+	   		name:''
+	   }
+	   $scope.beforeCreateFolder=function()
+	   {
+	   		$scope.newFolder.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
+    		$scope.newFolder.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newFolder.nodeName;
+    		$scope.newFolderBackError=angular.copy($scope.newFolderBackErrorTemplate);
+
+    		isoService.treeDir.checkDupEntry($scope.newFolder.fatherNodeId,$scope.newFolder.nodeName)
     		.then(function(data){
     			if(data.status=='success')
     			{
-					msg.success(isoLang.createFolderSuccess);
-					if(!$scope.selectedTreeNode.nodes)
-					{
-						$scope.selectedTreeNode.nodes={};
-					}
-					$scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(data.data);
+    				if(data.data.isDup)
+    				{
+    					if(data.data.counts.NAME)
+    						$scope.newFolderBackError.name="Name has been used!";
+    				}
+    				else
+    				{
+    					$scope.createFolder();
+    				}
     			}
-    			else
-    			{
-					msg.error(isoLang.createFolderError);
-    			}
-    			$("#iso-tree-action-content-popup").modal('hide');
-    		},function(err){
-    				msg.error(isoLang.createFolderError);
     		});
-
+	   }
+	    $scope.createFolder=function()
+	    {
+    		isoService.treeDir.createFolder($scope.newFolder)
+	    		.then(function(data){
+	    			if(data.status=='success')
+	    			{
+	    				msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,isoLang.createFolderSuccess);
+						if(!$scope.selectedTreeNode.nodes)
+						{
+							$scope.selectedTreeNode.nodes={};
+						}
+						$scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(data.data);
+	    			}
+	    			else
+	    			{
+	    				msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,isoLang.createFolderError);
+	    			}
+	    			$("#iso-tree-action-content-popup").modal('hide');
+	    		},function(err){
+	    				msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,isoLang.createFolderError);
+	    		});
 	    }
 
 	    /***
 	    //Ham tao file
 	    //tannv.dts@gmail.com
 	    */
-	    $scope.createDocument=function()
-	    {
-	    	$scope.newDocument.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
-	    	$scope.newDocument.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newDocument.docName;
-	    	isoService.createDocument($scope.newDocument)
-	    	.then(function(data){
+   	   	$scope.newDocumentBackErrorTemplate={
+	   		name:'',
+	   		docCode:''
+	    }
+	   $scope.beforeCreateDocument=function()
+	   {
+
+	   		$scope.newDocument.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
+	    	$scope.newDocument.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newDocument.nodeName;
+			$scope.newDocumentBackError=angular.copy($scope.newDocumentBackErrorTemplate);
+	    	isoService.treeDir.checkDupEntry($scope.newDocument.fatherNodeId,$scope.newDocument.nodeName,$scope.newDocument.docCode)
+    		.then(function(data){
     			if(data.status=='success')
     			{
-    				msg.success(isoLang.createDocumentSuccess);
+    				if(data.data.isDup)
+    				{
+    					if(data.data.counts.NAME)
+    						$scope.newDocumentBackError.name="Name has been used!";
+    					if(data.data.counts.CODE)
+    						$scope.newDocumentBackError.docCode="Document Code has been used!";
+    				}
+    				else
+    				{
+    					$scope.createDocument();
+    				}
+    			}
+    		});
+	   }
+	    $scope.createDocument=function()
+	    {
+	    	
+	    	if(uploader.queue[0])
+	    	{
+	    		uploader.queue[0].formData[0]={};
+    			uploader.queue[0].formData[0]=$scope.newDocument;
+    			uploader.uploadAll();
+    			
+	    	}
+	    	else
+	    	{
+	    		msgPopup(isoLang.isoHeader,isoConst.msgPopupType.fail,isoLang.pleaseSelectFile);
+	    	}
+	  
+	    }
+
+	    //---------------------------------------------------------------
+        //HANDLE UPLOAD FILES
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/api/iso/iso-tree-dir/create-document-with-file'
+        });
+        // FILTERS
+        uploader.filters.push({
+            name: 'customFilter',
+            fn: function (item /*{File|FileLikeObject}*/, options) {
+                return this.queue.length < 10;
+            }
+        });
+
+        // CALLBACKS
+
+        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+            console.info('onWhenAddingFileFailed', item, filter, options);
+        };
+        uploader.onAfterAddingFile = function(fileItem) {
+        	uploader.queue.splice(0,uploader.queue.length-1);
+            console.info('onAfterAddingFile', fileItem);
+        };
+        uploader.onAfterAddingAll = function(addedFileItems) {
+            console.info('onAfterAddingAll', addedFileItems);
+        };
+        uploader.onBeforeUploadItem = function(item) {
+            console.info('onBeforeUploadItem', item);
+        };
+        uploader.onProgressItem = function(fileItem, progress) {
+            console.info('onProgressItem', fileItem, progress);
+        };
+        uploader.onProgressAll = function(progress) {
+            console.info('onProgressAll', progress);
+        };
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+            console.info('onSuccessItem', fileItem, response, status, headers);
+        };
+        uploader.onErrorItem = function(fileItem, response, status, headers) {
+            console.info('onErrorItem', fileItem, response, status, headers);
+        };
+        uploader.onCancelItem = function(fileItem, response, status, headers) {
+            console.info('onCancelItem', fileItem, response, status, headers);
+        };
+        uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        	$("#iso-tree-action-content-popup").modal('hide');
+        	if(response.status)
+        	{
+        		if(response.status=='success')
+        		{
+ 					msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,isoLang.createDocumentSuccess);
     				if(!$scope.selectedTreeNode.nodes)
 					{
 						$scope.selectedTreeNode.nodes={};
 					}
-					$scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(data.data);
-    			}
-    			else
-    			{
-    				msg.error(isoLang.createDocumentError);
-    			}
-    			$("#iso-tree-action-content-popup").modal('hide');
-	    	},function(err){
-				msg.error(isoLang.createDocumentError);
-	    	});
-	    }
+					$scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(response.data);
+        		}
+        		else
+        		{
+        			msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,isoLang.createDocumentError);
+        		}
+        	}
+            console.info('onCompleteItem', fileItem, response, status, headers);
+        };
+        uploader.onCompleteAll = function() {
+            console.info('onCompleteAll');
+        };
+
+        console.info('uploader', uploader);
+
+        $scope.test=function()
+        {
+        	msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,'hahahahahhaha');
+        }
+
     })
 

@@ -84,4 +84,6 @@ angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
         $state.go("loggedIn.rlob.rlob_booking_report.type1");
 
 
+	$scope.documentStatusChangedFlag=0;
+    	$scope.bookingStatusChangedFlag=0;
     });

@@ -40,7 +40,7 @@
                     <ul style="margin-bottom: -8px;border: none;" class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a class="rlob-tab-font-color" ng-click="gotoReport(reportType.report1)" role="tab" data-toggle="tab"> <i class="fa fa-cogs"></i>Upcomming booking</a></li>
                         <li role="presentation"><a class="rlob-tab-font-color" ng-click="gotoReport(reportType.report2)" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Pass booking</a></li>
-                        <li  role="presentation"><a class="rlob-tab-font-color" ng-click="gotoReport(reportType.report3)" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Outstanding Report </a></li>
+                        <!--<li  role="presentation"><a class="rlob-tab-font-color" ng-click="gotoReport(reportType.report3)" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Outstanding Report </a></li>-->
                     </ul>
                 </div>
             </div>
@@ -59,7 +59,7 @@
     <h2 style="margin:10px;">Selected Booking Info:</h2>
     <div class="row">
         <div class="col-md-6 col-sm-6">
-            <rlob-change-document-status selected-document="selectedBooking"></rlob-change-document-status>
+            <rlob-change-document-status selected-document="selectedBooking" document-status-changed-flag="documentStatusChangedFlag"></rlob-change-document-status>
             <accordion >
                 <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
                     <accordion-heading>
@@ -88,7 +88,7 @@
         </div>
         <div class="col-md-6 col-sm-6">
 
-            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
+            <rlob-change-booking-status selected-booking="selectedBooking" booking-status-changed-flag="bookingStatusChangedFlag"></rlob-change-booking-status>
             <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
         </div>
     </div>

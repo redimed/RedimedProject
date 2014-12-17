@@ -10,23 +10,23 @@
                 items-per-page="itemsPerPageReport2"
                 ng-change="pagingHandlerStatusBookingHaveNotResult()">
     </pagination>
-    <table class="table table-responsive table-hover">
+    <table class="table table-hover table-light">
         <thead class="flip-content">
         <tr>
             <th ng-if="bookingType=='REDiLEGAL'">
-                Claim No.
+                CLAIM NO.
             </th>
             <th ng-if="bookingType=='Vaccination'">
-                Employee number
+                EMPLOYEE NUMBER
             </th>
             <th>
-                Surname
+                SURNAME
             </th>
             <th>
-                Type
+                TYPE
             </th>
             <th>
-                Appointment Date
+                APPOINTMENT DATE
             </th>
         </tr>
         <tr>
@@ -44,7 +44,7 @@
                         ng-model="rlTypeSelected"
                         ng-options="rltype.Rl_TYPE_NAME for rltype in rlTypeList"
                         ng-change="initPagingReportStatusBookingHaveNotResult()">
-                    <option  value=""></option>
+                    <option  value="">ALL</option>
                 </select>
             </td>
 
@@ -56,11 +56,11 @@
         </thead>
         <tbody ng-repeat="booking2 in reportStatusBookingsList">
         <tr ng-class='booking2.style_class' ng-click="setSelectedBooking(booking2.BOOKING_ID)">
-            <td ng-if="bookingType=='REDiLEGAL'">{{booking2.CLAIM_NO}}</td>
-            <td ng-if="bookingType=='Vaccination'">{{booking2.EMPLOYEE_NUMBER}}</td>
-            <td>{{booking2.WRK_SURNAME}}</td>
-            <td>{{booking2.Rl_TYPE_NAME}}</td>
-            <td>{{booking2.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
+            <td ng-if="bookingType=='REDiLEGAL'"><label>{{booking2.CLAIM_NO}}</label></td>
+            <td ng-if="bookingType=='Vaccination'"><label>{{booking2.EMPLOYEE_NUMBER}}</label></td>
+            <td><label>{{booking2.WRK_SURNAME}}</label></td>
+            <td><label>{{booking2.Rl_TYPE_NAME}}</label></td>
+            <td><label>{{booking2.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
         </tr>
         </tbody>
     </table>
