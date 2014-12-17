@@ -6,6 +6,11 @@ angular.module("app.loggedIn.patient.services", [])
 
     var mdtApi = Restangular.all("api/meditek/v1/patient/");
 
+    instanceService.mdtVerifiedMedicare = function(options){
+        var govermentApi = Restangular.allUrl("Medicare", "http://localhost:9292/testapp.redimed.com.au:3003/RedimedJavaREST/api/medicare/verify/pvm");
+        return govermentApi.post(options);
+    }
+
     instanceService.mdtSearch = function(options){
         var funcApi = mdtApi.all("search");
         return funcApi.post(options);
