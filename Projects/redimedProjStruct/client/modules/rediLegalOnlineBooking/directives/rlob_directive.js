@@ -792,8 +792,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                     //phanquocchien.c1109g@gmail.com
                     //Get List date Appoiment Calendar 15 date < var1 < 15 date 
                     //
-                    var startDate = angular.copy(var1).subtract('days' ,15).format("YYYY/MM/DD");
-                    var endDate = angular.copy(var1).add('days',15).format("YYYY/MM/DD");   
+                    var startDate = angular.copy(var1).subtract('days' ,30).format("YYYY/MM/DD");
+                    var endDate = angular.copy(var1).add('days',30).format("YYYY/MM/DD");   
                     rlobService.getListDateAppoinmentCalendar(rlTypeId,specialityId,doctorId,locationId,startDate,endDate,$scope.bookingType).then(function(data){
                         if(data.status=='success')
                         {

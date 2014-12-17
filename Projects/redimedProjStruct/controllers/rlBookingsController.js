@@ -1280,8 +1280,9 @@ module.exports =
                             textBody:''
                         };
                         emailInfo.subject='Redilegal Result';
-                        emailInfo.senders="tannv.solution@gmail.com";
+                        emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
                         emailInfo.recipients=row.Contact_email;
+
 
                         emailInfo.htmlBody=
                             " <p>                                                                                                    "+
