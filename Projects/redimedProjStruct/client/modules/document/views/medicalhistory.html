@@ -3403,18 +3403,14 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-6 col-sm-6">
-                                                <div ng-class="{'has-error': mhForm.many_cigarettes.$error.required || mhForm.many_cigarettes.$error.maxlength}">
-                                                    <input type="text" class="form-control" name="many_cigarettes"
-                                                           ng-maxlength="200" ng-model="info.many_cigarettes"
+                                                <div ng-class="{'has-error': mhForm.many_cigarettes.$error.required}">
+                                                    <input type="text" class="form-control" name="s13_many_cigarettes"
+                                                           ng-model="info.s13_many_cigarettes"
                                                            ng-required="info.s13_ever_smoked"/>
 
                                                     <div class="help-block"
                                                          ng-show="mhForm.many_cigarettes.$error.required">
                                                         <label class="control-label">Required!</label>
-                                                    </div>
-                                                    <div class="help-block"
-                                                         ng-show="mhForm.many_cigarettes.$error.maxlength">
-                                                        <label class="control-label">Too long!</label>
                                                     </div>
                                                 </div>
                                             </div>
