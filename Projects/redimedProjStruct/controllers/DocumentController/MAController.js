@@ -83,6 +83,7 @@ module.exports = {
         db.docMA.create({
             PATIENT_ID: info.PATIENT_ID,
             CAL_ID: info.CAL_ID,
+            STICKER : info.STICKER,
             HEIGHT: info.HEIGHT == '' ? null : info.HEIGHT,
             WEIGHT: info.WEIGHT == '' ? null : info.WEIGHT,
             BMI : info.BMI == '' ? null : info.BMI,
@@ -151,8 +152,7 @@ module.exports = {
             ECG_RESULT: info.ECG_RESULT,
             GP: info.GP,
             COMMENT_SEC10 : info.COMMENT_SEC10,
-            DOCTOR_NAME : info.DOCTOR_NAME,
-            SIGN: info.SIGN,
+            DOCTOR_ID : info.DOCTOR_ID,
             Created_by: info.Created_by,
             Creation_date: info.Creation_date,
             Last_updated_by: info.Last_updated_by,
@@ -173,6 +173,7 @@ module.exports = {
     {
         var info = req.body.info;
         db.docMA.update({
+            STICKER : info.STICKER,
             HEIGHT: info.HEIGHT == '' ? null : info.HEIGHT,
             WEIGHT: info.WEIGHT == '' ? null : info.WEIGHT,
             BMI : info.BMI == '' ? null : info.BMI,
@@ -241,10 +242,7 @@ module.exports = {
             ECG_RESULT: info.ECG_RESULT,
             GP: info.GP,
             COMMENT_SEC10 : info.COMMENT_SEC10,
-            DOCTOR_NAME : info.DOCTOR_NAME,
-            SIGN: info.SIGN,
             Created_by: info.Created_by,
-            Creation_date: info.Creation_date,
             Last_updated_by: info.Last_updated_by,
             Last_update_date: info.Last_update_date,
             DF_CODE  : info.DF_CODE,
@@ -283,7 +281,7 @@ module.exports = {
                                         return false;
                                     }else
                                     {
-                                        res.json({status:'insert',docName:doctor.NAME,docSign:doctor.Signature});
+                                        res.json({status:'insert',docID : doctor.doctor_id,docName:doctor.NAME,docSign:doctor.Signature});
                                     }
                                 })
                                 .error(function (err) {
@@ -299,7 +297,22 @@ module.exports = {
                         });
                 }else
                 {
-                    res.json(data);
+                    db.Doctor.find({where: {doctor_id: data.DOCTOR_ID}}, {raw: true})
+                        .success(function (doctor) {
+                            if (doctor === null || doctor.length === 0) {
+                                console.log("Not found doctor in table");
+                                res.json({status: 'fail'});
+                                return false;
+                            }else
+                            {
+                                res.json({status:'update',data : data,docName:doctor.NAME,docSign:doctor.Signature});
+                            }
+                        })
+                        .error(function (err) {
+                            console.log("ERROR:" + err);
+                            res.json({status: 'error'});
+                            return false;
+                        });
                 }
             })
             .error(function(err){

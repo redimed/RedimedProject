@@ -68,8 +68,10 @@
                     <!-- END TYPE INPUT -->
                 </td> 
                 <!-- END MORE COLUMNS -->
+
+                 <!-- ACTION -->
                 <td ng-if="options.use_actions">
-                    <div class="btn-group" dropdown>
+                    <div  ng-if="options.action_show ?  options.action_show(item) : true" class="btn-group" dropdown>
                         <button style="margin-right: 0;" type="button" class="btn btn-sm blue-soft dropdown-toggle" ng-disabled="disabled">
                             More <span class="caret"></span>
                         </button>
@@ -80,6 +82,7 @@
                         </ul>
                     </div>
                 </td>
+                <!-- END ACTION -->
             </tr>
             <tr ng-repeat="item in data.more_items" ng-class="row_class(item)" ng-click="row_click(item)">
                 <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
@@ -103,8 +106,8 @@
                 
                 <!-- ACTION -->
                 <td ng-if="options.use_actions">
-                    <div class="btn-group" dropdown>
-                        <button style="margin-right: 0;" type="button" class="btn btn-sm blue-soft dropdown-toggle" ng-disabled="disabled">
+                    <div ng-if="options.action_show ?  options.action_show(item) : true" class="btn-group" dropdown>
+                        <button style="margin-right: 0;" type="button" class="btn btn-sm blue-soft dropdown-toggle">
                             More <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">

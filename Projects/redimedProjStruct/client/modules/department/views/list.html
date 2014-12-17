@@ -83,7 +83,18 @@
     </div>
     <department-detail onsuccess="formAddDept.success"></department-detail>
 </div>
- <!-- POPUP ADD HEADER ITEM FORM  -->
+<!-- POPUP ADD DEPT FORM  -->
+
+<!-- POPUP EDIT DEPT ITEM FORM  -->
+<div class="mdt-search" style="display: block;" ng-if="formEditDept.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="formEditDept.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <department-detail onsuccess="formEditDept.success" data="{id: '{{departmentInfo.id}}'}"></department-detail>
+</div>
+<!-- POPUP EDIT HEADER ITEM FORM  -->
 
 
 

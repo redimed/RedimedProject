@@ -11,7 +11,7 @@ angular.module("app.loggedIn.department.detail.directive", [])
         link: function (scope, element, attrs) {
             var loadData = function (id) {
                 DepartmentService.detail(id).then(function (data) {
-                    angular.extend(scope.modelObjectMap, data.row);
+                        angular.extend(scope.modelObjectMap, data.data);
                     ConfigService.autoConvertData(scope.modelObjectMap);
                 });
             };
@@ -33,7 +33,7 @@ angular.module("app.loggedIn.department.detail.directive", [])
                         scope.modelObjectMap = angular.copy(ClnDepartmentModel);
                         scope.isSubmit = false;
                         if (scope.on_success) {
-                            scope.on_success();
+                                scope.on_success(response);
                         }
                     }
                 })
@@ -47,7 +47,7 @@ angular.module("app.loggedIn.department.detail.directive", [])
                         toastr.success("Edit Department Successfully", "Success");
                         scope.isSubmit = false;
                         if (scope.on_success) {
-                            scope.on_success();
+                                scope.on_success(response);
                         }
                     }
                 })

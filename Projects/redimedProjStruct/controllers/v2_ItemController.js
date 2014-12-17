@@ -1,5 +1,89 @@
 var db = require('../models');
+var fs = require('fs');
 var mdt_functions = require('../mdt-functions.js');
+
+var item_model = require('../v1_models/Inv_items.js');
+var parseString = require('xml2js').parseString;
+
+var general_process = function(req, res){
+
+	var UPLOAD_FOLDER = db.FeeGroup.getUploadPath();
+
+	this.set_file_name = function(name){
+		file_name = name;
+	}
+
+	this.insert_item_from_source = function(){
+		if(!file_name) {
+			throw 'File name is null !!!';
+		}
+
+		var source_arr = []; // ARRAY FEES AFTER READ SOURCE FILE
+		var process_data = {
+			step_num: 400, 
+			total_num: 0,
+			left_num: 0,
+			done_num: 0,
+		};
+		
+		var checksumHandle = function(){
+			if( source_arr.length == 0) { // checksum
+				res.json({status: 'success'});
+				return;
+			} 
+
+			if(source_arr.length > process_data.step_num) {
+				var process_arr = source_arr.splice(0, process_data.step_num); 
+			} else {
+				var process_arr = source_arr;
+				source_arr = [];
+			}
+
+			var sql = item_model.sql_insert_from_source( process_arr);
+
+			db.sequelize.query(sql)
+        	.success(function(data){
+        		if((process_data.total_num - process_data.done_num) > process_data.step_num)
+	            	process_data.done_num += process_data.step_num;
+	            else 
+	            	process_data.done_num = process_data.total_num;
+
+	            console.log('DONE RECORDS: ' + process_data.done_num + ' / ' +  process_data.total_num );
+	       		checksumHandle();
+	        })
+	        .error(function(err){
+	            res.json({status:'error', err:err});
+	        });
+		}
+
+		
+		var processPriceSource = function(file){
+			fs.readFile(file, "utf-8", function(err, data){
+				if(err){
+					console.log(err)
+					res.json(500, {"status": "error"});
+					return;
+				}
+				console.log('PROCESS XML HERE ', Date.now());
+				parseString(data, function (err, xml_result) {
+					if(err) {
+						console.log(err);
+						res.json(500, {"status": "error"});
+						return;
+					}
+					console.log('PROCESS XML DONE ', Date.now());
+
+					source_arr = xml_result.MBS_XML.Data;  // ASSIGN GLOBAL
+					process_data.total_num =  source_arr.length; // ASSIGN GLOBAL
+					process_data.left_num = source_arr.length; // ASSIGN GLOBAL
+					checksumHandle();
+				});
+			});	
+		}
+
+		processPriceSource(UPLOAD_FOLDER + file_name);
+	}
+}
 
 module.exports = {
 	anySearch: function(req, res) {
@@ -60,7 +144,7 @@ module.exports = {
 		var item_id = postData.ITEM_ID;
 		delete postData.ITEM_ID;
 
-		db.InvItem.update(postData, {where: {ITEM_ID: item_id}})
+		db.InvItem.update(postData, {ITEM_ID: item_id})
 		.success(function(data){
 			res.json({"status": "success", "data": data});
 		})
@@ -169,5 +253,25 @@ module.exports = {
 		});
 	},
 
-	
+	postInsertFromSource: function(req, res){
+
+		db.FeeGroup.find({
+			where: {FEE_GROUP_TYPE: 'item_fee_type'}
+		})
+		.success(function(groupInstance){
+			if(!groupInstance || !groupInstance.PRICE_SOURCE) {
+				res.json(500, {"status": "error", "message": 'No Group / Source Availabel !!!'});
+				return;
+			}
+		
+			var processInstance = new general_process(req, res);
+			processInstance.set_file_name(groupInstance.PRICE_SOURCE);
+			processInstance.insert_item_from_source();
+
+		}).error(function(err){
+			console.log(err);
+			res.json(500, {"status": "error", "message": error});
+		});
+
+	},
 }

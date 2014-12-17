@@ -43,6 +43,9 @@ var general_process = function(req, res){
 	}
 
 	this.update_price_source_group_fee = function(group_id){
+		if(!group_id){
+			res.json(500, {"status": "error"});
+		}
 		var updateData = {PRICE_SOURCE: file_name};
 		// BELONGS TO FEE GROUP
 		db.FeeGroup.update(updateData, {FEE_GROUP_ID: group_id})
@@ -335,7 +338,10 @@ module.exports = {
 			// offset: offset,
 			// limit: limit,
 			attributes: fields,
-			order: 'FEE_GROUP_ID DESC',
+			order: [
+				['FEE_GROUP_ID', 'DESC'],
+				['FEE_GROUP_ORDER', 'ASC'],
+			],
 			include: [
 				{ 
 					model: db.FeeGroup , as: 'FeeGroup',
@@ -422,7 +428,7 @@ module.exports = {
 			}
 			// BELONGS TO FEE GROUP
 
-			processInstance.update_price_source_group_fee(typeInstance.typeInstance);
+			processInstance.update_price_source_group_fee(typeInstance.FEE_GROUP_ID);
 		})
 		.error(function(err){
 			console.log(err);

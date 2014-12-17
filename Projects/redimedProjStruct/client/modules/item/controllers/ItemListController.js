@@ -1,7 +1,9 @@
 angular.module("app.loggedIn.item.list.controller",[
 ])
-.controller("ItemListController", function($scope, $state){
+.controller("ItemListController", function($scope, $state, toastr, ItemService){
 
+        $scope.item_panel = {};
+        $scope.itemInfo = {};
     /*
     *   ITEM
     */
@@ -15,6 +17,7 @@ angular.module("app.loggedIn.item.list.controller",[
         options : {
             api: 'api/erm/v2/items/search',
             method: 'post',
+                scope: $scope.item_panel,
             columns: [
                 {field: 'ITEM_ID', is_hide: true},
                 {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
@@ -34,6 +37,8 @@ angular.module("app.loggedIn.item.list.controller",[
                     class: 'fa fa-info', title: 'Info',
                     callback: function(item){
                         console.log(item)
+                            $scope.itemInfo.ITEM_ID = item.ITEM_ID;
+                            $scope.editForm.open();
                     }
                 },
                 {
@@ -74,11 +79,32 @@ angular.module("app.loggedIn.item.list.controller",[
         close: function(){
             this.is_show = false;
         }, 
-        save: function(){
-            
+            success: function (response) {
+                $scope.item_panel.reload();
         }
     }
 
-   
+ 	$scope.editForm = {
+            is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                $scope.item_panel.reload();
+            }
+        }
+   /*
+   *    IMPORT ITEMS FROM SOURCE
+   */
+   $scope.importItemsFromSource = function(){
+        ItemService.insertFromSource().then(function(response){
+            if(response.status == 'success')
+                toastr.success('Update successfully !!!');
+            // console.log(response);
+        });
+   }
 
 })

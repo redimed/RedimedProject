@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mh_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ed7ad48-d2ae-4fdc-8d98-79bb0b845af6">
-	<property name="ireport.zoom" value="0.8264462809917368"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="3899"/>
+	<property name="ireport.y" value="3551"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -591,6 +591,318 @@ medical_history.`mh_id` = $P{id}]]>
 				<reportElement x="0" y="446" width="555" height="279" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH16.PNG"]]></imageExpression>
 			</image>
+			<image>
+				<reportElement x="484" y="30" width="16" height="16" uuid="e68d298e-a328-4364-a86b-2a0f42479f3d">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_indigestion}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="43" width="16" height="16" uuid="eddc0e00-2c36-4385-abe1-5597774ce253">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_vomited_blood}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="294" width="16" height="16" uuid="3ddd32ba-8853-463d-90ec-42e3bb86a6f6">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_drug_or_alcohol}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="280" width="16" height="16" uuid="f0794f2e-62e7-4e70-a251-c67672b6f6f6">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_sleeping_tablets}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="267" width="16" height="16" uuid="f613f9f4-61e6-466b-9441-fff3c76a6aff">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_psychologist_or_psychiatrist}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="242" width="16" height="16" uuid="690620f0-b329-4f7b-9f43-786ed2f44fce">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_medicaltion_or_counselling}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="57" width="16" height="16" uuid="4fa33d48-f455-415c-affe-7ab76d97642e">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_bowel_habit}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="70" width="16" height="16" uuid="0b251abf-19cb-4c7b-a14a-3573f39e9f3b">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_time_you_urinate}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="83" width="16" height="16" uuid="0794ca48-69d8-4652-850f-9cffceb95002">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_night_to_urinate}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="96" width="16" height="16" uuid="a77910c8-2bcb-4f00-aaa7-193fcf3505fe">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_start_stop_urine}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="110" width="16" height="16" uuid="9b0a95b7-7818-4eda-8315-a0176183de01">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_change_urine}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="320" width="16" height="16" uuid="993bd4bd-1275-419e-9c5f-8a47b44ae0ac">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_insomnia}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="332" width="16" height="16" uuid="8609fc47-ffcb-4d2c-ad3d-fd972c790757">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_any_condition}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="563" width="16" height="16" uuid="a0051654-bfee-4024-8681-0cd5ce28d4a2">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_hormonal}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="577" width="16" height="16" uuid="43824fa7-c986-4420-8822-9152c2e635e8">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_stones_or_renal}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="550" width="16" height="16" uuid="e75f053f-c146-4672-998f-c92e9a987726">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_sweat}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="538" width="16" height="16" uuid="0b5db0a4-bd2b-42c7-9ecf-eb3e8ff2aaff">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_illness}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="524" width="16" height="16" uuid="b39e3385-cf25-46ca-a9fe-48e9dd9fa32d">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_very_hot_environment}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="511" width="16" height="16" uuid="844a0779-0e45-4ad1-bda4-41e64b58bb44">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_environment}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="498" width="16" height="16" uuid="37ae0e3e-2882-4815-b224-21cb29801e9d">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_shift_work}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="484" width="16" height="16" uuid="f16c8f60-2974-44f2-931c-7113d92dee0d">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_exhaustion}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="471" width="16" height="16" uuid="866a0760-81f3-44d5-8f0e-9cb458b96fad">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_narcolepsy}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="202" y="347" width="16" height="16" uuid="5d00c3dd-e721-4429-9d95-d16e548e6f72">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_anxiety}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="202" y="333" width="16" height="16" uuid="4467d343-8e90-40b2-a692-be827a3a3a6c">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_panic}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="202" y="320" width="16" height="16" uuid="d43ff303-5615-4244-bba2-6973903eb3d2">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_depression}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="577" width="16" height="16" uuid="5354ebe9-d449-4e58-851c-2282ee37e1fc">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_stones_or_renal}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="527" y="294" width="16" height="16" uuid="d85aa1de-8463-4c0d-8d56-a4e857b937a8">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_drug_or_alcohol}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="528" y="320" width="16" height="16" uuid="ecdf8fbc-6946-42bb-99fd-a247dd246add">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_insomnia}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="528" y="332" width="16" height="16" uuid="72550a8e-1b00-4fe0-a2b7-34c614d9e8de">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_any_condition}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="563" width="16" height="16" uuid="2b6c8f58-15c1-4cb6-8469-3d6a72af975e">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_hormonal}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="550" width="16" height="16" uuid="a241cc2a-094e-458e-b293-9e42b25b51e8">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_sweat}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="538" width="16" height="16" uuid="3f973e93-c09a-4217-8160-269e23d9e2fd">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_illness}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="525" width="16" height="16" uuid="29302e88-8aea-495d-aac4-74e35812280a">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_very_hot_environment}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="512" width="16" height="16" uuid="9f15f693-c329-487b-a611-9a6afb3b76ed">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_environment}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="497" width="16" height="16" uuid="2d385d54-a63a-4975-97c5-a3fb7a466623">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_shift_work}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="484" width="16" height="16" uuid="51f862b5-4827-4552-87c3-d05fd4648d24">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_exhaustion}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="471" width="16" height="16" uuid="2a4162c5-c6fe-4c88-9496-da618b07d500">
+					<printWhenExpression><![CDATA[$F{medical_history_s12_narcolepsy}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="527" y="110" width="16" height="16" uuid="a5917f80-6891-4a82-bf50-baf1c239fff3">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_change_urine}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="527" y="242" width="16" height="16" uuid="08bbf2ce-78e4-4197-a95c-4e4e0c060a78">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_medicaltion_or_counselling}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="527" y="267" width="16" height="16" uuid="64bee7ed-1a6d-4195-999b-7ce68b80d760">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_psychologist_or_psychiatrist}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="527" y="280" width="16" height="16" uuid="03ec1030-6c0f-4f61-a25b-96d35cf95389">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_sleeping_tablets}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="527" y="70" width="16" height="16" uuid="4eec6555-3f2d-444b-8a50-84cb7709ad30">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_time_you_urinate}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="528" y="83" width="16" height="16" uuid="e434e9f5-255a-43f5-990f-6d70446ee1c5">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_night_to_urinate}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="527" y="96" width="16" height="16" uuid="47cfe2d9-a8f9-4ba1-b811-308d09b6a329">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_start_stop_urine}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="527" y="57" width="16" height="16" uuid="f5588078-a90a-4e79-bdb8-d7fdb983dc83">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_bowel_habit}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="528" y="43" width="16" height="16" uuid="71b546b3-82c2-4c95-968f-df4a0b3c5192">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_vomited_blood}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="528" y="30" width="16" height="16" uuid="294f9572-142c-4533-9e81-cff8f91a1a9e">
+					<printWhenExpression><![CDATA[$F{medical_history_s10_indigestion}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="244" y="347" width="16" height="16" uuid="312367fa-c0c2-4d87-a6ad-9fd6cfeb7dc6">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_anxiety}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="244" y="333" width="16" height="16" uuid="2ea85bd8-20c7-4585-bb4d-0b773880c309">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_panic}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="244" y="320" width="16" height="16" uuid="336c73f4-5ee5-4413-a699-f1e8f84532dc">
+					<printWhenExpression><![CDATA[$F{medical_history_s11_depression}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="10" y="138" width="536" height="70" uuid="c610eaf5-722b-44f0-942c-9b01c94389f4"/>
+				<textFieldExpression><![CDATA[$F{medical_history_s10_comments}!= null ?  $F{medical_history_s10_comments} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="374" width="533" height="70" uuid="234f8302-36d9-454b-aa8d-deb750cd9126"/>
+				<textFieldExpression><![CDATA[$F{medical_history_s11_comments}!= null ?  $F{medical_history_s11_comments} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="607" width="533" height="94" uuid="a689d49b-2cc2-4c89-92d3-25cdee3654bd"/>
+				<textFieldExpression><![CDATA[$F{medical_history_s12_comments}!= null ?  $F{medical_history_s12_comments} : ""]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="725">
 			<image scaleImage="RetainShape">
@@ -598,27 +910,139 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH17.PNG"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape">
-				<reportElement x="0" y="211" width="555" height="273" uuid="425f4c5e-e246-4e90-914e-171f6cf1142c"/>
+				<reportElement x="0" y="215" width="555" height="273" uuid="425f4c5e-e246-4e90-914e-171f6cf1142c"/>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH18.PNG"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center">
 				<reportElement x="0" y="686" width="555" height="39" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH19.PNG"]]></imageExpression>
 			</image>
+			<image>
+				<reportElement x="471" y="57" width="16" height="16" uuid="4d8ebc31-cf07-4bc0-9ce0-4294522a9785">
+					<printWhenExpression><![CDATA[$F{medical_history_s13_ever_smoked}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="296" y="356" width="16" height="16" uuid="36fb6427-d5f8-4c1b-8874-24021e9c467f">
+					<printWhenExpression><![CDATA[$F{medical_history_s14_helpa_helpb}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="296" y="342" width="16" height="16" uuid="fb3c9416-297e-48a2-b248-f051641ac255">
+					<printWhenExpression><![CDATA[$F{medical_history_s14_tetanus}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="197" width="16" height="16" uuid="8f0ce269-e572-44b2-a1a3-59b43b8053a4">
+					<printWhenExpression><![CDATA[$F{medical_history_s13_aspect}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="450" y="172" width="16" height="16" uuid="92f0d9c3-1554-4639-997f-ae1bd182b047">
+					<printWhenExpression><![CDATA[$F{medical_history_s13_exercise}.intValue() == 3]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="450" y="146" width="16" height="16" uuid="5f220a49-6f99-4e8b-b958-d72202dc5712">
+					<printWhenExpression><![CDATA[$F{medical_history_s13_exercise}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="450" y="120" width="16" height="16" uuid="1009e626-f076-4e2c-9d13-c33cd2f8ef78">
+					<printWhenExpression><![CDATA[$F{medical_history_s13_exercise}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="450" y="97" width="16" height="16" uuid="357d2793-36e1-409d-b7a9-a5e0c7feb22a">
+					<printWhenExpression><![CDATA[$F{medical_history_s13_exercise}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="336" y="342" width="16" height="16" uuid="a21b9b10-7043-4ec0-a4e4-b9be91ba2cad">
+					<printWhenExpression><![CDATA[$F{medical_history_s14_tetanus}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="336" y="356" width="16" height="16" uuid="7ff41eb6-6941-4d76-af8e-ddf12a8b26d6">
+					<printWhenExpression><![CDATA[$F{medical_history_s14_helpa_helpb}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="516" y="57" width="16" height="16" uuid="e4a38ba7-a4a1-4dc9-a569-7a4be0c580e6">
+					<printWhenExpression><![CDATA[$F{medical_history_s13_ever_smoked}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="516" y="197" width="16" height="16" uuid="2ae2e1d8-530d-44d1-b0af-37b67800a94f">
+					<printWhenExpression><![CDATA[$F{medical_history_s13_aspect}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="10" y="230" width="533" height="70" uuid="cdb09cce-b73d-4786-97a1-0e1902a2ba6c"/>
+				<textFieldExpression><![CDATA[$F{medical_history_s13_comments}!= null ? $F{medical_history_s13_comments}  : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="388" width="536" height="57" uuid="fa401912-6a1a-4fb4-96e0-51500d9b46a5"/>
+				<textFieldExpression><![CDATA[$F{medical_history_s14_comments}!= null ? $F{medical_history_s14_comments}  : ""]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="725">
 			<image scaleImage="RetainShape">
-				<reportElement x="0" y="0" width="555" height="298" uuid="b4dd2985-5e0b-46c8-99dc-b4529b7c5557"/>
-				<imageExpression><![CDATA[$P{real_path}+"Image/MH20.PNG"]]></imageExpression>
-			</image>
-			<image scaleImage="RetainShape">
-				<reportElement x="0" y="211" width="555" height="273" uuid="425f4c5e-e246-4e90-914e-171f6cf1142c"/>
-				<imageExpression><![CDATA[$P{real_path}+"Image/MH21.PNG"]]></imageExpression>
-			</image>
-			<image scaleImage="RetainShape">
-				<reportElement x="0" y="446" width="555" height="279" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
+				<reportElement x="0" y="589" width="555" height="136" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH22.PNG"]]></imageExpression>
 			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="6" width="555" height="293" uuid="b4dd2985-5e0b-46c8-99dc-b4529b7c5557"/>
+				<imageExpression><![CDATA[$P{real_path}+"Image/MH20.PNG"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="299" width="555" height="290" uuid="f42036ca-d580-4704-883b-df2b45cc7cbb"/>
+				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\RedimedProject\\Projects\\redimedProjStruct\\reports\\MH\\Image\\MH21.PNG"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="37" y="145" width="16" height="16" uuid="74d0326f-e1d1-4416-8a24-09aa917c5627">
+					<printWhenExpression><![CDATA[$F{medical_history_rmi_physical}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="37" y="196" width="16" height="16" uuid="3a154b66-1124-4456-9990-dfd95a7b06bf">
+					<printWhenExpression><![CDATA[$F{medical_history_rmi_mental}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"\\Image\\checked.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="151" y="141" width="121" height="20" uuid="431a8a44-178b-4a4b-8c85-f931627e7936"/>
+				<textFieldExpression><![CDATA[$F{medical_history_rmi_physical_initials}!= null ? $F{medical_history_rmi_physical_initials}  : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="192" width="133" height="20" uuid="bd694568-333f-4377-bc28-b882b3f5036b"/>
+				<textFieldExpression><![CDATA[$F{medical_history_rmi_mental_initials}!= null ?  $F{medical_history_rmi_mental_initials} : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="53" y="365" width="165" height="20" uuid="cd859d16-ed6a-4dcd-9034-19da2c46b02a"/>
+				<textFieldExpression><![CDATA[$F{medical_history_rmi_date}!= null ? $F{medical_history_rmi_date}  : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="53" y="695" width="165" height="20" uuid="3f6181c0-36fe-446a-9d98-3151edd8419d"/>
+				<textFieldExpression><![CDATA[$F{medical_history_dec_date}!= null ? $F{medical_history_dec_date}  : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="675" width="493" height="20" uuid="68728543-29ac-47d7-a50b-87731b0f7518"/>
+				<textFieldExpression><![CDATA[$F{medical_history_dec_witness}!= null ? $F{medical_history_dec_witness}  : ""]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
