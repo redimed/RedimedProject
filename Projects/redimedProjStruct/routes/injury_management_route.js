@@ -17,3 +17,7 @@ app.get('/api/im/list',injuryController.injuryList);
 app.post('/api/im/getById',injuryController.injuryById);
 app.post('/api/im/images',injuryController.injuryImageById);
 app.get('/api/im/testGCM',injuryController.testPushGCM);
+
+app.get('/api/im/pushSound',function(req,res){
+    res.sendfile('./sound/notification.mp3');
+})
