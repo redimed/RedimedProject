@@ -356,6 +356,8 @@ module.exports =
     {
 //        rlobEmailController.sendEmail("asdfasdf jasodfja sfiasjd foids>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         var bookingId=req.body.bookingId;
+        var siteAddress=req.body.siteAddress;
+        var mapUrl=req.body.mapUrl;
         var sql=
             " SELECT 	u.`user_name`,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
             " 	booking.`WRK_SURNAME`,booking.`CLAIM_NO`,                                                     "+
@@ -392,6 +394,7 @@ module.exports =
                         };
                         emailInfo.subject='Confirmation of Redilegal booking � '+row.WRK_SURNAME;
                         emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
+                        //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
                         emailInfo.htmlBody=
                             "	<p>Hi <span style='font-weight: bold'>"+row.user_name+"</span>,</p>                                 "+
@@ -419,7 +422,11 @@ module.exports =
                             "    </p>                                                                                                "+
                             "    <p>                                                                                                 "+
                             "        Thank you                                                                                       "+
-                            "    </p>                                                                                                ";
+                            "    </p>                                                                                                "+
+                            " <div style='width:400px;height:300px'>                                                                 "+
+                            "   <img src='"+mapUrl+"'/>                                                                                        "+
+                            " <div> Site address: "+siteAddress+" <div> "+
+                            " </div>                                                                                                 ";
                         rlobEmailController.sendEmail(req,res,emailInfo);
                     }
 

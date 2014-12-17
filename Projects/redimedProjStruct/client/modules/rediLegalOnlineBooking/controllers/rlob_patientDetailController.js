@@ -302,11 +302,37 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
          */
         $scope.sendConfirmEmail=function()
         {
-            $http({
+            var mapUrl=null;
+            var siteAddress=selectedInfo.locationSelected.Site_addr;
+            GMaps.geocode({
+                address: siteAddress,
+                callback: function (results, status) {
+                    if (status == 'OK') 
+                    {
+                        latlng1 = results[0].geometry.location;
+                        mapUrl = GMaps.staticMapURL({
+                          lat: latlng1.lat(),
+                          lng: latlng1.lng(),
+                          markers: [
+                            {lat: latlng1.lat(), lng: latlng1.lng()}
+                          ]
+                        });
+                        handle();
+                    }
+                    else
+                    {
+                        handle();
+                    }
+                }
+            });
+
+            var handle=function()
+            {
+                $http({
                 method:"POST",
                 url:"/api/rlob/rl_bookings/admin/send-comfirm-email",
-                data:{bookingId:$scope.newBooking.BOOKING_ID}
-            })
+                data:{bookingId:$scope.newBooking.BOOKING_ID,siteAddress:siteAddress,mapUrl:mapUrl}
+                })
                 .success(function(data) {
                     if(data.status=='success')
                     {
@@ -326,6 +352,10 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 .finally(function() {
 
                 });
+            }
+
+
+            
         }
 
         $scope.isSaving=false;
