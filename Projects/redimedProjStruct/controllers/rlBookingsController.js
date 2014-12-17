@@ -1288,6 +1288,7 @@ module.exports =
                         };
                         emailInfo.subject='Redilegal Result';
                         emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
+                        //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
 
 
@@ -1309,11 +1310,11 @@ module.exports =
                             " </p>                                                                                                   "+
                             " <p>                                                                                                    "+
                             "     REDiLEGAL Team                                                                                     "+
-                            " </p>                                                                                                   "+
-                            " <div style='width:400px;height:300px'>                                                                 "+
-                            "   <img src='"+mapUrl+"'/>                                                                                        "+
-                            " <div> Site address: "+siteAddress+" <div> "+
-                            " </div>                                                                                                 "
+                            " </p>                                                                                                   ";
+                            //" <div style='width:400px;height:300px'>                                                                 "+
+                            //"   <img src='"+mapUrl+"'/>                                                                                        "+
+                            //" <div> Site address: "+siteAddress+" <div> "+
+                            //" </div>                                                                                                 "
                         rlobEmailController.sendEmail(req,res,emailInfo);
                     }
 
