@@ -30,6 +30,16 @@ angular.module("app.loggedIn.item", [
                     }
                 }
             })
+            // FEE SEARCH
+            .state("loggedIn.item.fee.search", {
+                url: "/search",
+                views: {
+                    "main-content@loggedIn.item": {
+                        templateUrl: "modules/item/views/fee_search.html",
+                        controller: "ItemFeeSearchController"
+                    }
+                }
+            })
             // HEADER
             .state("loggedIn.item.header", {
                 url: "/item/header",

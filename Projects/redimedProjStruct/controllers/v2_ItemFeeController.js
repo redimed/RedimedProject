@@ -176,6 +176,8 @@ module.exports = {
 	*	ITEM FUND FEES
 	*/
 
+
+	// SEARCH PRIVATE FUND
 	postSearchFundFees:function(req, res) {
 		// var limit = (req.body.limit) ? req.body.limit : 10;
   //       var offset = (req.body.offset) ? req.body.offset : 0;
@@ -194,6 +196,7 @@ module.exports = {
 		});
 	},
 
+	//	SEARCH PRIVATE FUND FEE OF AN ITEM 
 	postGetItemFundFees: function(req, res) {
 		var search = req.body.search;
 		var item_id = search.item_id; 
@@ -216,6 +219,7 @@ module.exports = {
         });
 	},
 
+	// INSERT PRIVATE FUND FEE OF AN ITEM
 	postInsertItemFundFees: function(req, res) {
 		var item_id = req.body.item_id; 
 		var fees = req.body.fees; 
@@ -239,6 +243,8 @@ module.exports = {
 	/*
 	*	ITEM FEE GROUP
 	*/
+
+	// SEARCH FEE GROUP 
 	postSearchGroupFees:function(req, res) {
 		var fields = req.body.fields;
 
@@ -254,6 +260,7 @@ module.exports = {
 		});
 	},
 
+	// UPLOAD PRICE SOURCE TO GROUP 
 	uploadUploadGroupPriceSource: function(req, res) {
 		var group_id = req.body.FEE_GROUP_ID;
 
@@ -278,6 +285,7 @@ module.exports = {
 		})
 	},
 
+	// UPDATE PRICE FROM PRICE SOURCE OF GROUP 
 	postUpdateGroupPriceSource: function(req, res) {
 		var group_id = req.body.FEE_GROUP_ID;
 		// var group_id = req.query.id;
@@ -337,6 +345,8 @@ module.exports = {
 	/*
 	*	ITEM FEE TYPES
 	*/
+
+	// SEARCH FEE TYPES 
 	postSearchTypeFees:function(req, res) {
 		// var limit = (req.body.limit) ? req.body.limit : 10;
   //       var offset = (req.body.offset) ? req.body.offset : 0;
@@ -364,6 +374,7 @@ module.exports = {
 		});
 	},
 
+	// SEARCH FEE TYPES OF AN ITEM
 	postGetItemFees: function(req, res) {
 		var search = req.body.search;
 		var item_id = search.item_id; 
@@ -384,6 +395,7 @@ module.exports = {
         });
 	},
 
+	// INSERT FEE TYPES OF AN ITEM
 	postInsertItemFees: function(req, res) {
 		var item_id = req.body.item_id; 
 		var fees = req.body.fees; 
@@ -404,6 +416,7 @@ module.exports = {
         });
 	},
 
+	// UPLOAD PRICE SOURCE TO TYPE 
 	uploadUploadTypePriceSource: function(req, res) {
 		var type_id = req.body.FEE_TYPE_ID;
 
@@ -445,6 +458,7 @@ module.exports = {
 		})
 	},
 
+	// UPDATE PRICE SOURCE FROM FEE TYPE
 	postUpdateTypePriceSource: function(req, res){
 		var type_id = req.body.FEE_TYPE_ID;
 

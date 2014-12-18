@@ -86,7 +86,7 @@ var general_process = function(req, res){
 }
 
 module.exports = {
-	anySearch: function(req, res) {
+	postSearch: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
@@ -254,7 +254,6 @@ module.exports = {
 	},
 
 	postInsertFromSource: function(req, res){
-
 		db.FeeGroup.find({
 			where: {FEE_GROUP_TYPE: 'item_fee_type'}
 		})
@@ -272,6 +271,37 @@ module.exports = {
 			console.log(err);
 			res.json(500, {"status": "error", "message": error});
 		});
-
 	},
+
+	postSearchItemFees: function(req, res) {
+		var limit = (req.body.limit) ? req.body.limit : 10;
+        var offset = (req.body.offset) ? req.body.offset : 0;
+		var fields = req.body.fields;
+		var search_data = req.body.search;
+
+		var agrs = [];
+		// for (var key in search_data) {
+		// 	if(search_data[key])
+		// 	agrs.push(key + " LIKE '%"+ search_data[key] +"%'");
+		// };
+		// var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
+
+		db.InvItem.findAndCountAll({
+			// where: whereOpt,
+			offset: offset,
+			limit: limit,
+			attributes: fields,
+			order: 'ITEM_ID DESC',
+			include: [
+                { 
+                    model: db.FeeType , as: 'FeeTypes'
+                },
+            ]
+		}).success(function(result){
+			res.json({"status": "success", "list": result.rows, "count": result.count});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	}
 }
