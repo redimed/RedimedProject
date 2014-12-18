@@ -5,12 +5,7 @@ var db = require('../../models');
 var gorgonMH = db.gorgonMH;
 var patient = db.Patient;
 var APPTCAL = db.APPTCAL;
-
-
-
 module.exports = {
-
-
     loadGGMH: function (req, res) {
         var info = req.body.info || [];
         var patient_id = info.Patient_Id;
