@@ -34,6 +34,3 @@ eval(fs.readFileSync('./routes/mdt_route.js')+'');
 
 //tannv.dts@gmail.com
 eval(fs.readFileSync('./routes/iso_route.js')+'');
-
-//medicare
-eval(fs.readFileSync('./routes/medicare_route.js')+'');

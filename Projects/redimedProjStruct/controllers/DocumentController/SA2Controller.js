@@ -15,83 +15,8 @@ var APPTCAL = db.APPTCAL;
 var RedimedSite = db.RedimedSite;
 var fs = require('fs');
 
-var mkdirp = require('mkdirp');
-var java = require('java');
-java.options.push("-Djava.awt.headless=true");
-java.classpath.push('commons-lang3-3.1.jar');
-java.classpath.push('commons-io.jar');
-
-java.classpath.push('./lib/iText-2.1.7.js2.jar');
-java.classpath.push('./lib/jasperreports-5.6.0.jar');
-java.classpath.push('./lib/mysql-connector-java-5.1.13-bin.jar');
-java.classpath.push('./lib/org-apache-commons-codec.jar');
-//java.classpath.push('./lib/Audio.jar');
-
-var HashMap = java.import('java.util.HashMap');
-var JRException = java.import('net.sf.jasperreports.engine.JRException');
-var JasperExportManager = java.import('net.sf.jasperreports.engine.JasperExportManager');
-var JasperFillManager = java.import('net.sf.jasperreports.engine.JasperFillManager');
-var JasperPrint = java.import('net.sf.jasperreports.engine.JasperPrint');
-var DriverManager = java.import('java.sql.DriverManager');
-var Driver = java.import('com.mysql.jdbc.Driver');
-var InputStream = java.import('java.io.InputStream');
-var FileInputStream = java.import('java.io.FileInputStream');
-
-//var AudioBean = java.import('com.au.AudioBean');
 
 module.exports = {
-    printReport: function (req, res, next) {
-        var arr = [];
-        var calId = req.params.calId;
-        var id = req.params.id;
-        var patientId = req.params.patientId;
-
-        db.sequelize.query("SELECT c.Name,c.VALUE_RIGHT,c.VALUE_LEFT FROM cln_sa_df_lines c WHERE c.patient_id = ? AND c.CAL_ID=? AND c.SA_ID=?", null, {raw: true}, [patientId, calId, id])
-            .success(function (data) {
-                arr = data;
-
-                var jString = JSON.stringify(arr);
-
-                mkdirp('.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId, function (err) {
-                    if (err) console.error(err)
-                    else {
-                        var con = java.callStaticMethodSync('java.sql.DriverManager', 'getConnection', "jdbc:mysql://localhost:3306/sakila", "root", "root");
-
-                        var paramMap = new HashMap();
-
-                        paramMap.putSync("cal_id", parseInt(calId));
-                        paramMap.putSync("patient_id", parseInt(patientId));
-                        paramMap.putSync("sa_id", parseInt(id));
-                        paramMap.putSync("result_image", java.callStaticMethodSync('com.au.AudioBean', 'getImageChart', jString, false));
-
-                        var filePath = '.\\download\\report\\' + 'patientID_' + patientId + '\\calID_' + calId + '\\Audiogram_2.pdf';
-
-                        var jPrint = java.callStaticMethodSync('net.sf.jasperreports.engine.JasperFillManager', 'fillReport', './reports/SACln/Redimed.jasper', paramMap, con);
-
-                        java.callStaticMethod('net.sf.jasperreports.engine.JasperExportManager', 'exportReportToPdfFile', jPrint, filePath, function (err, rs) {
-                            if (err) {
-                                console.log(err);
-                                return;
-                            }
-                            else {
-
-                                res.download(filePath, 'Audiogram_2.pdf', function (err) {
-                                    if (err) {
-                                        console.log(err);
-                                        return;
-                                    }
-                                });
-                            }
-
-                        });
-                    }
-                });
-            })
-            .error(function (err) {
-                console.log(err);
-            })
-
-    },
     loadSA2: function (req, res) {
         var info = req.body.info; //get id find
         var patient_id = info.patient_id;
