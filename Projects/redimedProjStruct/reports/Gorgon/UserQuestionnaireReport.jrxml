@@ -2,11 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UserQuestionnaireReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d1146a0-3d50-4a42-bea5-3b6b3c2fd9ba">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-
-	<property name="ireport.y" value="3225"/>
+	<property name="ireport.y" value="3246"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
-
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -130,13 +128,18 @@
      userquestionnaire.`UQDate` AS userquestionnaire_UQDate,
      cln_patients.`Patient_id` AS cln_patients_Patient_id,
      cln_patients.`First_name` AS cln_patients_First_name,
+     cln_patients.`DOB` AS cln_patients_DOB,
      cln_patients.`Sur_name` AS cln_patients_Sur_name,
+     CONCAT(CONCAT(CONCAT(CONCAT(IFNULL(cln_patients.`First_name` ,''),' '), IFNULL(cln_patients.`Middle_name`,''), ' '),IFNULL(cln_patients.`Sur_name`,''))) AS full_name,
      cln_patients.`Sex` AS cln_patients_Sex,
      cln_patients.`DOB` AS cln_patients_DOB,
      userquestionnaire.`isUseRespirator` AS userquestionnaire_isUseRespirator,
-     SUBSTRING_INDEX(userquestionnaire.`SIGNATURE`,',',-1) AS Signature
+     SUBSTRING_INDEX(userquestionnaire.`SIGNATURE`,',',-1) AS Signature,
+     doctors.`NAME` AS doctors_NAME,
+     SUBSTRING_INDEX(doctors.`Signature`,',',-1) AS doctors_Signature
 FROM
-     `cln_patients` cln_patients INNER JOIN `userquestionnaire` userquestionnaire ON cln_patients.`Patient_id` = userquestionnaire.`Patient_Id`
+     `cln_patients` cln_patients INNER JOIN `userquestionnaire` userquestionnaire ON cln_patients.`Patient_id` = userquestionnaire.`Patient_Id` INNER JOIN `cln_appointment_calendar` ON cln_appointment_calendar.`CAL_ID`=userquestionnaire.`CalId`
+INNER JOIN `doctors` ON doctors.`doctor_id`=cln_appointment_calendar.`DOCTOR_ID`
 WHERE
      userquestionnaire.`Quest_Id` = $P{id}]]>
 	</queryString>
@@ -257,13 +260,16 @@ WHERE
 	<field name="userquestionnaire_UQDate" class="java.sql.Timestamp"/>
 	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
 	<field name="cln_patients_First_name" class="java.lang.String"/>
-	<field name="cln_patients_Sur_name" class="java.lang.String"/>
-	<field name="cln_patients_Sex" class="java.lang.String"/>
 	<field name="cln_patients_DOB" class="java.sql.Date"/>
+	<field name="cln_patients_Sur_name" class="java.lang.String"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="cln_patients_Sex" class="java.lang.String"/>
 	<field name="userquestionnaire_isUseRespirator" class="java.lang.Integer"/>
 	<field name="Signature" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="doctors_NAME" class="java.lang.String"/>
+	<field name="doctors_Signature" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -278,9 +284,9 @@ WHERE
 				<imageExpression><![CDATA[$P{realPath} +"/Redimed_Injury.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="5" y="82" width="545" height="20" uuid="7fa9eb60-1119-434e-9865-91c16c5b4543"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+				<reportElement x="10" y="82" width="545" height="20" uuid="7fa9eb60-1119-434e-9865-91c16c5b4543"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[MEDICAL QUESTIONNAIRE FOR RESPIRATOR USERS]]></text>
 			</staticText>
@@ -326,7 +332,7 @@ WHERE
 				<text><![CDATA[Answers to questions in Section 1, and to question 9 in Section 2 of Part A, do not require medical examination. ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="50" width="83" height="15" uuid="261f5322-7224-4533-b42b-b027e54e4219"/>
+				<reportElement x="13" y="50" width="121" height="15" uuid="261f5322-7224-4533-b42b-b027e54e4219"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
@@ -358,7 +364,7 @@ WHERE
 				<text><![CDATA[1.    Today’s date:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="48" y="210" width="76" height="14" uuid="a0351a2f-a613-45fb-b1a2-c7220ee79c0d"/>
+				<reportElement x="48" y="210" width="81" height="14" uuid="a0351a2f-a613-45fb-b1a2-c7220ee79c0d"/>
 				<text><![CDATA[2.    Your Name:]]></text>
 			</staticText>
 			<staticText>
@@ -559,8 +565,8 @@ WHERE
 				<textFieldExpression><![CDATA[$F{userquestionnaire_TodayDate}!= null ? $F{userquestionnaire_TodayDate} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="131" y="209" width="351" height="14" uuid="e06f8380-660d-4cd3-bb35-0e6bd3f919ec"/>
-				<textFieldExpression><![CDATA[($F{cln_patients_First_name} != null ? $F{cln_patients_First_name} : "") + " " + ($F{cln_patients_Sur_name} != null ? $F{cln_patients_Sur_name} : "")]]></textFieldExpression>
+				<reportElement x="136" y="209" width="351" height="14" uuid="e06f8380-660d-4cd3-bb35-0e6bd3f919ec"/>
+				<textFieldExpression><![CDATA[($F{full_name}!=null && $F{full_name}!="")?$F{full_name}:""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="197" y="235" width="285" height="14" uuid="b757d3a6-9470-46c1-8b9c-7cca314ae6e6"/>
@@ -571,11 +577,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{userquestionnaire_Height} != null ? $F{userquestionnaire_Height} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="141" y="309" width="341" height="14" uuid="2e3c4971-661d-4370-8cb5-c02f2be67d0a"/>
+				<reportElement x="133" y="309" width="341" height="14" uuid="2e3c4971-661d-4370-8cb5-c02f2be67d0a"/>
 				<textFieldExpression><![CDATA[$F{userquestionnaire_Weight} != null ? $F{userquestionnaire_Weight} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="141" y="334" width="341" height="14" uuid="8941ee18-1019-4491-a4f1-fcd94bd3fed9"/>
+				<reportElement x="133" y="334" width="341" height="14" uuid="8941ee18-1019-4491-a4f1-fcd94bd3fed9"/>
 				<textFieldExpression><![CDATA[$F{userquestionnaire_JobTitle} != null ? $F{userquestionnaire_JobTitle} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -2300,26 +2306,6 @@ WHERE
 				<reportElement x="35" y="208" width="292" height="14" uuid="29bde057-2928-4957-bf14-d4dfc7a2ccd3"/>
 				<text><![CDATA[13.   Do you currently have any of the following hearing problems:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="392" y="208" width="20" height="14" uuid="0b895e3e-8e7f-4e75-bf0c-5aa0a7edda71"/>
-				<text><![CDATA[No]]></text>
-			</staticText>
-			<image>
-				<reportElement x="328" y="208" width="13" height="13" uuid="f52cf78d-be37-4eb3-a981-16667441979e"/>
-				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHearingProblems} != null && $F{userquestionnaire_isHearingProblems}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="375" y="208" width="13" height="13" uuid="b7c1a1ff-c3ad-4e53-99a6-250a561d36a1"/>
-				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHearingProblems} != null && $F{userquestionnaire_isHearingProblems}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="367" y="208" width="5" height="14" uuid="7baafc1b-0925-41d4-af75-1e09babef49f"/>
-				<text><![CDATA[/]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="343" y="207" width="21" height="14" uuid="3e9b7eff-16c6-4278-94b5-a5e13844d8a0"/>
-				<text><![CDATA[Yes]]></text>
-			</staticText>
 			<image>
 				<reportElement x="209" y="284" width="13" height="13" uuid="b2d75d75-3a9d-4d65-8fce-34fe4fc939a0"/>
 				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBackInjury} != null && $F{userquestionnaire_isBackInjury}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
@@ -2624,7 +2610,7 @@ WHERE
 				<text><![CDATA[Employee:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="221" y="35" width="59" height="14" uuid="1ba17d2d-2adf-4d21-a32f-62ccdb075668"/>
+				<reportElement x="221" y="35" width="75" height="14" uuid="1ba17d2d-2adf-4d21-a32f-62ccdb075668"/>
 				<text><![CDATA[Date of Birth:]]></text>
 			</staticText>
 			<staticText>
@@ -2784,33 +2770,33 @@ WHERE
 				<text><![CDATA[1) No restriction on respirator usage ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="562" width="62" height="14" uuid="4802c2bf-2468-471c-aa43-7295b4d52657"/>
+				<reportElement x="10" y="556" width="62" height="14" uuid="4802c2bf-2468-471c-aa43-7295b4d52657"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Restrictions: ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="13" y="595" width="529" height="1" uuid="9afb9dd9-248a-4709-8fd1-28e72b6d6aa3"/>
+				<reportElement x="13" y="580" width="529" height="1" uuid="9afb9dd9-248a-4709-8fd1-28e72b6d6aa3"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="13" y="607" width="529" height="1" uuid="b620de9a-78a9-4a0c-a6de-c51dbdc5e0eb"/>
+				<reportElement x="13" y="595" width="529" height="1" uuid="b620de9a-78a9-4a0c-a6de-c51dbdc5e0eb"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="13" y="635" width="179" height="14" uuid="310e2f52-d8ce-40ea-9887-df321edecdca"/>
+				<reportElement x="10" y="610" width="195" height="14" uuid="310e2f52-d8ce-40ea-9887-df321edecdca"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Examining Health Care Professional:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="401" y="635" width="28" height="14" uuid="22844059-1176-401b-a37b-74227b042649"/>
+				<reportElement x="401" y="610" width="28" height="14" uuid="22844059-1176-401b-a37b-74227b042649"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -2937,20 +2923,20 @@ WHERE
 				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_Class} != null && $F{userquestionnaire_Class}.intValue() == 2 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="191" y="646" width="204" height="1" uuid="2fbfc057-28c0-45e9-9447-f01385073e44"/>
+				<reportElement x="192" y="625" width="200" height="1" uuid="2fbfc057-28c0-45e9-9447-f01385073e44"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="427" y="647" width="115" height="1" uuid="be7f484f-18b8-497b-bd83-e46208762507"/>
+				<reportElement x="435" y="625" width="105" height="1" uuid="be7f484f-18b8-497b-bd83-e46208762507"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<textField>
 				<reportElement x="68" y="34" width="139" height="14" uuid="e3e43074-b2f3-4217-924c-78aa18fb52a1"/>
-				<textFieldExpression><![CDATA[$F{userquestionnaire_Employee} != null ? $F{userquestionnaire_Employee} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{full_name}!=null && $F{full_name}!="")?$F{full_name}:""]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="283" y="34" width="68" height="14" uuid="b9bcf096-7de0-4083-900b-0d28d7790d6a"/>
@@ -2985,33 +2971,33 @@ WHERE
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{userquestionnaire_HealthCare} != null ? $F{userquestionnaire_HealthCare}.toUpperCase() : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{full_name}!=null && $F{full_name}!="")?$F{full_name}:""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="18" y="583" width="524" height="35" uuid="83185f15-6f75-4134-8363-b22809ddfd94"/>
+				<reportElement x="10" y="570" width="534" height="35" uuid="83185f15-6f75-4134-8363-b22809ddfd94"/>
 				<textFieldExpression><![CDATA[$F{userquestionnaire_Restrictions} != null ? $F{userquestionnaire_Restrictions} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="196" y="634" width="196" height="14" uuid="88de1062-70c5-490a-8dae-d72b3a4cb6db"/>
+				<reportElement x="196" y="612" width="196" height="14" uuid="88de1062-70c5-490a-8dae-d72b3a4cb6db"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{userquestionnaire_HealthCarePro} != null ? $F{userquestionnaire_HealthCarePro} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{doctors_NAME}!=null && $F{doctors_NAME}!="")?$F{doctors_NAME}:""]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="434" y="634" width="108" height="14" uuid="10e77e04-0a74-4335-b664-6a3e2671980c"/>
+				<reportElement x="434" y="612" width="108" height="14" uuid="10e77e04-0a74-4335-b664-6a3e2671980c"/>
 				<textFieldExpression><![CDATA[$F{userquestionnaire_UQDate} != null ? $F{userquestionnaire_UQDate} : ""]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="259" y="562" width="283" height="13" uuid="31cd047e-2d25-463b-bbf2-ae4cc19ffec8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="10" y="647" width="52" height="13" uuid="31cd047e-2d25-463b-bbf2-ae4cc19ffec8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Signature]]></text>
+				<text><![CDATA[Signature:]]></text>
 			</staticText>
-			<image hAlign="Center">
-				<reportElement x="294" y="499" width="216" height="50" uuid="b04d80d3-8adc-42ac-8287-60058ef605ac"/>
-				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature}.getBytes("UTF-8"))))]]></imageExpression>
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement x="65" y="630" width="150" height="50" uuid="b04d80d3-8adc-42ac-8287-60058ef605ac"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctors_Signature}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 		</band>
 	</detail>

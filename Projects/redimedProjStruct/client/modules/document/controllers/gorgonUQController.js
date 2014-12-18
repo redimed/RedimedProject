@@ -1,372 +1,235 @@
 angular.module('app.loggedIn.document.gorgonUQ.controllers', [])
 
-.controller("gorgonUQController", function ($scope, $filter, DocumentService, $http, $cookieStore, localStorageService, $state, toastr, $window, $stateParams) {
-    $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-    };
-    var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
+    .controller("gorgonUQController", function ($scope, $filter, DocumentService, $http, $cookieStore, localStorageService, $state, toastr, $window, $stateParams) {
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+        var userinfo = $cookieStore.get("userInfo") !== 'undefined' ? $cookieStore.get("userInfo") : 'fail';
 
-    //$scope.apptInfo = localStorageService.get('tempAppt');
-    $scope.patientInfo = localStorageService.get('tempPatient');
-    //var doctorInfo = $cookieStore.get('doctorInfo');
-    var Patient_ID = $scope.patientInfo.Patient_id;
-    var CalID = -1; // $scope.apptInfo.CAL_ID;
+        //$scope.apptInfo = localStorageService.get('tempAppt');
+        $scope.patientInfo = localStorageService.get('tempPatient');
+        //var doctorInfo = $cookieStore.get('doctorInfo');
+        var Patient_ID = $scope.patientInfo.Patient_id;
+        var CalID = -1; // $scope.apptInfo.CAL_ID;
 
-    function getAge(dateString) {
-        var now = new Date();
-        var birthDate = new Date(dateString);
-        var age = now.getFullYear() - birthDate.getFullYear();
-        var m = now.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        return age;
-    }
-
-
-    // Start Signature
-    var tempSignature;
-    $scope.isSignature = false;
-    $scope.showSignature = function () {
-        $scope.isSignature = !$scope.isSignature;
-    }
-
-    $scope.cancelClick = function () {
-        $scope.isSignature = !$scope.isSignature;
-        $scope.info.SIGNATURE = tempSignature;
-    };
-    $scope.clearClick = function () {
-        $scope.info.SIGNATURE = '';
-    };
-    $scope.okClick = function () {
-        $scope.isSignature = !$scope.isSignature;
-        tempSignature = $scope.info.SIGNATURE;
-    }
-    // End Signature
-
-
-    $scope.info = {
-        name: $scope.patientInfo.First_name + " " + $scope.patientInfo.Sur_name + " " + $scope.patientInfo.Middle_name,
-        Patient_Id: Patient_ID,
-        age: getAge($scope.patientInfo.DOB),
-        sex: $scope.patientInfo.Sex,
-        TodayDate: new Date(),
-        Height: null,
-        Weight: null,
-        JobTitle: null,
-        PhoneNumber: null,
-        BestTime: null,
-        isReviewQuest: null,
-        isNRP: 0,
-        isOtherType: 0,
-        isRespirator: null,
-        RespiratorType: null,
-        isSmoke: null,
-        isSeizuresCondition: null,
-        isDiabetes: null,
-        isAllergicReactions: null,
-        isClaustrophobia: null,
-        isTrouble: null,
-        isAsbestosis: null,
-        isAsthma: null,
-        isBronchitis: null,
-        isEmphysema: null,
-        isPneumonia: null,
-        isTuberculosis: null,
-        isSilicosis: null,
-        isPneumothorax: null,
-        isLungCancer: null,
-        isBrokenRibs: null,
-        isInjuries: null,
-        isOtherLung: null,
-        OtherLungComment: null,
-        isSOB: null,
-        isSOBWalkingFast: null,
-        isSOBWalkingOther: null,
-        isStopForBreath: null,
-        isSOBWashing: null,
-        isSOBInterferes: null,
-        isCoughingPhlegm: null,
-        isCoughingMorning: null,
-        isCoughingLyingDown: null,
-        isCoughingUpBlood: null,
-        isWheezing: null,
-        isWheezingInterferes: null,
-        isChestPain: null,
-        isOtherSymptomsPulmonary: null,
-        isHeartAttack: null,
-        isStroke: null,
-        isAngina: null,
-        isHeartFailure: null,
-        isSwelling: null,
-        isHeartArrhythmia: null,
-        isBloodPressureHeart: null,
-        isOtherHeart: null,
-        OtherHeartComment: null,
-        isFrequentPain: null,
-        isPOTPhysical: null,
-        isPOTInterferes: null,
-        isMissingBeat: null,
-        isHeartburn: null,
-        isOtherSymptomsHeart: null,
-        isBreathing: null,
-        isHeartTrouble: null,
-        isBloodPressureMedication: null,
-        isSeizuresMedication: null,
-        isEyeIrritation: null,
-        isSkinAllergies: null,
-        isAnxiety: null,
-        isGeneralWeakness: null,
-        isOtherProblem: null,
-        isTalk: null,
-        isLostVision: null,
-        isContactLenses: null,
-        isWearGlasses: null,
-        isColourBlind: null,
-        isOtherEye: null,
-        isInjuryEars: null,
-        isHearingProblems: null,
-        isDifficultyHearing: null,
-        isHearingAid: null,
-        isOtherHearing: null,
-        isBackInjury: null,
-        isWeaknessAny: null,
-        isBackPain: null,
-        isDFMArmsLegs: null,
-        isDFMHead: null,
-        isPOSLeanForward: null,
-        isPODHead: null,
-        isDifficultyBending: null,
-        isDifficultySquatting: null,
-        isClimbing: null,
-        isOtherMuscle: null,
-        Employee: null,
-        DOB: null,
-        Department: null,
-        SocialSecurity: null,
-        Supervisor: null,
-        isAtmosphere: 0,
-        isContinuous: 0,
-        isOpen: 0,
-        isClose: 0,
-        isSupplied: 0,
-        isCombination: 0,
-        isAir_NonPow: 0,
-        isAir_Pow: 0,
-        LevelOfWE: null,
-        ExtentUsage: null,
-        LengthOfTime: null,
-        WorkCons: null,
-        Safety: null,
-        HealthCare: null,
-        Class: null,
-        Restrictions: null,
-        HealthCarePro: null,
-        UQDate: new Date(),
-        Created_by: null,
-        Creation_date: null,
-        Last_updated_by: null,
-        Last_update_date: null,
-        CalId: CalID,
-        DocId: null,
-        SIGNATURE: null,
-        isUseRespirator: 0
-    };
-
-    var oriInfo = angular.copy($scope.info);
-
-    $scope.resetForm = function () {
-        $scope.info = angular.copy(oriInfo);
-        $scope.gorgonUQForm.$setPristine();
-    }
-
-    $scope.infoChanged = function () {
-        return !angular.equals(oriInfo, $scope.info);
-    }
-
-    $scope.checkUseRespirator = function (value) {
-        if (value == true) {
-            $scope.info.isEyeIrritation = null;
-            $scope.info.isSkinAllergies = null;
-            $scope.info.isAnxiety = null;
-            $scope.info.isGeneralWeakness = null;
-            $scope.info.isOtherProblem = null;
-        }
-
-    };
-
-
-    DocumentService.checkUser(Patient_ID, CalID).then(function (response) {
-        if (response['status'] === 'fail') {
-            var date = new Date();
-            $scope.isNew = true;
-            $scope.maxDate = new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
-        } else {
-            $scope.isNew = false;
-            $scope.info = {
-                Quest_Id: response.Quest_Id,
-                name: $scope.patientInfo.First_name + " " + $scope.patientInfo.Sur_name + " " + $scope.patientInfo.Middle_name,
-                Patient_Id: response.Patient_Id,
-                age: getAge($scope.patientInfo.DOB),
-                sex: $scope.patientInfo.Sex,
-                TodayDate: response.TodayDate,
-                Height: response.Height,
-                Weight: response.Weight,
-                JobTitle: response.JobTitle,
-                PhoneNumber: response.PhoneNumber,
-                BestTime: response.BestTime,
-                isReviewQuest: response.isReviewQuest,
-                isNRP: response.isNRP,
-                isOtherType: response.isOtherType,
-                isRespirator: response.isRespirator,
-                RespiratorType: response.RespiratorType,
-                isSmoke: response.isSmoke,
-                isSeizuresCondition: response.isSeizuresCondition,
-                isDiabetes: response.isDiabetes,
-                isAllergicReactions: response.isAllergicReactions,
-                isClaustrophobia: response.isClaustrophobia,
-                isTrouble: response.isTrouble,
-                isAsbestosis: response.isAsbestosis,
-                isAsthma: response.isAsthma,
-                isBronchitis: response.isBronchitis,
-                isEmphysema: response.isEmphysema,
-                isPneumonia: response.isPneumonia,
-                isTuberculosis: response.isTuberculosis,
-                isSilicosis: response.isSilicosis,
-                isPneumothorax: response.isPneumothorax,
-                isLungCancer: response.isLungCancer,
-                isBrokenRibs: response.isBrokenRibs,
-                isInjuries: response.isInjuries,
-                isOtherLung: response.isOtherLung,
-                OtherLungComment: response.OtherLungComment,
-                isSOB: response.isSOB,
-                isSOBWalkingFast: response.isSOBWalkingFast,
-                isSOBWalkingOther: response.isSOBWalkingOther,
-                isStopForBreath: response.isStopForBreath,
-                isSOBWashing: response.isSOBWashing,
-                isSOBInterferes: response.isSOBInterferes,
-                isCoughingPhlegm: response.isCoughingPhlegm,
-                isCoughingMorning: response.isCoughingMorning,
-                isCoughingLyingDown: response.isCoughingLyingDown,
-                isCoughingUpBlood: response.isCoughingUpBlood,
-                isWheezing: response.isWheezing,
-                isWheezingInterferes: response.isWheezingInterferes,
-                isChestPain: response.isChestPain,
-                isOtherSymptomsPulmonary: response.isOtherSymptomsPulmonary,
-                isHeartAttack: response.isHeartAttack,
-                isStroke: response.isStroke,
-                isAngina: response.isAngina,
-                isHeartFailure: response.isHeartFailure,
-                isSwelling: response.isSwelling,
-                isHeartArrhythmia: response.isHeartArrhythmia,
-                isBloodPressureHeart: response.isBloodPressureHeart,
-                isOtherHeart: response.isOtherHeart,
-                OtherHeartComment: response.OtherHeartComment,
-                isFrequentPain: response.isFrequentPain,
-                isPOTPhysical: response.isPOTPhysical,
-                isPOTInterferes: response.isPOTInterferes,
-                isMissingBeat: response.isMissingBeat,
-                isHeartburn: response.isHeartburn,
-                isOtherSymptomsHeart: response.isOtherSymptomsHeart,
-                isBreathing: response.isBreathing,
-                isHeartTrouble: response.isHeartTrouble,
-                isBloodPressureMedication: response.isBloodPressureMedication,
-                isSeizuresMedication: response.isSeizuresMedication,
-                isEyeIrritation: response.isEyeIrritation,
-                isSkinAllergies: response.isSkinAllergies,
-                isAnxiety: response.isAnxiety,
-                isGeneralWeakness: response.isGeneralWeakness,
-                isOtherProblem: response.isOtherProblem,
-                isTalk: response.isTalk,
-                isLostVision: response.isLostVision,
-                isContactLenses: response.isContactLenses,
-                isWearGlasses: response.isWearGlasses,
-                isColourBlind: response.isColourBlind,
-                isOtherEye: response.isOtherEye,
-                isInjuryEars: response.isInjuryEars,
-                isHearingProblems: response.isHearingProblems,
-                isDifficultyHearing: response.isDifficultyHearing,
-                isHearingAid: response.isHearingAid,
-                isOtherHearing: response.isOtherHearing,
-                isBackInjury: response.isBackInjury,
-                isWeaknessAny: response.isWeaknessAny,
-                isBackPain: response.isBackPain,
-                isDFMArmsLegs: response.isDFMArmsLegs,
-                isDFMHead: response.isDFMHead,
-                isPOSLeanForward: response.isPOSLeanForward,
-                isPODHead: response.isPODHead,
-                isDifficultyBending: response.isDifficultyBending,
-                isDifficultySquatting: response.isDifficultySquatting,
-                isClimbing: response.isClimbing,
-                isOtherMuscle: response.isOtherMuscle,
-                Employee: response.Employee,
-                DOB: response.DOB,
-                Department: response.Department,
-                SocialSecurity: response.SocialSecurity,
-                Supervisor: response.Supervisor,
-                isAtmosphere: response.isAtmosphere,
-                isContinuous: response.isContinuous,
-                isOpen: response.isOpen,
-                isClose: response.isClose,
-                isSupplied: response.isSupplied,
-                isCombination: response.isCombination,
-                isAir_NonPow: response.isAir_NonPow,
-                isAir_Pow: response.isAir_Pow,
-                LevelOfWE: response.LevelOfWE,
-                ExtentUsage: response.ExtentUsage,
-                LengthOfTime: response.LengthOfTime,
-                WorkCons: response.WorkCons,
-                Safety: response.Safety,
-                HealthCare: response.HealthCare,
-                Class: response.Class,
-                Restrictions: response.Restrictions,
-                HealthCarePro: response.HealthCarePro,
-                UQDate: response.UQDate,
-                Created_by: response.Created_by,
-                Creation_date: response.Creation_date,
-                Last_updated_by: response.Last_updated_by,
-                Last_update_date: response.Last_update_date,
-                CalId: response.CalId,
-                DocId: response.DocId,
-                SIGNATURE: response.SIGNATURE,
-                isUseRespirator: response.isUseRespirator
-            };
-            oriInfo = angular.copy($scope.info);
-        }
-    });
-
-    $scope.submitGorgonUQ = function (gorgonUQForm) {
-        $scope.showClickedValidation = true;
-        if (gorgonUQForm.$error.required || gorgonUQForm.$error.pattern) {
-            toastr.error("Please Input All Required Information!", "Error");
-        } else {
-            if ($scope.isNew == true) {
-                DocumentService.insertUQ($scope.info).then(function (response) {
-                    if (response['status'] === 'success') {
-                        toastr.success("Successfully", "Success");
-                        $state.go('loggedIn.gorgonUQ', null, {
-                            'reload': true
-                        });
-                    } else {
-                        toastr.error("Fail", "Error");
-                    }
-                });
-            } else if ($scope.isNew == false) {
-                DocumentService.updateUQ($scope.info).then(function (response) {
-                    if (response['status'] === 'success') {
-                        toastr.success("Successfully", "Success");
-                        $state.go('loggedIn.gorgonUQ', null, {
-                            'reload': true
-                        });
-                    } else {
-                        toastr.error("Fail", "Error");
-                    }
-                });
+        function getAge(dateString) {
+            var now = new Date();
+            var birthDate = new Date(dateString);
+            var age = now.getFullYear() - birthDate.getFullYear();
+            var m = now.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
+                age--;
             }
+            return age;
         }
 
-    };
+        $scope.info = {
+            Patient_Id: Patient_ID,
+            CalId: CalID
+        };
+
+        var oriInfo = angular.copy($scope.info);
+
+        $scope.resetForm = function () {
+            $scope.info = angular.copy(oriInfo);
+            $scope.gorgonUQForm.$setPristine();
+        }
+
+        $scope.infoChanged = function () {
+            return !angular.equals(oriInfo, $scope.info);
+        }
+
+        $scope.checkUseRespirator = function (value) {
+            if (value == true) {
+                $scope.info.isEyeIrritation = null;
+                $scope.info.isSkinAllergies = null;
+                $scope.info.isAnxiety = null;
+                $scope.info.isGeneralWeakness = null;
+                $scope.info.isOtherProblem = null;
+            }
+
+        };
 
 
-});
+        DocumentService.checkUser(Patient_ID, CalID).then(function (response) {
+            if (response[0].status === 'fail') {
+                $state.go("loggedIn.home", null, {"reload": true});
+                toastr.error("Load fail!", "Error");
+            }
+            else if (response[0].status === 'findNull') {
+                var date = new Date();
+                $scope.isNew = true;
+                $scope.maxDate = new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+            }
+            else if (response[0].status === 'findFound') {
+                $scope.isNew = false;
+                var data = response[0].data;
+                $scope.info = {
+                    Quest_Id: data.Quest_Id,
+                    Patient_Id: Patient_ID,
+                    age: getAge($scope.patientInfo.DOB),
+                    sex: $scope.patientInfo.Sex,
+                    TodayDate: data.TodayDate,
+                    Height: data.Height,
+                    Weight: data.Weight,
+                    JobTitle: data.JobTitle,
+                    PhoneNumber: data.PhoneNumber,
+                    BestTime: data.BestTime,
+                    isReviewQuest: data.isReviewQuest,
+                    isNRP: data.isNRP,
+                    isOtherType: data.isOtherType,
+                    isRespirator: data.isRespirator,
+                    RespiratorType: data.RespiratorType,
+                    isSmoke: data.isSmoke,
+                    isSeizuresCondition: data.isSeizuresCondition,
+                    isDiabetes: data.isDiabetes,
+                    isAllergicReactions: data.isAllergicReactions,
+                    isClaustrophobia: data.isClaustrophobia,
+                    isTrouble: data.isTrouble,
+                    isAsbestosis: data.isAsbestosis,
+                    isAsthma: data.isAsthma,
+                    isBronchitis: data.isBronchitis,
+                    isEmphysema: data.isEmphysema,
+                    isPneumonia: data.isPneumonia,
+                    isTuberculosis: data.isTuberculosis,
+                    isSilicosis: data.isSilicosis,
+                    isPneumothorax: data.isPneumothorax,
+                    isLungCancer: data.isLungCancer,
+                    isBrokenRibs: data.isBrokenRibs,
+                    isInjuries: data.isInjuries,
+                    isOtherLung: data.isOtherLung,
+                    OtherLungComment: data.OtherLungComment,
+                    isSOB: data.isSOB,
+                    isSOBWalkingFast: data.isSOBWalkingFast,
+                    isSOBWalkingOther: data.isSOBWalkingOther,
+                    isStopForBreath: data.isStopForBreath,
+                    isSOBWashing: data.isSOBWashing,
+                    isSOBInterferes: data.isSOBInterferes,
+                    isCoughingPhlegm: data.isCoughingPhlegm,
+                    isCoughingMorning: data.isCoughingMorning,
+                    isCoughingLyingDown: data.isCoughingLyingDown,
+                    isCoughingUpBlood: data.isCoughingUpBlood,
+                    isWheezing: data.isWheezing,
+                    isWheezingInterferes: data.isWheezingInterferes,
+                    isChestPain: data.isChestPain,
+                    isOtherSymptomsPulmonary: data.isOtherSymptomsPulmonary,
+                    isHeartAttack: data.isHeartAttack,
+                    isStroke: data.isStroke,
+                    isAngina: data.isAngina,
+                    isHeartFailure: data.isHeartFailure,
+                    isSwelling: data.isSwelling,
+                    isHeartArrhythmia: data.isHeartArrhythmia,
+                    isBloodPressureHeart: data.isBloodPressureHeart,
+                    isOtherHeart: data.isOtherHeart,
+                    OtherHeartComment: data.OtherHeartComment,
+                    isFrequentPain: data.isFrequentPain,
+                    isPOTPhysical: data.isPOTPhysical,
+                    isPOTInterferes: data.isPOTInterferes,
+                    isMissingBeat: data.isMissingBeat,
+                    isHeartburn: data.isHeartburn,
+                    isOtherSymptomsHeart: data.isOtherSymptomsHeart,
+                    isBreathing: data.isBreathing,
+                    isHeartTrouble: data.isHeartTrouble,
+                    isBloodPressureMedication: data.isBloodPressureMedication,
+                    isSeizuresMedication: data.isSeizuresMedication,
+                    isEyeIrritation: data.isEyeIrritation,
+                    isSkinAllergies: data.isSkinAllergies,
+                    isAnxiety: data.isAnxiety,
+                    isGeneralWeakness: data.isGeneralWeakness,
+                    isOtherProblem: data.isOtherProblem,
+                    isTalk: data.isTalk,
+                    isLostVision: data.isLostVision,
+                    isContactLenses: data.isContactLenses,
+                    isWearGlasses: data.isWearGlasses,
+                    isColourBlind: data.isColourBlind,
+                    isOtherEye: data.isOtherEye,
+                    isInjuryEars: data.isInjuryEars,
+                    isHearingProblems: data.isHearingProblems,
+                    isDifficultyHearing: data.isDifficultyHearing,
+                    isHearingAid: data.isHearingAid,
+                    isOtherHearing: data.isOtherHearing,
+                    isBackInjury: data.isBackInjury,
+                    isWeaknessAny: data.isWeaknessAny,
+                    isBackPain: data.isBackPain,
+                    isDFMArmsLegs: data.isDFMArmsLegs,
+                    isDFMHead: data.isDFMHead,
+                    isPOSLeanForward: data.isPOSLeanForward,
+                    isPODHead: data.isPODHead,
+                    isDifficultyBending: data.isDifficultyBending,
+                    isDifficultySquatting: data.isDifficultySquatting,
+                    isClimbing: data.isClimbing,
+                    isOtherMuscle: data.isOtherMuscle,
+                    Department: data.Department,
+                    SocialSecurity: data.SocialSecurity,
+                    Supervisor: data.Supervisor,
+                    isAtmosphere: data.isAtmosphere,
+                    isContinuous: data.isContinuous,
+                    isOpen: data.isOpen,
+                    isClose: data.isClose,
+                    isSupplied: data.isSupplied,
+                    isCombination: data.isCombination,
+                    isAir_NonPow: data.isAir_NonPow,
+                    isAir_Pow: data.isAir_Pow,
+                    LevelOfWE: data.LevelOfWE,
+                    ExtentUsage: data.ExtentUsage,
+                    LengthOfTime: data.LengthOfTime,
+                    WorkCons: data.WorkCons,
+                    Safety: data.Safety,
+                    HealthCare: data.HealthCare,
+                    Class: data.Class,
+                    Restrictions: data.Restrictions,
+                    UQDate: data.UQDate,
+                    Created_by: data.Created_by,
+                    Creation_date: data.Creation_date,
+                    Last_updated_by: data.Last_updated_by,
+                    Last_update_date: data.Last_update_date,
+                    CalId: CalID,
+                    DocId: response[0].doctor.doctor_id,
+                    SIGNATURE: data.SIGNATURE,
+                    isUseRespirator: data.isUseRespirator,
+                    patient: response[0].patient,
+                    doctor: response[0].doctor
+                };
+                oriInfo = angular.copy($scope.info);
+            }
+            else {
+                $state.go("loggedIn.home", null, {"reload": true});
+                toastr.error("Load fail!", "Error");
+            }
+        });
+
+        $scope.submitGorgonUQ = function (gorgonUQForm) {
+            $scope.showClickedValidation = true;
+            if (gorgonUQForm.$error.required || gorgonUQForm.$error.pattern) {
+                toastr.error("Please Input All Required Information!", "Error");
+            } else {
+                if ($scope.isNew == true) {
+                    DocumentService.insertUQ($scope.info).then(function (response) {
+                        if (response['status'] === 'success') {
+                            toastr.success("Successfully", "Success");
+                            $state.go('loggedIn.gorgonUQ', null, {
+                                'reload': true
+                            });
+                        } else {
+                            toastr.error("Fail", "Error");
+                        }
+                    });
+                } else if ($scope.isNew == false) {
+                    DocumentService.updateUQ($scope.info).then(function (response) {
+                        if (response['status'] === 'success') {
+                            toastr.success("Successfully", "Success");
+                            $state.go('loggedIn.gorgonUQ', null, {
+                                'reload': true
+                            });
+                        } else {
+                            toastr.error("Fail", "Error");
+                        }
+                    });
+                }
+            }
+
+        };
+
+
+    });
