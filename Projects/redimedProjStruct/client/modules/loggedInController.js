@@ -14,13 +14,11 @@ angular.module("app.loggedIn.controller",[
         $state.go($state.current, {}, {reload: true});
     }
 
-
     // OPTIONS
     $scope.options = {
         titles: ConfigService.title_option(),
         sexes: ConfigService.sex_option(),
         sms: ConfigService.yes_no_option(),
-        //countries: ConfigService.country_option(),
         gaps: ConfigService.yes_no_option(),
         acc_types: ConfigService.acc_type_option(),
         app_types: ConfigService.app_type_option(),
@@ -30,6 +28,11 @@ angular.module("app.loggedIn.controller",[
     }
 
     var loadOptionsApi = function(){
+        ConfigService.countries_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.countries = response.data;
+        })
+
         ConfigService.redimedsite_option().then(function(response){
             if(response.status === 'success')
                 $scope.options.redimedsites = response.data;

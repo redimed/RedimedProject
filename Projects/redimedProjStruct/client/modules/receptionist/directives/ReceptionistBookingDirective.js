@@ -58,7 +58,7 @@ angular.module("app.loggedIn.receptionist.booking.directive", [])
 					scope.modelObjectMap.Patient_id = newPatient.Patient_id;
 
 					if(scope.data.patients[0].Patient_id !== 0){
-						scope.data.patients.push({Patient_id: newPatient.Patient_id, Patient_name: newPatient.Patient_name});
+						//scope.data.patients.push({Patient_id: newPatient.Patient_id, Patient_name: newPatient.Patient_name});
 						scope.modelObjectMap.PATIENTS = JSON.stringify(scope.data.patients);
 					}else{
 						scope.modelObjectMap.PATIENTS = JSON.stringify([{Patient_id: newPatient.Patient_id, Patient_name: newPatient.Patient_name}]);

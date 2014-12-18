@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.detail.directive", [])
 
-.directive("patientDetail", function($http, PatientService, CompanyService, ConfigService, toastr, PatientModel){
+.directive("patientDetail", function(sysStateService, PatientService, CompanyService, ConfigService, toastr, PatientModel){
 	return{
 		restrict: "EA",
 		scope: {
@@ -14,6 +14,16 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			if(scope.isClose){
 				var idClose = "#"+scope.isClose;
 			}
+
+			//LOAD STATE
+			scope.loadState = function(){
+				if(scope.modelObjectMap.Country !== null){
+					sysStateService.list(scope.modelObjectMap.Country).then(function(response){
+						scope.options.states = response.data;
+					})
+				}
+			}
+			//END LOAD STATE
 
 			// VERIFIED MEDICARE
 			scope.verifiedMedicare = function(){
@@ -57,6 +67,9 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				scope.isSubmit = false;
 				scope.accordion = {
 					oneAtATime: false,
+					main_address: true,
+					main_medicare: true,
+					main_medicare_disabled: true,
 					main_one: true,
 					main_two: true
 				}
@@ -80,7 +93,8 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 								}
 							}
 
-							angular.extend(scope.selectedCompany, response.company);
+							scope.loadState();
+							//angular.extend(scope.selectedCompany, response.company);
 						}// end if
 					})
 				}
@@ -93,10 +107,10 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				angular.element(idPatientDetailCompany).fadeIn();
 			}
 
-			scope.selectCompany = function(row){
+			/*scope.selectCompany = function(row){
 				angular.element(idPatientDetailCompany).fadeOut();
 				angular.extend(scope.selectedCompany, row);
-			}
+			}*/
 			// END DECLARE
 
 			//POPUP
@@ -116,7 +130,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 
 				if(!scope.patientForm.$invalid){
 					var postData = angular.copy(scope.modelObjectMap);
-					postData.company_id = scope.selectedCompany.id;
+					//postData.company_id = scope.selectedCompany.id;
 
 					// DATE
 					for(var key in postData){
@@ -162,98 +176,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 	                    })
 					}
 				}else{
-					toastr.error('You got some fields left', "Error");
-				}//end if
-			}
-			// END ACTION
-		}
-	} // END RETURN
-}) // END DIRECTIVE PATIENT DETAIL
-
-.directive("patientModule", function(PatientService, ConfigService, toastr, PatientModel){
-	return{
-		restrict: "EA",
-		scope: {
-			options: "=",
-			isClose: "@",
-			patient: "=",
-			params: "="
-		},
-		templateUrl: "modules/patient/directives/templates/detail.html",
-		link: function(scope, element, attrs){
-			if(scope.isClose){
-				var idClose = "#"+scope.isClose;
-			}
-
-			var initObject = function(){
-				scope.isSubmit = false;
-				scope.accordion = {
-					oneAtATime: false,
-					main_one: true,
-					main_two: true
-				}
-
-				scope.modelObjectMap = angular.copy(PatientModel);
-				if(typeof scope.params !== 'undefined'){
-					PatientService.mdtById(scope.params.Patient_id).then(function(response){
-						if(response.status === 'success'){
-							angular.extend(scope.modelObjectMap, response.data);
-
-							for(var key in scope.modelObjectMap){
-								if(scope.modelObjectMap[key]){
-									if(key.indexOf("is") != -1 || key.indexOf("Is") != -1)
-										scope.modelObjectMap[key] = scope.modelObjectMap[key].toString();
-									if(key.indexOf("_date") != -1 || key.indexOf("DOB") != -1 || key.indexOf("Exp") != -1)
-										scope.modelObjectMap[key] = new Date(scope.modelObjectMap[key]);
-								}
-							}	
-						}
-					})
-				}
-			}
-
-			initObject();
-			// END DECLARE
-
-			//POPUP
-			scope.closePopup = function(){
-				angular.element(idClose).fadeOut();
-			}
-			//END POPUP
-
-			// ACTION
-			scope.clickAction = function(){
-				scope.isSubmit = true;
-				if(!scope.patientForm.$invalid){
-					var postData = angular.copy(scope.modelObjectMap);
-
-					// DATE
-					for(var key in postData){
-						if(postData[key] instanceof Date){
-							postData[key] = ConfigService.getCommonDate(postData[key]);
-						}
-					}
-					// END DATE
-
-					PatientService.insertPatient({patient: postData}).then(function (data) {
-                        if (data.status != 'success') {
-                            toastr.error("Cannot Insert!", "Error");
-                            return;
-                        }
-                        toastr.success('Insert Patient Successfully !!!', "Success");
-
-                        //return
-                        scope.patient = {};
-                        scope.patient.Patient_name = scope.modelObjectMap.First_name+" "+scope.modelObjectMap.Sur_name;
-                        scope.patient.Patient_id = data.data.Patient_id;
-                        //end return
-
-                        initObject();
-
-                        if(scope.isClose){
-                        	scope.closePopup();
-                        }
-                    })
+					//toastr.error('You got some fields left', "Error");
 				}//end if
 			}
 			// END ACTION

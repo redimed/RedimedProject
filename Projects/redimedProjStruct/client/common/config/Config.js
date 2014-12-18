@@ -91,6 +91,11 @@ angular.module('app.config', [])
         return instanceApi.get();
     }
 
+    configService.countries_option = function(){
+        var instanceApi = mdtApi.one("syscountry/list");
+        return instanceApi.get();
+    }
+
     configService.rl_type_option = function(){
         var instanceApi = mdtApi.one("sysrltypes/list");
         return instanceApi.get();

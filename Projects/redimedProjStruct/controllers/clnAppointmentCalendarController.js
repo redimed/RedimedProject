@@ -134,6 +134,13 @@ module.exports =
         var notes = (req.body.NOTES)?req.body.NOTES:"";
         var PATIENTS = (req.body.PATIENTS)?req.body.PATIENTS:"";
 
+        var patient_obj = JSON.parse(PATIENTS);
+
+        var patient_length = patient_obj.length;
+        var last_patient_id = patient_obj[patient_length-1].Patient_id;
+
+        var sql_2 = "INSERT INTO cln_appt_patients(Patient_id, CAL_ID, Creation_date) VALUES("+last_patient_id+", "+cal_id+", NOW())";        
+
         req.getConnection(function(err, connection){
             var query = connection.query(
                 "UPDATE cln_appointment_calendar"+
@@ -153,7 +160,13 @@ module.exports =
                         console.log("Error Selecting : %s ",err );
                     }
                     else{
-                        res.json({status: 'success', data: rows});
+                        db.sequelize.query(sql_2)
+                        .success(function(list){
+                            res.json({status: 'success', data: rows});
+                        })
+                        .error(function(error){
+                            res.json(500, {status: 'error', data: error});
+                        })
                     }
                 });
         });
@@ -169,7 +182,6 @@ module.exports =
         }else{
             sql_dept = " WHERE cac.CLINICAL_DEPT_ID="+dept;
         }
-
 
         var sql = "SELECT cac.FROM_TIME, cac.TO_TIME,"+
                 " GROUP_CONCAT(cac.SERVICE_ID ORDER BY cac.DOCTOR_ID) AS SERVICES,"+

@@ -205,6 +205,23 @@ angular.module("app.model", [])
 //END WAITING LIST
 
 /*AUTO CREATE*/
+.value('sysStateModel', {
+	State: '',
+	Country_name: '',
+	Isenable: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+.value('sysCountryModel', {
+	Country_name: '',
+	Isenable: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
 .value('mdtRedimedsitesModel', {
 	Site_name: '',
 	Site_addr: '',
