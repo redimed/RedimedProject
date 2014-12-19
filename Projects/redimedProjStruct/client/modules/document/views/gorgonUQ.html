@@ -1743,10 +1743,11 @@
                            close-text="Close"/>
                 </div>
             </div>
-            <div class="row" ng-show="info.doctor.Signature!=null && info.doctor.Signature!=''">
+            <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <label class="control-label bold">Signature:</label>
-                    <img ng-src="{{info.doctor.Signature}}" style="height: 70px; width: 200px;"/>
+                    <img ng-show="info.doctor.Signature!=null && info.doctor.Signature!=''"
+                         ng-src="{{info.doctor.Signature}}" style="height: 70px; width: 200px;"/>
                 </div>
             </div>
         </div>
