@@ -3,11 +3,14 @@ angular.module("app.loggedIn.item.services", [])
         var instanceService = {};
         var appApi = Restangular.all("api/erm");
 
-        instanceService.saveHeaderItems = function (header_id, item_list) {
-            var list = [];
-            for (var i = item_list.length - 1; i >= 0; i--) {
-                list.push(item_list[i].ITEM_ID);
-            };
+    /*
+    *   header item 
+    */
+    instanceService.saveHeaderItems = function (header_id, item_list) {
+        var list = [];
+        for (var i = item_list.length - 1; i >= 0; i--) {
+            list.push(item_list[i].ITEM_ID);
+        };
 
             var data = {
                 header_id: header_id,
@@ -17,10 +20,14 @@ angular.module("app.loggedIn.item.services", [])
             return detailApi.post(data);
         }
 
-        instanceService.insertHeader = function (data) {
-            var detailApi = appApi.all("v2/items/insert_header");
-            return detailApi.post(data);
-        }
+    instanceService.insertHeader = function(data) {
+        var detailApi = appApi.all("v2/items/insert_header");
+        return detailApi.post(data);
+    }
+
+    /*
+    *   item
+    */
 
         instanceService.insert = function (data) {
             var detailApi = appApi.all("v2/items/insert");
@@ -149,7 +156,18 @@ angular.module("app.loggedIn.item.services", [])
         }
         //PRIVATE FUND END
 
+    /*
+    *   fees
+    */
+    instanceService.all_fee_types = function(){
+        var detailApi = appApi.all("v2/fees/search_type_fees");
+        return detailApi.post();
+    }
 
+    instanceService.importItemFromXML = function() {
+        var detailApi = appApi.all("v2/items/import_from_source");
+        return detailApi.post();
+    }
 
         return instanceService;
     })

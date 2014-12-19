@@ -30,7 +30,7 @@
                             <select ng-if="field.type == 'dropdown'" ng-model="search[col.field]" ng-change="ajaxGetData()" ng-options="item.code as item.label for item in field.values" class="form-control input-sm" ></select>
                         </div>
                         <div ng-switch-default>
-                              <input ng-if="field.type == 'text'" ng-model="search[col.field]" ng-enter="ajaxGetData()" type="text" placeholder="{{col.label || col.field}}" class="form-control input-sm" />
+                              <input ng-if="field.type == 'text'" ng-model="search[col.field]" ng-enter="enterFilter()" type="text" placeholder="{{col.label || col.field}}" class="form-control input-sm" />
                         </div>
                     </div>
                 </td>

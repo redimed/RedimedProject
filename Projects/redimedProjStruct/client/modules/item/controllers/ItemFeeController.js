@@ -138,6 +138,17 @@ angular.module("app.loggedIn.item.fee.controller",[
                             toastr.warning('Needed a price source', 'Warning');
                             return;
                         }
+
+                        if(item.FEE_GROUP_TYPE == 'item_fee_type') {
+                            ItemService.importItemFromXML().then(function(response){
+                                console.log(response);
+                                if(response.status == 'success') {
+                                    toastr.success('Upload successfully !', 'Success');
+                                }
+                            });
+                            return;
+                        }
+
                         $scope.fee_groups.select_item = item;
                         ItemService.updateGroupPriceSource(item.FEE_GROUP_ID).then(function(response){
 							console.log(response);
@@ -210,7 +221,6 @@ angular.module("app.loggedIn.item.fee.controller",[
                                 toastr.success('Upload successfully !', 'Success');
                             }
                         })
-                        console.log(item);
                     }
                 }
             ],

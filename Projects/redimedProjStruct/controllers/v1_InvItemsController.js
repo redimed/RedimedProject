@@ -5,6 +5,7 @@ var model_sql = {
     sql_get_by_dept: function (dept_id, isenable) {
         var dept_items_builder = squel.select().from('cln_dept_item_lists')
                 .where('CLINICAL_DEPT_ID = ?', dept_id)
+                .where('ISENABLE', 1)
                 .field('POPULAR_HEADER_ID');
 
         var inv_items_builder = squel.select().from('inv_items')
@@ -16,6 +17,7 @@ var model_sql = {
         var querybuilder = squel.select().from('cln_popular_item_headers', 'item_headers');
         if(isenable == 1){
             querybuilder.where('item_headers.isenable = ?', 1);
+            // querybuilder.where('cln_popular_item_lines.isenable = ?', 1);
         }
 
         querybuilder.join(dept_items_builder, 'dept_item', 'item_headers.POPULAR_HEADER_ID = dept_item.POPULAR_HEADER_ID')

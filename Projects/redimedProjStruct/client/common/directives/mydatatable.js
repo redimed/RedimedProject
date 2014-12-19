@@ -40,8 +40,8 @@ angular.module("app.directive.mydatatable.common", [])
 
                 if(oldTotal != data.count) {
                     $scope.page_data.totalItems = data.count;
-                    $scope.page_data.currentPage = 1;
                 }
+                console.log(data.list)
                 $scope.data.items = data.list;
             }
 
@@ -67,6 +67,11 @@ angular.module("app.directive.mydatatable.common", [])
                 } else {
                     Restangular.one(options.api).get(opt).then(processData);
                 }
+            }
+
+            $scope.enterFilter = function(){
+                $scope.page_data.currentPage = 1;
+                $scope.ajaxGetData();
             }
 
             $scope.reload = function() {

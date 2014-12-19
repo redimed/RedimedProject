@@ -15,6 +15,12 @@ angular.module("app.loggedIn.item.fee.search.controller",[
                 {field: 'ITEM_NAME', label: 'Description'},        
                 {field: 'ISENABLE', is_hide: true},     
             ],
+            use_filters: true,
+             filters: {
+                 INV_GROUP: {type: 'text'},
+                ITEM_CODE: {type: 'text'},
+                ITEM_NAME: {type: 'text'},
+            },
         } 
     }
 

@@ -3,10 +3,7 @@ var functions = require('../functions.js')
 var install_model = new k_model('cln_item_fees', 'ITEM_FEE_ID');
 var squel = install_model._squel;
 
-
-
 install_model.sql_insert_xml_group_fees = function (type_list, data_list) {
-    // var data_list = xml_result.MBS_XML.Data;
     var arr = [];
     var now_str = functions.toCurrentTimeDatabase();
     for (var i = 0; i < data_list.length; ++i) {
@@ -15,37 +12,38 @@ install_model.sql_insert_xml_group_fees = function (type_list, data_list) {
             .where('ITEM_CODE = ?', item.ItemNum[0]).limit(1);
 
         switch (type_list.length) {
-        case 3:
-            if (item.Benefit85) { // IP Rebate
-                arr.push({
-                    CLN_ITEM_ID: query_item_id,
-                    FEE_TYPE_ID: type_list[2].FEE_TYPE_ID,
-                    SCHEDULE_FEE: item.Benefit85[0],
-                    CREATION_DATE: now_str
-                });
-            }
-        case 2:
-            if (item.Benefit75) { // Rebate
-                arr.push({
-                    CLN_ITEM_ID: query_item_id,
-                    FEE_TYPE_ID: type_list[1].FEE_TYPE_ID,
-                    SCHEDULE_FEE: item.Benefit75[0],
-                    CREATION_DATE: now_str
-                });
-            }
-        case 1:
-            if (item.ScheduleFee) { // Schedule
-                arr.push({
-                    CLN_ITEM_ID: query_item_id,
-                    FEE_TYPE_ID: type_list[0].FEE_TYPE_ID,
-                    SCHEDULE_FEE: item.ScheduleFee[0],
-                    CREATION_DATE: now_str
-                });
-            }
+            case 3:
+                if (item.Benefit85) { // IP Rebate
+                    arr.push({
+                        CLN_ITEM_ID: query_item_id,
+                        FEE_TYPE_ID: type_list[2].FEE_TYPE_ID,
+                        SCHEDULE_FEE: item.Benefit85[0],
+                        CREATION_DATE: now_str
+                    });
+                }
+            case 2:
+                if (item.Benefit75) { // Rebate
+                    arr.push({
+                        CLN_ITEM_ID: query_item_id,
+                        FEE_TYPE_ID: type_list[1].FEE_TYPE_ID,
+                        SCHEDULE_FEE: item.Benefit75[0],
+                        CREATION_DATE: now_str
+                    });
+                }
+            case 1:
+                if (item.ScheduleFee) { // Schedule
+                    arr.push({
+                        CLN_ITEM_ID: query_item_id,
+                        FEE_TYPE_ID: type_list[0].FEE_TYPE_ID,
+                        SCHEDULE_FEE: item.ScheduleFee[0],
+                        CREATION_DATE: now_str
+                    });
+                }
         }
 
     }
-
+    if(arr.length == 0)
+        return '';
     var querybuilder = install_model.query_insert_batch(arr);
     querybuilder.onDupUpdate('SCHEDULE_FEE', 'VALUES(SCHEDULE_FEE)', {
         dontQuote: true

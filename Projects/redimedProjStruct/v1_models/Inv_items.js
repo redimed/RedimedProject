@@ -12,58 +12,63 @@ function convert_date_xml(date) {
     return spices[2] + '-' + spices[1] + '-' + spices[0];
 }
 
+install_model.build_instance_from_xml_node = function(item) {
+    var node = {};
+    node.ITEM_CODE = item.ItemNum[0];
+    node.ITEM_NAME = item.Description[0];
+    node.SUB_ITEM_CODE = item.SubItemNum[0] ? item.SubItemNum[0] : null;
+
+    node.ITEM_START_DATE = convert_date_xml(item.ItemStartDate[0]);
+    node.ITEM_END_DATE = convert_date_xml(item.ItemEndDate[0]);
+
+    node.CATEGORY = item.Category[0];
+    node.INV_GROUP = item.Group[0];
+    node.SUB_GROUP = item.SubGroup[0];
+    node.SUB_HEADING = item.SubHeading[0] ? item.SubHeading[0] : null;
+    node.ITEM_TYPE = item.ItemType[0];
+    node.FEE_TYPE = item.FeeType[0];
+    node.PROVIDER_TYPE = item.ProviderType[0];
+    node.NEW_ITEM = item.NewItem[0];
+    node.ITEM_CHANGE = item.ItemChange[0];
+
+    node.ANAES_CHANGE = item.AnaesChange[0];
+    node.FEE_CHANGE = item.FeeChange[0];
+
+    node.EMSN_CHANGE = item.EMSNChange[0];
+    node.EMSN_CAP = item.EMSNCap[0];
+
+    node.BENEFIT_TYPE = item.BenefitType[0];
+    node.BENEFIT_START_DATE = convert_date_xml(item.BenefitStartDate[0]);
+
+    //        node.ITEM_CHANGE = item.FeeStartDate ? convert_date_xml(item.FeeStartDate[0]) : null;
+    node.DESCRIPTOR_CHANGE = item.DescriptorChange[0];
+    // node.ITEM_CHANGE = item.ScheduleFee[0];
+    // node.ITEM_CHANGE = item.Benefit100[0];
+    // node.ITEM_CHANGE = item.BasicUnits[0];
+
+    node.EMSN_START_DATE = convert_date_xml(item.EMSNStartDate[0]);
+    node.EMSN_END_DATE = convert_date_xml(item.EMSNEndDate[0]);
+    node.EMSN_FIXED_CAP_AMOUNT = item.EMSNFixedCapAmount[0] ? parseFloat(item.EMSNFixedCapAmount[0]) : 0;
+    node.EMSN_MAXIMUM_CAP = item.EMSNMaximumCap[0] ? parseFloat(item.EMSNMaximumCap[0]) : 0;
+    node.EMSN_PERCENTAGE_CAP = item.EMSNPercentageCap[0] ? parseFloat(item.EMSNPercentageCap[0]) : 0;
+    node.EMSN_DESCRIPTION = item.EMSNDescription[0];
+    node.EMSN_CHANGE_DATE = convert_date_xml(item.EMSNChangeDate[0]);
+
+    node.DESCRIPTION_START_DATE = convert_date_xml(item.DescriptionStartDate[0]);
+
+
+    node.QFE_START_DATE = convert_date_xml(item.QFEStartDate[0]);
+    node.QFE_END_DATE = convert_date_xml(item.QFEEndDate[0]);
+    return node;
+}
+
 install_model.sql_insert_from_source = function (data_list) {
     var arr = [];
     // var now_str = functions.toCurrentTimeDatabase();
     for (var i = 0; i < data_list.length; ++i) {
         var item = data_list[i];
 
-        var node = {};
-        node.ITEM_CODE = item.ItemNum[0];
-        node.ITEM_NAME = item.Description[0];
-        node.SUB_ITEM_CODE = item.SubItemNum[0] ? item.SubItemNum[0] : null;
-
-        node.ITEM_START_DATE = convert_date_xml(item.ItemStartDate[0]);
-        node.ITEM_END_DATE = convert_date_xml(item.ItemEndDate[0]);
-
-        node.CATEGORY = item.Category[0];
-        node.INV_GROUP = item.Group[0];
-        node.SUB_GROUP = item.SubGroup[0];
-        node.SUB_HEADING = item.SubHeading[0] ? item.SubHeading[0] : null;
-        node.ITEM_TYPE = item.ItemType[0];
-        node.FEE_TYPE = item.FeeType[0];
-        node.PROVIDER_TYPE = item.ProviderType[0];
-        node.NEW_ITEM = item.NewItem[0];
-        node.ITEM_CHANGE = item.ItemChange[0];
-
-        node.ANAES_CHANGE = item.AnaesChange[0];
-        node.FEE_CHANGE = item.FeeChange[0];
-
-        node.EMSN_CHANGE = item.EMSNChange[0];
-        node.EMSN_CAP = item.EMSNCap[0];
-
-        node.BENEFIT_TYPE = item.BenefitType[0];
-        node.BENEFIT_START_DATE = convert_date_xml(item.BenefitStartDate[0]);
-
-        //        node.ITEM_CHANGE = item.FeeStartDate ? convert_date_xml(item.FeeStartDate[0]) : null;
-        node.DESCRIPTOR_CHANGE = item.DescriptorChange[0];
-        // node.ITEM_CHANGE = item.ScheduleFee[0];
-        // node.ITEM_CHANGE = item.Benefit100[0];
-        // node.ITEM_CHANGE = item.BasicUnits[0];
-
-        node.EMSN_START_DATE = convert_date_xml(item.EMSNStartDate[0]);
-        node.EMSN_END_DATE = convert_date_xml(item.EMSNEndDate[0]);
-        node.EMSN_FIXED_CAP_AMOUNT = item.EMSNFixedCapAmount[0] ? parseFloat(item.EMSNFixedCapAmount[0]) : 0;
-        node.EMSN_MAXIMUM_CAP = item.EMSNMaximumCap[0] ? parseFloat(item.EMSNMaximumCap[0]) : 0;
-        node.EMSN_PERCENTAGE_CAP = item.EMSNPercentageCap[0] ? parseFloat(item.EMSNPercentageCap[0]) : 0;
-        node.EMSN_DESCRIPTION = item.EMSNDescription[0];
-        node.EMSN_CHANGE_DATE = convert_date_xml(item.EMSNChangeDate[0]);
-
-        node.DESCRIPTION_START_DATE = convert_date_xml(item.DescriptionStartDate[0]);
-
-
-        node.QFE_START_DATE = convert_date_xml(item.QFEStartDate[0]);
-        node.QFE_END_DATE = convert_date_xml(item.QFEEndDate[0]);
+        var node = install_model.build_instance_from_xml_node(item);
 
         for (var key in node) {
             if (typeof node[key] == 'string') {
@@ -178,6 +183,5 @@ install_model.sql_insert_from_source = function (data_list) {
 
     return querybuilder.toString();
 }
-
 
 module.exports = install_model;
