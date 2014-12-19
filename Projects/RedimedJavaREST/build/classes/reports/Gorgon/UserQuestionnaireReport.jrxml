@@ -1,0 +1,3004 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UserQuestionnaireReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d1146a0-3d50-4a42-bea5-3b6b3c2fd9ba">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="3226"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="realPath" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     userquestionnaire.`Quest_Id` AS userquestionnaire_Quest_Id,
+     userquestionnaire.`Patient_Id` AS userquestionnaire_Patient_Id,
+     userquestionnaire.`TodayDate` AS userquestionnaire_TodayDate,
+     userquestionnaire.`Height` AS userquestionnaire_Height,
+     userquestionnaire.`Weight` AS userquestionnaire_Weight,
+     userquestionnaire.`JobTitle` AS userquestionnaire_JobTitle,
+     userquestionnaire.`PhoneNumber` AS userquestionnaire_PhoneNumber,
+     userquestionnaire.`BestTime` AS userquestionnaire_BestTime,
+     userquestionnaire.`isReviewQuest` AS userquestionnaire_isReviewQuest,
+     userquestionnaire.`isNRP` AS userquestionnaire_isNRP,
+     userquestionnaire.`isOtherType` AS userquestionnaire_isOtherType,
+     userquestionnaire.`isRespirator` AS userquestionnaire_isRespirator,
+     userquestionnaire.`RespiratorType` AS userquestionnaire_RespiratorType,
+     userquestionnaire.`isSmoke` AS userquestionnaire_isSmoke,
+     userquestionnaire.`isSeizuresCondition` AS userquestionnaire_isSeizuresCondition,
+     userquestionnaire.`isDiabetes` AS userquestionnaire_isDiabetes,
+     userquestionnaire.`isAllergicReactions` AS userquestionnaire_isAllergicReactions,
+     userquestionnaire.`isClaustrophobia` AS userquestionnaire_isClaustrophobia,
+     userquestionnaire.`isTrouble` AS userquestionnaire_isTrouble,
+     userquestionnaire.`isAsbestosis` AS userquestionnaire_isAsbestosis,
+     userquestionnaire.`isAsthma` AS userquestionnaire_isAsthma,
+     userquestionnaire.`isBronchitis` AS userquestionnaire_isBronchitis,
+     userquestionnaire.`isEmphysema` AS userquestionnaire_isEmphysema,
+     userquestionnaire.`isPneumonia` AS userquestionnaire_isPneumonia,
+     userquestionnaire.`isTuberculosis` AS userquestionnaire_isTuberculosis,
+     userquestionnaire.`isSilicosis` AS userquestionnaire_isSilicosis,
+     userquestionnaire.`isPneumothorax` AS userquestionnaire_isPneumothorax,
+     userquestionnaire.`isLungCancer` AS userquestionnaire_isLungCancer,
+     userquestionnaire.`isBrokenRibs` AS userquestionnaire_isBrokenRibs,
+     userquestionnaire.`isInjuries` AS userquestionnaire_isInjuries,
+     userquestionnaire.`isOtherLung` AS userquestionnaire_isOtherLung,
+     userquestionnaire.`OtherLungComment` AS userquestionnaire_OtherLungComment,
+     userquestionnaire.`isSOB` AS userquestionnaire_isSOB,
+     userquestionnaire.`isSOBWalkingFast` AS userquestionnaire_isSOBWalkingFast,
+     userquestionnaire.`isSOBWalkingOther` AS userquestionnaire_isSOBWalkingOther,
+     userquestionnaire.`isStopForBreath` AS userquestionnaire_isStopForBreath,
+     userquestionnaire.`isSOBWashing` AS userquestionnaire_isSOBWashing,
+     userquestionnaire.`isSOBInterferes` AS userquestionnaire_isSOBInterferes,
+     userquestionnaire.`isCoughingPhlegm` AS userquestionnaire_isCoughingPhlegm,
+     userquestionnaire.`isCoughingMorning` AS userquestionnaire_isCoughingMorning,
+     userquestionnaire.`isCoughingLyingDown` AS userquestionnaire_isCoughingLyingDown,
+     userquestionnaire.`isCoughingUpBlood` AS userquestionnaire_isCoughingUpBlood,
+     userquestionnaire.`isWheezing` AS userquestionnaire_isWheezing,
+     userquestionnaire.`isWheezingInterferes` AS userquestionnaire_isWheezingInterferes,
+     userquestionnaire.`isChestPain` AS userquestionnaire_isChestPain,
+     userquestionnaire.`isOtherSymptomsPulmonary` AS userquestionnaire_isOtherSymptomsPulmonary,
+     userquestionnaire.`isHeartAttack` AS userquestionnaire_isHeartAttack,
+     userquestionnaire.`isStroke` AS userquestionnaire_isStroke,
+     userquestionnaire.`isAngina` AS userquestionnaire_isAngina,
+     userquestionnaire.`isHeartFailure` AS userquestionnaire_isHeartFailure,
+     userquestionnaire.`isSwelling` AS userquestionnaire_isSwelling,
+     userquestionnaire.`isHeartArrhythmia` AS userquestionnaire_isHeartArrhythmia,
+     userquestionnaire.`isBloodPressureHeart` AS userquestionnaire_isBloodPressureHeart,
+     userquestionnaire.`isOtherHeart` AS userquestionnaire_isOtherHeart,
+     userquestionnaire.`OtherHeartComment` AS userquestionnaire_OtherHeartComment,
+     userquestionnaire.`isFrequentPain` AS userquestionnaire_isFrequentPain,
+     userquestionnaire.`isPOTPhysical` AS userquestionnaire_isPOTPhysical,
+     userquestionnaire.`isPOTInterferes` AS userquestionnaire_isPOTInterferes,
+     userquestionnaire.`isMissingBeat` AS userquestionnaire_isMissingBeat,
+     userquestionnaire.`isHeartburn` AS userquestionnaire_isHeartburn,
+     userquestionnaire.`isOtherSymptomsHeart` AS userquestionnaire_isOtherSymptomsHeart,
+     userquestionnaire.`isBreathing` AS userquestionnaire_isBreathing,
+     userquestionnaire.`isHeartTrouble` AS userquestionnaire_isHeartTrouble,
+     userquestionnaire.`isBloodPressureMedication` AS userquestionnaire_isBloodPressureMedication,
+     userquestionnaire.`isSeizuresMedication` AS userquestionnaire_isSeizuresMedication,
+     userquestionnaire.`isEyeIrritation` AS userquestionnaire_isEyeIrritation,
+     userquestionnaire.`isSkinAllergies` AS userquestionnaire_isSkinAllergies,
+     userquestionnaire.`isAnxiety` AS userquestionnaire_isAnxiety,
+     userquestionnaire.`isGeneralWeakness` AS userquestionnaire_isGeneralWeakness,
+     userquestionnaire.`isOtherProblem` AS userquestionnaire_isOtherProblem,
+     userquestionnaire.`isTalk` AS userquestionnaire_isTalk,
+     userquestionnaire.`isLostVision` AS userquestionnaire_isLostVision,
+     userquestionnaire.`isContactLenses` AS userquestionnaire_isContactLenses,
+     userquestionnaire.`isWearGlasses` AS userquestionnaire_isWearGlasses,
+     userquestionnaire.`isColourBlind` AS userquestionnaire_isColourBlind,
+     userquestionnaire.`isOtherEye` AS userquestionnaire_isOtherEye,
+     userquestionnaire.`isInjuryEars` AS userquestionnaire_isInjuryEars,
+     userquestionnaire.`isHearingProblems` AS userquestionnaire_isHearingProblems,
+     userquestionnaire.`isDifficultyHearing` AS userquestionnaire_isDifficultyHearing,
+     userquestionnaire.`isHearingAid` AS userquestionnaire_isHearingAid,
+     userquestionnaire.`isOtherHearing` AS userquestionnaire_isOtherHearing,
+     userquestionnaire.`isBackInjury` AS userquestionnaire_isBackInjury,
+     userquestionnaire.`isWeaknessAny` AS userquestionnaire_isWeaknessAny,
+     userquestionnaire.`isBackPain` AS userquestionnaire_isBackPain,
+     userquestionnaire.`isDFMArmsLegs` AS userquestionnaire_isDFMArmsLegs,
+     userquestionnaire.`isDFMHead` AS userquestionnaire_isDFMHead,
+     userquestionnaire.`isPOSLeanForward` AS userquestionnaire_isPOSLeanForward,
+     userquestionnaire.`isPODHead` AS userquestionnaire_isPODHead,
+     userquestionnaire.`isDifficultyBending` AS userquestionnaire_isDifficultyBending,
+     userquestionnaire.`isDifficultySquatting` AS userquestionnaire_isDifficultySquatting,
+     userquestionnaire.`isClimbing` AS userquestionnaire_isClimbing,
+     userquestionnaire.`isOtherMuscle` AS userquestionnaire_isOtherMuscle,
+     userquestionnaire.`Employee` AS userquestionnaire_Employee,
+     userquestionnaire.`DOB` AS userquestionnaire_DOB,
+     userquestionnaire.`Department` AS userquestionnaire_Department,
+     userquestionnaire.`SocialSecurity` AS userquestionnaire_SocialSecurity,
+     userquestionnaire.`Supervisor` AS userquestionnaire_Supervisor,
+     userquestionnaire.`isAtmosphere` AS userquestionnaire_isAtmosphere,
+     userquestionnaire.`isContinuous` AS userquestionnaire_isContinuous,
+     userquestionnaire.`isOpen` AS userquestionnaire_isOpen,
+     userquestionnaire.`isClose` AS userquestionnaire_isClose,
+     userquestionnaire.`isSupplied` AS userquestionnaire_isSupplied,
+     userquestionnaire.`isCombination` AS userquestionnaire_isCombination,
+     userquestionnaire.`isAir_NonPow` AS userquestionnaire_isAir_NonPow,
+     userquestionnaire.`isAir_Pow` AS userquestionnaire_isAir_Pow,
+     userquestionnaire.`LevelOfWE` AS userquestionnaire_LevelOfWE,
+     userquestionnaire.`ExtentUsage` AS userquestionnaire_ExtentUsage,
+     userquestionnaire.`LengthOfTime` AS userquestionnaire_LengthOfTime,
+     userquestionnaire.`WorkCons` AS userquestionnaire_WorkCons,
+     userquestionnaire.`Safety` AS userquestionnaire_Safety,
+     userquestionnaire.`HealthCare` AS userquestionnaire_HealthCare,
+     userquestionnaire.`Class` AS userquestionnaire_Class,
+     userquestionnaire.`Restrictions` AS userquestionnaire_Restrictions,
+     userquestionnaire.`HealthCarePro` AS userquestionnaire_HealthCarePro,
+     userquestionnaire.`UQDate` AS userquestionnaire_UQDate,
+     cln_patients.`Patient_id` AS cln_patients_Patient_id,
+     cln_patients.`First_name` AS cln_patients_First_name,
+     cln_patients.`DOB` AS cln_patients_DOB,
+     cln_patients.`Sur_name` AS cln_patients_Sur_name,
+     CONCAT(CONCAT(CONCAT(CONCAT(IFNULL(cln_patients.`First_name` ,''),' '), IFNULL(cln_patients.`Middle_name`,''), ' '),IFNULL(cln_patients.`Sur_name`,''))) AS full_name,
+     cln_patients.`Sex` AS cln_patients_Sex,
+     cln_patients.`DOB` AS cln_patients_DOB,
+     userquestionnaire.`isUseRespirator` AS userquestionnaire_isUseRespirator,
+     SUBSTRING_INDEX(userquestionnaire.`SIGNATURE`,',',-1) AS Signature,
+     doctors.`NAME` AS doctors_NAME,
+     SUBSTRING_INDEX(doctors.`Signature`,',',-1) AS doctors_Signature
+FROM
+     `cln_patients` cln_patients INNER JOIN `userquestionnaire` userquestionnaire ON cln_patients.`Patient_id` = userquestionnaire.`Patient_Id` INNER JOIN `cln_appointment_calendar` ON cln_appointment_calendar.`CAL_ID`=userquestionnaire.`CalId`
+INNER JOIN `doctors` ON doctors.`doctor_id`=cln_appointment_calendar.`DOCTOR_ID`
+WHERE
+     userquestionnaire.`Quest_Id` = $P{id}]]>
+	</queryString>
+	<field name="userquestionnaire_Quest_Id" class="java.lang.Integer"/>
+	<field name="userquestionnaire_Patient_Id" class="java.lang.Integer"/>
+	<field name="userquestionnaire_TodayDate" class="java.sql.Timestamp"/>
+	<field name="userquestionnaire_Height" class="java.lang.Integer"/>
+	<field name="userquestionnaire_Weight" class="java.lang.Integer"/>
+	<field name="userquestionnaire_JobTitle" class="java.lang.String"/>
+	<field name="userquestionnaire_PhoneNumber" class="java.lang.String"/>
+	<field name="userquestionnaire_BestTime" class="java.lang.String"/>
+	<field name="userquestionnaire_isReviewQuest" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isNRP" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherType" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isRespirator" class="java.lang.Integer"/>
+	<field name="userquestionnaire_RespiratorType" class="java.lang.String"/>
+	<field name="userquestionnaire_isSmoke" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSeizuresCondition" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isDiabetes" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isAllergicReactions" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isClaustrophobia" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isTrouble" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isAsbestosis" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isAsthma" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isBronchitis" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isEmphysema" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isPneumonia" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isTuberculosis" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSilicosis" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isPneumothorax" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isLungCancer" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isBrokenRibs" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isInjuries" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherLung" class="java.lang.Integer"/>
+	<field name="userquestionnaire_OtherLungComment" class="java.lang.String"/>
+	<field name="userquestionnaire_isSOB" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSOBWalkingFast" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSOBWalkingOther" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isStopForBreath" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSOBWashing" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSOBInterferes" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isCoughingPhlegm" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isCoughingMorning" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isCoughingLyingDown" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isCoughingUpBlood" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isWheezing" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isWheezingInterferes" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isChestPain" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherSymptomsPulmonary" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isHeartAttack" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isStroke" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isAngina" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isHeartFailure" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSwelling" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isHeartArrhythmia" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isBloodPressureHeart" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherHeart" class="java.lang.Integer"/>
+	<field name="userquestionnaire_OtherHeartComment" class="java.lang.String"/>
+	<field name="userquestionnaire_isFrequentPain" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isPOTPhysical" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isPOTInterferes" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isMissingBeat" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isHeartburn" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherSymptomsHeart" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isBreathing" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isHeartTrouble" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isBloodPressureMedication" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSeizuresMedication" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isEyeIrritation" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSkinAllergies" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isAnxiety" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isGeneralWeakness" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherProblem" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isTalk" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isLostVision" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isContactLenses" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isWearGlasses" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isColourBlind" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherEye" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isInjuryEars" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isHearingProblems" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isDifficultyHearing" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isHearingAid" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherHearing" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isBackInjury" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isWeaknessAny" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isBackPain" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isDFMArmsLegs" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isDFMHead" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isPOSLeanForward" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isPODHead" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isDifficultyBending" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isDifficultySquatting" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isClimbing" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOtherMuscle" class="java.lang.Integer"/>
+	<field name="userquestionnaire_Employee" class="java.lang.String"/>
+	<field name="userquestionnaire_DOB" class="java.sql.Timestamp"/>
+	<field name="userquestionnaire_Department" class="java.lang.String"/>
+	<field name="userquestionnaire_SocialSecurity" class="java.lang.String"/>
+	<field name="userquestionnaire_Supervisor" class="java.lang.String"/>
+	<field name="userquestionnaire_isAtmosphere" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isContinuous" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isOpen" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isClose" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isSupplied" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isCombination" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isAir_NonPow" class="java.lang.Integer"/>
+	<field name="userquestionnaire_isAir_Pow" class="java.lang.Integer"/>
+	<field name="userquestionnaire_LevelOfWE" class="java.lang.Integer"/>
+	<field name="userquestionnaire_ExtentUsage" class="java.lang.Integer"/>
+	<field name="userquestionnaire_LengthOfTime" class="java.lang.Integer"/>
+	<field name="userquestionnaire_WorkCons" class="java.lang.String"/>
+	<field name="userquestionnaire_Safety" class="java.lang.String"/>
+	<field name="userquestionnaire_HealthCare" class="java.lang.String"/>
+	<field name="userquestionnaire_Class" class="java.lang.Integer"/>
+	<field name="userquestionnaire_Restrictions" class="java.lang.String"/>
+	<field name="userquestionnaire_HealthCarePro" class="java.lang.String"/>
+	<field name="userquestionnaire_UQDate" class="java.sql.Timestamp"/>
+	<field name="cln_patients_Patient_id" class="java.lang.Long"/>
+	<field name="cln_patients_First_name" class="java.lang.String"/>
+	<field name="cln_patients_DOB" class="java.sql.Date"/>
+	<field name="cln_patients_Sur_name" class="java.lang.String"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="cln_patients_Sex" class="java.lang.String"/>
+	<field name="userquestionnaire_isUseRespirator" class="java.lang.Integer"/>
+	<field name="Signature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="doctors_NAME" class="java.lang.String"/>
+	<field name="doctors_Signature" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="116" splitType="Stretch">
+			<image>
+				<reportElement x="5" y="5" width="176" height="65" uuid="4e89fedc-103f-47c5-9524-3b419269b6a8"/>
+				<imageExpression><![CDATA[$P{realPath} +"/leftLogo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="381" y="5" width="169" height="65" uuid="14b775bb-4e54-46b3-b442-111694c4c725"/>
+				<imageExpression><![CDATA[$P{realPath} +"/Redimed_Injury.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="82" width="545" height="20" uuid="7fa9eb60-1119-434e-9865-91c16c5b4543"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true" isStrikeThrough="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[MEDICAL QUESTIONNAIRE FOR RESPIRATOR USERS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="67471154-5710-4c1e-8065-b468ac5134e2"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="116" uuid="e80c6640-f882-4068-abf6-01f421c0bb7d"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="116" uuid="506f31a9-65bb-4f58-9331-706f5cddf3f4"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="686" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="1" height="686" uuid="a05a3d46-a5aa-47a5-9905-13d916dc68aa"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="686" uuid="1eef4f0e-52d1-4d41-a347-cbd57f07507b"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="13" y="22" width="529" height="15" uuid="0ffccf1b-d5ea-4268-a066-3fefdede9473"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Answers to questions in Section 1, and to question 9 in Section 2 of Part A, do not require medical examination. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="50" width="121" height="15" uuid="261f5322-7224-4533-b42b-b027e54e4219"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[To the Employee:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="65" width="529" height="40" uuid="f4677dec-5dd1-4e45-8f08-4bf7882fa6b4"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[This questionnaire will be evaluated by a licensed health care professional in order to determine any health problems that may prevent you from, or restrict you, while wearing a respirator. The intent of these questions is to determine if the difficulty you experience, if any, is medically significant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="113" width="529" height="27" uuid="e6634ec4-036c-42a1-b673-408a1e9bd1a7"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[To maintain your confidentiality, you supervisor must not look at or review your answers, and your supervisor must tell you how to deliver or send this questionnaire to the health care professional who will review it.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="150" width="529" height="27" uuid="5307bc50-b887-4694-8190-e1128fce850e"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Part A. Section 1. The following information must be provided by every employee who has been selected to use any type of respirator (please print). ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="185" width="83" height="14" uuid="eb8af1f9-bbd2-4658-b108-d4a2a2dd4e97"/>
+				<text><![CDATA[1.    Today’s date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="210" width="81" height="14" uuid="a0351a2f-a613-45fb-b1a2-c7220ee79c0d"/>
+				<text><![CDATA[2.    Your Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="235" width="141" height="14" uuid="0bb6bf54-d651-4322-a779-f426d0c4a48f"/>
+				<text><![CDATA[3.    Your Age (to nearest year):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="260" width="93" height="14" uuid="51956bc3-1436-4a60-934e-e45d4c5ee008"/>
+				<text><![CDATA[4.    Sex (circle one):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="285" width="76" height="14" uuid="b80526eb-3126-4ad7-a161-c5e3e85fd886"/>
+				<text><![CDATA[5.    Your Height:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="310" width="83" height="14" uuid="c6127089-57b8-4618-9173-861d5b11ce33"/>
+				<text><![CDATA[6.    Your Weight:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="335" width="83" height="14" uuid="451afdce-1a97-4086-9cf8-0028c8882635"/>
+				<text><![CDATA[7.    Your job title:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="360" width="440" height="14" uuid="5e8ebe7e-6bb0-4566-b5ec-eabbe24092a4"/>
+				<text><![CDATA[8.    A phone number where you can be reached by the health care professional who reviews this]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="375" width="189" height="14" uuid="a44b3fe7-4121-408b-9771-a2b079d270a2"/>
+				<text><![CDATA[      questionnaire (include the Area Code):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="400" width="213" height="14" uuid="5a10f597-ec0b-4e78-9dfa-a629ec946d41"/>
+				<text><![CDATA[9.    The best time to phone you on this number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="425" width="440" height="14" uuid="53abe11a-9a1a-4665-9061-69ec41a3792e"/>
+				<text><![CDATA[10.   Has your employer told you how to contact the health care professional who will review this]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="440" width="133" height="14" uuid="7860d8ef-9024-4078-99e2-2609a3346423"/>
+				<text><![CDATA[      questionnaire (circle one):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="465" width="385" height="14" uuid="c69f68f9-1145-4265-bf2b-fd07abe4f16b"/>
+				<text><![CDATA[11.   Check the type of respirator you will use (you can check more than one category):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="480" width="347" height="14" uuid="0021d40a-07f3-41fc-a1f1-feaa7dd665d4"/>
+				<text><![CDATA[        a.    N,R, or P disposable respirator (filter-mask, non-cartridge type only).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="495" width="440" height="14" uuid="bdb775d5-57cf-402a-8d50-35e86df68021"/>
+				<text><![CDATA[        b.    Other type (for example, half or full-face piece type, powered-air purifying, supplied-air,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="510" width="202" height="14" uuid="12f8aa08-37fe-4e9e-8127-26556853c7ab"/>
+				<text><![CDATA[               self contained breathing apparatus). ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="535" width="198" height="14" uuid="a436036c-9058-4537-ad11-c4bda0300661"/>
+				<text><![CDATA[12.   Have you worn a respirator (circle one):]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="685" width="554" height="1" uuid="984444bb-5015-4b8f-b896-6749dbbf92e6"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="131" y="196" width="357" height="1" uuid="5ff77bb7-f4b9-4069-9329-ffa51c13def2"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="124" y="221" width="364" height="1" uuid="18efba92-dd85-4024-9800-0e9b9e3a7134"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="189" y="246" width="299" height="1" uuid="f424f25f-09f2-4d75-a3bc-3a0f5b42f2e6"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="144" y="260" width="13" height="13" uuid="8142f730-8f6d-4a0c-99f6-71464e0f08d7"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{cln_patients_Sex} != null && $F{cln_patients_Sex} == "Male" ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="186" y="260" width="5" height="14" uuid="fbaa1ce9-871c-4b5b-8910-2b0ec67913d2"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="194" y="260" width="13" height="13" uuid="4bbe481f-da00-4edb-9ea3-4580e5cd2554"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{cln_patients_Sex} != null && $F{cln_patients_Sex} == "Female" ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="124" y="296" width="364" height="1" uuid="471272bf-eb7d-445f-b328-7695d551420d"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="131" y="321" width="357" height="1" uuid="6fc63494-365d-43f3-ae58-94f06d031528"/>
+				<graphicElement>
+					<pen lineWidth="0.51"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="131" y="346" width="357" height="1" uuid="76b99e11-0dd2-448e-ba4e-ae8283ff1a77"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="237" y="386" width="251" height="1" uuid="886bd7d3-085c-4944-9197-9b8ba8caf1e4"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="261" y="412" width="227" height="1" uuid="cd89c6a4-f289-4c42-8772-0fddb5ad86ae"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="159" y="259" width="22" height="14" uuid="5c0ee506-6261-4620-8f5f-c25a0d2c8aeb"/>
+				<text><![CDATA[Male]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="260" width="36" height="14" uuid="d713cd53-7cb9-491e-a8fd-c9bb243a51d9"/>
+				<text><![CDATA[Female]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="439" width="21" height="14" uuid="7c2e598c-827d-4264-92cc-a6bbc5bfed60"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="440" width="5" height="14" uuid="5ff7c9b4-7afa-457a-a96d-74abaae0e923"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="248" y="440" width="20" height="14" uuid="71414d6e-4d5f-48d5-b7ea-c6d06b9f3e91"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="186" y="440" width="13" height="13" uuid="0659c86e-be56-489f-97b7-37b5768e974c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isReviewQuest} != null && $F{userquestionnaire_isReviewQuest}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="233" y="440" width="13" height="13" uuid="7d2ca6f7-04bc-4378-9912-a091dd50a232"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isReviewQuest} != null && $F{userquestionnaire_isReviewQuest}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="513" y="479" width="13" height="13" uuid="c3dfec57-1c12-4ca2-9922-04f0ce499bfd"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isNRP}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="513" y="495" width="13" height="13" uuid="099a1d5a-48d6-49fa-bd05-f4ba2e6199bf"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherType}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="311" y="535" width="20" height="14" uuid="b1e6b0a9-6b12-4ba7-8138-1beaea364e1b"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="249" y="535" width="13" height="13" uuid="136a5ec6-1b0e-471f-8089-004820176bff"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isRespirator} != null && $F{userquestionnaire_isRespirator}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="288" y="535" width="5" height="14" uuid="8eab7bf2-c450-4d65-8b45-95214f2e09bd"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="296" y="535" width="13" height="13" uuid="09bd1139-f145-409a-aada-c76048802142"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isRespirator} != null && $F{userquestionnaire_isRespirator}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="264" y="534" width="21" height="14" uuid="80c377fe-a9df-4077-ae0b-bc957c58bd66"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<line>
+				<reportElement x="136" y="572" width="352" height="1" uuid="9ce64662-dbac-4e38-b6dd-826ee0de0a51"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="48" y="560" width="88" height="14" uuid="a2d5f5b8-dbaf-4389-b7c1-39d426b03495"/>
+				<text><![CDATA[If yes, what type(s): ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="136" y="184" width="346" height="14" uuid="ad40b1cc-e10d-4830-ad5a-e0b503d3dbe5"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_TodayDate}!= null ? $F{userquestionnaire_TodayDate} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="136" y="209" width="351" height="14" uuid="e06f8380-660d-4cd3-bb35-0e6bd3f919ec"/>
+				<textFieldExpression><![CDATA[($F{full_name}!=null && $F{full_name}!="")?$F{full_name}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="235" width="285" height="14" uuid="b757d3a6-9470-46c1-8b9c-7cca314ae6e6"/>
+				<textFieldExpression><![CDATA[$F{cln_patients_DOB} != null ? (new Date().getYear() - $F{cln_patients_DOB}.getYear()) : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="284" width="349" height="14" uuid="ef8ae71e-550e-4588-9cd3-501479878245"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_Height} != null ? $F{userquestionnaire_Height} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="309" width="341" height="14" uuid="2e3c4971-661d-4370-8cb5-c02f2be67d0a"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_Weight} != null ? $F{userquestionnaire_Weight} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="334" width="341" height="14" uuid="8941ee18-1019-4491-a4f1-fcd94bd3fed9"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_JobTitle} != null ? $F{userquestionnaire_JobTitle} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="245" y="374" width="237" height="14" uuid="f2f6e8bb-062d-4d19-b8b9-d8af0a8ff66d"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_PhoneNumber} != null ? $F{userquestionnaire_PhoneNumber} : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="269" y="400" width="213" height="14" uuid="071558fa-9b4a-40a1-a1ac-2c6c854af942"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_BestTime} != null ? $F{userquestionnaire_BestTime} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="559" width="334" height="14" uuid="3ec3d762-06a4-4680-b219-b6cd0c332987"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_RespiratorType} != null ? $F{userquestionnaire_RespiratorType} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="686">
+			<line>
+				<reportElement x="0" y="0" width="1" height="686" uuid="ac79ed9c-c233-411a-aa95-5fc8cb0748ff"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="686" uuid="c8367602-913a-4e53-b931-11ca6ac9bf89"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="685" width="554" height="1" uuid="1b4fc09f-b51f-4d5c-bf8f-51643118f93a"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="13" y="4" width="529" height="27" uuid="245c0ba3-e343-4c5d-9e82-437abdecaeee"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Part A. Section 2. Questions 1 through 9 below must be answered by every employee who has been selected to use any type of respirator (please circle “yes” or “no”). ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="35" width="375" height="14" uuid="04b81d30-c36b-4bad-82ea-3371ce87ad73"/>
+				<text><![CDATA[1.    Do you currently smoke tobacco, or have you smoked tobacco in the last month:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="58" width="250" height="14" uuid="88f5a9f7-e553-4f42-a403-7c4dfa0d35dc"/>
+				<text><![CDATA[2.    Have you ever has any of the following conditions?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="75" width="109" height="14" uuid="c4ef57ef-4a88-4ebe-9523-b5b44caf30e9"/>
+				<text><![CDATA[       a)    Seizures (fits): ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="92" width="154" height="14" uuid="bb9d828c-1411-4667-8923-1b94133ac6c4"/>
+				<text><![CDATA[       b)    Diabetes (sugar disease):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="109" width="266" height="14" uuid="b875e335-af92-4e6b-b6e1-28fe2ddcb2e3"/>
+				<text><![CDATA[       c)    Allergic reactions that interfere with your breathing:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="126" width="226" height="14" uuid="38672586-d95c-4069-bf1e-ecbee4c41168"/>
+				<text><![CDATA[       d)    Claustrophobia (fear of closed in spaces):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="143" width="151" height="14" uuid="736c17cf-ea00-4cf0-968a-55cb8f280310"/>
+				<text><![CDATA[       e)    Trouble smelling odours:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="183" width="96" height="14" uuid="51e04e2b-041c-490d-b211-a13cffb39bc9"/>
+				<text><![CDATA[       a)    Asbestosis: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="166" width="327" height="14" uuid="f3758806-5175-476b-b4ba-42089b274a61"/>
+				<text><![CDATA[3.    Have you ever had any of the following pulmonary or lung problems?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="217" width="124" height="14" uuid="09d7fe0a-14b9-417f-95a8-020ad7ee9ece"/>
+				<text><![CDATA[       c)    Chronic bronchitis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="251" width="96" height="14" uuid="e5f12e73-2909-4ad3-b61d-a31d1bdb4ab8"/>
+				<text><![CDATA[       e)    Pneumonia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="234" width="101" height="14" uuid="1e3e2234-da24-411b-8ef6-ea893944c1f4"/>
+				<text><![CDATA[       d)    Emphysema:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="200" width="79" height="14" uuid="4fc3f3e7-070d-42b0-aed0-eb705a515f17"/>
+				<text><![CDATA[       b)    Asthma:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="268" width="101" height="14" uuid="585c798f-88ed-478f-af30-066076eba2a5"/>
+				<text><![CDATA[       f)    Tuberculosis: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="319" width="101" height="14" uuid="f51fc146-f558-42ea-b74b-299a9d35bbb5"/>
+				<text><![CDATA[       i)    Lung cancer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="285" width="89" height="14" uuid="13d00134-e525-4971-841b-ce7570264429"/>
+				<text><![CDATA[       g)    Silicosis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="302" width="187" height="14" uuid="dd3d4f2b-fb3a-4113-b35f-311626a08089"/>
+				<text><![CDATA[       h)    Pneumothorax (collapsed lung):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="336" width="96" height="14" uuid="307562ba-1fae-466b-84bc-9a5ce4d7aabb"/>
+				<text><![CDATA[       j)    Broken ribs:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="353" width="182" height="14" uuid="961993aa-6ce7-46bd-bfd3-ac684e20806e"/>
+				<text><![CDATA[       k)    Any chest injuries or surgeries:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="370" width="267" height="14" uuid="c1a0b148-f033-409c-b134-4704baff20a5"/>
+				<text><![CDATA[       l)    Any other lung problem that you’ve been told about:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="409" width="385" height="14" uuid="70057722-56de-4d5f-90ce-8bdbbd0c7f18"/>
+				<text><![CDATA[4.    Do you currently have any of the following symptoms of pulmonary or lung illness: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="426" width="134" height="14" uuid="de3d46cd-a685-40f1-8398-0288b5527b3c"/>
+				<text><![CDATA[       a)    Shortness of breath: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="494" width="360" height="14" uuid="f0e7ec56-ee18-474f-8a5d-fa5c947b976d"/>
+				<text><![CDATA[       d)    Have to stop for breath when walking at your own pace on level ground:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="579" width="286" height="14" uuid="93eec39b-efbe-4500-bc95-fb60fa6dc795"/>
+				<text><![CDATA[       i)     Coughing that occurs mostly when you are lying down:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="630" width="210" height="14" uuid="b59053b8-6678-42a2-88b6-822230dd4a64"/>
+				<text><![CDATA[       l)    Wheezing that interferes with your job:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="443" width="478" height="14" uuid="50e0f422-d807-48b6-94af-809284619646"/>
+				<text><![CDATA[       b)    Shortness of breath when walking fast on level ground or walking up a slight hill or incline that may ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="477" width="438" height="14" uuid="72ba9a98-7186-45ca-a4bb-bddd469dc8b9"/>
+				<text><![CDATA[       c)    Shortness of breath when walking with other people at an ordinary pace on level ground:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="545" width="250" height="14" uuid="c5e64f04-e24c-4f37-be1d-0a54fab7f2f8"/>
+				<text><![CDATA[       g)    Coughing that produces phlegm (thick sputum):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="528" width="255" height="14" uuid="e6dae1a3-67ca-4d7f-8613-250e036cd91a"/>
+				<text><![CDATA[       f)     Shortness of breath that interferes with your job: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="562" width="250" height="14" uuid="24578912-ae30-49ab-99b8-7cba81665e2a"/>
+				<text><![CDATA[       h)    Coughing that wakes you early in the morning:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="596" width="202" height="14" uuid="bf233a49-2c61-4170-bf28-c5867720d02b"/>
+				<text><![CDATA[       j)     Coughing up blood in the last month:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="613" width="89" height="14" uuid="8b90d338-8e0d-4a8c-8e8c-6696a958de54"/>
+				<text><![CDATA[       k)    Wheezing:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="511" width="286" height="14" uuid="69f6fb4c-6d75-4308-8764-fa0afa4209b6"/>
+				<text><![CDATA[       e)    Shortness of breath when washing or dressing yourself:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="460" width="214" height="14" uuid="516de097-cdc6-468b-9cc8-05d3d8c5b28e"/>
+				<text><![CDATA[              impair your ability to wear a respirator?:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="647" width="210" height="14" uuid="296382cf-4e43-4eed-adba-67e8949f7b2f"/>
+				<text><![CDATA[       m)  Chest pain when you breathe deeply:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="664" width="339" height="14" uuid="902ed3ca-5acd-4749-b548-103815832a28"/>
+				<text><![CDATA[       n)   Any other symptoms that you think may be related to lung problems:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="35" width="20" height="14" uuid="69117426-ac55-4cb0-851f-17522691fc37"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="34" width="21" height="14" uuid="4e14b603-da6d-48b8-8063-249835f6ad24"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="35" width="5" height="14" uuid="98450bf4-8574-4008-b2b4-09e7ad201f18"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="460" y="35" width="13" height="13" uuid="e6629f94-d4ec-4f02-8836-aac2ddffdb0c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSmoke} != null && $F{userquestionnaire_isSmoke}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="413" y="35" width="13" height="13" uuid="c6ad3db9-e91f-4fc7-b3cb-627f82c0ebdf"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSmoke} != null && $F{userquestionnaire_isSmoke}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="148" y="75" width="13" height="13" uuid="f2318c0d-1093-4793-806e-4828fecb56b6"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSeizuresCondition} != null && $F{userquestionnaire_isSeizuresCondition}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="210" y="75" width="20" height="14" uuid="2012b10e-de9b-4c7f-a5b4-25631674c809"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="75" width="5" height="14" uuid="3e6b70a5-7c3f-4235-ba44-41cc5636dd22"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="74" width="21" height="14" uuid="22b016b3-641b-4638-a932-b9c52beeb876"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="195" y="75" width="13" height="13" uuid="5f8b55fc-1f77-4186-8901-dd01ee03e775"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSeizuresCondition} != null && $F{userquestionnaire_isSeizuresCondition}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="194" y="92" width="13" height="13" uuid="5d57db9d-9a30-457b-9e19-e4fcd231714b"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDiabetes} != null && $F{userquestionnaire_isDiabetes}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="256" y="92" width="20" height="14" uuid="b0cde89c-1560-4642-b060-95a85022eafc"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="92" width="5" height="14" uuid="15d1c208-ef7a-4c2a-9139-684f94f40f63"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="91" width="21" height="14" uuid="cba505f1-d058-49c8-941b-2bc7deb441e7"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="241" y="92" width="13" height="13" uuid="174aa9d2-2986-446a-adfd-1df326ed4642"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDiabetes} != null && $F{userquestionnaire_isDiabetes}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="353" y="109" width="13" height="13" uuid="05a9cce1-6016-4cb8-beda-36b4d9ea963f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAllergicReactions} != null && $F{userquestionnaire_isAllergicReactions}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="306" y="109" width="13" height="13" uuid="03bd629a-7b5d-4c22-9830-2bfaa92a590d"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAllergicReactions} != null && $F{userquestionnaire_isAllergicReactions}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="321" y="108" width="21" height="14" uuid="cd91196b-d90f-49ad-9483-995ae3a1d8fd"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="109" width="5" height="14" uuid="619fbc1f-8ae4-4c9e-8d68-e9459042df3c"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="109" width="20" height="14" uuid="f4310cbb-c952-4d7e-bc80-67941712ef38"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="266" y="126" width="13" height="13" uuid="b268d7dc-1551-4f1e-840c-017a3c676717"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isClaustrophobia} != null && $F{userquestionnaire_isClaustrophobia}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="281" y="125" width="21" height="14" uuid="a162cb50-c709-471d-bc17-b8ae44a25250"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="126" width="5" height="14" uuid="bf402686-e6e6-42fd-a1a1-6cac127da791"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="126" width="20" height="14" uuid="5f32088c-82ae-494b-b181-b36f4ee04690"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="313" y="126" width="13" height="13" uuid="704c4c62-b7fd-46e8-a096-90c0fdb560de"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isClaustrophobia} != null && $F{userquestionnaire_isClaustrophobia}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="191" y="143" width="13" height="13" uuid="c6294a66-3c43-48ad-ad8f-be712647b8c8"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isTrouble} != null && $F{userquestionnaire_isTrouble}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="206" y="142" width="21" height="14" uuid="c93b7828-175b-41ab-9013-3bfa13f93099"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="143" width="5" height="14" uuid="d9c6f8c1-c487-4eec-b1fd-e1e23f1d9500"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="143" width="20" height="14" uuid="87078697-55dc-4f0e-9f5c-3e552f7b82b0"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="238" y="143" width="13" height="13" uuid="7b0ed5a6-44b5-4edb-a024-0da85831d8bb"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isTrouble} != null && $F{userquestionnaire_isTrouble}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="136" y="183" width="13" height="13" uuid="f81b94d3-4b65-4082-90cb-2d014323989a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAsbestosis} != null && $F{userquestionnaire_isAsbestosis}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="151" y="182" width="21" height="14" uuid="4554b74d-d719-4150-b3e9-88bcdb975966"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="183" width="5" height="14" uuid="20bade32-0e76-40f2-a1c3-2d697fca2285"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="183" width="20" height="14" uuid="7ceed5e4-0db4-4405-8583-d3e4507be818"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="183" y="183" width="13" height="13" uuid="de6c41de-5209-4549-8024-af803cd59418"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAsbestosis} != null && $F{userquestionnaire_isAsbestosis}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="119" y="200" width="13" height="13" uuid="7d40e981-2e01-4cf6-ac65-e3121aa48801"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAsthma} != null && $F{userquestionnaire_isAsthma}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="134" y="199" width="21" height="14" uuid="fcc9282d-17f7-4816-a103-b0593c777d2d"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="200" width="5" height="14" uuid="269f0d1b-660b-4024-9cc8-0502d4ce7eb1"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="200" width="20" height="14" uuid="0eb8093f-6710-4332-8f2e-5b1706f469af"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="166" y="200" width="13" height="13" uuid="1ac844ab-4b08-476e-851a-8239f7392ccb"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAsthma} != null && $F{userquestionnaire_isAsthma}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="163" y="217" width="13" height="13" uuid="95803685-98db-41bd-9a9b-5210b0957d95"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBronchitis} != null && $F{userquestionnaire_isBronchitis}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="178" y="216" width="21" height="14" uuid="2f67faca-8ea4-4757-8abc-efe5f2371804"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="217" width="5" height="14" uuid="154533f9-69b4-4f2f-9c4a-625ae4ef5ca2"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="217" width="20" height="14" uuid="7ccad2fc-7127-4d6d-950a-abbc5b97ffa5"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="210" y="217" width="13" height="13" uuid="2b05ba2b-bd30-4dc6-81b7-5364c886b5ce"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBronchitis} != null && $F{userquestionnaire_isBronchitis}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="141" y="234" width="13" height="13" uuid="283f84ba-b509-4a37-9852-efb3eeeff6c3"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isEmphysema} != null && $F{userquestionnaire_isEmphysema}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="156" y="233" width="21" height="14" uuid="4103e02b-1378-45aa-94a2-7d4185953ba0"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="234" width="5" height="14" uuid="370707ac-ee1f-4420-915c-a37c3564959a"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="234" width="20" height="14" uuid="2caf26fe-250e-4ee8-b8bc-3f9f99898a04"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="188" y="234" width="13" height="13" uuid="c319a76b-529b-48da-85a2-bc8e0c3bab1c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isEmphysema} != null && $F{userquestionnaire_isEmphysema}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="136" y="251" width="13" height="13" uuid="9dbcb3a3-f231-42d9-891c-d4dae796a979"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPneumonia} != null && $F{userquestionnaire_isPneumonia}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="151" y="250" width="21" height="14" uuid="9e4df34d-6bb3-4348-ba25-0e6b15fef497"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="251" width="5" height="14" uuid="bc35d3cb-8857-4b45-8350-4e4071ce5d11"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="251" width="20" height="14" uuid="c0a298ed-b025-447a-b927-730f5fb6ffe1"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="183" y="251" width="13" height="13" uuid="01d2a9e4-c3d9-4a2c-8648-613bb7c11310"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPneumonia} != null && $F{userquestionnaire_isPneumonia}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="142" y="268" width="13" height="13" uuid="cef4e4a8-e083-4303-81f7-fae38a9fe2f2"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isTuberculosis} != null && $F{userquestionnaire_isTuberculosis}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="157" y="267" width="21" height="14" uuid="98bbef01-a576-4c1d-9c30-f254a6307607"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="268" width="5" height="14" uuid="8ff508cf-836e-4e03-b7bf-3c42cbefd03b"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="204" y="268" width="20" height="14" uuid="5c6ccfbc-96c3-495a-860d-19097a8674e9"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="189" y="268" width="13" height="13" uuid="00acdba7-42dc-437c-98fb-226604cd7fa4"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isTuberculosis} != null && $F{userquestionnaire_isTuberculosis}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="131" y="285" width="13" height="13" uuid="face74fc-5587-4cd5-bda1-b1f7f39bff87"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSilicosis} != null && $F{userquestionnaire_isSilicosis}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="146" y="284" width="21" height="14" uuid="474b69f9-d92e-40ab-95d5-2a2aa809f06e"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="285" width="5" height="14" uuid="c7225779-c149-4838-8e2b-f1f57643d542"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="193" y="285" width="20" height="14" uuid="2b3709be-3848-4446-862c-c7aed4bc4206"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="178" y="285" width="13" height="13" uuid="053bd695-2500-45c1-b038-018ae0ea171f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSilicosis} != null && $F{userquestionnaire_isSilicosis}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="223" y="302" width="13" height="13" uuid="e2a32492-9696-4062-9370-f456e7a847fe"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPneumothorax} != null && $F{userquestionnaire_isPneumothorax}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="238" y="301" width="21" height="14" uuid="c7afaad2-d172-4a30-8791-6e1a496050d6"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="302" width="5" height="14" uuid="8d4995de-bed3-48da-a8b4-9f4be57ddeeb"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="302" width="20" height="14" uuid="93c37594-70b0-4f3e-9b19-7259f741fc56"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="270" y="302" width="13" height="13" uuid="f13aae96-fbf0-4e36-9c4e-3f89c4517e60"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPneumothorax} != null && $F{userquestionnaire_isPneumothorax}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="138" y="319" width="13" height="13" uuid="c0ae35bc-6478-4337-9250-1e980dd29a5a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isLungCancer} != null && $F{userquestionnaire_isLungCancer}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="153" y="318" width="21" height="14" uuid="28092d08-8bae-45fc-953d-3dcd67785557"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="177" y="319" width="5" height="14" uuid="c6506a4c-fbfc-406a-8999-ad8453cae10f"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="319" width="20" height="14" uuid="1a7fecd5-a6c7-4792-9e54-c951fe085b6b"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="185" y="319" width="13" height="13" uuid="023c0832-7c60-40fc-9927-a85bb22ae0fb"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isLungCancer} != null && $F{userquestionnaire_isLungCancer}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="135" y="336" width="13" height="13" uuid="1b7851d7-aa2e-4e2f-968e-c0de56ccf6da"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBrokenRibs} != null && $F{userquestionnaire_isBrokenRibs}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="150" y="335" width="21" height="14" uuid="0d5d8d1b-07a3-4c19-b542-c3609bcba0e2"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="174" y="336" width="5" height="14" uuid="de3c78b1-bd91-4831-a48a-ae443a8daa7b"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="197" y="336" width="20" height="14" uuid="4c520878-5c59-4a94-9459-8d35fd30e01e"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="182" y="336" width="13" height="13" uuid="87bd3329-5e18-4cec-aebc-84957a3169ef"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBrokenRibs} != null && $F{userquestionnaire_isBrokenRibs}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="218" y="353" width="13" height="13" uuid="12a464e7-61b9-44df-9d21-16ecda558632"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isInjuries} != null && $F{userquestionnaire_isInjuries}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="233" y="352" width="21" height="14" uuid="6a5a9d40-b796-4554-bc20-79ac8b2a0528"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="353" width="5" height="14" uuid="303cb6eb-3ed3-4140-9c51-43e757babbd0"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="353" width="20" height="14" uuid="52b13a73-8d5e-48e4-b0ec-7faabfff669d"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="265" y="353" width="13" height="13" uuid="c53a6fa2-ca24-4179-8a0a-df4a8f8dc9b7"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isInjuries} != null && $F{userquestionnaire_isInjuries}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="303" y="370" width="13" height="13" uuid="15640b8f-cf1f-4213-b1af-a81bc89a759d"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherLung} != null && $F{userquestionnaire_isOtherLung}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="318" y="369" width="21" height="14" uuid="6e7a19c9-4b35-45c4-8040-b4fdfd5054d5"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="370" width="5" height="14" uuid="f0b6ecca-c099-4438-bb58-0cc59d4339e4"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="370" width="20" height="14" uuid="d12675af-2ba2-4771-bed3-c3da7cf3ee0a"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="350" y="370" width="13" height="13" uuid="7b303f56-dab5-4714-ab30-83de7391c503"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherLung} != null && $F{userquestionnaire_isOtherLung}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="72" y="398" width="408" height="1" uuid="3444e977-1bdc-463c-8d22-7b0ac574533b"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="174" y="426" width="13" height="13" uuid="6d50e6f7-fac4-4e35-979a-caec8cc2a9ee"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOB} != null && $F{userquestionnaire_isSOB}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="213" y="426" width="5" height="14" uuid="c0299ffb-7de2-4cb8-81fc-00b090572173"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="426" width="20" height="14" uuid="2772e22f-3096-42ac-a70f-c08b3a494240"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="221" y="426" width="13" height="13" uuid="0dbedfc9-47b1-40c4-ac10-8f098e9e0043"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOB} != null && $F{userquestionnaire_isSOB}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="189" y="425" width="21" height="14" uuid="960e7ba9-52b4-4d56-8821-32901f7ab92b"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="254" y="460" width="13" height="13" uuid="2fb6f523-3d68-4056-a89d-a14df14d17d7"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOBWalkingFast} != null && $F{userquestionnaire_isSOBWalkingFast}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="293" y="460" width="5" height="14" uuid="8097ff12-4d24-4651-9b7a-ad2ede58ad3c"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="460" width="20" height="14" uuid="5e8bb2ca-94ff-449f-98f7-6bace5fa690e"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="301" y="460" width="13" height="13" uuid="ae28ed5b-07fa-4625-9d47-355954aa5242"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOBWalkingFast} != null && $F{userquestionnaire_isSOBWalkingFast}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="269" y="459" width="21" height="14" uuid="f964bfd2-b43c-4345-8e55-068323a32cdc"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="462" y="477" width="13" height="13" uuid="e7306b5b-9c31-4b4d-a491-9b61e574d798"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOBWalkingOther} != null && $F{userquestionnaire_isSOBWalkingOther}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="501" y="477" width="5" height="14" uuid="c6507b97-f914-4bfa-b72f-14c08cf969ca"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="524" y="477" width="20" height="14" uuid="db81a105-c313-4dc3-84ec-ff54f08c8fdb"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="509" y="477" width="13" height="13" uuid="b14cc3bc-7f41-4c92-9fcf-546cf52f82e7"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOBWalkingOther} != null && $F{userquestionnaire_isSOBWalkingOther}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="477" y="476" width="21" height="14" uuid="1adb013b-87a9-4ffc-911e-7e49f22f1963"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="395" y="494" width="13" height="13" uuid="23a09d2e-a10a-4a6c-a3f5-1205e81e20be"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isStopForBreath} != null && $F{userquestionnaire_isStopForBreath}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="434" y="494" width="5" height="14" uuid="aed2234e-b0c1-45f0-a010-18f3694cb6b4"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="457" y="494" width="20" height="14" uuid="12378657-ab82-4e07-9a54-cd8388cd1bfe"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="442" y="494" width="13" height="13" uuid="6e41e352-b24e-4aa8-b9e6-ed494c45437b"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isStopForBreath} != null && $F{userquestionnaire_isStopForBreath}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="410" y="493" width="21" height="14" uuid="9e10a197-f36f-4371-bf6d-293ce3e25dc5"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="325" y="511" width="13" height="13" uuid="a379f86b-9e73-4e75-8dba-a5a440b810e7"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOBWashing} != null && $F{userquestionnaire_isSOBWashing}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="364" y="511" width="5" height="14" uuid="c20a5406-0af0-454b-b1dc-b71540963edd"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="511" width="20" height="14" uuid="659d2ff5-90ce-4ea1-8fe4-6300cfc10417"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="372" y="511" width="13" height="13" uuid="98732fd6-6bba-4656-a5ee-7c2a2ecf4bb8"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOBWashing} != null && $F{userquestionnaire_isSOBWashing}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="340" y="510" width="21" height="14" uuid="feacf542-1adf-4dcb-affd-4a454c76a6ff"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="292" y="528" width="13" height="13" uuid="49eef50c-f4eb-4a30-8174-2f6de3e58216"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOBInterferes} != null && $F{userquestionnaire_isSOBInterferes}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="331" y="528" width="5" height="14" uuid="3ec68acd-acfb-46da-8c7a-6294e4952ed4"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="528" width="20" height="14" uuid="af981514-9284-4d72-9444-4dc3226c60fa"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="339" y="528" width="13" height="13" uuid="04bd5e3d-73e3-4c19-b58d-4eaac66b858f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSOBInterferes} != null && $F{userquestionnaire_isSOBInterferes}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="307" y="527" width="21" height="14" uuid="702ac661-e29c-457f-94c9-3f0430a507c3"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="289" y="545" width="13" height="13" uuid="7bdc5fb7-89f0-4f7d-8e9f-4ed5e03ef1ef"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCoughingPhlegm} != null && $F{userquestionnaire_isCoughingPhlegm}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="328" y="545" width="5" height="14" uuid="92649889-825b-4df1-8708-3939e1f87680"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="545" width="20" height="14" uuid="d0aada19-53c2-49c6-9ce4-fa359295d8ae"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="336" y="545" width="13" height="13" uuid="5bfd1e1e-718a-4585-a4f6-bb5db42e4841"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCoughingPhlegm} != null && $F{userquestionnaire_isCoughingPhlegm}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="304" y="544" width="21" height="14" uuid="c9d25330-898e-4b64-8004-e31ebfbe96fb"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="289" y="562" width="13" height="13" uuid="b2542443-df0f-4208-82a9-9ab15b0493dd"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCoughingMorning} != null && $F{userquestionnaire_isCoughingMorning}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="328" y="562" width="5" height="14" uuid="c936034a-0346-4bbb-ae7f-7d363810d452"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="562" width="20" height="14" uuid="f26cae0a-3b3f-4ec8-a363-b103a5726446"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="336" y="562" width="13" height="13" uuid="d30c8a4e-0f2c-4fe6-94e9-5af61cc3cb0f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCoughingMorning} != null && $F{userquestionnaire_isCoughingMorning}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="304" y="561" width="21" height="14" uuid="c927e1ec-92a7-451c-b33e-2ab229438d8d"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="326" y="579" width="13" height="13" uuid="c64364ce-099b-4e78-8f68-067473bfe8d4"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCoughingLyingDown} != null && $F{userquestionnaire_isCoughingLyingDown}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="365" y="579" width="5" height="14" uuid="d68fc153-9c09-4187-90de-82392f63132a"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="579" width="20" height="14" uuid="cb52c3cc-8d47-4aa4-b4f2-a7d259a2a6ff"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="373" y="579" width="13" height="13" uuid="c3ae5177-f65e-4c3b-abf7-70d4b4bc8d8e"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCoughingLyingDown} != null && $F{userquestionnaire_isCoughingLyingDown}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="341" y="578" width="21" height="14" uuid="124375d7-0f49-42b3-b022-3955e49cb272"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="238" y="596" width="13" height="13" uuid="8a6524fc-aeaa-439a-9a77-2d8025841196"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCoughingUpBlood} != null && $F{userquestionnaire_isCoughingUpBlood}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="277" y="596" width="5" height="14" uuid="053172ab-df62-4dec-9337-c25200671a78"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="596" width="20" height="14" uuid="851dd51f-447b-4761-aec6-4019c59786f2"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="285" y="596" width="13" height="13" uuid="aac321d9-5b69-42cc-a186-05c9761c809c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCoughingUpBlood} != null && $F{userquestionnaire_isCoughingUpBlood}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="253" y="595" width="21" height="14" uuid="8f62e496-4294-4d9c-aab9-73581012fe6e"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="129" y="613" width="13" height="13" uuid="7c9ecb95-1065-4c33-88ad-8b23f00ebc9e"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isWheezing} != null && $F{userquestionnaire_isWheezing}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="168" y="613" width="5" height="14" uuid="b9892404-e91f-430d-a71a-c6a8117d0fad"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="613" width="20" height="14" uuid="4b0e9bcb-226f-42fe-91b8-288cf9088f73"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="176" y="613" width="13" height="13" uuid="e0e6fddc-2171-4d00-af71-fd0666ff2387"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isWheezing} != null && $F{userquestionnaire_isWheezing}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="144" y="612" width="21" height="14" uuid="552d8f16-2fc6-478d-aef0-478dcb7b8b0a"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="248" y="630" width="13" height="13" uuid="99430082-f7c0-40f4-866e-482f3d46ffc6"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isWheezingInterferes} != null && $F{userquestionnaire_isWheezingInterferes}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="287" y="630" width="5" height="14" uuid="22d2085a-7720-4955-b830-7029b55c9e70"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="630" width="20" height="14" uuid="1a460a69-70e3-4565-bafe-15ce143e45a3"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="295" y="630" width="13" height="13" uuid="10d1ed99-63d7-4398-83d7-1834fd153014"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isWheezingInterferes} != null && $F{userquestionnaire_isWheezingInterferes}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="263" y="629" width="21" height="14" uuid="de4f5f20-96d8-4d4c-9b48-d9ad3fe1c836"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="248" y="647" width="13" height="13" uuid="a1fee147-375e-4798-ac37-363e94481aa5"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isChestPain} != null && $F{userquestionnaire_isChestPain}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="287" y="647" width="5" height="14" uuid="d1a256be-270f-46c6-bbf2-01aaa07d571f"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="647" width="20" height="14" uuid="11bd766f-430d-4d34-aba3-a2e5ccee2158"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="295" y="647" width="13" height="13" uuid="f80e9e98-4475-4ba5-aa05-576df967c77f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isChestPain} != null && $F{userquestionnaire_isChestPain}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="263" y="646" width="21" height="14" uuid="afb58646-33ea-4e79-b824-c848770e1ca6"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="380" y="664" width="13" height="13" uuid="b283cb56-b4b6-461a-9f37-a27083288cb5"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherSymptomsPulmonary} != null && $F{userquestionnaire_isOtherSymptomsPulmonary}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="419" y="664" width="5" height="14" uuid="8a07b04b-0717-4c9d-9cb5-d57d1ad93bc0"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="664" width="20" height="14" uuid="28c68925-7f97-4a3b-a543-990a2855c1d1"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="427" y="664" width="13" height="13" uuid="9c93c867-73ba-4adc-9dc3-8cb56354d730"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherSymptomsPulmonary} != null && $F{userquestionnaire_isOtherSymptomsPulmonary}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="395" y="663" width="21" height="14" uuid="4a64bbeb-84c0-4177-ab8a-84ede81e0a34"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="386" width="403" height="14" uuid="7db51bc1-8585-494f-8dee-e761d0d8df76"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_OtherLungComment} != null ? $F{userquestionnaire_OtherLungComment} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="686">
+			<line>
+				<reportElement x="0" y="0" width="1" height="686" uuid="b21d07d9-9d2b-462d-88ee-a97b0d10ca0b"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="686" uuid="d073c537-b523-417d-a029-389b1d79a150"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="685" width="554" height="1" uuid="306de594-1519-466f-b4f0-fab0e2f555d0"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="237" y="131" width="20" height="14" uuid="c096ad58-3f82-4797-8c3e-74af1be69a3d"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="165" y="63" width="13" height="13" uuid="a7ce9bfe-e9a7-47c0-adf6-6d637c66b70c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAngina} != null && $F{userquestionnaire_isAngina}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="12" width="346" height="14" uuid="1771523a-c0c7-42cc-a422-3fdf3687204a"/>
+				<text><![CDATA[5.    Have you ever had any of the following cardiovascular or heart problems?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="46" width="20" height="14" uuid="9101cbd6-2944-4485-93d6-0d4ecf143d9d"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="113" width="21" height="14" uuid="7f9e5e1f-f6a0-46dd-8806-a5ce949f0606"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="46" width="5" height="14" uuid="8ee80410-d921-4dca-a2dd-e2d7aba3d4e6"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="175" y="131" width="13" height="13" uuid="ee759eea-d8b7-48da-b5b3-ab22c0ec8beb"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBloodPressureHeart} != null && $F{userquestionnaire_isBloodPressureHeart}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="133" y="62" width="21" height="14" uuid="e73d7ffd-dcca-4c13-b73b-15d3937be10d"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="148" width="20" height="14" uuid="a3bd630a-47e8-43d0-a6a6-93e91fc6b994"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="80" width="20" height="14" uuid="43ca1e5b-85d2-4119-a72c-59f98eb0e5b5"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="97" width="20" height="14" uuid="95ad45fd-b5c1-48ed-afad-8c3168c63062"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="131" width="5" height="14" uuid="ce318956-3d67-4ef2-bfb6-1c706716a8bc"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="96" width="21" height="14" uuid="e33f7837-fb67-4e98-b7c4-9021a9959a26"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="46" width="79" height="14" uuid="9b162977-1875-4c3a-b15d-775f81cf6ed0"/>
+				<text><![CDATA[       b)    Stroke:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="63" width="79" height="14" uuid="2c036e46-6239-4967-9d70-6538959b082c"/>
+				<text><![CDATA[       c)    Angina:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="119" y="46" width="13" height="13" uuid="f2167b9d-3da4-4490-9830-e7e17389663f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isStroke} != null && $F{userquestionnaire_isStroke}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="190" y="130" width="21" height="14" uuid="31b125a3-caae-4a0c-8d8d-1d664c813696"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="141" y="80" width="13" height="13" uuid="a4995623-cc9f-4119-a263-fcbef108f856"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartFailure} != null && $F{userquestionnaire_isHeartFailure}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="351" y="97" width="5" height="14" uuid="f9450c39-87e9-47c8-9545-ac53e946cd00"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="222" y="131" width="13" height="13" uuid="4e2f98c2-3caf-4309-83d6-2df985edb340"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBloodPressureHeart} != null && $F{userquestionnaire_isBloodPressureHeart}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="97" width="273" height="14" uuid="b4b4ea3e-d1b9-4890-83b1-4034780db838"/>
+				<text><![CDATA[       e)    Swelling in your legs or feet (not caused by walking):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="45" width="21" height="14" uuid="1bba65b6-c5d0-4891-b8e4-c74f0e57a638"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="148" width="5" height="14" uuid="92f82e65-a0af-4818-833b-95a900d19b2b"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="29" width="20" height="14" uuid="3d7bcf2e-1280-4936-97e8-5758ee9cbf1a"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="114" width="5" height="14" uuid="3f711a21-ae16-4076-a4ea-df329514668b"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="29" width="100" height="14" uuid="1ac6091b-3e20-41b0-9503-3b03602bf503"/>
+				<text><![CDATA[       a)    Heart attack: ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="268" y="114" width="13" height="13" uuid="2544e9b5-2d33-4fc3-a4b0-2e5a9325ca36"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartArrhythmia} != null && $F{userquestionnaire_isHeartArrhythmia}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="186" y="29" width="13" height="13" uuid="dbe21d5f-6d3a-413a-882c-72774f15283f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartAttack} != null && $F{userquestionnaire_isHeartAttack}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="80" width="101" height="14" uuid="fd7a60bd-cb4d-4cc0-9db8-2c22fab02515"/>
+				<text><![CDATA[       d)    Heart failure:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="63" width="20" height="14" uuid="12fce4a9-d74e-481c-b287-7c9e3fd9a067"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="147" width="21" height="14" uuid="a11da636-f927-4848-84e8-ed9f77e96c62"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="28" width="21" height="14" uuid="3ebab0f4-1fcd-4d09-aa66-d7c890ec2a18"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="312" y="148" width="13" height="13" uuid="071b7d9e-05cb-41c1-8094-2bf963a603ef"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherHeart} != null && $F{userquestionnaire_isOtherHeart}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="359" y="148" width="13" height="13" uuid="d91fa61c-2916-49eb-aaf6-135cd2939e57"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherHeart} != null && $F{userquestionnaire_isOtherHeart}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="180" y="80" width="5" height="14" uuid="3cc14c0e-2def-4a3a-bd2d-7d4e34695523"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="359" y="97" width="13" height="13" uuid="1085f2e4-30b4-4eda-9230-c67b85b871da"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSwelling} != null && $F{userquestionnaire_isSwelling}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="312" y="97" width="13" height="13" uuid="110ae276-05ae-465b-8d52-aca4e8f5153f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSwelling} != null && $F{userquestionnaire_isSwelling}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="157" y="63" width="5" height="14" uuid="87f0f778-4d02-404c-b8b8-ad309a609b94"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="188" y="80" width="13" height="13" uuid="8ca23176-44e3-4366-aba2-ddb23fcbf084"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartFailure} != null && $F{userquestionnaire_isHeartFailure}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="131" width="137" height="14" uuid="ce89bbe7-72cd-4512-808d-cd7636815403"/>
+				<text><![CDATA[       g)    High blood pressure:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="114" width="20" height="14" uuid="f3000e55-8e9e-4c06-8996-59fb2e0d5445"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="114" width="231" height="14" uuid="5e76e8b7-869a-41ed-aada-52d6086c3770"/>
+				<text><![CDATA[       f)    Heart arrhythmia (heart beating irregularly): ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="79" width="21" height="14" uuid="b4d5711d-37ec-46dc-9c51-221c0a164bd8"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="118" y="63" width="13" height="13" uuid="13196589-6427-4cb3-b8b3-7e1554d9e7ac"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAngina} != null && $F{userquestionnaire_isAngina}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="148" width="274" height="14" uuid="36d246cd-b7fe-4700-b30e-48fedea347f7"/>
+				<text><![CDATA[       h)    Any other heart problem that you’ve been told about:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="29" width="5" height="14" uuid="31c39129-8995-4f21-acaa-c82064ca40d1"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="315" y="114" width="13" height="13" uuid="565211e4-d8b0-4da2-9b97-beda04233028"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartArrhythmia} != null && $F{userquestionnaire_isHeartArrhythmia}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="166" y="46" width="13" height="13" uuid="60d60c78-e3b5-4ed3-8864-05ab8d6eb288"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isStroke} != null && $F{userquestionnaire_isStroke}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="139" y="29" width="13" height="13" uuid="c7bd434b-62a0-40cf-8ce9-facddc656376"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartAttack} != null && $F{userquestionnaire_isHeartAttack}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="75" y="176" width="408" height="1" uuid="e3867130-3316-43b6-90c5-ac7fdae1d495"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="443" y="292" width="13" height="13" uuid="762b3f9f-5708-4d6f-a48f-970b33e5c977"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherSymptomsHeart} != null && $F{userquestionnaire_isOtherSymptomsHeart}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="389" y="241" width="13" height="13" uuid="915efcf8-f508-48e3-bc63-a4abde1a6707"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPOTInterferes} != null && $F{userquestionnaire_isPOTInterferes}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="435" y="257" width="21" height="14" uuid="7c821400-6d63-4397-bc61-fef4ddab74ad"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="342" y="241" width="13" height="13" uuid="75fa9856-ba03-4fce-b4ec-f97debaa01c2"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPOTInterferes} != null && $F{userquestionnaire_isPOTInterferes}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="357" y="240" width="21" height="14" uuid="0c6455d9-c617-485c-8afb-c8800c8fdafc"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="207" width="5" height="14" uuid="4accea89-4933-42f1-85f0-f0e13b069a98"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="206" width="21" height="14" uuid="46026229-ef84-42f8-97e1-fb10752b61e3"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="359" y="275" width="13" height="13" uuid="19b1fb0c-3f41-45b2-9168-67e02efb341a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartburn} != null && $F{userquestionnaire_isHeartburn}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="505" y="292" width="20" height="14" uuid="79f30ea2-122e-498b-8965-7a966ddfc9b2"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="258" width="5" height="14" uuid="02c73fc4-6332-43c9-a16e-bcd8b07545ae"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="338" y="223" width="21" height="14" uuid="e159ef9c-2356-4e44-88a6-ac89fe100612"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="292" width="404" height="14" uuid="5426b353-4b35-4f96-af07-1a5f3d536531"/>
+				<text><![CDATA[       f)    Any other symptoms that you think may be related to heart or circulation problems: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="292" width="5" height="14" uuid="de20c5f7-f4e4-4ca3-89ca-9104e35670b8"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="274" width="21" height="14" uuid="95d269b3-1b5a-4227-a954-d881a4dd4ee2"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="420" y="258" width="13" height="13" uuid="0b9073fb-4ef1-4866-9381-9cacaa4cbf3d"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isMissingBeat} != null && $F{userquestionnaire_isMissingBeat}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="404" y="241" width="20" height="14" uuid="5e5b41b7-0cb9-450e-9a6d-895a51462950"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="241" width="301" height="14" uuid="078868f5-3d02-4f43-964d-d41216c913bb"/>
+				<text><![CDATA[       c)    Pain or tightness in your chest that interferes with your job:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="275" width="273" height="14" uuid="4d11a384-d2f7-44aa-82fd-1f67d5d71c5b"/>
+				<text><![CDATA[       e)    Heartburn or indigestion that is not related to eating:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="312" y="275" width="13" height="13" uuid="dac9ea79-3957-401a-87c7-706dc1cdd1d5"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartburn} != null && $F{userquestionnaire_isHeartburn}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="381" y="241" width="5" height="14" uuid="fbda9b22-ccc4-4117-af35-4d831d789851"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="275" width="5" height="14" uuid="76a96596-30a5-4b07-929c-779a4aef8b78"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="323" y="224" width="13" height="13" uuid="1e24e6b0-2078-4fa9-a8fa-033808132b9c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPOTPhysical}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="490" y="292" width="13" height="13" uuid="2180bb85-c80c-425d-a07a-e86d14bd4ff8"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherSymptomsHeart} != null && $F{userquestionnaire_isOtherSymptomsHeart}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="259" y="207" width="13" height="13" uuid="5bbbb065-d548-4087-b5f5-d7e8b71c715f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isFrequentPain} != null && $F{userquestionnaire_isFrequentPain}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="362" y="224" width="5" height="14" uuid="71b28007-c253-4861-a0ff-643b311d7223"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="370" y="224" width="13" height="13" uuid="7a2b28fe-65eb-4c60-9e03-6c98ae0f04db"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPOTPhysical} != null && $F{userquestionnaire_isPOTPhysical}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="321" y="207" width="20" height="14" uuid="9b7d1965-3546-4f14-8570-8af1db384765"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="224" width="20" height="14" uuid="3a695ab2-d3c1-4b53-a329-da98eb0da60a"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="190" width="353" height="14" uuid="ba4fb8d8-ba25-483c-b6b7-c78ba19d64be"/>
+				<text><![CDATA[6.    Have you ever had any of the following cardiovascular or heart symptoms?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="291" width="21" height="14" uuid="8317908a-3ac0-41c6-8363-d91ae9c58426"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="258" width="381" height="14" uuid="e2a91a3e-df65-44f1-9f83-4c499006607e"/>
+				<text><![CDATA[       d)    In the past two years have you noticed your heart skipping or missing a beat:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="306" y="207" width="13" height="13" uuid="af2777f5-7a94-4deb-b080-8b4d231d2e8a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isFrequentPain} != null && $F{userquestionnaire_isFrequentPain}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="467" y="258" width="13" height="13" uuid="df4cad95-392d-4434-8fe9-1f4e922415f5"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isMissingBeat} != null && $F{userquestionnaire_isMissingBeat}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="207" width="218" height="14" uuid="b26aaf03-75df-4de8-93b2-33219ace8b32"/>
+				<text><![CDATA[       a)    Frequent pain or tightness in your chest: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="224" width="283" height="14" uuid="a9f60cdd-1e53-4410-b5ce-d24d7f039451"/>
+				<text><![CDATA[       b)    Pain or tightness in your chest during physical activity:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="258" width="20" height="14" uuid="4b87a149-234f-4352-b4df-22c5bb8543d1"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="245" y="334" width="5" height="14" uuid="df060c1a-6343-4f9f-9cba-e452cb28919f"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="385" width="20" height="14" uuid="b1cf33a8-d8f1-4b42-ba63-8c5fb7df8341"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="141" y="351" width="13" height="13" uuid="c91f7a18-6cea-448f-9a43-870a0df92277"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartTrouble} != null && $F{userquestionnaire_isHeartTrouble}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="168" y="367" width="21" height="14" uuid="1b070ad3-79db-4cab-b5ac-f66466e99b76"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="333" width="21" height="14" uuid="3a752cf8-19bd-4c50-a429-71898b3241dc"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="351" width="5" height="14" uuid="c7d2cdae-6369-4326-874e-4e859fdb4b23"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="351" width="20" height="14" uuid="9b76fb52-f030-4814-907b-7ac6070c54a5"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="253" y="334" width="13" height="13" uuid="03bd770d-fdb0-47a0-912a-019599776e03"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBreathing} != null && $F{userquestionnaire_isBreathing}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="368" width="113" height="14" uuid="7b767690-b39a-4394-841e-7c769fd72bbd"/>
+				<text><![CDATA[       c)    Blood pressure:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="350" width="21" height="14" uuid="a362c622-bd7d-491b-a6c3-663eed331629"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="385" width="5" height="14" uuid="9d35aa6b-5648-4e20-81cd-485d9616b47f"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="334" width="167" height="14" uuid="d8be8f9b-b740-4a4d-8a00-1080ce2a39a0"/>
+				<text><![CDATA[       a)    Breathing or lung problems? ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="384" width="21" height="14" uuid="7dc96a18-f824-429c-9535-77eb2214ef81"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="192" y="368" width="5" height="14" uuid="875fad1d-7aa2-498b-ae77-60db62182bc4"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="334" width="20" height="14" uuid="98aa30df-2115-4c56-9069-d3a72ca27756"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="368" width="20" height="14" uuid="9f20d691-1800-4367-bb02-55ff8a0bd372"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="148" y="385" width="13" height="13" uuid="9dc0419a-6087-44b6-8726-7903c378b5c4"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSeizuresMedication} != null && $F{userquestionnaire_isSeizuresMedication}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="195" y="385" width="13" height="13" uuid="32dd7fa1-eaea-4d4c-a49e-37f2c6eb69b8"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSeizuresMedication} != null && $F{userquestionnaire_isSeizuresMedication}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="351" width="101" height="14" uuid="1dc1c45b-f241-4cd2-a141-dc6476c29bb9"/>
+				<text><![CDATA[       b)    Heart trouble:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="317" width="353" height="14" uuid="5df6898b-d8a3-48b7-8621-cee41162974d"/>
+				<text><![CDATA[7.    Do you currently take medication for any of the following problems?]]></text>
+			</staticText>
+			<image>
+				<reportElement x="200" y="368" width="13" height="13" uuid="d36032a4-d087-4eeb-b1bb-d493e8257df1"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBloodPressureMedication} != null && $F{userquestionnaire_isBloodPressureMedication}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="206" y="334" width="13" height="13" uuid="a5acff23-89bd-4c42-9c7b-6e730dd19b6f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBreathing} != null && $F{userquestionnaire_isBreathing}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="188" y="351" width="13" height="13" uuid="cdd85c47-e1ee-499a-81cc-53fb364cdda6"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHeartTrouble} != null && $F{userquestionnaire_isHeartTrouble}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="385" width="109" height="14" uuid="b2fbd649-68db-4ddc-97c4-09cd38387df2"/>
+				<text><![CDATA[       d)    Seizures (fits):]]></text>
+			</staticText>
+			<image>
+				<reportElement x="153" y="368" width="13" height="13" uuid="cdff8917-d11e-4f54-b1d3-34a525f6a66d"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBloodPressureMedication} != null && $F{userquestionnaire_isBloodPressureMedication}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="179" y="469" width="5" height="14" uuid="b61de8cd-f3c3-431f-93b4-3fe8663c56b8"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="520" width="20" height="14" uuid="b2e1a225-8ade-42b0-99f3-223351627cd7"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="190" y="486" width="13" height="13" uuid="7c34e32b-36dd-46ff-b2a8-70a8dfe8e3ab"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSkinAllergies} != null && $F{userquestionnaire_isSkinAllergies}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="134" y="502" width="21" height="14" uuid="01da9c2b-b6b4-4ae5-ae92-216ddd5305dc"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="468" width="21" height="14" uuid="779eac58-2753-4ba1-80dd-9b857865f72e"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="486" width="5" height="14" uuid="26c48cd4-a983-4823-b411-17e9aa639cc1"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="252" y="486" width="20" height="14" uuid="9bab410c-acc6-4c2f-8be3-0fc0cddac2c9"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="537" width="316" height="14" uuid="da3d0c03-c949-4da4-b411-61899b40c45f"/>
+				<text><![CDATA[       e)    Any other problem that interferes with your use of a respirator:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="187" y="469" width="13" height="13" uuid="a1fe9cb6-fe0c-4de7-83ae-28e8bc348d0e"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isEyeIrritation} != null && $F{userquestionnaire_isEyeIrritation}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="371" y="536" width="21" height="14" uuid="6bbf184a-4500-47ff-a73b-8e6f5ddb8c7e"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="503" width="79" height="14" uuid="54a6596b-4818-46f5-a49b-ced0b9c096d1"/>
+				<text><![CDATA[       c)    Anxiety:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="485" width="21" height="14" uuid="e505e459-6a8f-4912-957f-3c7355509561"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="520" width="5" height="14" uuid="13e2225c-23a3-473a-995d-187894fef28a"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="469" width="101" height="14" uuid="517b8d72-a095-44cf-9130-a3ed377b92f8"/>
+				<text><![CDATA[       a)    Eye irritation: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="519" width="21" height="14" uuid="f2a2614a-44cd-4783-b1d6-2edea1978590"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="503" width="5" height="14" uuid="d26b6b24-fe99-4f5e-9165-98c47c4815f9"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="469" width="20" height="14" uuid="df89a116-3a9c-484c-8f05-6dcf2c7399d7"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="503" width="20" height="14" uuid="a4991e21-948c-45bd-a556-b2c6679736eb"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="537" width="5" height="14" uuid="1cc0a6ed-3f21-4d50-bc77-87cce4467d3e"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="210" y="520" width="13" height="13" uuid="e4f1477c-557b-45fd-be26-adb0d94619f1"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isGeneralWeakness} != null && $F{userquestionnaire_isGeneralWeakness}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="257" y="520" width="13" height="13" uuid="2b6e4619-7335-4b8c-a8ef-9b96073c6178"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isGeneralWeakness} != null && $F{userquestionnaire_isGeneralWeakness}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="486" width="149" height="14" uuid="15bf2b40-8ae5-4d17-ba5f-9f332141bde7"/>
+				<text><![CDATA[       b)    Skin allergies or rashes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="410" width="487" height="14" uuid="5ef41bb6-78ae-455e-bc46-cd58e27e0602"/>
+				<text><![CDATA[8.    If you’ve used a respirator, have you ever had any of the following problem? (if you’ve never used a ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="403" y="537" width="13" height="13" uuid="c4af43f6-04e2-46c3-b73b-655daf09b5ef"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherProblem} != null && $F{userquestionnaire_isOtherProblem}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="166" y="503" width="13" height="13" uuid="36733b77-db7e-45ca-8693-84f749a6b76b"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAnxiety} != null && $F{userquestionnaire_isAnxiety}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="140" y="469" width="13" height="13" uuid="a2101618-c16f-4ca1-bda9-e44ec98a677a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isEyeIrritation} != null && $F{userquestionnaire_isEyeIrritation}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="356" y="537" width="13" height="13" uuid="9f780dc9-b6a3-4381-aef7-14c523d0af4e"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherProblem} != null && $F{userquestionnaire_isOtherProblem}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="237" y="486" width="13" height="13" uuid="cdb6e635-82dd-4165-9b93-fb6757b44f51"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSkinAllergies} != null && $F{userquestionnaire_isSkinAllergies}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="520" width="171" height="14" uuid="8d906dbb-4a4e-4453-8088-1749e7e96668"/>
+				<text><![CDATA[       d)    General weakness or fatigue:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="119" y="503" width="13" height="13" uuid="4f43d85a-0b4c-4862-bd24-28bff2df729e"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAnxiety} != null && $F{userquestionnaire_isAnxiety}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="427" width="279" height="14" uuid="fc4e5909-d81c-4d26-bed9-f7f7ecf60bfa"/>
+				<text><![CDATA[       respirator, check the following space and go to question 9): ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="453" width="141" height="14" uuid="57aeae1f-36b6-4f5f-bc11-7b623f8c70b3"/>
+				<text><![CDATA[   Never used a respirator ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="579" width="115" height="14" uuid="045ffce5-aff6-44b6-9727-7590a2a3d31b"/>
+				<text><![CDATA[       to this questionnaire:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="562" width="507" height="14" uuid="ec62e496-f479-4a4b-9002-788a644412ad"/>
+				<text><![CDATA[9.    Would you like to talk to the health care professional who will review this questionnaire about your answers ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="275" width="20" height="14" uuid="29ea6583-f41e-4819-93ab-22b31b858104"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="537" width="20" height="14" uuid="a9322143-ba6b-4793-aa7c-44045b0abef2"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="579" width="5" height="14" uuid="1b63fb11-5f86-4ec2-917e-09d45532d7f0"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="202" y="579" width="13" height="13" uuid="b34d7518-46e4-400a-b26d-bdabee90f7ae"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isTalk} != null && $F{userquestionnaire_isTalk}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="219" y="579" width="20" height="14" uuid="5c13e275-0d76-4c0d-a317-4b832c0edf49"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="155" y="579" width="13" height="13" uuid="ae6b5981-9cb9-437f-9cb0-3b96df444e81"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isTalk} != null && $F{userquestionnaire_isTalk}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="170" y="578" width="21" height="14" uuid="c028c758-1943-4e1d-894d-deafc1e1ee5e"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="75" y="164" width="405" height="13" uuid="8c01d3bd-3392-4c3e-8368-84736a63970c"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_OtherHeartComment} != null ? $F{userquestionnaire_OtherHeartComment} : ""]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="35" y="453" width="13" height="13" uuid="81bb5060-f9fd-4586-98c3-611d40ddd403"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isUseRespirator} != null && $F{userquestionnaire_isUseRespirator}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+		</band>
+		<band height="686">
+			<line>
+				<reportElement x="0" y="0" width="1" height="686" uuid="044e0cef-8940-495c-ac5f-ec6000b6b998"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="686" uuid="003ceb1f-b643-4613-92e6-602287b7f709"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="685" width="554" height="1" uuid="cba43aef-4c70-41cf-9424-2b5038d83352"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="13" y="13" width="529" height="40" uuid="7196aa72-403d-4f35-943d-428831c2c104"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Questions 10 to 15 below must be answered by every employee who has been selected to use either a full-face piece respirator or a self-contained breathing apparatus (SCBA). For employees who have been selected to use other types or respirators, answering those questions is voluntary. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="65" width="327" height="14" uuid="d4e18e20-c5a5-4742-9233-71f94b5187db"/>
+				<text><![CDATA[10.   Have you every lost vision in either eye (temporarily or permanently):]]></text>
+			</staticText>
+			<image>
+				<reportElement x="365" y="65" width="13" height="13" uuid="0dadd336-8b7f-48ae-8b94-16151c7bc532"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isLostVision} != null && $F{userquestionnaire_isLostVision}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="412" y="65" width="13" height="13" uuid="cf780dde-8a93-4561-93bc-946c8373f616"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isLostVision} != null && $F{userquestionnaire_isLostVision}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="404" y="65" width="5" height="14" uuid="4c6011e0-8c86-499a-b713-6218892596b1"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="64" width="21" height="14" uuid="f2990e0b-6194-4189-a6e6-8c27c36afd9c"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="65" width="20" height="14" uuid="8531df08-ee1b-45bf-ada4-04ce926f72c9"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="107" width="5" height="14" uuid="6e0113ba-5550-495b-a5e6-695e4e053bf3"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="208" y="141" width="20" height="14" uuid="366ce3fb-2443-4cc8-9335-d42e02858055"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="124" width="5" height="14" uuid="952435d6-d0b3-4303-9fba-ec746911a356"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="158" width="184" height="14" uuid="40f83bdb-7a99-452c-b08d-d02d1b4071c3"/>
+				<text><![CDATA[       d)    Any other eye or vision problem:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="146" y="141" width="13" height="13" uuid="241cd41a-df29-43e9-8b14-dd0bef839066"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isColourBlind} != null && $F{userquestionnaire_isColourBlind}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="141" width="101" height="14" uuid="5c068ba2-97a9-4453-8a48-846ee2363b2b"/>
+				<text><![CDATA[       c)    Colour Blind:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="178" y="107" width="13" height="13" uuid="892c0d6b-4646-495f-bd52-942ed8d15167"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isContactLenses} != null && $F{userquestionnaire_isContactLenses}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="161" y="123" width="21" height="14" uuid="0df9262f-fced-41b7-9a63-39a0488e1950"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="193" y="124" width="13" height="13" uuid="7f1e6c79-3fbb-470b-9b0b-61ac740e65b2"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isWearGlasses} != null && $F{userquestionnaire_isWearGlasses}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="270" y="158" width="13" height="13" uuid="34d704cf-1a56-46b9-bb29-cae289f7c09f"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherEye} != null && $F{userquestionnaire_isOtherEye}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="223" y="158" width="13" height="13" uuid="bdd5212e-1fc3-4217-8e5e-580c24cd6c7a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherEye} != null && $F{userquestionnaire_isOtherEye}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="193" y="106" width="21" height="14" uuid="669cd967-1348-4253-bab8-45d390a6de40"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="225" y="107" width="13" height="13" uuid="46648c36-98d6-4fd2-b30a-44ef6f38b4eb"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isContactLenses} != null && $F{userquestionnaire_isContactLenses}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="262" y="158" width="5" height="14" uuid="64e35603-2fd5-48de-a8b6-d121e718a8b7"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="157" width="21" height="14" uuid="ada8d911-db3d-4224-9608-ec39c604125a"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="141" width="5" height="14" uuid="8e1c4e6c-9c6a-42da-bee8-0b00a016b837"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="146" y="124" width="13" height="13" uuid="da61e0ad-e8b7-473e-8a45-c02f24a0073c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isWearGlasses} != null && $F{userquestionnaire_isWearGlasses}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="90" width="286" height="14" uuid="4a2f8c72-56a4-4b91-aff4-fd159fafb0f4"/>
+				<text><![CDATA[11.   Do you currently have any of the following vision problems?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="107" width="20" height="14" uuid="07895c6e-9ad5-496c-849b-2812a9853b81"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="124" width="107" height="14" uuid="c5518394-68d0-462e-9691-74e2c83279bd"/>
+				<text><![CDATA[       b)    Wear glasses:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="140" width="21" height="14" uuid="9a52e58d-4c96-4361-a46a-7f5c896d2312"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="158" width="20" height="14" uuid="92bca492-77d2-492f-8c23-e3f4bffb447e"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="193" y="141" width="13" height="13" uuid="d0b242c2-b7d0-4cab-afb6-2990fd154e2b"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isColourBlind} != null && $F{userquestionnaire_isColourBlind}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="107" width="138" height="14" uuid="60b6ce82-e742-4075-ac0e-e047b0e3b9af"/>
+				<text><![CDATA[       a)    Wear contact lenses:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="208" y="124" width="20" height="14" uuid="891da9d4-6490-4d92-91eb-a66dce733ca2"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="371" y="183" width="13" height="13" uuid="e6a3c2a8-40a2-4e5f-8515-83c7ca961bd8"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isInjuryEars} != null && $F{userquestionnaire_isInjuryEars}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="418" y="183" width="13" height="13" uuid="94734c82-1d1c-412d-a609-0182f406bc72"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isInjuryEars} != null && $F{userquestionnaire_isInjuryEars}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="410" y="183" width="5" height="14" uuid="9389be5d-13d3-45f9-a458-3837bf586304"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="183" width="335" height="14" uuid="6f4b56b9-f98e-4c9f-9b46-d3945e3ca21b"/>
+				<text><![CDATA[12.   Have you ever had an injury to your ears, including a broken ear drum:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="183" width="20" height="14" uuid="f840b710-e711-482c-a72a-1e99ee735b2e"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="182" width="21" height="14" uuid="d2144493-50e6-413b-9a14-198214cfb64f"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="259" width="20" height="14" uuid="4c6e0960-a308-4c02-9e3b-6bc27289c03c"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="242" width="128" height="14" uuid="4a76c615-3033-40a7-9fd9-cdf4ae0fca9b"/>
+				<text><![CDATA[       b)    Wear a hearing aid:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="225" width="5" height="14" uuid="1a9c2659-58a5-46ba-9b6f-9ca660fc2d47"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="259" width="5" height="14" uuid="a97623a0-f420-4217-8cc0-a95dcbdfb02c"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="258" width="21" height="14" uuid="c7f63075-14f5-4980-9e52-903424e65c9e"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="281" y="259" width="13" height="13" uuid="9a040a25-c2d3-4b0d-ae98-5758ff87d117"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherHearing} != null && $F{userquestionnaire_isOtherHearing}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="206" y="225" width="13" height="13" uuid="779a9cb6-c763-490a-a44f-41f66e154035"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDifficultyHearing} != null && $F{userquestionnaire_isDifficultyHearing}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="225" width="119" height="14" uuid="b2dd952d-5a87-420f-b335-c8a961613fd8"/>
+				<text><![CDATA[       a)    Difficulty hearing:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="259" width="196" height="14" uuid="fefd892e-71e2-4f44-a27d-a17e0c5d736d"/>
+				<text><![CDATA[       c)    Any other hearing or ear problems:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="168" y="242" width="13" height="13" uuid="cad2b54a-efe8-48b8-a728-0efe478b2275"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHearingAid} != null && $F{userquestionnaire_isHearingAid}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="215" y="242" width="13" height="13" uuid="2a52509d-f94f-4556-8daa-1977fe998848"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isHearingAid} != null && $F{userquestionnaire_isHearingAid}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="174" y="224" width="21" height="14" uuid="d13841d9-8216-458c-adb2-8c6f725ec9cd"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="207" y="242" width="5" height="14" uuid="33192e8c-9339-494c-852f-49f85483eb68"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="225" width="20" height="14" uuid="8c477905-e3b0-417f-8faf-16ef32c1bb28"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="159" y="225" width="13" height="13" uuid="101f4aa1-fe47-4b57-b718-8d3bf4d0c0bc"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDifficultyHearing} != null && $F{userquestionnaire_isDifficultyHearing}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="183" y="241" width="21" height="14" uuid="dde21a95-12c2-4716-a2e9-9a3d748d7c6d"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="242" width="20" height="14" uuid="cea63502-61f7-4820-aaca-00e6cd9ee9ce"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="234" y="259" width="13" height="13" uuid="3d3a6c60-2751-444f-aa8f-b633ec068203"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherHearing} != null && $F{userquestionnaire_isOtherHearing}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="208" width="292" height="14" uuid="29bde057-2928-4957-bf14-d4dfc7a2ccd3"/>
+				<text><![CDATA[13.   Do you currently have any of the following hearing problems:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="209" y="284" width="13" height="13" uuid="b2d75d75-3a9d-4d65-8fce-34fe4fc939a0"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBackInjury} != null && $F{userquestionnaire_isBackInjury}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="256" y="284" width="13" height="13" uuid="e767fdb5-b5c6-41a9-9663-778692a1246b"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBackInjury} != null && $F{userquestionnaire_isBackInjury}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="248" y="284" width="5" height="14" uuid="8666dd12-c7fc-4870-8abd-c4b37c4a693f"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="284" width="169" height="14" uuid="c50a59ee-5abb-4663-a517-e66fabc4cca3"/>
+				<text><![CDATA[14.   Have you ever had a back injury:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="284" width="20" height="14" uuid="067d158c-908c-4359-8a65-e5fc835f4985"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="283" width="21" height="14" uuid="ac6692b9-6a45-4c3b-a257-7efd30cbe034"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="307" y="412" width="13" height="13" uuid="229e16af-de2c-4fcb-9a23-c0eb94298cae"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPODHead} != null && $F{userquestionnaire_isPODHead}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="292" y="377" width="21" height="14" uuid="937588e6-1292-4dab-b67f-7ba445f87a91"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="309" y="361" width="13" height="13" uuid="057df3ac-696d-4e9b-b919-b2e113902ca1"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDFMArmsLegs} != null && $F{userquestionnaire_isDFMArmsLegs}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="326" width="269" height="14" uuid="efbed078-a034-4ec4-9d16-15f5cc43bff3"/>
+				<text><![CDATA[       a)    Weakness in any of your arms, hands, legs, or feet: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="395" width="20" height="14" uuid="5773a372-8d5f-4c22-a64a-7cb57f3a3fcd"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="429" width="393" height="14" uuid="d951d0b8-213c-46cb-855e-4cb7dca4e397"/>
+				<text><![CDATA[       g)    Difficulty bending at your knees that may impair your ability to wear a respirator:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="365" y="395" width="13" height="13" uuid="a203c396-f065-404e-9ca6-618a79ce89f0"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPOSLeanForward} != null && $F{userquestionnaire_isPOSLeanForward}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="412" y="497" width="13" height="13" uuid="d41aa37c-e787-4d6a-bec0-db82cb5c8af2"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherMuscle} != null && $F{userquestionnaire_isOtherMuscle}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="322" y="411" width="21" height="14" uuid="10902a04-c0e6-4cfd-89df-c004d230080b"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="277" y="378" width="13" height="13" uuid="83f39a64-9c8f-45e1-9804-2391ce253c5b"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDFMHead} != null && $F{userquestionnaire_isDFMHead}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="316" y="378" width="5" height="14" uuid="e5eff5ed-4465-4340-8cf6-242bde582b9e"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="326" width="20" height="14" uuid="7d5e026a-dff3-4946-8225-5077b09107fb"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="262" y="361" width="13" height="13" uuid="03222065-4a26-4ae0-8ca8-d2f1f1d9d4f4"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDFMArmsLegs} != null && $F{userquestionnaire_isDFMArmsLegs}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="380" y="394" width="21" height="14" uuid="b349a9db-5ab5-4816-8f72-9cc4e2a9c63b"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="429" width="5" height="14" uuid="b025b6d0-d9ff-454c-99a3-6b79a7b97fba"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="412" width="20" height="14" uuid="de4c4431-4958-488f-b6d2-ce27417ecbea"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="431" y="429" width="13" height="13" uuid="b75d4737-2248-4e94-b5a9-39237f334e4c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDifficultyBending} != null && $F{userquestionnaire_isDifficultyBending}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="347" y="326" width="5" height="14" uuid="d4467f5d-08f9-47d1-a640-20c93e71c3f7"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="324" y="378" width="13" height="13" uuid="f4dda649-a0d9-41ad-ac21-fbd6add76660"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDFMHead} != null && $F{userquestionnaire_isDFMHead}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="493" y="429" width="20" height="14" uuid="58fd355b-6b49-418d-80b7-f2dce1185473"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="361" width="224" height="14" uuid="21a27cdd-7da6-4c98-b444-861b2f90ad02"/>
+				<text><![CDATA[       c)    Difficulty fully moving your arms and legs:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="360" width="21" height="14" uuid="512103a1-9c3b-46c1-b3f6-bdb4e9c6ad5c"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="478" y="429" width="13" height="13" uuid="494a9db5-fd54-4f39-bf4b-e0e47c4c92f4"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDifficultyBending} != null && $F{userquestionnaire_isDifficultyBending}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="474" y="446" width="5" height="14" uuid="7849c457-0f0c-4406-ba2b-b3ac5178c6c4"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="497" width="20" height="14" uuid="443d2520-d954-4697-8842-50c1eca9f786"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<image>
+				<reportElement x="308" y="326" width="13" height="13" uuid="c8d6b0bd-57c2-4620-9d51-a6646c9e5fb5"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isWeaknessAny} != null && $F{userquestionnaire_isWeaknessAny}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="339" y="378" width="20" height="14" uuid="27636d66-da9a-4c52-b53a-c619722876ff"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="325" width="21" height="14" uuid="7082bfab-b087-4677-bc38-82af67ca131b"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="412" y="395" width="13" height="13" uuid="b966e079-061c-48f9-800d-ae53facb1711"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPOSLeanForward} != null && $F{userquestionnaire_isPOSLeanForward}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="446" width="396" height="14" uuid="673a40f5-b898-4bb0-ab3a-91189ec08c24"/>
+				<text><![CDATA[       h)    Difficulty squatting to the ground that may impair your ability to wear a respirator:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="445" width="21" height="14" uuid="1a7ddb57-967a-487e-b3e0-d089cb7c5a3a"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="343" width="89" height="14" uuid="c76f1a17-4f55-4c02-a9d7-7f7d7badf4e1"/>
+				<text><![CDATA[       b)    Back pain:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="361" width="20" height="14" uuid="9e0d8d41-218b-4731-8aca-422a7a2fa347"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="480" width="5" height="14" uuid="e652f063-6252-4167-85d9-82d3b04c0a74"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="497" width="5" height="14" uuid="963c7779-ee03-4401-8e96-0c76f39c6157"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="496" width="21" height="14" uuid="f312a643-d073-4b31-a978-2360b6a0dd23"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="395" width="329" height="14" uuid="8308f8b2-032b-499f-9d52-f302874ea44d"/>
+				<text><![CDATA[       e)    Pain or stiffness when you lean forward or backward at the waist:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="459" y="497" width="13" height="13" uuid="4ced3999-36c2-483c-bf72-dff4805d30ab"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOtherMuscle} != null && $F{userquestionnaire_isOtherMuscle}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="355" y="326" width="13" height="13" uuid="9c87ed4a-f213-47c5-8937-1568f0405006"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isWeaknessAny} != null && $F{userquestionnaire_isWeaknessAny}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="378" width="237" height="14" uuid="0a8c1448-2225-44fa-a963-3889e59e7da4"/>
+				<text><![CDATA[       d)    Difficulty fully moving your head up or down:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="428" width="21" height="14" uuid="ee5131b9-0dc9-4eb3-8331-cfd8947bbe3b"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="309" width="333" height="14" uuid="d8a04a72-5b41-4fd2-8cc7-176567062690"/>
+				<text><![CDATA[15.   Do you currently have any of the following musculoskeletal problems?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="479" width="21" height="14" uuid="589a81d1-814e-410d-ba2c-078b3e5266a2"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="463" width="489" height="14" uuid="cbaa7928-1837-4960-84ef-d3b948d2dbf4"/>
+				<text><![CDATA[       i)     Climbing a flight of stairs or a ladder carrying more than 25 lbs. (e.g. SCBA) that may impair your ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="412" width="270" height="14" uuid="c8322e97-7c4a-4a36-b032-bceebf18bdd2"/>
+				<text><![CDATA[       f)     Pain or difficulty fully moving your head side to side: ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="197" y="480" width="13" height="13" uuid="17d2a793-9e3f-4914-a631-628285e15e66"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isClimbing} != null && $F{userquestionnaire_isClimbing}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="259" y="480" width="20" height="14" uuid="c99a08f0-ef4d-4146-a4d8-393887193584"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="480" width="158" height="14" uuid="5094924b-a3ee-4b49-92bc-c488475ea300"/>
+				<text><![CDATA[              ability to wear a respirato:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="244" y="480" width="13" height="13" uuid="4c27f667-80c9-428b-ad61-4bb644636832"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isClimbing} != null && $F{userquestionnaire_isClimbing}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="435" y="446" width="13" height="13" uuid="bea6113a-c5a0-4a7d-903b-2e91453be4a5"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDifficultySquatting} != null && $F{userquestionnaire_isDifficultySquatting}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="346" y="412" width="5" height="14" uuid="711fe1d4-2b42-4ad0-a400-59d14fc39464"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="497" width="372" height="14" uuid="739ac659-3adb-455e-ad13-9fb12f8a903f"/>
+				<text><![CDATA[       j)     Any other muscle or skeletal problem that interferes with using a respirator:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="354" y="412" width="13" height="13" uuid="876e620a-9fec-4601-8302-9240903eb985"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isPODHead} != null && $F{userquestionnaire_isPODHead}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="301" y="361" width="5" height="14" uuid="bdc062c3-821a-4b79-b654-78fb3d9ec832"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="482" y="446" width="13" height="13" uuid="4306518d-4506-4fb3-9430-646694a38355"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isDifficultySquatting} != null && $F{userquestionnaire_isDifficultySquatting}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="497" y="446" width="20" height="14" uuid="0debb595-4289-4465-af53-17982175146c"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="395" width="5" height="14" uuid="26752c0c-0846-4755-a532-c386ca19654c"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="144" y="342" width="21" height="14" uuid="ab2b7a50-78d6-481e-8c86-4f5cf8cf4307"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="343" width="20" height="14" uuid="d6317563-308e-48c1-826d-1189cbb94c91"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="343" width="5" height="14" uuid="159d8a15-ce1a-4a6e-8fd0-e15dc0b0c4f0"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<image>
+				<reportElement x="176" y="343" width="13" height="13" uuid="ee6f49af-be35-4725-bb5b-f1bd384d5f3a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBackPain} != null && $F{userquestionnaire_isBackPain}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="129" y="343" width="13" height="13" uuid="1d16d93c-3ec6-4919-99f9-402903b4cfcd"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isBackPain} != null && $F{userquestionnaire_isBackPain}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+		</band>
+		<band height="686">
+			<line>
+				<reportElement x="0" y="0" width="1" height="686" uuid="97cb68c0-04a4-42b9-823d-cedb1e8f867b"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="686" uuid="7c1b60ae-430c-4b96-810b-448b804432f5"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="685" width="554" height="1" uuid="3a1e20ca-4e1f-4ade-b5a6-18a059016dce"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#943634"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="13" y="15" width="313" height="14" uuid="7278ee25-5953-4880-83e4-66e30c6a8146"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Request for Medical Clearance for Respirator Use Questionnaire ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="35" width="49" height="14" uuid="4dac23ce-8e00-4ce8-b0e7-73efd906e8e5"/>
+				<text><![CDATA[Employee:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="35" width="75" height="14" uuid="1ba17d2d-2adf-4d21-a32f-62ccdb075668"/>
+				<text><![CDATA[Date of Birth:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="35" width="56" height="14" uuid="d2572024-0308-4ab8-85a4-73cd0983912f"/>
+				<text><![CDATA[Department:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="60" width="72" height="14" uuid="b670117c-da95-408d-911b-305bd50793d4"/>
+				<text><![CDATA[Social Security:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="60" width="52" height="14" uuid="67add084-d26b-41d1-b4c2-f85df14f93a2"/>
+				<text><![CDATA[Supervisor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="85" width="225" height="14" uuid="4b2f3efa-1686-49d6-926a-f11e04d5a4bd"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Circle type or types of respirator(s) to be used:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="105" width="145" height="14" uuid="50b3e748-2594-45e5-b0b6-b8f7bfaddea5"/>
+				<text><![CDATA[Atmosphere-supplying respirator ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="124" width="89" height="14" uuid="052a2dd9-8c4a-43a7-b24d-4c5393d65ab8"/>
+				<text><![CDATA[Open-circuit SCBA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="144" width="100" height="14" uuid="6f8e0a8b-894f-4223-9d2f-1df7d2688c08"/>
+				<text><![CDATA[Supplied-air respirator]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="164" width="122" height="14" uuid="7c7f3826-b20e-4635-ac33-862829bd5282"/>
+				<text><![CDATA[Air-purifying (non-powered)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="124" width="98" height="14" uuid="6ae04a59-c791-4a08-9a95-c30fa625c01d"/>
+				<text><![CDATA[Closed-circuit SCBA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="144" width="143" height="14" uuid="d3a9f583-cd13-4118-b5d0-776789e8e454"/>
+				<text><![CDATA[Combination air-line and SCBA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="164" width="139" height="14" uuid="34bb7dea-061a-4563-93f8-fcaa7e8b3fda"/>
+				<text><![CDATA[Air-purifying (powered) (PAPR)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="105" width="117" height="14" uuid="37d024ca-615f-4ce5-8cf1-212590f619f7"/>
+				<text><![CDATA[Continuous-flow respirator]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="189" width="101" height="14" uuid="c400d157-2e96-441f-9f3b-3fc4f6d70333"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Level of Work Effort:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="209" width="23" height="14" uuid="b16679a8-1ef9-4bc4-9b46-99713811254d"/>
+				<text><![CDATA[Light]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="209" width="44" height="14" uuid="a3b8c5b4-da4e-46f2-b80f-a5dbe4d46955"/>
+				<text><![CDATA[Moderate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="209" width="29" height="14" uuid="ec28811f-a332-4042-84eb-97e649f3aa0e"/>
+				<text><![CDATA[Heavy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="209" width="46" height="14" uuid="f5f9ba98-7155-4a4b-8d8b-18669bfee27b"/>
+				<text><![CDATA[Strenuous]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="234" width="83" height="14" uuid="2559a92c-0602-4340-8022-2bac0f58be46"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Extent of Usage:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="254" width="99" height="14" uuid="b5f91567-3a17-4b97-849c-4a972e33dc62"/>
+				<text><![CDATA[1) On a daily basis ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="274" width="219" height="14" uuid="1878fa37-966a-424b-b6ed-91922ca10484"/>
+				<text><![CDATA[2) Occasionally – but more than once per week ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="294" width="205" height="14" uuid="bfc567b4-8a38-4880-bf97-a19eedba1672"/>
+				<text><![CDATA[3) Rarely – or for emergency situations only ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="322" width="207" height="14" uuid="46abaa43-f586-47c9-a79a-654f684a5607"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Length of Time anticipated Effort in Hours:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="352" width="529" height="14" uuid="077369c3-df65-4af0-b5f4-4bc066665337"/>
+				<text><![CDATA[Special Work Considerations (i.e., high places, temperature, hazardous material, protective clothing, etc.) ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="390" width="529" height="1" uuid="88c85055-2f89-4809-ba35-b7c604774590"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="13" y="412" width="152" height="14" uuid="1dd28f96-4961-4f98-87df-8121970ec4c4"/>
+				<text><![CDATA[Safety Representative/Supervisor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="442" width="252" height="14" uuid="bb00ea1e-27a9-429a-bd71-549f4eee8f86"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[HEALTH CARE PROFESSIONAL’S EVALUATION OF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="442" width="67" height="14" uuid="c02e0129-f835-4d6e-a436-0ab717366585"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ (EMPLOYEE)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="472" width="83" height="14" uuid="89fc295a-a509-4f1a-8fec-7c8047329c50"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[CLASS (Circle): ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="535" width="159" height="14" uuid="66a07324-a3e6-4d71-a209-27569db64a34"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[3) No respirator use permitted ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="515" width="170" height="14" uuid="b8d8695c-e19c-4182-a782-f98569503ef0"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[2) Some specific use restrictions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="497" width="191" height="14" uuid="096dea91-936a-4c3e-8be3-980a18f20651"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[1) No restriction on respirator usage ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="556" width="62" height="14" uuid="4802c2bf-2468-471c-aa43-7295b4d52657"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Restrictions: ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="580" width="529" height="1" uuid="9afb9dd9-248a-4709-8fd1-28e72b6d6aa3"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="13" y="595" width="529" height="1" uuid="b620de9a-78a9-4a0c-a6de-c51dbdc5e0eb"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="10" y="610" width="195" height="14" uuid="310e2f52-d8ce-40ea-9887-df321edecdca"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Examining Health Care Professional:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="610" width="28" height="14" uuid="22844059-1176-401b-a37b-74227b042649"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="62" y="46" width="151" height="1" uuid="e219f10d-c95a-4b29-8fb3-3823d8d4dff8"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="85" y="71" width="128" height="1" uuid="b5ae8423-b666-4791-81f6-4c630dbddcda"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="274" y="71" width="268" height="1" uuid="213da1ba-6acc-40a1-91f9-2d40d07592d5"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="281" y="46" width="74" height="1" uuid="1405b5a9-2d2b-4662-abb3-7854006df5b3"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="417" y="46" width="125" height="1" uuid="81e1479f-5ff1-46b0-affa-a77a580e3f48"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="20" y="105" width="13" height="13" uuid="5dffac4e-fc2e-49c1-a744-f190ee12406e"/>
+				<imageExpression><![CDATA[$P{realPath} + ( $F{userquestionnaire_isAtmosphere} != null && $F{userquestionnaire_isAtmosphere}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="124" width="13" height="13" uuid="0637c18f-64ae-4a90-a4b0-06452b55bbf5"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isOpen} != null && $F{userquestionnaire_isOpen}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="144" width="13" height="13" uuid="f4aef990-4a80-4dfa-8863-0577c8278399"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isSupplied} != null && $F{userquestionnaire_isSupplied}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="164" width="13" height="13" uuid="a8013dd5-61cd-47f2-819f-116392091426"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAir_NonPow} != null && $F{userquestionnaire_isAir_NonPow}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="275" y="105" width="13" height="13" uuid="bea86516-3b1d-41a3-bc39-e07a22756b7a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isContinuous} != null && $F{userquestionnaire_isContinuous}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="275" y="124" width="13" height="13" uuid="0b55e3d1-4b8d-4d05-aa6c-236460f4c14b"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isClose} != null && $F{userquestionnaire_isClose}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="275" y="144" width="13" height="13" uuid="a1a90281-d968-4331-8696-1681960cc1db"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isCombination} != null && $F{userquestionnaire_isCombination}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="275" y="164" width="13" height="13" uuid="5cb2ff34-a719-4c3b-8c36-0d3a660b80b4"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_isAir_Pow} != null && $F{userquestionnaire_isAir_Pow}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="48" y="210" width="13" height="13" uuid="3252d588-8fe1-4a76-ab8d-7e7b46b40b17"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_LevelOfWE} != null && $F{userquestionnaire_LevelOfWE}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="164" y="209" width="13" height="13" uuid="7ff92b20-97c1-486f-b969-adcfc7888377"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_LevelOfWE} != null && $F{userquestionnaire_LevelOfWE}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="300" y="209" width="13" height="13" uuid="f593943a-90cf-40a9-b8cf-9b8580dadcb2"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_LevelOfWE} != null && $F{userquestionnaire_LevelOfWE}.intValue() == 2 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="426" y="209" width="13" height="13" uuid="d38fd043-87da-4a24-85d3-37e7af6c697a"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_LevelOfWE} != null && $F{userquestionnaire_LevelOfWE}.intValue() == 3 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="254" width="13" height="13" uuid="26c3a8c4-96f1-4bf4-bc7c-d9869676d3d8"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_ExtentUsage} != null && $F{userquestionnaire_ExtentUsage}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="275" width="13" height="13" uuid="8d532ee6-d4f8-4093-ab45-8491ac22c00c"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_ExtentUsage} != null && $F{userquestionnaire_ExtentUsage}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="294" width="13" height="13" uuid="ce168e8b-97d6-4919-b488-69a53f4bd0e6"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_ExtentUsage} != null && $F{userquestionnaire_ExtentUsage}.intValue() == 2 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="220" y="333" width="110" height="1" uuid="07dcb8cf-38a7-4800-b5c4-0b075bc36a27"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="165" y="424" width="205" height="1" uuid="109ff3aa-a74d-4d7c-99ef-b59fd9cf7211"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="263" y="454" width="209" height="1" uuid="2e786633-e33e-4a0f-86c0-9c84c03d8f0e"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="19" y="496" width="13" height="13" uuid="07415ae6-96e1-4ccb-912b-41664133afb1"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_Class} != null && $F{userquestionnaire_Class}.intValue() == 0 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="19" y="517" width="13" height="13" uuid="ce3f076a-fb7b-40fe-94b2-da8ae9446a22"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_Class} != null && $F{userquestionnaire_Class}.intValue() == 1 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="19" y="536" width="13" height="13" uuid="6df24bcb-a7b8-4df1-bfda-022eca6a68b6"/>
+				<imageExpression><![CDATA[$P{realPath} +($F{userquestionnaire_Class} != null && $F{userquestionnaire_Class}.intValue() == 2 ? "/checked.png" : "/uncheck.png")]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="192" y="625" width="200" height="1" uuid="2fbfc057-28c0-45e9-9447-f01385073e44"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="435" y="625" width="105" height="1" uuid="be7f484f-18b8-497b-bd83-e46208762507"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="68" y="34" width="139" height="14" uuid="e3e43074-b2f3-4217-924c-78aa18fb52a1"/>
+				<textFieldExpression><![CDATA[($F{full_name}!=null && $F{full_name}!="")?$F{full_name}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="283" y="34" width="68" height="14" uuid="b9bcf096-7de0-4083-900b-0d28d7790d6a"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_DOB} != null ? $F{userquestionnaire_DOB} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="34" width="117" height="14" uuid="5bcee0ba-5603-4e8d-b6af-a252692755ee"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_Department} != null ? $F{userquestionnaire_Department} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="59" width="114" height="14" uuid="46c7d677-b0fa-4f4f-981f-66ac7b9cc448"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_SocialSecurity} != null ? $F{userquestionnaire_SocialSecurity} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="59" width="258" height="14" uuid="dd54b19b-be8a-4366-b23a-33e26f8bc0bc"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_Supervisor} != null ? $F{userquestionnaire_Supervisor} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="321" width="103" height="14" uuid="42dc040e-6bc0-4f37-bdef-aef86fa31cb7"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_LengthOfTime} != null ? $F{userquestionnaire_LengthOfTime} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="377" width="522" height="20" uuid="7e1abcd7-85c5-4c46-aeb5-39292b63c686"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_WorkCons} != null ? $F{userquestionnaire_WorkCons} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="412" width="202" height="14" uuid="d320a166-ff11-4396-a401-6d9eae26fff5"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_Safety} != null ? $F{userquestionnaire_Safety} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="265" y="442" width="205" height="14" uuid="6ac72afc-bc1c-49f5-b029-49c61978904d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{full_name}!=null && $F{full_name}!="")?$F{full_name}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="570" width="534" height="35" uuid="83185f15-6f75-4134-8363-b22809ddfd94"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_Restrictions} != null ? $F{userquestionnaire_Restrictions} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="612" width="196" height="14" uuid="88de1062-70c5-490a-8dae-d72b3a4cb6db"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{doctors_NAME}!=null && $F{doctors_NAME}!="")?$F{doctors_NAME}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="434" y="612" width="108" height="14" uuid="10e77e04-0a74-4335-b664-6a3e2671980c"/>
+				<textFieldExpression><![CDATA[$F{userquestionnaire_UQDate} != null ? $F{userquestionnaire_UQDate} : ""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="647" width="52" height="13" uuid="31cd047e-2d25-463b-bbf2-ae4cc19ffec8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Signature:]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement x="65" y="630" width="150" height="50" uuid="b04d80d3-8adc-42ac-8287-60058ef605ac"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctors_Signature}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

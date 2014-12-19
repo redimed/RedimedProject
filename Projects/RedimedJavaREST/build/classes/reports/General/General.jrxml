@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CertificateReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="f828c8c1-0693-4bf1-9703-ef8317bc2333">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="618"/>
+	<parameter name="teleid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     th_telehealth_form.`Id` AS th_telehealth_form_Id,
+     th_telehealth_form.`isWorkRelated` AS th_telehealth_form_isWorkRelated,
+     th_telehealth_form.`isTraumaConsult` AS th_telehealth_form_isTraumaConsult,
+     th_telehealth_form.`isFirstMedicalCertificate` AS th_telehealth_form_isFirstMedicalCertificate,
+     th_telehealth_form.`isFollowupInPerth` AS th_telehealth_form_isFollowupInPerth,
+     th_telehealth_form.`isFitnessForWork` AS th_telehealth_form_isFitnessForWork,
+     th_telehealth_form.`isInitialTelehealthConsult` AS th_telehealth_form_isInitialTelehealthConsult,
+     th_telehealth_form.`isProgressTelehealthConsult` AS th_telehealth_form_isProgressTelehealthConsult,
+     th_telehealth_form.`isTransportAirPort` AS th_telehealth_form_isTransportAirPort,
+     th_telehealth_form.`Salutation` AS th_telehealth_form_Salutation,
+     th_telehealth_form.`DOB` AS th_telehealth_form_DOB,
+     th_telehealth_form.`Family_name` AS th_telehealth_form_Family_name,
+     th_telehealth_form.`Given_name` AS th_telehealth_form_Given_name,
+     th_telehealth_form.`Occupation` AS th_telehealth_form_Occupation,
+     th_telehealth_form.`Address` AS th_telehealth_form_Address,
+     th_telehealth_form.`Suburb` AS th_telehealth_form_Suburb,
+     th_telehealth_form.`Postcode` AS th_telehealth_form_Postcode,
+     th_telehealth_form.`Home_phone` AS th_telehealth_form_Home_phone,
+     th_telehealth_form.`Mobile_phone` AS th_telehealth_form_Mobile_phone,
+     th_telehealth_form.`Work_phone` AS th_telehealth_form_Work_phone,
+     th_telehealth_form.`Next_Of_kin` AS th_telehealth_form_Next_Of_kin,
+     th_telehealth_form.`Tel` AS th_telehealth_form_Tel,
+     th_telehealth_form.`Medicare` AS th_telehealth_form_Medicare,
+     th_telehealth_form.`Position_no` AS th_telehealth_form_Position_no,
+     th_telehealth_form.`Exp` AS th_telehealth_form_Exp,
+     th_telehealth_form.`isPrivateInsurrance` AS th_telehealth_form_isPrivateInsurrance,
+     th_telehealth_form.`Health_fund_name` AS th_telehealth_form_Health_fund_name,
+     th_telehealth_form.`Mem_no` AS th_telehealth_form_Mem_no,
+     th_telehealth_form.`isHospitalCover` AS th_telehealth_form_isHospitalCover,
+     th_telehealth_form.`Veteran_affairs_no` AS th_telehealth_form_Veteran_affairs_no,
+     th_telehealth_form.`Card_holder` AS th_telehealth_form_Card_holder,
+     th_telehealth_form.`isStatement1` AS th_telehealth_form_isStatement1,
+     th_telehealth_form.`isStatement2` AS th_telehealth_form_isStatement2,
+     th_telehealth_form.`isStatement3` AS th_telehealth_form_isStatement3,
+     th_telehealth_form.`signature` AS th_telehealth_form_signature,
+     th_telehealth_form.`Medical_History` AS th_telehealth_form_Medical_History,
+     th_telehealth_form.`isAsthma` AS th_telehealth_form_isAsthma,
+     th_telehealth_form.`isEpilepsy` AS th_telehealth_form_isEpilepsy,
+     th_telehealth_form.`isHeartCondition` AS th_telehealth_form_isHeartCondition,
+     th_telehealth_form.`isHighCholesterol` AS th_telehealth_form_isHighCholesterol,
+     th_telehealth_form.`isDiabetesTypeI` AS th_telehealth_form_isDiabetesTypeI,
+     th_telehealth_form.`isDiabetesTypeII` AS th_telehealth_form_isDiabetesTypeII,
+     th_telehealth_form.`isHighBloobPressure` AS th_telehealth_form_isHighBloobPressure,
+     th_telehealth_form.`isArthritis` AS th_telehealth_form_isArthritis,
+     th_telehealth_form.`isBloodCon` AS th_telehealth_form_isBloodCon,
+     th_telehealth_form.`isMedications` AS th_telehealth_form_isMedications,
+     th_telehealth_form.`Medications` AS th_telehealth_form_Medications,
+     th_telehealth_form.`isAllergies` AS th_telehealth_form_isAllergies,
+     th_telehealth_form.`Allergies` AS th_telehealth_form_Allergies,
+     th_telehealth_form.`Initial_treatment_provided` AS th_telehealth_form_Initial_treatment_provided,
+     th_telehealth_form.`Picture_of_Injury` AS th_telehealth_form_Picture_of_Injury,
+     th_telehealth_form.`Accident_Date` AS th_telehealth_form_Accident_Date,
+     th_telehealth_form.`Workplace` AS th_telehealth_form_Workplace,
+     th_telehealth_form.`Cause` AS th_telehealth_form_Cause,
+     th_telehealth_form.`isSprainStrain` AS th_telehealth_form_isSprainStrain,
+     th_telehealth_form.`isLaceration` AS th_telehealth_form_isLaceration,
+     th_telehealth_form.`isCrush` AS th_telehealth_form_isCrush,
+     th_telehealth_form.`isFall` AS th_telehealth_form_isFall,
+     th_telehealth_form.`Other_of_Injury` AS th_telehealth_form_Other_of_Injury,
+     th_telehealth_form.`isSymtomBefore_of_Injury` AS th_telehealth_form_isSymtomBefore_of_Injury,
+     th_telehealth_form.`isLeftLowerleg` AS th_telehealth_form_isLeftLowerleg,
+     th_telehealth_form.`isRightLowerleg` AS th_telehealth_form_isRightLowerleg,
+     th_telehealth_form.`isLeftUperleg` AS th_telehealth_form_isLeftUperleg,
+     th_telehealth_form.`isRightUperleg` AS th_telehealth_form_isRightUperleg,
+     th_telehealth_form.`isLeftLowerArm` AS th_telehealth_form_isLeftLowerArm,
+     th_telehealth_form.`isRightLowerArm` AS th_telehealth_form_isRightLowerArm,
+     th_telehealth_form.`isLeftUperArm` AS th_telehealth_form_isLeftUperArm,
+     th_telehealth_form.`isRightUperArm` AS th_telehealth_form_isRightUperArm,
+     th_telehealth_form.`isLefthand` AS th_telehealth_form_isLefthand,
+     th_telehealth_form.`isRighthand` AS th_telehealth_form_isRighthand,
+     th_telehealth_form.`isLeftShoulder` AS th_telehealth_form_isLeftShoulder,
+     th_telehealth_form.`isRightShoulder` AS th_telehealth_form_isRightShoulder,
+     th_telehealth_form.`isAbdomen` AS th_telehealth_form_isAbdomen,
+     th_telehealth_form.`isChest` AS th_telehealth_form_isChest,
+     th_telehealth_form.`isLowerBack` AS th_telehealth_form_isLowerBack,
+     th_telehealth_form.`Other` AS th_telehealth_form_Other,
+     th_telehealth_form.`isOpenWound` AS th_telehealth_form_isOpenWound,
+     th_telehealth_form.`isSwelling` AS th_telehealth_form_isSwelling,
+     th_telehealth_form.`isRedness` AS th_telehealth_form_isRedness,
+     th_telehealth_form.`isReducesMovement` AS th_telehealth_form_isReducesMovement,
+     th_telehealth_form.`Pain` AS th_telehealth_form_Pain,
+     th_telehealth_form.`OtherSymtom` AS th_telehealth_form_OtherSymtom,
+     th_telehealth_form.`GI_picture` AS th_telehealth_form_GI_picture,
+     th_telehealth_form.`GI_Date` AS th_telehealth_form_GI_Date,
+     th_telehealth_form.`isSymtomBefore` AS th_telehealth_form_isSymtomBefore,
+     th_telehealth_form.`isHeadache` AS th_telehealth_form_isHeadache,
+     th_telehealth_form.`isNausea` AS th_telehealth_form_isNausea,
+     th_telehealth_form.`isFatigue` AS th_telehealth_form_isFatigue,
+     th_telehealth_form.`isFever` AS th_telehealth_form_isFever,
+     th_telehealth_form.`isSoreThroat` AS th_telehealth_form_isSoreThroat,
+     th_telehealth_form.`isCough` AS th_telehealth_form_isCough,
+     th_telehealth_form.`isSinusCongestion` AS th_telehealth_form_isSinusCongestion,
+     th_telehealth_form.`isBodyAches` AS th_telehealth_form_isBodyAches,
+     th_telehealth_form.`isVomiting` AS th_telehealth_form_isVomiting,
+     th_telehealth_form.`isLightHeadedness` AS th_telehealth_form_isLightHeadedness,
+     th_telehealth_form.`isDiarrhea` AS th_telehealth_form_isDiarrhea,
+     th_telehealth_form.`isShortnessOfBreath` AS th_telehealth_form_isShortnessOfBreath,
+     th_telehealth_form.`isChestPain` AS th_telehealth_form_isChestPain,
+     th_telehealth_form.`isAbdomenPain` AS th_telehealth_form_isAbdomenPain,
+     th_telehealth_form.`isBackPain` AS th_telehealth_form_isBackPain,
+     th_telehealth_form.`isEarPain` AS th_telehealth_form_isEarPain,
+     th_telehealth_form.`isLowMood` AS th_telehealth_form_isLowMood,
+     th_telehealth_form.`isDecreasedAppetite` AS th_telehealth_form_isDecreasedAppetite,
+     th_telehealth_form.`isFeelingDepressed` AS th_telehealth_form_isFeelingDepressed,
+     th_telehealth_form.`isToothPain` AS th_telehealth_form_isToothPain,
+     th_telehealth_form.`OtherGISymtom` AS th_telehealth_form_OtherGISymtom,
+     th_telehealth_form.`BPM` AS th_telehealth_form_BPM,
+     th_telehealth_form.`Temp` AS th_telehealth_form_Temp,
+     th_telehealth_form.`RR` AS th_telehealth_form_RR,
+     th_telehealth_form.`BP` AS th_telehealth_form_BP,
+     th_telehealth_form.`SaO2` AS th_telehealth_form_SaO2,
+     th_telehealth_form.`company_id` AS th_telehealth_form_company_id,
+     th_telehealth_form.`doctor_id` AS th_telehealth_form_doctor_id,
+     th_telehealth_form.`Created_by` AS th_telehealth_form_Created_by,
+     th_telehealth_form.`Creation_date` AS th_telehealth_form_Creation_date,
+     th_telehealth_form.`Last_updated_by` AS th_telehealth_form_Last_updated_by,
+     th_telehealth_form.`Last_update_date` AS th_telehealth_form_Last_update_date,
+     th_telehealth_form.`isInjury` AS th_telehealth_form_isInjury,
+     companies.`id` AS companies_id,
+     companies.`Company_name` AS companies_Company_name,
+     companies.`IMA` AS companies_IMA,
+     companies.`Email` AS companies_Email,
+     companies.`Insurer` AS companies_Insurer,
+     companies.`Addr` AS companies_Addr,
+     companies.`Phone` AS companies_Phone,
+     th_general_assessment.`id` AS th_general_assessment_id,
+     th_general_assessment.`symptomology` AS th_general_assessment_symptomology,
+     th_general_assessment.`examiantion` AS th_general_assessment_examiantion,
+     th_general_assessment.`diffDiagnosis` AS th_general_assessment_diffDiagnosis,
+     th_general_assessment.`medication` AS th_general_assessment_medication,
+     th_general_assessment.`physio` AS th_general_assessment_physio,
+     th_general_assessment.`dutyrestriction` AS th_general_assessment_dutyrestriction,
+     th_general_assessment.`recommendations` AS th_general_assessment_recommendations,
+     th_general_assessment.`followup` AS th_general_assessment_followup,
+     th_general_assessment.`referrals` AS th_general_assessment_referrals,
+     th_general_assessment.`telehealth_id` AS th_general_assessment_telehealth_id,
+     th_general_assessment.`Name` AS th_general_assessment_Name,
+     th_general_assessment.`Address` AS th_general_assessment_Address,
+     th_general_assessment.`Email` AS th_general_assessment_Email,
+     th_general_assessment.`registionNo` AS th_general_assessment_registionNo,
+     th_general_assessment.`Phone` AS th_general_assessment_Phone,
+     th_general_assessment.`examDate` AS th_general_assessment_examDate,
+     th_general_assessment.`signature` AS th_general_assessment_signature,
+     th_general_assessment.`reportlocal` AS th_general_assessment_reportlocal,
+     th_general_assessment.`Creation_date` AS th_general_assessment_Creation_date,
+     th_telehealth_form.`symtom_value_1` AS th_telehealth_form_symtom_value_1,
+     th_telehealth_form.`symtom_value_2` AS th_telehealth_form_symtom_value_2,
+     th_telehealth_form.`symtom_value_3` AS th_telehealth_form_symtom_value_3,
+     th_telehealth_form.`symtom_value_4` AS th_telehealth_form_symtom_value_4,
+     th_telehealth_form.`symtom_value_5` AS th_telehealth_form_symtom_value_5,
+     th_telehealth_form.`symtom_value_6` AS th_telehealth_form_symtom_value_6,
+     th_telehealth_form.`symtom_value_7` AS th_telehealth_form_symtom_value_7,
+     th_telehealth_form.`symtom_value_8` AS th_telehealth_form_symtom_value_8,
+     th_telehealth_form.`symtom_value_9` AS th_telehealth_form_symtom_value_9,
+     th_telehealth_form.`symtom_value_10` AS th_telehealth_form_symtom_value_10,
+     th_telehealth_form.`symtom_value_11` AS th_telehealth_form_symtom_value_11,
+     th_telehealth_form.`symtom_value_12` AS th_telehealth_form_symtom_value_12,
+     th_telehealth_form.`symtom_value_13` AS th_telehealth_form_symtom_value_13,
+     th_telehealth_form.`symtom_value_14` AS th_telehealth_form_symtom_value_14,
+     th_telehealth_form.`symtom_value_15` AS th_telehealth_form_symtom_value_15,
+     th_telehealth_form.`symtom_value_16` AS th_telehealth_form_symtom_value_16,
+     th_telehealth_form.`symtom_value_17` AS th_telehealth_form_symtom_value_17,
+     th_telehealth_form.`symtom_value_18` AS th_telehealth_form_symtom_value_18,
+     th_telehealth_form.`symtom_value_19` AS th_telehealth_form_symtom_value_19,
+     th_telehealth_form.`symtom_value_20` AS th_telehealth_form_symtom_value_20,
+     th_telehealth_form.`nt_descInjury` AS th_telehealth_form_nt_descInjury
+FROM
+     `companies` companies INNER JOIN `th_telehealth_form` th_telehealth_form ON companies.`id` = th_telehealth_form.`company_id`
+     INNER JOIN `th_general_assessment` th_general_assessment ON th_telehealth_form.`Id` = th_general_assessment.`telehealth_id`
+WHERE
+     th_general_assessment.`id` = $P{teleid}]]>
+	</queryString>
+	<field name="th_telehealth_form_Id" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isWorkRelated" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isTraumaConsult" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isFirstMedicalCertificate" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isFollowupInPerth" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isFitnessForWork" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isInitialTelehealthConsult" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isProgressTelehealthConsult" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isTransportAirPort" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Salutation" class="java.lang.String"/>
+	<field name="th_telehealth_form_DOB" class="java.sql.Date"/>
+	<field name="th_telehealth_form_Family_name" class="java.lang.String"/>
+	<field name="th_telehealth_form_Given_name" class="java.lang.String"/>
+	<field name="th_telehealth_form_Occupation" class="java.lang.String"/>
+	<field name="th_telehealth_form_Address" class="java.lang.String"/>
+	<field name="th_telehealth_form_Suburb" class="java.lang.String"/>
+	<field name="th_telehealth_form_Postcode" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Home_phone" class="java.lang.String"/>
+	<field name="th_telehealth_form_Mobile_phone" class="java.lang.String"/>
+	<field name="th_telehealth_form_Work_phone" class="java.lang.String"/>
+	<field name="th_telehealth_form_Next_Of_kin" class="java.lang.String"/>
+	<field name="th_telehealth_form_Tel" class="java.lang.String"/>
+	<field name="th_telehealth_form_Medicare" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Position_no" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Exp" class="java.lang.String"/>
+	<field name="th_telehealth_form_isPrivateInsurrance" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Health_fund_name" class="java.lang.String"/>
+	<field name="th_telehealth_form_Mem_no" class="java.lang.String"/>
+	<field name="th_telehealth_form_isHospitalCover" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Veteran_affairs_no" class="java.lang.String"/>
+	<field name="th_telehealth_form_Card_holder" class="java.lang.String"/>
+	<field name="th_telehealth_form_isStatement1" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isStatement2" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isStatement3" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_signature" class="java.io.InputStream"/>
+	<field name="th_telehealth_form_Medical_History" class="java.lang.String"/>
+	<field name="th_telehealth_form_isAsthma" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isEpilepsy" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isHeartCondition" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isHighCholesterol" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isDiabetesTypeI" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isDiabetesTypeII" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isHighBloobPressure" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isArthritis" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isBloodCon" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isMedications" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Medications" class="java.lang.String"/>
+	<field name="th_telehealth_form_isAllergies" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Allergies" class="java.lang.String"/>
+	<field name="th_telehealth_form_Initial_treatment_provided" class="java.lang.String"/>
+	<field name="th_telehealth_form_Picture_of_Injury" class="java.lang.Object"/>
+	<field name="th_telehealth_form_Accident_Date" class="java.sql.Date"/>
+	<field name="th_telehealth_form_Workplace" class="java.lang.String"/>
+	<field name="th_telehealth_form_Cause" class="java.lang.String"/>
+	<field name="th_telehealth_form_isSprainStrain" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLaceration" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isCrush" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isFall" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Other_of_Injury" class="java.lang.String"/>
+	<field name="th_telehealth_form_isSymtomBefore_of_Injury" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLeftLowerleg" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isRightLowerleg" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLeftUperleg" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isRightUperleg" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLeftLowerArm" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isRightLowerArm" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLeftUperArm" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isRightUperArm" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLefthand" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isRighthand" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLeftShoulder" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isRightShoulder" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isAbdomen" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isChest" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLowerBack" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Other" class="java.lang.String"/>
+	<field name="th_telehealth_form_isOpenWound" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isSwelling" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isRedness" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isReducesMovement" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Pain" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_OtherSymtom" class="java.lang.String"/>
+	<field name="th_telehealth_form_GI_picture" class="java.lang.Object"/>
+	<field name="th_telehealth_form_GI_Date" class="java.sql.Date"/>
+	<field name="th_telehealth_form_isSymtomBefore" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isHeadache" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isNausea" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isFatigue" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isFever" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isSoreThroat" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isCough" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isSinusCongestion" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isBodyAches" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isVomiting" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLightHeadedness" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isDiarrhea" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isShortnessOfBreath" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isChestPain" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isAbdomenPain" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isBackPain" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isEarPain" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isLowMood" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isDecreasedAppetite" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isFeelingDepressed" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_isToothPain" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_OtherGISymtom" class="java.lang.String"/>
+	<field name="th_telehealth_form_BPM" class="java.lang.String"/>
+	<field name="th_telehealth_form_Temp" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_RR" class="java.lang.String"/>
+	<field name="th_telehealth_form_BP" class="java.lang.String"/>
+	<field name="th_telehealth_form_SaO2" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_company_id" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_doctor_id" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Created_by" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Creation_date" class="java.sql.Timestamp"/>
+	<field name="th_telehealth_form_Last_updated_by" class="java.lang.Integer"/>
+	<field name="th_telehealth_form_Last_update_date" class="java.sql.Timestamp"/>
+	<field name="th_telehealth_form_isInjury" class="java.lang.Integer"/>
+	<field name="companies_id" class="java.lang.Integer"/>
+	<field name="companies_Company_name" class="java.lang.String"/>
+	<field name="companies_IMA" class="java.lang.String"/>
+	<field name="companies_Email" class="java.lang.String"/>
+	<field name="companies_Insurer" class="java.lang.Integer"/>
+	<field name="companies_Addr" class="java.lang.String"/>
+	<field name="companies_Phone" class="java.lang.String"/>
+	<field name="th_general_assessment_id" class="java.lang.Integer"/>
+	<field name="th_general_assessment_symptomology" class="java.lang.String"/>
+	<field name="th_general_assessment_examiantion" class="java.lang.String"/>
+	<field name="th_general_assessment_diffDiagnosis" class="java.lang.String"/>
+	<field name="th_general_assessment_medication" class="java.lang.String"/>
+	<field name="th_general_assessment_physio" class="java.lang.String"/>
+	<field name="th_general_assessment_dutyrestriction" class="java.lang.String"/>
+	<field name="th_general_assessment_recommendations" class="java.lang.String"/>
+	<field name="th_general_assessment_followup" class="java.lang.String"/>
+	<field name="th_general_assessment_referrals" class="java.lang.String"/>
+	<field name="th_general_assessment_telehealth_id" class="java.lang.Integer"/>
+	<field name="th_general_assessment_Name" class="java.lang.String"/>
+	<field name="th_general_assessment_Address" class="java.lang.String"/>
+	<field name="th_general_assessment_Email" class="java.lang.String"/>
+	<field name="th_general_assessment_registionNo" class="java.lang.String"/>
+	<field name="th_general_assessment_Phone" class="java.lang.String"/>
+	<field name="th_general_assessment_examDate" class="java.sql.Timestamp"/>
+	<field name="th_general_assessment_signature" class="java.io.InputStream"/>
+	<field name="th_general_assessment_reportlocal" class="java.lang.String"/>
+	<field name="th_general_assessment_Creation_date" class="java.sql.Timestamp"/>
+	<field name="th_telehealth_form_symtom_value_1" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_2" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_3" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_4" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_5" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_6" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_7" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_8" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_9" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_10" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_11" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_12" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_13" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_14" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_15" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_16" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_17" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_18" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_19" class="java.lang.String"/>
+	<field name="th_telehealth_form_symtom_value_20" class="java.lang.String"/>
+	<field name="th_telehealth_form_nt_descInjury" class="java.lang.String"/>
+	<variable name="Service" class="java.lang.String">
+		<variableExpression><![CDATA[($F{th_telehealth_form_isTraumaConsult} != null && $F{th_telehealth_form_isTraumaConsult}.intValue() == 1 ? "Trauma Consult, " : "") +
+($F{th_telehealth_form_isFirstMedicalCertificate} != null && $F{th_telehealth_form_isFirstMedicalCertificate}.intValue() == 1 ? "First Medical Certificate, " : "") +
+($F{th_telehealth_form_isFollowupInPerth} != null && $F{th_telehealth_form_isFollowupInPerth}.intValue() == 1 ? "Follow up in Perth, " : "") +
+($F{th_telehealth_form_isFitnessForWork} != null && $F{th_telehealth_form_isFitnessForWork}.intValue() == 1 ? "Fitness for work, " : "") +
+($F{th_telehealth_form_isInitialTelehealthConsult} != null && $F{th_telehealth_form_isInitialTelehealthConsult}.intValue() == 1 ? "Initial Telehealth Consult, " : "") +
+($F{th_telehealth_form_isProgressTelehealthConsult} != null && $F{th_telehealth_form_isProgressTelehealthConsult}.intValue() == 1 ? "Progress Telehealth Consult, " : "") +
+($F{th_telehealth_form_isTransportAirPort} != null && $F{th_telehealth_form_isTransportAirPort}.intValue() == 1 ? "Transport to/from Airport" : "")]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="822">
+			<staticText>
+				<reportElement x="13" y="61" width="264" height="16" uuid="71ef7ad6-7f3c-4b4c-9299-cf6406802a22"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employer's, worker's and Insurance's details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="80" width="85" height="13" uuid="131b8681-cffd-400d-bcbb-f3cd4134e0a0"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Service required:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" mode="Transparent" x="62" y="93" width="263" height="0" uuid="c50614d9-bba0-42e1-968d-62407314cbae"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="95" width="85" height="13" uuid="10180667-7af9-43fd-8451-c1d2dc947e03"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Patient:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="109" width="85" height="13" uuid="025bd0f5-aadb-4204-80c0-483cb4a94b27"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Address:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="123" width="85" height="13" uuid="93405d83-279c-4cda-ad30-6d0eccd28fa9"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Postcode:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="137" width="85" height="13" uuid="fbddb979-019c-4e32-bd02-f38f02711187"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[(Mob):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="151" width="85" height="13" uuid="a8799e13-c15b-42d2-8b18-12730f9cb147"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Next of Kin:(Hm):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="165" width="85" height="13" uuid="c2c7d7ca-e5e3-4099-9f29-e553d172fe49"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Company's name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="179" width="85" height="13" uuid="1cad7223-22d8-4091-8269-ee11023c5766"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[IMA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="193" width="85" height="13" uuid="8501e4c4-16ef-4fda-9005-3a87e7fa2038"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="207" width="85" height="13" uuid="5287b6d7-1792-40de-9d87-9ef9d4d6ffee"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[ Membership No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="221" width="85" height="13" uuid="c55ccbf7-77b7-409e-a988-82afb8bb96b1"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Expiry:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="62" y="235" width="85" height="13" uuid="6814d932-5e5b-43fb-b2b6-458c2cb92d74"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Medicare:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="180" width="83" height="13" uuid="19fc43b3-6a4a-4312-bd74-ad0eb8bd4f97"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Address:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="165" width="83" height="13" uuid="1675360b-5c6f-4f0c-b7b4-36bd4e5036eb"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Insurer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="208" width="83" height="13" uuid="af963e53-1386-4ee5-b487-3138c9cf2835"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Position No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="95" width="83" height="13" uuid="b9505e52-b5eb-4534-aa2c-f2d0fc9902f8"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Date of birth:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="137" width="83" height="13" uuid="d639280b-8af6-4a13-977a-eeba91c61b8c"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[(Wk):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="151" width="83" height="13" uuid="76e2947a-a27e-408d-9f93-d2dffeb27015"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Telephone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="109" width="83" height="13" uuid="5d4ec96b-c2e3-4208-99d9-27525a53a6f5"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Suburb:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="123" width="83" height="13" uuid="f4dfcab5-bc00-412a-9ed9-9c965676a81b"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Telephone:(Hm):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="194" width="83" height="13" uuid="2a3636a0-1c0f-4c33-a265-26117c4f7c57"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Phone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="222" width="83" height="13" uuid="4e55fc84-5066-49f6-b804-c84452f8053b"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Health Fund:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="80" width="83" height="13" uuid="67ef7c68-f911-4cbd-9dbc-de8903046cad"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Section:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="350" y="236" width="83" height="13" uuid="cd09d026-0364-4638-90ce-6fb688c3da8a"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[VA No.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="252" width="133" height="16" uuid="eaf2a3dd-c5a2-4f42-8eb4-63392703ad8a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description of injury]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="46" y="327" width="101" height="13" uuid="d04be1bd-649b-4a9f-aac3-b14f3d83cbe5"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Medications:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="46" y="285" width="101" height="13" uuid="4c0c71a4-54bc-455e-bd76-f49574d3c8bf"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Symptoms:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="298" width="555" height="0" uuid="9a5ac79c-5e29-4dc1-9a60-7a649d57c48e"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="46" y="341" width="101" height="13" uuid="02d82c44-76db-41a5-9f8a-803b99f085a1"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Allergies:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="46" y="299" width="101" height="13" uuid="a2e2e261-d0a6-434c-a46c-de8156df5b03"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Vital signs:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="46" y="313" width="101" height="13" uuid="b10cc9ad-c4af-4950-86ab-85a7f21e657c"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Medical history:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="326" width="555" height="0" uuid="5547865e-c3a4-464d-8039-e87c53d1ae02"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="271" width="117" height="13" uuid="36284a45-f70e-4b45-b071-043ff0de12ec"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Date of Accident / Onset:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="357" width="87" height="16" uuid="c8a8d37e-bad0-40ca-84ea-973ffa936549"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assessment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="43" y="409" width="104" height="13" uuid="a6ac383c-c67b-4904-891c-ab49036ae057"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Differential Diagnosis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="49" y="376" width="98" height="13" uuid="ccf897b8-10cb-4a98-b0ad-c1f760971e24"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Symptomology:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="389" width="555" height="0" uuid="a342ed92-b581-4fd5-ba70-d8b301b8f5a3"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="49" y="392" width="98" height="13" uuid="97a44014-8f8a-445f-9e37-caa892256ee4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Examination:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="405" width="555" height="0" uuid="7a0cfad1-4e22-49af-a718-30934bbbbe25"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="424" width="113" height="16" uuid="ef35ae61-1f2c-4d0a-94e8-af51dc815292"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Management plan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="47" y="471" width="100" height="13" uuid="cf70e16b-a5a1-4e5f-9cae-e621d4fc84e9"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Duty restriction:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="484" width="555" height="0" uuid="f5978260-3993-469c-b805-7382291d054e"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="47" y="443" width="100" height="13" uuid="7688f9de-9361-4ccc-9bb5-e2b280ca3eb7"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Medication:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="47" y="457" width="100" height="13" uuid="ffac6b41-5b64-4f9d-879d-fcecd590d853"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[  Physio/allied:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="47" y="500" width="100" height="13" uuid="3d5d1628-2c41-470e-b5dd-bcf579f1804c"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Follow up/review:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="513" width="555" height="0" uuid="d3188aa0-0d2a-41aa-a1ad-b61c88160bfe"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="47" y="486" width="100" height="13" uuid="556addee-fe68-453a-92e1-b99d1d6431c1"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Recommendations:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="47" y="515" width="100" height="13" uuid="b875b515-86e8-4346-93bb-dd5b40cba788"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Referrals:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="528" width="555" height="0" uuid="315c53d4-490e-40b6-b24f-10d82d825fc8"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="535" width="33" height="13" uuid="2962291c-3a27-4e82-8950-2f4026e71bf7"/>
+				<text><![CDATA[Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="549" width="43" height="13" uuid="68185a58-9d27-43f9-85da-0d9a0a6cc447"/>
+				<text><![CDATA[Address:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="563" width="53" height="13" uuid="baf6b8ec-6577-4283-9dfa-6da0b77db41c"/>
+				<text><![CDATA[Telephone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="577" width="130" height="13" uuid="78fa6f13-56be-4103-b01e-e003a33445bb"/>
+				<text><![CDATA[Time & date of examination:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="325" y="550" width="24" height="13" uuid="b6092b20-36c7-4ee6-a6e6-9a648294304e"/>
+				<text><![CDATA[Fax:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="325" y="577" width="52" height="13" uuid="e6df0199-eeef-4587-b925-f07aa6108d07"/>
+				<text><![CDATA[Signature:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="325" y="535" width="82" height="13" uuid="e28bbc5f-de0a-4816-96ed-d76ba11d49a3"/>
+				<text><![CDATA[Registration No.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="150" y="109" width="177" height="13" uuid="c1488222-46ec-4188-ad7f-4bfa93731b4b"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Address} != null ? $F{th_telehealth_form_Address} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="150" y="123" width="177" height="13" uuid="babb272f-08a2-42fa-9cf2-02fa18b5ac40"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Postcode} != null ? $F{th_telehealth_form_Postcode} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="150" y="165" width="177" height="13" uuid="b2c9c697-3011-4bb7-a9d3-166a3e026d8f"/>
+				<textFieldExpression><![CDATA[$F{companies_Company_name} != null ? $F{companies_Company_name} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="150" y="179" width="177" height="13" uuid="1933b15e-3b68-4d28-8458-63f9f066a54f"/>
+				<textFieldExpression><![CDATA[$F{companies_IMA} != null ? $F{companies_IMA} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="150" y="193" width="177" height="13" uuid="a1985754-3d2c-4a9f-a70c-81d792accafe"/>
+				<textFieldExpression><![CDATA[$F{companies_Email} != null ? $F{companies_Email} : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement positionType="Float" x="436" y="95" width="112" height="13" uuid="74e0f873-fe6d-4818-9d76-97d9f9d532f3"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_DOB} != null ? $F{th_telehealth_form_DOB} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="109" width="112" height="13" uuid="0b8762df-5468-474b-bf5b-e6086eec4865"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Suburb} != null ? $F{th_telehealth_form_Suburb} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="123" width="112" height="13" uuid="f276760a-9753-43a0-b3ad-83409f0b3fbe"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Home_phone} != null ? $F{th_telehealth_form_Home_phone} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="137" width="112" height="13" uuid="3fec0707-f5ca-4846-b020-5a9f3f534d75"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Work_phone} != null ? $F{th_telehealth_form_Work_phone} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="151" width="112" height="13" uuid="201e0dbb-83c6-471a-8a5c-cbf2f9a630fe"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Mobile_phone} != null ? $F{th_telehealth_form_Mobile_phone} : ($F{th_telehealth_form_Tel} != null ? $F{th_telehealth_form_Tel} : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="164" width="112" height="14" uuid="e217a428-34bf-4be7-b591-f36959467990"/>
+				<textFieldExpression><![CDATA[$F{companies_Insurer} != null ? $F{companies_Insurer} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="180" width="112" height="13" uuid="dd83d409-dc8f-417a-9562-8a861a67cb88"/>
+				<textFieldExpression><![CDATA[$F{companies_Addr} != null ? $F{companies_Addr} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="192" width="112" height="15" uuid="671c2566-1b91-457b-b8df-459910e15b91"/>
+				<textFieldExpression><![CDATA[$F{companies_Phone} != null ? $F{companies_Phone} : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement positionType="Float" x="152" y="271" width="396" height="13" uuid="dff20976-a572-4474-aa91-793b08d7366d"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Accident_Date} != null ? $F{th_telehealth_form_Accident_Date} : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="152" y="285" width="396" height="13" isRemoveLineWhenBlank="true" uuid="edd027ec-e96e-48bb-8986-525b4bf8e263"/>
+				<textFieldExpression><![CDATA[($F{th_telehealth_form_isHeadache} != null && $F{th_telehealth_form_isHeadache}.intValue() == 1 ? "Headache" + ($F{th_telehealth_form_symtom_value_1} != null ? " - " + $F{th_telehealth_form_symtom_value_1} + ", " : ", ") : "") +
+($F{th_telehealth_form_isNausea} != null && $F{th_telehealth_form_isNausea}.intValue() == 1 ? "Nausea" + ($F{th_telehealth_form_symtom_value_2} != null ? " - " + $F{th_telehealth_form_symtom_value_2} + ", " : ", ") : "") +
+($F{th_telehealth_form_isFatigue} != null && $F{th_telehealth_form_isFatigue}.intValue() == 1 ? "Fatigue" + ($F{th_telehealth_form_symtom_value_3} != null ? " - " + $F{th_telehealth_form_symtom_value_3} + ", " : ", ") : "") +
+($F{th_telehealth_form_isFever} != null && $F{th_telehealth_form_isFever}.intValue() == 1 ? "Fever" + ($F{th_telehealth_form_symtom_value_4} != null ? " - " + $F{th_telehealth_form_symtom_value_4} + ", " : ", ") : "") +
+($F{th_telehealth_form_isSoreThroat} != null && $F{th_telehealth_form_isSoreThroat}.intValue() == 1 ? "Sore throat" + ($F{th_telehealth_form_symtom_value_5} != null ? " - " + $F{th_telehealth_form_symtom_value_5} + ", " : ", ") : "") +
+($F{th_telehealth_form_isCough} != null && $F{th_telehealth_form_isCough}.intValue() == 1 ? "Cough" + ($F{th_telehealth_form_symtom_value_6} != null ? " - " + $F{th_telehealth_form_symtom_value_6} + ", " : ", ") : "") +
+($F{th_telehealth_form_isSinusCongestion} != null && $F{th_telehealth_form_isSinusCongestion}.intValue() == 1 ? "Sinus congestion" + ($F{th_telehealth_form_symtom_value_7} != null ? " - " + $F{th_telehealth_form_symtom_value_7} + ", " : ", ") : "") +
+($F{th_telehealth_form_isBodyAches} != null && $F{th_telehealth_form_isBodyAches}.intValue() == 1 ? "Body aches" + ($F{th_telehealth_form_symtom_value_8} != null ? " - " + $F{th_telehealth_form_symtom_value_8} + ", " : ", ") : "") +
+($F{th_telehealth_form_isVomiting} != null && $F{th_telehealth_form_isVomiting}.intValue() == 1 ? "Vomiting" + ($F{th_telehealth_form_symtom_value_9} != null ? " - " + $F{th_telehealth_form_symtom_value_9} + ", " : ", ") : "") +
+($F{th_telehealth_form_isLightHeadedness} != null && $F{th_telehealth_form_isLightHeadedness}.intValue() == 1 ? "Light headedness" + ($F{th_telehealth_form_symtom_value_10} != null ? " - " + $F{th_telehealth_form_symtom_value_10} + ", " : ", ") : "") +
+($F{th_telehealth_form_isDiarrhea} != null && $F{th_telehealth_form_isDiarrhea}.intValue() == 1 ? "Diarrhea" + ($F{th_telehealth_form_symtom_value_11} != null ? " - " + $F{th_telehealth_form_symtom_value_11} + ", " : ", ") : "") +
+($F{th_telehealth_form_isShortnessOfBreath} != null && $F{th_telehealth_form_isShortnessOfBreath}.intValue() == 1 ? "Shortness of breath" + ($F{th_telehealth_form_symtom_value_12} != null ? " - " + $F{th_telehealth_form_symtom_value_12} + ", " : ", ") : "") +
+($F{th_telehealth_form_isChestPain} != null && $F{th_telehealth_form_isChestPain}.intValue() == 1 ? "Chest pain" + ($F{th_telehealth_form_symtom_value_13} != null ? " - " + $F{th_telehealth_form_symtom_value_13} + ", " : ", ") : "") +
+($F{th_telehealth_form_isAbdomenPain} != null && $F{th_telehealth_form_isAbdomenPain}.intValue() == 1 ? "Abdomen pain" + ($F{th_telehealth_form_symtom_value_14} != null ? " - " + $F{th_telehealth_form_symtom_value_14} + ", " : ", ") : "") +
+($F{th_telehealth_form_isBackPain} != null && $F{th_telehealth_form_isBackPain}.intValue() == 1 ? "Back pain" + ($F{th_telehealth_form_symtom_value_15} != null ? " - " + $F{th_telehealth_form_symtom_value_15} + ", " : ", ") : "") +
+($F{th_telehealth_form_isEarPain} != null && $F{th_telehealth_form_isEarPain}.intValue() == 1 ? "Ear pain" + ($F{th_telehealth_form_symtom_value_16} != null ? " - " + $F{th_telehealth_form_symtom_value_16} + ", " : ", ") : "") +
+($F{th_telehealth_form_isLowMood} != null && $F{th_telehealth_form_isLowMood}.intValue() == 1 ? "Low mood" + ($F{th_telehealth_form_symtom_value_17} != null ? " - " + $F{th_telehealth_form_symtom_value_17} + ", " : ", ") : "") +
+($F{th_telehealth_form_isDecreasedAppetite} != null && $F{th_telehealth_form_isDecreasedAppetite}.intValue() == 1 ? "Decreased appetite" + ($F{th_telehealth_form_symtom_value_18} != null ? " - " + $F{th_telehealth_form_symtom_value_18} + ", " : ", ") : "") +
+($F{th_telehealth_form_isFeelingDepressed} != null && $F{th_telehealth_form_isFeelingDepressed}.intValue() == 1 ? "Feeling depressed" + ($F{th_telehealth_form_symtom_value_19} != null ? " - " + $F{th_telehealth_form_symtom_value_19} + ", " : ", ") : "") +
+($F{th_telehealth_form_isToothPain} != null && $F{th_telehealth_form_isToothPain}.intValue() == 1 ? "Tooth pain" + ($F{th_telehealth_form_symtom_value_20} != null ? " - " + $F{th_telehealth_form_symtom_value_20} + ", " : ", ") : "") +
+($F{th_telehealth_form_OtherGISymtom} != null ? $F{th_telehealth_form_OtherGISymtom} : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="152" y="313" width="396" height="13" uuid="59878c15-bb62-407f-a197-b9eed3cce18e"/>
+				<textFieldExpression><![CDATA[($F{th_telehealth_form_isAsthma} != null && $F{th_telehealth_form_isAsthma}.intValue() == 1 ? "Asthma, " : "") +
+($F{th_telehealth_form_isEpilepsy} != null && $F{th_telehealth_form_isEpilepsy}.intValue() == 1 ? "Epilepsy, " : "") +
+($F{th_telehealth_form_isHeartCondition} != null && $F{th_telehealth_form_isHeartCondition}.intValue() == 1 ? "Heart condition, " : "") +
+($F{th_telehealth_form_isHighCholesterol} != null && $F{th_telehealth_form_isHighCholesterol}.intValue() == 1 ? "High cholesterol, " : "") +
+($F{th_telehealth_form_isDiabetesTypeI} != null && $F{th_telehealth_form_isDiabetesTypeI}.intValue() == 1 ? "Diabetes type I, " : "") +
+($F{th_telehealth_form_isDiabetesTypeII} != null && $F{th_telehealth_form_isDiabetesTypeII}.intValue() == 1 ? "Diabetes type II, " : "") +
+($F{th_telehealth_form_isHighBloobPressure} != null && $F{th_telehealth_form_isHighBloobPressure}.intValue() == 1 ? "High bloob pressure, " : "") +
+($F{th_telehealth_form_isArthritis} != null && $F{th_telehealth_form_isArthritis}.intValue() == 1 ? "Arthritis, " : "") +
+($F{th_telehealth_form_isBloodCon} != null && $F{th_telehealth_form_isBloodCon}.intValue() == 1 ? "Blood condition." : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="152" y="327" width="44" height="13" uuid="613e0238-2969-48e3-adc3-c7b7966d8639"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_isMedications} != null && $F{th_telehealth_form_isMedications}.intValue() == 1 ? "Yes" : "No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="152" y="341" width="44" height="13" uuid="966d2728-0923-4fb2-9075-670bb65a8b74"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_isAllergies} != null && $F{th_telehealth_form_isAllergies}.intValue() == 1 ? "Yes" : "No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="196" y="327" width="352" height="13" uuid="81bf0afc-7ed3-42c7-9447-639af3455087"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Medications} != null && $F{th_telehealth_form_isMedications} != null && $F{th_telehealth_form_isMedications}.intValue() == 1 ? $F{th_telehealth_form_Medications} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="196" y="341" width="352" height="13" uuid="0364f7b4-964f-4393-95c2-9fad7c9499b7"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Allergies} != null && $F{th_telehealth_form_isAllergies} != null && $F{th_telehealth_form_isAllergies}.intValue() == 1 ? $F{th_telehealth_form_Allergies} : ""]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement positionType="Float" x="377" y="565" width="171" height="44" uuid="481bdd48-6fc7-48cf-a062-133b65f7ccd0"/>
+				<imageExpression><![CDATA[$F{th_general_assessment_signature}]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="152" y="376" width="396" height="13" uuid="10dcdd8a-a35b-4a66-858d-c5d09bf73c72"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_symptomology} != null ? $F{th_general_assessment_symptomology} : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="152" y="392" width="396" height="13" uuid="446d1779-605e-4979-9df1-2d8881c94189"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_examiantion} != null ? $F{th_general_assessment_examiantion} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="152" y="409" width="396" height="13" uuid="914e1850-065b-4ba6-a3c2-86ed9c187c22"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_diffDiagnosis} != null ? $F{th_general_assessment_diffDiagnosis} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="49" y="535" width="254" height="13" uuid="70deec4f-9b5f-4777-baf7-22017a1a9fba"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_Name} != null ? $F{th_general_assessment_Name} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="56" y="549" width="247" height="13" uuid="9869e209-1a03-4d8d-8409-a934a556951b"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_Address} != null ? $F{th_general_assessment_Address} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="66" y="563" width="237" height="14" uuid="bf23a013-d9f1-4661-b5e2-8724c9324d5f"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_Phone} != null ? $F{th_general_assessment_Phone} : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy hh:mm a">
+				<reportElement positionType="Float" x="146" y="577" width="157" height="13" uuid="2914310f-a91d-449e-8644-340ead59b937"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_examDate} != null ? $F{th_general_assessment_examDate} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="407" y="535" width="141" height="13" uuid="b4bcf132-c731-4465-b90f-4be20b44ae95"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_registionNo} != null ? $F{th_general_assessment_registionNo} : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="152" y="515" width="396" height="13" uuid="e1f7dda4-9826-4b5b-ade3-0fc35fbcbab5"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_referrals} != null ? $F{th_general_assessment_referrals} : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="152" y="500" width="396" height="13" uuid="8b28a427-e027-4e56-ba3e-694d30ad8483"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_followup} != null ? $F{th_general_assessment_followup} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="152" y="486" width="396" height="13" uuid="fbf298d3-b337-4a50-888a-702af25106d8"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_recommendations} != null ? $F{th_general_assessment_recommendations} : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="152" y="471" width="396" height="13" uuid="ef1ab39d-db38-414d-92f1-38916ec8a79a"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_dutyrestriction} != null ? $F{th_general_assessment_dutyrestriction} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="152" y="457" width="396" height="13" uuid="cde3beed-a63c-4187-9456-90e9895bacf3"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_physio} != null ? $F{th_general_assessment_physio} : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="152" y="443" width="396" height="13" uuid="b16a955b-2d51-4d51-9202-e6222bfd28e2"/>
+				<textFieldExpression><![CDATA[$F{th_general_assessment_medication} != null ? $F{th_general_assessment_medication} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="208" width="112" height="13" uuid="67102caa-e0cc-4cf3-9c95-27b90c0ea336"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Position_no} != null ? $F{th_telehealth_form_Position_no} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="150" y="235" width="177" height="13" uuid="a6fdede6-1075-484a-a196-851b0d29968c"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Medicare} != null ? $F{th_telehealth_form_Medicare} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="148" y="207" width="179" height="14" uuid="37c514f3-9879-4f18-a713-d7a38c9497e0"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Mem_no} != null ? $F{th_telehealth_form_Mem_no} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="236" width="112" height="13" uuid="35c7de99-ccf8-4b25-9881-406f7f71ad51"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Veteran_affairs_no} != null ? $F{th_telehealth_form_Veteran_affairs_no} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="150" y="137" width="177" height="13" uuid="cb21e3fb-abba-466b-98be-a541a31dab22"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Mobile_phone} != null ? $F{th_telehealth_form_Mobile_phone} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="150" y="150" width="177" height="14" uuid="fd30faa2-6470-4cbd-acab-024902ded62d"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Next_Of_kin} != null ? $F{th_telehealth_form_Next_Of_kin} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="150" y="221" width="177" height="13" uuid="17d5dadb-b92e-4986-a33d-38169a54b96a"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Exp} != null ? $F{th_telehealth_form_Exp} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="222" width="112" height="13" uuid="332521c5-d745-42ff-ad56-c169765b1426"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_Health_fund_name} != null ? $F{th_telehealth_form_Health_fund_name} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="436" y="80" width="112" height="13" uuid="8f2b4875-f24e-403a-b34f-04f77322828e"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_isWorkRelated} != null && $F{th_telehealth_form_isWorkRelated}.intValue() == 0 ? "Work related" : ($F{th_telehealth_form_isWorkRelated} != null && $F{th_telehealth_form_isWorkRelated}.intValue() == 1 ? "Non work related" : ($F{th_telehealth_form_isWorkRelated} != null && $F{th_telehealth_form_isWorkRelated}.intValue() == 2 ? "Not sure" : ""))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="152" y="95" width="175" height="13" uuid="4528d59e-9c3b-4dc4-8cf9-79f3e1d6a742"/>
+				<textFieldExpression><![CDATA[($F{th_telehealth_form_Salutation} != null ? $F{th_telehealth_form_Salutation} : "") + " " +
+($F{th_telehealth_form_Family_name} != null ? $F{th_telehealth_form_Family_name} : "") + " " +
+($F{th_telehealth_form_Given_name} != null ? $F{th_telehealth_form_Given_name} : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" mode="Transparent" x="150" y="80" width="177" height="13" uuid="4fcfbbad-8350-4d2f-8dba-5a8ea1a56821"/>
+				<textFieldExpression><![CDATA[($F{th_telehealth_form_isTraumaConsult} != null && $F{th_telehealth_form_isTraumaConsult}.intValue() == 1 ? "Trauma Consult, " : "") +
+($F{th_telehealth_form_isFirstMedicalCertificate} != null && $F{th_telehealth_form_isFirstMedicalCertificate}.intValue() == 1 ? "First Medical Certificate, " : "") +
+($F{th_telehealth_form_isFollowupInPerth} != null && $F{th_telehealth_form_isFollowupInPerth}.intValue() == 1 ? "Follow up in Perth, " : "") +
+($F{th_telehealth_form_isFitnessForWork} != null && $F{th_telehealth_form_isFitnessForWork}.intValue() == 1 ? "Fitness for work, " : "") +
+($F{th_telehealth_form_isInitialTelehealthConsult} != null && $F{th_telehealth_form_isInitialTelehealthConsult}.intValue() == 1 ? "Initial Telehealth Consult, " : "") +
+($F{th_telehealth_form_isProgressTelehealthConsult} != null && $F{th_telehealth_form_isProgressTelehealthConsult}.intValue() == 1 ? "Progress Telehealth Consult, " : "") +
+($F{th_telehealth_form_isTransportAirPort} != null && $F{th_telehealth_form_isTransportAirPort}.intValue() == 1 ? "Transport to/from Airport" : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="152" y="299" width="396" height="13" uuid="c81f593e-c758-4879-b770-d6f482ca549e"/>
+				<textFieldExpression><![CDATA[$F{th_telehealth_form_BPM} != null ? $F{th_telehealth_form_BPM} : ""]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="13" y="6" width="193" height="50" uuid="31d76e07-d605-4020-9615-5fa714b553a9"/>
+				<imageExpression><![CDATA["image001.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="623" width="555" height="27" uuid="dfd1aec9-27d6-48c0-8add-2f7cc031d6c3"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[For workers' compensation and injury management information or assistance contact
+WorkCover WA's Advisory Services: 1300 794 744]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

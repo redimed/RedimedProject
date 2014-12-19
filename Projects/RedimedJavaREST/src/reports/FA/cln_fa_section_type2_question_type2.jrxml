@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_type2_question_type2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fd71dbc3-641b-4f3c-bed3-3be77f14dbc4">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CAL_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LINE_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["F:\\work_f2\\branches\\TeleHealth_Tan\\Tan_Nguyen\\Pre-Employment Reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT  DISTINCT	line.`LINE_ID`,line.`QUESTION`,line.`ISSCORE1`,line.`SCORE1`,line.`ISRATING1`,line.`RATE1`,line.`RATING_VALUE1`,
+	detail.`QUESTION` DETAIL_QUESTION ,detail.`VAL1_ISVALUE`, detail.`VAL1_NAME`, detail.`VAL1_VALUE`,
+	detail.`COMMENTS` DETAIL_COMMENT,
+	line.`IS_SHOW_RANKING_TABLE`,line.`RATING_ID1`
+FROM 	`cln_fa_df_lines` line INNER JOIN `cln_fa_df_line_details` detail ON line.`LINE_ID`=detail.`LINE_ID` AND line.`PATIENT_ID`=detail.`PATIENT_ID` AND line.`CAL_ID`=detail.`CAL_ID`
+WHERE 	line.`ISENABLE`=1 AND detail.`ISENABLE`=1
+	AND
+	line.`SCORE_TYPE1`=6
+	AND
+	line.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
+	AND
+	line.`CAL_ID`=$P{CAL_ID_PARAM}
+	AND
+	line.`LINE_ID`=$P{LINE_ID_PARAM}]]>
+	</queryString>
+	<field name="LINE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISSCORE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISRATING1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATE1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATING_VALUE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DETAIL_QUESTION" class="java.lang.String"/>
+	<field name="VAL1_ISVALUE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_VALUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DETAIL_COMMENT" class="java.lang.String"/>
+	<field name="IS_SHOW_RANKING_TABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATING_ID1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="LINE_GROUP">
+		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="0" y="7" width="440" height="20" uuid="37e977e6-3bc8-4c28-aa94-aab585727512"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="98">
+				<textField isBlankWhenNull="true">
+					<reportElement x="35" y="0" width="113" height="15" isRemoveLineWhenBlank="true" uuid="6c7bf0a6-95d7-4d0d-922f-06f8cdee3357"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RATE1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="35" height="15" uuid="169b046c-14ca-488e-a6b4-082e1712badd"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Rate:]]></text>
+				</staticText>
+				<subreport>
+					<reportElement positionType="Float" x="0" y="30" width="440" height="37" isRemoveLineWhenBlank="true" uuid="a13975db-7f92-42f3-a28a-9b496bddd320"/>
+					<subreportParameter name="DIR_PATH">
+						<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CAL_ID_PARAM">
+						<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="LINE_ID_PARAM">
+						<subreportParameterExpression><![CDATA[$P{LINE_ID_PARAM}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="PATIENT_ID_PARAM">
+						<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_comments.jasper"]]></subreportExpression>
+				</subreport>
+				<staticText>
+					<reportElement x="0" y="15" width="100" height="15" uuid="e905c5dc-5349-4798-bc68-e9fa0a4017a9"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Comments:]]></text>
+				</staticText>
+				<subreport>
+					<reportElement positionType="Float" x="0" y="67" width="578" height="31" isRemoveLineWhenBlank="true" uuid="f5dd52e5-4ad1-424f-84bf-4523193f7246">
+						<printWhenExpression><![CDATA[$F{IS_SHOW_RANKING_TABLE}!=null && $F{IS_SHOW_RANKING_TABLE}==1]]></printWhenExpression>
+					</reportElement>
+					<subreportParameter name="DIR_PATH">
+						<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="RANKING_HEADER_ID_PARAM">
+						<subreportParameterExpression><![CDATA[$F{RATING_ID1}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_ranking.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="271" height="15" isRemoveLineWhenBlank="true" uuid="2e984c8c-e5f7-4236-ba04-70a423c81804"/>
+				<textFieldExpression><![CDATA[$F{DETAIL_QUESTION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="0" width="151" height="15" isRemoveLineWhenBlank="true" uuid="47ebec96-6569-4737-88bc-34fab75d3c95"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAL1_VALUE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="271" y="0" width="17" height="15" uuid="b0f11c93-1f8f-42a5-ac51-af4f9d651a75"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

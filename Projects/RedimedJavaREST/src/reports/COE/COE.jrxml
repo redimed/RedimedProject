@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="COE" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bbd20295-566f-4fa1-b314-70faaee1b730">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="53"/>
+	<property name="ireport.y" value="672"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.*,SUBSTRING_INDEX(c.`Signature1`, ',', -1) AS Signature11,SUBSTRING_INDEX(c.`Signature2`, ',', -1)AS Signature22,e.* , CONCAT(IFNULL(p.first_name,''),' ',IFNULL(p.sur_name,'')) AS full_name , p.dob FROM gorgon_doc_coe c INNER JOIN cln_patients p ON p.patient_id = c.PatientId LEFT JOIN companies e ON p.`company_id` = e.id
+WHERE coe_id = $P{key}]]>
+	</queryString>
+	<field name="coe_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DocId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOCTOR_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CalId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PatientId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isEmployed" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateEmployed" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inPosition" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Signature1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="coeName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="coeTitle" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="coeDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Signature2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Signature11" class="java.lang.String"/>
+	<field name="Signature22" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Industry" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Addr" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="postcode" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="State" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="latitude" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="longitude" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="result_email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invoice_email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PO_number" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isProject" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isCalendar" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="father_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="report_to_email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="default_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isInvoiceEmailToUser" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isAddContactEmailToResult" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IMA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Site_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Medic_contact_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Insurer" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Site_medic" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="User_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isPO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="dob" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802">
+			<image>
+				<reportElement x="0" y="0" width="555" height="802" uuid="20bd35a9-0dfa-4db8-b438-3ecf5b2ffcd4"/>
+				<imageExpression><![CDATA[$P{real_path} + "images/coe.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="62" y="165" width="211" height="15" uuid="1b6a778d-f9d9-42ae-bbc5-6e0fe43989ec"/>
+				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="52" y="319" width="336" height="15" uuid="703c3bc6-8590-4cb5-9b86-f94f1eac4441"/>
+				<textFieldExpression><![CDATA[$F{Company_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="347" width="354" height="16" uuid="13c32499-62ec-43d4-9fd2-7d089a07b188"/>
+				<textFieldExpression><![CDATA[$F{inPosition}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="63" y="407" width="186" height="15" uuid="79745e9d-99d6-4847-80b1-01688b7f0ac0"/>
+				<textFieldExpression><![CDATA[$F{coeName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="407" width="100" height="15" uuid="a98dc086-6ce0-466f-a313-50934625c772"/>
+				<textFieldExpression><![CDATA[$F{coeTitle}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="426" y="407" width="19" height="15" uuid="589c90ff-d027-4c01-8a9b-de2d37a5701f"/>
+				<textFieldExpression><![CDATA[$F{coeDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="453" y="407" width="19" height="15" uuid="f591bebf-2b7b-46bc-bb32-f92957337a68"/>
+				<textFieldExpression><![CDATA[$F{coeDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="477" y="407" width="29" height="15" uuid="74d896f8-d4fc-485a-aef6-8952e200d5f2"/>
+				<textFieldExpression><![CDATA[$F{coeDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="465" y="165" width="29" height="15" uuid="a597cd2b-13d9-42cf-832c-1c414bceb814"/>
+				<textFieldExpression><![CDATA[$F{coeDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="445" y="165" width="19" height="15" uuid="1307648e-3e56-4183-97b5-0fa55c207ccc"/>
+				<textFieldExpression><![CDATA[$F{coeDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="419" y="165" width="19" height="15" uuid="e2bc6568-f74a-4571-bffd-414a43fc45c2"/>
+				<textFieldExpression><![CDATA[$F{coeDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="367" y="165" width="28" height="15" uuid="bfeb0b4c-02e5-4149-b6d9-8c8efe9c2960"/>
+				<textFieldExpression><![CDATA[$F{dob}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="313" y="165" width="18" height="15" uuid="dccc9b21-4abd-4976-8994-800979766150"/>
+				<textFieldExpression><![CDATA[$F{dob}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="340" y="165" width="18" height="15" uuid="72f43dcb-5495-4667-bee9-f5167d7e80f9"/>
+				<textFieldExpression><![CDATA[$F{dob}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="true">
+				<reportElement x="475" y="290" width="31" height="13" uuid="1624ab7d-ba24-4231-830e-a7487d1c9446"/>
+				<textFieldExpression><![CDATA[$F{dateEmployed}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="true">
+				<reportElement x="426" y="290" width="19" height="13" uuid="6e8d7c82-1a9f-4e59-a4ef-2bb97f2baebf"/>
+				<textFieldExpression><![CDATA[$F{dateEmployed}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM" isBlankWhenNull="true">
+				<reportElement x="451" y="290" width="19" height="13" uuid="32530bd1-b78e-4061-9caa-e323aafa5e73"/>
+				<textFieldExpression><![CDATA[$F{dateEmployed}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="24" y="623" width="208" height="89" uuid="28a3e62b-c5c5-456e-996f-f86ac7fc6a45"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature22}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="118" y="366" width="91" height="41" uuid="770911fc-53a0-4519-8a41-a8aa0ba89d25"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature11}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

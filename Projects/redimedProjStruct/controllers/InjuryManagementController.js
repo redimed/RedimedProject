@@ -357,7 +357,6 @@ module.exports = {
     },
     makeCall: function(req,res){
         var userId = req.body.user_id;
-
         db.UserToken.find({where:{user_id: userId}},{raw:true})
             .success(function(data){
                 var token = opentok.generateToken(data.roomSession,{ role: 'moderator' });

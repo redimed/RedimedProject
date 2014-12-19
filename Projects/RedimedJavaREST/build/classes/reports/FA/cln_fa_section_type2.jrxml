@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_type2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="18e836ee-514f-4720-8c3b-33a30f76641d">
+	<property name="ireport.zoom" value="1.3310000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CAL_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SECTION_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["F:\\work_f2\\branches\\TeleHealth_Tan\\Tan_Nguyen\\Pre-Employment Reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT	section.`SECTION_ID`,section.`SECTION_TYPE`,section.`SECTION_NAME`,
+	line.`LINE_ID`,line.`SCORE_TYPE1`,
+	detail.`VAL1_ISCHECKBOX`,detail.`VAL2_ISCHECKBOX`
+FROM 	`cln_fa_df_sections` section INNER JOIN `cln_fa_df_lines` line ON section.`SECTION_ID`=line.`SECTION_ID` AND section.`PATIENT_ID`=line.`PATIENT_ID` AND section.`CAL_ID`=line.`CAL_ID`
+	LEFT JOIN `cln_fa_df_line_details` detail ON line.`LINE_ID`=detail.`LINE_ID` AND line.`CAL_ID`=detail.`CAL_ID` AND line.`PATIENT_ID`=detail.`PATIENT_ID`
+WHERE	section.`ISENABLE`=1 AND line.`ISENABLE`=1
+	AND
+	section.`SECTION_TYPE`=1
+	AND
+	line.`LineType`=0
+	AND
+	section.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
+	AND
+	section.`CAL_ID`=$P{CAL_ID_PARAM}
+	AND
+	section.`SECTION_ID`=$P{SECTION_ID_PARAM}]]>
+	</queryString>
+	<field name="SECTION_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTION_TYPE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTION_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LINE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE_TYPE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_ISCHECKBOX" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_ISCHECKBOX" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="SECTION_GROUP">
+		<groupExpression><![CDATA[$F{SECTION_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="49">
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="29" width="595" height="20" uuid="531f8f88-531d-4c76-9a5f-20e0bd57bc1a"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SECTION_NAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null
+&&
+($F{SCORE_TYPE1}==1 || $F{SCORE_TYPE1}==2 || $F{SCORE_TYPE1}==3 ||
+$F{SCORE_TYPE1}==4)]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="541" height="34" uuid="be058be5-5643-4453-bfa5-1877e4536bfe">
+					<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null
+&&
+($F{SCORE_TYPE1}==1 || $F{SCORE_TYPE1}==2 || $F{SCORE_TYPE1}==3 ||
+$F{SCORE_TYPE1}==4)]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LINE_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_section_type2_question_type1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="36">
+			<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==6]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="541" height="36" isRemoveLineWhenBlank="true" uuid="f282692b-2e0e-42af-b398-fe8372b24d5b">
+					<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==6]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LINE_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_section_type2_question_type2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="36">
+			<printWhenExpression><![CDATA[$F{VAL1_ISCHECKBOX}!=null && $F{VAL1_ISCHECKBOX}==2]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="541" height="36" isRemoveLineWhenBlank="true" uuid="fccfd121-3441-4dad-86ea-cd010f6d85d2">
+					<printWhenExpression><![CDATA[$F{VAL1_ISCHECKBOX}!=null && $F{VAL1_ISCHECKBOX}==2]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LINE_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_section_type2_question_type3.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="37">
+			<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null
+&&
+($F{SCORE_TYPE1}==7 || $F{SCORE_TYPE1}==9)]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="541" height="37" isRemoveLineWhenBlank="true" uuid="80d0c494-a785-4ea6-a2ca-444c52402b0f">
+					<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null
+&&
+($F{SCORE_TYPE1}==7 || $F{SCORE_TYPE1}==9)]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LINE_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_section_type2_question_type4.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="35">
+			<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==8]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="541" height="35" isRemoveLineWhenBlank="true" uuid="016af84a-9bb0-4ab2-bff8-4a5dff7fb3b0">
+					<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==8]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LINE_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_section_type2_question_type5.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="38">
+			<printWhenExpression><![CDATA[$F{VAL1_ISCHECKBOX}!=null && $F{VAL1_ISCHECKBOX}==1
+&&
+$F{VAL2_ISCHECKBOX}!=null && $F{VAL2_ISCHECKBOX}==1]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="541" height="38" isRemoveLineWhenBlank="true" uuid="087af6b2-a28c-484f-ad47-ba0279ca95bf">
+					<printWhenExpression><![CDATA[$F{VAL1_ISCHECKBOX}!=null && $F{VAL1_ISCHECKBOX}==1
+ &&
+ $F{VAL2_ISCHECKBOX}!=null && $F{VAL2_ISCHECKBOX}==1]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="DIR_PATH">
+					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CAL_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LINE_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATIENT_ID_PARAM">
+					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_section_type2_question_type6.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
