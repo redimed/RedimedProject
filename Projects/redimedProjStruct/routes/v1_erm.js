@@ -36,6 +36,9 @@ var v2_AppointmentController = require('./controllers/v2_AppointmentController')
 var v2_DoctorController = require('./controllers/v2_DoctorController');
 var v2_ItemController = require('./controllers/v2_ItemController');
 var v2_ItemFeeController = require('./controllers/v2_ItemFeeController');
+var v2_ItemFeeGroupController = require('./controllers/v2_ItemFeeGroupController');
+var v2_ItemFeeTypesController = require('./controllers/v2_ItemFeeTypesController');
+var v2_ItemPrivateFundsController = require('./controllers/v2_ItemPrivateFundsController');
 
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
 k_route.setRoute(app, v2_InsurersController, '/api/erm/v2/insurers/');
@@ -45,5 +48,6 @@ k_route.setRoute(app, v2_AppointmentController, '/api/erm/v2/appt/');
 k_route.setRoute(app, v2_DoctorController, '/api/erm/v2/doctor/');
 k_route.setRoute(app, v2_ItemController, '/api/erm/v2/items/');
 k_route.setRoute(app, v2_ItemFeeController, '/api/erm/v2/fees/');
-
-
+k_route.setRoute(app, v2_ItemFeeGroupController, '/api/erm/v2/fees/group/');
+k_route.setRoute(app, v2_ItemFeeTypesController, '/api/erm/v2/fees/type/');
+k_route.setRoute(app, v2_ItemPrivateFundsController, '/api/erm/v2/fees/funds/')

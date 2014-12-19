@@ -16,7 +16,7 @@
                 <!-- FEE GROUPS  -->
                 <div ng-class="{active: (fees.tab == 1)}" class="tab-pane">
                     <div class="pull-right navbar-right">
-                        <a class="btn btn-sm blue" ng-click="searchHeader.open()"><i class="fa fa-plus"></i> Add Group</a>
+                        <a class="btn btn-sm blue" ng-click="addGroupForm.open()"><i class="fa fa-plus"></i> Add Group</a>
                     </div>
                     <my-data-table options="fee_groups.options" rowclass="fee_groups.class"></my-data-table>
                 </div>
@@ -24,7 +24,7 @@
                 <!-- FEE TYPES  -->
                 <div ng-class="{active: (fees.tab == 2)}" class="tab-pane">
                     <div class="pull-right navbar-right">
-                        <a class="btn btn-sm blue" ng-click="searchHeader.open()"><i class="fa fa-plus"></i> Add Fee Type</a>
+                        <a class="btn btn-sm blue" ng-click="addTypeForm.open()"><i class="fa fa-plus"></i> Add Fee Type</a>
                     </div>
                     <my-data-table options="fee_types.options" rowclass="fee_types.class"></my-data-table>
                 </div>
@@ -33,7 +33,7 @@
                 <!-- PRIVATE FUNDS  -->
                 <div ng-class="{active: (fees.tab == 3)}" class="tab-pane">
                     <div class="pull-right navbar-right">
-                        <a class="btn btn-sm blue" ng-click="searchService.open()"><i class="fa fa-plus"></i> Add Private Fund</a>
+                        <a class="btn btn-sm blue" ng-click="addPrivateFundsForm.open()"><i class="fa fa-plus"></i> Add Private Fund</a>
                     </div>
                     <my-data-table options="private_funds.options" rowclass="private_funds.class"></my-data-table>
                 </div>
@@ -43,4 +43,76 @@
     </div>
 </div>
 
-<input id="fee_type_upload" ng-hide="true" type="file" nv-file-select uploader="uploader"/>
+<input id="fee_type_upload" ng-hide="true" type="file" nv-file-select uploader="uploader" />
+
+
+<!--POPUP GROUP DETAIL ADD FORM-->
+<div class="mdt-search" style="display: block;" ng-if="addGroupForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="addGroupForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <fee-group-detail options="options" onsuccess="addGroupForm.success" />
+</div>
+<!--END POPUP GROUP DETAIL ADD FORM-->
+
+
+<!--POPUP GROUP DETAIL EDIT FORM-->
+<div class="mdt-search" style="display: block;" ng-if="editGroupForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="editGroupForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <fee-group-detail options="options" onsuccess="editGroupForm.success" data="{id: '{{feeGroup.id}}'}" />
+</div>
+<!--END POPUP GROUP EDIT FORM-->
+
+
+<!--POPUP TYPE DETAIL ADD FORM-->
+<div class="mdt-search" style="display: block;" ng-if="addTypeForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="addTypeForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <fee-type-detail options="addTypeForm.options" onsuccess="addTypeForm.success" />
+</div>
+<!--END POPUP TYPE ADD FORM-->
+
+
+<!--POPUP TYPE DETAIL EDIT FORM-->
+<div class="mdt-search" style="display: block;" ng-if="editTypeForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="editTypeForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <fee-type-detail options="editTypeForm.options" onsuccess="editTypeForm.success" data="{id: '{{feeType.id}}'}" />
+</div>
+<!--END POPUP TYPE EDIT FORM-->
+
+
+<!--POPUP PRIVATE FUNDS DETAIL ADD FORM-->
+<div class="mdt-search" style="display: block;" ng-if="addPrivateFundsForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="addPrivateFundsForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <private-funds-detail options="options" onsuccess="addPrivateFundsForm.success" />
+</div>
+<!--END POPUP PRIVATE FUNDS DETAIL ADD FORM-->
+
+
+<!--POPUP PRIVATE FUNDS DETAIL EDIT FORM-->
+<div class="mdt-search" style="display: block;" ng-if="editPrivateFundsForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="editPrivateFundsForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <private-funds-detail options="options" onsuccess="editPrivateFundsForm.success" data="{id: '{{pf.id}}'}" />
+</div>
+<!--END POPUP PRIVATE FUNDS DETAIL EDIT FORM-->

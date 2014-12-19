@@ -528,3 +528,43 @@ angular.module("app.model", [])
 	Last_update_date: null,
 })
 // END CLN DEPARTMENT
+
+//FEE GROUP MODEL
+.value('FeeGroupModel', {
+    FEE_GROUP_NAME: '',
+    FEE_GROUP_TYPE: '',
+    PRICE_SOURCE: '',
+    ISENABLE: null,
+    CREATION_DATE: null,
+    LAST_UPDATE_DATE: null,
+    CREATED_BY: null,
+    LAST_UPDATED_BY: null,
+})
+//END FEE GROUP MODEL
+
+//FEE TYPE MODEL
+.value('FeeTypesModel', {
+    FEE_TYPE_NAME: '',
+    PRICE_SOURCE: '',
+    FEE_GROUP_ID: null,
+    FEE_GROUP_ORDER: null,
+    ISENABLE: null,
+    Creation_date: null,
+    Created_by: null,
+    Last_update_date: null,
+    Last_updated_by: null,
+})
+//END FEE TYPE MODEL
+
+//PRIVATE FUNDS MODEL
+.value('PrivateFundsModel', {
+    Fund_name: '',
+    Isenable: null,
+    Created_by: null,
+    Creation_date: null,
+    Last_updated_by: null,
+    Last_update_date: null,
+    isAHSA: null,
+    isBUPA: null,
+})
+//END PRIVATE FUNDS MODEL
