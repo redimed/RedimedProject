@@ -286,7 +286,7 @@ WHERE
 			<staticText>
 				<reportElement x="10" y="82" width="545" height="20" uuid="7fa9eb60-1119-434e-9865-91c16c5b4543"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true" isStrikeThrough="false"/>
+					<font fontName="SansSerif" size="14" isBold="true" isStrikeThrough="false" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[MEDICAL QUESTIONNAIRE FOR RESPIRATOR USERS]]></text>
 			</staticText>
@@ -355,7 +355,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="150" width="529" height="27" uuid="5307bc50-b887-4694-8190-e1128fce850e"/>
 				<textElement>
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Part A. Section 1. The following information must be provided by every employee who has been selected to use any type of respirator (please print). ]]></text>
 			</staticText>
@@ -619,7 +619,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="4" width="529" height="27" uuid="245c0ba3-e343-4c5d-9e82-437abdecaeee"/>
 				<textElement>
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Part A. Section 2. Questions 1 through 9 below must be answered by every employee who has been selected to use any type of respirator (please circle “yes” or “no”). ]]></text>
 			</staticText>
@@ -2078,7 +2078,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="13" width="529" height="40" uuid="7196aa72-403d-4f35-943d-428831c2c104"/>
 				<textElement>
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Questions 10 to 15 below must be answered by every employee who has been selected to use either a full-face piece respirator or a self-contained breathing apparatus (SCBA). For employees who have been selected to use other types or respirators, answering those questions is voluntary. ]]></text>
 			</staticText>
@@ -2601,7 +2601,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="15" width="313" height="14" uuid="7278ee25-5953-4880-83e4-66e30c6a8146"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Request for Medical Clearance for Respirator Use Questionnaire ]]></text>
 			</staticText>
@@ -2628,7 +2628,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="85" width="225" height="14" uuid="4b2f3efa-1686-49d6-926a-f11e04d5a4bd"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Circle type or types of respirator(s) to be used:]]></text>
 			</staticText>
@@ -2667,7 +2667,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="189" width="101" height="14" uuid="c400d157-2e96-441f-9f3b-3fc4f6d70333"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Level of Work Effort:]]></text>
 			</staticText>
@@ -2690,7 +2690,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="234" width="83" height="14" uuid="2559a92c-0602-4340-8022-2bac0f58be46"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Extent of Usage:]]></text>
 			</staticText>
@@ -2709,7 +2709,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="322" width="207" height="14" uuid="46abaa43-f586-47c9-a79a-654f684a5607"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Length of Time anticipated Effort in Hours:]]></text>
 			</staticText>
@@ -2730,7 +2730,7 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="442" width="252" height="14" uuid="bb00ea1e-27a9-429a-bd71-549f4eee8f86"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[HEALTH CARE PROFESSIONAL’S EVALUATION OF:]]></text>
 			</staticText>
@@ -2744,35 +2744,35 @@ WHERE
 			<staticText>
 				<reportElement x="13" y="472" width="83" height="14" uuid="89fc295a-a509-4f1a-8fec-7c8047329c50"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[CLASS (Circle): ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="35" y="535" width="159" height="14" uuid="66a07324-a3e6-4d71-a209-27569db64a34"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[3) No respirator use permitted ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="35" y="515" width="170" height="14" uuid="b8d8695c-e19c-4182-a782-f98569503ef0"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[2) Some specific use restrictions]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="35" y="497" width="191" height="14" uuid="096dea91-936a-4c3e-8be3-980a18f20651"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[1) No restriction on respirator usage ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="556" width="62" height="14" uuid="4802c2bf-2468-471c-aa43-7295b4d52657"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Restrictions: ]]></text>
 			</staticText>
@@ -2791,14 +2791,14 @@ WHERE
 			<staticText>
 				<reportElement x="10" y="610" width="195" height="14" uuid="310e2f52-d8ce-40ea-9887-df321edecdca"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Examining Health Care Professional:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="401" y="610" width="28" height="14" uuid="22844059-1176-401b-a37b-74227b042649"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
@@ -2991,7 +2991,7 @@ WHERE
 			<staticText>
 				<reportElement x="10" y="647" width="52" height="13" uuid="31cd047e-2d25-463b-bbf2-ae4cc19ffec8"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Signature:]]></text>
 			</staticText>
