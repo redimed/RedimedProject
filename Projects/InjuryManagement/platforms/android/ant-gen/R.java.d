@@ -24,7 +24,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/drawable-xxhdpi/ic_action_next_item.png \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/drawable-xxhdpi/ic_action_previous_item.png \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/drawable-xxhdpi/ic_action_remove.png \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/raw/ringtone.mp3 \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/values/strings.xml \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/xml/config.xml \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/res/drawable/icon.png \

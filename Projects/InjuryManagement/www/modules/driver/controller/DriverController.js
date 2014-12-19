@@ -9,12 +9,6 @@ angular.module('starter.driver.controller',[])
 
         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
 
-        $scope.info = {
-            width: '80px',
-            height: '80px',
-            font:'70px'
-        };
-
         $scope.tabs = [{
             title: 'Information',
             url: 'info.html'
@@ -91,7 +85,10 @@ angular.module('starter.driver.controller',[])
         }
 
         $scope.pickUp = function(injuryID) {
-            var jsonStatus = {STATUS:'Done'};
+            var jsonStatus = {
+                STATUS:'Done',
+                driverId: localStorageService.get('userInfo').id
+            };
             DriverServices.editPatient(jsonStatus,injuryID).then(function (result) {
                 if(result.status.toLocaleLowerCase('success')){
                     console.log("success");

@@ -16,7 +16,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/Manifest.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$attr.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$drawable.class \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$raw.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$string.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R$xml.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/ionicframework/injurymanagement949685/R.class \
@@ -34,6 +33,13 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/plugin/gcm/GCMIntentService.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/plugin/gcm/PushHandlerActivity.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/plugin/gcm/PushPlugin.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/tokbox/cordova/OpenTokAndroidPlugin$1.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/tokbox/cordova/OpenTokAndroidPlugin$2.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/tokbox/cordova/OpenTokAndroidPlugin$RunnablePublisher.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/tokbox/cordova/OpenTokAndroidPlugin$RunnableSubscriber.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/tokbox/cordova/OpenTokAndroidPlugin$RunnableUpdateViews$CustomComparator.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/tokbox/cordova/OpenTokAndroidPlugin$RunnableUpdateViews.class \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/com/tokbox/cordova/OpenTokAndroidPlugin.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/nl/xservices/plugins/Toast$1.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/nl/xservices/plugins/Toast.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/api/Dummy.class \
@@ -138,5 +144,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/statusbar/StatusBar$3.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/classes/org/apache/cordova/statusbar/StatusBar.class \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/dexedLibs/classes-deaa03c195172bd61103b5e7ea31eca3.jar \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/dexedLibs/opentok-android-sdk-2.3.1-f9fc8a33ac3d63de52dfe6ba25758e5e.jar \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/dexedLibs/gcm-137063b15ab0c03d5d1113d7a6fbfb80.jar \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/dexedLibs/android-support-v13-7045aadcc44812cc7c60d43930d34dad.jar \

@@ -24,7 +24,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/drawable-xxhdpi/ic_action_next_item.png \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/drawable-xxhdpi/ic_action_previous_item.png \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/drawable-xxhdpi/ic_action_remove.png \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/raw/ringtone.mp3 \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/values/strings.xml \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/res/xml/config.xml \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/res/drawable/icon.png \
@@ -54,8 +53,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_remove.png \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/_where-is-www.txt \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/alert.mp3 \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/beep.wav \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/cordova.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/cordova_plugins.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/css \
@@ -64,6 +61,7 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/opentok.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/plugins \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/css/components.css \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/css/login.css \
@@ -92,6 +90,7 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/jquery \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/lodash \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/ng-cordova.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/opentok.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/restangular \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/angular-bootstrap/ui-bootstrap-tpls.min.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/angular-local-storage/CHANGELOG.md \
@@ -262,6 +261,7 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/menu \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/NFC \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/onlineBooking \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/security \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/submitinjury \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/user \
@@ -297,6 +297,15 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/onlineBooking/services/OnlineBookingService.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/onlineBooking/views/rlob_choose_appointment_calendar_template.html \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/onlineBooking/views/rlob_info_booking.html \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/controller \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/OpenTok.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/services \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/views \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/controller/OpenTokController.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/services/OpenTokServices.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/views/list.html \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/views/main.html \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/opentok/views/structure.html \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/security/controller \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/security/security.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/security/services \
@@ -320,7 +329,6 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/submitinjury/views/structure.html \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/submitinjury/views/successinjury.html \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/submitinjury/views/modal/imageDetail.html \
-/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/submitinjury/views/modal/modalPicture.html \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/user/controller \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/user/services \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/user/user.js \

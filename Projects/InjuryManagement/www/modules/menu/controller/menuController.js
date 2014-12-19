@@ -1,11 +1,17 @@
 angular.module("starter.menu.controller",[])
-    .controller("menuController",function($scope, localStorageService, $state, UserService, $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs, $ionicLoading, $timeout, $cordovaMedia){
+    .controller("menuController",function($scope, localStorageService, $state, UserService, $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs, $ionicLoading, $timeout, $cordovaMedia, $ionicPlatform){
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
         $scope.Injurymenu = [];
         $scope.user = userInfo.Booking_Person;
         $scope.userName = userInfo.user_name;
         $scope.selectedMenu = null;
+        if(ionic.Platform.isAndroid() || ionic.Platform.isIOS())
+        {
+            var mediaSource = $cordovaMedia.newMedia("http://testapp.redimed.com.au:3000/api/im/pushSound");
+            var media = mediaSource.media
+        }
+
         UserService.getUserInfo(userInfo.id).then(function(data){
             $scope.img = data.img;
         })
@@ -105,11 +111,6 @@ angular.module("starter.menu.controller",[])
 
 
         $scope.$on('pushNotificationReceived', function (event, notification) {
-            var mediaSource = $cordovaMedia.newMedia("/android_asset/www/beep.wav");
-            var promise = mediaSource.promise;
-            var mediaStatus = mediaSource.mediaStatus;
-            var media = mediaSource.media;
-            $cordovaMedia.play(media);
             if (ionic.Platform.isAndroid()) {
                 handleAndroid(notification);
             }
@@ -121,9 +122,11 @@ angular.module("starter.menu.controller",[])
         //Android.
         function handleAndroid(notification) {
             if (notification.event == "message" && userInfo.user_type == "Driver") {
+                $cordovaMedia.play(media);
                 $cordovaDialogs.alert(notification.message, "Emergency").then(function (){
                     localStorageService.set("idpatient_notice", notification.payload.injury_id)
                     $state.go('app.driver.detailInjury', {}, {reload: true});
+                    $cordovaMedia.stop(media);
                 })
             }
             else if (notification.event == "error")
