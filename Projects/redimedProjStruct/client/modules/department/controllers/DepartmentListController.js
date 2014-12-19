@@ -308,7 +308,7 @@ angular.module("app.loggedIn.department.list.controller", [
                 DepartmentService.saveDeptHeaders($scope.department.select, $scope.searchHeader.select_list).then(function (response) {
                     if (response.status === 'success') {
                         toastr.success('Save Successfully!!!', "Success");
-                        $scope.reloadpage();
+                        $scope.header_panel.reload();
                     }
                 });
             },
@@ -370,7 +370,7 @@ angular.module("app.loggedIn.department.list.controller", [
                 DepartmentService.saveDeptServices($scope.department.select, $scope.searchService.select_list).then(function (response) {
                     if (response.status === 'success') {
                         toastr.success('Save Successfully!!!', "Success");
-                        $scope.reloadpage();
+                        $scope.service_panel.reload();
                     }
                 });
             },

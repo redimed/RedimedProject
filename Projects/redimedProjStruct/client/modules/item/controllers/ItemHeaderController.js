@@ -57,7 +57,7 @@ angular.module("app.loggedIn.item.header.controller",[
             ItemService.saveHeaderItems($scope.header_selected, $scope.selectList).then(function(response){
                 if(response.status === 'success') {
                     toastr.success('Save Successfully!!!', "Success");
-                    $scope.reloadpage();
+                    $scope.item_panel.reload();
                 }
             });
         }
