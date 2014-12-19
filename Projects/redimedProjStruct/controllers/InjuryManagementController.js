@@ -9,6 +9,15 @@ var smtpPool = require('nodemailer-smtp-pool');
 var gcm = require('node-gcm');
 var mkdirp = require('mkdirp');
 
+
+var OTKEY = "45110172";
+var OTSECRET = "2c6760b523e735a60c125af9d1a8a1f906bbd4c9";
+
+var OpenTok = require('opentok'),
+    opentok = new OpenTok(OTKEY, OTSECRET);
+
+
+
 var transport = nodemailer.createTransport(smtpTransport({
     host: "mail.redimed.com.au", // hostname
     secure: false,
@@ -343,6 +352,23 @@ module.exports = {
                 });
             })
             .error(function (err) {
+                console.log(err);
+            })
+    },
+    makeCall: function(req,res){
+        var userId = req.body.user_id;
+
+        db.UserToken.find({where:{user_id: userId}},{raw:true})
+            .success(function(data){
+                var token = opentok.generateToken(data.roomSession,{ role: 'moderator' });
+                res.json({
+                    apiKey: OTKEY,
+                    sessionId: data.roomSession,
+                    token: token
+                })
+            })
+            .error(function(err){
+                res.json(err);
                 console.log(err);
             })
     }

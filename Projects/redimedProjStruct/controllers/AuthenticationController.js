@@ -1,6 +1,12 @@
 var bcrypt = require('bcrypt-nodejs');
 var db = require('../models');
 
+var OTKEY = "45110172";
+var OTSECRET = "2c6760b523e735a60c125af9d1a8a1f906bbd4c9";
+
+var OpenTok = require('opentok'),
+    opentok = new OpenTok(OTKEY, OTSECRET);
+
 module.exports = {
     login: function(req,username,password,done) {
         var platform = req.body.platform != null || typeof req.body.platform != 'undefined' ? req.body.platform : null;
@@ -19,16 +25,19 @@ module.exports = {
 
                             if(platform != null)
                             {
+                                opentok.createSession({ mediaMode: 'routed' },function(err, session) {
+                                    if (err) throw err;
 
-                                db.UserToken.findOrCreate({
-                                    user_id : data.id,
-                                    user_type: data.user_type,
-                                    android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
-                                    ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
-                                })
-                                    .success(function(data,created){console.log('Created: ',created)})
-                                    .error(function(err){res.json({status:'Error',error:err});})
-
+                                    db.UserToken.findOrCreate({
+                                        user_id : data.id,
+                                        user_type: data.user_type,
+                                        android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
+                                        ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null,
+                                        roomSession: session.sessionId
+                                    })
+                                        .success(function(data,created){console.log('Created: ',created)})
+                                        .error(function(err){res.json({status:'Error',error:err});})
+                                });
                             }
 
 
