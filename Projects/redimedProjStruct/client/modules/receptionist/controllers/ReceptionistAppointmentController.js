@@ -222,9 +222,13 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 							if(flag !== false){
 								$scope.overviewAppointment[i].doctors.push(doctors[flag]);
 								$scope.overviewAppointment[i].cals.push(cals[flag]);
+									
+								if(data[i].SERVICES !== null){
+									$scope.overviewAppointment[i].services.push(services[flag]);
+								}
+								
 								if(data[i].SERVICE_COLORS !== null){
 									$scope.overviewAppointment[i].service_colors.push(service_colors[flag]);
-									$scope.overviewAppointment[i].services.push(services[flag]);
 								}
 								else{
 									$scope.overviewAppointment[i].service_colors.push("#ffffff");
