@@ -187,7 +187,7 @@ module.exports =
                 " GROUP_CONCAT(cac.SERVICE_ID ORDER BY cac.DOCTOR_ID) AS SERVICES,"+
                 " GROUP_CONCAT(cac.DOCTOR_ID ORDER BY cac.DOCTOR_ID) AS doctor,"+
                 " GROUP_CONCAT(d.NAME ORDER BY cac.DOCTOR_ID) AS doctor_name,"+
-                " GROUP_CONCAT(ss.SERVICE_COLOR ORDER BY cac.DOCTOR_ID) AS SERVICE_COLORS,"+
+                " GROUP_CONCAT(IFNULL(ss.SERVICE_COLOR, '#FFFFFF') ORDER BY cac.DOCTOR_ID) AS SERVICE_COLORS,"+
                 " GROUP_CONCAT(cac.STATUS ORDER BY cac.DOCTOR_ID) AS status,"+
                 " GROUP_CONCAT(cac.CAL_ID ORDER BY cac.DOCTOR_ID) AS CAL_ID,"+
                 " GROUP_CONCAT(IFNULL(cac.PATIENTS, 'No Patient') ORDER BY cac.DOCTOR_ID separator '|') AS PATIENTS"+

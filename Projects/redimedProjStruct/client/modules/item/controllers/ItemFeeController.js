@@ -5,11 +5,15 @@ angular.module("app.loggedIn.item.fee.controller",[
     $scope.private_funds_panel = {};
     $scope.fee_groups_panel = {};
 
-    var uploader = $scope.uploader = new FileUploader({
-        url: 'api/erm/v2/fees/upload',
-        autoUpload: true,
-        removeAfterUpload: true,
-    });
+        $scope.feeGroup = {};
+        $scope.feeType = {};
+        $scope.pf = {};
+
+        var uploader = $scope.uploader = new FileUploader({
+            url: 'api/erm/v2/fees/upload',
+            autoUpload: true,
+            removeAfterUpload: true,
+        });
 
     uploader.isUploadOnGroup = function(){
         return uploader.url == 'api/erm/v2/fees/upload_group_price_source';
@@ -90,28 +94,32 @@ angular.module("app.loggedIn.item.fee.controller",[
                 {field: 'FEE_GROUP_TYPE', label: 'Type'},
                 {field: 'PRICE_SOURCE', label: 'Price Source'},            
             ],
-            use_actions: true, 
-            actions: [
-                {
-                    class: 'fa fa-pencil', title: 'Edit',
-                    callback: function(item){
-                        console.log(item)
-                    }
-                },   
-                {
-                    class: 'fa fa-upload', title: 'Upload Price Source',
-                    callback: function(item){
-                        console.log(item)
-                        $scope.fee_groups.select_item = item;
-                        uploader.url = 'api/erm/v2/fees/upload_group_price_source';
-                        uploader.formData[0]={};
-                        uploader.formData[0].FEE_GROUP_ID = item.FEE_GROUP_ID
-						
-						$timeout(function(){
-							$('#fee_type_upload').click();
-						}, 100);
-						
-						/*
+                use_actions: true,
+                actions: [
+                    {
+                        class: 'fa fa-pencil',
+                        title: 'Edit',
+                        callback: function (item) {
+                            console.log(item);
+                            $scope.feeGroup.id = item.FEE_GROUP_ID;
+                            $scope.editGroupForm.open();
+                        }
+                },
+                    {
+                        class: 'fa fa-upload',
+                        title: 'Upload Price Source',
+                        callback: function (item) {
+                            console.log(item)
+                            $scope.fee_groups.select_item = item;
+                            uploader.url = 'api/erm/v2/fees/upload_group_price_source';
+                            uploader.formData[0] = {};
+                            uploader.formData[0].FEE_GROUP_ID = item.FEE_GROUP_ID
+
+                            $timeout(function () {
+                                $('#fee_type_upload').click();
+                            }, 100);
+
+                            /*
 						angular.element('#fee_type_upload').bind('click', function(){
 							this.click();
 						});
@@ -172,6 +180,8 @@ angular.module("app.loggedIn.item.fee.controller",[
                     class: 'fa fa-pencil', title: 'Edit',
                     callback: function(item){
                         console.log(item)
+                            $scope.feeType.id = item.FEE_TYPE_ID;
+                            $scope.editTypeForm.open();
                     }
                 },   
                 {
@@ -207,19 +217,149 @@ angular.module("app.loggedIn.item.fee.controller",[
         }
     }
 
-    $scope.private_funds = {
-        options: {
-            api: 'api/erm/v2/fees/search_fund_fees',
-            scope: $scope.private_funds_panel,
-            not_paging: true,
-            method: 'post',
-            columns: [
-                {field: 'PF_id', is_hide: true},
-                {field: 'Isenable', is_hide: true},
-                {field: 'Fund_name', label: 'Fund name'},
-                {field: 'isAHSA', label: 'AHSA', type: 'checkbox', disabled: true},    
-                {field: 'isBUPA', label: 'BUPA', type: 'checkbox', disabled: true},        
-            ]
+
+
+
+
+        $scope.private_funds = {
+            options: {
+                api: 'api/erm/v2/fees/search_fund_fees',
+                scope: $scope.private_funds_panel,
+                not_paging: true,
+                method: 'post',
+                columns: [
+                    {
+                        field: 'PF_id',
+                        is_hide: true
+                    },
+                    {
+                        field: 'Isenable',
+                        is_hide: true
+                    },
+                    {
+                        field: 'Fund_name',
+                        label: 'Fund name'
+                    },
+                    {
+                        field: 'isAHSA',
+                        label: 'AHSA',
+                        type: 'checkbox',
+                        disabled: true
+                    },
+                    {
+                        field: 'isBUPA',
+                        label: 'BUPA',
+                        type: 'checkbox',
+                        disabled: true
+                    },
+            ],
+                use_actions: true,
+                actions: [
+                    {
+                        class: 'fa fa-pencil',
+                        title: 'Edit',
+                        callback: function (item) {
+                            console.log(item);
+                            $scope.pf.id = item.PF_id;
+                            $scope.editPrivateFundsForm.open();
+                        }
+                },
+                    ]
+            },
+
         }
-    }
-})
+
+        $scope.addGroupForm = {
+            is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                if (response.status == 'success')
+                    $scope.fee_groups_panel.reload();
+            }
+        }
+
+        $scope.editGroupForm = {
+            is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                if (response.status == 'success')
+                    $scope.fee_groups_panel.reload();
+                $scope.fee_types_panel.reload();
+            }
+        }
+
+        $scope.addTypeForm = {
+            options: {
+                groupSelect: $scope.fee_groups_panel
+            },
+            is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                if (response.status == 'success')
+                    $scope.fee_types_panel.reload();
+            }
+
+        }
+
+        $scope.editTypeForm = {
+            options: {
+                groupSelect: $scope.fee_groups_panel
+            },
+            is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                if (response.status == 'success')
+                    $scope.fee_types_panel.reload();
+            }
+        }
+
+        $scope.addPrivateFundsForm = {
+            is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                if (response.status == 'success')
+                    $scope.private_funds_panel.reload();
+            }
+        }
+
+        $scope.editPrivateFundsForm = {
+            is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                if (response.status == 'success')
+                    $scope.private_funds_panel.reload();
+            }
+        }
+
+
+    })
