@@ -36,6 +36,9 @@
     <feature name="StatusBar">
         <param name="android-package" onload="true" value="org.apache.cordova.statusbar.StatusBar" />
     </feature>
+    <feature name="OpenTokPlugin">
+        <param name="android-package" value="com.tokbox.cordova.OpenTokAndroidPlugin" />
+    </feature>
     <name>InjuryManagement</name>
     <description>
     An Ionic Framework and Cordova project.

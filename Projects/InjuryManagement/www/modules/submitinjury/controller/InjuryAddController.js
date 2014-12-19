@@ -67,12 +67,12 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         });
 
         //CONFIG MODAL DETAIL PICTURE
-        $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/modalPicture.html', function(modal) {
-            $scope.pictureModal = modal;
-        },{
-            scope: $scope,
-            animation: 'slide-in-up'
-        });
+        //$ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/modalPicture.html', function(modal) {
+        //    $scope.pictureModal = modal;
+        //},{
+        //    scope: $scope,
+        //    animation: 'slide-in-up'
+        //});
 
         //VALID NEXT FORM DESCRIPTION INJURY (TAKE PHOTO)
         $scope.nextform = function(info) {
@@ -257,7 +257,6 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             }, options);
         }
 
-        $scope.isLoading = false;
 
         //CHECK VALID MOBILE AND EMAIL
         $scope.Checkfield = function (isMobile) {
@@ -281,18 +280,15 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             {
                 InjuryServices.checkEmail($scope.worker.Email).then(function (data) {
                     if (data.status == 'success')
-                        $scope.isLoading = true;
                     $timeout(function (){
                         console.log(data.data.length);
                         if (data.data.length == 0) {
                             $scope.isFailEmail = false;
-                            $scope.isLoading = !$scope.isLoading;
                         }
                         else {
                             $scope.isFailEmail = true;
-                            $scope.isLoading = false;
                         }
-                    },5000)
+                    }, 5000)
                 })
             }
         }
@@ -358,14 +354,15 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                             }
                         });
                     }
-
                 }
             }
         };
 
         //SUBMIT END INSERT INJURY LAST
         $scope.submitInjuryAll = function () {
+
             $scope.worker.infoMaps =   $scope.infoMaps;
+
             $ionicLoading.show({
                 template: "<div class='icon ion-ios7-reloading'></div>"+
                 "<br />"+
@@ -462,6 +459,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.isActiveTab = function(tabUrl) {
             return tabUrl == $scope.currentTab;
         };
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/InjuryManagement-v1.0
         $scope.ad = {};
         $scope.result1 = '';
         $scope.options1 = null;

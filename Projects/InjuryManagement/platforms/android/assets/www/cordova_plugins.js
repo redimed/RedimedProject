@@ -276,7 +276,8 @@ module.exports.metadata =
     "org.apache.cordova.geolocation": "0.3.10",
     "org.apache.cordova.inappbrowser": "0.5.3",
     "org.apache.cordova.media": "0.2.15",
-    "org.apache.cordova.statusbar": "0.1.8"
+    "org.apache.cordova.statusbar": "0.1.8",
+    "com.tokbox.cordova.opentok": "1.0.2"
 }
 // BOTTOM OF METADATA
 });

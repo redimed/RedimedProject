@@ -111,7 +111,7 @@
                     </label>
 
                     <label class="item item-input" ng-class="{'has-error':(isSubmit && info.Email.$invalid) || isFailEmail}">
-                        <span class="input-label span-input-color">Email {{isLoading}}</span>
+                        <span class="input-label span-input-color">Email</span>
                         <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-change="Checkfield(isMobile = false)" ng-blur="isSuccess = false" ng-disabled="worker.Patient_id != -1 && temp1.Email"/>
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Email.$invalid || isFailEmail}"></i>
                         <i ng-class="{'icon ion-loading-a':isLoading}"></i>
@@ -128,7 +128,7 @@
 
                     <label class="item item-input" ng-class="{'has-error':isSubmit && info.DOB.$invalid}">
                         <span class="input-label span-input-color">Birthday</span>
-                        <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()" />
+                        <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()"  min="1865-01-01" max="1995-01-01" />
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.DOB.$invalid}"></i>
                     </label>
 
