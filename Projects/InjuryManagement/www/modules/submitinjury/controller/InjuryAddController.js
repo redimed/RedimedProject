@@ -365,6 +365,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
         //SUBMIT END INSERT INJURY LAST
         $scope.submitInjuryAll = function () {
+            $scope.worker.infoMaps =   $scope.infoMaps;
             $ionicLoading.show({
                 template: "<div class='icon ion-ios7-reloading'></div>"+
                 "<br />"+
@@ -460,112 +461,199 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
         $scope.isActiveTab = function(tabUrl) {
             return tabUrl == $scope.currentTab;
-        }
-
-
-
-
-
-
-
-
-        $scope.isCollapsed = false;
-        //maps
-        //Google map
-        $scope.testMap = function(){
-
-            new GMaps({
-                div: '#map',
-                lat: -12.043333,
-                lng: -77.028333
-            });
-        }
-
+        };
+        $scope.ad = {};
+        $scope.result1 = '';
+        $scope.options1 = null;
+        $scope.details1 = '';
+        $scope.infoMaps =  $scope.ad;
     })
-
-    .directive("mdtMap", function(){
-        return {
-            restrict: "A",
-            replace: "true",
-            scope:{
-                address: '='
-            },
-            link: function(scope, element, attrs){
-                var id = "#"+attrs.id;
-                alert(id);
-                //alert(scope.address);
-                var map = new GMaps({
-                    el: id,
-                    lat: -12.043333,
-                    lng: -77.028333,
-                    zoomControl : true,
-                    zoomControlOpt: {
-                        style : 'SMALL',
-                        position: 'TOP_LEFT'
-                    },
-                    panControl : false,
-                    streetViewControl : false,
-                    mapTypeControl: false,
-                    overviewMapControl: false
-                });
-
-                GMaps.geolocate({
-                    success: function(position) {
-                        map.setCenter(position.coords.latitude, position.coords.longitude);
-                        alert(position);
-                        map.addMarker({
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                            title: 'Lima',
-                            click: function(e) {
-                                alert('You clicked in this marker');
-                            }
+        .directive("mdtMap", function($http,$ionicLoading){
+            return {
+                restrict: "A",
+                replace: "true",
+                scope:{
+                    address: '=',
+                    lo:'=',
+                    ad:'='
+                },
+                link: function(scope, element, attrs){
+                    var id = "#"+attrs.id;
+                    var geo ;
+                    $ionicLoading.show({
+                        template: "<div class='icon ion-ios7-reloading'></div>"+
+                        "<br />"+
+                        "<span>Acquiring the current location...</span>",
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
+                    });
+                    var map = new GMaps({
+                        el: id,
+                        lat: -32.280625,
+                        lng: 115.736246,
+                        zoomControl : true,
+                        zoomControlOpt: {
+                            style : 'SMALL',
+                            position: 'TOP_LEFT'
+                        },
+                        panControl : false,
+                        streetViewControl : false,
+                        mapTypeControl: false,
+                        overviewMapControl: false
+                    });
+                    var location =  function(){
+                        $ionicLoading.show({
+                            template: "<div class='icon ion-ios7-reloading'></div>"+
+                            "<br />"+
+                            "<span>Acquiring the current location...</span>",
+                            animation: 'fade-in',
+                            showBackdrop: true,
+                            maxWidth: 200,
+                            showDelay: 0
                         });
+                 GMaps.geolocate({
+                     success: function(position) {
 
-                    },
-                    error: function(error) {
-                        alert('Geolocation failed: '+error.message);
-                    },
-                    not_supported: function() {
-                        alert("Your browser does not support geolocation");
+                         map.setCenter(position.coords.latitude, position.coords.longitude);
+                         geo = position;
+                         map.removeMarkers();
+                         map.addMarker({
+                             lat: position.coords.latitude,
+                             lng: position.coords.longitude
+                         });
+
+                         $http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+position.coords.latitude+','+ position.coords.longitude+'&sensor=true').then(function(data){
+
+                                    scope.ad.lat = position.coords.latitude;
+                                    scope.ad.lng = position.coords.longitude;
+                                    scope.ad.format_address =  data.data.results[0].formatted_address;
+                                    $ionicLoading.hide();
+                         });
+                     },
+                     error: function(error) {
+                         alert('Geolocation failed: '+error.message);
+                     },
+                     not_supported: function() {
+                         alert("Your browser does not support geolocation");
+                     }
+                     //,
+                     //always: function() {
+                     //    alert("done");
+                     //}
+                 });
+             };
+                    location();
+                map.addControl({
+                    position:'top_right',
+                    content:'<i class="fa fa-location-arrow fa-4x text-danger"></i>',
+                    events:{
+                        click: function(){
+                            location();
+                        }
                     }
-                    //,
-                    //always: function() {
-                    //    alert("done");
-                    //}
                 });
-
-
                 var ad= function(){
+                    $ionicLoading.show({
+                        template: "<div class='icon ion-ios7-reloading'></div>"+
+                        "<br />"+
+                        "<span>waiting...</span>",
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
+                    });
                     GMaps.geocode({
-                        address:scope.address ,
+                        address:scope.address,
                         callback: function(results, status){
                             if(status=='OK'){
                                 var latlng = results[0].geometry.location;
                                 map.setCenter(latlng.lat(), latlng.lng());
-
+                                map.removeMarkers();
                                 map.addMarker({
                                     lat: latlng.lat(),
                                     lng: latlng.lng()
                                 });
+                                scope.ad.lat = latlng.lat();
+                                scope.ad.lng = latlng.lng();
+                                scope.ad.format_address =  scope.address;
+                                $ionicLoading.hide();
                             }
                         }
                     });
-                }
-
-                scope.$watch('address',function(newadd,oldadd){
-                    if(typeof newadd!== undefined){
-
-                        scope.address = newadd;
-
-                        ad();
-                    }
+                };
+                //scope.$watch('address',function(newadd,oldadd){
+                //    if(typeof newadd!== undefined){
+                //        scope.address = newadd;
+                //        ad();
+                //    }
+                //});
+                //event out ditective
+                scope.$watch('lo',function(newval,oldval){
+                  if(newval==true){
+                      scope.lo = false;
+                      ad();
+                  }
                 })
-
-
-
             }
         }
+    })
+    .directive('ngAutocomplete', function($parse) {
+        return {
+            scope: {
+                details: '=',
+                ngAutocomplete: '=',
+                options: '='
+            },
+            link: function(scope, element, attrs, model) {
+                //options for autocomplete
+                var opts;
+                //convert options provided to opts
+                var initOpts = function() {
+                    opts = {};
+                    if (scope.options) {
+                        if (scope.options.types) {
+                            opts.types = [];
+                            opts.types.push(scope.options.types)
+                        }
+                        if (scope.options.bounds) {
+                            opts.bounds = scope.options.bounds
+                        }
+                        if (scope.options.country) {
+                            opts.componentRestrictions = {
+                                country: scope.options.country
+                            }
+                        }
+                    }
+                };
+                initOpts();
+                //create new autocomplete
+                //reinitializes on every change of the options provided
+                var newAutocomplete = function() {
+                    scope.gPlace = new google.maps.places.Autocomplete(element[0], opts);
+                    google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+                        scope.$apply(function() {
+//              if (scope.details) {
+                            scope.details = scope.gPlace.getPlace();
+//              }
+                            scope.ngAutocomplete = element.val();
+                        });
+                    })
+                };
+                newAutocomplete();
+                //watch options provided to directive
+                scope.watchOptions = function () {
+                    return scope.options
+                };
+                scope.$watch(scope.watchOptions, function () {
+                    initOpts();
+                    newAutocomplete();
+                    element[0].value = '';
+                    scope.ngAutocomplete = element.val();
+                }, true);
+            }
+        };
     });
 
 //.directive('noDragRight', ['$ionicGesture', function($ionicGesture) {
