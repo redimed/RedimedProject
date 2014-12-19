@@ -15,8 +15,8 @@ angular.module('app.loggedIn.iso.service',[])
             //tannv.dts@gmail.com
             getTreeDir:function()
             {
-                var result = api.one('iso/iso-tree-dir/get-tree-dir');
-                return result.get();
+                var result = api.all('iso/iso-tree-dir/get-tree-dir');
+                return result.post();
             },
             //tao mot folder
             //tannv.dts@gmail.com

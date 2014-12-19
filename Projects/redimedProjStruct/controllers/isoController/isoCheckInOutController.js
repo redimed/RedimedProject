@@ -10,7 +10,7 @@ module.exports =
 	buildFirstCheckIn:function(req,res,next)
 	{
 		var info=req.body;
-		var userInfo=req.cookies.userInfo;
+		var userInfo=JSON.parse(req.cookies.userInfo);
 		var newRow={
 			NODE_ID:info.newDocument.NODE_ID,
 			CHECK_IN_COMMENT:'CREATE DOCUMENT',

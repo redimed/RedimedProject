@@ -15,7 +15,9 @@ angular.module('app.loggedIn.rlob',
     ,'app.loggedIn.rlob.adminBookingReport.type1.controller'
     ,'app.loggedIn.rlob.adminBookingReport.type2.controller'
     ,'app.loggedIn.rlob.adminDocumentStatusSummary.controller'
-    ,'app.loggedIn.rlob.adminBookingMessages.controller'])
+    ,'app.loggedIn.rlob.adminBookingMessages.controller'
+    ,'app.loggedIn.rlob.paperless.controller'
+    ,'app.loggedIn.rlob.paperless.ams6.controller'])
     .config(function($stateProvider){
         $stateProvider
 
@@ -85,6 +87,19 @@ angular.module('app.loggedIn.rlob',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/admin-booking-messages.html',
                 controller: 'rlob_admin_bookingMessagesController'
             })
+
+            .state('loggedIn.rlob.paperless',{
+                url:'/booking/paperless',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/paperless.html',
+                controller: 'rlob_paperlessController'
+            })
+
+            .state('loggedIn.rlob.paperless.ams6',{
+                url:'/ams6',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/paperless/ams6.html',
+                controller: 'rlob_paperless_ams6Controller'
+            })
+
 //            .state('loggedIn.rlob.rlob_booking_detail', {
 //                url: '/booking/booking-detail/:bookingId',
 //                views: {

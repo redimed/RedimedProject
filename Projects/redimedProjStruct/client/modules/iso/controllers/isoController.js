@@ -53,7 +53,7 @@ angular.module('app.loggedIn.iso.controller',[])
 	    $scope.tempData={};
 	    $scope.tempData[-1]={};
 	    $scope.treeData={};
-	    isoService.treeDir.getTreeDir()
+	    isoService.treeDir.getTreeDir($scope.userInfo.id)
 	    	.then(function(data){
     			if(data.status=='success')
     			{
@@ -83,6 +83,19 @@ angular.module('app.loggedIn.iso.controller',[])
 						$scope.tempData[data.data[i].NODE_ID].relativePath=
 							$scope.tempData[data.data[i].FATHER_NODE_ID].relativePath+
 							'\\'+$scope.tempData[data.data[i].NODE_ID].NODE_NAME;
+
+						//tannv.dts@gmail.com
+						//tinh ke thua
+						//neu user co nhung quyen han tren node cha, thi se co quyen han tren node con
+						//user co quyen han nao tren node cha cung co quyen han do tren node con
+						//*
+						//neu node khong co ACCESSIBLE_USER_ID trung voi user dang nhap
+						//thi kiem tra node cha xem user hien tai co quyen han khong
+						//neu co thi node nay user cung co quyen han
+						if($scope.tempData[data.data[i].NODE_ID].ACCESSIBLE_USER_ID!=$scope.userInfo.id)
+						{
+							isoNode.inheritPermission($scope.tempData[data.data[i].NODE_ID],$scope.tempData[data.data[i].FATHER_NODE_ID]);
+						}
 					}
 					//----------------------------------------------
 
@@ -171,7 +184,6 @@ angular.module('app.loggedIn.iso.controller',[])
 	   		$scope.newFolder.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
     		$scope.newFolder.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newFolder.nodeName;
     		$scope.newFolderBackError=angular.copy($scope.newFolderBackErrorTemplate);
-
     		isoService.treeDir.checkDupEntry($scope.newFolder.fatherNodeId,$scope.newFolder.nodeName)
     		.then(function(data){
     			if(data.status=='success')
@@ -200,6 +212,10 @@ angular.module('app.loggedIn.iso.controller',[])
 							$scope.selectedTreeNode.nodes={};
 						}
 						$scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(data.data);
+						if(!data.data.ACCESSIBLE_USER_ID)
+						{
+							isoNode.inheritPermission($scope.selectedTreeNode.nodes[data.data.NODE_ID],$scope.selectedTreeNode);
+						}
 	    			}
 	    			else
 	    			{
@@ -209,7 +225,7 @@ angular.module('app.loggedIn.iso.controller',[])
 	    		},function(err){
 	    				msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,isoLang.createFolderError);
 	    		});
-	    }
+	    }	   
 
 	    /***
 	    //Ham tao file
@@ -251,7 +267,6 @@ angular.module('app.loggedIn.iso.controller',[])
 	    		uploader.queue[0].formData[0]={};
     			uploader.queue[0].formData[0]=$scope.newDocument;
     			uploader.uploadAll();
-    			
 	    	}
 	    	else
 	    	{
@@ -315,6 +330,11 @@ angular.module('app.loggedIn.iso.controller',[])
 						$scope.selectedTreeNode.nodes={};
 					}
 					$scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(response.data);
+					if(!data.data.ACCESSIBLE_USER_ID)
+					{
+						isoNode.inheritPermission($scope.selectedTreeNode.nodes[data.data.NODE_ID],$scope.selectedTreeNode);
+					}
+						
         		}
         		else
         		{
