@@ -55,6 +55,8 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 						PatientService.mdtVerifiedMedicare(options).then(function(response){
 							if(response.status.code == '0')
 								scope.isMedicare = true;
+							else
+								scope.isMedicare = false;
 						})
 					}//end medicare length
 				}//end isNaN
