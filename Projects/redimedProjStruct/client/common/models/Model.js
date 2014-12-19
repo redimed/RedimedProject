@@ -532,9 +532,9 @@ angular.module("app.model", [])
 //FEE GROUP MODEL
 .value('FeeGroupModel', {
     FEE_GROUP_NAME: '',
-    FEE_GROUP_TYPE: '',
+    FEE_GROUP_TYPE: 'fee_type',
     PRICE_SOURCE: '',
-    ISENABLE: null,
+    ISENABLE: '1',
     CREATION_DATE: null,
     LAST_UPDATE_DATE: null,
     CREATED_BY: null,
@@ -548,7 +548,7 @@ angular.module("app.model", [])
     PRICE_SOURCE: '',
     FEE_GROUP_ID: null,
     FEE_GROUP_ORDER: null,
-    ISENABLE: null,
+    ISENABLE: '1',
     Creation_date: null,
     Created_by: null,
     Last_update_date: null,
@@ -559,7 +559,7 @@ angular.module("app.model", [])
 //PRIVATE FUNDS MODEL
 .value('PrivateFundsModel', {
     Fund_name: '',
-    Isenable: null,
+    Isenable: '1',
     Created_by: null,
     Creation_date: null,
     Last_updated_by: null,

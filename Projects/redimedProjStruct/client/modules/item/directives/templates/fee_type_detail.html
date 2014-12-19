@@ -24,7 +24,7 @@
             <span class="field" ng-class="{'has-error': mainForm.fee_group_type.$invalid && isSubmit}">
 			<label for="fee_group_type">Fee group</label>
 			<select name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_ID" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in groupOptions | filter:{FEE_GROUP_TYPE: '!item_fee_type'} | filter:{FEE_GROUP_TYPE:'!private_fund'}" float-label required>
-			    <option disabled selected>Fee group</option>
+			    <option value="" disabled selected>Fee group</option>
 			</select>
                 <span ng-show="mainForm.fee_group_type.$invalid && isSubmit">
                     <span class="mdt-popover above" ng-show="mainForm.fee_group_type.$error.required">
