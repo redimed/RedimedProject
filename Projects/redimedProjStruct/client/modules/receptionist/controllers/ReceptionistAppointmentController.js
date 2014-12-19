@@ -196,8 +196,12 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 						var doctors = data[i].doctor.split(",");
 						var cals = data[i].CAL_ID.split(",");
-						if(data[i].SERVICE_COLORS !== null){
+						
+						if(data[i].SERVICES){
 							var services = data[i].SERVICES.split(",");
+						}
+						
+						if(data[i].SERVICE_COLORS !== null){
 							var service_colors = data[i].SERVICE_COLORS.split(",");
 						}
 
