@@ -13,9 +13,7 @@ var Doctor = db.Doctor;
 var Company = db.Company;
 var APPTCAL = db.APPTCAL;
 var RedimedSite = db.RedimedSite;
-
 var fs = require('fs');
-
 
 module.exports = {
     loadSA1: function (req, res) {
@@ -34,13 +32,7 @@ module.exports = {
                 }, {raw: true})
                     .success(function (dataS) {
                         if (dataS == null || dataS.length == 0) return loadSYS(req, res, info);
-                        linesSACLN.findAll({
-                            where: {
-                                patient_id: patient_id,
-                                CAL_ID: CAL_ID,
-                                SA_ID: 3
-                            }
-                        }, {raw: true})
+                        linesSACLN.findAll({where: {patient_id: patient_id, CAL_ID: CAL_ID, SA_ID: 3}}, {raw: true})
                             .success(function (dataL) {
                                 Patient.find({where: {Patient_id: patient_id}}, {raw: true})
                                     .success(function (patient) {
