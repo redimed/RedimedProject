@@ -10,7 +10,7 @@
                         ng-click="submit(category3Form)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
                 <!--BEGIN PRINT PDF-->
-                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/cat3/{{info.cat_id}}/{{info.patient_id}}/{{info.cal_id}}"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/cat3/{{info.cat_id}}/{{info.cal_id}}/{{info.patient_id}}"
                    ng-disabled="infoChanged() || category3Form.$error.maxlength || categoryForm.$error.pattern || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>

@@ -9,7 +9,7 @@
                     !infoChanged()"
                         ng-click="submit(cat2Form)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/cat2/{{info.cat_id}}/{{info.patient_id}}/{{info.cal_id}}" target="_self"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/cat2/{{info.cat_id}}/{{info.cal_id}}/{{info.patient_id}}" target="_self"
                    ng-disabled="cat2Form.$error.pattern || cat2Form.$error.maxlength || cat2Form.$error.required || infoChanged() || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
