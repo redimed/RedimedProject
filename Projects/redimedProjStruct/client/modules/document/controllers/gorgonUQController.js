@@ -179,7 +179,7 @@ angular.module('app.loggedIn.document.gorgonUQ.controllers', [])
                     HealthCare: data.HealthCare,
                     Class: data.Class,
                     Restrictions: data.Restrictions,
-                    UQDate: data.UQDate,
+                    UQDate: data.UQDate || new Date(),
                     Created_by: data.Created_by,
                     Creation_date: data.Creation_date,
                     Last_updated_by: data.Last_updated_by,
