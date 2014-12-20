@@ -356,7 +356,7 @@ doctors.`NAME` as doctors_NAME,
 SUBSTRING_INDEX(doctors. `Signature`, ',', -1) as doctors_Signature,
 doctors.`DOB` as doctors_DOB
 FROM
-`cln_patients` cln_patients LEFT JOIN `medical_history` medical_history ON cln_patients.`Patient_id` = medical_history.`PATIENT_ID` LEFT JOIN `companies` ON cln_patients.`company_id` = companies.id LEFT JOIN `doctors` ON medical_history.doctor_id = doctors.doctor_id
+`cln_patients` cln_patients LEFT JOIN `medical_history` medical_history ON cln_patients.`Patient_id` = medical_history.`patient_id` LEFT JOIN `companies` ON cln_patients.`company_id` = companies.id LEFT JOIN `doctors` ON medical_history.doctor_id = doctors.doctor_id
 WHERE
 medical_history.`mh_id` = $P{id}]]>
 	</queryString>
