@@ -32,7 +32,7 @@
         <div class="portlet-body form">
             <ul class="text-info">
                 <li>Check that the questionnaire has been completed correctly.</li>
-                <li>Check that an explanation has been given for every positive response.</li>
+                <li>Check that an explanation has been given for <span class="bold">every</span> positive response.</li>
                 <li>Add any further comments to this form.</li>
             </ul>
         </div>
@@ -42,11 +42,11 @@
         <div class="row">
             <div class="col-md-5 col-sm-6">
                 <label class="control-label bold">Family Name: </label>
-                <label class="control-label bold text-info">{{info.EXAMINER_NAME = patientInfo.First_name}}</label>
+                <label class="control-label bold text-info">{{patientInfo.Sur_name}}</label>
             </div>
             <div class="col-md-5 col-sm-6">
                 <label class="control-label bold">Given Name:</label>
-                <label class="control-label text-info">{{patientInfo.Sur_name}}</label>
+                <label class="control-label text-info">{{patientInfo.First_name}}</label>
             </div>
         </div>
         <div class="row">
@@ -1124,23 +1124,23 @@
                 <div class="col-md-9 col-lg-12 col-sm-9">
                     <label class="control-label col-md-2 col-lg-1 col-sm-2 " style="margin-top: 10px"> Nil</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.AS_Nil == 1" ng-model="info.AS_Nil"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.AS_Wide == 1 || info.AS_Basal == 1 || info.AS_Wheezes == 1 || info.AS_Rub == 1" ng-checked="info.AS_Nil == 1" ng-model="info.AS_Nil"/>
                     </div>
                     <label class="control-label col-md-4 col-lg-2 col-sm-4 " style="margin-top: 10px"> Widespread crackles</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.AS_Wide == 1" ng-model="info.AS_Wide"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.AS_Nil == 1" ng-checked="info.AS_Wide == 1" ng-model="info.AS_Wide"/>
                     </div>
                     <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px"> Basal crackles</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.AS_Basal == 1" ng-model="info.AS_Basal"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.AS_Nil == 1" ng-checked="info.AS_Basal == 1" ng-model="info.AS_Basal"/>
                     </div>
                     <label class="control-label col-md-2 col-lg-1 col-sm-2 " style="margin-top: 10px"> Wheezes</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.AS_Wheezes == 1" ng-model="info.AS_Wheezes"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.AS_Nil == 1" ng-checked="info.AS_Wheezes == 1" ng-model="info.AS_Wheezes"/>
                     </div>
                     <label class="control-label col-md-4 col-lg-1 col-sm-4 " style="margin-top: 10px"> Rub</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.AS_Rub == 1" ng-model="info.AS_Rub"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.AS_Nil == 1" ng-checked="info.AS_Rub == 1" ng-model="info.AS_Rub"/>
                     </div>
                 </div>
             </div>
@@ -1164,23 +1164,23 @@
                 <div class="col-sm-12 col-md-9 col-lg-12">
                     <label class="control-label col-md-4 col-lg-1 col-sm-4 " style="margin-top: 10px">Normal</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.EC_normal == 1" ng-model="info.EC_normal"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.EC_dermatitis == 1 || info.EC_fungal == 1 || info.EC_structural == 1 || info.EC_wax == 1" ng-checked="info.EC_normal == 1" ng-model="info.EC_normal"/>
                     </div>
                     <label class="control-label col-md-2 col-lg-1 col-sm-2 " style="margin-top: 10px">Dermatitis</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.EC_dermatitis == 1" ng-model="info.EC_dermatitis"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.EC_normal == 1" ng-checked="info.EC_dermatitis == 1" ng-model="info.EC_dermatitis"/>
                     </div>
                     <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px">Fungal infection</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.EC_fungal == 1" ng-model="info.EC_fungal"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.EC_normal == 1" ng-checked="info.EC_fungal == 1" ng-model="info.EC_fungal"/>
                     </div>
                     <label class="control-label col-md-4 col-lg-2 col-sm-4 " style="margin-top: 10px">Structural abnormality</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.EC_structural == 1" ng-model="info.EC_structural"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.EC_normal == 1" ng-checked="info.EC_structural == 1" ng-model="info.EC_structural"/>
                     </div>
                     <label class="control-label col-md-2 col-lg-1 col-sm-2 " style="margin-top: 10px">Wax</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.EC_wax == 1" ng-model="info.EC_wax"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.EC_normal == 1" ng-checked="info.EC_wax == 1" ng-model="info.EC_wax"/>
                     </div>
                 </div>
             </div>
@@ -1189,19 +1189,19 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px">Normal</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.TM_normal == 1" ng-model="info.TM_normal"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.TM_effusion == 1 || info.TM_wet == 1 || info.TM_dry == 1" ng-checked="info.TM_normal == 1" ng-model="info.TM_normal"/>
                     </div>
                     <label class="control-label col-md-1 col-lg-1 col-sm-1 " style="margin-top: 10px">Effusion</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.TM_effusion == 1" ng-model="info.TM_effusion"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.TM_normal == 1" ng-checked="info.TM_effusion == 1" ng-model="info.TM_effusion"/>
                     </div>
                     <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px">Wet perforation</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.TM_wet == 1" ng-model="info.TM_wet"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.TM_normal == 1" ng-checked="info.TM_wet == 1" ng-model="info.TM_wet"/>
                     </div>
                     <label class="control-label col-md-3 col-lg-2 col-sm-3 " style="margin-top: 10px">Dry perforation</label>
                     <div class="col-md-1 col-lg-1 col-sm-1">
-                        <input class="form-control" type="checkbox" ng-checked="info.TM_dry == 1" ng-model="info.TM_dry"/>
+                        <input class="form-control" type="checkbox" ng-disabled="info.TM_normal == 1" ng-checked="info.TM_dry == 1" ng-model="info.TM_dry"/>
                     </div>
                 </div>
             </div>
@@ -1382,35 +1382,31 @@
             <div class="row">
                 <label class="control-label bold col-md-1 col-sm-12" style="font-weight: bold">Scars: </label>
                 <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Nil</label>
-
                 <div class="col-md-1 col-sm-1">
                     <input class="form-control" type="checkbox" ng-checked="info.SCARS_NIL == 1"
+                            ng-disabled="info.SCARS_APPENDIX == 1 || info.SCARS_GALLBLADDER == 1 || info.SCARS_HERNIA == 1 || info.SCARS_OTHER == 1"
                            ng-model="info.SCARS_NIL"/>
                 </div>
                 <label class="control-label col-md-1 col-sm-2"
                        style="margin-top: 10px;text-align: right">Appendix</label>
 
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.SCARS_APPENDIX == 1"
-                           ng-model="info.SCARS_APPENDIX"/>
+                    <input class="form-control" type="checkbox" ng-checked="info.SCARS_APPENDIX == 1" ng-disabled="info.SCARS_NIL == 1" ng-model="info.SCARS_APPENDIX"/>
                 </div>
                 <label class="control-label col-md-2 col-lg-1 col-sm-2" style="margin-top: 10px;text-align: right">Gallbladder</label>
 
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.SCARS_GALLBLADDER == 1"
-                           ng-model="info.SCARS_GALLBLADDER"/>
+                    <input class="form-control" type="checkbox" ng-checked="info.SCARS_GALLBLADDER == 1" ng-disabled="info.SCARS_NIL == 1" ng-model="info.SCARS_GALLBLADDER"/>
                 </div>
                 <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Hernia</label>
 
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.SCARS_HERNIA == 1"
-                           ng-model="info.SCARS_HERNIA"/>
+                    <input class="form-control" type="checkbox" ng-checked="info.SCARS_HERNIA == 1" ng-disabled="info.SCARS_NIL == 1" ng-model="info.SCARS_HERNIA"/>
                 </div>
                 <label class="control-label col-md-1 col-sm-1" style="margin-top: 10px;text-align: right">Other</label>
 
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" ng-checked="info.SCARS_OTHER == 1"
-                           ng-model="info.SCARS_OTHER"/>
+                    <input class="form-control" type="checkbox" ng-checked="info.SCARS_OTHER == 1" ng-disabled="info.SCARS_NIL == 1"  ng-model="info.SCARS_OTHER"/>
                 </div>
             </div>
             <div class="row">

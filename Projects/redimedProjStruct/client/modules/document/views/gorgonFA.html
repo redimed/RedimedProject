@@ -533,7 +533,7 @@
             <div class="row">
                 <div ng-class="{'has-error': gorgonFAForm.Rom_Comments1.$error.required}">
                     <div class="col-md-8 col-sm-10">
-                        <textarea class="form-control" ng-model="info.Rom_Comments1" name="Rom_Comments1"
+                        <textarea class="form-control" ng-model="info.Rom_Comments1" ng-change="collectComment()" name="Rom_Comments1"
                                   ng-required="info.Rom_Neck1 ==1 || info.Rom_Neck1==0 ||info.Rom_Thoracic1==1||
                               info.Rom_Thoracic1==0 ||info.Rom_Lumbar1==1||info.Rom_Lumbar1==0 ||
                               info.Rom_Shoulder1 ==1 || info.Rom_Shoulder1==0 ||
@@ -709,8 +709,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-lg-4 col-sm-7">
-                    <label class="control-label" style="margin-top: 7px">Correct pace maintained for duration of
-                        assessment</label>
+                    <label class="control-label" style="margin-top: 7px">Correct pace maintained for duration of assessment</label>
                 </div>
                 <div class="btn-group col-md-3 col-sm-4">
                     <label class="btn">
@@ -726,7 +725,7 @@
             </div>
             <div class="row">
                 <div class="col-md-8 col-sm-10">
-                    <textarea class="form-control" ng-model="info.Comments2"></textarea>
+                    <textarea class="form-control" ng-model="info.Comments2" ng-change="collectComment()"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -1380,7 +1379,7 @@
             </div>
             <div class="row">
                 <div class="col-md-5 col-lg-4 col-sm-5">
-                    <label style="margin-top: 10px">Demonstrated good squat position to lift load</label>
+                    <label style="margin-top: 10px">Demonstrates good squat position to lift load</label>
                 </div>
                 <div class="col-md-1 col-sm-1">
                     <input class="form-control" ng-model="info.c_36" ng-checked="info.c_36==1" type="checkbox"/>
@@ -1616,9 +1615,8 @@
                         workplace.</label>
                 </div>
                 <div class="row">
-                    <div class="col-md-8 col-sm-10">
-                        <textarea class="form-control" name="LComment" ng-model="info.LComment" required></textarea>
-
+                    <div class="col-md-10 col-sm-10">
+                        <textarea class="form-control" style="height: 200px" name="LComment" ng-model="info.LComment" required></textarea>
                         <div ng-show="gorgonFAForm.LComment.$error.required">
                             <div class="help-block" for="LComment">
                                 <label class="control-label">Required!</label>
@@ -1644,7 +1642,6 @@
                     </label>
                 </div>
             </div>
-
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label class="control-label bold">Date</label>

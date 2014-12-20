@@ -312,6 +312,17 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                 $scope.info.dResult5 = null;
             }
         };
+
+        $scope.collectComment = function () {
+            if($scope.info.Rom_Comments1 != null && $scope.info.Comments2 != null){
+                $scope.info.LComment= $scope.info.Rom_Comments1 + '\n' + $scope.info.Comments2;
+            }else if($scope.info.Rom_Comments1 != null  && $scope.info.Comments2 == null)
+            {
+                $scope.info.LComment= $scope.info.Rom_Comments1;
+            }else if($scope.info.Rom_Comments1 == null  && $scope.info.Comments2 != null){
+                $scope.info.LComment= $scope.info.Comments2;
+            }
+        };
         //=============================================================================
         $scope.maxDateDOB = new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
         $scope.maxDate = date;
