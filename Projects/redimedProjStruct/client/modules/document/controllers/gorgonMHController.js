@@ -566,9 +566,6 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                                     temp[i] = Examiner_Comments.substring(0, location);
                                     Examiner_Comments = Examiner_Comments.substring(temp[i].length + 2, Examiner_Comments.length);
                                 }
-                                console.log("Cut:" + (i + 1) + ":" + temp[i]);
-                                console.log("Before cut:" + Examiner_Comments);
-                                console.log("location" + (i + 1) + ":" + location);
                                 i++;
                             }
                             $scope.info.Q3_ExaminersComments = temp[0];
