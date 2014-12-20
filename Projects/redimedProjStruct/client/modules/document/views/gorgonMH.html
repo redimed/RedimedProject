@@ -5,7 +5,7 @@
                 <button type="button" ng-disabled="!infoChanged()" ng-click="submit(gorgonMHForm)"
                         class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/gorgonMH/{{info.Gorgon_Id}}/{{info.Patient_Id}}/{{info.CalId}}"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/gorgonMH/{{info.Gorgon_Id}}"
                    ng-disabled="gorgonMHForm.$error.pattern || gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required || infoChanged() || isNew"
                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
                 </a>
@@ -3743,8 +3743,8 @@
                     <div class="col-md-5 col-sm-5">
                         <div ng-class="{'has-error': gorgonMHForm.Q16_Allergic.$error.maxlength || gorgonMHForm.Q16_Allergic.$error.required}">
                             <input type="text" name="Q16_Allergic" ng-model="info.Q16_Allergic" class="form-control"
-                                   ng-maxlength="200" ng-required="info.checkAllergic!=1"
-                                   ng-disabled="info.checkAllergic==1">
+                                   ng-maxlength="200" ng-required="info.Q16_checkAllergic!=1"
+                                   ng-disabled="info.Q16_checkAllergic==1">
 
                             <div class="help-block" ng-show="gorgonMHForm.Q16_Allergic.$error.maxlength">
                                 <label class="control-label">Too long!</label>
@@ -3758,8 +3758,8 @@
                         <label class="control-label bold">Nil</label>
                     </div>
                     <div class="col-md-1 col-sm-1">
-                        <input type="checkbox" class="form-control" ng-model="info.checkAllergic" ng-true-value="1"
-                               ng-false-value="0"/>
+                        <input type="checkbox" class="form-control" ng-model="info.Q16_checkAllergic" ng-true-value="1"
+                               ng-false-value="0" ng-checked="info.Q16_checkAllergic==1"/>
                     </div>
 
 

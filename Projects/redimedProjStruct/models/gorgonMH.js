@@ -175,6 +175,7 @@ module.exports = function (sequelize, DataTypes) {
         Q15_ListMedication: DataTypes.STRING(200),
         Q16_HayFever: DataTypes.INTEGER(11),
         Q16_Eczema: DataTypes.INTEGER(11),
+        Q16_checkAllergic: DataTypes.INTEGER(11),
         Q16_Allergic: DataTypes.STRING(200),
         Q16_Adrenaline: DataTypes.INTEGER(11),
         Q16_Epipen: DataTypes.INTEGER(11),

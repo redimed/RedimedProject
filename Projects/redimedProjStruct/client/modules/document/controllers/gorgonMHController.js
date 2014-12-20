@@ -493,6 +493,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                                 Q15_ListMedication: data.Q15_ListMedication,
                                 Q16_HayFever: data.Q16_HayFever,
                                 Q16_Eczema: data.Q16_Eczema,
+                                Q16_checkAllergic: data.Q16_checkAllergic,
                                 Q16_Allergic: data.Q16_Allergic,
                                 Q16_Adrenaline: data.Q16_Adrenaline,
                                 Q16_Epipen: data.Q16_Epipen,
