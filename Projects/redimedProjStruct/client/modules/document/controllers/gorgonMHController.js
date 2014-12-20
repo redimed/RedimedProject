@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.gorgonMH.controllers', [])
-    .controller("gorgonMHController", function($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
+    .controller("gorgonMHController", function ($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -20,18 +20,18 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
             //begin signature
             var tempSignature;
             $scope.isSignature = false;
-            $scope.showSignature = function() {
+            $scope.showSignature = function () {
                 $scope.isSignature = !$scope.isSignature;
             }
 
-            $scope.cancelClick = function() {
+            $scope.cancelClick = function () {
                 $scope.isSignature = !$scope.isSignature;
                 $scope.info.Signature = tempSignature;
             };
-            $scope.clearClick = function() {
+            $scope.clearClick = function () {
                 $scope.info.Signature = '';
             };
-            $scope.okClick = function() {
+            $scope.okClick = function () {
                 $scope.isSignature = !$scope.isSignature;
                 tempSignature = $scope.info.Signature;
             }
@@ -284,19 +284,26 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                     PATIENT_SIGNATURE: null
                 }
                 var oriInfo;
-                $scope.totals = [{
-                    id: 0
-                }, {
-                    id: 1
-                }, {
-                    id: 2
-                }, {
-                    id: 3
-                }];
+
+                $scope.totals = [
+                    {
+                        id: 0
+                    },
+                    {
+                        id: 1
+                    },
+                    {
+                        id: 2
+                    },
+                    {
+                        id: 3
+                    }
+                ];
+
                 $scope.maxDate = new Date();
                 var info = $scope.info;
                 DocumentService.loadGGMH(info)
-                    .then(function(response) {
+                    .then(function (response) {
                         if (response['status'] === 'fail') {
                             $state.go('loggedIn.home', null, {
                                 reload: true
@@ -542,74 +549,104 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                                 Q21Other1Comment: data.Q21Other1Comment,
                                 PATIENT_SIGNATURE: data.PATIENT_SIGNATURE
                             };
-                            oriInfo = angular.copy($scope.info);
-                            if ($scope.info.Q21_IsComment) {
-                                $scope.info.Q21_IsComment.checked = true;
+
+                            /*
+                             * begin Check comment from q3 to q9
+                             */
+                            var Examiner_Comments = $scope.info.Q9_ExaminersComments;
+                            var temp = [];
+                            var i = 0;
+                            while (Examiner_Comments != '' && Examiner_Comments != null && Examiner_Comments != 'undefined') {
+                                var location = Examiner_Comments.search("\r\n");
+                                if (location == -1) {
+                                    temp[i] = Examiner_Comments;
+                                    Examiner_Comments = '';
+                                }
+                                else {
+                                    temp[i] = Examiner_Comments.substring(0, location);
+                                    Examiner_Comments = Examiner_Comments.substring(temp[i].length + 2, Examiner_Comments.length);
+                                }
+                                console.log("Cut:" + (i + 1) + ":" + temp[i]);
+                                console.log("Before cut:" + Examiner_Comments);
+                                console.log("location" + (i + 1) + ":" + location);
+                                i++;
                             }
+                            $scope.info.Q3_ExaminersComments = temp[0];
+                            $scope.info.Q4_ExaminersComments = temp[1];
+                            $scope.info.Q5_ExaminersComments = temp[2];
+                            $scope.info.Q6_ExaminersComments = temp[3];
+                            $scope.info.Q7_ExaminersComments = temp[4];
+                            $scope.info.Q8_ExaminersComments = temp[5];
+                            $scope.info.Q9_ExaminersComments_details = temp[6];
+                            /*
+                             * end Check comment from q3 to q9
+                             */
+
+                            oriInfo = angular.copy($scope.info);
                         } else {
                             $state.go('loggedIn.home', null, {
                                 reload: true
                             });
                         }
-                    })
+                    });
 
-                $scope.resetForm = function() {
+                $scope.resetForm = function () {
                     $scope.info = angular.copy(oriInfo);
                     $scope.gorgonMHForm.$setPristine();
                 }
 
-                $scope.infoChanged = function() {
+                $scope.infoChanged = function () {
                     return !angular.equals(oriInfo, $scope.info);
                 }
 
-                $scope.submit = function(gorgonMHForm) {
-                    //set value total score
-                    $scope.info.Q23_TotalScore = $scope.info.Q23_SittingReading + $scope.info.Q23_WatchingTV + $scope.info.Q23_Inactive +
-                        $scope.info.Q23_Passenger + $scope.info.Q23_LyingDown + $scope.info.Q23_SittingTalking + $scope.info.Q23_SittingQuietly +
-                        $scope.info.Q23_InACar + 0;
-                    if ($scope.isNew === true) {
-                        /**
-                         * edit gorgon medical history
-                         */
-                        if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
-                            toastr.error("Please Input All Required Information!", "Error");
-                        } else {
-                            var info = $scope.info;
-                            DocumentService.insertGGMH(info)
-                                .then(function(response) {
-                                    if (response['status'] === 'success') {
-                                        toastr.success("Add new success!", "Success");
-                                        $state.go('loggedIn.gorgonMH', null, {
-                                            "reload": true
-                                        });
-                                    } else if (response['status'] === 'fail')
-                                        toastr.error("Add new fail!", "Error");
+                $scope.submit = function (gorgonMHForm) {
+                    //begin set value total score
+                    $scope.info.Q23_TotalScore = $scope.info.Q23_SittingReading + $scope.info.Q23_WatchingTV +
+                    $scope.info.Q23_Inactive + $scope.info.Q23_Passenger +
+                    $scope.info.Q23_LyingDown + $scope.info.Q23_SittingTalking +
+                    $scope.info.Q23_SittingQuietly + $scope.info.Q23_InACar + 0;
+                    //end set value total score
 
-                                })
-                        }
-                    } else {
-                        /**
-                         * add new gorgon medical history
-                         */
-                        if ($scope.isNew === false) {
-                            if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
-                                toastr.error("Please Input All Required Information!", "Error");
-                            } else {
-                                var info = $scope.info;
-                                DocumentService.editGGMH(info)
-                                    .then(function(response) {
-                                        if (response['status'] === 'success') {
-                                            toastr.success("Update success!", "Success");
-                                            $state.go('loggedIn.gorgonMH', null, {
-                                                "reload": true
-                                            });
-                                        } else if (response['status'] === 'fail')
-                                            toastr.error("Update fail!", "Error");
-
+                    //begin comment q3-q9
+                    $scope.info.Q9_ExaminersComments = (($scope.info.Q3_ExaminersComments != null && $scope.info.Q3_ExaminersComments != '' && $scope.info.Q3_ExaminersComments != 'undefined') ? $scope.info.Q3_ExaminersComments : '') + "\r\n" +
+                    (($scope.info.Q4_ExaminersComments != null && $scope.info.Q4_ExaminersComments != '' && $scope.info.Q4_ExaminersComments != 'undefined') ? $scope.info.Q4_ExaminersComments : '') + "\r\n" +
+                    (($scope.info.Q5_ExaminersComments != null && $scope.info.Q5_ExaminersComments != '' && $scope.info.Q5_ExaminersComments != 'undefined') ? $scope.info.Q5_ExaminersComments : '') + "\r\n" +
+                    (($scope.info.Q6_ExaminersComments != null && $scope.info.Q6_ExaminersComments != '' && $scope.info.Q6_ExaminersComments != 'undefined') ? $scope.info.Q6_ExaminersComments : '') + "\r\n" +
+                    (($scope.info.Q7_ExaminersComments != null && $scope.info.Q7_ExaminersComments != '' && $scope.info.Q7_ExaminersComments != 'undefined') ? $scope.info.Q7_ExaminersComments : '') + "\r\n" +
+                    (($scope.info.Q8_ExaminersComments != null && $scope.info.Q8_ExaminersComments != '' && $scope.info.Q8_ExaminersComments != 'undefined') ? $scope.info.Q8_ExaminersComments : '') + "\r\n" +
+                    (($scope.info.Q9_ExaminersComments_details != null && $scope.info.Q9_ExaminersComments_details != '' && $scope.info.Q9_ExaminersComments_details != 'undefined') ? $scope.info.Q9_ExaminersComments_details : '');
+                    //end comment q3-q9
+                    if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
+                        toastr.error("Please Input All Required Information!", "Error");
+                    }
+                    else {
+                        var info = $scope.info;
+                        if ($scope.isNew === true) {
+                            //add new gorgon medical history
+                            DocumentService.insertGGMH(info).then(function (response) {
+                                if (response['status'] === 'success') {
+                                    toastr.success("Add new success!", "Success");
+                                    $state.go('loggedIn.gorgonMH', null, {
+                                        "reload": true
                                     });
-                            }
-                        }
+                                } else if (response['status'] === 'fail')
+                                    toastr.error("Add new fail!", "Error");
 
+                            });
+                        }
+                        else if ($scope.isNew === false) {
+                            //update gorgon medical history
+                            DocumentService.editGGMH(info).then(function (response) {
+                                if (response['status'] === 'success') {
+                                    toastr.success("Update success!", "Success");
+                                    $state.go('loggedIn.gorgonMH', null, {
+                                        "reload": true
+                                    });
+                                } else if (response['status'] === 'fail')
+                                    toastr.error("Update fail!", "Error");
+
+                            });
+                        }
                     }
                 }
             }
