@@ -7,7 +7,7 @@
                         class="btn green pull-right">{{isNew?"Add
                     new":"Update"}}
                 </button>
-                <a href="/api/document/printMH/{{info.patient_id}}/{{info.cal_id}}/{{info.mh_id}}"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/mh/{{info.mh_id}}"
 
                    class="btn btn-primary blue pull-right" ng-disabled="infoChanged() || isNew">Print PDF
                 </a>

@@ -6,7 +6,7 @@
                         ng-disabled="!infoChanged()"
                         ng-click="submit(mrsForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="/api/document/printMRS/{{info.patient_id}}/{{info.cal_id}}/{{info.mrs_id}}"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/mrs/{{info.mrs_id}}"
                    type="button"
                    ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required || infoChanged() || isNew"
                    class="btn btn-primary blue pull-right">Print PDF

@@ -42,8 +42,6 @@ module.exports = {
                                         //check company
                                         if (company == null || company.length == 0) {
                                             console.log("******************* Find not found company in company table *******************");
-                                            res.json({status: 'fail'});
-                                            return false;
                                         }
                                         //check doctor
                                         Doctor.find({where: {doctor_id: appt.DOCTOR_ID}})
@@ -62,7 +60,7 @@ module.exports = {
                                                     "patient": patient,
                                                     "appt": appt,
                                                     "doctor": doctor,
-                                                    "company": company,
+                                                    "company": company || [],
                                                     "status": status
                                                 }];
                                                 res.json(response);

@@ -12,7 +12,6 @@ var Company = db.Company;
 module.exports = {
 
 
-
     loadForm18: function (req, res) {
         var info = req.body.info || [];
         Form18.find({where: {PATIENT_ID: info.PATIENT_ID, CAL_ID: info.CAL_ID}}, {raw: true})
@@ -49,8 +48,6 @@ module.exports = {
                                                     .success(function (company) {
                                                         if (company == null || company.length == 0) {
                                                             console.log("******************* Not found Company in Company table *******************");
-                                                            res.json({status: 'fail'});
-                                                            return false;
                                                         }
                                                         if (dataF18 === null || dataF18.length === 0) {
                                                             var response = [
@@ -60,7 +57,7 @@ module.exports = {
                                                                     "doctor": doctor,
                                                                     "APPT": APPT,
                                                                     "rmSite": rmSite,
-                                                                    "company": company
+                                                                    "company": company || []
                                                                 }
                                                             ];
                                                             res.json(response);

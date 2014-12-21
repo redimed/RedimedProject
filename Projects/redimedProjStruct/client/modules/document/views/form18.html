@@ -6,7 +6,7 @@
                         ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || !infoChanged()"
                         ng-click="submit(form18)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="/api/document/printForm18/{{info.GORGON_ID}}/{{info.PATIENT_ID}}/{{info.CAL_ID}}"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/form18/{{info.GORGON_ID}}"
                    ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || infoChanged() || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
