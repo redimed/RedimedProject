@@ -6,7 +6,7 @@
                         ng-disabled="SA1.$error.pattern || SA1.$error.maxlength || !infoChanged()"
                         ng-click="submit(SA1)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="/api/document/printSA1/{{info.patient_id}}/{{info.CAL_ID}}/{{info.headers[0].SA_ID}}"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/SA1/{{info.headers[0].SA_ID}}/{{info.CAL_ID}}/{{info.patient_id}}"
                    target="_self"
                    ng-disabled="SA1.$error.pattern || SA1.$error.maxlength || infoChanged() || isNew"
                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
