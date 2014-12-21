@@ -87,41 +87,40 @@ public class MedicareService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response verifyPVM(String json) {
 		
-		PatientObject patient = new Gson().fromJson(json, PatientObject.class);
+		Map<String,Object> patient = new Gson().fromJson(json, Map.class);
 
 		int sessionId = getSessionId();
 
 		Vector rs = new Vector();
 		rval = EasyclaimAPI.getInstance().createBusinessObject(sessionId, "HIC/HolMedical/PatientVerificationRequest@4", "", "", rs);
 		
-
 		if(rval == 0)	
 			rval =  EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "OPVTypeCde", "PVM") ;
 		else
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientFirstName", patient.getFirstName());
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientFirstName", patient.get("firstName").toString());
 		else
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientFamilyName", patient.getLastName());
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientFamilyName", patient.get("lastName").toString());
 		else
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientDateOfBirth", patient.getDob());
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientDateOfBirth", patient.get("dob").toString());
 		else
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientMedicareCardNum", patient.getMedicareNo());
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientMedicareCardNum", patient.get("medicareNo").toString());
 		else
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientReferenceNum", patient.getRefNo());
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "PatientReferenceNum", patient.get("refNo").toString());
 		else
 			return returnOPVJson(rval);
 
@@ -152,7 +151,6 @@ public class MedicareService {
 		if(rval == 0)
 		{
 			int code = Integer.parseInt(statusCode.elementAt(0).toString());
-			System.out.println(code);
 			
 			if(code == 0)
 			{
@@ -176,6 +174,42 @@ public class MedicareService {
 			return returnOPVJson(rval);
 		}
 
+	}
+	
+	@Path("verify/ecm")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response verifyECM(String json) {
+		Map<String, Object> jsonObj = new Gson().fromJson(json, Map.class);
+		
+		int sessionId = getSessionId();
+
+		rval = EasyclaimAPI.getInstance().createBusinessObject(sessionId, "HIC/HolMedical/OnlineEligibilityCheckRequestCH@4", "", "", null);
+		
+		Vector rs = new Vector();
+		if(rval == 0)	
+			rval =  EasyclaimAPI.getInstance().getUniqueId(sessionId, rs);
+		else
+			return returnOPVJson(rval);
+		
+		if(rval == 0)	
+			rval =  EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"../", "TransactionId ", rs.get(0).toString()) ;
+		else
+			return returnOPVJson(rval);
+
+		if(rval == 0)
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "OECTypeCde", "ECM");
+		else
+			return returnOPVJson(rval);
+
+		if(rval == 0)
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "SubmissionAuthorisedInd", "Y");
+		else
+			return returnOPVJson(rval);
+
+
+		return null;
 	}
 	
 
