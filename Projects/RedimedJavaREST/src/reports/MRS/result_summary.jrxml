@@ -45,7 +45,7 @@
     SUBSTRING_INDEX(doctors.`Signature`, ',', -1) AS medical_summary_Signature,
     doctors.`NAME` AS medical_summary_NAME
 FROM
-`doctors` doctors LEFT JOIN `medical_summary` medical_summary ON doctors.`doctor_id` = medical_summary.`doctor_id`
+`doctors` doctors INNER JOIN `medical_summary` medical_summary ON doctors.`doctor_id` = medical_summary.`doctor_id`
 WHERE
 medical_summary.`mrs_id` = $P{id}]]>
 	</queryString>

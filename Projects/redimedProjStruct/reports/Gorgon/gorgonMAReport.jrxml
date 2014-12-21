@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gorgonMAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d5e1d6a5-cccc-4b09-a010-c017da2c939f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1748"/>
+	<property name="ireport.y" value="1028"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="84940f7f-a360-45b6-8549-d07a2fbd07c5"/>
@@ -2670,6 +2670,11 @@ Barrow Island LNG Plant ]]></text>
 			<line>
 				<reportElement x="0" y="751" width="554" height="1" uuid="23599f7a-3efc-48bd-8f8e-0fd61b6bb7e9"/>
 			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="660" width="540" height="92" uuid="fc1be090-4160-4174-80c0-de92763d755f"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_SKIN_EXAMINERS_COMMENTS}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="752">
 			<rectangle>
@@ -2679,7 +2684,7 @@ Barrow Island LNG Plant ]]></text>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="2" y="466" width="554" height="20" backcolor="#E7E7E7" uuid="27b785c2-9e48-404d-85f5-953088bf534f"/>
+				<reportElement x="0" y="458" width="554" height="20" backcolor="#E7E7E7" uuid="27b785c2-9e48-404d-85f5-953088bf534f"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
@@ -2705,9 +2710,6 @@ Barrow Island LNG Plant ]]></text>
 			<line>
 				<reportElement x="0" y="21" width="555" height="1" uuid="960de34b-b661-4516-8e75-c8205971c9a3"/>
 			</line>
-			<line>
-				<reportElement x="0" y="1" width="555" height="1" uuid="85ab4049-8927-4365-8663-1786bb14e683"/>
-			</line>
 			<staticText>
 				<reportElement x="12" y="2" width="50" height="20" uuid="70ec5d6a-66f1-482d-ac6e-56b91037faf9"/>
 				<textElement verticalAlignment="Middle">
@@ -2716,142 +2718,142 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Abdomen]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="28" width="34" height="15" uuid="7a45f4b0-20dc-4ae4-aef0-f85cb0f6efdc"/>
+				<reportElement x="12" y="25" width="34" height="15" uuid="7a45f4b0-20dc-4ae4-aef0-f85cb0f6efdc"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Scars:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="112" y="28" width="12" height="15" uuid="b1d02453-4c2c-4e4b-ad3c-1a16fde59cd7"/>
+				<reportElement x="112" y="25" width="12" height="15" uuid="b1d02453-4c2c-4e4b-ad3c-1a16fde59cd7"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nil]]></text>
 			</staticText>
 			<image>
-				<reportElement x="321" y="28" width="13" height="13" uuid="f6cab02b-c37b-46dc-95a5-dcdca9aafe42"/>
+				<reportElement x="321" y="25" width="13" height="13" uuid="f6cab02b-c37b-46dc-95a5-dcdca9aafe42"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_SCARS_GALLBLADDER} != null && $F{gorgon_doc_ma_SCARS_GALLBLADDER}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="28" width="13" height="13" uuid="3aebd60f-c767-4f6f-ba08-b5f155fd5247"/>
+				<reportElement x="527" y="25" width="13" height="13" uuid="3aebd60f-c767-4f6f-ba08-b5f155fd5247"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_SCARS_OTHER} != null && $F{gorgon_doc_ma_SCARS_OTHER}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="419" y="28" width="13" height="13" uuid="5f56eccf-df59-471f-8a3e-d64540afac32"/>
+				<reportElement x="419" y="25" width="13" height="13" uuid="5f56eccf-df59-471f-8a3e-d64540afac32"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_SCARS_HERNIA} != null && $F{gorgon_doc_ma_SCARS_HERNIA}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="495" y="28" width="29" height="15" uuid="39446162-07ed-4492-9ec4-8c05ccb13ea8"/>
+				<reportElement x="495" y="25" width="29" height="15" uuid="39446162-07ed-4492-9ec4-8c05ccb13ea8"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Other]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="171" y="28" width="42" height="15" uuid="287bba8d-01dd-43a7-8632-3f4c7cc91ec5"/>
+				<reportElement x="171" y="25" width="42" height="15" uuid="287bba8d-01dd-43a7-8632-3f4c7cc91ec5"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Appendix]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="265" y="28" width="54" height="15" uuid="a200b0d9-20e8-44ee-b8b6-3d2c7095c4d6"/>
+				<reportElement x="265" y="25" width="54" height="15" uuid="a200b0d9-20e8-44ee-b8b6-3d2c7095c4d6"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Gallbladder]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="386" y="28" width="30" height="15" uuid="77df0237-3cfe-45d0-9b43-9667fe5c395d"/>
+				<reportElement x="386" y="25" width="30" height="15" uuid="77df0237-3cfe-45d0-9b43-9667fe5c395d"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Hernia]]></text>
 			</staticText>
 			<image>
-				<reportElement x="126" y="28" width="13" height="13" uuid="2a3eba50-a99d-432c-80da-e67fd5bab468"/>
+				<reportElement x="126" y="25" width="13" height="13" uuid="2a3eba50-a99d-432c-80da-e67fd5bab468"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_SCARS_NIL} != null && $F{gorgon_doc_ma_SCARS_NIL}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="215" y="28" width="13" height="13" uuid="c2582ac5-b0f0-41eb-8722-90d26ddd53ec"/>
+				<reportElement x="215" y="25" width="13" height="13" uuid="c2582ac5-b0f0-41eb-8722-90d26ddd53ec"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_SCARS_APPENDIX} != null && $F{gorgon_doc_ma_SCARS_APPENDIX}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="12" y="47" width="85" height="15" uuid="c8ecd228-2325-4dde-8005-a8c7d82b3c09"/>
+				<reportElement x="12" y="44" width="85" height="15" uuid="c8ecd228-2325-4dde-8005-a8c7d82b3c09"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hernial orifices: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="67" width="85" height="15" uuid="5d1a0d7f-2c6b-4830-942a-131dd918b7fb"/>
+				<reportElement x="12" y="64" width="85" height="15" uuid="5d1a0d7f-2c6b-4830-942a-131dd918b7fb"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Rectus muscles: ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="148" y="47" width="13" height="13" uuid="aecf7fe9-327d-4cbe-9c79-64bbd6492149"/>
+				<reportElement x="148" y="44" width="13" height="13" uuid="aecf7fe9-327d-4cbe-9c79-64bbd6492149"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_HERNIAL} != null && $F{gorgon_doc_ma_HERNIAL}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="322" y="47" width="13" height="13" uuid="b54da03f-f319-48e4-b43f-385dd59b4bfd"/>
+				<reportElement x="322" y="44" width="13" height="13" uuid="b54da03f-f319-48e4-b43f-385dd59b4bfd"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_HERNIAL_RIGHT} != null && $F{gorgon_doc_ma_HERNIAL_RIGHT}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="252" y="47" width="13" height="13" uuid="b41ccd7a-5298-4adb-b4a6-e2ced3eb3504"/>
+				<reportElement x="252" y="44" width="13" height="13" uuid="b41ccd7a-5298-4adb-b4a6-e2ced3eb3504"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_HERNIAL} != null && $F{gorgon_doc_ma_HERNIAL}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="308" y="47" width="12" height="15" uuid="9d3d621b-8b48-4d4b-9038-a41499c45921"/>
+				<reportElement x="308" y="44" width="12" height="15" uuid="9d3d621b-8b48-4d4b-9038-a41499c45921"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[R]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="184" y="47" width="66" height="15" uuid="094f7710-9ab6-412a-9145-8843c9dbd790"/>
+				<reportElement x="184" y="44" width="66" height="15" uuid="094f7710-9ab6-412a-9145-8843c9dbd790"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Inguinal hernia]]></text>
 			</staticText>
 			<image>
-				<reportElement x="363" y="47" width="13" height="13" uuid="77836651-4c51-4d0b-b55e-9ef131a15b24"/>
+				<reportElement x="363" y="44" width="13" height="13" uuid="77836651-4c51-4d0b-b55e-9ef131a15b24"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_HERNIAL_LEFT} != null && $F{gorgon_doc_ma_HERNIAL_LEFT}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="351" y="47" width="9" height="15" uuid="cc62a6db-586f-43ee-9ac7-881412985782"/>
+				<reportElement x="351" y="44" width="9" height="15" uuid="cc62a6db-586f-43ee-9ac7-881412985782"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[L]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="112" y="47" width="34" height="15" uuid="ff312e16-a9a5-4f29-aec5-af6218f72f04"/>
+				<reportElement x="112" y="44" width="34" height="15" uuid="ff312e16-a9a5-4f29-aec5-af6218f72f04"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<image>
-				<reportElement x="148" y="67" width="13" height="13" uuid="c214d71e-b712-4d33-a776-8e0477c2e286"/>
+				<reportElement x="148" y="64" width="13" height="13" uuid="c214d71e-b712-4d33-a776-8e0477c2e286"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_RECTUS} != null && $F{gorgon_doc_ma_RECTUS}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="112" y="67" width="34" height="15" uuid="173f5edd-c7a2-482e-bc22-95992f46cb0d"/>
+				<reportElement x="112" y="64" width="34" height="15" uuid="173f5edd-c7a2-482e-bc22-95992f46cb0d"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<image>
-				<reportElement x="252" y="67" width="13" height="13" uuid="cb189da3-dfc0-47c2-bb9c-bc29fcecc8ef"/>
+				<reportElement x="252" y="64" width="13" height="13" uuid="cb189da3-dfc0-47c2-bb9c-bc29fcecc8ef"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_RECTUS} != null && $F{gorgon_doc_ma_RECTUS}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="184" y="67" width="66" height="15" uuid="3b4f0f7e-34ec-4281-8b5b-7357b83d999d"/>
+				<reportElement x="184" y="64" width="66" height="15" uuid="3b4f0f7e-34ec-4281-8b5b-7357b83d999d"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
@@ -3091,7 +3093,7 @@ Barrow Island LNG Plant ]]></text>
 				<reportElement x="-1" y="312" width="555" height="1" uuid="8e439862-a213-4b22-b581-6541f62b8b6a"/>
 			</line>
 			<line>
-				<reportElement x="-1" y="332" width="555" height="1" uuid="f6075201-77ed-41b5-9a05-a0bd26bee13e"/>
+				<reportElement x="0" y="332" width="555" height="1" uuid="f6075201-77ed-41b5-9a05-a0bd26bee13e"/>
 			</line>
 			<staticText>
 				<reportElement x="11" y="338" width="41" height="15" uuid="c80c81ba-1e9a-4979-9e7b-b4e493703009"/>
@@ -3413,35 +3415,35 @@ Barrow Island LNG Plant ]]></text>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="-1" y="271" width="554" height="1" uuid="713d1293-8f0c-4b4c-a447-424bf6d93618"/>
+				<reportElement x="0" y="271" width="554" height="1" uuid="713d1293-8f0c-4b4c-a447-424bf6d93618"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="-1" y="258" width="554" height="1" uuid="88cbe6a8-07d3-4488-ba11-28669079dd01"/>
+				<reportElement x="0" y="258" width="554" height="1" uuid="88cbe6a8-07d3-4488-ba11-28669079dd01"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="-1" y="284" width="554" height="1" uuid="fba47dd4-2a7d-4098-9371-c73fa4acc9b7"/>
+				<reportElement x="0" y="284" width="554" height="1" uuid="fba47dd4-2a7d-4098-9371-c73fa4acc9b7"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="2" y="486" width="555" height="1" uuid="9c9fdb32-029a-42ad-a53f-62540cd36502"/>
+				<reportElement x="0" y="478" width="555" height="1" uuid="9c9fdb32-029a-42ad-a53f-62540cd36502"/>
 			</line>
 			<staticText>
-				<reportElement x="14" y="467" width="89" height="20" uuid="ea0624cc-6f75-405f-8195-0e6d02732391"/>
+				<reportElement x="12" y="459" width="89" height="20" uuid="ea0624cc-6f75-405f-8195-0e6d02732391"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Back Function]]></text>
 			</staticText>
 			<line>
-				<reportElement x="2" y="466" width="555" height="1" uuid="e7f6d59e-0edd-41c4-8251-377535bda680"/>
+				<reportElement x="-1" y="458" width="555" height="1" uuid="e7f6d59e-0edd-41c4-8251-377535bda680"/>
 			</line>
 			<image>
 				<reportElement x="438" y="541" width="13" height="13" uuid="582fef52-ab48-4f78-864f-fb73b168432b"/>
@@ -3460,14 +3462,14 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="118" y="498" width="33" height="15" uuid="df9665fc-8374-4c27-9003-c4696f1309d7"/>
+				<reportElement x="118" y="500" width="33" height="15" uuid="df9665fc-8374-4c27-9003-c4696f1309d7"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="197" y="498" width="58" height="15" uuid="841f333f-59c0-4063-9740-494e4a92364b"/>
+				<reportElement x="196" y="500" width="58" height="15" uuid="841f333f-59c0-4063-9740-494e4a92364b"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
@@ -3481,7 +3483,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[25-50% ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="264" y="487" width="13" height="13" uuid="4dc3fd4d-20ff-48d2-ac51-3c86ef0a80cb"/>
+				<reportElement x="259" y="480" width="13" height="13" uuid="4dc3fd4d-20ff-48d2-ac51-3c86ef0a80cb"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
@@ -3510,7 +3512,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="159" y="487" width="13" height="13" uuid="4ce67710-d5e9-4319-b9f5-acb633f53cf1"/>
+				<reportElement x="154" y="480" width="13" height="13" uuid="4ce67710-d5e9-4319-b9f5-acb633f53cf1"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
@@ -3546,7 +3548,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[25-50% ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="154" y="498" width="13" height="13" uuid="f44e8a93-c135-47a9-b824-c70b4108ff6f"/>
+				<reportElement x="154" y="500" width="13" height="13" uuid="f44e8a93-c135-47a9-b824-c70b4108ff6f"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_RHYTHM}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
@@ -3571,7 +3573,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[25-50% ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="498" width="41" height="15" uuid="10e7c9d2-52a4-4c5f-930f-c245476861b7"/>
+				<reportElement x="20" y="500" width="41" height="15" uuid="10e7c9d2-52a4-4c5f-930f-c245476861b7"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -3629,7 +3631,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="18" y="487" width="41" height="15" uuid="ed40df6a-14d2-43a1-a3df-fcbfe5cbd856"/>
+				<reportElement x="20" y="480" width="41" height="15" uuid="ed40df6a-14d2-43a1-a3df-fcbfe5cbd856"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -3647,7 +3649,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="259" y="498" width="13" height="13" uuid="e906b4f8-87d3-450f-a9bc-2778db572a8a"/>
+				<reportElement x="259" y="500" width="13" height="13" uuid="e906b4f8-87d3-450f-a9bc-2778db572a8a"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_RHYTHM}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
@@ -3662,7 +3664,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="218" y="487" width="43" height="15" uuid="82ce9196-6327-48d0-9684-f05d78c0ca3f"/>
+				<reportElement x="209" y="480" width="43" height="15" uuid="82ce9196-6327-48d0-9684-f05d78c0ca3f"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
@@ -3705,7 +3707,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="487" width="33" height="15" uuid="09f83b1b-86a8-4de2-8f9b-4ec5f8f41e79"/>
+				<reportElement x="118" y="480" width="33" height="15" uuid="09f83b1b-86a8-4de2-8f9b-4ec5f8f41e79"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
@@ -3750,14 +3752,14 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="320" y="487" width="43" height="15" uuid="e986157b-1451-417d-85c5-5ae19c355b13"/>
+				<reportElement x="312" y="480" width="43" height="15" uuid="e986157b-1451-417d-85c5-5ae19c355b13"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Kyphosis]]></text>
 			</staticText>
 			<image>
-				<reportElement x="366" y="487" width="13" height="13" uuid="b559851e-4841-45e7-85d8-6b7ae07f2295"/>
+				<reportElement x="357" y="480" width="13" height="13" uuid="b559851e-4841-45e7-85d8-6b7ae07f2295"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<line>
@@ -3773,25 +3775,17 @@ Barrow Island LNG Plant ]]></text>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField isBlankWhenNull="true">
-				<reportElement x="15" y="509" width="527" height="95" uuid="fc1be090-4160-4174-80c0-de92763d755f"/>
-				<textElement verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_SKIN_EXAMINERS_COMMENTS}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="-1" y="0" width="555" height="1" uuid="dccde858-80a8-4728-bb52-f92c20c99482"/>
 			</line>
 			<rectangle>
-				<reportElement x="0" y="605" width="554" height="20" backcolor="#E7E7E7" uuid="81e641e3-e387-4db3-b126-b80abd3d7c6b"/>
+				<reportElement x="1" y="605" width="553" height="20" backcolor="#E7E7E7" uuid="81e641e3-e387-4db3-b126-b80abd3d7c6b"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<line>
 				<reportElement x="0" y="625" width="555" height="1" uuid="13e48542-7549-4be5-9f9c-53a6cc93bfef"/>
-			</line>
-			<line>
-				<reportElement x="0" y="605" width="555" height="1" uuid="cae697aa-39a1-4ca3-9d9e-6d7a98cf65a5"/>
 			</line>
 			<staticText>
 				<reportElement x="12" y="606" width="115" height="20" uuid="8f064d8c-14ed-4b1e-b744-30bd3964fc87"/>
@@ -3859,30 +3853,30 @@ Barrow Island LNG Plant ]]></text>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="3" y="751" width="554" height="1" uuid="9ffdf58e-30e6-4fd0-b0ae-424765f91976"/>
+				<reportElement x="0" y="751" width="554" height="1" uuid="9ffdf58e-30e6-4fd0-b0ae-424765f91976"/>
 			</line>
 		</band>
 		<band height="752">
 			<rectangle>
-				<reportElement x="0" y="401" width="554" height="20" backcolor="#E7E7E7" uuid="2cec62ca-5566-4093-b563-1d21b7086296"/>
+				<reportElement x="1" y="261" width="554" height="20" backcolor="#E7E7E7" uuid="2cec62ca-5566-4093-b563-1d21b7086296"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="500" width="554" height="20" backcolor="#E7E7E7" uuid="c74005bf-c5f3-4d04-89f9-c3684a6ef0dd"/>
+				<reportElement x="1" y="360" width="554" height="20" backcolor="#E7E7E7" uuid="c74005bf-c5f3-4d04-89f9-c3684a6ef0dd"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="650" width="554" height="20" backcolor="#666666" uuid="09ab06d6-52fa-4057-8766-7557d52d62b9"/>
+				<reportElement x="1" y="510" width="554" height="20" backcolor="#666666" uuid="09ab06d6-52fa-4057-8766-7557d52d62b9"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="143" width="554" height="20" backcolor="#E7E7E7" uuid="d0d4bbc8-163f-48fc-8165-e41279a4ccbe"/>
+				<reportElement x="0" y="0" width="554" height="20" backcolor="#E7E7E7" uuid="d0d4bbc8-163f-48fc-8165-e41279a4ccbe"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
@@ -3894,123 +3888,123 @@ Barrow Island LNG Plant ]]></text>
 				<reportElement x="554" y="0" width="1" height="752" uuid="286815d9-ee7e-4144-9e49-830078161980"/>
 			</line>
 			<line>
-				<reportElement x="0" y="163" width="555" height="1" uuid="1133667c-13b8-4e00-b2bf-810ec2b19c3e"/>
+				<reportElement x="0" y="20" width="555" height="1" uuid="1133667c-13b8-4e00-b2bf-810ec2b19c3e"/>
 			</line>
 			<staticText>
-				<reportElement x="12" y="144" width="116" height="20" uuid="6ada6711-9688-45fd-b75b-f08ca9636be2"/>
+				<reportElement x="12" y="1" width="116" height="20" uuid="6ada6711-9688-45fd-b75b-f08ca9636be2"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Limb Function]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="143" width="555" height="1" uuid="12532fb2-e927-4258-b549-cdaf3f560892"/>
+				<reportElement x="0" y="0" width="555" height="1" uuid="12532fb2-e927-4258-b549-cdaf3f560892"/>
 			</line>
 			<image>
-				<reportElement x="226" y="193" width="13" height="13" uuid="66a6e988-a87d-42a9-95c1-8cec61701411"/>
+				<reportElement x="226" y="50" width="13" height="13" uuid="66a6e988-a87d-42a9-95c1-8cec61701411"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_SHOULDER} != null && $F{gorgon_doc_ma_SHOULDER}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="121" y="193" width="13" height="13" uuid="71f9f798-b4ee-4cba-97a5-4581ebf76d82"/>
+				<reportElement x="121" y="50" width="13" height="13" uuid="71f9f798-b4ee-4cba-97a5-4581ebf76d82"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_SHOULDER} != null && $F{gorgon_doc_ma_SHOULDER}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="12" y="214" width="50" height="15" uuid="7af11d1c-46a4-4b9b-a19d-e56c7137676a"/>
+				<reportElement x="12" y="71" width="50" height="15" uuid="7af11d1c-46a4-4b9b-a19d-e56c7137676a"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Elbows ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="172" y="193" width="13" height="13" uuid="d09c5f59-dff6-4c3b-8c84-4c42f8c8cc47"/>
+				<reportElement x="172" y="50" width="13" height="13" uuid="d09c5f59-dff6-4c3b-8c84-4c42f8c8cc47"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_SHOULDER} != null && $F{gorgon_doc_ma_SHOULDER}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="12" y="193" width="51" height="15" uuid="41de5706-4e98-4061-924f-409263ff0a1a"/>
+				<reportElement x="12" y="50" width="51" height="15" uuid="41de5706-4e98-4061-924f-409263ff0a1a"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Shoulder ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="172" y="214" width="13" height="13" uuid="ed6c0a5d-95aa-4981-a352-5ceec19a20bb"/>
+				<reportElement x="172" y="71" width="13" height="13" uuid="ed6c0a5d-95aa-4981-a352-5ceec19a20bb"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_ELBOWS} != null && $F{gorgon_doc_ma_ELBOWS}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="121" y="214" width="13" height="13" uuid="c2694613-dab0-4768-82f8-3d1864379f8f"/>
+				<reportElement x="121" y="71" width="13" height="13" uuid="c2694613-dab0-4768-82f8-3d1864379f8f"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_ELBOWS} != null && $F{gorgon_doc_ma_ELBOWS}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="226" y="214" width="13" height="13" uuid="2ee3deba-98ba-4671-b804-ad4465684b8e"/>
+				<reportElement x="226" y="71" width="13" height="13" uuid="2ee3deba-98ba-4671-b804-ad4465684b8e"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_ELBOWS} != null && $F{gorgon_doc_ma_ELBOWS}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="12" y="171" width="50" height="15" uuid="3ac89791-4d7f-4cec-895e-ba004041933e"/>
+				<reportElement x="12" y="28" width="50" height="15" uuid="3ac89791-4d7f-4cec-895e-ba004041933e"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mobility:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="111" y="171" width="35" height="15" uuid="4d7d808d-6cf4-40f7-a775-f3c0d0d27495"/>
+				<reportElement x="111" y="28" width="35" height="15" uuid="4d7d808d-6cf4-40f7-a775-f3c0d0d27495"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="160" y="171" width="43" height="15" uuid="24c22fe5-0b03-48a9-bc4c-10ea7c4f7f64"/>
+				<reportElement x="160" y="28" width="43" height="15" uuid="24c22fe5-0b03-48a9-bc4c-10ea7c4f7f64"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Reduced]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="216" y="171" width="43" height="15" uuid="d49aca06-c884-4ea0-970a-a141fb62dfde"/>
+				<reportElement x="216" y="28" width="43" height="15" uuid="d49aca06-c884-4ea0-970a-a141fb62dfde"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Painful]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="477" y="171" width="49" height="15" uuid="04724292-b4f8-497e-8903-2da9d085a8b9"/>
+				<reportElement x="477" y="28" width="49" height="15" uuid="04724292-b4f8-497e-8903-2da9d085a8b9"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Abnormal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="421" y="171" width="38" height="15" uuid="d1aca819-ebbd-457a-b9b9-5d64e88ed6a6"/>
+				<reportElement x="421" y="28" width="38" height="15" uuid="d1aca819-ebbd-457a-b9b9-5d64e88ed6a6"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<image>
-				<reportElement x="495" y="193" width="13" height="13" uuid="b0b909f2-0b80-494f-972e-f910aff9370a"/>
+				<reportElement x="495" y="50" width="13" height="13" uuid="b0b909f2-0b80-494f-972e-f910aff9370a"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_GRIP_STRENGTH} != null && $F{gorgon_doc_ma_GRIP_STRENGTH}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="495" y="214" width="13" height="13" uuid="4c6ae6fd-f618-4fbe-a7f0-0342d59f0432"/>
+				<reportElement x="495" y="71" width="13" height="13" uuid="4c6ae6fd-f618-4fbe-a7f0-0342d59f0432"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_EPICONDYLES} != null && $F{gorgon_doc_ma_EPICONDYLES}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="434" y="214" width="13" height="13" uuid="ae00a0f3-6b03-497f-ba96-2d331dafae01"/>
+				<reportElement x="434" y="71" width="13" height="13" uuid="ae00a0f3-6b03-497f-ba96-2d331dafae01"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_EPICONDYLES} != null && $F{gorgon_doc_ma_EPICONDYLES}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="434" y="193" width="13" height="13" uuid="ff9eb160-6e2b-4f00-a336-4dfcec68a562"/>
+				<reportElement x="434" y="50" width="13" height="13" uuid="ff9eb160-6e2b-4f00-a336-4dfcec68a562"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_GRIP_STRENGTH} != null && $F{gorgon_doc_ma_GRIP_STRENGTH}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="341" y="193" width="67" height="15" uuid="17465511-bc53-4180-a6a6-b13ad1006615"/>
+				<reportElement x="341" y="50" width="67" height="15" uuid="17465511-bc53-4180-a6a6-b13ad1006615"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Grip Strength ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="341" y="214" width="69" height="15" uuid="3dd56d36-c184-43e6-b4b7-a9aea30cb4a5"/>
+				<reportElement x="341" y="71" width="69" height="15" uuid="3dd56d36-c184-43e6-b4b7-a9aea30cb4a5"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -4020,308 +4014,308 @@ Barrow Island LNG Plant ]]></text>
 				<reportElement x="0" y="751" width="554" height="1" uuid="688f050a-c5eb-4fcc-a97d-092c8c65ade3"/>
 			</line>
 			<image>
-				<reportElement x="227" y="236" width="13" height="13" uuid="fb51b47b-2c3e-4b15-9b25-8ce004fe191a"/>
+				<reportElement x="227" y="93" width="13" height="13" uuid="fb51b47b-2c3e-4b15-9b25-8ce004fe191a"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_WRISTS} != null && $F{gorgon_doc_ma_WRISTS}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="13" y="257" width="50" height="15" uuid="3c6659fe-cf64-4cab-988b-5832d9db6886"/>
+				<reportElement x="13" y="114" width="50" height="15" uuid="3c6659fe-cf64-4cab-988b-5832d9db6886"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Knees ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="227" y="257" width="13" height="13" uuid="080f3c3b-fdd6-454d-b3b6-09a96609921f"/>
+				<reportElement x="227" y="114" width="13" height="13" uuid="080f3c3b-fdd6-454d-b3b6-09a96609921f"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_KNEES} != null && $F{gorgon_doc_ma_KNEES}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="122" y="257" width="13" height="13" uuid="87b07dab-8020-4daa-b421-8738fbad8389"/>
+				<reportElement x="122" y="114" width="13" height="13" uuid="87b07dab-8020-4daa-b421-8738fbad8389"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_KNEES} != null && $F{gorgon_doc_ma_KNEES}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="122" y="236" width="13" height="13" uuid="0abe00d4-0c33-4535-840d-81c451fbbded"/>
+				<reportElement x="122" y="93" width="13" height="13" uuid="0abe00d4-0c33-4535-840d-81c451fbbded"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_WRISTS} != null && $F{gorgon_doc_ma_WRISTS}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="173" y="257" width="13" height="13" uuid="64d63254-0dca-44bd-8640-e553725d0845"/>
+				<reportElement x="173" y="114" width="13" height="13" uuid="64d63254-0dca-44bd-8640-e553725d0845"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_KNEES} != null && $F{gorgon_doc_ma_KNEES}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="173" y="236" width="13" height="13" uuid="3226f765-c3c3-4be7-a301-7a4c9b551f58"/>
+				<reportElement x="173" y="93" width="13" height="13" uuid="3226f765-c3c3-4be7-a301-7a4c9b551f58"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_WRISTS} != null && $F{gorgon_doc_ma_WRISTS}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="13" y="236" width="51" height="15" uuid="f1debfac-ca7f-4479-89c7-499b35294490"/>
+				<reportElement x="13" y="93" width="51" height="15" uuid="f1debfac-ca7f-4479-89c7-499b35294490"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Wrists ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="122" y="279" width="13" height="13" uuid="0538278e-7bd1-4294-8d8c-309d5f12f60f"/>
+				<reportElement x="122" y="136" width="13" height="13" uuid="0538278e-7bd1-4294-8d8c-309d5f12f60f"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_ANKLES} != null && $F{gorgon_doc_ma_ANKLES}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="173" y="279" width="13" height="13" uuid="fd4b8957-2618-4646-a423-b50e489ccb5b"/>
+				<reportElement x="173" y="136" width="13" height="13" uuid="fd4b8957-2618-4646-a423-b50e489ccb5b"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_ANKLES} != null && $F{gorgon_doc_ma_ANKLES}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="227" y="279" width="13" height="13" uuid="b436641f-ba6f-40b0-bc57-f81d4927c787"/>
+				<reportElement x="227" y="136" width="13" height="13" uuid="b436641f-ba6f-40b0-bc57-f81d4927c787"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_ANKLES} != null && $F{gorgon_doc_ma_ANKLES}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="13" y="279" width="50" height="15" uuid="31693f1b-ff26-4714-ba1d-78f5c89ca7fe"/>
+				<reportElement x="13" y="136" width="50" height="15" uuid="31693f1b-ff26-4714-ba1d-78f5c89ca7fe"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Ankles ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="174" y="335" width="13" height="13" uuid="355f0fb4-a63f-4ade-b241-19829d91f09c"/>
+				<reportElement x="174" y="192" width="13" height="13" uuid="355f0fb4-a63f-4ade-b241-19829d91f09c"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_HEEL_WALK} != null && $F{gorgon_doc_ma_HEEL_WALK}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="174" y="356" width="13" height="13" uuid="8fb9a656-d866-4009-b1cc-879ab402c786"/>
+				<reportElement x="174" y="213" width="13" height="13" uuid="8fb9a656-d866-4009-b1cc-879ab402c786"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_DUCK_WALK} != null && $F{gorgon_doc_ma_DUCK_WALK}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="13" y="333" width="67" height="15" uuid="5695cd1b-db63-455e-80e5-73b028b5141b"/>
+				<reportElement x="13" y="190" width="67" height="15" uuid="5695cd1b-db63-455e-80e5-73b028b5141b"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Heel walk:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="109" y="313" width="38" height="15" uuid="3f7d6e3b-0201-45ae-8b09-9c0accd51d54"/>
+				<reportElement x="109" y="170" width="38" height="15" uuid="3f7d6e3b-0201-45ae-8b09-9c0accd51d54"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="356" width="69" height="15" uuid="712d49b0-529b-4c2c-902e-e833a1c45b01"/>
+				<reportElement x="13" y="213" width="69" height="15" uuid="712d49b0-529b-4c2c-902e-e833a1c45b01"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Duck walk:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="122" y="356" width="13" height="13" uuid="8f4c70eb-d54c-4031-86f1-a752d35b10c1"/>
+				<reportElement x="122" y="213" width="13" height="13" uuid="8f4c70eb-d54c-4031-86f1-a752d35b10c1"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_DUCK_WALK} != null && $F{gorgon_doc_ma_DUCK_WALK}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="122" y="335" width="13" height="13" uuid="8561fef0-6162-4194-914f-86bd87f92735"/>
+				<reportElement x="122" y="192" width="13" height="13" uuid="8561fef0-6162-4194-914f-86bd87f92735"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_HEEL_WALK} != null && $F{gorgon_doc_ma_HEEL_WALK}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="158" y="313" width="49" height="15" uuid="b4427326-21a4-406f-b9d7-4d001527feec"/>
+				<reportElement x="158" y="170" width="49" height="15" uuid="b4427326-21a4-406f-b9d7-4d001527feec"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Abnormal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="379" width="69" height="15" uuid="13922e59-565c-4837-8873-3664b6be2009"/>
+				<reportElement x="13" y="236" width="69" height="15" uuid="13922e59-565c-4837-8873-3664b6be2009"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Toe walk: ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="122" y="379" width="13" height="13" uuid="fb6fc370-1503-49d2-9a25-5582d6f3c54b"/>
+				<reportElement x="122" y="236" width="13" height="13" uuid="fb6fc370-1503-49d2-9a25-5582d6f3c54b"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_TOE_WALK} != null && $F{gorgon_doc_ma_TOE_WALK}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="174" y="379" width="13" height="13" uuid="aba39a26-7a0a-41a9-9397-a783c013e7e6"/>
+				<reportElement x="174" y="236" width="13" height="13" uuid="aba39a26-7a0a-41a9-9397-a783c013e7e6"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_TOE_WALK} != null && $F{gorgon_doc_ma_TOE_WALK}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="496" y="335" width="13" height="13" uuid="18fbb7b4-de60-4666-b426-fe5beca5f1ff"/>
+				<reportElement x="496" y="192" width="13" height="13" uuid="18fbb7b4-de60-4666-b426-fe5beca5f1ff"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_RHOMBERGS} != null && $F{gorgon_doc_ma_RHOMBERGS}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="342" y="335" width="67" height="15" uuid="85c0beeb-0f0c-4280-9bc3-21f59f38b75b"/>
+				<reportElement x="342" y="192" width="67" height="15" uuid="85c0beeb-0f0c-4280-9bc3-21f59f38b75b"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Rhomberg’s ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="422" y="313" width="38" height="15" uuid="5c0e1579-7ba7-4d50-a4bf-d50a137b15a0"/>
+				<reportElement x="422" y="170" width="38" height="15" uuid="5c0e1579-7ba7-4d50-a4bf-d50a137b15a0"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<image>
-				<reportElement x="435" y="335" width="13" height="13" uuid="5bbdfc0e-da68-49bd-833c-f3d912d0162c"/>
+				<reportElement x="435" y="192" width="13" height="13" uuid="5bbdfc0e-da68-49bd-833c-f3d912d0162c"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_RHOMBERGS} != null && $F{gorgon_doc_ma_RHOMBERGS}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="478" y="313" width="49" height="15" uuid="25803f78-ac11-4c5e-80e6-8b9bcaeb6d71"/>
+				<reportElement x="478" y="170" width="49" height="15" uuid="25803f78-ac11-4c5e-80e6-8b9bcaeb6d71"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Abnormal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="214" y="354" width="131" height="15" uuid="974fe50b-5909-41f5-9789-87aa9d51faf9"/>
+				<reportElement x="214" y="211" width="131" height="15" uuid="974fe50b-5909-41f5-9789-87aa9d51faf9"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[(walk in HALF squat position) ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="401" width="555" height="1" uuid="ac841498-23c4-49f6-900a-d28050d3cc28"/>
+				<reportElement x="1" y="261" width="555" height="1" uuid="ac841498-23c4-49f6-900a-d28050d3cc28"/>
 			</line>
 			<line>
-				<reportElement x="0" y="421" width="555" height="1" uuid="0ed4c5ea-c495-40c8-ab4e-16353ad7bc1c"/>
+				<reportElement x="1" y="281" width="555" height="1" uuid="0ed4c5ea-c495-40c8-ab4e-16353ad7bc1c"/>
 			</line>
 			<staticText>
-				<reportElement x="12" y="402" width="225" height="20" uuid="fdea75c6-2bf1-4530-bcd6-4167effeea2c"/>
+				<reportElement x="13" y="262" width="225" height="20" uuid="fdea75c6-2bf1-4530-bcd6-4167effeea2c"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Any Further Comments on Questionnaire ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="460" width="554" height="1" uuid="ee78b1f7-873c-4794-960f-08209fed7517"/>
+				<reportElement x="1" y="320" width="554" height="1" uuid="ee78b1f7-873c-4794-960f-08209fed7517"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="434" width="554" height="1" uuid="09849978-99a4-4adf-9072-59170c6bffe6"/>
+				<reportElement x="1" y="294" width="554" height="1" uuid="09849978-99a4-4adf-9072-59170c6bffe6"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="486" width="554" height="1" uuid="f2723ac8-d3a1-4d68-abdc-784d9432b847"/>
+				<reportElement x="1" y="346" width="554" height="1" uuid="f2723ac8-d3a1-4d68-abdc-784d9432b847"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="447" width="554" height="1" uuid="c2119296-b41a-4c4f-9cda-b4f844991b8f"/>
+				<reportElement x="1" y="307" width="554" height="1" uuid="c2119296-b41a-4c4f-9cda-b4f844991b8f"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="473" width="554" height="1" uuid="7d372797-3741-4fa2-b174-04b1a4711adb"/>
+				<reportElement x="1" y="333" width="554" height="1" uuid="7d372797-3741-4fa2-b174-04b1a4711adb"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="532" width="554" height="1" uuid="eb3e85b9-4073-4188-a57a-5db6b9be5f79"/>
+				<reportElement x="1" y="392" width="554" height="1" uuid="eb3e85b9-4073-4188-a57a-5db6b9be5f79"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="583" width="554" height="1" uuid="60906b0d-3758-46f7-a4d5-35253e6f1679"/>
+				<reportElement x="1" y="443" width="554" height="1" uuid="60906b0d-3758-46f7-a4d5-35253e6f1679"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="12" y="501" width="152" height="20" uuid="aed23c39-086a-460d-9ce2-1047ff36ea26"/>
+				<reportElement x="13" y="361" width="152" height="20" uuid="aed23c39-086a-460d-9ce2-1047ff36ea26"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Comments on Examination ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="544" width="554" height="1" uuid="ae97bd3a-381e-42af-b7ad-6f8b896f4ca6"/>
+				<reportElement x="1" y="404" width="554" height="1" uuid="ae97bd3a-381e-42af-b7ad-6f8b896f4ca6"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="500" width="554" height="1" uuid="fb4c5dd4-64c2-4c58-84e6-c43a6ba0d6d2"/>
+				<reportElement x="1" y="360" width="554" height="1" uuid="fb4c5dd4-64c2-4c58-84e6-c43a6ba0d6d2"/>
 			</line>
 			<line>
-				<reportElement x="0" y="520" width="554" height="1" uuid="eda5e0b9-beec-49d5-aea2-b1e65acb3ce5"/>
+				<reportElement x="1" y="380" width="554" height="1" uuid="eda5e0b9-beec-49d5-aea2-b1e65acb3ce5"/>
 			</line>
 			<line>
-				<reportElement x="0" y="570" width="554" height="1" uuid="29ee3182-42af-49f7-a0a2-84e6cd2c4212"/>
+				<reportElement x="1" y="430" width="554" height="1" uuid="29ee3182-42af-49f7-a0a2-84e6cd2c4212"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="557" width="554" height="1" uuid="af0524d4-8ee1-448d-80b0-82d3665d87f3"/>
+				<reportElement x="1" y="417" width="554" height="1" uuid="af0524d4-8ee1-448d-80b0-82d3665d87f3"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="12" y="651" width="153" height="20" forecolor="#FFFFFF" uuid="32963a3f-8389-4f87-8190-7887c71d429b"/>
+				<reportElement x="13" y="511" width="153" height="20" forecolor="#FFFFFF" uuid="32963a3f-8389-4f87-8190-7887c71d429b"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[SIGNATURE]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="650" width="554" height="1" uuid="ae7027b4-8551-4966-8a48-89eb9f282c56"/>
+				<reportElement x="1" y="510" width="554" height="1" uuid="ae7027b4-8551-4966-8a48-89eb9f282c56"/>
 			</line>
 			<line>
-				<reportElement x="0" y="670" width="554" height="1" uuid="5b53f321-ba93-4fa3-bdb1-82a91a52b6d9"/>
+				<reportElement x="1" y="530" width="554" height="1" uuid="5b53f321-ba93-4fa3-bdb1-82a91a52b6d9"/>
 			</line>
 			<line>
-				<reportElement x="330" y="726" width="211" height="1" uuid="3105b13f-3689-41df-963f-d2762e809c0a"/>
+				<reportElement x="331" y="685" width="211" height="1" uuid="3105b13f-3689-41df-963f-d2762e809c0a"/>
 			</line>
 			<staticText>
-				<reportElement x="330" y="727" width="211" height="13" uuid="23dfe7da-79f8-42eb-aab3-b635cbaac3f3"/>
+				<reportElement x="331" y="686" width="211" height="13" uuid="23dfe7da-79f8-42eb-aab3-b635cbaac3f3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="726" width="283" height="13" uuid="0c224322-0755-48b5-b53d-beae16c00030"/>
+				<reportElement x="13" y="685" width="283" height="13" uuid="0c224322-0755-48b5-b53d-beae16c00030"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Signature]]></text>
 			</staticText>
 			<line>
-				<reportElement x="12" y="725" width="283" height="1" uuid="1c2da7ec-45fc-4899-af2c-1d2542ff53d8"/>
+				<reportElement x="13" y="684" width="283" height="1" uuid="1c2da7ec-45fc-4899-af2c-1d2542ff53d8"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="13" y="423" width="531" height="65" uuid="39f9f65a-13c0-4e64-b7ad-b51880b79c61"/>
+				<reportElement x="14" y="283" width="531" height="65" uuid="39f9f65a-13c0-4e64-b7ad-b51880b79c61"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_FUTHER_COMMENTS}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="596" width="554" height="1" uuid="82352e07-38cc-41b7-8612-271444107550"/>
+				<reportElement x="1" y="456" width="554" height="1" uuid="82352e07-38cc-41b7-8612-271444107550"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="12" y="520" width="532" height="79" uuid="01785615-05a4-4326-ba0a-fb2fc42a0f8a"/>
+				<reportElement x="13" y="380" width="532" height="79" uuid="01785615-05a4-4326-ba0a-fb2fc42a0f8a"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_LIMB_EXAMINERS_COMMENTS}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="359" y="711" width="154" height="14" uuid="4088e250-a048-4dc2-ad39-3b96f0f3f7f9"/>
+				<reportElement x="360" y="670" width="154" height="14" uuid="4088e250-a048-4dc2-ad39-3b96f0f3f7f9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_GORGON_DATE} != null ? $F{gorgon_doc_ma_GORGON_DATE} : ""]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center">
-				<reportElement x="46" y="675" width="216" height="50" uuid="66cd0ee8-3c6f-4ba7-9c6a-ed2b63d98d2d"/>
+				<reportElement x="47" y="531" width="216" height="153" uuid="66cd0ee8-3c6f-4ba7-9c6a-ed2b63d98d2d"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{gorgon_doc_ma_SIGNATURE}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="11" y="606" width="121" height="15" uuid="d26988c7-a56f-447a-8906-537090d2a9c7"/>
+				<reportElement x="12" y="466" width="121" height="15" uuid="d26988c7-a56f-447a-8906-537090d2a9c7"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Examiner’s Name/Stamp]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="45" y="621" width="184" height="15" uuid="714d0fd2-38aa-4f5e-9f8b-6aa27dcc8c5b"/>
+				<reportElement x="46" y="481" width="184" height="15" uuid="714d0fd2-38aa-4f5e-9f8b-6aa27dcc8c5b"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_EXAMINER_NAME} != null ? $F{gorgon_doc_ma_EXAMINER_NAME} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="275" y="621" width="301" height="15" uuid="d6af4510-ac48-444d-9ae1-7f92eda615e8"/>
+				<reportElement x="276" y="481" width="301" height="15" uuid="d6af4510-ac48-444d-9ae1-7f92eda615e8"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_EXAMINER_ADDRESS} != null ? $F{gorgon_doc_ma_EXAMINER_ADDRESS} : ""]]></textFieldExpression>
 			</textField>
 		</band>
