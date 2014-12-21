@@ -4,7 +4,8 @@
             <button class="btn green pull-right" ng-click="submitIDS(IDSForm)" ng-disabled="!infoChanged()">{{isNew?"Add
                 New":"Update"}}
             </button>
-            <a href="/api/document/printIDS/{{info.headers[0].PATIENT_ID}}/{{info.headers[0].CAL_ID}}/{{info.headers[0].IDAS_ID}}"
+
+            <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/IDS/{{info.headers[0].IDAS_ID}}/{{info.headers[0].CAL_ID}}/{{info.headers[0].PATIENT_ID}}"
                type="button" ng-disabled="isNew || infoChanged()" class="btn btn-primary blue pull-right">Print PDF
             </a>
             <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()"

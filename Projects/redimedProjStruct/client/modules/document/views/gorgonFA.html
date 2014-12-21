@@ -12,7 +12,9 @@
                 <button ng-disabled="!infoChanged()"
                         class="btn green pull-right" ng-click="submitGorgonFA(gorgonFAForm)">{{isNew?"Add New":"Update"}}
                 </button>
-                <a href="/api/document/printGorgonFA/{{info.id}}/{{info.CalId}}"
+
+
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/gorgonFA/{{info.id}}"
                    ng-disabled="isNew || infoChanged()"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
