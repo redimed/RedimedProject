@@ -307,7 +307,8 @@ module.exports =
                                             CHECK_IN_NO:newCheckInNo,
                                             CHECK_IN_DATE:checkInDate,
                                             CHECK_IN_FOLDER_STORAGE:checkInFolderStorage,
-                                            CHECK_IN_STATUS:isoUtil.isoConst.checkInStatus.unlock
+                                            CHECK_IN_STATUS:isoUtil.isoConst.checkInStatus.unlock,
+                                            FILE_NAME:req.files.file.name
                                         }
                                         var sql="UPDATE `iso_check_out_in` SET ? WHERE ID=? ";
                                         req.getConnection(function(err,connection)
