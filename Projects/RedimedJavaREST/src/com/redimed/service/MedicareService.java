@@ -207,6 +207,11 @@ public class MedicareService {
 			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "SubmissionAuthorisedInd", "Y");
 		else
 			return returnOPVJson(rval);
+		
+		if(rval == 0)
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,"", "AccountReferenceId", "Y");
+		else
+			return returnOPVJson(rval);
 
 
 		return null;

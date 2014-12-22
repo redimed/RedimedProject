@@ -36,7 +36,7 @@ module.exports = {
                                         roomSession: session.sessionId
                                     })
                                         .success(function(data,created){console.log('Created: ',created)})
-                                        .error(function(err){res.json({status:'Error',error:err});})
+                                        .error(function(err){console.log(err)})
                                 });
                             }
 

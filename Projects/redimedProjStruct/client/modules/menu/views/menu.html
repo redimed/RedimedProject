@@ -34,21 +34,15 @@
                 <i class="fa fa-plus"></i> Add New</a>
         </div>
     </div>
-    <div class="portlet-body">
-
+    <div class="portlet-body" >
         <div class="table-scrollable" id="content">
-            <table ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered table-responsive">
-                <tr style="white-space: nowrap; cursor: pointer;" ng-repeat="m in $data | orderBy:'menu_id'" ng-class="{selected : m.menu_id == selectedId}">
+            <table id="tblMenu" ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered table-responsive">
+                <tr  style="white-space: nowrap; cursor: pointer;" ng-repeat="m in $data | orderBy:'menu_id'" ng-class="{selected : m.menu_id == selectedId}">
                     <td width="200px" data-title="'Description'" sortable="'description'" ng-click="showChild(m)"  filter="{ 'description': 'text' }">
                         <label >{{m.description}}</label>
                     </td>
-                    <td width="200px" data-title="'Definition'" sortable="'definition'" ng-click="showChild(m)"  filter="{ 'definition': 'text' }">
+                    <td width="300px" data-title="'Definition'" sortable="'definition'" ng-click="showChild(m)"  filter="{ 'definition': 'text' }">
                         <label >{{m.definition}}</label>
-                    </td>
-                    <td width="100px" align="center" data-title="'Icon'" sortable="'type'" ng-click="showChild(m)"  filter="{ 'type': 'text' }">
-                        <label >
-                            <i class="{{m.type}}"></i>
-                        </label>
                     </td>
                     <td align="center" width="100px" data-title="'Enable'" ng-click="showChild(m)"  >
                         <label ng-if="m.isEnable===1" ><input  type="checkbox" disabled   checked /></label>
@@ -80,6 +74,7 @@
 
 </div>
 
+<div id="subMenu"></div>
 <!--Child Menu -->
 <div class="portlet grey-cascade box" ng-if="selectedId != null">
     <div class="portlet-title">
@@ -94,7 +89,7 @@
     </div>
     <div class="portlet-body">
         <div class="table-scrollable" >
-            <table ng-table="tableParams2"  show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
+            <table  ng-table="tableParams2"  show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
                 <tr ng-repeat="m in $data | orderBy:'menu_id'">
                     <td width="200px" data-title="'Description'" sortable="'description'" filter="{ 'description': 'text' }">
                         <label>{{m.description}}</label>
@@ -130,4 +125,21 @@
     </div>
 
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('#tblMenu tr').click(function(){
+            var index= $('#TestTable tr').index(this);
+            alert(' This row has index =' +index);
+        });
+    })
+
+//    $('#tblMenu tr').on('click', function(e){
+//        e.preventDefault();
+//        var target= $('#subMenu');
+//        $('html, body').stop().animate({
+//            scrollTop: target.offset().top
+//        }, 1000);
+//    });
+</script>
 

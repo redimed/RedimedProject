@@ -43,11 +43,11 @@ angular.module('app.loggedIn.function.controller',[])
        modalInstance.result.then(function(){
            $scope.rs = [];
            FunctionService.getList().then(function(response) {
-               $scope.rs = response;
-           })
+               $scope.data = response;
 
-           $scope.$watch('rs',function(rs){
-               $scope.data = rs;
+               $scope.$watch('data',function(data){
+                   $scope.tableParams.reload();
+               })
            })
 
        })
@@ -59,12 +59,11 @@ angular.module('app.loggedIn.function.controller',[])
                 $scope.rs = [];
                 toastr.success("Delete Function Successfully!","Success");
                 FunctionService.getList().then(function(response) {
-                    $scope.rs = response;
-                })
+                    $scope.data = response;
 
-                $scope.$watch('rs',function(rs){
-                    $scope.data = rs;
-                    $scope.tableParams.reload();
+                    $scope.$watch('data',function(data){
+                        $scope.tableParams.reload();
+                    })
                 })
             }
             else
@@ -84,13 +83,12 @@ angular.module('app.loggedIn.function.controller',[])
         modalInstance.result.then(function(){
             $scope.rs = [];
             FunctionService.getList().then(function(response) {
-                $scope.rs = response;
-            })
+                $scope.data = response;
 
-            $scope.$watch('rs',function(rs){
-                $scope.data = rs;
+                $scope.$watch('data',function(data){
+                    $scope.tableParams.reload();
+                })
             })
-
         })
     }
 })

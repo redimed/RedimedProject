@@ -324,8 +324,8 @@
     </li>
 
     <li ng-repeat="menu in loggedInMenus">
-        <a ui-sref="{{menu.parent.definition}}">
-            <i class="{{menu.parent.icon}}"></i>
+        <a ui-sref="{{menu.parent.definition}}" >
+            <i class="glyphicon glyphicon-star-empty"></i>
             <span class="title">{{menu.parent.name}}</span>
 
         </a>
@@ -556,4 +556,6 @@
         Index.init();
     });
 </script>
+
+
 
