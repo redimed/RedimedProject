@@ -5,7 +5,7 @@ var model_sql = {
     sql_get_by_dept: function (dept_id, isenable) {
         var dept_items_builder = squel.select().from('cln_dept_item_lists')
                 .where('CLINICAL_DEPT_ID = ?', dept_id)
-                .where('ISENABLE', 1)
+                .where('ISENABLE = ?', 1)
                 .field('POPULAR_HEADER_ID');
 
         var inv_items_builder = squel.select().from('inv_items')

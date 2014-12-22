@@ -20,12 +20,21 @@ module.exports = function(sequelize, DataTypes){
 		updatedAt: 'Last_update_date',
         classMethods: {
             associate: function (models) {
+            	
+                FeeType.belongsTo( models.FeeType, { 
+            		as: 'FeeType', 
+            		foreignKey: 'SERVICE_ID'
+                });
+
                 FeeType.hasMany(models.InvItem, {
                     as: 'Items', 
                     foreignKey: 'FEE_TYPE_ID',
                     through: models.mdtClnItemFee
                 });
-                FeeType.belongsTo(models.FeeGroup, { as: 'FeeGroup', foreignKey: 'FEE_GROUP_ID'});
+                FeeType.belongsTo(models.FeeGroup, { 
+                	as: 'FeeGroup', 
+                	foreignKey: 'FEE_GROUP_ID'
+                });
             },
 			getUploadPath: function(){ return 'uploadFile/ItemFee/'; }
         }

@@ -16,45 +16,6 @@ module.exports = function(sequelize, DataTypes){
         'SCHEDULE_FEE': { 
             type: DataTypes.FLOAT,  
         },
-        'BENEFIT1': { 
-            type: DataTypes.FLOAT,  
-        },
-        'BENEFIT2': { 
-            type: DataTypes.FLOAT,  
-        },
-        'BENEFIT3': { 
-            type: DataTypes.FLOAT,  
-        },
-        'REBATE': { 
-            type: DataTypes.FLOAT,  
-        },
-        'IP_REBATE': { 
-            type: DataTypes.FLOAT,  
-        },
-        'PRIVATE': { 
-            type: DataTypes.FLOAT,  
-        },
-        'PUBLIC': { 
-            type: DataTypes.FLOAT,  
-        },
-        'PERSION': { 
-            type: DataTypes.FLOAT,  
-        },
-        'DVA_GP_CONSULTS': { 
-            type: DataTypes.FLOAT,  
-        },
-        'DVA_INPATIENT_PROC': { 
-            type: DataTypes.FLOAT,  
-        },
-        'DVA_OUTPATIENT_PROC': { 
-            type: DataTypes.FLOAT,  
-        },
-        'AMA': { 
-            type: DataTypes.FLOAT,  
-        },
-        'WORK_COVER': { 
-            type: DataTypes.FLOAT,  
-        },
         'ISENABLE': { 
             type: DataTypes.INTEGER(11),  
         },

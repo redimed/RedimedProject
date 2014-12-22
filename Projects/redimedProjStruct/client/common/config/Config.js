@@ -156,6 +156,12 @@ angular.module('app.config', [])
         var siteApi = configApi.one("v1/inv/list_uoms");
         return siteApi.get({is_option: 1});
     };
+
+
+    configService.fee_type_option = function(){
+          var siteApi = configApi.one("v2/fees/type/option");
+        return siteApi.get();
+    }
     
     configService.sex_option = function () {
         return SEX_LIST;

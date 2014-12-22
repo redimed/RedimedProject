@@ -53,6 +53,18 @@
 
 
             <div class="break-row"></div>
+             <!-- FEE TYPE ID -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <select class="form-control" name="FEE_TYPE_ID"
+                        ng-model="SysServicesMap.FEE_TYPE_ID"
+                        ng-options="type.FEE_TYPE_ID as type.FEE_TYPE_NAME for type in options.fee_types"
+                        required>
+                        <option value="">-- Select Fee Type --</option>
+                    </select>
+            </div>
+            <!--END FEE TYPE ID -->
+
+
             <!--Isenable-->
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="SysServicesMap.Isenable" ng-true-value="1" ng-false-value="0">

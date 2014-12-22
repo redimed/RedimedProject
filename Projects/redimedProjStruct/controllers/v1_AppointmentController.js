@@ -72,19 +72,30 @@ var model_sql = {
     /*
     * ITEMS FOR APPOINTMENT
     */
-    sql_get_items_calendar: function (appt_id) {
-        var query_builder = squel.select().from('inv_items').where('cal_id = ?', appt_id);
+    sql_get_items_calendar: function (appt_id, patient_id) {
+        var query_builder = squel.select()
+        .from('inv_items')
+        .where('cal_id = ?', appt_id)
+        .where('appt_items.Patient_id = ?', patient_id)
+        ;
         query_builder.join('cln_appt_items', 'appt_items', 'appt_items.CLN_ITEM_ID = inv_items.ITEM_ID');
-        query_builder.field('appt_item_id').field('ITEM_ID').field('ITEM_NAME').field('ITEM_CODE').field('QUANTITY');
+
+        query_builder.field('appt_item_id')
+                    .field('ITEM_ID')
+                    .field('ITEM_NAME')
+                    .field('appt_items.PRICE')
+                    .field('ITEM_CODE')
+                    .field('QUANTITY');
         return query_builder.toString();
     },
-    sql_insert_items_calendar: function (cal_id, items) {
+    sql_insert_items_calendar: function (cal_id, patient_id, items) {
         var query_builder = squel.insert().into('cln_appt_items');
         var rows = [];
         for (var key in items) {
             var item = items[key];
             var row = {
                 cal_id: cal_id,
+                Patient_id: patient_id,
                 CLN_ITEM_ID: item.CLN_ITEM_ID,
                 QUANTITY: item.QUANTITY ? item.QUANTITY : 1,
                 PRICE: item.PRICE ? item.PRICE : 0,
@@ -95,17 +106,20 @@ var model_sql = {
         query_builder.setFieldsRows(rows, {dontQuote: true});
         return query_builder.toString();
     },
-    sql_delete_items_calendar: function (cal_id, items_id) {
+    sql_delete_items_calendar: function (cal_id, patient_id,  items_id) {
         var query_builder = squel.delete().from('cln_appt_items');
         query_builder.where('cal_id = ?', cal_id);
-        query_builder.where('CLN_ITEM_ID IN ?', items_id); 
+        query_builder.where('Patient_id = ?', patient_id);
+        query_builder.where('CLN_ITEM_ID IN ?', items_id);
+
         return query_builder.toString();
     },
-    sql_update_item_calendar: function (cal_id, item) {
+    sql_update_item_calendar: function (cal_id, patient_id, item) {
         var query_builder = squel.update().table('cln_appt_items');
         query_builder.set('QUANTITY', item.QUANTITY)
 
         query_builder.where('cal_id = ?', cal_id);
+        query_builder.where('Patient_id = ?', patient_id);
         query_builder.where('CLN_ITEM_ID IN ?', item.CLN_ITEM_ID); 
         return query_builder.toString();
     },
@@ -136,7 +150,9 @@ module.exports = {
     */
     postGetItems: function (req, res) {
         var appt_id = req.body.appt_id;
-        var sql = model_sql.sql_get_items_calendar(appt_id);
+        var patient_id = req.body.patient_id;
+
+        var sql = model_sql.sql_get_items_calendar(appt_id, patient_id);
         var k_sql = res.locals.k_sql;
 
         k_sql.exec(sql, function (data) {
@@ -149,12 +165,13 @@ module.exports = {
     postInsertItems: function (req, res) {
         var cal_id = req.body.cal_id;
         var items = req.body.items;
+        var patient_id = req.body.patient_id;
         if (!cal_id || !items) {
             res.json({status: 'error 1 '});
             return;
         }
 
-        var sql = model_sql.sql_insert_items_calendar(cal_id, items);
+        var sql = model_sql.sql_insert_items_calendar(cal_id, patient_id, items);
         var k_sql = res.locals.k_sql;
         k_sql.exec_row(sql, function (data) {
             res.json(data);
@@ -165,12 +182,14 @@ module.exports = {
     postDeleteItems: function(req, res){
         var cal_id = req.body.cal_id;
         var items = req.body.items; // list item_id
+        var patient_id = req.body.patient_id;
+
         if (!cal_id || !items) {
             res.json({status: 'error 1 '});
             return;
         }
         console.log('DELTE LIST ', items)
-        var sql = model_sql.sql_delete_items_calendar(cal_id, items);
+        var sql = model_sql.sql_delete_items_calendar(cal_id, patient_id, items);
         var k_sql = res.locals.k_sql;
         k_sql.exec(sql, function (data) {
             res.json(data);
@@ -181,6 +200,7 @@ module.exports = {
     postUpdateItems: function(req, res){
         var cal_id = req.body.cal_id;
         var items = req.body.items; // list item_id
+        
         if (!cal_id || !items) {
             res.json({status: 'error 1 '});
             return;
@@ -196,31 +216,6 @@ module.exports = {
         }, function (err) {
             res.json(err);
         });
-        
-
-
-        /*
-        var index = 0;
-
-        var checksum = function(){
-            if(i == items.length)
-                res.json({status: 'success'});
-        }
-
-        var updateF = function(sql){
-            k_sql.exec(sql, function (data) {
-                ++index;
-                checksum();
-            });
-        }
-
-        for (var i = items.length - 1; i >= 0; --i) {
-            var sql = model_sql.sql_update_items_calendar(cal_id, items);  
-            updateF(sql);
-        };
-        */
-
-
     },
 
     /*

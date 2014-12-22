@@ -2,6 +2,22 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
+
+    getOption: function(req, res) {
+        db.FeeType.findAll({
+            attributes: ['FEE_TYPE_ID', 'FEE_TYPE_NAME'],
+            where: {ISENABLE : 1}
+        }).success(function(data){
+            res.json({"status": "success", "data": data});
+        })
+         .error(function (error) {
+                res.json(500, {
+                    'status': 'error',
+                    'message': error
+                });
+            })
+    },
+
     postInsert: function (req, res) {
         var postData = req.body;
         console.log('this is post data', postData);
