@@ -41,7 +41,6 @@ angular.module("app.directive.mydatatable.common", [])
                 if(oldTotal != data.count) {
                     $scope.page_data.totalItems = data.count;
                 }
-                console.log(data.list)
                 $scope.data.items = data.list;
             }
 

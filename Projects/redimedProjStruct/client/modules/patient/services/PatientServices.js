@@ -6,6 +6,24 @@ angular.module("app.loggedIn.patient.services", [])
 
     var mdtApi = Restangular.all("api/meditek/v1/patient/");
 
+    var khankAPI = Restangular.all("api/erm/v2/patients");
+    /*
+    *   KHANK 
+    */
+     instanceService.numCompanies = function(patient_id){
+        var funcApi = khankAPI.one('num_companies');
+        return funcApi.get({id: patient_id});
+    }
+
+     instanceService.numClaims = function(patient_id){
+        var funcApi = khankAPI.one('num_claims');
+        return funcApi.get({id: patient_id});
+    }
+
+     /*
+    *  END KHANK 
+    */
+
     instanceService.mdtVerifiedMedicare = function(options){
         var govermentApi = Restangular.allUrl("Medicare", "http://localhost:9292/testapp.redimed.com.au:3003/RedimedJavaREST/api/medicare/verify/pvm");
         return govermentApi.post(options);

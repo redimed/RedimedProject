@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
+	<property name="ireport.zoom" value="1.0245201830476074"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#D9C3C3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFE6E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="549b730d-d512-4ca7-9f86-e170f809cd8a"/>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    doc_ma.`STICKER` AS doc_ma_STICKER,
+    doc_ma.`HEIGHT` AS doc_ma_HEIGHT,
+    doc_ma.`WEIGHT` AS doc_ma_WEIGHT,
+    doc_ma.`BMI` AS doc_ma_BMI,
+    doc_ma.`WAIST` AS doc_ma_WAIST,
+    doc_ma.`HIP` AS doc_ma_HIP,
+    doc_ma.`WHR` AS doc_ma_WHR,
+    doc_ma.`IS_BMI` AS doc_ma_IS_BMI,
+    doc_ma.`BLOOD_SEC1` AS doc_ma_BLOOD_SEC1,
+    doc_ma.`IS_BLOOD` AS doc_ma_IS_BLOOD,
+    doc_ma.`RESTING_HEART_RATE` AS doc_ma_RESTING_HEART_RATE,
+    doc_ma.`IS_RESTING_HEART_RATE` AS doc_ma_IS_RESTING_HEART_RATE,
+    doc_ma.`HEART_SOUNDS` AS doc_ma_HEART_SOUNDS,
+    doc_ma.`PERIPHERAL` AS doc_ma_PERIPHERAL,
+    doc_ma.`VEINS_OTHER` AS doc_ma_VEINS_OTHER,
+    doc_ma.`COMMENT_SEC1` AS doc_ma_COMMENT_SEC1,
+    doc_ma.`RIGHT_DIST` AS doc_ma_RIGHT_DIST,
+    doc_ma.`RIGHT_DIST_CORRECT` AS doc_ma_RIGHT_DIST_CORRECT,
+    doc_ma.`LEFT_DIST` AS doc_ma_LEFT_DIST,
+    doc_ma.`LEFT_DIST_CORRECT` AS doc_ma_LEFT_DIST_CORRECT,
+    doc_ma.`RIGHT_NEAR` AS doc_ma_RIGHT_NEAR,
+    doc_ma.`RIGHT_NEAR_CORRECT` AS doc_ma_RIGHT_NEAR_CORRECT,
+    doc_ma.`LEFT_NEAR` AS doc_ma_LEFT_NEAR,
+    doc_ma.`LEFT_NEAR_CORRECT` AS doc_ma_LEFT_NEAR_CORRECT,
+    doc_ma.`COLOUR_SEC2` AS doc_ma_COLOUR_SEC2,
+    doc_ma.`SCORE_SEC2` AS doc_ma_SCORE_SEC2,
+    doc_ma.`PERIPHERAL_SEC2` AS doc_ma_PERIPHERAL_SEC2,
+    doc_ma.`VISUAL_AIDS` AS doc_ma_VISUAL_AIDS,
+    doc_ma.`COMMENT_SEC2` AS doc_ma_COMMENT_SEC2,
+    doc_ma.`PROTEIN` AS doc_ma_PROTEIN,
+    doc_ma.`GLUCOSE` AS doc_ma_GLUCOSE,
+    doc_ma.`BLOOD` AS doc_ma_BLOOD,
+    doc_ma.`BLOOD_SUGAR_LEVEL` AS doc_ma_BLOOD_SUGAR_LEVEL,
+    doc_ma.`COMMENT_SEC3` AS doc_ma_COMMENT_SEC3,
+    doc_ma.`SPIROMETRY` AS doc_ma_SPIROMETRY,
+    doc_ma.`SYMMETRICAL` AS doc_ma_SYMMETRICAL,
+    doc_ma.`AUSCULTATION` AS doc_ma_AUSCULTATION,
+    doc_ma.`EARS` AS doc_ma_EARS,
+    doc_ma.`HEARING` AS doc_ma_HEARING,
+    doc_ma.`NOSE` AS doc_ma_NOSE,
+    doc_ma.`THROAT` AS doc_ma_THROAT,
+    doc_ma.`TEETH_GUMS` AS doc_ma_TEETH_GUMS,
+    doc_ma.`SKIN` AS doc_ma_SKIN,
+    doc_ma.`DRUG` AS doc_ma_DRUG,
+    doc_ma.`NAIL` AS doc_ma_NAIL,
+    doc_ma.`SCAR` AS doc_ma_SCAR,
+    doc_ma.`ABDOMEN` AS doc_ma_ABDOMEN,
+    doc_ma.`HERNIAL` AS doc_ma_HERNIAL,
+    doc_ma.`LIVER` AS doc_ma_LIVER,
+    doc_ma.`SPLEEN` AS doc_ma_SPLEEN,
+    doc_ma.`KIDNEYS` AS doc_ma_KIDNEYS,
+    doc_ma.`BALANCE` AS doc_ma_BALANCE,
+    doc_ma.`COORDINATION` AS doc_ma_COORDINATION,
+    doc_ma.`LYMPH` AS doc_ma_LYMPH,
+    doc_ma.`THYROID` AS doc_ma_THYROID,
+    doc_ma.`COMMENT_SEC9` AS doc_ma_COMMENT_SEC9,
+    doc_ma.`AGE` AS doc_ma_AGE,
+    doc_ma.`HYPER` AS doc_ma_HYPER,
+    doc_ma.`SMOKER` AS doc_ma_SMOKER,
+    doc_ma.`KNOW` AS doc_ma_KNOW,
+    doc_ma.`SEDENTARY` AS doc_ma_SEDENTARY,
+    doc_ma.`FAMILY` AS doc_ma_FAMILY,
+    doc_ma.`HISTORY` AS doc_ma_HISTORY,
+    doc_ma.`OBESITY` AS doc_ma_OBESITY,
+    doc_ma.`RISK` AS doc_ma_RISK,
+    doc_ma.`ECG` AS doc_ma_ECG,
+    doc_ma.`ECG_RESULT` AS doc_ma_ECG_RESULT,
+    doctors.`NAME` AS doc_ma_DOCTOR_NAME,
+    SUBSTRING_INDEX(doctors.`Signature`, ',', -1) AS doc_ma_SIGN,
+    doc_ma.`GP` AS doc_ma_GP,
+    doc_ma.`COMMENT_SEC10` AS doc_ma_COMMENT_SEC10,
+    doc_ma.`Creation_date` AS doc_ma_Creation_date
+FROM
+`doctors` doctors INNER JOIN `doc_ma` doc_ma ON doctors.`doctor_id` = doc_ma.`DOCTOR_ID`
+WHERE
+doc_ma.`MA_ID` = $P{id}]]>
+	</queryString>
+	<field name="doc_ma_STICKER" class="java.lang.String"/>
+	<field name="doc_ma_HEIGHT" class="java.lang.Integer"/>
+	<field name="doc_ma_WEIGHT" class="java.lang.Integer"/>
+	<field name="doc_ma_BMI" class="java.lang.Integer"/>
+	<field name="doc_ma_WAIST" class="java.lang.Integer"/>
+	<field name="doc_ma_HIP" class="java.lang.Integer"/>
+	<field name="doc_ma_WHR" class="java.lang.Integer"/>
+	<field name="doc_ma_IS_BMI" class="java.lang.Integer"/>
+	<field name="doc_ma_BLOOD_SEC1" class="java.lang.Integer"/>
+	<field name="doc_ma_IS_BLOOD" class="java.lang.Integer"/>
+	<field name="doc_ma_RESTING_HEART_RATE" class="java.lang.Integer"/>
+	<field name="doc_ma_IS_RESTING_HEART_RATE" class="java.lang.Integer"/>
+	<field name="doc_ma_HEART_SOUNDS" class="java.lang.Integer"/>
+	<field name="doc_ma_PERIPHERAL" class="java.lang.Integer"/>
+	<field name="doc_ma_VEINS_OTHER" class="java.lang.Integer"/>
+	<field name="doc_ma_COMMENT_SEC1" class="java.lang.String"/>
+	<field name="doc_ma_RIGHT_DIST" class="java.lang.Integer"/>
+	<field name="doc_ma_RIGHT_DIST_CORRECT" class="java.lang.Integer"/>
+	<field name="doc_ma_LEFT_DIST" class="java.lang.Integer"/>
+	<field name="doc_ma_LEFT_DIST_CORRECT" class="java.lang.Integer"/>
+	<field name="doc_ma_RIGHT_NEAR" class="java.lang.Integer"/>
+	<field name="doc_ma_RIGHT_NEAR_CORRECT" class="java.lang.Integer"/>
+	<field name="doc_ma_LEFT_NEAR" class="java.lang.Integer"/>
+	<field name="doc_ma_LEFT_NEAR_CORRECT" class="java.lang.Integer"/>
+	<field name="doc_ma_COLOUR_SEC2" class="java.lang.Integer"/>
+	<field name="doc_ma_SCORE_SEC2" class="java.lang.Integer"/>
+	<field name="doc_ma_PERIPHERAL_SEC2" class="java.lang.Integer"/>
+	<field name="doc_ma_VISUAL_AIDS" class="java.lang.Integer"/>
+	<field name="doc_ma_COMMENT_SEC2" class="java.lang.String"/>
+	<field name="doc_ma_PROTEIN" class="java.lang.Integer"/>
+	<field name="doc_ma_GLUCOSE" class="java.lang.Integer"/>
+	<field name="doc_ma_BLOOD" class="java.lang.Integer"/>
+	<field name="doc_ma_BLOOD_SUGAR_LEVEL" class="java.lang.Integer"/>
+	<field name="doc_ma_COMMENT_SEC3" class="java.lang.String"/>
+	<field name="doc_ma_SPIROMETRY" class="java.lang.Integer"/>
+	<field name="doc_ma_SYMMETRICAL" class="java.lang.Integer"/>
+	<field name="doc_ma_AUSCULTATION" class="java.lang.Integer"/>
+	<field name="doc_ma_EARS" class="java.lang.Integer"/>
+	<field name="doc_ma_HEARING" class="java.lang.Integer"/>
+	<field name="doc_ma_NOSE" class="java.lang.Integer"/>
+	<field name="doc_ma_THROAT" class="java.lang.Integer"/>
+	<field name="doc_ma_TEETH_GUMS" class="java.lang.Integer"/>
+	<field name="doc_ma_SKIN" class="java.lang.Integer"/>
+	<field name="doc_ma_DRUG" class="java.lang.Integer"/>
+	<field name="doc_ma_NAIL" class="java.lang.Integer"/>
+	<field name="doc_ma_SCAR" class="java.lang.Integer"/>
+	<field name="doc_ma_ABDOMEN" class="java.lang.Integer"/>
+	<field name="doc_ma_HERNIAL" class="java.lang.Integer"/>
+	<field name="doc_ma_LIVER" class="java.lang.Integer"/>
+	<field name="doc_ma_SPLEEN" class="java.lang.Integer"/>
+	<field name="doc_ma_KIDNEYS" class="java.lang.Integer"/>
+	<field name="doc_ma_BALANCE" class="java.lang.Integer"/>
+	<field name="doc_ma_COORDINATION" class="java.lang.Integer"/>
+	<field name="doc_ma_LYMPH" class="java.lang.Integer"/>
+	<field name="doc_ma_THYROID" class="java.lang.Integer"/>
+	<field name="doc_ma_COMMENT_SEC9" class="java.lang.String"/>
+	<field name="doc_ma_AGE" class="java.lang.Integer"/>
+	<field name="doc_ma_HYPER" class="java.lang.Integer"/>
+	<field name="doc_ma_SMOKER" class="java.lang.Integer"/>
+	<field name="doc_ma_KNOW" class="java.lang.Integer"/>
+	<field name="doc_ma_SEDENTARY" class="java.lang.Integer"/>
+	<field name="doc_ma_FAMILY" class="java.lang.Integer"/>
+	<field name="doc_ma_HISTORY" class="java.lang.Integer"/>
+	<field name="doc_ma_OBESITY" class="java.lang.Integer"/>
+	<field name="doc_ma_RISK" class="java.lang.Integer"/>
+	<field name="doc_ma_ECG" class="java.lang.Integer"/>
+	<field name="doc_ma_ECG_RESULT" class="java.lang.Integer"/>
+	<field name="doc_ma_DOCTOR_NAME" class="java.lang.String"/>
+	<field name="doc_ma_SIGN" class="java.lang.String"/>
+	<field name="doc_ma_GP" class="java.lang.Integer"/>
+	<field name="doc_ma_COMMENT_SEC10" class="java.lang.String"/>
+	<field name="doc_ma_Creation_date" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802">
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="103" width="555" height="298" uuid="b4dd2985-5e0b-46c8-99dc-b4529b7c5557"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA4.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="312" width="555" height="273" uuid="425f4c5e-e246-4e90-914e-171f6cf1142c"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA5.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="542" width="555" height="237" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA6.PNG"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="377" y="0" width="178" height="103" uuid="4174c3b6-428d-4c0d-a009-443fed1597f9"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/header1.PNG"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="131" width="14" height="13" uuid="3a4b3a83-cc9c-4446-a73f-271f58c86933">
+					<printWhenExpression><![CDATA[$F{doc_ma_SPIROMETRY}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="171" width="14" height="13" uuid="f33b32ff-3a87-4074-bce8-7e33f3bc9c60">
+					<printWhenExpression><![CDATA[$F{doc_ma_AUSCULTATION}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="153" width="14" height="13" uuid="c62fa99e-c413-4414-84ab-7e77b76a3059">
+					<printWhenExpression><![CDATA[$F{doc_ma_SYMMETRICAL}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="153" width="14" height="13" uuid="5ba4f0b1-2a0f-4fdd-9704-94b8987f17ae">
+					<printWhenExpression><![CDATA[$F{doc_ma_SYMMETRICAL}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="131" width="14" height="13" uuid="2fc27ff1-6d1b-4424-b82c-c7d33621d88c">
+					<printWhenExpression><![CDATA[$F{doc_ma_SPIROMETRY}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="171" width="14" height="13" uuid="c7dda16b-ab08-4e56-811f-20ddfe817b8e">
+					<printWhenExpression><![CDATA[$F{doc_ma_AUSCULTATION}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="274" width="14" height="13" uuid="d576b719-be2a-4bf6-abd4-168b72b5d563">
+					<printWhenExpression><![CDATA[$F{doc_ma_THROAT}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="254" width="14" height="13" uuid="40705f4c-6fcc-4641-9a64-9de68e097b2b">
+					<printWhenExpression><![CDATA[$F{doc_ma_NOSE}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="254" width="14" height="13" uuid="46ff03b2-66a3-482d-9dc6-7bb3a64a3ef2">
+					<printWhenExpression><![CDATA[$F{doc_ma_NOSE}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="234" width="14" height="13" uuid="6d0a5d65-f306-42bf-9a8e-4bedb8657ee7">
+					<printWhenExpression><![CDATA[$F{doc_ma_HEARING}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="234" width="14" height="13" uuid="e8220b9c-bafb-4330-8538-6efbb6ddb610">
+					<printWhenExpression><![CDATA[$F{doc_ma_HEARING}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="213" width="14" height="13" uuid="c649d01b-8991-4c15-ae2b-6ce5cddbcefd">
+					<printWhenExpression><![CDATA[$F{doc_ma_EARS}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="213" width="14" height="13" uuid="98a16024-f372-491a-9e03-aad1bc4a6201">
+					<printWhenExpression><![CDATA[$F{doc_ma_EARS}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="465" width="14" height="13" uuid="a98f9d49-e115-4b72-bb7d-77ae1a4c208f">
+					<printWhenExpression><![CDATA[$F{doc_ma_HERNIAL}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="238" y="465" width="14" height="13" uuid="2739b669-7e3c-4299-8cf0-3ec4a939c20c">
+					<printWhenExpression><![CDATA[$F{doc_ma_HERNIAL}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="445" width="14" height="13" uuid="657a0ea6-20e4-439a-b885-f194308fe720">
+					<printWhenExpression><![CDATA[$F{doc_ma_ABDOMEN}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="238" y="445" width="14" height="13" uuid="2fa9c15a-327e-4e49-beec-e2f3de205818">
+					<printWhenExpression><![CDATA[$F{doc_ma_ABDOMEN}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="262" y="402" width="14" height="13" uuid="a5220994-c3f3-499c-a75a-1070635523e8">
+					<printWhenExpression><![CDATA[$F{doc_ma_SCAR}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="224" y="402" width="14" height="13" uuid="0714729d-7d8b-4031-9776-f83030e7387b">
+					<printWhenExpression><![CDATA[$F{doc_ma_SCAR}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="262" y="383" width="14" height="13" uuid="e0f4bdb7-9b65-4e46-95ac-0fb3ad16eb69">
+					<printWhenExpression><![CDATA[$F{doc_ma_NAIL}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="224" y="383" width="14" height="13" uuid="d2b96751-b351-41bb-bd22-db3d2e577fb9">
+					<printWhenExpression><![CDATA[$F{doc_ma_NAIL}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="262" y="363" width="14" height="13" uuid="7461a965-9698-4dd3-ab70-943667c56b56">
+					<printWhenExpression><![CDATA[$F{doc_ma_DRUG}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="224" y="363" width="14" height="13" uuid="5c814f4a-a325-429e-9ec8-ff29fe518fe1">
+					<printWhenExpression><![CDATA[$F{doc_ma_DRUG}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="262" y="340" width="14" height="13" uuid="49f8423e-1c93-40e2-aae8-034f958656a1">
+					<printWhenExpression><![CDATA[$F{doc_ma_SKIN}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="224" y="340" width="14" height="13" uuid="d68337cd-5b45-4825-a0ff-8430c2241423">
+					<printWhenExpression><![CDATA[$F{doc_ma_SKIN}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="239" y="650" width="14" height="13" uuid="58241e3e-b4da-43cc-a770-15e9ccf39051">
+					<printWhenExpression><![CDATA[$F{doc_ma_THYROID}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="650" width="14" height="13" uuid="60e81128-3466-4dfc-8fd8-c9a49af09811">
+					<printWhenExpression><![CDATA[$F{doc_ma_THYROID}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="629" width="14" height="13" uuid="8a395734-a371-4b91-8091-4176ed7d8c81">
+					<printWhenExpression><![CDATA[$F{doc_ma_LYMPH}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="239" y="629" width="14" height="13" uuid="e391e395-20ed-424f-a4d9-2277911880a9">
+					<printWhenExpression><![CDATA[$F{doc_ma_LYMPH}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="587" width="14" height="13" uuid="c10d5be8-6531-4311-94ed-0a9c89cdeb75">
+					<printWhenExpression><![CDATA[$F{doc_ma_COORDINATION}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="239" y="587" width="14" height="13" uuid="59dcca35-bc3e-47b2-b7a3-331842ffa272">
+					<printWhenExpression><![CDATA[$F{doc_ma_COORDINATION}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="568" width="14" height="13" uuid="efeb6695-1c63-4cd0-b72b-85f352e2e422">
+					<printWhenExpression><![CDATA[$F{doc_ma_BALANCE}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="239" y="568" width="14" height="13" uuid="ad3be230-1fd1-4e56-9b1f-2055ce66ede0">
+					<printWhenExpression><![CDATA[$F{doc_ma_BALANCE}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="295" width="14" height="13" uuid="9a50c032-28b9-4a8e-aa74-3370ba6aed9d">
+					<printWhenExpression><![CDATA[$F{doc_ma_TEETH_GUMS}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="295" width="14" height="13" uuid="64a97784-a83a-4265-b5ac-e32518b463a0">
+					<printWhenExpression><![CDATA[$F{doc_ma_TEETH_GUMS}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="240" y="274" width="14" height="13" uuid="6e09ebc2-b602-4be5-831c-d377bcd0bf8c">
+					<printWhenExpression><![CDATA[$F{doc_ma_THROAT}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="525" width="14" height="13" uuid="72e78c3a-c6aa-4cc3-8c82-2920fdb4873b">
+					<printWhenExpression><![CDATA[$F{doc_ma_KIDNEYS}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="238" y="525" width="14" height="13" uuid="3869e10f-61fc-4afe-b25a-999f6382053a">
+					<printWhenExpression><![CDATA[$F{doc_ma_KIDNEYS}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="505" width="14" height="13" uuid="c797c5ba-3057-4028-92ef-80188fff92f8">
+					<printWhenExpression><![CDATA[$F{doc_ma_SPLEEN}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="238" y="505" width="14" height="13" uuid="89dd838a-3393-478b-b025-69b5fc3c32c7">
+					<printWhenExpression><![CDATA[$F{doc_ma_SPLEEN}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="307" y="485" width="14" height="13" uuid="dd661109-954f-42c9-a4c2-cbab82b815c3">
+					<printWhenExpression><![CDATA[$F{doc_ma_LIVER}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="238" y="485" width="14" height="13" uuid="84136cb8-3d6b-49b0-834d-1988b38ea8da">
+					<printWhenExpression><![CDATA[$F{doc_ma_LIVER}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="10" y="683" width="534" height="80" uuid="83facef6-df21-4c49-a06f-2f30514020d8"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_COMMENT_SEC9} != null ? $F{doc_ma_COMMENT_SEC9} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="761">
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="107" width="555" height="298" uuid="b4dd2985-5e0b-46c8-99dc-b4529b7c5557"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA7.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="-1" y="402" width="555" height="295" uuid="425f4c5e-e246-4e90-914e-171f6cf1142c"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA8.PNG"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="674" width="555" height="79" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA9.PNG"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="363" y="0" width="192" height="100" uuid="77f4ee2f-4045-4977-b609-86640515c844"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/header1.PNG"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="179" width="14" height="13" uuid="e73863e0-6fbc-4f29-a22d-910b9e0984c2">
+					<printWhenExpression><![CDATA[$F{doc_ma_HYPER}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="188" y="192" width="14" height="13" uuid="1a1b7edb-6843-4eb8-a5a4-b24cc6e98a30">
+					<printWhenExpression><![CDATA[$F{doc_ma_RISK}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="447" y="410" width="14" height="13" uuid="9b0eed5d-1363-4f2a-b7c7-b4353677c805">
+					<printWhenExpression><![CDATA[$F{doc_ma_GP}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="485" y="410" width="14" height="13" uuid="dd68b8e3-e3fe-4c35-baca-d8e292967f3b">
+					<printWhenExpression><![CDATA[$F{doc_ma_GP}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="300" width="14" height="13" uuid="061ac7b5-473a-4c6d-8870-79e8a399c669">
+					<printWhenExpression><![CDATA[$F{doc_ma_OBESITY}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="281" width="14" height="13" uuid="c9eeef91-16ba-4a52-aee1-1f23fb4c7bee">
+					<printWhenExpression><![CDATA[$F{doc_ma_HISTORY}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="260" width="14" height="13" uuid="c1baf3e0-a4f1-44b5-bf66-75fb6bd75a87">
+					<printWhenExpression><![CDATA[$F{doc_ma_FAMILY}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="240" width="14" height="13" uuid="20abf9d4-a57e-41ef-bfde-c36bef7cc852">
+					<printWhenExpression><![CDATA[$F{doc_ma_SEDENTARY}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="219" width="14" height="13" uuid="fa10c113-4d38-447d-a39c-5d0ab6615d63">
+					<printWhenExpression><![CDATA[$F{doc_ma_KNOW}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="199" width="14" height="13" uuid="b169e7a8-269c-486d-b48c-7df2c9ff6245">
+					<printWhenExpression><![CDATA[$F{doc_ma_SMOKER}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="188" y="320" width="14" height="13" uuid="11784136-c0ec-40fb-b91d-835d91d9cfe0">
+					<printWhenExpression><![CDATA[$F{doc_ma_RISK}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="188" y="251" width="14" height="13" uuid="777b871d-066e-41ec-b0f7-ad86644ca107">
+					<printWhenExpression><![CDATA[$F{doc_ma_RISK}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="-1" y="354" width="556" height="51" uuid="c32b2603-3d59-4f26-b0f9-da7f124befe0"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA78.PNG"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="530" y="385" width="14" height="13" uuid="50b8a9d3-7e94-469f-aeb7-c0bfd04f78c2">
+					<printWhenExpression><![CDATA[$F{doc_ma_ECG_RESULT}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="463" y="385" width="14" height="13" uuid="670e3b42-d467-4bd2-9687-86b8094816f0">
+					<printWhenExpression><![CDATA[$F{doc_ma_ECG_RESULT}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="484" y="361" width="14" height="13" uuid="4b724903-e605-4b79-982e-d809e29f4c58">
+					<printWhenExpression><![CDATA[$F{doc_ma_ECG}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="449" y="361" width="14" height="13" uuid="bd98c603-1a6b-4a53-9ef3-14ee61927d95">
+					<printWhenExpression><![CDATA[$F{doc_ma_ECG}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="10" y="464" width="534" height="153" uuid="78435f2d-4030-4d97-bfc4-3c3716fa1d34"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_COMMENT_SEC10} != null ? $F{doc_ma_COMMENT_SEC10} : ""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="81" y="140" width="262" height="20" uuid="e9d4b688-5015-438d-9f0b-e699f6802a48"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[If 55 years or above, proceed to ECG testing]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="37" y="140" width="32" height="20" uuid="a7b4d24a-21d8-4bbc-863a-70b72d065d11"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_AGE} != null ? $F{doc_ma_AGE} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="98" y="683" width="164" height="20" uuid="e1d27cf1-8a43-48ec-9d4e-67a4ec5ff774"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_DOCTOR_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="98" y="720" width="164" height="23" uuid="d943b991-2e8c-4094-a7c0-14a9386636e4"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_Creation_date}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="344" y="617" width="162" height="98" uuid="f2abcee0-d809-48bb-b9a0-fb2232f94826"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doc_ma_SIGN}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

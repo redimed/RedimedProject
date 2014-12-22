@@ -47,7 +47,7 @@ angular.module("app.model", [])
     suburb: null, // varchar (200)
     postcode: null, // varchar (50)
     state: null, // varchar (100)
-    isenable: null, // tinyint (1)
+    isenable: '1', // tinyint (1)
     created_by: null, // int (11)
     creation_date: null, // datetime ()
     last_updated_by: null, // int (11)
@@ -237,53 +237,6 @@ angular.module("app.model", [])
 	Last_updated_by: null,
 	Last_update_date: null,
 	isPreEmpBK: null,
-})
-.value('sysServiceModel', {
-	SERVICE_NAME: '',
-	DESCRIPTION: '',
-	Isenable: null,
-	Created_by: null,
-	Creation_date: null,
-	Last_updated_by: null,
-	Last_update_date: null,
-	Prefix: '',
-	ITEM_START_DATE: null,
-	ITEM_END_DATE: null,
-	CATEGORY: '',
-	INV_GROUP: '',
-	SUB_GROUP: '',
-	SUB_HEADING: '',
-	FEE_TYPE: '',
-	PROVIDER_TYPE: '',
-	NEW_ITEM: '',
-	ITEM_CHANGE: '',
-	ANAES_CHANGE: '',
-	DESCRIPTOR_CHANGE: '',
-	FEE_CHANGE: '',
-	EMSN_CHANGE: '',
-	EMSN_CAP: '',
-	BENEFIT_TYPE: '',
-	BENEFIT_START_DATE: null,
-	EMSN_START_DATE: null,
-	EMSN_END_DATE: null,
-	EMSN_FIXED_CAP_AMOUNT: '',
-	EMSN_PERCENTAGE_CAP: '',
-	EMSN_MAXIMUM_CAP: '',
-	EMSN_DESCRIPTION: '',
-	EMSN_CHANGE_DATE: null,
-	DERIVED_FEE_START_DATE: null,
-	DERIVED_FEE: '',
-	ANAES: '',
-	DESCRIPTION_START_DATE: null,
-	QFE_START_DATE: null,
-	QFE_END_DATE: null,
-	ITEM_CODE: '', // r
-	SUB_ITEM_CODE: '',
-	DURING_TIME: null,
-	AMA_CODE: '',
-	AMA_DESC: '',
-	isPO: null, // r
-	isOM: null, // r
 })
 .value('sysrlTypesModel', {
 	Rl_TYPE_NAME: '',
@@ -511,7 +464,8 @@ angular.module("app.model", [])
 	SERVICE_NAME: '',
 	DESCRIPTION: '',
 	SERVICE_COLOR: '',
-	Isenable: null,
+	FEE_TYPE_ID: '',
+	Isenable: '1',
 	Created_by: null,
 	Creation_date: null,
 	Last_updated_by: null,

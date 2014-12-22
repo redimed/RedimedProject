@@ -97,6 +97,10 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 
 							scope.verifiedMedicare();
 							scope.loadState();
+							//INT
+							scope.modelObjectMap.State = parseInt(scope.modelObjectMap.State);
+							scope.modelObjectMap.Title = parseInt(scope.modelObjectMap.Title);
+							//END INT
 							angular.extend(scope.selectedCompany, response.company);
 						}// end if
 					})

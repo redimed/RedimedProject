@@ -27,10 +27,10 @@ angular.module('app.loggedIn.sysservices.search.directive', []).directive('sysse
 					filters: [
 						{type: 'text', name: 'SERVICE_NAME', value:''},
 						{type: 'text', name: 'DESCRIPTION', value:''},
-						{type: 'text', name: 'SERVICE_COLOR', value:''}
+						{type: 'text', name: 'SERVICE_COLOR', value:''},
 					],
 					select: [
-						'SERVICE_ID','SERVICE_NAME', 'DESCRIPTION', 'SERVICE_COLOR', 'Isenable'
+						'SERVICE_ID', 'FEE_TYPE_ID', 'SERVICE_NAME', 'DESCRIPTION', 'SERVICE_COLOR', 'Isenable'
 					]
 				}
 			}//end init

@@ -1,24 +1,32 @@
 <h2 id="demo1">REDiMED ISO SYSTEM</h2>
+<div>
+    R:Read. C:Create. U:Update. D:Delete. G: Grant Permission
+</div>      
 <div class="tree well">
 
     <script type="text/ng-template" id="nodes_renderer.html">
-        <span>
+        <span >
                 <i ng-if="node.nodes" class="fa fa-minus"></i>
                 <i ng-if="node.NODE_TYPE==nodeType.folder" class="fa fa-folder-open"></i>
                 <i ng-if="node.NODE_TYPE==nodeType.document" class="fa fa-leaf"></i>
                 {{node.NODE_NAME}}
                 <!-- ____{{node.relativePath}} -->
         </span>
-        <a ng-click="showTreeActionsMenuPopup(node);">actions </a>    
+        <div style="color:#800000;display:inline;font-size:11px">
+           
+           {{node.ACCESSIBLE_USER_ID?'(':''}}{{node.IS_READ==1?'R':''}}{{node.IS_CREATE==1 && node.NODE_TYPE==nodeType.folder?'C':''}}{{node.IS_UPDATE==1?'U':''}}{{node.IS_DELETE==1?'D':''}}{{node.IS_GRANT_PERMISSION==1?'G':''}}{{node.ACCESSIBLE_USER_ID?')':''}}
+           
+        </div>
+        <a ng-show="node.ACCESSIBLE_USER_ID" ng-click="showTreeActionsMenuPopup(node);">actions </a>    
         
         <ul>
-            <li ng-repeat="(key,node) in node.nodes" iso-notice-finish-render-directory-tree ng-include="'nodes_renderer.html'">
+            <li ng-class="{node_accessible:node.ACCESSIBLE_USER_ID}" ng-repeat="(key,node) in node.nodes" iso-notice-finish-render-directory-tree ng-include="'nodes_renderer.html'">
             </li>
         </ul>
     </script>
 
     <ul>
-        <li ng-repeat="(key,node) in treeData"  ng-include="'nodes_renderer.html'">
+        <li ng-class="{node_accessible:node.ACCESSIBLE_USER_ID}" ng-repeat="(key,node) in treeData"  ng-include="'nodes_renderer.html'">
         </li>
     </ul>
 
@@ -32,19 +40,101 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">{{selectedTreeNode.NODE_TYPE==nodeType.folder?'Folder Actions':'File Actions'}}</h4>
-            </div>
+            </div>  
             <div class="modal-body">
-                <button ng-show='selectedTreeNode.NODE_TYPE==nodeType.folder' 
-                    type="button" 
-                    class="btn btn-default"
-                    ng-click="showTreeActionContentPopup(treeActions.createFolder.name);">Create Folder
-                </button>
-                <button ng-show='selectedTreeNode.NODE_TYPE==nodeType.folder' 
-                    type="button" 
-                    class="btn btn-default"
-                    ng-click="showTreeActionContentPopup(treeActions.createDocument.name);">Create Document
-                </button>
+                <div ng-show='selectedTreeNode.NODE_TYPE==nodeType.folder'>
+                    <div class='iso-action-group'>
+                        <button 
+                            ng-show='selectedTreeNode.IS_CREATE==1'
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="showTreeActionContentPopup(treeActions.createFolder.name);">Create Folder
+                        </button>
+
+                        <button ng-show='selectedTreeNode.IS_DELETE==1' 
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="">Delete Folder
+                        </button>
+
+                        <button ng-show='selectedTreeNode.IS_READ==1' 
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="">Clone to PC
+                        </button>
+
+                    </div>
+
+                    <div class='iso-action-group'>
+                        <button ng-show='selectedTreeNode.IS_READ==1' 
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="showTreeActionContentPopup(treeActions.grantNodePermission.name);">Grant Permission
+                        </button>
+                    </div>
+
+                    <div class='iso-action-group'>
+                        <button 
+                            ng-show="selectedTreeNode.IS_CREATE==1"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="showTreeActionContentPopup(treeActions.createDocument.name);">Create Document
+                        </button>
+                    </div>
+                    
+                </div>
+
+
+                <div ng-show='selectedTreeNode.NODE_TYPE==nodeType.document'>
+                    <div class='iso-action-group'>
+                        <button 
+                            ng-show="selectedTreeNode.IS_UPDATE"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="checkOutDocument();">Check out
+                        </button>
+                        <button 
+                            ng-show="selectedTreeNode.IS_UPDATE"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="beforeCheckIn();">Check in
+                        </button>
+                        <button 
+                            ng-show="selectedTreeNode.IS_UPDATE"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="">Submit Document
+                        </button>
+                    </div>
+
+                    <div class='iso-action-group'>
+                        <button 
+                            ng-show="selectedTreeNode.IS_DELETE"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="">Delete Document
+                        </button>
+                        <button 
+                            ng-show="selectedTreeNode.IS_GRANT_PERMISSION"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="">Grant Permission
+                        </button>
+                    </div>
+
+                    <div class='iso-action-group'>
+                        <button 
+                            ng-show="selectedTreeNode.IS_READ"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="">Download Newest Version
+                        </button>
+                    </div>
+                </div>
             </div>
+
+
+            
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -74,5 +164,3 @@
 <div ng-include="'modules/iso/views/templates/iso.html/iso_page_template.html'">
 
 </div>
-
-<button ng-click='test();'>test</button>   

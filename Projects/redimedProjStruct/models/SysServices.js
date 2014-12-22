@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes){
 		SERVICE_NAME: DataTypes.STRING(50),
 		DESCRIPTION: DataTypes.STRING(250),
 		SERVICE_COLOR: DataTypes.STRING(10),
+		FEE_TYPE_ID: DataTypes.INTEGER(11),
 		Isenable: DataTypes.INTEGER(11),
 		Created_by: DataTypes.INTEGER(11),
 		Creation_date: DataTypes.DATE,
@@ -25,6 +26,16 @@ module.exports = function(sequelize, DataTypes){
                     foreignKey: 'SERVICE_ID', 
                     through: models.DeptServices,
                     // through: 'cln_dept_services',
+                });
+
+                SysServices.hasOne( models.FeeType, { 
+            		as: 'FeeType', 
+            		foreignKey: 'FEE_TYPE_ID'
+                });
+
+                SysServices.belongsTo( models.Appointment, { 
+            		as: 'Appointment', 
+            		foreignKey: 'SERVICE_ID'
                 });
             }
         }

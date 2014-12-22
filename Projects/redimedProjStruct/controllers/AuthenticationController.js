@@ -20,11 +20,14 @@ module.exports = {
             {
                 if(data)
                 {
+                    var ses = null;
                     bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                         if (compareResult == true) {
 
                             if(platform != null)
                             {
+                                delete data["img"];
+                                
                                 opentok.createSession({ mediaMode: 'routed' },function(err, session) {
                                     if (err) throw err;
 
@@ -35,34 +38,66 @@ module.exports = {
                                         ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null,
                                         roomSession: session.sessionId
                                     })
-                                        .success(function(data,created){console.log('Created: ',created)})
+                                        .success(function(rs,created)
+                                        {
+                                            data.sessionId = session.sessionId;
+                                            data.apiKey = OTKEY;
+                                            data.token = opentok.generateToken(session.sessionId,{ role: 'moderator' });
+
+                                            if(data.user_type == 'Company')
+                                            {
+                                                db.Company.find({where: {id: data.company_id}},{raw:true})
+                                                    .success(function(company){
+                                                        return done(null, {status: 'success',
+                                                            msg: "Login Successfully!",
+                                                            userInfo: data,
+                                                            companyInfo: company
+                                                        });
+                                                    })
+                                                    .error(function(err){
+                                                        console.log(err);
+                                                    })
+                                            }
+                                            else
+                                            {
+                                                return done(null, {status: 'success',
+                                                    msg: "Login Successfully!",
+                                                    userInfo: data
+                                                });
+                                            }
+                                        })
                                         .error(function(err){console.log(err)})
+
                                 });
-                            }
 
 
-                            delete data["img"];
 
-                            if(data.user_type == 'Company')
-                            {
-                                db.Company.find({where: {id: data.company_id}},{raw:true})
-                                    .success(function(company){
-                                        return done(null, {status: 'success',
-                                            msg: "Login Successfully!",
-                                            userInfo: data,
-                                            companyInfo: company
-                                        });
-                                    })
-                                    .error(function(err){
-                                        console.log(err);
-                                    })
                             }
                             else
                             {
-                                return done(null, {status: 'success',
-                                    msg: "Login Successfully!",
-                                    userInfo: data
-                                });
+                                delete data["img"];
+
+                                if(data.user_type == 'Company')
+                                {
+                                    db.Company.find({where: {id: data.company_id}},{raw:true})
+                                        .success(function(company){
+                                            return done(null, {status: 'success',
+                                                msg: "Login Successfully!",
+                                                userInfo: data,
+                                                companyInfo: company
+                                            });
+                                        })
+                                        .error(function(err){
+                                            console.log(err);
+                                        })
+                                }
+                                else
+                                {
+                                    return done(null, {status: 'success',
+                                        msg: "Login Successfully!",
+                                        userInfo: data
+                                    });
+                                }
                             }
                         }
                         else {

@@ -2,6 +2,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 
 .controller("PatientAppointmentController", function($scope, $stateParams, PatientService){
 	//Detail appt modules
+    var patient_id = $stateParams.patient_id;
 	$scope.current_patient = {};
 
     $scope.patient_detail_modules = [
@@ -41,6 +42,14 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
                 }
             }
         })
+
+        PatientService.numCompanies(patient_id).then(function(response){
+            $scope.patient_detail_modules[1].desc = 'Total: ' + response.count; 
+        });
+
+        PatientService.numClaims(patient_id).then(function(response){
+            $scope.patient_detail_modules[2].desc = 'Total: ' + response.count; 
+        });
     }
 
     initObject();

@@ -1,6 +1,9 @@
 angular.module("app.loggedIn.insurer.list.controller", [])
 
         .controller("InsurerListController", function ($scope, $state, localStorageService) {
+    
+            $scope.insurer_panel = {};
+    
             var item_type_options = [
                 {code: 'Service', label: 'Service'},
                 {code: 'Goods', label: 'Goods'},
@@ -8,6 +11,7 @@ angular.module("app.loggedIn.insurer.list.controller", [])
             $scope.data_options = {
                 api: 'api/erm/v2/insurers/search',
                 method: 'post',
+                scope: $scope.insurer_panel,
                 columns: [
                     {field: 'id', is_hide: true},
                     {field: 'insurer_name', label: 'Company Name'},
@@ -23,6 +27,9 @@ angular.module("app.loggedIn.insurer.list.controller", [])
                 },
                 close: function() {
                     this.is_show = false;
+                },
+                success: function(response){
+                    $scope.insurer_panel.reload();
                 }
             }
 
@@ -33,6 +40,10 @@ angular.module("app.loggedIn.insurer.list.controller", [])
                 },
                 close: function() {
                     this.is_show = false;
+                },
+                success: function(response){
+                    console.log('edit reloading');
+                    $scope.insurer_panel.reload();
                 }
             }
             $scope.clickRow = function (item) {

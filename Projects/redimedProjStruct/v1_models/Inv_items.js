@@ -15,6 +15,7 @@ function convert_date_xml(date) {
 install_model.build_instance_from_xml_node = function(item) {
     var node = {};
     node.ITEM_CODE = item.ItemNum[0];
+    node.ISENABLE = 1;
     node.ITEM_NAME = item.Description[0];
     node.SUB_ITEM_CODE = item.SubItemNum[0] ? item.SubItemNum[0] : null;
 

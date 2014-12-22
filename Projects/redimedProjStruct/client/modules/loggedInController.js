@@ -110,6 +110,14 @@ angular.module("app.loggedIn.controller",[
         ConfigService.prefix_headers_option('item').then(function(data){
             $scope.options.prefix_headers = data;
         });
+
+        ConfigService.fee_type_option().then(function(response){
+            if(response.status === 'success')
+                $scope.options.fee_types = response.data;
+        });
+
+
+
         /*ConfigService.provider_types_option().then(function(data){
             $scope.options.provider_types = data;
         });*/

@@ -9,6 +9,7 @@
                     <th>SERVICE DESCRIPTION</th>
                     <th>COLOR</th>
                     <th>SERVICE STATUS</th>
+                    <th>FEE TYPE</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,7 @@
                         <span ng-if="l.Isenable===1">Enable</span>
                         <span ng-if="l.Isenable!==1">Disable</span>
                     </td>
+                    <td>{{l.FEE_TYPE_ID}}</td>
                 </tr>
             </tbody>
         </table>
