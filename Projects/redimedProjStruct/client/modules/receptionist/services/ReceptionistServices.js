@@ -4,12 +4,6 @@ angular.module("app.loggedIn.receptionist.services", [])
 	var receptionistService = {};
 	var receptionistApi = Restangular.all("api/erm");
 
-	receptionistService.apptDetail =function(cal_id) {
-		// http://localhost:3000/api/erm/v2/appt/detail?id=23651
-		var appointmentApi = receptionistApi.one("v2/appt/detail");
-		return appointmentApi.get({id: cal_id});
-	}
-
 	receptionistService.getAppointmentList = function(options){
 		var appointmentApi = receptionistApi.all("appointment/get");
 		return appointmentApi.post(options);
@@ -38,6 +32,31 @@ angular.module("app.loggedIn.receptionist.services", [])
 	receptionistService.updateBooking = function(options){
 		var updateApi = receptionistApi.all("appointment/update");
 		return updateApi.post(options);
+	}
+
+
+	/**
+	*	APPOINTMENT ITEM FEE
+	*/
+
+	receptionistService.apptDetail =function(cal_id) {
+		// http://localhost:3000/api/erm/v2/appt/detail?id=23651
+		var appointmentApi = receptionistApi.one("v2/appt/detail");
+		return appointmentApi.get({id: cal_id});
+	}
+
+	receptionistService.getItemAppt = function (appt_id, patient_id) {
+		var instanceApi = doctorApi.all("v1/appointment/get_items");
+		return instanceApi.post({'appt_id':appt_id, patient_id: patient_id});
+	}
+
+	receptionistService.itemFeeAppt = function(service_id, list_id) {
+		if(!service_id || !list_id || list_id.length == 0) {
+			console.log('need more data');
+			return null;
+		}
+		var updateApi = receptionistApi.all("v2/appt/item_fee_appt");
+		return updateApi.post({service_id: service_id, list_id: list_id});
 	}
 
 	return receptionistService;

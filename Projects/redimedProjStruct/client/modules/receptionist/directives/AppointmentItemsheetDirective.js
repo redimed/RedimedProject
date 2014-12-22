@@ -24,6 +24,7 @@ return {
 					t_item.inserted = true;
 					t_item.appt_item_id = appt_item.appt_item_id;
 					t_item.QUANTITY = appt_item.QUANTITY ? appt_item.QUANTITY : 1;
+					t_item.PRICE = appt_item.PRICE ? appt_item.PRICE : 1;
 					continue;
 				} 
 				
@@ -40,7 +41,6 @@ return {
 					$scope.extra_list.push(appt_item);
 				}
 			}
-			
 			
 			// TRAVEL EXTRA ITEM 
 			for(var i = 0; i < $scope.extra_list.length; ++i) {
@@ -66,16 +66,50 @@ return {
 		 	}
 
 			DoctorService.getById($scope.appt.DOCTOR_ID).then(function(response) {
+				// console.log(response) // DOCTOR DATA
 				$scope.appt.dept_id = response.CLINICAL_DEPT_ID;
 				return 	DoctorService.getItemByDept($scope.appt.dept_id);
 			}).then(function (data) {
+				// console.log(data)
 		 		$scope.list_dept_item = data;
-		 		return  DoctorService.getItemAppt($scope.appt.CAL_ID);
+		 		return  DoctorService.getItemAppt($scope.appt.CAL_ID, $scope.data.Patient_id);
 		 	}).then(function (data) {
 		 		$scope.list_appt_item = data;
+
+		 		var item_id_list = [];
 		 		active_item();
+		 		angular.forEach($scope.item_list, function(cat, key) {
+		 			angular.forEach(cat.list, function(item, key) {
+		 				item_id_list.push(item.ITEM_ID);
+		 			});
+				});
+
+		 		return ReceptionistService.itemFeeAppt($scope.appt.SERVICE_ID, item_id_list);
+		 	}).then( function( response ){
+
+		 		var list_fee = response.list;
+		 		console.log(list_fee)
+		 		angular.forEach($scope.item_list, function(cat, key) {
+		 			angular.forEach(cat.list, function(item, key) {
+
+		 				// console.log(item)
+		 				var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
+		 				// console.log(t_item)
+		 				if(t_item) {
+		 					item.PRICE = t_item.SCHEDULE_FEE;
+		 					item.enable_fee = true;
+		 				} else {
+		 					if(!item.PRICE) {
+			 					item.PRICE = 0;
+			 					item.enable_fee = false;
+			 				} 
+		 				}
+		 			});
+				});
+
+		 		// console.log(response)
 		 	}, function(err){
-		 		console.error(err);
+		 		console.log(err);
 		 		toastr.error('Error, please Refresh Page !!!', "Error");
 		 	});
 		 }
@@ -93,7 +127,6 @@ return {
 		$scope.closeItemSearch =function(){
 		 	$scope.show_search_item = false;
 		}	
-
 
 		$scope.saveItemsheet = function () {
 			var insert_list = [];
@@ -113,14 +146,17 @@ return {
 							update_list.push({
 								appt_item_id: item.appt_item_id,
 								QUANTITY: item.QUANTITY,
+								PRICE: item.PRICE
 							});
 						} else {
+							// delete_list.push(item.appt_item_id);  
 							delete_list.push(item.ITEM_ID); // just push item_id for API
 						}
 					} else if (item.checked == '1'){
 						insert_list.push({
 							CLN_ITEM_ID: item.ITEM_ID,
 							QUANTITY: item.QUANTITY,
+							PRICE: item.PRICE
 						});
 					} 
 	                
@@ -139,13 +175,16 @@ return {
 					insert_list.push({
 						CLN_ITEM_ID: item.ITEM_ID,
 						QUANTITY: item.QUANTITY,
+						PRICE: item.PRICE
 					});
 				} else if (item.checked == '1'){
 					update_list.push({
 						appt_item_id: item.appt_item_id,
-						QUANTITY: item.QUANTITY
+						QUANTITY: item.QUANTITY,
+						PRICE: item.PRICE
 					});
 				} else {
+					// delete_list.push(item.appt_item_id);  
 					delete_list.push(item.ITEM_ID);
 				}
 			}
@@ -160,11 +199,12 @@ return {
 			console.log('DELETE LIST ', delete_list);
 			
 			var cal_id = $scope.appt.CAL_ID;
+			var Patient_id = $scope.data.Patient_id;
 			var is_insert = (insert_list.length == 0), 
 				is_delete = (delete_list.length == 0), 
 				is_update = (update_list.length == 0);
 	        if (!is_insert){
-				DoctorService.insertItemAppt(cal_id, insert_list).then(function(data){
+				DoctorService.insertItemAppt(cal_id, Patient_id, insert_list).then(function(data){
 					//console.log('INSERT ITEMS RESULT :', data);
 					is_insert = true;
 					if(is_delete && is_update){
@@ -174,7 +214,7 @@ return {
 				});
 			} 
 			if (!is_delete){
-				DoctorService.deleteItemAppt(cal_id, delete_list).then(function(data){
+				DoctorService.deleteItemAppt(cal_id, Patient_id, delete_list).then(function(data){
 					//console.log('INSERT ITEMS RESULT :', data);
 					is_delete = true;
 					if(is_insert && is_update){
@@ -192,11 +232,10 @@ return {
 						toastr.success('Save Successfully!!!', "Success");
 					}
 				});	
-			} 
-			
+			} 	
 		}
 
-		 ReceptionistService.apptDetail($scope.data.CAL_ID).then(function(response){
+		ReceptionistService.apptDetail($scope.data.CAL_ID).then(function(response){
 		 	if(response.status === 'success') {
 		 		console.log(response.data)
 		 		$scope.appt = response.data;

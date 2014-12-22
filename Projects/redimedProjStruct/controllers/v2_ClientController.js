@@ -1,9 +1,7 @@
 var PatientModel = require('../v1_models/Cln_patients');
+var db = require('../models');
 
 module.exports = {
-	getTest: function(req, res) {
-		res.json({status: 'error'});
-	},
 	postCompanies: function(req, res){
 
 		var limit = (req.body.limit) ? req.body.limit : 10;
@@ -37,6 +35,7 @@ module.exports = {
 			console.log(err);
 		})
 	},
+
 	postUpdate: function(req, res) {
         var id = req.body.Patient_id;
         var post_data = req.body.data;
@@ -65,4 +64,42 @@ module.exports = {
         });
     },
 	
+	getNumCompanies: function(req, res) {
+		var id = req.query.id;
+		if(!id) {
+			res.json(500, {status: 'error'});
+			return;
+		}
+
+		var daoFactory =  db.sequelize.daoFactoryManager.getDAO('patient_companies', { attribute: 'name' });
+
+		daoFactory.count({
+			where: {
+				patient_id: id, 
+			}
+		}).success(function(data){
+			res.json({status: 'success', count: data});
+		}) . error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+	},
+
+	getNumClaims: function(req, res) {
+		var id = req.query.id;
+		if(!id) {
+			res.json(500, {status: 'error'});
+			return;
+		}
+		
+		db.Claim.count({
+			where: {
+				Patient_id: id, 
+			}
+		}).success(function(data){
+			res.json({status: 'success', count: data});
+		}) . error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+
+	}
 }
