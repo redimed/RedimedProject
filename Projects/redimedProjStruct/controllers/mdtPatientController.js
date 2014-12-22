@@ -74,11 +74,7 @@ module.exports = {
 				res.json(500, {"status": "error", "message": "Database Error"});
 			}else{
 				patient.getCompany().then(function(company){
-					if(company){
-						res.json({"status": "success", "company": company, "data": patient});
-					}else{
-						res.json(500, {"status": "error", "message": "Database Error"});		
-					}
+					res.json({"status": "success", "company": company, "data": patient});
 				}, function(error){
 					res.json(500, {"status": "error", "message": error});
 				})

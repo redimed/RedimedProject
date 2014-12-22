@@ -96,7 +96,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							}
 
 							scope.loadState();
-							//angular.extend(scope.selectedCompany, response.company);
+							angular.extend(scope.selectedCompany, response.company);
 						}// end if
 					})
 				}
@@ -109,10 +109,10 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				angular.element(idPatientDetailCompany).fadeIn();
 			}
 
-			/*scope.selectCompany = function(row){
+			scope.selectCompany = function(row){
 				angular.element(idPatientDetailCompany).fadeOut();
 				angular.extend(scope.selectedCompany, row);
-			}*/
+			}
 			// END DECLARE
 
 			//POPUP
@@ -132,7 +132,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 
 				if(!scope.patientForm.$invalid){
 					var postData = angular.copy(scope.modelObjectMap);
-					//postData.company_id = scope.selectedCompany.id;
+					postData.company_id = scope.selectedCompany.id;
 
 					// DATE
 					for(var key in postData){

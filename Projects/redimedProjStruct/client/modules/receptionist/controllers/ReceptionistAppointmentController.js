@@ -196,11 +196,10 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 						var doctors = data[i].doctor.split(",");
 						var cals = data[i].CAL_ID.split(",");
-						
-						if(data[i].SERVICES){
+						if(data[i].SERVICES !== null){
 							var services = data[i].SERVICES.split(",");
 						}
-						
+
 						if(data[i].SERVICE_COLORS !== null){
 							var service_colors = data[i].SERVICE_COLORS.split(",");
 						}
@@ -222,11 +221,11 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 							if(flag !== false){
 								$scope.overviewAppointment[i].doctors.push(doctors[flag]);
 								$scope.overviewAppointment[i].cals.push(cals[flag]);
-									
+
 								if(data[i].SERVICES !== null){
 									$scope.overviewAppointment[i].services.push(services[flag]);
 								}
-								
+
 								if(data[i].SERVICE_COLORS !== null){
 									$scope.overviewAppointment[i].service_colors.push(service_colors[flag]);
 								}
