@@ -190,15 +190,15 @@ doc_ma.`MA_ID` = $P{id}]]>
 		<band height="791">
 			<image scaleImage="RetainShape">
 				<reportElement x="-1" y="119" width="555" height="264" uuid="01099329-d9cc-4adb-9717-56a6966f8f49"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/MA1.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\MA1.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="-1" y="368" width="555" height="265" uuid="5752702c-2183-470a-91cc-4603d39b36d3"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/MA2.PNG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images\\MA2.PNG"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape">
 				<reportElement x="0" y="622" width="555" height="158" uuid="90d90388-f5c6-4387-923a-b8948c863157"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/MA3.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\images/MA3.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="52" y="141" width="100" height="20" uuid="3b5692c1-4603-48b4-9b84-5f540fe65097"/>
