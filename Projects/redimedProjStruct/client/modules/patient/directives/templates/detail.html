@@ -281,18 +281,18 @@
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.ref.$invalid && isSubmit}">
                 <label for="ref">Ref No</label>
-                <input type="number" placeholder="Ref" name="ref" 
-                    ng-model="modelObjectMap.Ref" min="0"
+                <input placeholder="Ref" name="ref" 
+                    ng-model="modelObjectMap.Ref"
                     class="form-control" id="ref" float-label>
                 <!-- ERROR -->
-                <span ng-show="patientForm.ref.$invalid && isSubmit">
+                <!--<span ng-show="patientForm.ref.$invalid && isSubmit">
                     <span class="mdt-popover above" ng-show="patientForm.ref.$error.number">
                         Ref must be number
                     </span>
                     <span class="mdt-popover above" ng-show="patientForm.ref.$error.min">
                         Ref must be large than zero
                     </span>
-                </span>
+                </span>-->
                 <!-- ERROR -->
             </span>
         </div>
