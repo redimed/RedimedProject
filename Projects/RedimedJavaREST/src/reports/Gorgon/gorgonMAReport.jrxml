@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gorgonMAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d5e1d6a5-cccc-4b09-a010-c017da2c939f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="1872"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="84940f7f-a360-45b6-8549-d07a2fbd07c5"/>
@@ -484,14 +484,14 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Weight ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="190" width="27" height="15" uuid="4a179e0d-308c-47c0-8045-1b80ddcfe5ef"/>
+				<reportElement x="84" y="190" width="27" height="15" uuid="4a179e0d-308c-47c0-8045-1b80ddcfe5ef"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[cms]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="320" y="190" width="27" height="15" uuid="ff7f26cb-7f6c-46e9-91b3-c584b6601060"/>
+				<reportElement x="330" y="190" width="27" height="15" uuid="ff7f26cb-7f6c-46e9-91b3-c584b6601060"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
@@ -1135,12 +1135,26 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{cln_patients_Sur_name} != null ? $F{cln_patients_Sur_name} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="46" y="190" width="32" height="15" uuid="ddeb97da-2bd1-452a-9675-c25a33b0d130"/>
+				<reportElement x="50" y="190" width="30" height="15" uuid="ddeb97da-2bd1-452a-9675-c25a33b0d130"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_HEIGHT} != null ? $F{gorgon_doc_ma_HEIGHT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="292" y="190" width="27" height="15" uuid="d9d7f8fe-2d1f-4df6-9418-3bdbb3bf1254"/>
+				<reportElement x="295" y="190" width="30" height="15" uuid="d9d7f8fe-2d1f-4df6-9418-3bdbb3bf1254"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_WEIGHT} != null ? $F{gorgon_doc_ma_WEIGHT} : ""]]></textFieldExpression>
 			</textField>
@@ -2601,17 +2615,38 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_ISHIHARA_RESPONSE} != null ? $F{gorgon_doc_ma_ISHIHARA_RESPONSE} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="74" y="190" width="113" height="15" uuid="f58be391-f3de-4af8-96ee-696500c395d8"/>
+				<reportElement x="80" y="190" width="70" height="15" uuid="f58be391-f3de-4af8-96ee-696500c395d8"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_SYSTOLIC_BP} != null ? $F{gorgon_doc_ma_SYSTOLIC_BP} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="262" y="190" width="103" height="15" uuid="d755004f-e727-4132-9c64-b972c152a721"/>
+				<reportElement x="270" y="190" width="70" height="15" uuid="d755004f-e727-4132-9c64-b972c152a721"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_DIASTOLIC_BP} != null ? $F{gorgon_doc_ma_DIASTOLIC_BP} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="411" y="190" width="133" height="15" uuid="7aeaabb1-1544-40c2-b7d3-cca6a58c37f8"/>
+				<reportElement x="420" y="190" width="70" height="15" uuid="7aeaabb1-1544-40c2-b7d3-cca6a58c37f8"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_PULSE} != null ? $F{gorgon_doc_ma_PULSE} : ""]]></textFieldExpression>
 			</textField>
@@ -3513,7 +3548,7 @@ Barrow Island LNG Plant ]]></text>
 			</image>
 			<image>
 				<reportElement x="154" y="480" width="13" height="13" uuid="4ce67710-d5e9-4319-b9f5-acb633f53cf1"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE} != null && $F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="12" y="541" width="50" height="15" uuid="0d480447-5cab-478d-b709-1f4f4a262d92"/>
@@ -3837,7 +3872,7 @@ Barrow Island LNG Plant ]]></text>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="13" y="626" width="531" height="115" uuid="88c2c024-3b2c-4885-aa6a-09ab741c6fb6"/>
+				<reportElement x="13" y="626" width="531" height="120" uuid="88c2c024-3b2c-4885-aa6a-09ab741c6fb6"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_BACK_EXAMINERS_COMMENTS}]]></textFieldExpression>
 			</textField>
 			<line>
