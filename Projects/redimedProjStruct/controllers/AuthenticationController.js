@@ -26,6 +26,8 @@ module.exports = {
 
                             if(platform != null)
                             {
+                                delete data["img"];
+                                
                                 opentok.createSession({ mediaMode: 'routed' },function(err, session) {
                                     if (err) throw err;
 
@@ -38,11 +40,9 @@ module.exports = {
                                     })
                                         .success(function(rs,created)
                                         {
-
                                             data.sessionId = session.sessionId;
                                             data.apiKey = OTKEY;
-
-                                            delete data["img"];
+                                            data.token = opentok.generateToken(session.sessionId,{ role: 'moderator' });
 
                                             if(data.user_type == 'Company')
                                             {

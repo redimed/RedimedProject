@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
 	<property name="ireport.zoom" value="1.0245201830476074"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1918"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -226,7 +226,7 @@ doc_ma.`MA_ID` = $P{id}]]>
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="555" height="119" uuid="ccd8942e-10bd-4112-8e4e-b4f9aa8d9835"/>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\header.PNG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/header.PNG"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="110" y="190" width="42" height="15" uuid="0220c714-a251-492b-8478-c78a38899866"/>
@@ -240,211 +240,211 @@ doc_ma.`MA_ID` = $P{id}]]>
 				<reportElement x="255" y="187" width="14" height="13" uuid="2c62ea97-be66-4c95-81a3-af6ad45d24e6">
 					<printWhenExpression><![CDATA[$F{doc_ma_IS_BLOOD}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="321" y="187" width="14" height="13" uuid="83571dcf-7761-4fb0-8dbb-4f1864928107">
 					<printWhenExpression><![CDATA[$F{doc_ma_IS_BLOOD}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="254" y="210" width="14" height="13" uuid="eda61d9d-41c5-40ef-8fce-131fde878a9f">
 					<printWhenExpression><![CDATA[$F{doc_ma_IS_RESTING_HEART_RATE}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="321" y="210" width="14" height="13" uuid="40fde3d7-8206-4fc4-9627-a2a1abfea72f">
 					<printWhenExpression><![CDATA[$F{doc_ma_IS_RESTING_HEART_RATE}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="254" y="234" width="14" height="13" uuid="d9bdc5a7-1ae3-40b5-95f7-ff4b776c36db">
 					<printWhenExpression><![CDATA[$F{doc_ma_HEART_SOUNDS}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="321" y="234" width="14" height="13" uuid="a4f63a93-9f00-4761-8fee-06ed521c39ae">
 					<printWhenExpression><![CDATA[$F{doc_ma_HEART_SOUNDS}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="254" y="258" width="14" height="13" uuid="dd4ee986-82ba-46d3-9bec-fafc5c12bfe7">
 					<printWhenExpression><![CDATA[$F{doc_ma_PERIPHERAL}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="321" y="258" width="14" height="13" uuid="2defa1af-42a7-43d0-a05c-4063752caa95">
 					<printWhenExpression><![CDATA[$F{doc_ma_PERIPHERAL}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="254" y="281" width="14" height="13" uuid="55481e35-5b39-498f-acae-a0333021fd96">
 					<printWhenExpression><![CDATA[$F{doc_ma_VEINS_OTHER}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="321" y="281" width="14" height="13" uuid="f4b6809f-aef8-4ede-b083-1d9842b5788b">
 					<printWhenExpression><![CDATA[$F{doc_ma_VEINS_OTHER}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="152" y="484" width="14" height="13" uuid="865b2ad3-1275-431b-a56a-c857b88c1cdd">
 					<printWhenExpression><![CDATA[$F{doc_ma_COLOUR_SEC2}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="137" y="542" width="14" height="13" uuid="01143a4f-cc07-4c3e-b237-53b51d390f3d">
 					<printWhenExpression><![CDATA[$F{doc_ma_VISUAL_AIDS}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="220" y="515" width="14" height="13" uuid="a511744f-3d51-414a-ab31-6752c3f7da49">
 					<printWhenExpression><![CDATA[$F{doc_ma_PERIPHERAL_SEC2}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="152" y="515" width="14" height="13" uuid="9a535d8f-2c6e-4a2d-a231-d3cbccb7951c">
 					<printWhenExpression><![CDATA[$F{doc_ma_PERIPHERAL_SEC2}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="220" y="484" width="14" height="13" uuid="ca2e4359-e62f-420f-a389-f2591f7137fe">
 					<printWhenExpression><![CDATA[$F{doc_ma_COLOUR_SEC2}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="173" y="542" width="14" height="13" uuid="4cbf57b9-a533-448a-a7cb-b17e1941f8dd">
 					<printWhenExpression><![CDATA[$F{doc_ma_VISUAL_AIDS}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="374" y="279" width="14" height="13" uuid="68537f43-c9f8-4461-838d-1b6704211a94">
 					<printWhenExpression><![CDATA[$F{doc_ma_IS_BMI}.intValue() == 3]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="374" y="256" width="14" height="13" uuid="82a41fa5-b63c-43df-b51e-0134dd146426">
 					<printWhenExpression><![CDATA[$F{doc_ma_IS_BMI}.intValue() == 2]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="374" y="231" width="14" height="13" uuid="60a30423-1f34-4c55-b3ad-f3e416745fc3">
 					<printWhenExpression><![CDATA[$F{doc_ma_IS_BMI}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="374" y="209" width="14" height="13" uuid="7fe45d45-c309-4261-a900-a036e6761e8e">
 					<printWhenExpression><![CDATA[$F{doc_ma_IS_BMI}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="110" y="650" width="14" height="13" uuid="f5fe2fbc-c0c5-4720-9c01-a68b2df8138c">
 					<printWhenExpression><![CDATA[$F{doc_ma_PROTEIN}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="267" y="673" width="14" height="13" uuid="17aa0f01-4e5a-4f74-8b86-3682ab291639">
 					<printWhenExpression><![CDATA[$F{doc_ma_GLUCOSE}.intValue() == 2]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="267" y="650" width="14" height="13" uuid="6cff5dfd-8c72-4bec-b29a-26fb864bad29">
 					<printWhenExpression><![CDATA[$F{doc_ma_PROTEIN}.intValue() == 2]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="343" y="698" width="14" height="13" uuid="1e4d724b-8505-48b9-8481-f677128c92de">
 					<printWhenExpression><![CDATA[$F{doc_ma_BLOOD}.intValue() == 3]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="343" y="673" width="14" height="13" uuid="a4208d54-9cd5-444f-b51a-ae02f49439d8">
 					<printWhenExpression><![CDATA[$F{doc_ma_GLUCOSE}.intValue() == 3]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="343" y="650" width="14" height="13" uuid="82fbe95c-e5fc-4189-bbd5-82132f846250">
 					<printWhenExpression><![CDATA[$F{doc_ma_PROTEIN}.intValue() == 3]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="417" y="698" width="14" height="13" uuid="60b2997a-0474-4a3c-8eaf-a24cdc950790">
 					<printWhenExpression><![CDATA[$F{doc_ma_BLOOD}.intValue() == 5]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="417" y="673" width="14" height="13" uuid="3ebc5886-6fd3-4117-8463-ed3bae7edbc4">
 					<printWhenExpression><![CDATA[$F{doc_ma_GLUCOSE}.intValue() == 4]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="417" y="650" width="14" height="13" uuid="02f23da3-e550-42bd-909a-a16315e4c7dd">
 					<printWhenExpression><![CDATA[$F{doc_ma_PROTEIN}.intValue() == 4]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="110" y="673" width="14" height="13" uuid="a8d3f94b-e342-41a4-a28a-a65dc3b48127">
 					<printWhenExpression><![CDATA[$F{doc_ma_GLUCOSE}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="184" y="650" width="14" height="13" uuid="00e0ea5c-d5e2-4dce-ae71-0904e55fdb13">
 					<printWhenExpression><![CDATA[$F{doc_ma_PROTEIN}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="184" y="673" width="14" height="13" uuid="111828ac-1a3e-4518-a42e-b029df946003">
 					<printWhenExpression><![CDATA[$F{doc_ma_GLUCOSE}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="267" y="698" width="14" height="13" uuid="81ce2efd-3b78-41e3-92ea-a380b2a5d357">
 					<printWhenExpression><![CDATA[$F{doc_ma_BLOOD}.intValue() == 2]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="184" y="698" width="14" height="13" uuid="8a77bedb-efd4-4770-a21b-2347d0198b2f">
 					<printWhenExpression><![CDATA[$F{doc_ma_BLOOD}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="110" y="698" width="14" height="13" uuid="b3c8e27f-3ce5-458b-b928-1dc0417083f9">
 					<printWhenExpression><![CDATA[$F{doc_ma_BLOOD}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="10" y="317" width="524" height="45" uuid="ad0376ae-0a5a-413d-aec7-6885fac9c2f8"/>
@@ -518,259 +518,259 @@ doc_ma.`MA_ID` = $P{id}]]>
 			</image>
 			<image>
 				<reportElement x="377" y="0" width="178" height="103" uuid="4174c3b6-428d-4c0d-a009-443fed1597f9"/>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\header1.PNG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/header1.PNG"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="240" y="131" width="14" height="13" uuid="3a4b3a83-cc9c-4446-a73f-271f58c86933">
 					<printWhenExpression><![CDATA[$F{doc_ma_SPIROMETRY}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="240" y="171" width="14" height="13" uuid="f33b32ff-3a87-4074-bce8-7e33f3bc9c60">
 					<printWhenExpression><![CDATA[$F{doc_ma_AUSCULTATION}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="153" width="14" height="13" uuid="c62fa99e-c413-4414-84ab-7e77b76a3059">
 					<printWhenExpression><![CDATA[$F{doc_ma_SYMMETRICAL}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="240" y="153" width="14" height="13" uuid="5ba4f0b1-2a0f-4fdd-9704-94b8987f17ae">
 					<printWhenExpression><![CDATA[$F{doc_ma_SYMMETRICAL}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="131" width="14" height="13" uuid="2fc27ff1-6d1b-4424-b82c-c7d33621d88c">
 					<printWhenExpression><![CDATA[$F{doc_ma_SPIROMETRY}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="171" width="14" height="13" uuid="c7dda16b-ab08-4e56-811f-20ddfe817b8e">
 					<printWhenExpression><![CDATA[$F{doc_ma_AUSCULTATION}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="274" width="14" height="13" uuid="d576b719-be2a-4bf6-abd4-168b72b5d563">
 					<printWhenExpression><![CDATA[$F{doc_ma_THROAT}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="240" y="254" width="14" height="13" uuid="40705f4c-6fcc-4641-9a64-9de68e097b2b">
 					<printWhenExpression><![CDATA[$F{doc_ma_NOSE}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="254" width="14" height="13" uuid="46ff03b2-66a3-482d-9dc6-7bb3a64a3ef2">
 					<printWhenExpression><![CDATA[$F{doc_ma_NOSE}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="234" width="14" height="13" uuid="6d0a5d65-f306-42bf-9a8e-4bedb8657ee7">
 					<printWhenExpression><![CDATA[$F{doc_ma_HEARING}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="240" y="234" width="14" height="13" uuid="e8220b9c-bafb-4330-8538-6efbb6ddb610">
 					<printWhenExpression><![CDATA[$F{doc_ma_HEARING}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="240" y="213" width="14" height="13" uuid="c649d01b-8991-4c15-ae2b-6ce5cddbcefd">
 					<printWhenExpression><![CDATA[$F{doc_ma_EARS}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="213" width="14" height="13" uuid="98a16024-f372-491a-9e03-aad1bc4a6201">
 					<printWhenExpression><![CDATA[$F{doc_ma_EARS}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="465" width="14" height="13" uuid="a98f9d49-e115-4b72-bb7d-77ae1a4c208f">
 					<printWhenExpression><![CDATA[$F{doc_ma_HERNIAL}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="238" y="465" width="14" height="13" uuid="2739b669-7e3c-4299-8cf0-3ec4a939c20c">
 					<printWhenExpression><![CDATA[$F{doc_ma_HERNIAL}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="445" width="14" height="13" uuid="657a0ea6-20e4-439a-b885-f194308fe720">
 					<printWhenExpression><![CDATA[$F{doc_ma_ABDOMEN}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="238" y="445" width="14" height="13" uuid="2fa9c15a-327e-4e49-beec-e2f3de205818">
 					<printWhenExpression><![CDATA[$F{doc_ma_ABDOMEN}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="262" y="402" width="14" height="13" uuid="a5220994-c3f3-499c-a75a-1070635523e8">
 					<printWhenExpression><![CDATA[$F{doc_ma_SCAR}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="224" y="402" width="14" height="13" uuid="0714729d-7d8b-4031-9776-f83030e7387b">
 					<printWhenExpression><![CDATA[$F{doc_ma_SCAR}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="262" y="383" width="14" height="13" uuid="e0f4bdb7-9b65-4e46-95ac-0fb3ad16eb69">
 					<printWhenExpression><![CDATA[$F{doc_ma_NAIL}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="224" y="383" width="14" height="13" uuid="d2b96751-b351-41bb-bd22-db3d2e577fb9">
 					<printWhenExpression><![CDATA[$F{doc_ma_NAIL}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="262" y="363" width="14" height="13" uuid="7461a965-9698-4dd3-ab70-943667c56b56">
 					<printWhenExpression><![CDATA[$F{doc_ma_DRUG}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="224" y="363" width="14" height="13" uuid="5c814f4a-a325-429e-9ec8-ff29fe518fe1">
 					<printWhenExpression><![CDATA[$F{doc_ma_DRUG}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="262" y="340" width="14" height="13" uuid="49f8423e-1c93-40e2-aae8-034f958656a1">
 					<printWhenExpression><![CDATA[$F{doc_ma_SKIN}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="224" y="340" width="14" height="13" uuid="d68337cd-5b45-4825-a0ff-8430c2241423">
 					<printWhenExpression><![CDATA[$F{doc_ma_SKIN}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="239" y="650" width="14" height="13" uuid="58241e3e-b4da-43cc-a770-15e9ccf39051">
 					<printWhenExpression><![CDATA[$F{doc_ma_THYROID}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="650" width="14" height="13" uuid="60e81128-3466-4dfc-8fd8-c9a49af09811">
 					<printWhenExpression><![CDATA[$F{doc_ma_THYROID}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="629" width="14" height="13" uuid="8a395734-a371-4b91-8091-4176ed7d8c81">
 					<printWhenExpression><![CDATA[$F{doc_ma_LYMPH}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="239" y="629" width="14" height="13" uuid="e391e395-20ed-424f-a4d9-2277911880a9">
 					<printWhenExpression><![CDATA[$F{doc_ma_LYMPH}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="587" width="14" height="13" uuid="c10d5be8-6531-4311-94ed-0a9c89cdeb75">
 					<printWhenExpression><![CDATA[$F{doc_ma_COORDINATION}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="239" y="587" width="14" height="13" uuid="59dcca35-bc3e-47b2-b7a3-331842ffa272">
 					<printWhenExpression><![CDATA[$F{doc_ma_COORDINATION}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="568" width="14" height="13" uuid="efeb6695-1c63-4cd0-b72b-85f352e2e422">
 					<printWhenExpression><![CDATA[$F{doc_ma_BALANCE}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="239" y="568" width="14" height="13" uuid="ad3be230-1fd1-4e56-9b1f-2055ce66ede0">
 					<printWhenExpression><![CDATA[$F{doc_ma_BALANCE}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="295" width="14" height="13" uuid="9a50c032-28b9-4a8e-aa74-3370ba6aed9d">
 					<printWhenExpression><![CDATA[$F{doc_ma_TEETH_GUMS}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="240" y="295" width="14" height="13" uuid="64a97784-a83a-4265-b5ac-e32518b463a0">
 					<printWhenExpression><![CDATA[$F{doc_ma_TEETH_GUMS}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="240" y="274" width="14" height="13" uuid="6e09ebc2-b602-4be5-831c-d377bcd0bf8c">
 					<printWhenExpression><![CDATA[$F{doc_ma_THROAT}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="525" width="14" height="13" uuid="72e78c3a-c6aa-4cc3-8c82-2920fdb4873b">
 					<printWhenExpression><![CDATA[$F{doc_ma_KIDNEYS}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="238" y="525" width="14" height="13" uuid="3869e10f-61fc-4afe-b25a-999f6382053a">
 					<printWhenExpression><![CDATA[$F{doc_ma_KIDNEYS}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="505" width="14" height="13" uuid="c797c5ba-3057-4028-92ef-80188fff92f8">
 					<printWhenExpression><![CDATA[$F{doc_ma_SPLEEN}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="238" y="505" width="14" height="13" uuid="89dd838a-3393-478b-b025-69b5fc3c32c7">
 					<printWhenExpression><![CDATA[$F{doc_ma_SPLEEN}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="307" y="485" width="14" height="13" uuid="dd661109-954f-42c9-a4c2-cbab82b815c3">
 					<printWhenExpression><![CDATA[$F{doc_ma_LIVER}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="238" y="485" width="14" height="13" uuid="84136cb8-3d6b-49b0-834d-1988b38ea8da">
 					<printWhenExpression><![CDATA[$F{doc_ma_LIVER}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="10" y="683" width="534" height="80" uuid="83facef6-df21-4c49-a06f-2f30514020d8"/>
@@ -792,107 +792,107 @@ doc_ma.`MA_ID` = $P{id}]]>
 			</image>
 			<image>
 				<reportElement x="363" y="0" width="192" height="100" uuid="77f4ee2f-4045-4977-b609-86640515c844"/>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\header1.PNG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/header1.PNG"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="179" width="14" height="13" uuid="e73863e0-6fbc-4f29-a22d-910b9e0984c2">
 					<printWhenExpression><![CDATA[$F{doc_ma_HYPER}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="188" y="192" width="14" height="13" uuid="1a1b7edb-6843-4eb8-a5a4-b24cc6e98a30">
 					<printWhenExpression><![CDATA[$F{doc_ma_RISK}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="447" y="410" width="14" height="13" uuid="9b0eed5d-1363-4f2a-b7c7-b4353677c805">
 					<printWhenExpression><![CDATA[$F{doc_ma_GP}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="485" y="410" width="14" height="13" uuid="dd68b8e3-e3fe-4c35-baca-d8e292967f3b">
 					<printWhenExpression><![CDATA[$F{doc_ma_GP}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="300" width="14" height="13" uuid="061ac7b5-473a-4c6d-8870-79e8a399c669">
 					<printWhenExpression><![CDATA[$F{doc_ma_OBESITY}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="281" width="14" height="13" uuid="c9eeef91-16ba-4a52-aee1-1f23fb4c7bee">
 					<printWhenExpression><![CDATA[$F{doc_ma_HISTORY}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="260" width="14" height="13" uuid="c1baf3e0-a4f1-44b5-bf66-75fb6bd75a87">
 					<printWhenExpression><![CDATA[$F{doc_ma_FAMILY}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="240" width="14" height="13" uuid="20abf9d4-a57e-41ef-bfde-c36bef7cc852">
 					<printWhenExpression><![CDATA[$F{doc_ma_SEDENTARY}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="219" width="14" height="13" uuid="fa10c113-4d38-447d-a39c-5d0ab6615d63">
 					<printWhenExpression><![CDATA[$F{doc_ma_KNOW}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="199" width="14" height="13" uuid="b169e7a8-269c-486d-b48c-7df2c9ff6245">
 					<printWhenExpression><![CDATA[$F{doc_ma_SMOKER}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="188" y="320" width="14" height="13" uuid="11784136-c0ec-40fb-b91d-835d91d9cfe0">
 					<printWhenExpression><![CDATA[$F{doc_ma_RISK}.intValue() == 2]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="188" y="251" width="14" height="13" uuid="777b871d-066e-41ec-b0f7-ad86644ca107">
 					<printWhenExpression><![CDATA[$F{doc_ma_RISK}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="-1" y="354" width="556" height="51" uuid="c32b2603-3d59-4f26-b0f9-da7f124befe0"/>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\MA78.PNG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA78.PNG"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="530" y="385" width="14" height="13" uuid="50b8a9d3-7e94-469f-aeb7-c0bfd04f78c2">
 					<printWhenExpression><![CDATA[$F{doc_ma_ECG_RESULT}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="463" y="385" width="14" height="13" uuid="670e3b42-d467-4bd2-9687-86b8094816f0">
 					<printWhenExpression><![CDATA[$F{doc_ma_ECG_RESULT}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="484" y="361" width="14" height="13" uuid="4b724903-e605-4b79-982e-d809e29f4c58">
 					<printWhenExpression><![CDATA[$F{doc_ma_ECG}.intValue() == 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="449" y="361" width="14" height="13" uuid="bd98c603-1a6b-4a53-9ef3-14ee61927d95">
 					<printWhenExpression><![CDATA[$F{doc_ma_ECG}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"/images/checked.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="10" y="464" width="534" height="153" uuid="78435f2d-4030-4d97-bfc4-3c3716fa1d34"/>

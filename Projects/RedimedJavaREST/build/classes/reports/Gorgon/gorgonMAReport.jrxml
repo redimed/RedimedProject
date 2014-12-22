@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gorgonMAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d5e1d6a5-cccc-4b09-a010-c017da2c939f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1892"/>
+	<property name="ireport.y" value="1872"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="84940f7f-a360-45b6-8549-d07a2fbd07c5"/>
@@ -385,7 +385,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="43" width="51" height="15" uuid="e4461eb3-f10d-4c25-bcff-52dce556394e"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Examiner:]]></text>
 			</staticText>
@@ -410,14 +410,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="104" width="66" height="15" uuid="d2553c57-b794-44ed-ba32-a275f8c84568"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Family Name ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="255" y="104" width="66" height="15" uuid="4395d3f3-5667-4282-8087-624b444248e8"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Given Names ]]></text>
 			</staticText>
@@ -427,7 +427,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="137" width="201" height="15" uuid="1f39d76a-ab66-4248-adfe-8312dc8ea4d5"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Photo – ID has been sighted (compulsory)]]></text>
 			</staticText>
@@ -448,7 +448,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="160" width="85" height="15" uuid="5beda3b5-35eb-49ba-8688-a05e185f5982"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Hand Dominance]]></text>
 			</staticText>
@@ -484,14 +484,14 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Weight ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="190" width="27" height="15" uuid="4a179e0d-308c-47c0-8045-1b80ddcfe5ef"/>
+				<reportElement x="84" y="190" width="27" height="15" uuid="4a179e0d-308c-47c0-8045-1b80ddcfe5ef"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[cms]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="320" y="190" width="27" height="15" uuid="ff7f26cb-7f6c-46e9-91b3-c584b6601060"/>
+				<reportElement x="330" y="190" width="27" height="15" uuid="ff7f26cb-7f6c-46e9-91b3-c584b6601060"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
@@ -506,14 +506,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="215" width="137" height="20" uuid="5c70bf62-3e5f-4e26-b356-666e17f18052"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Urinalysis ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="306" y="215" width="169" height="20" uuid="eeb5e8e0-eec6-4091-923c-8f30d31af561"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Instant Drug Screen ]]></text>
 			</staticText>
@@ -858,7 +858,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="365" width="54" height="20" uuid="77086a9c-c6b0-450e-a48a-d83d87f26319"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Audiogram]]></text>
 			</staticText>
@@ -875,7 +875,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="482" width="54" height="20" uuid="8b97db9f-fdef-4f5b-8a9c-8863bbb4e038"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Spirometry]]></text>
 			</staticText>
@@ -895,105 +895,105 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="416" width="48" height="15" uuid="e4da1af4-ca94-49f0-96c6-b525968d03de"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Right Ear]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="442" width="48" height="15" uuid="7004b6aa-f6a0-4b73-b9c8-a2e58557f1da"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Left Ear]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="78" y="393" width="40" height="15" uuid="905d738d-ae49-4bde-95ad-dcf1eed5e400"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[500Hz]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="138" y="393" width="40" height="15" uuid="0e0a6b52-a4c2-4ef0-a237-6a7c42c1779a"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[1000Hz]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="198" y="393" width="40" height="15" uuid="a9107946-7b9b-423e-82e0-be4b8c3c2935"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[1500Hz]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="318" y="393" width="40" height="15" uuid="972fb0e8-5b43-4c0e-92ca-8f398577b06f"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[3000Hz]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="378" y="393" width="40" height="15" uuid="7bbe53a9-34f6-42e6-919a-c37c973f3735"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[4000Hz]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="438" y="393" width="40" height="15" uuid="8c90d912-9168-4b30-9238-302a4f8bde9c"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[6000Hz]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="498" y="393" width="40" height="15" uuid="049f9e42-c737-4055-9c41-a8475af40b0e"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[8000Hz]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="258" y="393" width="40" height="15" uuid="23647d17-8ce1-42cf-89e0-5f5157ccaf65"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[2000Hz]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="537" width="66" height="15" uuid="57f79b98-d87c-4f4a-8091-f911c388ee99"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Pre-Br/dilator]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="564" width="66" height="15" uuid="f5fdfb5e-8a4b-453c-82f4-29e963c245a3"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Pre-Br/dilator ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="150" y="511" width="23" height="15" uuid="f095ee79-4d11-4738-9dca-47e3b616a180"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[FVC]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="210" y="511" width="34" height="15" uuid="99cac2b5-5637-4437-b69b-c25971274e87"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[PERFR]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="90" y="511" width="27" height="15" uuid="dc3d1c05-c364-427b-a0e9-b8b42e459ad6"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[FEV1]]></text>
 			</staticText>
@@ -1021,14 +1021,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="155" y="589" width="7" height="15" uuid="315f9f04-866f-4138-96f9-47ecbccb9309"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Y]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="191" y="589" width="7" height="15" uuid="be94f3e8-b29d-4012-9afd-67c17c40a60f"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[N]]></text>
 			</staticText>
@@ -1047,7 +1047,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="155" y="608" width="7" height="15" uuid="c0923775-cafa-4da7-ab22-a7a9ca5b30a1"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Y]]></text>
 			</staticText>
@@ -1058,7 +1058,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="191" y="608" width="7" height="15" uuid="d27bcd2d-3b15-45e5-a092-1db7f3ff6464"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[N]]></text>
 			</staticText>
@@ -1069,7 +1069,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="286" y="628" width="7" height="15" uuid="3164a870-f5c0-444a-a7e8-66d1bd8e056a"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Y]]></text>
 			</staticText>
@@ -1080,7 +1080,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="322" y="628" width="7" height="15" uuid="73f94883-5826-4d51-b611-2c15f7eadca8"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[N]]></text>
 			</staticText>
@@ -1090,12 +1090,12 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="11" y="649" width="114" height="20" uuid="31933f45-75e2-493d-affe-71c03b3682e4"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Examiners Comments ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="650" width="555" height="1" uuid="e7833bab-22f7-4c4c-9417-0db81ec36500"/>
+				<reportElement x="0" y="649" width="555" height="1" uuid="e7833bab-22f7-4c4c-9417-0db81ec36500"/>
 			</line>
 			<line>
 				<reportElement x="0" y="685" width="555" height="1" uuid="9ede65e7-89d8-455a-8b1c-fa6b8c5b9d68"/>
@@ -1135,12 +1135,26 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{cln_patients_Sur_name} != null ? $F{cln_patients_Sur_name} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="46" y="190" width="32" height="15" uuid="ddeb97da-2bd1-452a-9675-c25a33b0d130"/>
+				<reportElement x="50" y="190" width="30" height="15" uuid="ddeb97da-2bd1-452a-9675-c25a33b0d130"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_HEIGHT} != null ? $F{gorgon_doc_ma_HEIGHT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="292" y="190" width="27" height="15" uuid="d9d7f8fe-2d1f-4df6-9418-3bdbb3bf1254"/>
+				<reportElement x="295" y="190" width="30" height="15" uuid="d9d7f8fe-2d1f-4df6-9418-3bdbb3bf1254"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_WEIGHT} != null ? $F{gorgon_doc_ma_WEIGHT} : ""]]></textFieldExpression>
 			</textField>
@@ -1624,7 +1638,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="0" width="36" height="20" uuid="dfaa228b-bc62-4b4e-ad55-e089cf6aba87"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Vision]]></text>
 			</staticText>
@@ -1634,28 +1648,28 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="51" width="77" height="15" uuid="609d8d33-de7d-4675-9965-1637dbaf9679"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Visual Acuity:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="13" y="72" width="77" height="15" uuid="d911aaf6-26bc-42a3-bfbf-45022f14988c"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Near Vision:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="13" y="93" width="77" height="15" uuid="24cac807-4187-4d57-a7c8-3cf1decb7f06"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Visual Fields:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="145" width="100" height="15" uuid="5cfff7c5-94a9-4ffe-9b32-b996e783cdbb"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Ishihara responses:]]></text>
 			</staticText>
@@ -1816,14 +1830,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="184" y="93" width="29" height="15" uuid="26cddefd-1b08-430e-95bd-bb7da29060c3"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Right]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="142" y="93" width="23" height="15" uuid="6692f5a0-b88c-408b-a2e1-39be1762cdf7"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Left]]></text>
 			</staticText>
@@ -1854,14 +1868,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="124" y="145" width="74" height="15" uuid="2b3e55f5-6594-4d07-afb5-2f39639fcafb"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Number wrong]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="241" y="145" width="158" height="15" uuid="dbcf60b6-5a9c-41f6-8a84-6d752bba7677"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[ (ONLY IF APPLICABLE TO JOB) ]]></text>
 			</staticText>
@@ -1881,42 +1895,42 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="190" width="62" height="15" uuid="0f64d1b2-6a1d-4599-b102-2ae3a1713bb2"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Systolic BP]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="200" y="190" width="62" height="15" uuid="cb0ca347-24a1-48dc-aea3-6abf293c178d"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Diastolic BP ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="379" y="190" width="31" height="15" uuid="2a88e09c-c711-4b8c-83be-4b23d7e08062"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Pulse]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="210" width="77" height="15" uuid="513fad10-768a-4326-9603-1ee9e4756552"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Heart Rhythm:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="230" width="77" height="15" uuid="cd5445f1-111e-4f1a-810e-d15dc787b165"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Heart Sounds: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="13" y="250" width="77" height="15" uuid="6ba15ff3-c836-47ca-9708-bf49d6f4cca6"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Pacemaker: ]]></text>
 			</staticText>
@@ -2009,22 +2023,22 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_PACEMAKER} != null && $F{gorgon_doc_ma_PACEMAKER}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="2" y="289" width="555" height="1" uuid="9a27700b-f7d1-4446-97b6-a85d7e3df4c3"/>
+				<reportElement x="2" y="289" width="553" height="1" uuid="9a27700b-f7d1-4446-97b6-a85d7e3df4c3"/>
 			</line>
 			<staticText>
 				<reportElement x="12" y="270" width="87" height="20" uuid="f54b0e64-d65f-4abb-9f8c-faa13bb6937e"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Respiratory]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="269" width="555" height="1" uuid="2937b554-9bac-44fd-a0ae-9dd6bc106e9d"/>
+				<reportElement x="1" y="269" width="553" height="1" uuid="2937b554-9bac-44fd-a0ae-9dd6bc106e9d"/>
 			</line>
 			<staticText>
 				<reportElement x="15" y="297" width="48" height="15" uuid="32e050bd-c30f-4f02-ad10-daf201e9a3c2"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Chest:]]></text>
 			</staticText>
@@ -2053,14 +2067,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="16" y="317" width="48" height="15" uuid="d0f45524-1afc-4f3e-b6b1-570ad6bf49d9"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Air Entry:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="112" y="317" width="67" height="15" uuid="8469823e-efc9-4365-b44d-ca5ddf2f4d97"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Upper Zones ]]></text>
 			</staticText>
@@ -2103,7 +2117,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="112" y="335" width="67" height="15" uuid="68f26943-e4e6-4cf6-82b5-90b98b6440a6"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Lower Zones ]]></text>
 			</staticText>
@@ -2118,7 +2132,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="13" y="355" width="77" height="15" uuid="4b74abc1-ef20-4a01-ac30-bf7591363bc1"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Added Sounds: ]]></text>
 			</staticText>
@@ -2180,27 +2194,27 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="13" y="375" width="36" height="20" uuid="d6e9c5fe-62ba-4603-b82f-6736bd3ed762"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Ears ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="395" width="555" height="1" uuid="ec8db2da-c7d6-4412-9a0e-f4e691db2c98"/>
+				<reportElement x="1" y="395" width="554" height="1" uuid="ec8db2da-c7d6-4412-9a0e-f4e691db2c98"/>
 			</line>
 			<line>
-				<reportElement x="1" y="375" width="555" height="1" uuid="e6663a79-ef32-40c5-81e3-d18c006588b6"/>
+				<reportElement x="1" y="375" width="554" height="1" uuid="e6663a79-ef32-40c5-81e3-d18c006588b6"/>
 			</line>
 			<staticText>
 				<reportElement x="13" y="401" width="79" height="15" uuid="13bfc7a4-2af8-4bd0-b6ab-92312c45a8cd"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[External Canals: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="13" y="423" width="112" height="15" uuid="5f1bf27c-369c-4c39-a126-988b10be0642"/>
 				<textElement verticalAlignment="Top">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Tympanic Membranes: ]]></text>
 			</staticText>
@@ -2306,20 +2320,20 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="14" y="444" width="36" height="20" uuid="48dddded-f829-4a9e-9bc0-477208d50d99"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Skin]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="444" width="555" height="1" uuid="f969df08-b09c-4737-b651-0b22dab8cd66"/>
+				<reportElement x="1" y="444" width="554" height="1" uuid="f969df08-b09c-4737-b651-0b22dab8cd66"/>
 			</line>
 			<line>
-				<reportElement x="1" y="464" width="555" height="1" uuid="f526625d-e6c0-4a01-8e38-fcbda8b008a3"/>
+				<reportElement x="1" y="464" width="554" height="1" uuid="f526625d-e6c0-4a01-8e38-fcbda8b008a3"/>
 			</line>
 			<staticText>
 				<reportElement x="14" y="470" width="85" height="15" uuid="ed2f9b7f-9083-46b0-a557-e8356d312055"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[External Canals: ]]></text>
 			</staticText>
@@ -2368,28 +2382,28 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="216" y="470" width="13" height="15" uuid="ab00d6eb-f241-4051-ae04-5efc60c315af"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Nil]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="272" y="470" width="21" height="15" uuid="8c0d49d0-433f-4ead-9f35-cd94a7d297d8"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Mild]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="329" y="470" width="46" height="15" uuid="904bee25-8d8c-42cb-ab36-1207815f227b"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Moderate]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="403" y="470" width="36" height="15" uuid="7758f443-d1c6-49e6-a493-5cd6196f45f3"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Severe]]></text>
 			</staticText>
@@ -2490,7 +2504,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_EC_OTHER} != null && $F{gorgon_doc_ma_EC_OTHER}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="2" y="636" width="554" height="1" uuid="2bcfbc0a-dac0-452f-9e11-b21831b27786"/>
+				<reportElement x="1" y="636" width="554" height="1" uuid="2bcfbc0a-dac0-452f-9e11-b21831b27786"/>
 			</line>
 			<textField>
 				<reportElement x="187" y="51" width="20" height="15" uuid="b3cbf13e-b770-43d4-b855-12c7468a31aa"/>
@@ -2601,17 +2615,38 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_ISHIHARA_RESPONSE} != null ? $F{gorgon_doc_ma_ISHIHARA_RESPONSE} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="74" y="190" width="113" height="15" uuid="f58be391-f3de-4af8-96ee-696500c395d8"/>
+				<reportElement x="80" y="190" width="70" height="15" uuid="f58be391-f3de-4af8-96ee-696500c395d8"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_SYSTOLIC_BP} != null ? $F{gorgon_doc_ma_SYSTOLIC_BP} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="262" y="190" width="103" height="15" uuid="d755004f-e727-4132-9c64-b972c152a721"/>
+				<reportElement x="270" y="190" width="70" height="15" uuid="d755004f-e727-4132-9c64-b972c152a721"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_DIASTOLIC_BP} != null ? $F{gorgon_doc_ma_DIASTOLIC_BP} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="411" y="190" width="133" height="15" uuid="7aeaabb1-1544-40c2-b7d3-cca6a58c37f8"/>
+				<reportElement x="420" y="190" width="70" height="15" uuid="7aeaabb1-1544-40c2-b7d3-cca6a58c37f8"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_PULSE} != null ? $F{gorgon_doc_ma_PULSE} : ""]]></textFieldExpression>
 			</textField>
@@ -2622,12 +2657,12 @@ Barrow Island LNG Plant ]]></text>
 				</graphicElement>
 			</rectangle>
 			<line>
-				<reportElement x="-1" y="656" width="555" height="1" uuid="18695750-6855-48f0-83ad-2bcd6e439044"/>
+				<reportElement x="1" y="656" width="554" height="1" uuid="18695750-6855-48f0-83ad-2bcd6e439044"/>
 			</line>
 			<staticText>
 				<reportElement x="11" y="637" width="117" height="20" uuid="8f717161-f6b1-46ba-87f2-a8c20111da77"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Examiners Comments ]]></text>
 			</staticText>
@@ -2668,7 +2703,7 @@ Barrow Island LNG Plant ]]></text>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="751" width="554" height="1" uuid="23599f7a-3efc-48bd-8f8e-0fd61b6bb7e9"/>
+				<reportElement x="1" y="751" width="554" height="1" uuid="23599f7a-3efc-48bd-8f8e-0fd61b6bb7e9"/>
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="6" y="660" width="540" height="92" uuid="fc1be090-4160-4174-80c0-de92763d755f"/>
@@ -2713,7 +2748,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="2" width="50" height="20" uuid="70ec5d6a-66f1-482d-ac6e-56b91037faf9"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Abdomen]]></text>
 			</staticText>
@@ -2860,57 +2895,57 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Weak/bulging]]></text>
 			</staticText>
 			<line>
-				<reportElement x="-1" y="102" width="555" height="1" uuid="13b2e9f7-606a-41d3-a515-87919bc17327"/>
+				<reportElement x="0" y="102" width="555" height="1" uuid="13b2e9f7-606a-41d3-a515-87919bc17327"/>
 			</line>
 			<staticText>
 				<reportElement x="11" y="83" width="50" height="20" uuid="4c978aa5-e779-4fdf-bb72-8123ea3f04b5"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[CNS ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="-1" y="82" width="555" height="1" uuid="94d9b285-cbfc-4583-b116-9b4f6267e3d4"/>
+				<reportElement x="0" y="82" width="554" height="1" uuid="94d9b285-cbfc-4583-b116-9b4f6267e3d4"/>
 			</line>
 			<staticText>
 				<reportElement x="11" y="110" width="66" height="15" uuid="08db0a94-659a-4e33-8547-d2b5fc36ee34"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Muscle tone: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="11" y="130" width="77" height="15" uuid="ece01c22-8013-41fa-ac1a-efc9ce055846"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Muscle power: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="11" y="151" width="85" height="15" uuid="3c3a87df-f48c-4e5d-84b7-20efdc914820"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Muscle wasting: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="11" y="193" width="34" height="15" uuid="b5c0bf17-3fa6-4388-a8ea-5c92fcdf2a66"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Gait:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="11" y="172" width="41" height="15" uuid="1897f1f5-1fc4-4ed5-aaac-d5607e3c892e"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Tremor: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="11" y="214" width="100" height="15" uuid="cf1f5eec-83e5-4bba-bab2-416df9cefa52"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Lower limb reflexes: ]]></text>
 			</staticText>
@@ -3049,7 +3084,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="209" y="214" width="20" height="15" uuid="0a35133f-d31a-4822-8c83-344828470328"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Left]]></text>
 			</staticText>
@@ -3064,7 +3099,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="415" y="213" width="27" height="15" uuid="24ee07e8-c209-4528-99dd-1d0c2773cd39"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Right]]></text>
 			</staticText>
@@ -3085,12 +3120,12 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="11" y="313" width="89" height="20" uuid="6bd673c7-19ca-4d85-8bad-193a54820ab0"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Neck Function ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="-1" y="312" width="555" height="1" uuid="8e439862-a213-4b22-b581-6541f62b8b6a"/>
+				<reportElement x="0" y="312" width="554" height="1" uuid="8e439862-a213-4b22-b581-6541f62b8b6a"/>
 			</line>
 			<line>
 				<reportElement x="0" y="332" width="555" height="1" uuid="f6075201-77ed-41b5-9a05-a0bd26bee13e"/>
@@ -3098,14 +3133,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="11" y="338" width="41" height="15" uuid="c80c81ba-1e9a-4979-9e7b-b4e493703009"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Posture:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="11" y="357" width="41" height="15" uuid="10524feb-275b-4714-9c98-ae911ecd1d62"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Rhythm:]]></text>
 			</staticText>
@@ -3343,7 +3378,7 @@ Barrow Island LNG Plant ]]></text>
 			</image>
 			<image>
 				<reportElement x="258" y="357" width="13" height="13" uuid="83d10576-d725-48d5-adfa-d07cd61b8930"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_NECK_RHYTHM} != null && $F{gorgon_doc_ma_NECK_RHYTHM}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_NECK_RHYTHM} != null && $F{gorgon_doc_ma_NECK_RHYTHM}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="258" y="440" width="13" height="13" uuid="a3a4524f-b078-473f-86df-fe07a03379b6"/>
@@ -3404,7 +3439,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="11" y="235" width="34" height="15" uuid="db473d35-6794-4d8b-ada0-ea542242f812"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Detail]]></text>
 			</staticText>
@@ -3438,28 +3473,28 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="459" width="89" height="20" uuid="ea0624cc-6f75-405f-8195-0e6d02732391"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Back Function]]></text>
 			</staticText>
 			<line>
-				<reportElement x="-1" y="458" width="555" height="1" uuid="e7f6d59e-0edd-41c4-8251-377535bda680"/>
+				<reportElement x="0" y="458" width="554" height="1" uuid="e7f6d59e-0edd-41c4-8251-377535bda680"/>
 			</line>
 			<image>
 				<reportElement x="438" y="541" width="13" height="13" uuid="582fef52-ab48-4f78-864f-fb73b168432b"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION} != null && $F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="357" y="563" width="13" height="13" uuid="b986b6e2-45e7-4bc5-9cd5-7eac13163014"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL} != null && $F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="505" y="541" width="13" height="13" uuid="74b895b3-7350-454a-9aac-319ca302bd9e"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION} != null && $F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="505" y="563" width="13" height="13" uuid="6b0fae78-ba66-4aab-90fd-3226d0942e79"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL} != null && $F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="118" y="500" width="33" height="15" uuid="df9665fc-8374-4c27-9003-c4696f1309d7"/>
@@ -3484,7 +3519,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="259" y="480" width="13" height="13" uuid="4dc3fd4d-20ff-48d2-ac51-3c86ef0a80cb"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE} != null && $F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="474" y="520" width="28" height="15" uuid="cbe8fc82-2901-4542-85f5-8769e0320bb4"/>
@@ -3509,11 +3544,11 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="259" y="541" width="13" height="13" uuid="68641397-1d33-487a-8a27-6a378ad72ef9"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION} != null && $F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="154" y="480" width="13" height="13" uuid="4ce67710-d5e9-4319-b9f5-acb633f53cf1"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE} != null && $F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="12" y="541" width="50" height="15" uuid="0d480447-5cab-478d-b709-1f4f4a262d92"/>
@@ -3538,7 +3573,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="505" y="584" width="13" height="13" uuid="f09db2d6-415f-4cc9-a9db-9392ae487cc3"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION} != null && $F{gorgon_doc_ma_BACK_ROTATION} != null && $F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="399" y="563" width="35" height="15" uuid="ca2d97b0-0a40-4610-9a59-c8f78695d7ac"/>
@@ -3549,7 +3584,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="154" y="500" width="13" height="13" uuid="f44e8a93-c135-47a9-b824-c70b4108ff6f"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_RHYTHM}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_RHYTHM} != null && $F{gorgon_doc_ma_BACK_RHYTHM}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="314" y="520" width="39" height="15" uuid="73de85c3-52f3-49ed-90a8-ff62fb58fe30"/>
@@ -3575,7 +3610,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="20" y="500" width="41" height="15" uuid="10e7c9d2-52a4-4c5f-930f-c245476861b7"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Rhythm:]]></text>
 			</staticText>
@@ -3595,15 +3630,15 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="154" y="563" width="13" height="13" uuid="7cab06e5-d80d-4aed-965e-c82523769071"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL} != null && $F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="357" y="584" width="13" height="13" uuid="b18ab548-5d36-4fc2-b975-25edf9980def"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION} != null && $F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="259" y="563" width="13" height="13" uuid="0e694a52-6244-4568-a5f9-785adb90bcc9"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL} != null && $F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="12" y="584" width="50" height="15" uuid="03f77e57-3787-427e-a6af-9d4d86a31f06"/>
@@ -3628,12 +3663,12 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="154" y="541" width="13" height="13" uuid="8edd7e9f-1ab5-4423-a4b6-7ed3f68e435f"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION} != null && $F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="20" y="480" width="41" height="15" uuid="ed40df6a-14d2-43a1-a3df-fcbfe5cbd856"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Posture:]]></text>
 			</staticText>
@@ -3646,11 +3681,11 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="357" y="541" width="13" height="13" uuid="e2b2e0b9-9bb0-4129-8449-e8fdad480539"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_EXTENSION} != null && $F{gorgon_doc_ma_BACK_EXTENSION}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="259" y="500" width="13" height="13" uuid="e906b4f8-87d3-450f-a9bc-2778db572a8a"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_RHYTHM}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_RHYTHM} != null && $F{gorgon_doc_ma_BACK_RHYTHM}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="223" y="563" width="32" height="15" uuid="bf7d8ad6-8017-4008-b07b-a2db7f9d51a3"/>
@@ -3661,7 +3696,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="438" y="563" width="13" height="13" uuid="5c67039e-3d6d-405b-b467-79ed47808086"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_LATERAL} != null && $F{gorgon_doc_ma_BACK_LATERAL}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="209" y="480" width="43" height="15" uuid="82ce9196-6327-48d0-9684-f05d78c0ca3f"/>
@@ -3672,7 +3707,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="154" y="520" width="13" height="13" uuid="2a9b3d1c-813f-4500-96c4-91a1f6fa660d"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION} != null && $F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="118" y="520" width="33" height="15" uuid="b3e5b0cd-b92c-4960-a7e0-23877ba38525"/>
@@ -3683,7 +3718,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="438" y="584" width="13" height="13" uuid="2dd284dd-120f-4053-a05a-f76831d77cf1"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION} != null && $F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="12" y="520" width="37" height="15" uuid="cd2cc496-b152-4dd0-a1cf-587aa20b6d01"/>
@@ -3715,19 +3750,19 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="438" y="520" width="13" height="13" uuid="74b67e91-94a0-45be-83ce-572b72ae3bcf"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION} != null && $F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="505" y="520" width="13" height="13" uuid="25e87530-1a4e-4e3f-9f78-8208f9e881b4"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION} != null && $F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="154" y="584" width="13" height="13" uuid="ae61428d-40c4-4769-9f4e-43c79c1622ec"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION} != null && $F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="259" y="584" width="13" height="13" uuid="d8a96e5f-3736-4563-9c3f-228f5cb17c96"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_ROTATION} != null && $F{gorgon_doc_ma_BACK_ROTATION}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="399" y="541" width="35" height="15" uuid="96689de4-0617-41c4-b5d0-8507324f1e05"/>
@@ -3738,7 +3773,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="357" y="520" width="13" height="13" uuid="16068386-a4b8-4556-ab3d-d2d9883d4e00"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION} != null && $F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="12" y="563" width="66" height="15" uuid="549a3498-be2f-4a7c-a756-04b15381c7a1"/>
@@ -3749,7 +3784,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="259" y="520" width="13" height="13" uuid="a7c87ea6-fee4-4c2f-a5a4-6ac3ebc7590c"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_FLEXION} != null && $F{gorgon_doc_ma_BACK_FLEXION}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="312" y="480" width="43" height="15" uuid="e986157b-1451-417d-85c5-5ae19c355b13"/>
@@ -3760,7 +3795,7 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="357" y="480" width="13" height="13" uuid="b559851e-4841-45e7-85d8-6b7ae07f2295"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_ma_BACK_POSTURE} != null && $F{gorgon_doc_ma_BACK_POSTURE}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="0" y="604" width="554" height="1" uuid="caad09d9-9f23-4b4f-a39a-0c2899654b48"/>
@@ -3770,7 +3805,7 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_CNS_COMMENTS}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="-1" y="298" width="554" height="1" uuid="2851fed2-81e9-4993-abb0-b657f68429b4"/>
+				<reportElement x="0" y="298" width="554" height="1" uuid="2851fed2-81e9-4993-abb0-b657f68429b4"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
@@ -3790,7 +3825,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="606" width="115" height="20" uuid="8f064d8c-14ed-4b1e-b744-30bd3964fc87"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Examiners Comments]]></text>
 			</staticText>
@@ -3837,7 +3872,7 @@ Barrow Island LNG Plant ]]></text>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="13" y="626" width="531" height="115" uuid="88c2c024-3b2c-4885-aa6a-09ab741c6fb6"/>
+				<reportElement x="13" y="626" width="531" height="120" uuid="88c2c024-3b2c-4885-aa6a-09ab741c6fb6"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_BACK_EXAMINERS_COMMENTS}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -3893,7 +3928,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="1" width="116" height="20" uuid="6ada6711-9688-45fd-b75b-f08ca9636be2"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Limb Function]]></text>
 			</staticText>
@@ -3941,42 +3976,42 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="28" width="50" height="15" uuid="3ac89791-4d7f-4cec-895e-ba004041933e"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Mobility:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="111" y="28" width="35" height="15" uuid="4d7d808d-6cf4-40f7-a775-f3c0d0d27495"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="28" width="43" height="15" uuid="24c22fe5-0b03-48a9-bc4c-10ea7c4f7f64"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Reduced]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="216" y="28" width="43" height="15" uuid="d49aca06-c884-4ea0-970a-a141fb62dfde"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Painful]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="477" y="28" width="49" height="15" uuid="04724292-b4f8-497e-8903-2da9d085a8b9"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Abnormal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="421" y="28" width="38" height="15" uuid="d1aca819-ebbd-457a-b9b9-5d64e88ed6a6"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
@@ -3999,14 +4034,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="341" y="50" width="67" height="15" uuid="17465511-bc53-4180-a6a6-b13ad1006615"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Grip Strength ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="341" y="71" width="69" height="15" uuid="3dd56d36-c184-43e6-b4b7-a9aea30cb4a5"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Epicondyles]]></text>
 			</staticText>
@@ -4081,21 +4116,21 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="13" y="190" width="67" height="15" uuid="5695cd1b-db63-455e-80e5-73b028b5141b"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Heel walk:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="109" y="170" width="38" height="15" uuid="3f7d6e3b-0201-45ae-8b09-9c0accd51d54"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="13" y="213" width="69" height="15" uuid="712d49b0-529b-4c2c-902e-e833a1c45b01"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Duck walk:]]></text>
 			</staticText>
@@ -4110,14 +4145,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="158" y="170" width="49" height="15" uuid="b4427326-21a4-406f-b9d7-4d001527feec"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Abnormal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="13" y="236" width="69" height="15" uuid="13922e59-565c-4837-8873-3664b6be2009"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Toe walk: ]]></text>
 			</staticText>
@@ -4136,14 +4171,14 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="342" y="192" width="67" height="15" uuid="85c0beeb-0f0c-4280-9bc3-21f59f38b75b"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Rhomberg’s ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="422" y="170" width="38" height="15" uuid="5c0e1579-7ba7-4d50-a4bf-d50a137b15a0"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Normal]]></text>
 			</staticText>
@@ -4154,7 +4189,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="478" y="170" width="49" height="15" uuid="25803f78-ac11-4c5e-80e6-8b9bcaeb6d71"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
+					<font isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Abnormal]]></text>
 			</staticText>
@@ -4166,15 +4201,15 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[(walk in HALF squat position) ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="261" width="555" height="1" uuid="ac841498-23c4-49f6-900a-d28050d3cc28"/>
+				<reportElement x="1" y="261" width="554" height="1" uuid="ac841498-23c4-49f6-900a-d28050d3cc28"/>
 			</line>
 			<line>
-				<reportElement x="1" y="281" width="555" height="1" uuid="0ed4c5ea-c495-40c8-ab4e-16353ad7bc1c"/>
+				<reportElement x="1" y="281" width="554" height="1" uuid="0ed4c5ea-c495-40c8-ab4e-16353ad7bc1c"/>
 			</line>
 			<staticText>
 				<reportElement x="13" y="262" width="225" height="20" uuid="fdea75c6-2bf1-4530-bcd6-4167effeea2c"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Any Further Comments on Questionnaire ]]></text>
 			</staticText>
@@ -4223,7 +4258,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="13" y="361" width="152" height="20" uuid="aed23c39-086a-460d-9ce2-1047ff36ea26"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Comments on Examination ]]></text>
 			</staticText>
@@ -4254,7 +4289,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="13" y="511" width="153" height="20" forecolor="#FFFFFF" uuid="32963a3f-8389-4f87-8190-7887c71d429b"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[SIGNATURE]]></text>
 			</staticText>
@@ -4306,7 +4341,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="12" y="466" width="121" height="15" uuid="d26988c7-a56f-447a-8906-537090d2a9c7"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Examiner’s Name/Stamp]]></text>
 			</staticText>
