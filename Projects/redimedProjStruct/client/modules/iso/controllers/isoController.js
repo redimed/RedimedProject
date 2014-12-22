@@ -143,6 +143,7 @@ angular.module('app.loggedIn.iso.controller',[])
 			relativePath:''
 	    }
 	    //hien thi popup la noi dung cua action da duoc chon
+	    $scope.resetFlag=0;
 	    $scope.showTreeActionContentPopup=function(treeAction)
 	    {
 	    	switch(treeAction)
@@ -157,6 +158,7 @@ angular.module('app.loggedIn.iso.controller',[])
 	    			break;
     			case $scope.treeActions.grantNodePermission.name:
     				$scope.currentTreeAction=$scope.treeActions.grantNodePermission;
+    				$scope.resetFlag=$scope.resetFlag+1;
     				break;
     			case $scope.treeActions.checkInDocument.name:
     				$scope.currentTreeAction=$scope.treeActions.checkInDocument;
