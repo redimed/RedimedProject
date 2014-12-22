@@ -48,8 +48,8 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							firstName: scope.modelObjectMap.First_name,
 							lastName: scope.modelObjectMap.Sur_name,
 							dob: dob,
-							medicareNo: scope.modelObjectMap.Medicare_no,
-							refNo: scope.modelObjectMap.Ref
+							medicareNo: scope.modelObjectMap.Medicare_no.toString(),
+							refNo: scope.modelObjectMap.Ref.toString()
 						}
 
 						PatientService.mdtVerifiedMedicare(options).then(function(response){
