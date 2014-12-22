@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="portlet-body">
-        <my-data-table options="data_options" rowclick="clickRow">
+        <my-data-table options="data_options" rowclick="clickRow" numrows="10">
     </div>
 </div>
 
@@ -34,7 +34,7 @@
         </button>
     </div>
     <div class="break-row" style="margin-bottom: 15px;"></div>
-    <insurer-detail data="{id:{{insurerInfo.id}}}" onsuccess="reloadpage"></insurer-detail>
+    <insurer-detail data="{id:{{insurerInfo.id}}}" onsuccess="edit_form.success"></insurer-detail>
 </div>
 
 <div class="mdt-search" style="display: block;" ng-if="add_form.is_show">
@@ -44,7 +44,7 @@
         </button>
     </div>
     <div class="break-row" style="margin-bottom: 15px;"></div>
-    <insurer-detail data="{}" onsuccess="reloadpage"></insurer-detail>
+    <insurer-detail data="{}" onsuccess="add_form.success"></insurer-detail>
 </div>
 
 

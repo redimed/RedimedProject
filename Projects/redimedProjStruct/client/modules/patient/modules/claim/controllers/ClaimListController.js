@@ -58,9 +58,27 @@ angular.module("app.loggedIn.patient.claim.list.controller", [
 		loadList();
 	}
 
-	$scope.openPopup = function(option){
-		if(option.type === 'add'){
-			angular.element(idClaimDetailAdd).fadeIn();
-		}
-	}
+    $scope.openPopup = function (option) {
+        if (option.type === 'add') {
+            angular.element(idClaimDetailAdd).fadeIn();
+        }
+    }
+
+    $scope.clickRow = function (claimData) {
+        if ($scope.claim_params.permission.edit !== true)
+            $scope.claim_params = {
+                permission: {
+                    edit: true,
+                    Claim_id: claimData.row.Claim_id
+                },
+            };
+        angular.element(idClaimDetailAdd).fadeIn();
+
+    }
+
+    $scope.$watch('claim_params.permission.edit', function (editMode) {
+        if (editMode !== true) {
+            loadList();
+        }
+    });
 })

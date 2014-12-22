@@ -34,7 +34,7 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                                 scope.modelObjectMap = angular.copy(InsurerModel);
                                 scope.isSubmit = false;
                                 if (scope.on_success) {
-                                    scope.on_success();
+                                    scope.on_success(response);
                                 }
                             }
                         })
@@ -48,7 +48,7 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                                 toastr.success("Edit Insurer Successfully", "Success");
                                 scope.isSubmit = false;
                                 if (scope.on_success) {
-                                    scope.on_success();
+                                    scope.on_success(response);
                                 }
                             }
                         })
