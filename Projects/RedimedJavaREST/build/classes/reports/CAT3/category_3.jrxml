@@ -29,8 +29,8 @@ e.`Company_name` AS 'e_name' ,
     d.`NAME` AS 'd_name' ,
     d.`Address` AS 'd_address' , d.`Phone` AS 'd_phone', l.`FROM_TIME`  ,
 SUBSTRING_INDEX(d.`Signature`, ',', -1) AS 'd_sign' , c.*, SUBSTRING_INDEX(c.`PATIENT_SIGNATURE`, ',', -1) AS 'PSignature' FROM `gorgon_category_3` c
-LEFT JOIN `cln_patients` p ON p.`Patient_id` = c.`patient_id`
-LEFT JOIN `cln_appointment_calendar`  l ON l.`CAL_ID` = c.`cal_id`
+INNER JOIN `cln_patients` p ON p.`Patient_id` = c.`patient_id`
+INNER JOIN `cln_appointment_calendar`  l ON l.`CAL_ID` = c.`cal_id`
 LEFT JOIN `doctors` d ON d.`doctor_id` = c.`DOCTOR_ID`
 LEFT JOIN `companies` e ON p.`company_id` = e.`id`
 WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{patient_id}]]>

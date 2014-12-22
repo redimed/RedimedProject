@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mh_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ed7ad48-d2ae-4fdc-8d98-79bb0b845af6">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+
+
+	<property name="ireport.x" value="178"/>
+
 	<property name="ireport.y" value="7152"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
@@ -356,7 +359,7 @@ doctors.`NAME` as doctors_NAME,
 SUBSTRING_INDEX(doctors. `Signature`, ',', -1) as doctors_Signature,
 doctors.`DOB` as doctors_DOB
 FROM
-`cln_patients` cln_patients LEFT JOIN `medical_history` medical_history ON cln_patients.`Patient_id` = medical_history.`patient_id` LEFT JOIN `companies` ON cln_patients.`company_id` = companies.id LEFT JOIN `doctors` ON medical_history.doctor_id = doctors.doctor_id
+`cln_patients` cln_patients INNER JOIN `medical_history` medical_history ON cln_patients.`Patient_id` = medical_history.`PATIENT_ID` LEFT JOIN `companies` ON cln_patients.`company_id` = companies.id INNER JOIN `doctors` ON medical_history.doctor_id = doctors.doctor_id
 WHERE
 medical_history.`mh_id` = $P{id}]]>
 	</queryString>
