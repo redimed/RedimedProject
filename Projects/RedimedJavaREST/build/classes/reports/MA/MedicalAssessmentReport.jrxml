@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
 	<property name="ireport.zoom" value="1.0245201830476074"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="85"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -187,18 +187,18 @@ doc_ma.`MA_ID` = $P{id}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="791">
+		<band height="802">
 			<image scaleImage="RetainShape">
-				<reportElement x="-1" y="119" width="555" height="264" uuid="01099329-d9cc-4adb-9717-56a6966f8f49"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/MA1.png"]]></imageExpression>
+				<reportElement x="0" y="103" width="555" height="298" uuid="b4dd2985-5e0b-46c8-99dc-b4529b7c5557"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA1.PNG"]]></imageExpression>
 			</image>
-			<image>
-				<reportElement x="-1" y="368" width="555" height="265" uuid="5752702c-2183-470a-91cc-4603d39b36d3"/>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="312" width="555" height="273" uuid="425f4c5e-e246-4e90-914e-171f6cf1142c"/>
 				<imageExpression><![CDATA[$P{real_path}+"/images/MA2.PNG"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape">
-				<reportElement x="0" y="622" width="555" height="158" uuid="90d90388-f5c6-4387-923a-b8948c863157"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/MA3.png"]]></imageExpression>
+				<reportElement x="0" y="542" width="555" height="237" uuid="84a2c0e7-29d2-47e3-b89d-437c42dd6cfc"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/MA3.PNG"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="52" y="141" width="100" height="20" uuid="3b5692c1-4603-48b4-9b84-5f540fe65097"/>
