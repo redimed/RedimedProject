@@ -1618,7 +1618,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-sm-10">
-                        <textarea class="form-control" style="height: 200px" name="LComment" ng-model="info.LComment" required></textarea>
+                        <textarea class="form-control" style="height: 200px" name="LComment" ng-model="info.LComment" ng-change="totalComment()" required></textarea>
                         <div ng-show="gorgonFAForm.LComment.$error.required">
                             <div class="help-block" for="LComment">
                                 <label class="control-label">Required!</label>
