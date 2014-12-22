@@ -72,3 +72,11 @@ tannv.dts@gmail.com
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
+
+
+/*select2 custom css
+tannv.dts@gmail.com
+*/
+.select2-search-field input{
+    width:223px!important;
+}

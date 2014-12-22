@@ -14,7 +14,7 @@
         </span>
         <div style="color:#800000;display:inline;font-size:11px">
            
-           {{node.ACCESSIBLE_USER_ID?'(':''}}{{node.IS_READ==1?'R':''}}{{node.IS_CREATE==1?'C':''}}{{node.IS_UPDATE==1?'U':''}}{{node.IS_DELETE==1?'D':''}}{{node.IS_GRANT_PERMISSION==1?'G':''}}{{node.ACCESSIBLE_USER_ID?')':''}}
+           {{node.ACCESSIBLE_USER_ID?'(':''}}{{node.IS_READ==1?'R':''}}{{node.IS_CREATE==1 && node.NODE_TYPE==nodeType.folder?'C':''}}{{node.IS_UPDATE==1?'U':''}}{{node.IS_DELETE==1?'D':''}}{{node.IS_GRANT_PERMISSION==1?'G':''}}{{node.ACCESSIBLE_USER_ID?')':''}}
            
         </div>
         <a ng-show="node.ACCESSIBLE_USER_ID" ng-click="showTreeActionsMenuPopup(node);">actions </a>    
@@ -69,7 +69,7 @@
                         <button ng-show='selectedTreeNode.IS_READ==1' 
                             type="button" 
                             class="btn btn-default"
-                            ng-click="">Grant Permission
+                            ng-click="showTreeActionContentPopup(treeActions.grantNodePermission.name);">Grant Permission
                         </button>
                     </div>
 
@@ -91,13 +91,13 @@
                             ng-show="selectedTreeNode.IS_UPDATE"
                             type="button" 
                             class="btn btn-default"
-                            ng-click="">Check out
+                            ng-click="checkOutDocument();">Check out
                         </button>
                         <button 
                             ng-show="selectedTreeNode.IS_UPDATE"
                             type="button" 
                             class="btn btn-default"
-                            ng-click="">Check in
+                            ng-click="beforeCheckIn();">Check in
                         </button>
                         <button 
                             ng-show="selectedTreeNode.IS_UPDATE"
@@ -164,5 +164,3 @@
 <div ng-include="'modules/iso/views/templates/iso.html/iso_page_template.html'">
 
 </div>
-
-<button ng-click='test();'>test</button>   

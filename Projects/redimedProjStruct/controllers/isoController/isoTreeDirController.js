@@ -7,7 +7,6 @@ var isoCheckInOutController=require('./isoCheckInOutController');
 var cookieParser = require('cookie-parser');
 module.exports =
 {
-
     /**
      * tannv.dts@gmail.com
      * Lay toan bo cau truc thu muc tu database
@@ -16,16 +15,21 @@ module.exports =
 	{
         var accessibleUserId=req.body.accessibleUserId?req.body.accessibleUserId:-10;
         var sql=
-        " SELECT    tree.*,                                                                                              "+
-        "   treeUser.`ACCESSIBLE_USER_ID`,`treeUser`.`IS_READ`,`treeUser`.`IS_CREATE`,treeUser.`IS_UPDATE`,              "+
-        "   treeUser.`IS_DELETE`,treeUser.`IS_GRANT_PERMISSION`                                                          "+
-        " FROM iso_tree_dir tree                                                                                         "+
-        " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=3) "+
-        " WHERE     tree.`ISENABLE`=1                                                                                    "+
-        " ORDER BY FATHER_NODE_ID DESC                                                                                   ";
+            " SELECT    tree.*,                                                                                                "+
+            "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                 "+
+            "   MAX(`treeUser`.`IS_READ`) AS IS_READ,                                                                          "+
+            "   MAX(`treeUser`.`IS_CREATE`) AS IS_CREATE,                                                                      "+
+            "   MAX(treeUser.`IS_UPDATE`) AS IS_UPDATE,                                                                        "+
+            "   MAX(treeUser.`IS_DELETE`) AS IS_DELETE,                                                                        "+
+            "   MAX(treeUser.`IS_GRANT_PERMISSION`) AS IS_GRANT_PERMISSION                                                     "+   
+            " FROM iso_tree_dir tree                                                                                           "+
+            " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)   "+
+            " WHERE     tree.`ISENABLE`=1                                                                                      "+
+            " GROUP BY tree.`NODE_ID`                                                                                          "+
+            " ORDER BY FATHER_NODE_ID DESC                                                                                     ";
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,function(err,rows)
+            var query = connection.query(sql,[accessibleUserId],function(err,rows)
             {
                 if(err)
                 {
@@ -55,7 +59,8 @@ module.exports =
      */
     createFolder:function(req,res,next)
     {
-
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create folder");
+        console.log(req.body.info);
         var info=req.body.info;
         var userInfo=JSON.parse(req.cookies.userInfo);
         console.log(userInfo);
@@ -70,6 +75,7 @@ module.exports =
         var sql=" INSERT INTO `iso_tree_dir` set ? ";
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
         var targetFolder=prefix+info.relativePath;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> info.relativePath "+info.relativePath);
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+targetFolder);
         mkdirp(targetFolder, function(err){
             if(!err)
@@ -144,8 +150,8 @@ module.exports =
                         {
                             newDocument.NODE_ID=result.insertId;
                             req.body.newDocument=newDocument;
-                            //Luu quyen han cua user tren document
-                            //chuyen den isoTreeUsersController.saveDocumentAuthor
+                            //tiep theo: luu node ancestor
+                            //chuyen den isoNodeAncestorController.setDocumentAncestor
                             next();
                         }
                         else
@@ -214,4 +220,6 @@ module.exports =
         });
 
     }
+
+    
 }
