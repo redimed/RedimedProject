@@ -95,6 +95,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 								}
 							}
 
+							scope.verifiedMedicare();
 							scope.loadState();
 							angular.extend(scope.selectedCompany, response.company);
 						}// end if
