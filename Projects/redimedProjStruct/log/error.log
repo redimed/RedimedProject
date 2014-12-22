@@ -1261,3 +1261,33 @@ Error at Mon Dec 22 2014 08:39:35 GMT+0700 (SE Asia Standard Time) : {"code":"PR
 Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
 Error at Mon Dec 22 2014 08:39:35 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
 
+Exec SQL: SELECT id, insurer_name, address, suburb FROM cln_insurers LIMIT 5
+Error at Mon Dec 22 2014 14:59:08 GMT+0800 (W. Australia Standard Time) : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","index":0}
+
+Exec SQL: SELECT id, insurer_name, address, suburb FROM cln_insurers LIMIT 5
+Error at Mon Dec 22 2014 14:59:23 GMT+0800 (W. Australia Standard Time) : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","index":0}
+
+Exec SQL: SELECT id, insurer_name, address, suburb FROM cln_insurers LIMIT 5
+Error at Mon Dec 22 2014 15:01:08 GMT+0800 (W. Australia Standard Time) : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","index":0}
+
+Exec SQL: SELECT id, insurer_name, address, suburb FROM cln_insurers LIMIT 5
+Error at Mon Dec 22 2014 15:01:23 GMT+0800 (W. Australia Standard Time) : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","index":0}
+
+Exec SQL: SELECT id, insurer_name, address, suburb FROM cln_insurers LIMIT 5
+Error at Mon Dec 22 2014 15:03:08 GMT+0800 (W. Australia Standard Time) : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","index":0}
+
+Exec SQL: UPDATE companies SET Company_name = 'Insurer Company', Industry = 'Mining', Addr = '222', postcode = 999, State = 'WA', Description = NULL, latitude = NULL, longitude = NULL, country = 'Australia', result_email = 'phuong_thql@yahoo.com', invoice_email = 'phuong_thql@yahoo.com', PO_number = '2', isProject = '1', isCalendar = NULL, father_id = NULL, report_to_email = 'phuong_thql@yahoo.com', default_status = 'Confirmed', isInvoiceEmailToUser = 0, Created_by = NULL, Creation_date = NULL, Last_updated_by = 25, Last_update_date = '2014-07-04', isAddContactEmailToResult = 0, IMA = NULL, Site_name = NULL, Medic_contact_no = NULL, Email = NULL, CODE = NULL, Insurer = 3, Phone = NULL, Site_medic = NULL, User_id = NULL, isPO = 0, isExtra = NULL WHERE (`id` = 1)
+Error at Mon Dec 22 2014 15:04:49 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: UPDATE companies SET Company_name = 'Insurer Company', Industry = 'Mining', Addr = '222', postcode = 999, State = 'WA', Description = NULL, latitude = NULL, longitude = NULL, country = 'Australia', result_email = 'phuong_thql@yahoo.com', invoice_email = 'phuong_thql@yahoo.com', PO_number = '2', isProject = '1', isCalendar = NULL, father_id = NULL, report_to_email = 'phuong_thql@yahoo.com', default_status = 'Confirmed', isInvoiceEmailToUser = 0, Created_by = NULL, Creation_date = NULL, Last_updated_by = 25, Last_update_date = '2014-07-04', isAddContactEmailToResult = 0, IMA = NULL, Site_name = NULL, Medic_contact_no = NULL, Email = NULL, CODE = NULL, Insurer = 1, Phone = NULL, Site_medic = NULL, User_id = NULL, isPO = 0, isExtra = NULL WHERE (`id` = 1)
+Error at Mon Dec 22 2014 15:04:56 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: UPDATE companies SET Company_name = 'Insurer Company', Industry = 'Mining', Addr = '222', postcode = 999, State = 'WA', Description = NULL, latitude = NULL, longitude = NULL, country = 'Australia', result_email = 'phuong_thql@yahoo.com', invoice_email = 'phuong_thql@yahoo.com', PO_number = '2', isProject = '1', isCalendar = NULL, father_id = NULL, report_to_email = 'phuong_thql@yahoo.com', default_status = 'Confirmed', isInvoiceEmailToUser = 0, Created_by = NULL, Creation_date = NULL, Last_updated_by = 25, Last_update_date = '2014-07-04', isAddContactEmailToResult = 0, IMA = NULL, Site_name = NULL, Medic_contact_no = NULL, Email = NULL, CODE = NULL, Insurer = NULL, Phone = NULL, Site_medic = NULL, User_id = NULL, isPO = 0, isExtra = NULL WHERE (`id` = 1)
+Error at Mon Dec 22 2014 15:15:32 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: INSERT INTO company_insurers (company_id, insurer_id) VALUES (7, 2)
+Error at Mon Dec 22 2014 15:16:51 GMT+0800 (W. Australia Standard Time) : {"code":"ER_NO_DEFAULT_FOR_FIELD","errno":1364,"sqlState":"HY000","index":0}
+
+Exec SQL: INSERT INTO company_insurers (company_id, insurer_id) VALUES (1, 1)
+Error at Mon Dec 22 2014 15:17:09 GMT+0800 (W. Australia Standard Time) : {"code":"ER_NO_DEFAULT_FOR_FIELD","errno":1364,"sqlState":"HY000","index":0}
+
