@@ -1,4 +1,7 @@
 <h3>Grant Permission</h3>
+<div>
+    R:Read. C:Create. U:Update. D:Delete. G: Grant Permission
+</div>    
 <ui-select multiple ng-model="selectedUserNames.list" theme="select2" ng-disabled="disabled" style="width: 300px;">
     <ui-select-match placeholder="Select user...">{{$item.user_name}}</ui-select-match>
     <ui-select-choices refresh="funcAsync($select.search,selectedTreeNode.NODE_ID)" refresh-delay="0" repeat="user in userNameList | filter:$select.search">
@@ -25,23 +28,24 @@
             </td>
             <td>
                 <label class="checkbox-inline">
-                    <input ng-disabled='item.CAN_SET_READ==0' type='checkbox' ng-model='item.IS_READ' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_READ==1"/>Read
+                    <input ng-disabled='item.CAN_SET_READ==0' type='checkbox' ng-model='item.IS_READ' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_READ==1"/>R
                 </label>
                 <label class="checkbox-inline">
-                    <input ng-disabled='item.CAN_SET_CREATE==0' type='checkbox' ng-model='item.IS_CREATE' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_CREATE==1"/>Create
+                    <input ng-disabled='item.CAN_SET_CREATE==0' type='checkbox' ng-model='item.IS_CREATE' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_CREATE==1"/>C
                 </label>
                 <label class="checkbox-inline">
-                    <input ng-disabled='item.CAN_SET_UPDATE==0' type='checkbox' ng-model='item.IS_UPDATE' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_UPDATE==1"/>Update
+                    <input ng-disabled='item.CAN_SET_UPDATE==0' type='checkbox' ng-model='item.IS_UPDATE' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_UPDATE==1"/>U
                 </label>
                 <label class="checkbox-inline">
-                    <input  ng-disabled='item.CAN_SET_DELETE==0' type='checkbox' ng-model='item.IS_DELETE' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_DELETE==1"/>Delete
+                    <input  ng-disabled='item.CAN_SET_DELETE==0' type='checkbox' ng-model='item.IS_DELETE' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_DELETE==1"/>D
                 </label>
                 <label  class="checkbox-inline">
-                    <input ng-disabled='item.CAN_SET_GRANT_PERMISSION==0' type='checkbox' ng-model='item.IS_GRANT_PERMISSION' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_GRANT_PERMISSION==1"/>Grant Permission
+                    <input ng-disabled='item.CAN_SET_GRANT_PERMISSION==0' type='checkbox' ng-model='item.IS_GRANT_PERMISSION' ng-true-value="1" ng-false-value="0" ng-checked="item.IS_GRANT_PERMISSION==1"/>G
                 </label>
             </td>
             <td>
-                {{item.STATUS}}
+                <span class="text-success" ng-show="item.STATUS=='success'">{{item.STATUS}}</span>
+                <span class="text-error" ng-show="item.STATUS=='fail'">{{item.STATUS}}</span>
             </td>
         </tr>
     </tbody>

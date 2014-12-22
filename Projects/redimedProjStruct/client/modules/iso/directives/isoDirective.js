@@ -55,7 +55,8 @@ angular.module("app.loggedIn.iso.directive", [])
             transclude:true,
             required:['^ngModel'],
             scope: {
-                selectedTreeNode:'='
+                selectedTreeNode:'=',
+                resetFlag:'='
             },
             templateUrl: 'modules/iso/directives/isoGrantPermission.html',
             controller: function ($scope,isoService)
@@ -63,6 +64,7 @@ angular.module("app.loggedIn.iso.directive", [])
                 $scope.userNameList = [];
                 $scope.funcAsync=function(userNameKey,nodeId)
                 {
+
                     $scope.userNameList=[];
                     isoService.core.getUserNameList(userNameKey,nodeId)
                     .then(function(data)
@@ -79,6 +81,12 @@ angular.module("app.loggedIn.iso.directive", [])
                     angular.element('.ui-select-match-close.select2-search-choice-close').removeAttr('href');
                 });
 
+                $scope.$watch('resetFlag', function(newValue, oldValue) {
+                        $scope.selectedUserNames = {};
+                        $scope.selectedUserNames.list = [];
+                });
+
+                /*
                 $scope.grantNodePermission=function()
                 {
                     for(var i=0;i<$scope.selectedUserNames.list.length;i++)
@@ -103,6 +111,37 @@ angular.module("app.loggedIn.iso.directive", [])
                         })
                     }
                     
+                }
+                */
+               
+                $scope.grantNodePermission=function()
+                {
+                    for(var i=0;i<$scope.selectedUserNames.list.length;i++)
+                    {
+                        var user=$scope.selectedUserNames.list[i];
+                        $scope.grantNodePermissionItem(user);
+                    }
+                }
+
+                $scope.grantNodePermissionItem=function(item)
+                {
+                    isoService.treeUser.grantNodePermission($scope.selectedTreeNode.NODE_ID,item)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            item.STATUS=data.status;
+                            //isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Grant Permission success!');
+                        }
+                        else
+                        {
+                            item.STATUS=data.status;
+                            //isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Grant Permission error!');
+                        }
+
+                        //$("#iso-tree-action-content-popup").modal('hide');
+                    },function(err){
+                        item.STATUS='error';
+                    })
                 }
             }
         };
