@@ -185,6 +185,8 @@ public class MedicareService {
 		
 		int sessionId = getSessionId();
 		
+		System.out.println(sessionId);
+		
 		Vector r1 = new Vector();
 		rval = EasyclaimAPI.getInstance().createBusinessObject(sessionId, "HIC/HolClassic/DirectBillClaim@1", "", "", r1);
 		
@@ -260,14 +262,37 @@ public class MedicareService {
 			rval = EasyclaimAPI.getInstance().createBusinessObject(sessionId, "Service",r3.get(0).toString(),"C001", r4);
 		else
 			return returnOPVJson(rval);
-
+		
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ChargeAmount", "1");
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ItemNum", "23");
 		else
 			return returnOPVJson(rval);
 
+		if(rval == 0)
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ChargeAmount", "999");
+		else
+			return returnOPVJson(rval);
+		
+		if(rval == 0)
+		{
+			rval = EasyclaimAPI.getInstance().sendContent(sessionId, "HIC/HolClassic/DirectBillClaim@1", "Pass-123");
+		}
+		else
+			return returnOPVJson(rval);
 
-		return null;
+		if(rval == 9501)
+		{
+			rval = EasyclaimAPI.getInstance().isReportAvailable(sessionId);
+		}
+		else
+			return returnOPVJson(rval);
+		
+		
+		
+		EasyclaimAPI.getInstance().resetSession(sessionId);
+
+
+		return returnOPVJson(rval);
 	}
 	
 
