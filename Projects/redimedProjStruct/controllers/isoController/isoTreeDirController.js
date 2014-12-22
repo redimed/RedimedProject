@@ -4,24 +4,32 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');//Read js file for import into
 var isoUtil=require('./isoUtilsController');
 var isoCheckInOutController=require('./isoCheckInOutController');
-
+var cookieParser = require('cookie-parser');
 module.exports =
 {
-
     /**
      * tannv.dts@gmail.com
      * Lay toan bo cau truc thu muc tu database
      */
 	getTreeDir:function(req,res)
 	{
+        var accessibleUserId=req.body.accessibleUserId?req.body.accessibleUserId:-10;
         var sql=
-        " SELECT tree.*                  "+
-        " FROM iso_tree_dir tree         "+
-        " WHERE tree.`ISENABLE`=1        "+
-        " ORDER BY FATHER_NODE_ID DESC   ";
+            " SELECT    tree.*,                                                                                                "+
+            "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                 "+
+            "   MAX(`treeUser`.`IS_READ`) AS IS_READ,                                                                          "+
+            "   MAX(`treeUser`.`IS_CREATE`) AS IS_CREATE,                                                                      "+
+            "   MAX(treeUser.`IS_UPDATE`) AS IS_UPDATE,                                                                        "+
+            "   MAX(treeUser.`IS_DELETE`) AS IS_DELETE,                                                                        "+
+            "   MAX(treeUser.`IS_GRANT_PERMISSION`) AS IS_GRANT_PERMISSION                                                     "+   
+            " FROM iso_tree_dir tree                                                                                           "+
+            " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)   "+
+            " WHERE     tree.`ISENABLE`=1                                                                                      "+
+            " GROUP BY tree.`NODE_ID`                                                                                          "+
+            " ORDER BY FATHER_NODE_ID DESC                                                                                     ";
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,function(err,rows)
+            var query = connection.query(sql,[accessibleUserId],function(err,rows)
             {
                 if(err)
                 {
@@ -49,23 +57,25 @@ module.exports =
      * tannv.dts@gmail.com
      * Tao mot thu muc moi tren o dia va luu vao database
      */
-    createFolder:function(req,res)
+    createFolder:function(req,res,next)
     {
-
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create folder");
+        console.log(req.body.info);
         var info=req.body.info;
+        var userInfo=JSON.parse(req.cookies.userInfo);
+        console.log(userInfo);
+        console.log(userInfo.user_name);
         var newFolder={
             FATHER_NODE_ID:info.fatherNodeId,
             NODE_TYPE:info.nodeType,
             NODE_NAME:info.nodeName,
             DESCRIPTION:info.description,
-            CREATED_BY:info.createdBy
+            CREATED_BY:userInfo.id
         }
-
         var sql=" INSERT INTO `iso_tree_dir` set ? ";
-
-
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
         var targetFolder=prefix+info.relativePath;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> info.relativePath "+info.relativePath);
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+targetFolder);
         mkdirp(targetFolder, function(err){
             if(!err)
@@ -78,12 +88,15 @@ module.exports =
                         
                         if(err)
                         {
+                            isoUtil.exlog(err);
                             res.json({status:'fail'});
                         }
                         else
                         {
                             newFolder.NODE_ID=result.insertId;
-                            res.json({status:'success',data:newFolder});
+                            req.body.newFolder=newFolder;
+                            next();
+                            //res.json({status:'success',data:newFolder});
                         }
                     });
                 });
@@ -137,8 +150,8 @@ module.exports =
                         {
                             newDocument.NODE_ID=result.insertId;
                             req.body.newDocument=newDocument;
-                            //isoCheckInOutController.buildFirstCheckIn(req,res);
-                            //res.json({status:'success',data:newDocument});
+                            //tiep theo: luu node ancestor
+                            //chuyen den isoNodeAncestorController.setDocumentAncestor
                             next();
                         }
                         else
@@ -207,4 +220,6 @@ module.exports =
         });
 
     }
+
+    
 }

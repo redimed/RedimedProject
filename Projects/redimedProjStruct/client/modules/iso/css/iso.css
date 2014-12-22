@@ -59,3 +59,24 @@
     border:1px solid #94a0b4;
     color:#000
 }
+
+
+/*
+tannv.dts@gmail.com
+ */
+.node_accessible span{
+    color:#00A653;
+}
+
+.iso-action-group{
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+
+/*select2 custom css
+tannv.dts@gmail.com
+*/
+.select2-search-field input{
+    width:223px!important;
+}
