@@ -2,7 +2,21 @@
  * Created by tannv.dts@gmail.com on 12/2/2014.
  */
 angular.module('app.loggedIn.iso.controller',[])
-    .controller("isoController", function($scope,$state,$window,$cookieStore,FileUploader,toastr,isoService) {
+    .controller("isoController", function($scope,$http,$state,$window,$cookieStore,FileUploader,toastr,isoService) {
+
+        $.ajax({url:"http://comviet12g.com/Thuc-don-trong-tuan/Thu-Hai/",
+        	headers:{
+        		"content-type": "application/json",
+				"Access-Control-Allow-Origin":"*"
+        	},
+        	success:function(result){
+	    		var other=$('.otherpage');
+            	other.html(result);
+	    }});
+
+	    $scope.testRemote=function(){
+	    	console.log($('.otherpage').find('#tinmoinhat'));
+	    }	
 
     	/***
     	//Khoi tao cac bien can thiet
