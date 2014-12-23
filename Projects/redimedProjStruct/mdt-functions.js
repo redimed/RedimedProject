@@ -1,6 +1,29 @@
 var fs = require('fs');
 
 module.exports = {
+	commonAdd: function(table, postData){
+		var sql = "INSERT INTO "+table+"(";
+		var sql_values = " VALUES(";
+
+		for(var key in postData){
+			sql += key+",";
+			if(postData[key] !== null)
+				sql_values += "'"+postData[key]+"',";
+			else
+				sql_values += postData[key]+",";
+		}
+
+		sql = sql.substring(0, sql.length-1);
+		sql_values = sql_values.substring(0, sql_values.length-1);
+
+		sql += ")";
+		sql_values += ")";
+
+		sql = sql+sql_values;
+
+		return sql;
+	},
+
 	commonSearch: function(post_fields){
 		var sql_where = "";
 		var select_fields = [];

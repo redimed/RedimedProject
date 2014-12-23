@@ -22,7 +22,7 @@
 <div class="row"> <!-- INFORMATION -->
 
     <!-- TITLE -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.title.$invalid && isSubmit}">
             <label for="title">Title</label>
             <select ng-options="title.id as title.name for title in options.titles" 
@@ -34,7 +34,7 @@
     <!-- END TITLE -->
 
     <!-- FIRST NAME -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.fname.$invalid && isSubmit}">
             <label for="fname">First name *</label>
             <input required type="text" id="fname" float-label
@@ -51,7 +51,7 @@
     <!-- END FIRST NAME -->
 
     <!-- SUR NAME -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.sname.$invalid && isSubmit}">
             <label for="sname">Sur name *</label>
             <input required type="text" id="sname" 
@@ -67,10 +67,8 @@
     </div>
     <!-- END SURNAME NAME -->
 
-    <div class="break-row"></div>
-
     <!-- MIDDLE NAME -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="mname">Middle name</label>
             <input type="text" id="mname" 
@@ -78,9 +76,11 @@
         </span>
     </div>
     <!-- END MIDDLE NAME -->
+
+    <div class="break-row"></div>
     
     <!-- KNOWN AS -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="knownas">Known as</label>
             <input type="text" id="knownas" 
@@ -90,7 +90,7 @@
     <!-- END KNOWN AS -->
 
     <!-- BIRTHDAY -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.dob.$invalid && isSubmit}">
             <label for="dob">Date of Birth *</label>
             <input readonly="" ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" 
@@ -109,17 +109,15 @@
     </div>
     <!-- END BIRTHDAY -->
 
-    <div class="break-row"></div>
-
     <!-- SEX -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <input type="checkbox" class="mdt-sex" id="sex" ng-model="modelObjectMap.Sex" ng-true-value="1" ng-false-value="0">
         <label for="sex"></label>
     </div>
     <!-- END SEX -->
     
     <!-- EMAIL -->
-    <div class="col-md-4 col-sm-6 col-xs-12" ng-class="{'has-error': patientForm.email.$invalid && isSubmit}">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-class="{'has-error': patientForm.email.$invalid && isSubmit}">
         <span class="field">
             <label for="email">Email *</label>
             <input type="email" placeholder="Email" name="email" ng-model="modelObjectMap.Email"
@@ -135,8 +133,10 @@
     </div>
     <!-- END EMAIL -->
 
+    <div class="break-row"></div>
+
     <!-- OCCUPATION -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="occupation">Occupation</label>
             <input type="text" placeholder="Occupation" name="occupation" ng-model="modelObjectMap.Occupation"
@@ -145,10 +145,8 @@
     </div>
     <!-- END OCCUPATION -->
 
-    <div class="break-row"></div>
-
     <!-- HOMEPHONE -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="hphone">Home Phone</label>
             <input type="text" placeholder="Home Phone" name="hphone" ng-model="modelObjectMap.Home_phone"
@@ -158,7 +156,7 @@
     <!-- END HOMEPHONE -->
 
     <!-- WORKPHONE -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="wphone">Work Phone</label>
             <input type="text" placeholder="Work Phone" name="wphone" ng-model="modelObjectMap.Work_phone"
@@ -168,7 +166,7 @@
     <!-- END WORKPHONE -->
 
     <!-- MOBILE -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="mobile">Mobile Phone</label>
             <input type="text" placeholder="Mobile Phone" name="mobile" ng-model="modelObjectMap.Mobile"
@@ -180,7 +178,7 @@
     <div class="break-row"></div>
 
     <!-- COMPANY -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-md-3 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <button class="btn btn-small btn-block green" ng-click="clickCompany()">
                 {{selectedCompany.Company_name}}
@@ -221,7 +219,7 @@
         <div class="break-row"></div>
 
         <!-- SURBURB -->
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="surburb">Surburb</label>
                 <input type="text" placeholder="Surburb" name="surburb" ng-model="modelObjectMap.Surburb"
@@ -231,7 +229,7 @@
         <!-- END SURBURB -->
 
         <!-- POST CODE -->
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="postcode">Post Code</label>
                 <input type="text" placeholder="Post code" name="postcode" ng-model="modelObjectMap.Post_code"
@@ -240,10 +238,8 @@
         </div>
         <!-- END POST CODE -->
 
-        <div class="break-row"></div>
-
         <!-- COUNTRY -->
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="country">Country</label>
                 <select ng-options="country.Country_name as country.Country_name for country in options.countries" 
@@ -255,7 +251,7 @@
         <!-- END COUNTRY -->
 
         <!-- STATE -->
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="state">State</label>
                 <select ng-options="state.id as state.State for state in options.states" 

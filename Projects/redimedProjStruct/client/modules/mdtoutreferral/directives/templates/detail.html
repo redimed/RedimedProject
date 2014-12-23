@@ -1,0 +1,114 @@
+<form name="mdtoutreferralForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+	<div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center">
+        <button class="btn btn-sm btn-block red" ng-click="closePopup()" ng-if="isClose">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--date_issued-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="date_issued">Date Issued</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Date Issued" name="date_issued" ng-model="mdtoutreferralMap.date_issued" class="form-control" id="date_issued" float-label>
+		</span>
+	</div>
+	<!--date_issued-->
+
+	<!--expire_date-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="expire_date">Expire date</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Expire date" name="expire_date" ng-model="mdtoutreferralMap.expire_date" class="form-control" id="expire_date" float-label>
+		</span>	
+	</div>
+	<!--expire_date-->
+
+	<!--duration-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="duration">Duration</label>
+			<input type="number" placeholder="Duration" name="duration" ng-model="mdtoutreferralMap.duration" class="form-control" id="duration" float-label>
+		</span>	</div>
+	<!--duration-->
+
+
+	<div class="break-row"></div>
+
+	<!--date_started-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="date_started">Date Started</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Date Started" name="date_started" ng-model="mdtoutreferralMap.date_started" class="form-control" id="date_started" float-label>
+		</span>
+	</div>
+	<!--date_started-->
+
+	<!--referred_to_doctor-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <button class="btn btn-small btn-block green" ng-click="clickReferredDoctor()">
+                {{selectedReferredDoctor.NAME}}
+            </button>
+        </span>
+    </div>
+	<!--<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="referred_to_doctor">Referred to doctor</label>
+			<input type="number" placeholder="Referred to doctor" name="referred_to_doctor" ng-model="mdtoutreferralMap.referred_to_doctor" class="form-control" id="referred_to_doctor" float-label>
+		</span>	</div>-->
+	<!--referred_to_doctor-->
+
+	<!--doctor_id-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+            <button class="btn btn-small btn-block green" ng-click="clickDoctor()">
+                {{selectedDoctor.name}}
+            </button>
+        </span>
+		<!--<span class="field">
+			<label for="doctor_id">Doctor id</label>
+			<input type="number" placeholder="Doctor id" name="doctor_id" ng-model="mdtoutreferralMap.doctor_id" class="form-control" id="doctor_id" float-label>
+		</span>	-->
+	</div>
+	<!--doctor_id-->
+
+</div>
+</form>
+
+<!-- REFERRED DOCTOR MODULE -->
+<div class="mdt-search" id="DoctorReferredModule" style="width: 75%;" ng-if="params.permission.create === true">
+	<mdtdoctor-search click-row="selectReferredDoctor(row)" is-close="DoctorReferredModule"></mdtdoctor-search>
+</div>
+<!-- END REFERRED DOCTOR MODULE -->
+
+<!-- REFERRED DOCTOR MODULE -->
+<div class="mdt-search" id="DoctorReferredEditModule" style="width: 75%;" ng-if="params.permission.edit === true">
+	<mdtdoctor-search click-row="selectReferredDoctor(row)" is-close="DoctorReferredEditModule"></mdtdoctor-search>
+</div>
+<!-- END REFERRED DOCTOR MODULE -->
+
+<!-- DOCTOR MODULE -->
+<div class="mdt-search" id="DoctorModule" style="width: 75%;" ng-if="params.permission.create === true">
+	<mdtoutdoctor-search click-row="selectDoctor(row)" is-close="DoctorModule"></mdtoutdoctor-search>
+</div>
+<!-- END DOCTOR MODULE -->
+
+<!-- DOCTOR MODULE -->
+<div class="mdt-search" id="DoctorEditModule" style="width: 75%;" ng-if="params.permission.edit === true">
+	<mdtoutdoctor-search click-row="selectDoctor(row)" is-close="DoctorEditModule"></mdtoutdoctor-search>
+</div>
+<!-- END DOCTOR MODULE -->

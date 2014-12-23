@@ -13,7 +13,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
             'state': 'loggedIn.patient.claim.list({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 12', 'icon': 'fa fa-envelope-o',
-            'state': 'loggedIn.patient.outsie_referrals({patient_id:' + $stateParams.patient_id + '})'}
+            'state': 'loggedIn.patient.outside_referral({patient_id:' + $stateParams.patient_id + '})'}
     ];
 
     $scope.patient_apt_modules = [
@@ -41,6 +41,8 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
                         $scope.current_patient[key] = new Date($scope.current_patient[key]);
                 }
             }
+
+            $scope.current_patient.Title = parseInt($scope.current_patient.Title);
         })
 
         PatientService.numCompanies(patient_id).then(function(response){

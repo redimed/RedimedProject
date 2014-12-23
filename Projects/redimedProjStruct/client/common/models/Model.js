@@ -205,6 +205,27 @@ angular.module("app.model", [])
 //END WAITING LIST
 
 /*AUTO CREATE*/
+.value('mdtOutdoctorModel', {
+	provider_no: '',
+	name: '',
+	address: '',
+	suburb: '',
+	state: '',
+	phone: '',
+	created_by: null,
+	last_updated_by: null
+})
+.value('mdtoutreferralModel', {
+	date_issued: null,
+	date_started: null,
+	duration: null,
+	expire_date: null,
+	referred_to_doctor: null,
+	doctor_id: null,
+	patient_id: null,
+	created_by: null,
+	last_updated_by: null
+})
 .value('sysStateModel', {
 	State: '',
 	Country_name: '',

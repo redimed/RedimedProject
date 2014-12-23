@@ -1,0 +1,41 @@
+<h3 class="page-title">Outside Referral</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>
+            	Outside Referral
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<button class="btn green btn-sm" ng-click="add()">Add Outsite Referrals</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<mdtoutreferral-search click-row="getRow(row)"></mdtoutreferral-search>
+	</div>
+</div>
+
+<!-- OUTSIDE REFERRAL MODULE -->
+<div class="mdt-search" id="OutsideReferralModule" style="width: 75%; z-index: 9998">
+	<mdtoutreferral-detail options="options" is-close="OutsideReferralModule" params="params_add" item-update="itemUpdate">
+    </mdtoutreferral-detail>
+</div>
+<!-- OUTSIDE REFERRAL MODULE -->
+
+<!-- OUTSIDE REFERRAL EDIT MODULE -->
+<div class="mdt-search" id="OutsideReferralEditModule" style="width: 75%; z-index: 9998">
+    <mdtoutreferral-detail options="options" is-close="OutsideReferralEditModule" params="params_edit" item-update="itemUpdate">
+    </mdtoutreferral-detail>
+</div>
+<!-- OUTSIDE REFERRAL EDIT MODULE -->

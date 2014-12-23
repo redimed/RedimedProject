@@ -1,0 +1,104 @@
+<form name="mdtoutdoctorForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--provider_no-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="provider_no">Provider no</label>
+			<input type="text" placeholder="Provider no" name="provider_no" ng-model="mdtOutdoctorMap.provider_no" class="form-control" id="provider_no" float-label>
+		</span>	</div>
+	<!--provider_no-->
+
+	<!--name-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="name">Name</label>
+			<input type="text" placeholder="Name" name="name" ng-model="mdtOutdoctorMap.name" class="form-control" id="name" float-label>
+		</span>	</div>
+	<!--name-->
+
+	<!--address-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="address">Address</label>
+			<input type="text" placeholder="Address" name="address" ng-model="mdtOutdoctorMap.address" class="form-control" id="address" float-label>
+		</span>	</div>
+	<!--address-->
+
+
+	<div class="break-row"></div>
+	<!--suburb-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="suburb">Suburb</label>
+			<input type="text" placeholder="Suburb" name="suburb" ng-model="mdtOutdoctorMap.suburb" class="form-control" id="suburb" float-label>
+		</span>	</div>
+	<!--suburb-->
+
+	<!--state-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="state">State</label>
+			<input type="text" placeholder="State" name="state" ng-model="mdtOutdoctorMap.state" class="form-control" id="state" float-label>
+		</span>	</div>
+	<!--state-->
+
+	<!--phone-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="phone">Phone</label>
+			<input type="text" placeholder="Phone" name="phone" ng-model="mdtOutdoctorMap.phone" class="form-control" id="phone" float-label>
+		</span>	</div>
+	<!--phone-->
+
+
+	<div class="break-row"></div>
+	<!--created_by-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="created_by">Created by</label>
+			<input type="number" placeholder="Created by" name="created_by" ng-model="mdtOutdoctorMap.created_by" class="form-control" id="created_by" float-label>
+		</span>	</div>
+	<!--created_by-->
+
+	<!--creation_date-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="creation_date">Creation date</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Creation date" name="creation_date" ng-model="mdtOutdoctorMap.creation_date" class="form-control" id="creation_date" float-label>
+		</span>	</div>
+	<!--creation_date-->
+
+	<!--last_updated_by-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="last_updated_by">Last updated by</label>
+			<input type="number" placeholder="Last updated by" name="last_updated_by" ng-model="mdtOutdoctorMap.last_updated_by" class="form-control" id="last_updated_by" float-label>
+		</span>	</div>
+	<!--last_updated_by-->
+
+
+	<div class="break-row"></div>
+	<!--last_update_date-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="last_update_date">Last update date</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Last update date" name="last_update_date" ng-model="mdtOutdoctorMap.last_update_date" class="form-control" id="last_update_date" float-label>
+		</span>	</div>
+	<!--last_update_date-->
+
+</div>
+</form>

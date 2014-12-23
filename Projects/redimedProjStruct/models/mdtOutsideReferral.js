@@ -26,16 +26,21 @@ module.exports = function(sequelize, DataTypes){
             'patient_id': { 
                 type: DataTypes.INTEGER(11),  
             },
-            'created_by': { 
+            'created_by': {     
                 type: DataTypes.INTEGER(11),  
             },
             'last_updated_by': { 
                 type: DataTypes.INTEGER(11),  
             },
+            'creation_date': {
+                type: DataTypes.DATE,
+            },
+            'last_update_date': {
+                type: DataTypes.DATE
+            }
         }, {
             tableName: "outside_referrals",
-            createdAt: "creation_date",
-            updatedAt: "last_update_date",
+            timestamps: false,
             classMethods: {
                 associate: function(models) {
                     mdtInstance.belongsTo(models.Patient, { as: 'Patient', foreignKey: 'patient_id'});

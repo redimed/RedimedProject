@@ -3,9 +3,16 @@ angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoct
 		restrict: 'EA',
 		scope: {
 			clickRow: '&',
+			isClose: '@'
 		},
 		templateUrl: 'modules/mdtdoctor/directives/templates/search.html',
 		link: function(scope, element, attrs){
+			//POPUP
+			scope.closePopup = function(){
+				angular.element("#"+scope.isClose).fadeOut();
+			}
+			//END POPUP
+
 			var init = function(){
 				scope.list = {};
 				scope.params = {
@@ -25,6 +32,10 @@ angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoct
 						'doctor_id', 'NAME', 'Email', 'Phone'
 					]
 				}
+
+				if(scope.isClose){
+                	scope.closePopup();
+                }
 			}//end init
 			var loadList = function(){
 				mdtDoctorService.search(scope.params).then(function(response){

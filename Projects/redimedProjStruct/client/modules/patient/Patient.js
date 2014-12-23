@@ -3,8 +3,7 @@ angular.module("app.loggedIn.patient", [
     "app.loggedIn.patient.services",
     "app.loggedIn.patient.directives",
 
-    "app.loggedIn.patient.claim",
-    "app.loggedIn.patient.outside_referral",
+    "app.loggedIn.patient.claim"
 ])
 
 .config(function ($stateProvider) {
@@ -78,6 +77,15 @@ angular.module("app.loggedIn.patient", [
             "main-content": {
                 templateUrl: "modules/patient/views/referrals.html",
                 controller: "PatientReferralsController"
+            }
+        }
+    })
+    .state("loggedIn.patient.outside_referral", {
+        url: "/:patient_id/outside_referral",
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/outside_referrals.html",
+                controller: "PatientOutsideReferralsController"
             }
         }
     })

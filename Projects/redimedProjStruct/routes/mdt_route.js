@@ -40,6 +40,20 @@ app.post('/api/meditek/v1/mdttimetable/add', mdtTimetableController.add);
 app.post('/api/meditek/v1/mdttimetable/generate', mdtTimetableController.generate);
 
 /*AUTO CREATE*/
+var mdtOutdoctorController = require('./controllers/mdtOutdoctorController');
+
+app.post('/api/meditek/v1/mdtoutdoctor/search', mdtOutdoctorController.postSearch);
+app.post('/api/meditek/v1/mdtoutdoctor/add', mdtOutdoctorController.postAdd);
+app.post('/api/meditek/v1/mdtoutdoctor/edit', mdtOutdoctorController.postEdit);
+app.post('/api/meditek/v1/mdtoutdoctor/byId', mdtOutdoctorController.postById);
+
+var mdtoutreferralController = require('./controllers/mdtoutreferralController');
+
+app.post('/api/meditek/v1/mdtoutreferral/search', mdtoutreferralController.postSearch);
+app.post('/api/meditek/v1/mdtoutreferral/add', mdtoutreferralController.postAdd);
+app.post('/api/meditek/v1/mdtoutreferral/edit', mdtoutreferralController.postEdit);
+app.post('/api/meditek/v1/mdtoutreferral/byId', mdtoutreferralController.postById);
+
 var sysStateController = require('./controllers/sysStateController');
 
 app.post('/api/meditek/v1/sysstate/list', sysStateController.postList);

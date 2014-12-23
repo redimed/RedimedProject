@@ -28,7 +28,7 @@
 	    <div class="col-md-4 col-sm-6 col-xs-12">
 	        <span class="field">
 	            <label for="title">Title</label>
-	            <select ng-options="title.code as title.name for title in options.titles" disabled
+	            <select ng-options="title.id as title.name for title in options.titles" disabled
 	                name="title" ng-model="current_patient.Title" id="title" float-label>
 	            </select>
 	        </span>

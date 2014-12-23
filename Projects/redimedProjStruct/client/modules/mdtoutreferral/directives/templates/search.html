@@ -14,21 +14,16 @@
 		<table class='mdt-table'>
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Phone</th>
+					<th>Issued Date</th>
+					<th>Expire Date</th>
+					<th>Duration</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td><input type="text" class="form-control" ng-model="params.filters[0].value" ng-change="refresh()"></td>
-					<td><input type="text" class="form-control" ng-model="params.filters[1].value" ng-change="refresh()"></td>
-					<td><input type="text" class="form-control" ng-model="params.filters[2].value" ng-change="refresh()"></td>
-				</tr>
 				<tr ng-repeat='l in list.data' ng-click='clickRow({row: l})' style='cursor: pointer;'>
-					<td>{{l.NAME}}</td>
-					<td>{{l.Email}}</td>
-					<td>{{l.Phone}}</td>
+					<td>{{l.date_issued_map}}</th>
+					<td>{{l.expire_date_map}}</th>
+					<td>{{l.duration}}</td>
 				</tr>
 			</tbody>
 		</table>
