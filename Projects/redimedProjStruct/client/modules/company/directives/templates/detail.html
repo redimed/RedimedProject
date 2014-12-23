@@ -79,7 +79,7 @@
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="country">Country </label>
-                <select required ng-options="title.name as title.name for title in options.countries" 
+                <select required ng-options="country.Country_name as country.Country_name for country in options.countries" 
                         name="country" ng-model="modelObjectMap.country" id="country" float-label>
                     <option value="" disabled selected>Country</option>
                 </select>
