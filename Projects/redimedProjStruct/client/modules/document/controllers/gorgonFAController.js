@@ -484,7 +484,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             }else if(response['status'] == 'update'){
                 insert = false;
                 $scope.isNew = false;
-                $scope.totalComment();
                 $scope.info = {
                     id: response['data']['id'],
                     patientId: response['data']['patientId'],
@@ -615,6 +614,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                     DocId: response['data']['DocId']
                 };
                 oriInfo = angular.copy($scope.info);
+                $scope.totalComment();
             }else if(response['status'] == 'error'){
                 toastr.error("Fail", "Error");
             }
