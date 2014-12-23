@@ -469,7 +469,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 50000);
+            }, 10000);
         };
 
 
@@ -686,7 +686,7 @@ angular.module("app.loggedIn.controller",[
                     $scope.numberAppointmentCalendarUpcoming=data.data.length;
                     for(var i=0;i<data.data.length;i++)
                     {
-                        $scope.listAppointmentCalendarUpcoming[i].push=data.data[i];
+                        $scope.listAppointmentCalendarUpcoming[i]=data.data[i];
                         $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION=
                             $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION
                             +' - '+moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("HH:mm")
