@@ -682,6 +682,8 @@ angular.module("app.loggedIn.controller",[
     $scope.numberAppointmentCalendarUpcoming=0;
     $scope.getAppointmentCalendarUpcoming=function()
     {
+        $scope.listAppointmentCalendarUpcoming=[];
+        $scope.numberAppointmentCalendarUpcoming=0;
         $http({
             method:"POST",
             url:"/api/structure/list-appointments-upcoming",
@@ -695,13 +697,14 @@ angular.module("app.loggedIn.controller",[
                     $scope.numberAppointmentCalendarUpcoming=data.data.length;
                     for(var i=0;i<data.data.length;i++)
                     {
-                        $scope.listAppointmentCalendarUpcoming.push(data.data[i]);
+                        $scope.listAppointmentCalendarUpcoming[i]=data.data[i];
                         $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION=
                             $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION
                             +' - '+moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("HH:mm")
                             +' '  +moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("DD/MM/YYYY")
 
                         $scope.listAppointmentCalendarUpcoming[i].link=getSourceLink($scope.listAppointmentCalendarUpcoming[i].SOURCE_NAME,$scope.listAppointmentCalendarUpcoming[i].ID);
+
                     }
                 }
                 $scope.setSlimCroll('.appointments-upcoming-dropdown');
