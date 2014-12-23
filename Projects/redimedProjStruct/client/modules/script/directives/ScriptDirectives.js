@@ -1,4 +1,3 @@
-angular.module('app.loggedIn.script.directives', [
-	'app.loggedIn.script.detail.directive',
-	'app.loggedIn.script.search.directive'
-])
+angular.module('app.loggedIn.script.directive', [
+	'app.loggedIn.script.detail.directive'
+]);

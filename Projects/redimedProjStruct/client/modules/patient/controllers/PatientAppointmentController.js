@@ -24,7 +24,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Workcover', 'icon': 'fa fa-paper-plane-o', 'color': 'green-soft', 'desc': 'Has: 2',
             'state': 'loggedIn.patient.workcover({patient_id:' + $stateParams.patient_id + ', cal_id: '+  $stateParams.cal_id +'})'},
         {'name': 'Script, Referral', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 2',
-            'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patient_id + '})'}
+            'state': 'loggedIn.patient.script.list({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'}
     ];
     //End detail appt modules
 

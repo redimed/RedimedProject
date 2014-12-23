@@ -1,58 +1,107 @@
-angular.module('app.loggedIn.script.detail.directive', [])
+angular.module('app.loggedIn.script.detail.directive',[])
+    .directive('scriptDetail',function(ScriptReferralModel, ScriptService, DoctorService, ReceptionistService, ConfigService, toastr, $stateParams){
+        return{
+            restrict: "EA",
+            scope: {
+                data: "@",
+                options: "=",
+                onsuccess: '=onsuccess'
+            },
+            templateUrl: "modules/script/directives/templates/detail.html",
+            link: function(scope, element, attrs){
+                var loadData = function (id) {
+                ScriptService.scriptDetail(id).then(function (data) {
+                    angular.extend(scope.modelObjectMap, data.data);
+                    console.log('this is edit data 1', scope.modelObjectMap);
+                    ConfigService.autoConvertData(scope.modelObjectMap);
+                    console.log('this is edit data 2', scope.modelObjectMap);
+                });
+            };
 
-.directive('scriptDetail', function(ScriptModel, ConfigService, ScriptService, toastr){
-	return {
-		restrict: 'EA',
-		scope: {
-			options: '=',
-			params: '='
-		},
-		templateUrl: 'modules/script/directives/templates/detail.html',
-		link: function(scope, element, attrs){
-			var init = function(){
-				scope.isSubmit = false;
-					if(scope.params.permission.edit === true){
-						ScriptService.byId(scope.params.id).then(function(response){
-							if(response.status == 'error') toastr.error('Error Get Detail', 'Error')
-							angular.extend(scope.ScriptMap, response.data);
-							for(var key in scope.ScriptMap){
-								if(scope.ScriptMap[key]){
-									if(key.indexOf('is') != -1 || key.indexOf('Is') != -1 || key.indexOf('IS') != -1)
-										scope.ScriptMap[key] = scope.ScriptMap[key].toString();
-									if(key.indexOf('date') != -1 || key.indexOf('Date') != -1 || key.indexOf('DATE') != -1)
-										scope.ScriptMap[key] = new Date(scope.ScriptMap[key]);
-								}
-							}//end for
-						})
-					}
-				scope.ScriptMap = angular.copy(ScriptModel);
-			}//end init
-			init();
+            scope.modelObjectMap = angular.copy(ScriptReferralModel);
+            scope.mode = {type: 'add', text: 'Add script'};
 
-			scope.clickAction = function(){
-				scope.isSubmit = true;
-				if(!scope.scriptForm.$invalid){
-					var postData = angular.copy(scope.ScriptMap);
-					for(var key in postData){
-						if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
-					}//end for
-					if(scope.params.permission.edit === true){
-						ScriptService.edit(scope.params.id, postData).then(function(response){
-							if(response.status == 'error') toastr.error('Error Get Detail', 'Error')
-							init();
-							toastr.success('Edit Successfully !!!', 'Success');
-						})
-					}else{
-						ScriptService.add(postData).then(function(data){
-							if(data.status == 'error') toastr.error('Cannot Insert', 'Error')
-							toastr.success('Insert Successfully !!!', 'Success');
-							init();
-						})
-						init();
-					}
-				}//end if invalid
-				else toastr.error('You got some fields left', 'Error')
-			}//end clickAction
-		}//end link
-	}//end return
-})
+            if (scope.data) {
+                var data = scope.$eval(scope.data);
+                if (data.id) { 
+                    loadData(data.id);
+                    scope.mode = {type: 'edit', text: 'Edit script'};
+                }
+            }
+                
+            //Get doctor siganture
+            ReceptionistService.apptDetail($stateParams.cal_id).then(function (res) {
+                        if (res.data !== undefined && res.data !== null && res.data !== '') {
+                            if (res.data.DOCTOR_ID !== undefined && res.data.DOCTOR_ID !== null && res.data.DOCTOR_ID !== '') {
+                                DoctorService.getById(res.data.DOCTOR_ID).then(function (res2) {
+                                    if (res2 !== null && res2 !== undefined && res2 !== '') {
+                                        scope.modelObjectMap.doctorSign = res2.Signature;
+                                    }
+                                })
+                            }
+                        }
+                    })
+
+             var addProcess = function (postData) {
+                console.log(postData); // return;
+                postData.Patient_id = $stateParams.patient_id;
+                postData.CAL_ID = $stateParams.cal_id; 
+                ScriptService.scriptInsert(postData).then(function (response) {
+                    console.log(response)
+                    if (response.status === 'success') {
+                        toastr.success("Added a script", "Success");
+                        scope.modelObjectMap = angular.copy(ScriptReferralModel);
+                        scope.isSubmit = false;
+                        if (scope.onsuccess) {
+                            console.log(scope.onsuccess)
+                            scope.onsuccess(response);
+                        }
+                    }
+                })
+            }
+             
+            scope.clearSignature = function(){
+                scope.modelObjectMap.patientSign = '';
+            }
+
+            var editProcess = function (postData) {
+                var id = postData.id;
+                delete postData.id;
+                ScriptService.scriptUpdate(postData).then(function (response) {
+                    if (response.status === 'success') {
+                        toastr.success("Edit script Successfully", "Success");
+                        scope.isSubmit = false;
+                        if (scope.onsuccess) {
+                            scope.onsuccess(response);
+                        }
+                    }
+                })
+            }
+
+            scope.clickAction = function (option) {
+                if (option.type != 'view') {
+                    scope.isSubmit = true;
+                    if (!scope.mainForm.$invalid) {
+                        var postData = angular.copy(scope.modelObjectMap);
+
+                        // DATE
+                        for (var key in postData) {
+                            if (postData[key] instanceof Date) {
+                                postData[key] = ConfigService.getCommonDate(postData[key]);
+                            }
+                        }
+                        // END DATE
+
+                        if (option.type == 'add') {
+                            addProcess(postData);
+                        } else if (option.type == 'edit') {
+                            editProcess(postData);
+                        }
+                    }
+                } else {
+                    // view process
+                }
+            }
+            }
+        }
+    });

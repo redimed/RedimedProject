@@ -2,23 +2,21 @@ angular.module('app.loggedIn.script.services', [])
 
 .factory('ScriptService', function(Restangular){
 	var mdtService = {}
-	var mdtApi = Restangular.all('api/meditek/v1/script/')
+	var mdtApi = Restangular.all('api/erm/')
 
-	mdtService.add = function(postData){
-		var funcApi = mdtApi.all('add');
-		return funcApi.post({add_data: postData});
+	mdtService.scriptInsert = function(postData){
+		var detailApi = mdtApi.all('v2/script/insert');
+		return detailApi.post(postData);
+	};
+    mdtService.scriptDetail = function(postData){
+		var detailApi = mdtApi.all('v2/script/detail');
+		return detailApi.post({ID: postData});
+	};
+    mdtService.scriptUpdate = function(postData){
+		var detailApi = mdtApi.all('v2/script/update');
+		return detailApi.post(postData);
 	}
-	mdtService.edit = function(id, postData){
-		var funcApi = mdtApi.all('edit');
-		return funcApi.post({edit_data: postData, edit_id: id});
-	}
-	mdtService.byId = function(id){
-		var funcApi = mdtApi.all('byId');
-		return funcApi.post({detail_id: id});
-	}
-	mdtService.search = function(option){
-		var funcApi = mdtApi.all('search');
-		return funcApi.post(option);
-	}
+
+
 	return mdtService;
 })

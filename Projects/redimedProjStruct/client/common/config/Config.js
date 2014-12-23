@@ -176,7 +176,7 @@ angular.module('app.config', [])
             if (data[key]) {
                 if (key.toLowerCase().indexOf("is") === 0) 
                     data[key] = data[key].toString();
-                else if (key.toLowerCase().indexOf("_date") != -1)
+                else if (key.toLowerCase().indexOf("_date") != -1 || key.toLowerCase().indexOf("date") != -1)
                     data[key] = new Date(data[key]);
             }
         }
