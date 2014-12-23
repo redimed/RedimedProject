@@ -484,6 +484,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             }else if(response['status'] == 'update'){
                 insert = false;
                 $scope.isNew = false;
+                $scope.totalComment();
                 $scope.info = {
                     id: response['data']['id'],
                     patientId: response['data']['patientId'],

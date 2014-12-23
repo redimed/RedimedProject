@@ -125,7 +125,7 @@
 
                     <div class="btn-group col-lg-10 col-md-10 col-sm-10">
                         <label class="btn">
-                            <input type="radio" ng-model="info.PROTEIN" value="1"/> Nil
+                            <input type="radio" ng-model="info.PROTEIN" ng-change="collectComment()" value="1"/> Nil
                         </label>
                         <label class="btn">
                             <input type="radio" ng-model="info.PROTEIN" value="2"/> Trace
@@ -150,9 +150,7 @@
                             <input type="text" ng-model="info.PROTEIN_COMMENT" ng-change="collectComment()" name="PROTEIN_COMMENT"
                                    class="form-control"
                                    ng-required="info.PROTEIN==3||info.PROTEIN==4||info.PROTEIN==5"
-                                   ng-disabled="info.PROTEIN == 1"
-                                   ng-bind="info.PROTEIN == 1 ? info.PROTEIN_COMMENT = '' : info.PROTEIN_COMMENT">
-
+                                   ng-disabled="info.PROTEIN == 1">
                             <div class="help-block" ng-show="gorgonMAForm.PROTEIN_COMMENT.$error.required">
                                 <label class="control-label">Required!</label>
                             </div>
@@ -166,7 +164,7 @@
 
                     <div class="btn-group col-md-10 col-lg-10 col-sm-10">
                         <label class="btn">
-                            <input type="radio" ng-model="info.GLUCOSE" value="1"/> Nil
+                            <input type="radio" ng-model="info.GLUCOSE" ng-change="collectComment()" value="1"/> Nil
                         </label>
                         <label class="btn">
                             <input type="radio" ng-model="info.GLUCOSE" value="2"/> Trace
@@ -191,8 +189,7 @@
                             <input type="text" ng-model="info.GLUCOSE_COMMENT" ng-change="collectComment()" name="GLUCOSE_COMMENT"
                                    class="form-control"
                                    ng-required="info.GLUCOSE==3||info.GLUCOSE==4||info.GLUCOSE==5"
-                                   ng-disabled="info.GLUCOSE == 1"
-                                   ng-bind="info.GLUCOSE == 1 ? info.GLUCOSE_COMMENT = '' : info.GLUCOSE_COMMENT">
+                                   ng-disabled="info.GLUCOSE == 1">
 
                             <div class="help-block" ng-show="gorgonMAForm.GLUCOSE_COMMENT.$error.required">
                                 <label class="control-label">Required!</label>
@@ -207,7 +204,7 @@
 
                     <div class="btn-group col-md-10 col-lg-10 col-sm-10">
                         <label class="btn">
-                            <input type="radio" ng-model="info.BLOOD" value="1"/> Nil
+                            <input type="radio" ng-model="info.BLOOD" ng-change="collectComment()" value="1"/> Nil
                         </label>
                         <label class="btn">
                             <input type="radio" ng-model="info.BLOOD" value="2"/> Trace
@@ -232,9 +229,7 @@
                             <input type="text" ng-model="info.BLOOD_COMMENT"
                                     ng-change="collectComment()" name="BLOOD_COMMENT" class="form-control"
                                    ng-required="info.BLOOD==3||info.BLOOD==4||info.BLOOD==5"
-                                   ng-disabled="info.BLOOD == 1"
-                                   ng-bind="info.BLOOD == 1 ? info.BLOOD_COMMENT = '' : info.BLOOD_COMMENT">
-
+                                   ng-disabled="info.BLOOD == 1">
                             <div class="help-block" ng-show="gorgonMAForm.BLOOD_COMMENT.$error.required">
                                 <label class="controntrol-label">Required!</label>
                             </div>
@@ -2081,50 +2076,29 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-7 col-sm-7">
-            <div class="col-md-2 col-sm-2">
-                <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
-                   class="btn green">Signature</a>
-            </div>
-            <div class="col-md-10 col-sm-10"
-                 ng-show="info.SIGNATURE!=null && info.SIGNATURE!='' && !isSignature">
-                <img src="" ng-src="{{info.SIGNATURE}}" alt=""
-                     style="width: 200px;height: 150px;"/>
-            </div>
-
+    <div class="portlet light bordered">
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-lg-2"></div>
+            <label class="control-label col-md-10 col-sm-10 col-lg-10 bold">Examiner's Name/Stamp</label>
+            <div class="col-md-2 col-sm-2 col-lg-2"></div>
+            <label class="control-label col-md-10 col-sm-10 col-lg-10">{{info.docName}}</label>
         </div>
-        <div class="col-md-5 col-sm-5">
-            <div class="form-group">
-                <label class="control-label col-md-2 col-sm-3" style="margin-top: 5px">Date</label>
-
-                <div class="col-md-3 col-sm-7">
-                    <input type="text" ng-model="info.GORGON_DATE" name="gorgonDate" datepicker-popup="dd/MM/yyyy"
-                           is-open="openGorgonDate" ng-click="openGorgonDate = true" datepicker-options="dateOptions"
-                           close-text="Close"/>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-lg-2"></div>
+            <div class="col-md-5 col-sm-5 col-lg-5" ng-show="info.docSign!=null && info.docSign!=''">
+                <img src="" ng-src="{{info.docSign}}" alt="" style="width: 200px;height: 150px;"/>
+            </div>
+            <div class="col-md-5 col-sm-5 col-lg-5">
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-3" style="margin-top: 5px">Date</label>
+                    <div class="col-md-3 col-sm-7">
+                        <input type="text" ng-model="info.GORGON_DATE" name="gorgonDate" datepicker-popup="dd/MM/yyyy"
+                               is-open="openGorgonDate" ng-click="openGorgonDate = true" datepicker-options="dateOptions"
+                               close-text="Close"/>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="row" style="text-align: center;" ng-show="isSignature">
-        <div class="col-md-12 col-sm-12">
-            <canvas width="500" height="400" id="canvas"
-                    signature ng-model="info.SIGNATURE" style="background-color: #8eece8">
-            </canvas>
-        </div>
-        <div class="col-md-12 col-sm-12">
-            <div class="break-row"></div>
-            <div class="btn-group">
-                <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
-                    Cancel
-                </button>
-                <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
-                </button>
-                <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
-            </div>
-        </div>
-    </div>
-
 </form>
 

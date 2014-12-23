@@ -2,26 +2,6 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
     .controller("gorgonMAController", function ($scope, $filter, DocumentService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
         var isEdit = true;
 
-        // Start Signature
-        var tempSignature;
-        $scope.isSignature = false;
-        $scope.showSignature = function () {
-            $scope.isSignature = !$scope.isSignature;
-        }
-
-        $scope.cancelClick = function () {
-            $scope.isSignature = !$scope.isSignature;
-            $scope.info.SIGNATURE = tempSignature;
-        };
-        $scope.clearClick = function () {
-            $scope.info.SIGNATURE = '';
-        };
-        $scope.okClick = function () {
-            $scope.isSignature = !$scope.isSignature;
-            tempSignature = $scope.info.SIGNATURE;
-        }
-        // End Signature
-
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -192,7 +172,6 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
             Last_updated_by: null,
             //Last_update_date: null,
             CalId: CalID,
-            DocId: null,
             EXAMINER_NAME: null,
             EXAMINER_ADDRESS: null,
             RIGHT_EAR_500: null,
@@ -227,9 +206,12 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
             PRE_BR2_V7: null,
             PROTEIN_COMMENT: null,
             GLUCOSE_COMMENT: null,
-            BLOOD_COMMENT: null
+            BLOOD_COMMENT: null,
+            DocId: null,
+            docName: null,
+            docSign: null
         };
-        var oriInfo = angular.copy($scope.info);
+        var oriInfo;
 
         $scope.resetForm = function () {
             $scope.info = angular.copy(oriInfo);
@@ -242,6 +224,9 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
 
         var len,totalCom = '',str;
         $scope.collectComment = function () {
+            $scope.info.BLOOD_COMMENT = $scope.info.BLOOD == 1 ? '' : $scope.info.BLOOD_COMMENT;
+            $scope.info.GLUCOSE_COMMENT = $scope.info.GLUCOSE == 1 ? '' : $scope.info.GLUCOSE_COMMENT;
+            $scope.info.PROTEIN_COMMENT = $scope.info.PROTEIN == 1 ? '' : $scope.info.PROTEIN_COMMENT;
             $scope.info.SPI_EXAMINERS_COMMENTS= (($scope.info.PROTEIN_COMMENT != null && $scope.info.PROTEIN_COMMENT != '') ? $scope.info.PROTEIN_COMMENT + '\n' : '')  + (($scope.info.GLUCOSE_COMMENT != null && $scope.info.GLUCOSE_COMMENT != '') ? $scope.info.GLUCOSE_COMMENT + '\n' : '')  + (($scope.info.BLOOD_COMMENT != null && $scope.info.BLOOD_COMMENT != '') ? $scope.info.BLOOD_COMMENT + '\n' : '') + totalCom;
         };
 
@@ -260,15 +245,23 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
 
         var insert = true;
         DocumentService.checkGorgonMA(Patient_ID, CalID).then(function (response) {
-            if (response['status'] === 'fail') {
+            if (response['status'] === 'insert') {
                 insert = true;
                 $scope.isNew = true;
-            }
-            else {
+                $scope.info.DocId = response['DocId'];
+                $scope.info.docName = response['docName'];
+                $scope.info.docSign = response['docSign'];
+                oriInfo = angular.copy($scope.info);
+            }else if(response['status'] == 'update'){
                 insert = false;
                 $scope.isNew = false;
-                $scope.info = angular.copy(response);
+                $scope.info = angular.copy(response['data']);
+                $scope.info.docName = response['docName'];
+                $scope.info.docSign = response['docSign'];
                 oriInfo = angular.copy($scope.info);
+                $scope.totalComment();
+            }else if(response['status'] == 'error'){
+                toastr.error("Fail", "Error");
             }
         });
 
