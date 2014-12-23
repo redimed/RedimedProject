@@ -63,6 +63,7 @@ module.exports = {
 		var k_sql = res.locals.k_sql;
 
 		var err_handle = function(err){
+		console.log(err);
             res.json('error')
         };
 
@@ -89,6 +90,7 @@ module.exports = {
 			return; 
 		}
 		var err_handle = function(err){
+		console.log(err);
             res.json('error')
         };
 		var sql = CompanyModel.sql_update(id, post_data);
@@ -122,6 +124,7 @@ module.exports = {
 		k_sql.exec( function(data){
 			res.json({status: 'success', data: data});
 		}, function(err) {
+			console.log(err);
 			res.json({status: 'error'});
 		});
 	},
@@ -152,6 +155,7 @@ module.exports = {
 		}).then(function(row){
 			res.json({list: result, count: row.count});
 		}).catch(function(err){
+			console.log(err);
 			console.log(err);
 		})
 	},
