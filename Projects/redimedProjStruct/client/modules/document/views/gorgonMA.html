@@ -147,9 +147,11 @@
                     </div>
                     <div ng-class="{'has-error':gorgonMAForm.PROTEIN_COMMENT.$error.required}">
                         <div class="col-md-8 col-lg-10 col-sm-10">
-                            <input type="text" ng-model="info.PROTEIN_COMMENT" name="PROTEIN_COMMENT"
+                            <input type="text" ng-model="info.PROTEIN_COMMENT" ng-change="collectComment()" name="PROTEIN_COMMENT"
                                    class="form-control"
-                                   ng-required="info.PROTEIN==3||info.PROTEIN==4||info.PROTEIN==5">
+                                   ng-required="info.PROTEIN==3||info.PROTEIN==4||info.PROTEIN==5"
+                                   ng-disabled="info.PROTEIN == 1"
+                                   ng-bind="info.PROTEIN == 1 ? info.PROTEIN_COMMENT = '' : info.PROTEIN_COMMENT">
 
                             <div class="help-block" ng-show="gorgonMAForm.PROTEIN_COMMENT.$error.required">
                                 <label class="control-label">Required!</label>
@@ -186,9 +188,11 @@
                     </div>
                     <div ng-class="{'has-error': gorgonMAForm.GLUCOSE_COMMENT.$error.required}">
                         <div class="col-md-8 col-sm-10 col-lg-10">
-                            <input type="text" ng-model="info.GLUCOSE_COMMENT" name="GLUCOSE_COMMENT"
+                            <input type="text" ng-model="info.GLUCOSE_COMMENT" ng-change="collectComment()" name="GLUCOSE_COMMENT"
                                    class="form-control"
-                                   ng-required="info.GLUCOSE==3||info.GLUCOSE==4||info.GLUCOSE==5">
+                                   ng-required="info.GLUCOSE==3||info.GLUCOSE==4||info.GLUCOSE==5"
+                                   ng-disabled="info.GLUCOSE == 1"
+                                   ng-bind="info.GLUCOSE == 1 ? info.GLUCOSE_COMMENT = '' : info.GLUCOSE_COMMENT">
 
                             <div class="help-block" ng-show="gorgonMAForm.GLUCOSE_COMMENT.$error.required">
                                 <label class="control-label">Required!</label>
@@ -225,8 +229,11 @@
                     </div>
                     <div ng-class="{'has-error': gorgonMAForm.BLOOD_COMMENT.$error.required}">
                         <div class="col-md-8 col-lg-10 col-sm-10">
-                            <input type="text" ng-model="info.BLOOD_COMMENT" name="BLOOD_COMMENT" class="form-control"
-                                   ng-required="info.BLOOD==3||info.BLOOD==4||info.BLOOD==5">
+                            <input type="text" ng-model="info.BLOOD_COMMENT"
+                                    ng-change="collectComment()" name="BLOOD_COMMENT" class="form-control"
+                                   ng-required="info.BLOOD==3||info.BLOOD==4||info.BLOOD==5"
+                                   ng-disabled="info.BLOOD == 1"
+                                   ng-bind="info.BLOOD == 1 ? info.BLOOD_COMMENT = '' : info.BLOOD_COMMENT">
 
                             <div class="help-block" ng-show="gorgonMAForm.BLOOD_COMMENT.$error.required">
                                 <label class="controntrol-label">Required!</label>
@@ -708,14 +715,15 @@
         <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
             Examiners Commments
         </p>
-
         <div class="row"
              ng-class="{'has-error':gorgonMAForm.SPI_EXAMINERS_COMMENTS.$error.required}">
-            <div class="col-md-8" style="margin-left: 15px;">
+            <div class="col-md-8" style="margin-left: 15px">
                 <textarea class="form-control"
                           ng-required="info.YES_TO_EITHER==1 || info.SPIROMETRY_STATIS ==0 || info.CANDIDATE_EVER || info.YES_TO_EITHER"
                           name="SPI_EXAMINERS_COMMENTS"
-                          ng-model="info.SPI_EXAMINERS_COMMENTS"></textarea>
+                          ng-model="info.SPI_EXAMINERS_COMMENTS"
+                          ng-change="totalComment()"
+                          style="height: 150px"></textarea>
             </div>
             <div class="col-md-6 help-block" style="margin-left: 20px;"
                  ng-show="gorgonMAForm.SPI_EXAMINERS_COMMENTS.$error.required">

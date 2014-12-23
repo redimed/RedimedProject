@@ -240,6 +240,21 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
             return !angular.equals(oriInfo, $scope.info);
         }
 
+        var len,totalCom = '',str;
+        $scope.collectComment = function () {
+            $scope.info.SPI_EXAMINERS_COMMENTS= (($scope.info.PROTEIN_COMMENT != null && $scope.info.PROTEIN_COMMENT != '') ? $scope.info.PROTEIN_COMMENT + '\n' : '')  + (($scope.info.GLUCOSE_COMMENT != null && $scope.info.GLUCOSE_COMMENT != '') ? $scope.info.GLUCOSE_COMMENT + '\n' : '')  + (($scope.info.BLOOD_COMMENT != null && $scope.info.BLOOD_COMMENT != '') ? $scope.info.BLOOD_COMMENT + '\n' : '') + totalCom;
+        };
+
+        $scope.totalComment = function(){
+            if(typeof $scope.info.SPI_EXAMINERS_COMMENTS === "undefined"){
+                $scope.info.SPI_EXAMINERS_COMMENTS= (($scope.info.PROTEIN_COMMENT != null && $scope.info.PROTEIN_COMMENT != '') ? $scope.info.PROTEIN_COMMENT + '\n' : '')  + (($scope.info.GLUCOSE_COMMENT != null && $scope.info.GLUCOSE_COMMENT != '') ? $scope.info.GLUCOSE_COMMENT + '\n' : '') + (($scope.info.BLOOD_COMMENT != null && $scope.info.BLOOD_COMMENT != '') ? $scope.info.BLOOD_COMMENT + '\n' : '');
+            }
+            len = ($scope.info.PROTEIN_COMMENT != null ? $scope.info.PROTEIN_COMMENT.length : 0) + ($scope.info.GLUCOSE_COMMENT != null ? $scope.info.GLUCOSE_COMMENT.length : 0) + ($scope.info.BLOOD_COMMENT != null ? $scope.info.BLOOD_COMMENT.length : 0);
+            str = $scope.info.SPI_EXAMINERS_COMMENTS.replace('\n','');
+            str = str.replace('\n','');
+            str = str.replace('\n','');
+            totalCom  = str.substr(len);
+        }
 
         //===================================insert and update===============================================
 
