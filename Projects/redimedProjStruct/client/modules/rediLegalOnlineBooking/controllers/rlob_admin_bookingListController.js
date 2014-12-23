@@ -50,18 +50,18 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.bellType=rlobConstant.bellType;
 
         //--------------------------------------------------
-        var initPickers = function () {
+        // var initPickers = function () {
 
-            //init date pickers
-            $('.date-picker').rlobdatepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            }).on('changeDate',function(evn){
+        //     //init date pickers
+        //     $('.date-picker').rlobdatepicker({
+        //         rtl: Metronic.isRTL(),
+        //         autoclose: true
+        //     }).on('changeDate',function(evn){
 
-            });
+        //     });
 
-        }
-        initPickers();
+        // }
+        // initPickers();
         //--------------------------------------------------
 
 
