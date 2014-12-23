@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.item.detail.directive", [])
-    .directive("itemDetail", function (ItemModel, ItemService, ConfigService, toastr) {
+    .directive("itemDetail", function (ItemModel, ItemService, ConfigService, toastr, $timeout) {
         return {
             restrict: "EA",
             scope: {
@@ -8,15 +8,21 @@ angular.module("app.loggedIn.item.detail.directive", [])
                 on_success: '=onsuccess'
             },
             templateUrl: "modules/item/directives/templates/detail.html",
-            link: function (scope, element, attrs) {
-                // console.log(scope.options)
-                var loadData = function (id) {
-                    console.log(id);
+            controller: function ($scope) { 
+                 $scope.fee_panel = {};
+
+                 // EDIT 
+                $scope.loadData = function (id) {
+                    $scope.id = id;
                     ItemService.detail(id).then(function (data) {
-                        angular.extend(scope.modelObjectMap, data.data);
-                        ConfigService.autoConvertData(scope.modelObjectMap);
+                        angular.extend($scope.modelObjectMap, data.data);
+                        ConfigService.autoConvertData($scope.modelObjectMap);
+                         $scope.fee_panel.reload(id);
                     });
                 };
+            },
+            link: function (scope, element, attrs) {
+               
                 scope.modelObjectMap = angular.copy(ItemModel);
                 scope.mode = {
                     type: 'add',
@@ -26,7 +32,7 @@ angular.module("app.loggedIn.item.detail.directive", [])
                 if (scope.data) {
                     var data = scope.$eval(scope.data);
                     if (data.id) {
-                        loadData(data.id);
+                        scope.loadData(data.id);
                         scope.mode = {
                             type: 'edit',
                             text: 'Edit Item'
@@ -40,12 +46,25 @@ angular.module("app.loggedIn.item.detail.directive", [])
                     ItemService.insert(postData).then(function (response) {
                         if (response.status === 'success') {
                             toastr.success("Added a new Item", "Success");
-                            scope.modelObjectMap = angular.copy(ItemModel);
+                            
                             scope.isSubmit = false;
-                            if (scope.on_success) {
-                                scope.on_success(response);
-                            }
+                            
+                            // CHANGE TO EDIT MODE
+                            scope.modelObjectMap = angular.copy(response.data);
+                            scope.mode = {
+                                type: 'edit',
+                                text: 'Edit Item'
+                            };
+                            scope.fee_panel.reload(scope.modelObjectMap.ITEM_ID);
+                            // CHANGE TO EDIT MODE
+
+                            
+                            // if (scope.on_success) {
+                            //     scope.on_success(response);
+                            // }
                         }
+                    }, function(error){
+                        toastr.error("Fail to add a new Item", "Error");
                     })
                 }
 

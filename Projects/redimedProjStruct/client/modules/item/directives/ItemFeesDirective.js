@@ -77,11 +77,11 @@ angular.module("app.loggedIn.item.item_fees.directive", [])
                 $scope.panel_funds.reload();
             }
 
-
+            console.log($scope.panel , $scope.item_id)
             if($scope.panel) {
                 angular.extend($scope.panel, $scope);
-            }
-
+            } 
+             console.log($scope.panel )
             // $scope.reload(6245);
         }
     };

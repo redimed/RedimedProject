@@ -117,16 +117,6 @@
         <!--UOM-->
 
 
-        <!-- PRICE -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <span class="field" ng-class="{'has-error': mainForm.PRICE.$invalid && isSubmit}">
-                <label for="PRICE">Price</label>
-                <input type="number" id="PRICE"
-                       name="PRICE" ng-model="modelObjectMap.PRICE" placeholder="Price" float-label />
-            </span>
-        </div>
-        <!-- END PRICE -->
-
         <!--CATEGORY-->
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
@@ -547,7 +537,7 @@
         <div class="break-row" style="margin-top: 15px"></div>
 
         <!-- ACTION -->
-        <div class="col-sm-4 col-xs-6">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
                 <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
                 <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
@@ -558,3 +548,5 @@
 
     </div>
 </form>
+
+ <item_fees ng-show="mode.type=='edit'" id="scope.modelObjectMap.id" panel="fee_panel"></item_fees>

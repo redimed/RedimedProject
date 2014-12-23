@@ -264,7 +264,7 @@ module.exports = {
 		var postData = req.body;
 
 		db.InvItem.create(postData)
-		.success(function(data, created){
+		.success(function(data){
 			res.json({"status": "success", "data": data});
 		})
 		.error(function(error){
