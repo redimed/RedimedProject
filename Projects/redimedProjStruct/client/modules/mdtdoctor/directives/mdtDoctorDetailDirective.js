@@ -29,11 +29,11 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 								}
 							}//end for
 							scope.mdtDoctorMap.Title = parseInt(scope.mdtDoctorMap.Title);
+							scope.mdtDoctorMap.Created_by = $cookieStore.get("userInfo").id;
+							scope.mdtDoctorMap.Last_updated_by = $cookieStore.get("userInfo").id;
 						})
 					}
 				scope.mdtDoctorMap = angular.copy(mdtDoctorModel);
-				scope.mdtDoctorMap.Created_by = $cookieStore.get("userInfo").id;
-				scope.mdtDoctorMap.Last_updated_by = $cookieStore.get("userInfo").id;
 			}//end init
 			init();
 
