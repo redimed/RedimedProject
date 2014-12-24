@@ -371,6 +371,7 @@ module.exports = {
                         });
                 }else
                 {
+                    console.log(data);
                     db.Doctor.find({where: {doctor_id: data.DocId}}, {raw: true})
                         .success(function (doctor) {
                             if (doctor === null || doctor.length === 0) {

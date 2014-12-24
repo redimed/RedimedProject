@@ -252,9 +252,11 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
                 $scope.info.docName = response['docName'];
                 $scope.info.docSign = response['docSign'];
                 oriInfo = angular.copy($scope.info);
+                console.log($scope.info);
             }else if(response['status'] == 'update'){
                 insert = false;
                 $scope.isNew = false;
+                console.log(response['data']);
                 $scope.info = angular.copy(response['data']);
                 $scope.info.docName = response['docName'];
                 $scope.info.docSign = response['docSign'];
