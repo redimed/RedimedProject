@@ -101,7 +101,6 @@ angular.module("app.loggedIn.company.detail.directive", [])
                     }
 
                     scope.clickAction = function (option) {
-                        console.log(option)
                         if (option.type != 'view') {
                             scope.isSubmit = true;
                             if (!scope.mainForm.$invalid) {

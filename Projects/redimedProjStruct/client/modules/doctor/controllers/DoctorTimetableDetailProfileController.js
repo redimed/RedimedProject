@@ -1,6 +1,17 @@
 angular.module("app.loggedIn.doctor.timetable.detail.profile.controller",[])
 
 .controller("DoctorTimetableDetailProfileController", function($scope, $stateParams, toastr, ConfigService, DoctorService, PatientService){
+	//PARAMS
+	$scope.params = {
+		permission: {
+			create: false,
+			edit: true
+		},
+		id: $stateParams.doctorId
+	}
+	//END PARAMS
+
+
 	// LOAD OPTION
 	var loadOption = function(){
 		ConfigService.clinical_option().then(function(list){

@@ -1,6 +1,6 @@
 <form name="mdtdoctorForm" novalidate>
 <!--ACTION-->
-<div class="row" style="margin-bottom: 15px;">
+<div class="row" style="margin-bottom: 15px;	">
 	<div class="col-md-2 col-sm-3 col-xs-6">
 		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
 			<i class="fa fa-plus"></i>
@@ -19,82 +19,100 @@
 
 <div class="row">
 
-	<!--NAME-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="name">Name</label>
-			<input type="text" placeholder="Name" name="name" ng-model="mdtDoctorMap.NAME" class="form-control" id="name" float-label>
-		</span>	</div>
-	<!--NAME-->
-
-	<!--Email-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="email">Email</label>
-			<input type="text" placeholder="Email" name="email" ng-model="mdtDoctorMap.Email" class="form-control" id="email" float-label>
-		</span>	</div>
-	<!--Email-->
-
-	<!--Phone-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="phone">Phone</label>
-			<input type="text" placeholder="Phone" name="phone" ng-model="mdtDoctorMap.Phone" class="form-control" id="phone" float-label>
-		</span>	</div>
-	<!--Phone-->
-	<div class="break-row"></div>
 	<!--Title-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="title">Title</label>
 			<select ng-options="title.id as title.name for title in options.titles" 
                 name="title" ng-model="mdtDoctorMap.Title" id="title" float-label>
                 <option value="" disabled selected>Title</option>
             </select>
-		</span>	</div>
+		</span>	
+	</div>
 	<!--Title-->
 
+	<!--NAME-->
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="name">Name</label>
+			<input type="text" placeholder="Name *" name="name" ng-model="mdtDoctorMap.NAME" class="form-control" 
+				id="name" float-label required>
+			<!-- ERROR -->
+            <span ng-show="mdtdoctorForm.name.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="mdtdoctorForm.name.$error.required">
+                    Name is required
+                </span>
+            </span>
+            <!-- ERROR -->
+		</span>
+	</div>
+	<!--NAME-->
+
+	<!--Email-->
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="email">Email</label>
+			<input type="text" placeholder="Email" name="email" ng-model="mdtDoctorMap.Email" class="form-control" 
+				id="email" float-label>
+		</span>	</div>
+	<!--Email-->
+
+	<!--Phone-->
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="phone">Phone</label>
+			<input type="text" placeholder="Phone" name="phone" ng-model="mdtDoctorMap.Phone" class="form-control" id="phone" float-label>
+		</span>	
+	</div>
+	<!--Phone-->
+	<div class="break-row"></div>
+
 	<!--First_name-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="first_name">First name</label>
 			<input type="text" placeholder="First name" name="first_name" ng-model="mdtDoctorMap.First_name" class="form-control" id="first_name" float-label>
-		</span>	</div>
+		</span>
+	</div>
 	<!--First_name-->
 
 	<!--Middle_name-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="middle_name">Middle name</label>
 			<input type="text" placeholder="Middle name" name="middle_name" ng-model="mdtDoctorMap.Middle_name" class="form-control" id="middle_name" float-label>
-		</span>	</div>
+		</span>
+	</div>
 	<!--Middle_name-->
-	<div class="break-row"></div>
+	
 	<!--Sur_name-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="sur_name">Sur name</label>
 			<input type="text" placeholder="Sur name" name="sur_name" ng-model="mdtDoctorMap.Sur_name" class="form-control" id="sur_name" float-label>
-		</span>	</div>
+		</span>
+	</div>
 	<!--Sur_name-->
 
 	<!--Address-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="address">Address</label>
 			<input type="text" placeholder="Address" name="address" ng-model="mdtDoctorMap.Address" class="form-control" id="address" float-label>
 		</span>	</div>
 	<!--Address-->
 
+	<div class="break-row"></div>
+
 	<!--Isenable-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="mdtDoctorMap.Isenable" ng-true-value="1" ng-false-value="0">
 		<label for="isenable">Enable</label>
 	</div>
 	<!--Isenable-->
-	<div class="break-row"></div>
+	
 	<!--Provider_no-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="provider_no">Provider no</label>
 			<input type="text" placeholder="Provider no" name="provider_no" ng-model="mdtDoctorMap.Provider_no" class="form-control" id="provider_no" float-label>
@@ -102,7 +120,7 @@
 	<!--Provider_no-->
 
 	<!--Prescriber_no-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="prescriber_no">Prescriber no</label>
 			<input type="number" placeholder="Prescriber no" name="prescriber_no" ng-model="mdtDoctorMap.Prescriber_no" class="form-control" id="prescriber_no" float-label>
@@ -110,70 +128,87 @@
 	<!--Prescriber_no-->
 
 	<!--Payee_provider_no-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="payee_provider_no">Payee provider no</label>
 			<input type="number" placeholder="Payee provider no" name="payee_provider_no" ng-model="mdtDoctorMap.Payee_provider_no" class="form-control" id="payee_provider_no" float-label>
 		</span>	</div>
 	<!--Payee_provider_no-->
+	
 	<div class="break-row"></div>
 
 	<!--Provider_type-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="provider_type">Provider type</label>
-			<select required ng-options="row.Provider_types_id as row.Provider_types_name for row in options.providers" 
+			<select ng-options="row.Provider_types_id as row.Provider_types_name for row in options.providers" 
                 name="provider_type" ng-model="mdtDoctorMap.Provider_type" id="provider_type" float-label>
                 <option value="" disabled selected>Provider Type</option>
             </select>
-		</span>	</div>
+		</span>	
+	</div>
 	<!--Provider_type-->
 
 	<!--CLINICAL_DEPT_ID-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="clinical_dept_id">Clinical Department</label>
 			<select required ng-options="row.CLINICAL_DEPT_ID as row.CLINICAL_DEPT_NAME for row in options.departments" 
                 name="clinical_dept_id" ng-model="mdtDoctorMap.CLINICAL_DEPT_ID" id="clinical_dept_id" float-label>
-                <option value="" disabled selected>Clinical Department</option>
+                <option value="" disabled selected>Clinical Department *</option>
             </select>
-		</span>	</div>
+		</span>
+		<!-- ERROR -->
+        <span ng-show="mdtdoctorForm.clinical_dept_id.$invalid && isSubmit">
+            <span class="mdt-popover above" ng-show="mdtdoctorForm.clinical_dept_id.$error.required">
+                Clinical Dept is required
+            </span>
+        </span>
+        <!-- ERROR -->
+	</div>
 	<!--CLINICAL_DEPT_ID-->
 
 	<!--Appt_interval-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="appt_interval">Appt interval</label>
-			<input type="number" placeholder="Appt interval" name="appt_interval" ng-model="mdtDoctorMap.Appt_interval" class="form-control" id="appt_interval" float-label>
-		</span>	</div>
+			<input type="number" placeholder="Appt interval *" name="appt_interval" ng-model="mdtDoctorMap.Appt_interval" class="form-control" id="appt_interval" float-label required>
+		</span>
+		<!-- ERROR -->
+        <span ng-show="mdtdoctorForm.appt_interval.$invalid && isSubmit">
+            <span class="mdt-popover above" ng-show="mdtdoctorForm.appt_interval.$error.required">
+                Appt Interval is required
+            </span>
+        </span>
+        <!-- ERROR -->
+	</div>
 	<!--Appt_interval-->
 
-	<div class="break-row"></div>
-
 	<!--isNewCalendarSlot-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<input type="checkbox" name="isnewcalendarslot" id="isnewcalendarslot" class="mdt-checkbox" ng-model="mdtDoctorMap.isNewCalendarSlot" ng-true-value="1" ng-false-value="0">
 		<label for="isnewcalendarslot">New Calendar Slot</label>
 	</div>
 	<!--isNewCalendarSlot-->
 
+	<div class="break-row"></div>
+
 	<!--isReceiveEmailAfterHour-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<input type="checkbox" name="isreceiveemailafterhour" id="isreceiveemailafterhour" class="mdt-checkbox" ng-model="mdtDoctorMap.isReceiveEmailAfterHour" ng-true-value="1" ng-false-value="0">
 		<label for="isreceiveemailafterhour">Receive Email After Hour</label>
 	</div>
 	<!--isReceiveEmailAfterHour-->
 
 	<!--isAppointmentBook-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<input type="checkbox" name="isappointmentbook" id="isappointmentbook" class="mdt-checkbox" ng-model="mdtDoctorMap.isAppointmentBook" ng-true-value="1" ng-false-value="0">
 		<label for="isappointmentbook">Appointment Book</label>
 	</div>
 	<!--isAppointmentBook-->
-	<div class="break-row" style="margin-bottom: 15px;"></div>
 
 	<!--ABN_no-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="abn_no">Abn no</label>
 			<input type="number" placeholder="Abn no" name="abn_no" ng-model="mdtDoctorMap.ABN_no" class="form-control" id="abn_no" float-label>
@@ -181,7 +216,7 @@
 	<!--ABN_no-->
 
 	<!--Sign_off-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="sign_off">Sign off</label>
 			<input type="text" placeholder="Sign off" name="sign_off" ng-model="mdtDoctorMap.Sign_off" class="form-control" id="sign_off" float-label>
@@ -189,18 +224,19 @@
 	</div>
 	<!--Sign_off-->
 
+	<div class="break-row"></div>
+
 	<!--Medical_Reg_no-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="medical_reg_no">Medical Registration No</label>
 			<input type="number" placeholder="Medical Registration No" name="medical_reg_no" ng-model="mdtDoctorMap.Medical_Reg_no" class="form-control" id="medical_reg_no" float-label>
 		</span>
 	</div>
 	<!--Medical_Reg_no-->
-	<div class="break-row"></div>
 
 	<!--Qualification_id-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="qualification_id">Qualification id</label>
 			<select ng-options="row.id as row.name for row in options.qualifications" 
@@ -211,7 +247,7 @@
 	<!--Qualification_id-->
 
 	<!--OSHC_ID-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="oshc_id">Oshc id</label>
 			<input type="number" placeholder="Oshc id" name="oshc_id" ng-model="mdtDoctorMap.OSHC_ID" class="form-control" id="oshc_id" float-label>
@@ -219,7 +255,7 @@
 	<!--OSHC_ID-->
 
 	<!--Default_bank_account_id-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="default_bank_account_id">Default bank account id</label>
 			<input type="number" placeholder="Default bank account id" name="default_bank_account_id" ng-model="mdtDoctorMap.Default_bank_account_id" class="form-control" id="default_bank_account_id" float-label>

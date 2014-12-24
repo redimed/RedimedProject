@@ -1,11 +1,12 @@
 angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 
-.directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, toastr){
+.directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, toastr, $cookieStore){
 	return {
 		restrict: 'EA',
 		scope: {
 			options: '=',
-			params: '='
+			params: '=',
+			itemUpdate: "="
 		},
 		templateUrl: 'modules/mdtdoctor/directives/templates/detail.html',
 		link: function(scope, element, attrs){
@@ -27,35 +28,45 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 										scope.mdtDoctorMap[key] = new Date(scope.mdtDoctorMap[key]);
 								}
 							}//end for
+							scope.mdtDoctorMap.Title = parseInt(scope.mdtDoctorMap.Title);
 						})
 					}
 				scope.mdtDoctorMap = angular.copy(mdtDoctorModel);
+				scope.mdtDoctorMap.Created_by = $cookieStore.get("userInfo").id;
+				scope.mdtDoctorMap.Last_updated_by = $cookieStore.get("userInfo").id;
 			}//end init
 			init();
 
 			scope.clickAction = function(){
 				scope.isSubmit = true;
+
 				if(!scope.mdtdoctorForm.$invalid){
 					var postData = angular.copy(scope.mdtDoctorMap);
 					for(var key in postData){
 						if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
 					}//end for
+
+					postData.Last_update_date = ConfigService.getCommonDatetime(new Date());
+
 					if(scope.params.permission.edit === true){
 						mdtDoctorService.edit(scope.params.id, postData).then(function(response){
 							if(response.status == 'error') toastr.error('Error Get Detail', 'Error')
 							init();
 							toastr.success('Edit Successfully !!!', 'Success');
+							scope.itemUpdate = true;
 						})
 					}else{
+						postData.Creation_date = ConfigService.getCommonDatetime(new Date());
+
 						mdtDoctorService.add(postData).then(function(data){
 							if(data.status == 'error') toastr.error('Cannot Insert', 'Error')
 							toastr.success('Insert Successfully !!!', 'Success');
 							init();
+							scope.itemUpdate = true;
 						})
 						init();
 					}
 				}//end if invalid
-				else toastr.error('You got some fields left', 'Error')
 			}//end clickAction
 
 			// UDPATE SIGNATURE

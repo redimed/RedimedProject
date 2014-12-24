@@ -2,27 +2,13 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
-	test: function(req, res){
-
-		var post_fields = [{'type': 'text', value: '', name: 'Specialties_name'}];
-		var sql = mdt_functions.commonSearch(post_fields);
-
-		db.mdtDoctor.find({
-			where: {doctor_id: 1},
-		})
-		.success(function(list){
-			list.getSpecialties({ where: [sql], limit: 2, offset:0 }).then(function(specialties){
-				res.json({specialties: specialties});
-			})
-		});
-	},
-
 	postAdd: function(req, res){
 		var postData = req.body.add_data;
 
-		db.mdtDoctor.create(postData)
+		var sql = mdt_functions.commonAdd("doctors", postData);
+
+		db.sequelize.query(sql)
 		.success(function(created){
-			if(!created) res.json(500, {'status': 'error', 'message': 'Cannot Insert'});
 			res.json({'status': 'success', 'data': created});
 		})
 		.error(function(error){

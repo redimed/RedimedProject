@@ -141,8 +141,6 @@ app.post('/api/meditek/v1/mdtdoctor/add', mdtDoctorController.postAdd);
 app.post('/api/meditek/v1/mdtdoctor/edit', mdtDoctorController.postEdit);
 app.post('/api/meditek/v1/mdtdoctor/byId', mdtDoctorController.postById);
 
-app.get('/v1/test', mdtDoctorController.test);
-
 var DepartmentController = require('./controllers/DepartmentController');
 
 app.post('/api/meditek/v1/department/search', DepartmentController.postSearch);

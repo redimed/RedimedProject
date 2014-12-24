@@ -3,6 +3,16 @@ angular.module("app.loggedIn.doctor.timetable.controller",[
 ])
 
 .controller("DoctorTimetableController", function($scope, $state){
+    //WATCH
+    $scope.$watch("itemUpdate", function(newItem){
+        if(typeof newItem !== 'undefined' && newItem === true){
+            angular.element("#TimetableDoctorAdd").fadeOut();
+            $state.go("loggedIn.doctor.timetable", null, {reload: true});
+            $scope.itemUpdate = false;
+        }
+    })
+    //END WATCH
+
     //PARAMS
     $scope.params_doctor_add = {
         permission: { create: true, popup: true },
