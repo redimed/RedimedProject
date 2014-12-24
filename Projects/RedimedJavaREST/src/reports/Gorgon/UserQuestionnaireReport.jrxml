@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UserQuestionnaireReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d1146a0-3d50-4a42-bea5-3b6b3c2fd9ba">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="3226"/>
+	<property name="ireport.y" value="2746"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
@@ -2940,7 +2940,7 @@ WHERE
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="283" y="34" width="68" height="14" uuid="b9bcf096-7de0-4083-900b-0d28d7790d6a"/>
-				<textFieldExpression><![CDATA[$F{userquestionnaire_DOB} != null ? $F{userquestionnaire_DOB} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{cln_patients_DOB}!=null&&$F{cln_patients_DOB}!="")?$F{cln_patients_DOB}:""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="425" y="34" width="117" height="14" uuid="5bcee0ba-5603-4e8d-b6af-a252692755ee"/>
