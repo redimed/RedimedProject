@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.doctor.itemsearch.directive", [])
 
-.directive("itemSearch", function($filter, PatientService, OutsideReferralModel, toastr){
+.directive("itemSearch", function($filter, PatientService, OutsideReferralModel, ReceptionistService, toastr){
 	var arrGetBy = $filter('arrGetBy');
 
 	return {
@@ -8,6 +8,7 @@ angular.module("app.loggedIn.doctor.itemsearch.directive", [])
 		scope: {
 			list: "=",
 			extra: "=",
+            appt: '='
 		},
 		template: '<my-data-table options="data_options" rowclass="set_row_class" rowclick="row_click">',
 		controller: function($scope){
@@ -52,6 +53,23 @@ angular.module("app.loggedIn.doctor.itemsearch.directive", [])
         		item.chosen = true;
         		$scope.extra.push(item);
 
+
+                ReceptionistService.itemFeeAppt($scope.appt.SERVICE_ID, [item.ITEM_ID]).then(function(response){
+                    var list_fee = response.list;
+                    var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
+
+                    if(t_item) {
+                        item.PRICE = t_item.SCHEDULE_FEE;
+                        item.disable_fee = true;
+                    } else {
+                        item.PRICE = 0;
+                        item.disable_fee = false;
+                    }
+
+                    
+                }, function(err){
+                    console.log(err);
+                });
             }
 
 		}

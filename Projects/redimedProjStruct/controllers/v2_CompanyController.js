@@ -145,8 +145,20 @@ module.exports = {
 		}
 		
 		var sql_count = CompanyModel.sql_search_count();
-        var sql_data = CompanyModel.sql_search_data(limit, offset, fields);
-		
+      	var sql_query = CompanyModel.query_search_data(limit, offset, fields);
+
+      	var is_request_insurer = false;
+      	for(var key in fields) {
+      		if(fields[key].toLowerCase() == 'insurer') {
+      			is_request_insurer = true;
+      			break;
+      		}
+      	}
+
+      	if(is_request_insurer) {
+      		sql_query.left_join("cln_insurers", 'insurers', "insurers.id = companies.Insurer");
+      	}
+        var sql_data = sql_query.toString();	
 		var k_sql = req.k_sql;
 		var result = null;
 		k_sql.exec(sql_data).then(function(data){
@@ -155,7 +167,6 @@ module.exports = {
 		}).then(function(row){
 			res.json({list: result, count: row.count});
 		}).catch(function(err){
-			console.log(err);
 			console.log(err);
 		})
 	},

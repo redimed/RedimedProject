@@ -15,7 +15,7 @@
 			  </button>
 			  
 			  <ul class="dropdown-menu" role="menu">
-				<li><a ui-sref="loggedIn.doctor.items.add"><i class="fa fa-plus"></i> New Item </a></li>
+				<!-- <li><a ui-sref="loggedIn.doctor.items.add"><i class="fa fa-plus"></i> New Item </a></li> -->
 				<li><a ng-click="openItemSearch()"><i class="fa fa-search"></i> Search Item</a></li>
 			  </ul>
 			</div>
@@ -38,7 +38,7 @@
                         <td>{{item.ITEM_CODE}}</td>
                         <td style="width: 70%">{{item.ITEM_NAME}}</td>
 						<td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
-                        <td><input type="number" ng-disabled="item.enable_fee" min="0"  class="form-control" ng-model="item.PRICE"></td>
+                        <td><input type="number" ng-disabled="item.disable_fee" min="0"  class="form-control" ng-model="item.PRICE"></td>
                     </tr>
 					
 					<tr ng-show="extra_list.length > 0" class="item-label">
@@ -52,7 +52,7 @@
                         <td>{{item.ITEM_CODE}}</td>
                         <td style="width: 70%">{{item.ITEM_NAME}}</td>
 						<td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
-                        <td><input type="number" ng-disabled="item.enable_fee" min="0" class="form-control" ng-model="item.PRICE"></td>
+                        <td><input type="number" ng-disabled="item.disable_fee" min="0" class="form-control" ng-model="item.PRICE"></td>
                     </tr>
 				
                 </tbody>
@@ -69,6 +69,6 @@
             <i class="fa fa-times"></i>
         </button>
     </div>
-    <item-search extra="extra_list" list="item_list"></item-search>
+    <item-search extra="extra_list" list="item_list" appt="appt"></item-search>
 </div>
  <!-- POPUP SEARCH-ITEM  -->

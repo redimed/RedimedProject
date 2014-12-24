@@ -21,8 +21,8 @@ module.exports = function(sequelize, DataTypes){
         classMethods: {
             associate: function (models) {
             	
-                FeeType.belongsTo( models.FeeType, { 
-            		as: 'FeeType', 
+                FeeType.belongsTo( models.SysServices, { 
+            		as: 'Service', 
             		foreignKey: 'SERVICE_ID'
                 });
 

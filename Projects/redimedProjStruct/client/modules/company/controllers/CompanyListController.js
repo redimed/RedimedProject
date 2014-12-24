@@ -9,12 +9,13 @@ angular.module("app.loggedIn.company.list.controller", [])
         api: 'api/erm/v2/companies/search',
         method: 'post',
         columns: [
-            {field: 'id', is_hide: true},
+            {db_field: 'companies.id', field: 'id', is_hide: true},
+            {field: 'Insurer', is_hide: true},
             {field: 'Company_name', label: 'Company Name'},
             {field: 'Industry'},
             {field: 'Addr', label: 'Address'},
-            {field: 'State'},
             {field: 'Country'},
+            {db_field: 'insurers.insurer_name', field: 'insurer_name', label: 'Insurer'}
         ],
         show_index: true,
         use_filters: true,

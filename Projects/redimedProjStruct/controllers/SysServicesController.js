@@ -72,8 +72,13 @@ module.exports = {
 			where: [sql],
 			offset: pagination.offset,
 			limit: pagination.limit,
-			attributes: select,
-			order: 'Creation_date DESC'
+			include: [
+				{ 
+					model: db.FeeType , as: 'FeeType',
+					attributes: ['FEE_TYPE_NAME']
+				},
+			],
+			attributes: select
 		})
 		.success(function(result){
 			if(!result) res.json(500, {'status': 'error', 'message': 'Cannot Get Search'});

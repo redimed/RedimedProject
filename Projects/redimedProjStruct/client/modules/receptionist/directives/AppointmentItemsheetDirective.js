@@ -55,6 +55,7 @@ return {
 		     delete $scope.list_dept_item;
 		     delete $scope.list_appt_item;
 		 };
+		
 		var init = function(){
 		 	var extra_list = localStorageService.get('itemsTempList');
 
@@ -88,23 +89,24 @@ return {
 		 	}).then( function( response ){
 
 		 		var list_fee = response.list;
-		 		console.log(list_fee)
 		 		angular.forEach($scope.item_list, function(cat, key) {
 		 			angular.forEach(cat.list, function(item, key) {
-
-		 				// console.log(item)
 		 				var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
-		 				// console.log(t_item)
 		 				if(t_item) {
 		 					item.PRICE = t_item.SCHEDULE_FEE;
-		 					item.enable_fee = true;
-		 				} else {
-		 					if(!item.PRICE) {
-			 					item.PRICE = 0;
-			 					item.enable_fee = false;
-			 				} 
-		 				}
+		 					item.disable_fee = true;
+		 				} else if(!item.PRICE) {
+		 					item.PRICE = 0;
+		 					item.disable_fee = false;
+		 				} 
+		 				
 		 			});
+				});
+
+				angular.forEach($scope.extra_list, function(item, key) {
+					
+					item.disable_fee = !!item.PRICE;
+
 				});
 
 		 		// console.log(response)

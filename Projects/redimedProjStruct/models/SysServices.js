@@ -28,12 +28,12 @@ module.exports = function(sequelize, DataTypes){
                     // through: 'cln_dept_services',
                 });
 
-                SysServices.hasOne( models.FeeType, { 
+                SysServices.belongsTo( models.FeeType, { 
             		as: 'FeeType', 
             		foreignKey: 'FEE_TYPE_ID'
                 });
 
-                SysServices.belongsTo( models.Appointment, { 
+                SysServices.hasMany( models.Appointment, { 
             		as: 'Appointment', 
             		foreignKey: 'SERVICE_ID'
                 });
