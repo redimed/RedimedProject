@@ -183,6 +183,8 @@ public class MedicareService {
 	public Response bulkBillClaim(String json) {
 		Map<String, Object> jsonObj = new Gson().fromJson(json, Map.class);
 		
+//		ArrayList itemArr = new Gson().fromJson(jsonObj.get("items").toString(), ArrayList.class);
+		
 		int sessionId = getSessionId();
 		
 		System.out.println(sessionId);
@@ -202,7 +204,7 @@ public class MedicareService {
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r1.get(0).toString(), "PmsClaimId", "A1234#");
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r1.get(0).toString(), "PmsClaimId", "A0001@");
 		else
 			return returnOPVJson(rval);
 
@@ -264,18 +266,18 @@ public class MedicareService {
 			return returnOPVJson(rval);
 		
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ItemNum", "23");
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ItemNum", "104");
 		else
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ChargeAmount", "999");
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ChargeAmount", "8555");
 		else
 			return returnOPVJson(rval);
 		
 		if(rval == 0)
 		{
-			rval = EasyclaimAPI.getInstance().sendContent(sessionId, "HIC/HolClassic/DirectBillClaim@1", "Pass-123");
+			rval = EasyclaimAPI.getInstance().sendContent(sessionId, "HIC/HolClassic/DirectBillClaim@1", "");
 		}
 		else
 			return returnOPVJson(rval);

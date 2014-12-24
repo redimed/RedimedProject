@@ -9,6 +9,9 @@ var smtpPool = require('nodemailer-smtp-pool');
 var gcm = require('node-gcm');
 var mkdirp = require('mkdirp');
 
+var io = require('socket.io');
+var _ = require('lodash-node');
+
 
 var OTKEY = "45110172";
 var OTSECRET = "2c6760b523e735a60c125af9d1a8a1f906bbd4c9";
@@ -356,20 +359,39 @@ module.exports = {
             })
     },
     makeCall: function(req,res){
-        var userId = req.body.user_id;
-        db.UserToken.find({where:{user_id: userId}},{raw:true})
-            .success(function(data){
-                var token = opentok.generateToken(data.roomSession,{ role: 'moderator' });
-                res.json({
-                    apiKey: OTKEY,
-                    sessionId: data.roomSession,
-                    token: token
-                })
-            })
-            .error(function(err){
-                res.json(err);
-                console.log(err);
-            })
+        io.on('connection', function(socket) {
+
+            socket.on('sendMessage', function(name, message) {
+                var currentUser = _.find(users, {
+                    socket: socket.id
+                });
+                if (!currentUser) {
+                    return;
+                }
+
+                var contact = _.find(users, {
+                    name: name
+                });
+                if (!contact) {
+                    return;
+                }
+
+                io.to(contact.socket)
+                    .emit('messageReceived', currentUser.name, message);
+            });
+
+            socket.on('disconnect', function() {
+                var index = _.findIndex(users, {
+                    socket: socket.id
+                });
+                if (index !== -1) {
+                    socket.broadcast.emit('offline', users[index].name);
+                    console.log(users[index].name + ' disconnected');
+
+                    users.splice(index, 1);
+                }
+            });
+        });
     }
 };
 
