@@ -816,41 +816,44 @@
                     </div>
                 </div>
             </div>
+            <br/>
+
             <div class="row">
-                <div class="col-md-4 col-sm-5">
+                <div class="col-md-4 col-sm-4">
                     <label class="control-label" style="margin-top:5px;">Did you need time off work?
                     </label>
                 </div>
-                <div ng-class="{'has-error':gorgonMHForm.Q2_TimeOfWork.$error.required}">
-                    <div class="clearfix">
-                        <div class="btn-group  col-md-6 col-sm-6" style="width: auto;">
-                            <label class="btn bold">
-                                <input type="radio" name='Q2_TimeOfWork' ng-model="info.Q2_TimeOfWork" ng-value="0"
-                                       ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>N
-                            </label>
-                            <label class="btn bold">
-                                <input type="radio" name='Q2_TimeOfWork' ng-model="info.Q2_TimeOfWork" ng-value="1"
-                                       ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>Y
-                            </label>
-                        </div>
-                        <div class="help-block" ng-show="gorgonMHForm.Q2_TimeOfWork.$error.required">
-                            <label class="control-label">Required!</label>
+                <div class="col-md-3 col-sm-3" style="width: auto;">
+                    <div ng-class="{'has-error':gorgonMHForm.Q2_TimeOfWork.$error.required}">
+                        <div class="clearfix">
+                            <div class="btn-group">
+                                <label class="btn bold">
+                                    <input type="radio" name='Q2_TimeOfWork' ng-model="info.Q2_TimeOfWork" ng-value="0"
+                                           ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>N
+                                </label>
+                                <label class="btn bold">
+                                    <input type="radio" name='Q2_TimeOfWork' ng-model="info.Q2_TimeOfWork" ng-value="1"
+                                           ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>Y
+                                </label>
+                            </div>
+                            <div class="help-block" ng-show="gorgonMHForm.Q2_TimeOfWork.$error.required">
+                                <label class="control-label">Required!</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-sm-5" style="margin-top: 7px;">
-                    <div ng-show="info.Q2_TimeOfWork">
-                        <label class="control-label">* How long were you off?</label>
+                <div class="col-md-3 col-sm-3" style="margin-top: 7px;width: auto;">
+                    <div ng-show="info.Q2_TimeOfWork==1">
+                        <label class="control-label">*How long were you off?</label>
                     </div>
-                    <div ng-show="!info.Q2_TimeOfWork">
+                    <div ng-show="!(info.Q2_TimeOfWork==1)">
                         <label class="control-label">How long were you off?</label>
                     </div>
                 </div>
-                <div class="col-md-7 col-sm-7">
-                    <div ng-class="{'has-error': gorgonMHForm.Q2_HowLongOff.$error.required}">
-                        <input type="text" name="Q2_HowLongOff" ng-model="info.Q2_HowLongOff" class="form-control"
+                <div class="col-md-2 col-sm-2">
+                    <div ng-class="{'has-error': gorgonMHForm.Q2_HowLongOff.$error.required || gorgonMHForm.Q2_HowLongOff.$error.maxlength}">
+                        <input type="text" name="Q2_HowLongOff" ng-model="info.Q2_HowLongOff"
+                               class="form-control"
                                ng-required="info.Q2_TimeOfWork" ng-maxlength="200">
 
                         <div class="help-block" ng-show="gorgonMHForm.Q2_HowLongOff.$error.maxlength">
@@ -866,10 +869,10 @@
 
             <div class="row">
                 <div class="col-md-4 col-sm-5" style="margin-top:7px;">
-                    <div ng-hide="info.Q2_Operation==1|| info.Q2_Accident==1||info.Q2_SportsInjury==1">
+                    <div ng-show="!(info.Q2_TimeOfWork==1)">
                         <label class="control-label">How long were you on modified or light duties?</label>
                     </div>
-                    <div ng-show="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1">
+                    <div ng-show="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1">
                         <label class="control-label">*How long were you on modified or light duties?</label>
                     </div>
                 </div>
@@ -892,10 +895,10 @@
 
             <div class="row">
                 <div class="col-md-4 col-sm-5" style="margin-top: 7px;">
-                    <div ng-hide="info.Q2_Operation==1|| info.Q2_Accident==1||info.Q2_SportsInjury==1">
+                    <div ng-show="!(info.Q2_TimeOfWork==1)">
                         <label class="control-label">How long did you need treatment?</label>
                     </div>
-                    <div ng-show="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1">
+                    <div ng-show="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1">
                         <label class="control-label">*How long did you need treatment?</label>
                     </div>
                 </div>
@@ -924,11 +927,11 @@
                         <div class="btn-group  col-md-3 col-sm-3" style="width:auto;">
                             <label class="btn bold">
                                 <input type="radio" name='Q2_NormalDuties' ng-model="info.Q2_NormalDuties" ng-value="0"
-                                       ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>N
+                                       ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1"/>N
                             </label>
                             <label class="btn bold">
                                 <input type="radio" name='Q2_NormalDuties' ng-model="info.Q2_NormalDuties" ng-value="1"
-                                       ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>Y
+                                       ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1"/>Y
                             </label>
                         </div>
                         <div class="help-block" ng-show="gorgonMHForm.Q2_NormalDuties.$error.required">
