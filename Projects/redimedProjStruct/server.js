@@ -17,7 +17,13 @@ var restful = require('sequelize-restful');
 
 //Create application management
 var app = express();
-app.set('port', process.env.PORT || 3000);
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+server.listen(3000);
+
+require('./socket')(io);
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 

@@ -1,6 +1,9 @@
 var bcrypt = require('bcrypt-nodejs');
 var db = require('../models');
 
+var io = require('socket.io');
+var _ = require('lodash-node');
+
 var OTKEY = "45110172";
 var OTSECRET = "2c6760b523e735a60c125af9d1a8a1f906bbd4c9";
 
@@ -23,6 +26,7 @@ module.exports = {
                     var ses = null;
                     bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                         if (compareResult == true) {
+
 
                             if(platform != null)
                             {
