@@ -234,9 +234,10 @@ public class DocumentService {
         		Connection connection = Database.getConnection();
         		PreparedStatement ps = null;
         		ResultSet rs = null;
+        		String name,valueLeft,valueRight;
         		try
         		{
-        			JsonObject json = new JsonObject();
+        			
         			JsonArray array = new JsonArray();
         			
         			ps = connection.prepareStatement("SELECT c.Name,c.VALUE_RIGHT,c.VALUE_LEFT FROM cln_sa_df_lines c WHERE c.patient_id = ? AND c.CAL_ID=? AND c.SA_ID=?");
@@ -246,10 +247,11 @@ public class DocumentService {
         			
         			rs = ps.executeQuery();
         			while (rs.next()) {
-        				 
-        				String name = rs.getString("Name");
-        				String valueLeft = rs.getString("VALUE_LEFT");
-        				String valueRight = rs.getString("VALUE_RIGHT");
+        				 JsonObject json = new JsonObject();
+        				
+    					 name = rs.getString("Name");
+        				 valueLeft = rs.getString("VALUE_LEFT");
+        				 valueRight = rs.getString("VALUE_RIGHT");
         				
         				json.addProperty("Name", name);
         				json.addProperty("VALUE_LEFT", valueLeft);
@@ -257,6 +259,7 @@ public class DocumentService {
         				
         				array.add(json);
         			}
+        			
         			
         			BufferedImage img = AudioBean.getImageChart(array.toString(), true);
         			
@@ -296,9 +299,10 @@ public class DocumentService {
         		Connection connection = Database.getConnection();
         		PreparedStatement ps = null;
         		ResultSet rs = null;
+        		String name,valueLeft,valueRight;
         		try
         		{
-        			JsonObject json = new JsonObject();
+        			
         			JsonArray array = new JsonArray();
         			
         			ps = connection.prepareStatement("SELECT c.Name,c.VALUE_RIGHT,c.VALUE_LEFT FROM cln_sa_df_lines c WHERE c.patient_id = ? AND c.CAL_ID=? AND c.SA_ID=?");
@@ -308,10 +312,11 @@ public class DocumentService {
         			
         			rs = ps.executeQuery();
         			while (rs.next()) {
-        				 
-        				String name = rs.getString("Name");
-        				String valueLeft = rs.getString("VALUE_LEFT");
-        				String valueRight = rs.getString("VALUE_RIGHT");
+        				JsonObject json = new JsonObject(); 
+        				
+        				 name = rs.getString("Name");
+        				 valueLeft = rs.getString("VALUE_LEFT");
+        				 valueRight = rs.getString("VALUE_RIGHT");
         				
         				json.addProperty("Name", name);
         				json.addProperty("VALUE_LEFT", valueLeft);
@@ -319,6 +324,8 @@ public class DocumentService {
         				
         				array.add(json);
         			}
+        			
+        			
         			
         			BufferedImage img = AudioBean.getImageChart(array.toString(), false);
         			

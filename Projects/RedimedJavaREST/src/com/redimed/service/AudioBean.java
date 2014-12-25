@@ -41,6 +41,9 @@ public class AudioBean {
     public static BufferedImage getImageChart( String arrData, Boolean isGovernment) {
         // InputStream asStream = ClnSaBeans.class.getResourceAsStream("/saClnView/image/redimed.png");
     	
+//    	System.out.println(arrData);
+    	
+    	
     	
     	Gson gson = new Gson();
 
@@ -52,6 +55,13 @@ public class AudioBean {
 	        BufferedImage img = null;
 	        
 	        AudioModel[] allRows = gson.fromJson(arrData, AudioModel[].class);
+	        
+//	        for(int i=0; i<allRows.length;i++)
+//	        {
+//	        	System.out.println(allRows[i].getName()+" - "+allRows[i].getVALUE_LEFT()+" - "+allRows[i].getVALUE_RIGHT());
+//	        	
+//	        }
+	        
 	        Double yValue = 2.1;
 	        try {
 	            img = ImageIO.read(asStream);
@@ -61,17 +71,17 @@ public class AudioBean {
 	                AudioModel rowX = (AudioModel) allRows[i];
 	                
 	                
-	                drawPoint(g, String.valueOf(rowX.getName()), Integer.valueOf(rowX.getVALUE_LEFT()), true, isGovernment ? true : false);
-	                drawPoint(g,String.valueOf(rowX.getName()), Integer.valueOf(rowX.getVALUE_RIGHT()), false, isGovernment ? true : false);
+	                drawPoint(g, String.valueOf(rowX.getName()),rowX.getVALUE_LEFT() == null ? 1000 : Integer.valueOf(rowX.getVALUE_LEFT()), true, isGovernment ? true : false);
+	                drawPoint(g,String.valueOf(rowX.getName()),rowX.getVALUE_RIGHT() == null ? 1000 : Integer.valueOf(rowX.getVALUE_RIGHT()), false, isGovernment ? true : false);
 	                if (y == allRows.length - 1) {
-	                    drawPoint(g, String.valueOf(rowY.getName()), Integer.valueOf(rowY.getVALUE_LEFT()), true,  isGovernment ? true : false);
-	                    drawPoint(g, String.valueOf(rowY.getName()), Integer.valueOf(rowY.getVALUE_RIGHT()), false,  isGovernment ? true : false);
+	                    drawPoint(g, String.valueOf(rowY.getName()),rowY.getVALUE_LEFT() == null ? 1000 : Integer.valueOf(rowY.getVALUE_LEFT()), true,  isGovernment ? true : false);
+	                    drawPoint(g, String.valueOf(rowY.getName()),rowY.getVALUE_RIGHT() == null ? 1000 : Integer.valueOf(rowY.getVALUE_RIGHT()), false,  isGovernment ? true : false);
 	                }
 
-	                drawLine(g, String.valueOf(rowX.getName()), String.valueOf(rowY.getName()), Integer.valueOf(rowX.getVALUE_LEFT()),
-	                         Integer.valueOf(rowY.getVALUE_LEFT()), true, isGovernment ? true : false);
-	                drawLine(g, String.valueOf(rowX.getName()), String.valueOf(rowY.getName()), Integer.valueOf(rowX.getVALUE_RIGHT()),
-	                         Integer.valueOf(rowY.getVALUE_RIGHT()), false, isGovernment ? true : false);
+	                drawLine(g, String.valueOf(rowX.getName()), String.valueOf(rowY.getName()),rowX.getVALUE_LEFT() == null ? 1000 : Integer.valueOf(rowX.getVALUE_LEFT()),
+	                         rowY.getVALUE_LEFT() == null ? 1000 : Integer.valueOf(rowY.getVALUE_LEFT()), true, isGovernment ? true : false);
+	                drawLine(g, String.valueOf(rowX.getName()), String.valueOf(rowY.getName()),rowX.getVALUE_RIGHT() == null ? 1000 : Integer.valueOf(rowX.getVALUE_RIGHT()),
+	                		rowY.getVALUE_RIGHT() == null ? 1000 : Integer.valueOf(rowY.getVALUE_RIGHT()), false, isGovernment ? true : false);
 	            }
 	           
 	            
