@@ -22,7 +22,7 @@
 <div class="row"> <!-- INFORMATION -->
 
     <!-- TITLE -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.title.$invalid && isSubmit}">
             <label for="title">Title</label>
             <select ng-options="title.id as title.name for title in options.titles" 
@@ -34,7 +34,7 @@
     <!-- END TITLE -->
 
     <!-- FIRST NAME -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.fname.$invalid && isSubmit}">
             <label for="fname">First name *</label>
             <input required type="text" id="fname" float-label
@@ -51,7 +51,7 @@
     <!-- END FIRST NAME -->
 
     <!-- SUR NAME -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.sname.$invalid && isSubmit}">
             <label for="sname">Sur name *</label>
             <input required type="text" id="sname" 
@@ -68,7 +68,7 @@
     <!-- END SURNAME NAME -->
 
     <!-- MIDDLE NAME -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="mname">Middle name</label>
             <input type="text" id="mname" 
@@ -76,11 +76,9 @@
         </span>
     </div>
     <!-- END MIDDLE NAME -->
-
-    <div class="break-row"></div>
     
     <!-- KNOWN AS -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="knownas">Known as</label>
             <input type="text" id="knownas" 
@@ -90,7 +88,7 @@
     <!-- END KNOWN AS -->
 
     <!-- BIRTHDAY -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field" ng-class="{'has-error': patientForm.dob.$invalid && isSubmit}">
             <label for="dob">Date of Birth *</label>
             <input readonly="" ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" 
@@ -109,15 +107,17 @@
     </div>
     <!-- END BIRTHDAY -->
 
+    <div class="break-row"></div>
+
     <!-- SEX -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <input type="checkbox" class="mdt-sex" id="sex" ng-model="modelObjectMap.Sex" ng-true-value="1" ng-false-value="0">
         <label for="sex"></label>
     </div>
     <!-- END SEX -->
     
     <!-- EMAIL -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-class="{'has-error': patientForm.email.$invalid && isSubmit}">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12" ng-class="{'has-error': patientForm.email.$invalid && isSubmit}">
         <span class="field">
             <label for="email">Email *</label>
             <input type="email" placeholder="Email" name="email" ng-model="modelObjectMap.Email"
@@ -133,10 +133,8 @@
     </div>
     <!-- END EMAIL -->
 
-    <div class="break-row"></div>
-
     <!-- OCCUPATION -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="occupation">Occupation</label>
             <input type="text" placeholder="Occupation" name="occupation" ng-model="modelObjectMap.Occupation"
@@ -146,7 +144,7 @@
     <!-- END OCCUPATION -->
 
     <!-- HOMEPHONE -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="hphone">Home Phone</label>
             <input type="text" placeholder="Home Phone" name="hphone" ng-model="modelObjectMap.Home_phone"
@@ -156,7 +154,7 @@
     <!-- END HOMEPHONE -->
 
     <!-- WORKPHONE -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="wphone">Work Phone</label>
             <input type="text" placeholder="Work Phone" name="wphone" ng-model="modelObjectMap.Work_phone"
@@ -166,7 +164,7 @@
     <!-- END WORKPHONE -->
 
     <!-- MOBILE -->
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="mobile">Mobile Phone</label>
             <input type="text" placeholder="Mobile Phone" name="mobile" ng-model="modelObjectMap.Mobile"
@@ -175,10 +173,8 @@
     </div>
     <!-- END MOBILE -->
 
-    <div class="break-row"></div>
-
     <!-- COMPANY -->
-    <div class="col-md-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-md-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <button class="btn btn-small btn-block green" ng-click="clickCompany()">
                 {{selectedCompany.Company_name}}
@@ -186,6 +182,53 @@
         </span>
     </div>
     <!-- END COMPANY -->
+
+    <!-- PHONE EXT -->
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="morephone">More Phone</label>
+            <input type="text" placeholder="More Phone" name="morephone" ng-model="modelObjectMap.Phone_ext"
+                class="form-control" id="morephone" float-label>
+        </span>
+    </div>
+    <!-- END PHONE EXT -->
+
+    <!-- NO SMS -->
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <input type="checkbox" name="nosms" id="nosms" class="mdt-checkbox" ng-model="modelObjectMap.No_SMS"
+            ng-true-value="1" ng-false-value="0">
+        <label for="nosms">SMS</label>
+    </div>
+    <!-- END NOSMS -->
+    <!-- IS LOCK -->
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <input type="checkbox" name="islock" id="islock" class="mdt-checkbox" ng-model="modelObjectMap.isLock"
+            ng-true-value="1" ng-false-value="0">
+        <label for="islock">Is Lock</label>
+    </div>
+    <!-- END IS LOCK -->
+
+    <!-- ACCOUNT TYPE -->
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="acctype">Account Type</label>
+            <select ng-options="type.Account_id as type.Account_name for type in options.account_types" 
+                name="acctype" ng-model="modelObjectMap.Account_type" id="acctype" float-label>
+                <option value="" disabled selected>Account Type</option>
+            </select>
+        </span>
+    </div>
+    <!-- END ACCOUNT TYPE -->
+
+    <!-- ACCOUNT HOLDER -->
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="accholder">Account Holder</label>
+            <input type="text" placeholder="Account Holder" name="accholder" ng-model="modelObjectMap.Account_holder"
+                class="form-control" id="accholder" float-label>
+        </span>
+    </div>
+    <!-- END ACCOUNT HOLDER -->
 </div> <!-- END INFORMATION -->
 
 <accordion close-others="accordion.oneAtATime">
@@ -197,7 +240,7 @@
         </accordion-heading>
 
         <!-- ADDRESS 1 -->
-        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
             <span class="field">
                 <label for="address1">Address 1</label>
                 <input type="text" placeholder="Address 1" name="address1" ng-model="modelObjectMap.Address1"
@@ -207,7 +250,7 @@
         <!-- END ADDRESS 1 -->
 
         <!-- ADDRESS 2 -->
-        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
             <span class="field">
                 <label for="address2">Address 2</label>
                 <input type="text" placeholder="Address 2" name="address2" ng-model="modelObjectMap.Address2"
@@ -216,10 +259,8 @@
         </div>
         <!-- END ADDRESS 2 -->
 
-        <div class="break-row"></div>
-
         <!-- SURBURB -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="surburb">Surburb</label>
                 <input type="text" placeholder="Surburb" name="surburb" ng-model="modelObjectMap.Surburb"
@@ -229,7 +270,7 @@
         <!-- END SURBURB -->
 
         <!-- POST CODE -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="postcode">Post Code</label>
                 <input type="text" placeholder="Post code" name="postcode" ng-model="modelObjectMap.Post_code"
@@ -239,7 +280,7 @@
         <!-- END POST CODE -->
 
         <!-- COUNTRY -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="country">Country</label>
                 <select ng-options="country.Country_name as country.Country_name for country in options.countries" 
@@ -251,7 +292,7 @@
         <!-- END COUNTRY -->
 
         <!-- STATE -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="state">State</label>
                 <select ng-options="state.id as state.State for state in options.states" 
@@ -340,55 +381,8 @@
             <i class="fa fa-bars"></i>
             &nbspSub Information
         </accordion-heading>
-        <!-- PHONE EXT -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-                <label for="morephone">More Phone</label>
-                <input type="text" placeholder="More Phone" name="morephone" ng-model="modelObjectMap.Phone_ext"
-                    class="form-control" id="morephone" float-label>
-            </span>
-        </div>
-        <!-- END PHONE EXT -->
-        <!-- NO SMS -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <input type="checkbox" name="nosms" id="nosms" class="mdt-checkbox" ng-model="modelObjectMap.No_SMS"
-                ng-true-value="1" ng-false-value="0">
-            <label for="nosms">SMS</label>
-        </div>
-        <!-- END NOSMS -->
-        <!-- IS LOCK -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <input type="checkbox" name="islock" id="islock" class="mdt-checkbox" ng-model="modelObjectMap.isLock"
-                ng-true-value="1" ng-false-value="0">
-            <label for="islock">Is Lock</label>
-        </div>
-        <!-- END IS LOCK -->
-        <div class="break-row"></div>
-
-        <!-- ACCOUNT TYPE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-                <label for="acctype">Account Type</label>
-                <select ng-options="type.Account_id as type.Account_name for type in options.account_types" 
-                    name="acctype" ng-model="modelObjectMap.Account_type" id="acctype" float-label>
-                    <option value="" disabled selected>Account Type</option>
-                </select>
-            </span>
-        </div>
-        <!-- END ACCOUNT TYPE -->
-
-        <!-- ACCOUNT HOLDER -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-                <label for="accholder">Account Holder</label>
-                <input type="text" placeholder="Account Holder" name="accholder" ng-model="modelObjectMap.Account_holder"
-                    class="form-control" id="accholder" float-label>
-            </span>
-        </div>
-        <!-- END ACCOUNT HOLDER -->
-
         <!-- ACCOUNT SEFT -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.accseft.$invalid && isSubmit}">
                 <label for="accseft">Account Seft</label>
                 <input type="number" placeholder="Account Seft" name="accseft" 
@@ -408,10 +402,8 @@
         </div>
         <!-- END ACCOUNT SEFT -->
 
-        <div class="break-row"></div>
-
         <!-- PRIVATE FUND -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="privatefund">Private Fund</label>
                 <select ng-options="type.PF_id as type.Fund_name for type in options.private_types" 
@@ -423,7 +415,7 @@
         <!-- END PRIVATE FUND -->
 
         <!-- MEMBERSHIP NO -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.memberno.$invalid && isSubmit}">
                 <label for="memberno">Membership No</label>
                 <input type="number" placeholder="Membership Number" name="memberno" 
@@ -444,7 +436,7 @@
         <!-- END MEMBERSHIP NO -->
 
         <!-- UPI -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.upi.$invalid && isSubmit}">
                 <label for="upi">UPI</label>
                 <input type="number" placeholder="UPI" name="upi" 
@@ -464,10 +456,8 @@
         </div>
         <!-- END UPI -->
 
-        <div class="break-row"></div>
-
         <!-- HCC PENSION NO -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.hccno.$invalid && isSubmit}">
                 <label for="hccno">HCC Pension No</label>
                 <input type="number" placeholder="HCC Pension Number" name="hccno" 
@@ -488,7 +478,7 @@
         <!-- END HCC PENSION NO -->
 
         <!-- PENSION EXP -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="pensionexp">Pension Expire</label>
                 <input readonly="" ui-date="{dateFormat: 'dd/mm/yy'}" id="pensionexp" placeholder="Pension Expire" 
@@ -498,8 +488,10 @@
         </div>
         <!-- END PENSION EXP -->
 
+        <div class="break-row"></div>
+
         <!-- DVA NO -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.dvano.$invalid && isSubmit}">
                 <label for="dvano">DVA No</label>
                 <input type="number" placeholder="DVA Number" name="dvano" 
@@ -520,7 +512,7 @@
         <!-- END DVA NO -->
 
         <!-- BALANCE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.balance.$invalid && isSubmit}">
                 <label for="balance">Balance</label>
                 <input type="number" placeholder="Balance" name="balance" 
@@ -541,7 +533,7 @@
         <!-- END BALANCE -->
 
         <!-- PAYS GAP ONLY -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.paygaps.$invalid && isSubmit}">
                 <label for="paygaps">Pays Gap Only</label>
                 <input type="number" placeholder="Pays Gap Only" name="paygaps" 
@@ -561,17 +553,15 @@
         </div>
         <!-- END PAYS GAP ONLY -->
         <!-- IS ENABLE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" 
                 ng-model="modelObjectMap.Isenable" ng-true-value="1" ng-false-value="0">
             <label for="isenable">Is Enable</label>
         </div>
         <!-- END IS ENABLE -->
 
-        <div class="break-row"></div>
-
         <!-- PASSPORT -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="passport">Passport</label>
                 <input type="text" placeholder="Passport" name="passport" ng-model="modelObjectMap.passport"
@@ -581,7 +571,7 @@
         <!-- END PASSPORT -->
 
         <!-- DRIVER LICENSE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="driver_license">Driver License</label>
                 <input type="text" placeholder="Driver License" name="driver_license" ng-model="modelObjectMap.driver_license"
@@ -600,7 +590,7 @@
             &nbspMore Sub Information
         </accordion-heading>
         <!-- PARTNER NAME -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="partnername">Partner Name</label>
                 <input type="text" placeholder="Partner Name" name="partnername" ng-model="modelObjectMap.Partner_name"
@@ -609,7 +599,7 @@
         </div>
         <!-- END PARTNER NAME -->
         <!-- PARTNER DOB -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="partnerdob">Partner's Date of Birth</label>
                 <input type="birthday" readonly="" ui-date="{dateFormat: 'dd/mm/yy'}" id="partnerdob" placeholder="Partner's Date of Birth" 
@@ -619,7 +609,7 @@
         </div>
         <!-- END PARTNER DOB -->
         <!-- PARTNER OCCUPATION -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="partnerocc">Partner Occupation</label>
                 <input type="text" placeholder="Partner Occupation" name="partnerocc" 
@@ -628,9 +618,8 @@
             </span>
         </div>
         <!-- END PARTNER OCCUPATION -->
-        <div class="break-row"></div>
         <!-- NOK EMERGE CONTACT -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="nokemecontact">NOK Emerge Contact</label>
                 <input type="text" placeholder="NOK Emerge Contact" name="nokemecontact" 
@@ -640,7 +629,7 @@
         </div>
         <!-- END NOK EMERGE CONTACT -->
         <!-- NOK PHONE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="nokphone">NOK Phone</label>
                 <input type="text" placeholder="NOK Phone" name="nokphone" 
@@ -650,7 +639,7 @@
         </div>
         <!-- END NOK PHONE -->
         <!-- CLINIC -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="clinic">Clinic</label>
                 <input type="text" placeholder="Clinic" name="clinic" 
@@ -661,7 +650,7 @@
         <!-- END CLINIC -->
         <div class="break-row"></div>
         <!-- ALIAS FIRST NAME -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="aliasfname">Alias First Name</label>
                 <input type="text" placeholder="Alias First Name" name="aliasfname" 
@@ -671,7 +660,7 @@
         </div>
         <!-- END ALIAS FIRST NAME -->
         <!-- ALIAS SUR NAME -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="aliassname">Alias Sur Name</label>
                 <input type="text" placeholder="Alias Sur Name" name="aliassname" 
@@ -681,7 +670,7 @@
         </div>
         <!-- END ALIAS SUR NAME -->
         <!-- SPECIALTY -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="specialty">Specialty</label>
                 <input type="text" placeholder="Specialty" name="specialty" 
@@ -690,9 +679,9 @@
             </span>
         </div>
         <!-- END SPECIALTY -->
-        <div class="break-row"></div>
+        
         <!-- GP FIRST NAME -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="gpfname">GP First Name</label>
                 <input type="text" placeholder="GP First Name" name="gpfname" 
@@ -702,7 +691,7 @@
         </div>
         <!-- END GP FIRST NAME -->
         <!-- GP SUR NAME -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="gpsname">GP Sur Name</label>
                 <input type="text" placeholder="GP Sur Name" name="gpsname" 
@@ -712,7 +701,7 @@
         </div>
         <!-- END GP SUR NAME -->
         <!-- MEMO -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="memo">Memo</label>
                 <input type="text" placeholder="Memo" name="memo" 
@@ -723,7 +712,7 @@
         <!-- END MEMO -->
         <div class="break-row"></div>
         <!-- USUAL PROVIDER -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="usual_provider">Usual Provider</label>
                 <select ng-options="type.Provider_types_id as type.Provider_types_name for type in options.provider_types" 
@@ -734,7 +723,7 @@
         </div>
         <!-- END USUAL PROVIDER -->
         <!-- REFERRAL SOURCE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="referral_source">Referral Source</label>
                 <select ng-options="type.RS_id as type.RS_name for type in options.referral_types" 
@@ -745,7 +734,7 @@
         </div>
         <!-- END REFERRAL SOURCE -->
         <!-- MARIAL STATUS -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="marial_status">Marial Status</label>
                 <select ng-options="type.Marial_status as type.Marial_status for type in options.marial_status_types" 
@@ -755,10 +744,9 @@
             </span>
         </div>
         <!-- END MARIAL STATUS -->
-        <div class="break-row"></div>
 
         <!-- DIABETIC -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="diabetic" id="diabetic" class="mdt-checkbox" 
                 ng-model="modelObjectMap.Diabetic" ng-true-value="1" ng-false-value="0">
             <label for="diabetic">Diabetic</label>
@@ -766,7 +754,7 @@
         <!-- END DIABETIC -->
 
         <!-- INACTIVE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="inactive" id="inactive" class="mdt-checkbox" 
                 ng-model="modelObjectMap.Inactive" ng-true-value="1" ng-false-value="0">
             <label for="inactive">Inactive</label>
@@ -774,7 +762,7 @@
         <!-- END INACTIVE -->
 
         <!-- DECEASED -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="deceased" id="deceased" class="mdt-checkbox" 
                 ng-model="modelObjectMap.Deceased" ng-true-value="1" ng-false-value="0">
             <label for="deceased">Deceased</label>
@@ -784,7 +772,7 @@
         <div class="break-row" style="margin-bottom: 10px;"></div>
 
         <!-- UR NO -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': patientForm.urno.$invalid && isSubmit}">
                 <label for="urno">UR No</label>
                 <input type="number" placeholder="UR No" name="urno" 
@@ -805,7 +793,7 @@
         <!-- END UR NO -->
 
         <!-- CUSTOM -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="custom">Custom</label>
                 <input type="text" placeholder="Custom" name="custom" 
@@ -816,7 +804,7 @@
         <!-- END CUSTOM -->
 
         <!-- CULTURE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="culture">Culture</label>
                 <select ng-options="type.CULTURE_id as type.CULTURE_name for type in options.culture_types" 
@@ -827,10 +815,8 @@
         </div>
         <!-- END CULTURE -->
 
-        <div class="break-row"></div>
-
         <!-- LANGUAGE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="language">Language</label>
                 <select ng-options="type.language_id as type.name for type in options.language_types" 
@@ -842,7 +828,7 @@
         <!-- END LANGUAGE -->
 
         <!-- FEE TYPE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="fee_type">Fee Type</label>
                 <input type="text" placeholder="Fee Type" name="fee_type" 
@@ -853,14 +839,12 @@
         <!-- END FEE TYPE -->
 
         <!-- GRADUATE STATUS -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
             <input type="checkbox" name="graduate" id="graduate" class="mdt-checkbox" 
                 ng-model="modelObjectMap.Gradudate_status" ng-true-value="1" ng-false-value="0">
             <label for="graduate">Graduate ?</label>
         </div>
         <!-- END GRADUATE STATUS -->
-
-        <div class="break-row"></div>
 
     </accordion>
     <!-- END SELFT INFORMATION -->
