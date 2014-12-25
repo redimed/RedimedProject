@@ -24,7 +24,11 @@ angular.module("app.loggedIn.controller",[
         app_types: ConfigService.app_type_option(),
         priorities: ConfigService.priority_option(),
         timetable_dow: ConfigService.timetable_dow_option(),
-        weeks_of_month: ConfigService.number_of_week_option()
+        weeks_of_month: ConfigService.number_of_week_option(),
+
+        month_in_year: ConfigService.month_in_year(),
+        date_in_month: ConfigService.date_in_month(),
+        
     }
 
     var loadOptionsApi = function(){

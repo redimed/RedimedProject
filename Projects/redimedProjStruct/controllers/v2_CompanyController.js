@@ -1,3 +1,4 @@
+var db = require('../models');
 var CompanyModel = require('../v1_models/Companies');
 var InsurerModel = require('../v1_models/Cln_insurers');
 
@@ -170,4 +171,33 @@ module.exports = {
 			console.log(err);
 		})
 	},
+
+	postInsurers : function(req, res) {
+		
+		var search_data = req.body.search;
+
+		// console.log(search_data, fields)
+		var company_id = search_data.id;
+		var fields = req.body.fields;
+
+
+		db.Company.find({
+			where: {id: company_id},
+			attributes: ['id'],
+			include: [
+				{ 
+					model: db.Insurer , as: 'Insurers',
+					attributes: fields,
+				},
+			]
+		}).success(function(company){
+			if(!company) {
+				res.json(500, {"status": "error"});
+				return;
+			}
+			res.json({list: company.insurers, count: company.insurers.length});
+		}) .error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	}
 }

@@ -2,6 +2,33 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
+	postCalendarByDate: function(req, res) {
+
+
+		var date = req.body.date;
+		var doctor_id = req.body.doctor_id; 
+		if(!date) {
+			// current date;
+			date = mdt_functions.nowDateDatabase();
+		}
+
+		db.Appointment.findAll({
+			where: {
+				DOCTOR_ID: doctor_id,
+				Patient_id: {ne: null},
+				FROM_TIME: { rlike: date },
+
+			}
+		}).success(function(data){
+
+			res.json({list: data, status: 'success'})
+		}).error(function(err) {
+			console.log(err);
+			res.json(500, {"status": "error", "error": error});
+		})
+
+	},
+
 	getListItems: function(req, res){
 		var id = req.query.id; 
 

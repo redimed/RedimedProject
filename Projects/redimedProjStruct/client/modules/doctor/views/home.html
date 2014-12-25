@@ -8,6 +8,43 @@
     </ul>
 </div>
 
+
+
+<div class="row">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <!-- YEAR -->
+        <span class="field show-label">
+            <label>Year</label>
+            <input ng-model="selectDate.year" type="number" min="1990" max="2020" ng-change="loadCalendar()" />
+        </span>
+        <!-- END YEAR -->
+    </div>
+
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <!-- MONTH -->
+        <span class="field show-label">
+            <label>Month</label>
+            <select ng-options="month.code as month.title for month in options.month_in_year" ng-model="selectDate.month" ng-change="loadCalendar()">
+                <option value="">-- All Month --</option>
+            </select>
+        </span>
+        <!-- END MONTH -->
+    </div>
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+         <!-- DAY -->
+        <span class="field show-label">
+            <label>Date</label>
+              <select ng-options="item.code as item.title for item in options.date_in_month" ng-model="selectDate.date" ng-change="loadCalendar()">
+                <option value="">-- All Date --</option>
+            </select>
+        </span>
+        <!-- END DAY -->
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+
 <div class="portlet grey-cascade box">
     <div class="portlet-title">
         <div class="caption">
@@ -19,8 +56,7 @@
             <thead>
                 <tr>
 					<th>#</th>
-                    <th>First Name</th>
-                    <th>Sur Name</th>
+                    <th>Patient</th>
 					<th>From time</th>
 					<th>To time</th>
                 </tr>
@@ -28,8 +64,11 @@
             <tbody>
                 <tr ng-repeat="item in list_appts" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item.APP_TYPE)" style="cursor: pointer;">
 					<td>{{$index+1}}</td>
-					<td>{{item.First_name}}</td>
-                    <td>{{item.Sur_name}}</td>
+					<td>
+                        <div ng-repeat="PATIENT in item.PATIENTS">
+                            <a ng-click="goToApptDetail(PATIENT, item)">{{PATIENT.Patient_name}}</a>
+                        </div>
+                    </td>
                     <td>{{item.FROM_TIME}}</td>
 					<td>{{item.TO_TIME}}</td>
                 </tr>

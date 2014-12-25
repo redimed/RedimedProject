@@ -4,10 +4,14 @@ angular.module("app.loggedIn.company.list.controller", [])
     var item_type_options = [
         {code: 'Service', label: 'Service'},
         {code: 'Goods', label: 'Goods'},
-    ]
+    ];
+
+    $scope.company_panel = {};
+
     $scope.data_options = {
         api: 'api/erm/v2/companies/search',
         method: 'post',
+        scope: $scope.company_panel,
         columns: [
             {db_field: 'companies.id', field: 'id', is_hide: true},
             {field: 'Insurer', is_hide: true},
@@ -26,29 +30,81 @@ angular.module("app.loggedIn.company.list.controller", [])
             State: {type: 'text'},
             Country: {type: 'text'},
         },
+        use_actions: true, 
+        actions: [              
+            {
+                class: 'fa fa-pencil', title: 'Edit',
+                callback: function(item){
+                    $scope.companyInfo = item;
+                    $scope.editForm.open();
+                }
+            },
+            {
+                class: 'fa fa-money', title: 'Insurer',
+                callback: function(item){
+                    $scope.insurers_option.search.id = item.id; // company id 
+                    $scope.insurers.open();
+                    $scope.insurers.panel.reload();
+                    // console.log(item)
+                }
+            },
+        ],
     };
 
-            $scope.reloadpage = function () {
-                console.log(123)
-                $state.go($state.current, {}, {reload: true});
-            }
+    $scope.insurers  = {
+        is_show: false,
+        open: function(){
+            this.is_show = true;
+        }, 
+        close: function(){
+            this.is_show = false;
+        }, 
+        panel: {}
+    }
 
-            $scope.show_add_form = false;
-            $scope.show_edit_form = false;
+               
+    $scope.insurers_option = {
+        not_load: true,
+        use_filters: true,
+        api: 'api/erm/v2/companies/insurers',
+        search: { id: 0 },
+        method: 'post',
+        columns: [
+            {field: 'id', is_hide: true},
+            {field: 'insurer_name', label: 'Insurer Name'},
+            {field: 'address', label: 'Address'},
+            {field: 'suburb', label: 'Suburb'},
+        ],
+        scope: $scope.insurers.panel
+    };
 
-            $scope.toogleAddForm = function () {
-                $scope.show_add_form = !$scope.show_add_form;
-            }
+    /*
+    *   ADD FORM
+    */
+    $scope.addForm = {
+        is_show: false,
+        open: function(){
+            this.is_show = true;
+        }, 
+        close: function(){
+            this.is_show = false;
+        }, 
+        success: function(){
+            $scope.company_panel.reload();
+        }
+    }
 
-            $scope.toogleEditForm = function () {
-                $scope.show_edit_form = !$scope.show_edit_form;
-            }
+    $scope.editForm = {
+        is_show: false,
+        open: function(){
+            this.is_show = true;
+        }, 
+        close: function(){
+            this.is_show = false;
+        }, 
+        success: function(){
+            $scope.company_panel.reload();
+        }
+    }
 
-            $scope.clickRow = function (item) {
-                $scope.companyInfo = item;
-                $scope.toogleEditForm();
-//        console.log(item);
-//        localStorageService.set('tempCompanyInfo', item);
-//        $state.go('loggedIn.company.detail');
-            }
-        })
+})

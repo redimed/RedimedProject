@@ -1,28 +1,54 @@
 angular.module("app.loggedIn.doctor.home.controller",[])
 
-.controller("DoctorHomeController", function($scope, $state, $cookieStore, DoctorService, localStorageService){
-	//$scope.data = [500, 1000, 1500, 2000, 3000, 4000, 6000, 8000];
-	
-	$scope.goToApptDetail = function (row) {
-		localStorageService.set("apptTempInfo", {CAL_ID: row.CAL_ID});
-		var patientTempt = {
-			Patient_id: row.p_id,
-			Title: row.Title,
-			Sur_name: row.Sur_name
+.controller("DoctorHomeController", function($scope, $state, $cookieStore, DoctorService, ConfigService, localStorageService){
+
+	var nowtime = moment();
+	var doctorInfo = $cookieStore.get('doctorInfo');
+
+	if(!doctorInfo || !doctorInfo.doctor_id) {
+		alert('Not Doctor Information !!!')
+	}
+
+	$scope.selectDate = {
+		year: nowtime.year(),
+		month: nowtime.month() + 1,
+		date: nowtime.date(),
+	}
+
+	$scope.loadCalendar = function(){
+		console.log($scope.selectDate)
+		var doctor_id = doctorInfo.doctor_id;
+
+		DoctorService.doctor_calendar_by_date(doctor_id, $scope.selectDate).then(function(data){
+			$scope.list_appts = data.list;
+
+
+			angular.forEach($scope.list_appts, function(value, key) {
+				value.FROM_TIME =  ConfigService.convertToDate(value.FROM_TIME);
+				value.TO_TIME =  ConfigService.convertToDate(value.TO_TIME);
+				
+				value.PATIENTS = JSON.parse(value.PATIENTS);
+			})
+
+			console.log($scope.list_appts);
+		}, function(err) {
+			console.log(err);
+		});
+	}
+
+	$scope.goToApptDetail = function (patient, appt) {
+		if(!patient.Patient_id || !appt.CAL_ID) {
+			alert('Patient or appointment');
+			return;
 		}
-		localStorageService.set("patientTempInfo", patientTempt);
-        $state.go("loggedIn.doctor.patients.detail.appt");
+  		$state.go("loggedIn.patient.appointment", {patient_id: patient.Patient_id, cal_id: appt.CAL_ID});
     }
 
 	
 	var init = function(){
 		//var doctor_id = 
-		$scope.doctorInfo = $cookieStore.get('doctorInfo');
 		
-		DoctorService.listCurPatients($scope.doctorInfo.doctor_id).then(function(data){
-			console.log(data);
-			$scope.list_appts = data;
-		});
+		$scope.loadCalendar();
 	}
 	
 	init();

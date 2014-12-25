@@ -18,32 +18,41 @@
         </div>
         <div class="pull-right navbar-right">
             <!--<a class="btn blue" ui-sref="loggedIn.company.add"><i class="fa fa-plus"></i> New Company</a>-->
-            <a class="btn blue" ng-click="toogleAddForm()"><i class="fa fa-plus"></i> New Company</a>
+            <a class="btn blue" ng-click="addForm.open()"><i class="fa fa-plus"></i> New Company</a>
         </div>
     </div>
     <div class="portlet-body">
-        <my-data-table options="data_options" numrows="10" rowclick="clickRow">
+        <my-data-table options="data_options" numrows="10">
     </div>
 </div>
 
 
-<div class="mdt-search" style="display: block;" ng-if="show_add_form">
+<div class="mdt-search" style="display: block;" ng-if="addForm.is_show">
     <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="toogleAddForm()">
+        <button class="btn btn-sm btn-block red" ng-click="addForm.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>
     <div class="break-row" style="margin-bottom: 15px;"></div>
-    <company-detail data="{}" options="options" onsuccess="reloadpage"></company-detail>
+    <company-detail data="{}" options="options" onsuccess="addForm.success"></company-detail>
 </div>
 
 
-<div class="mdt-search" style="display: block;" ng-if="show_edit_form">
+<div class="mdt-search" style="display: block;" ng-if="editForm.is_show">
     <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="toogleEditForm()">
+        <button class="btn btn-sm btn-block red" ng-click="editForm.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>
     <div class="break-row" style="margin-bottom: 15px;"></div>
-    <company-detail id="add-form" data="{id: '{{companyInfo.id}}'}" options="options" onsuccess="reloadpage"></company-detail>
+    <company-detail id="add-form" data="{id: '{{companyInfo.id}}'}" options="options" onsuccess="editForm.success"></company-detail>
+</div>
+
+<div class="mdt-search" style="display: block;" ng-show="insurers.is_show">
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="insurers.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <my-data-table options="insurers_option" numrows="10">
 </div>

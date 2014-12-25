@@ -15,6 +15,32 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
      * KHANK API
      */
 
+    doctorService.doctor_calendar_by_date = function(doctor_id, select_date) {
+        var  month = select_date.month, date = select_date.date;
+
+
+        var date_str = select_date.year + '';
+
+        if( !!month && month > 0 && month < 13) {
+            if(month < 10) {
+                date_str +=  '-0' + month;
+            } else {
+                date_str +=  '-' + month;
+            }
+
+            if(!!date && date > 0 && date < 31) {
+                if(date < 10) {
+                    date_str +=  '-0' + date;
+                } else {
+                    date_str +=  '-' + date;
+                }
+            }
+        }
+
+        var instanceApi = doctorApi.all("v2/doctor/calendar_by_date");
+        return instanceApi.post({'doctor_id' : doctor_id, date: date_str});
+    }
+
      doctorService.catItemDept = function(items) {
 				// MUST ORDER BY 'ITEM DEPT' POPULAR_HEADER_ID
 				var newlist = [];

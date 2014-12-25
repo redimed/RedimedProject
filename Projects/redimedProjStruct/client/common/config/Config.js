@@ -76,8 +76,21 @@ angular.module('app.config', [])
     {code: 'Thursday', name: 'Thursday'},
     {code: 'Friday', name: 'Friday'}
 ])
-
-.factory('ConfigService', function (TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS,  Restangular) {
+.constant("MONTH_IN_YEAR", [
+    {code: 1, title: 'January'},
+    {code: 2, title: 'February'},
+    {code: 3, title: 'March'},
+    {code: 4, title: 'April'},
+    {code: 5, title: 'May'},
+    {code: 6, title: 'June'},
+    {code: 7, title: 'July'},
+    {code: 8, title: 'August'},
+    {code: 9, title: 'September'},
+    {code: 10, title: 'October'},
+    {code: 11, title: 'November'},
+    {code: 12, title: 'December'},
+])
+.factory('ConfigService', function (TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
     var mdtApi = Restangular.all("api/meditek/v1");
@@ -134,6 +147,18 @@ angular.module('app.config', [])
     }
     
     /* KHANK */
+    configService.month_in_year = function() {
+        return MONTH_IN_YEAR;
+    }
+
+    configService.date_in_month = function() {
+        var arr = [];
+        for (var i = 1; i <= 31; ++i) {
+            arr.push({title: i, code: i});
+        };
+        return arr;
+    }
+
     configService.appt_status_option = function(){
         return APPT_STATUS;
     }	

@@ -104,7 +104,7 @@ module.exports = {
 
 		return minutes_add;
 	},
-
+	
 	toDateDatabase: function(date){
 		if(typeof date === 'string'){
 			var split = date.split("/");
@@ -120,7 +120,9 @@ module.exports = {
 
 		return year+"-"+month+"-"+dates;
 	},
-
+	nowDateDatabase: function(){
+		this.toDateDatabase(new Date());
+	},
 	toTime: function(current_time){
 		var hour = Math.floor(current_time/60);
 		var minute = current_time%60;

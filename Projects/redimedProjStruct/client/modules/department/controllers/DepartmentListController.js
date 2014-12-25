@@ -48,7 +48,7 @@ angular.module("app.loggedIn.department.list.controller", [
                             $scope.invheader.show(item.CLINICAL_DEPT_ID);
                             $scope.services.show(item.CLINICAL_DEPT_ID);
                         }
-    },
+                     },
                     {
                         class: 'fa fa-pencil',
                         title: 'Edit',
@@ -149,7 +149,7 @@ angular.module("app.loggedIn.department.list.controller", [
                         label: 'Color',
                         type: 'color'
                     },
-            ],
+                ],
                 use_filters: true,
                 search: {
                     CLINICAL_DEPT_ID: 0
@@ -173,8 +173,7 @@ angular.module("app.loggedIn.department.list.controller", [
                                 }
                             });
                         }
-                },
-                    {
+                    },{
                         class: 'fa fa-times',
                         title: 'Disable',
                         callback: function (item) {
@@ -189,8 +188,8 @@ angular.module("app.loggedIn.department.list.controller", [
                                 }
                             });
                         }
-                },
-            ],
+                    },
+                ],
             }
         }
 
