@@ -205,6 +205,38 @@ angular.module("app.model", [])
 //END WAITING LIST
 
 /*AUTO CREATE*/
+.value('mdtInsurerModel', {
+	insurer_name: '',
+	address: '',
+	suburb: '',
+	postcode: '',
+	state: '',
+	isenable: '',
+	created_by: null,
+	creation_date: null,
+	last_updated_by: null,
+	last_update_date: null,
+})
+.value('mdtClaimModel', {
+	Patient_id: '',
+	Injury_name: '',
+	Injury_date: null,
+	How_Injury_Occurred: '',
+	Location: '',
+	ENTITY_id: null,
+	Claim_date: null,
+	Insurer: '',
+	Address: '',
+	Claim_no: null,
+	Case_manager: '',
+	Isenable: '1',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	isCurr: null,
+	insurer_site: null
+})
 .value('mdtOutdoctorModel', {
 	provider_no: '',
 	name: '',

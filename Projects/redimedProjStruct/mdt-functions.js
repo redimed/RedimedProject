@@ -104,7 +104,7 @@ module.exports = {
 
 		return minutes_add;
 	},
-	
+
 	toDateDatabase: function(date){
 		if(typeof date === 'string'){
 			var split = date.split("/");

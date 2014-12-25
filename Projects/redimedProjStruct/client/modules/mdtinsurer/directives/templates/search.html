@@ -14,14 +14,14 @@
 		<table class='mdt-table'>
 			<thead>
 				<tr>
-					<th>provider_no</th>
-					<th>name</th>
+					<th>insurer_name</th>
+					<th>address</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat='l in list.data' ng-click='clickRow({row: l})' style='cursor: pointer;'>
-					<td>{{l.provider_no}}</th>
-					<td>{{l.name}}</th>
+					<td>{{l.insurer_name}}</th>
+					<td>{{l.address}}</th>
 				</tr>
 			</tbody>
 		</table>

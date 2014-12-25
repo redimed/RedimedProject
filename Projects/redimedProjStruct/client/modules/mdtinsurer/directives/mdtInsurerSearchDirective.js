@@ -1,18 +1,12 @@
-angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdtoutdoctorSearch', function(mdtOutdoctorService, toastr){
+angular.module('app.loggedIn.mdtinsurer.search.directive', []).directive('mdtinsurerSearch', function(mdtInsurerService, toastr){
 	return {
 		restrict: 'EA',
 		scope: {
 			clickRow: '&',
-			isClose: '@'
+			isClose: "@"
 		},
-		templateUrl: 'modules/mdtoutdoctor/directives/templates/search.html',
+		templateUrl: 'modules/mdtinsurer/directives/templates/search.html',
 		link: function(scope, element, attrs){
-			//POPUP
-			scope.closePopup = function(){
-				angular.element("#"+scope.isClose).fadeOut();
-			}
-			//END POPUP
-
 			var init = function(){
 				scope.list = {};
 				scope.params = {
@@ -23,21 +17,24 @@ angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdto
 						max_size: 3
 					},
 					filters: [
-						{type: 'text', name: 'provider_no', value:''},
-						{type: 'text', name: 'name', value:''},
-						{type: 'text', name: 'address', value:''}
+						{type: 'text', name: 'insurer_name', value:''},
+						{type: 'text', name: 'address', value:''},
+						{type: 'text', name: 'suburb', value:''}
 					],
 					select: [
-						'doctor_id', 'provider_no', 'name', 'address'
+						'insurer_name', 'address', 'suburb'
 					]
 				}
-
-				if(scope.isClose){
-                	scope.closePopup();
-                }
 			}//end init
+
+			//POPUP
+			scope.closePopup = function(){
+				angular.element(idClose).fadeOut();
+			}
+			//END POPUP
+
 			var loadList = function(){
-				mdtOutdoctorService.search(scope.params).then(function(response){
+				mdtInsurerService.search(scope.params).then(function(response){
 					if(response.status==='error') toastr.error('Cannot get Seacrh', 'Error')
 					scope.list = response;
 				})

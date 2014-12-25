@@ -11,6 +11,12 @@ angular.module("app.loggedIn.patient.claim.directive", [])
         },
         templateUrl: "modules/patient/directives/templates/claim.html",
         link: function (scope, element, attrs) {
+            scope.$watch("patientId", function(newPatientId){
+                if(typeof newPatientId !== 'undefined'){
+
+                }
+            })
+
             scope.$watch('params.permission.edit', function () {
                 if (scope.params.permission.edit === true) {
                     scope.mode = {
@@ -99,9 +105,6 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                 text: 'Add Claim'
             };
 
-
-            loadInit();
-            getInsurerInfo();
             // END DECLARE
 
             //POPUP

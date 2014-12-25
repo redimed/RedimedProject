@@ -29,7 +29,6 @@ angular.module('app.loggedIn.mdtoutreferral.detail.directive', [])
 
 			scope.$watch("params.id", function(newId, oldId){
 				if(scope.params.permission.edit === true){
-					console.log(newId);
 					if(typeof newId !== 'undefined' && newId !== 0){
 						mdtoutreferralService.byId(newId).then(function(response){
 							if(response.status == 'error') toastr.error('Error Get Detail', 'Error')

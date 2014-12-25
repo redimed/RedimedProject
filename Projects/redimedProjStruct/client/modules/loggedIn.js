@@ -21,6 +21,10 @@ angular.module("app.loggedIn",[
         "app.loggedIn.insurer",
 	"app.loggedIn.department",		
 	/*AUTO CREATE*/
+	'app.loggedIn.mdtinsurer',
+
+	'app.loggedIn.mdtclaim',
+
 	'app.loggedIn.mdtoutdoctor',
 
 	'app.loggedIn.mdtoutreferral',

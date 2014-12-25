@@ -2,12 +2,25 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
+	list: function(req, res){
+		var sql = "SELECT * FROM cln_insurers";
+
+		db.sequelize.query(sql)
+		.success(function(list){
+			res.json({status: 'success', data: list});
+		})
+		.error(function(error){
+			res.json(500, {status: 'error', message: error});
+		})
+	},
+
 	postAdd: function(req, res){
 		var postData = req.body.add_data;
 
-		db.mdtClaim.create(postData)
+		var sql = mdt_functions.commonAdd("cln_insurers", postData);
+
+		db.sequelize.query(sql)
 		.success(function(created){
-			if(!created) res.json(500, {'status': 'error', 'message': 'Cannot Insert'});
 			res.json({'status': 'success', 'data': created});
 		})
 		.error(function(error){
@@ -18,7 +31,7 @@ module.exports = {
 		var postData = req.body.edit_data;
 		var edit_id = req.body.edit_id;
 
-		db.mdtClaim.find(edit_id)
+		db.Insurer.find(edit_id)
 		.success(function(detail){
 			if(!detail) res.json(500, {'status': 'error', 'message': 'Id Missing !!!'});
 			detail.updateAttributes(postData).success(function(updated){
@@ -35,7 +48,7 @@ module.exports = {
 	postDelete: function(req, res){
 		var delete_id = req.body.delete_id;
 
-		db.mdtClaim.find(delete_id)
+		db.Insurer.find(delete_id)
 		.success(function(detail){
 			if(!detail) res.json(500, {'status': 'error', 'message': 'Id Missing !!!'});
 			detail.destroy().success(function(deleted){
@@ -52,7 +65,7 @@ module.exports = {
 	postById: function(req, res){
 		var detail_id = req.body.detail_id;
 
-		db.mdtClaim.find(detail_id)
+		db.Insurer.find(detail_id)
 		.success(function(detail){
 			if(!detail) res.json(500, {'status': 'error', 'message': 'Cannot Get Detail'});
 			res.json({'status': 'success', 'data': detail});
@@ -68,7 +81,7 @@ module.exports = {
 
 		var sql = mdt_functions.commonSearch(post_fields);
 
-		db.mdtClaim.findAndCountAll({
+		db.Insurer.findAndCountAll({
 			where: [sql],
 			offset: pagination.offset,
 			limit: pagination.limit,

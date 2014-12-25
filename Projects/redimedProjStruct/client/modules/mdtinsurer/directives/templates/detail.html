@@ -1,0 +1,103 @@
+<form name="mdtinsurerForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i>
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--insurer_name-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="insurer_name">Insurer name</label>
+			<input type="text" placeholder="Insurer name" name="insurer_name" ng-model="mdtInsurerMap.insurer_name" class="form-control" id="insurer_name" float-label>
+		</span>	</div>
+	<!--insurer_name-->
+
+	<!--address-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="address">Address</label>
+			<input type="text" placeholder="Address" name="address" ng-model="mdtInsurerMap.address" class="form-control" id="address" float-label>
+		</span>	</div>
+	<!--address-->
+
+	<!--suburb-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="suburb">Suburb</label>
+			<input type="text" placeholder="Suburb" name="suburb" ng-model="mdtInsurerMap.suburb" class="form-control" id="suburb" float-label>
+		</span>	</div>
+	<!--suburb-->
+
+
+	<div class="break-row"></div>
+	<!--postcode-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="postcode">Postcode</label>
+			<input type="text" placeholder="Postcode" name="postcode" ng-model="mdtInsurerMap.postcode" class="form-control" id="postcode" float-label>
+		</span>	</div>
+	<!--postcode-->
+
+	<!--state-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="state">State</label>
+			<input type="text" placeholder="State" name="state" ng-model="mdtInsurerMap.state" class="form-control" id="state" float-label>
+		</span>	</div>
+	<!--state-->
+
+	<!--isenable-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="mdtInsurerMap.isenable" ng-true-value="1" ng-false-value="0">
+		<label for="isenable">Isenable</label>
+	</div>
+	<!--isenable-->
+
+
+	<div class="break-row"></div>
+	<!--created_by-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="created_by">Created by</label>
+			<input type="number" placeholder="Created by" name="created_by" ng-model="mdtInsurerMap.created_by" class="form-control" id="created_by" float-label>
+		</span>	</div>
+	<!--created_by-->
+
+	<!--creation_date-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="creation_date">Creation date</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Creation date" name="creation_date" ng-model="mdtInsurerMap.creation_date" class="form-control" id="creation_date" float-label>
+		</span>	</div>
+	<!--creation_date-->
+
+	<!--last_updated_by-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="last_updated_by">Last updated by</label>
+			<input type="number" placeholder="Last updated by" name="last_updated_by" ng-model="mdtInsurerMap.last_updated_by" class="form-control" id="last_updated_by" float-label>
+		</span>	</div>
+	<!--last_updated_by-->
+
+
+	<div class="break-row"></div>
+	<!--last_update_date-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="last_update_date">Last update date</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Last update date" name="last_update_date" ng-model="mdtInsurerMap.last_update_date" class="form-control" id="last_update_date" float-label>
+		</span>	</div>
+	<!--last_update_date-->
+
+</div>
+</form>

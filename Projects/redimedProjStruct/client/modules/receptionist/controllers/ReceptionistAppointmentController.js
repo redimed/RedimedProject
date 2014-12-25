@@ -11,6 +11,13 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 		}
 	}
 
+	$scope.params_claim = {
+		permission: {
+			create: true,
+			edit: false
+		}
+	}
+
 	$scope.extra = {
 		service_id: 0
 	}
@@ -22,6 +29,8 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	//DECLARE
 	var waitingListSelectId = "#waitingListSelectModule";
 	var appointmentPatientSearchId = "#appointmentPatientSearch";
+	var claimListSelectId = "#ClaimListSelectModule";
+	var claimListAddId = "#ClaimListAddModule";
 
 	$scope.rightSelectedBooking = {};
 	$scope.selectedCalId = 0;
@@ -37,10 +46,23 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 	// WATCH PATIENT ID
 	$scope.$watch("patient", function(newPatient){
-		if(typeof newPatient !== 'undefined'){
-			$scope.refreshAppointment();
+		if(typeof newPatient !== 'undefined' && newPatient !== null){
+			$scope.patient_id = newPatient.Patient_id;
+			angular.element(claimListSelectId).fadeIn();
+			//$scope.refreshAppointment();
 		}
 	})
+
+	$scope.addClaim = function(){
+		angular.element(claimListAddId).fadeIn();
+	}
+
+	$scope.$watch('claim', function(newClaim, oldClaim){
+		if(typeof newClaim !== 'undefined'){
+			angular.element(claimListSelectId).fadeOut();
+			angular.element(claimListAddId).fadeOut();
+		}
+	});
 	// END WATCH PATIENT ID
 
 	// RIGHT CLICK BOOKING

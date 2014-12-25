@@ -118,7 +118,7 @@
 <!-- END BOOKING MODULE -->
 
 <!-- PATIENT MODULE -->
-<div class="mdt-search" id="patientModule" style="width: 75%">
+<div class="mdt-search" id="patientModule" style="width: 100%">
 	<patient-detail options="options" is-close="patientModule" patient="patient" params="params"></patient-detail>
 </div>
 <!-- END PATIENT MODULE -->
@@ -142,3 +142,19 @@
 	</waiting-list-search>
 </div>
 <!-- END SELECT WAITING LIST MODULE -->
+
+<!-- CLAIM MODULE -->
+<div class="mdt-search" id="ClaimListSelectModule">
+	<button class="btn btn-sm green" ng-click="addClaim()">Add Claim</button>
+	<mdtclaim-search options="options" is-close="ClaimListSelectModule" patient-id="patient_id" click-row="selectClaimModule(row)">
+	</mdtclaim-search>
+</div>
+<!-- END CLAIM MODULE -->
+
+<!-- ADD CLAIM MODULE ADD -->
+<div class="mdt-search" id="ClaimListAddModule">
+	<mdtclaim-detail options="options" is-close="ClaimListAddModule" patient-id="patient_id" 
+		params="params_claim" claim="claim">
+	</mdtclaim-detail>
+</div>
+<!-- END ADD CLAIM MODULE ADD -->

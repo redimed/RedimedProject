@@ -40,6 +40,21 @@ app.post('/api/meditek/v1/mdttimetable/add', mdtTimetableController.add);
 app.post('/api/meditek/v1/mdttimetable/generate', mdtTimetableController.generate);
 
 /*AUTO CREATE*/
+var mdtInsurerController = require('./controllers/mdtInsurerController');
+
+app.post('/api/meditek/v1/mdtinsurer/search', mdtInsurerController.postSearch);
+app.post('/api/meditek/v1/mdtinsurer/add', mdtInsurerController.postAdd);
+app.post('/api/meditek/v1/mdtinsurer/edit', mdtInsurerController.postEdit);
+app.post('/api/meditek/v1/mdtinsurer/byId', mdtInsurerController.postById);
+app.get('/api/meditek/v1/mdtinsurer/list', mdtInsurerController.list);
+
+var mdtClaimController = require('./controllers/mdtClaimController');
+
+app.post('/api/meditek/v1/mdtclaim/search', mdtClaimController.postSearch);
+app.post('/api/meditek/v1/mdtclaim/add', mdtClaimController.postAdd);
+app.post('/api/meditek/v1/mdtclaim/edit', mdtClaimController.postEdit);
+app.post('/api/meditek/v1/mdtclaim/byId', mdtClaimController.postById);
+
 var mdtOutdoctorController = require('./controllers/mdtOutdoctorController');
 
 app.post('/api/meditek/v1/mdtoutdoctor/search', mdtOutdoctorController.postSearch);
