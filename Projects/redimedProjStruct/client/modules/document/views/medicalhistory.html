@@ -1360,7 +1360,7 @@
                                         <textarea class="form-control" ng-model="info.s5_comments" name="s5_comments"
                                                   ng-maxlength="500"
                                                   ng-required="info.s5_disease==1 ||
-             info.s5_duties==1 ||
+             info.s5_duties==0 ||
              info.s5_sickness==1 ||
              info.s5_equipment==1 ||
              info.s5_chermicals ==1||
@@ -3657,10 +3657,24 @@
                                             </label>
 
                                         </div>
-                                        <div class="col-md-3 col-sm-3" style="width:auto;">
-                                            <input type="text" class="form-control"
-                                                   ng-model="info.rmi_physical_initials"
-                                                   ng-disabled="info.rmi_physical!=1"/>
+                                        <div ng-class="{'has-error':mhForm.rmi_physical_initials.$error.required || mhForm.rmi_physical_initials.$error.maxlength}">
+                                            <div class="col-md-3 col-sm-3" style="width:auto;">
+                                                <input type="text" class="form-control"
+                                                       name="rmi_physical_initials"
+                                                       ng-model="info.rmi_physical_initials"
+                                                       ng-disabled="info.rmi_physical!=1"
+                                                       ng-required="info.rmi_physical==1"
+                                                       ng-maxlength="2"/>
+
+                                                <div class="help-block"
+                                                     ng-show="mhForm.rmi_physical_initials.$error.required">
+                                                    <label class="control-label">Required!</label>
+                                                </div>
+                                                <div class="help-block"
+                                                     ng-show="mhForm.rmi_physical_initials.$error.maxlength">
+                                                    <label class="control-label">Too long!</label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-1 col-sm-1" style="margin-top:10px;">
                                             <label class="control-label bold">
@@ -3682,9 +3696,22 @@
                                             </label>
 
                                         </div>
-                                        <div class="col-md-3 col-sm-3" style="width:auto;">
-                                            <input type="text" class="form-control" ng-model="info.rmi_mental_initials"
-                                                   ng-disabled="info.rmi_mental!=1"/>
+                                        <div ng-class="{'has-error': mhForm.rmi_mental_initials.$error.required || mhForm.rmi_mental_initials.$error.maxlength}">
+                                            <div class="col-md-3 col-sm-3" style="width:auto;">
+                                                <input type="text" class="form-control" name="rmi_mental_initials"
+                                                       ng-model="info.rmi_mental_initials"
+                                                       ng-disabled="info.rmi_mental!=1"
+                                                       ng-required="info.rmi_mental==1"/>
+
+                                                <div class="help-block"
+                                                     ng-show="mhForm.rmi_mental_initials.$error.required">
+                                                    <label class="control-label">Required!</label>
+                                                </div>
+                                                <div class="help-block"
+                                                     ng-show="mhForm.rmi_mental_initials.$error.maxlength">
+                                                    <label class="control-label">Too long!</label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-1 col-sm-1" style="margin-top:10px;">
                                             <label class="control-label bold">
