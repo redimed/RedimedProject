@@ -3664,7 +3664,7 @@
                                                        ng-model="info.rmi_physical_initials"
                                                        ng-disabled="info.rmi_physical!=1"
                                                        ng-required="info.rmi_physical==1"
-                                                       ng-maxlength="2"/>
+                                                       ng-maxlength="200"/>
 
                                                 <div class="help-block"
                                                      ng-show="mhForm.rmi_physical_initials.$error.required">
@@ -3701,7 +3701,8 @@
                                                 <input type="text" class="form-control" name="rmi_mental_initials"
                                                        ng-model="info.rmi_mental_initials"
                                                        ng-disabled="info.rmi_mental!=1"
-                                                       ng-required="info.rmi_mental==1"/>
+                                                       ng-required="info.rmi_mental==1"
+                                                       ng-maxlength="200"/>
 
                                                 <div class="help-block"
                                                      ng-show="mhForm.rmi_mental_initials.$error.required">
