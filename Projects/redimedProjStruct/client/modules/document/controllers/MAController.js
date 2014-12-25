@@ -1,7 +1,6 @@
 
 angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
-    .controller("MAController",function($scope,DocumentService,$http,$cookieStore,$state,toastr,$stateParams,localStorageService) {
-        $scope.focusField1 = false;
+    .controller("MAController",function($scope,DocumentService,ConfigService,$http,$cookieStore,$state,toastr,$stateParams,localStorageService) {
 
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -212,7 +211,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             $scope.showClickedValidation = true;
             if (MAForm.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
-                $scope.focusField1 = true;
+                ConfigService.focus_input(MAForm);
             } else {
                 if (insert == true) {
                     DocumentService.insertMA($scope.info).then(function (response) {
@@ -242,26 +241,6 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         };
 
     })
-    .directive('showErrors', function() {
-        return {
-            restrict: 'A',
-            require:  '^form',
-            link: function (scope, el, attrs, formCtrl) {
-                // find the text box element, which has the 'name' attribute
-                var inputEl   = el[0].querySelector("[name]");
-                // convert the native text box element to an angular element
-                var inputNgEl = angular.element(inputEl);
-                // get the name on the text box so we know the property to check
-                // on the form controller
-                var inputName = inputNgEl.attr('name');
-
-                // only apply the has-error class after the user leaves the text box
-                inputNgEl.bind('blur', function() {
-                    formCtrl[inputName].$error.required.focus();
-                })
-            }
-        }
-    });
 
 
 

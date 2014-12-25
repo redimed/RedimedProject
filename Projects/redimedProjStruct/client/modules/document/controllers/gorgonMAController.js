@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.gorgonMA.controllers', [])
-    .controller("gorgonMAController", function ($scope, $filter, DocumentService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
+    .controller("gorgonMAController", function ($scope, $filter, DocumentService,ConfigService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
         var isEdit = true;
 
         $scope.dateOptions = {
@@ -271,6 +271,7 @@ angular.module('app.loggedIn.document.gorgonMA.controllers', [])
             $scope.showClickedValidation = true;
             if (gorgonMAForm.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
+                ConfigService.focus_input(gorgonMAForm);
             } else {
                 if (insert == true) {
                     DocumentService.insertGorgonMA($scope.info).then(function (response) {
