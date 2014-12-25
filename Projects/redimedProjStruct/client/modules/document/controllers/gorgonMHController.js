@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.gorgonMH.controllers', [])
-    .controller("gorgonMHController", function ($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
+    .controller("gorgonMHController", function ($filter, DocumentService, $scope, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService, ConfigService) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -591,11 +591,11 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                 $scope.resetForm = function () {
                     $scope.info = angular.copy(oriInfo);
                     $scope.gorgonMHForm.$setPristine();
-                }
+                };
 
                 $scope.infoChanged = function () {
                     return !angular.equals(oriInfo, $scope.info);
-                }
+                };
 
                 $scope.submit = function (gorgonMHForm) {
                     //begin set value total score
@@ -616,6 +616,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                     //end comment q3-q9
                     if (gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required) {
                         toastr.error("Please Input All Required Information!", "Error");
+                        ConfigService.focus_input(gorgonMHForm);
                     }
                     else {
                         var info = $scope.info;

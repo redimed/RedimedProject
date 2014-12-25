@@ -1,6 +1,7 @@
 
 angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
-    .controller("MAController",function($scope,DocumentService,$http,$cookieStore,$state,toastr,$stateParams,localStorageService) {
+    .controller("MAController",function($scope,DocumentService,ConfigService,$http,$cookieStore,$state,toastr,$stateParams,localStorageService) {
+
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -210,13 +211,13 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             $scope.showClickedValidation = true;
             if (MAForm.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
+                ConfigService.focus_input(MAForm);
             } else {
                 if (insert == true) {
                     DocumentService.insertMA($scope.info).then(function (response) {
                         if (response['status'] === 'success') {
                             toastr.success("Add new success!", "Success");
                             $scope.isNew = false;
-
                             $state.go('loggedIn.MA', null, {'reload': true});
                         }
                         else {
@@ -239,8 +240,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
 
         };
 
-    });
-
+    })
 
 
 

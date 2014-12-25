@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.gorgonFA.controllers', [])
-    .controller("gorgonFAController", function ($scope, $filter, DocumentService, $http, $cookieStore, $state, toastr, $window, $stateParams, localStorageService) {
+    .controller("gorgonFAController", function ($scope, $filter, DocumentService,ConfigService, $http, $cookieStore, $state, toastr, $window, $stateParams, localStorageService) {
         // Start Signature
         var tempSignature;
         var oriInfo;
@@ -624,6 +624,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             $scope.showClickedValidation = true;
             if (gorgonFAForm.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
+                ConfigService.focus_input(gorgonFAForm);
             } else {
                 if (insert == true) {
                     var info = $scope.info;
