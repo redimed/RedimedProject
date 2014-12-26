@@ -82,8 +82,12 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             }
         };
 
+        var weight, height;
         $scope.mathBMI = function(){
-            value = ($scope.info.WEIGHT * 10000) / ($scope.info.HEIGHT * $scope.info.HEIGHT);
+            weight =  new Number( $scope.info.WEIGHT );
+            height = new Number( $scope.info.HEIGHT );
+            value = (weight * 10000) / (height * height);
+            value = value.toFixed(1);
             if(value > 0 && value < 300)
             {
                 $scope.info.BMI = value;
@@ -102,6 +106,23 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                 $scope.info.IS_BMI = null;
             }
         };
+
+        var len,totalCom = '',str;
+        $scope.collectComment = function () {
+            $scope.info.COMMENT_SEC9= (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '')+ (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '')+ (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '')+ (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '')+ totalCom;
+        };
+
+        $scope.totalComment = function(){
+            if(!$scope.info.COMMENT_SEC9){
+                $scope.info.COMMENT_SEC9= (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '')+ (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '')+ (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '')+ (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '');
+            }
+            len = ($scope.info.COMMENT_SEC4 != null ? $scope.info.COMMENT_SEC4.length : 0) +($scope.info.COMMENT_SEC5 != null ? $scope.info.COMMENT_SEC5.length : 0) +($scope.info.COMMENT_SEC6 != null ? $scope.info.COMMENT_SEC6.length : 0) +($scope.info.COMMENT_SEC7 != null ? $scope.info.COMMENT_SEC7.length : 0) +($scope.info.COMMENT_SEC8 != null ? $scope.info.COMMENT_SEC8.length : 0);
+            str = $scope.info.COMMENT_SEC9.replace('\n','');
+            for(var i = 0; i <4; i++){
+                str = str.replace('\n','');
+            }
+            totalCom  = str.substr(len);
+        }
 
         var insert = true;
         DocumentService.checkMA(Patient_ID, CalID).then(function (response) {
@@ -204,6 +225,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                 $scope.info.DOCTOR_NAME = response['docName'];
                 $scope.info.SIGN = response['docSign'];
                 oriInfo = angular.copy($scope.info);
+                $scope.totalComment();
             }
         });
 
@@ -211,7 +233,6 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
             $scope.showClickedValidation = true;
             if (MAForm.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
-                ConfigService.focus_input(MAForm);
             } else {
                 if (insert == true) {
                     DocumentService.insertMA($scope.info).then(function (response) {

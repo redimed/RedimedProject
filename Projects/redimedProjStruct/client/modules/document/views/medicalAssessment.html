@@ -1,4 +1,4 @@
-<form name="MAForm" ng-submit="submitMA(MAForm)" show-errors method="post" novalidate>
+<form name="MAForm" ng-submit="submitMA(MAForm)" method="post" accessible-form novalidate>
     <div class="row">
         <div class="col-md-12 ">
             <button type="submit"
@@ -48,7 +48,7 @@
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">BMI</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <div class="form-control"  style="background-color: #f5f5f5">{{info.BMI| number : 1}}</div>
+                        <div class="form-control"  style="background-color: #f5f5f5">{{info.BMI}}</div>
                     </div>
                 </div>
                 <div ng-show="showClickedValidation">
@@ -163,8 +163,14 @@
                 </div>
                 <div class="row">
                     <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
-                    <div class="col-lg-10 col-md-10 col-sm-10">
-                        <textarea class="form-control " ng-model="info.COMMENT_SEC1"></textarea></div>
+                    <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC1.$error.required}">
+                        <textarea class="form-control " ng-model="info.COMMENT_SEC1" name="COMMENT_SEC1"
+                        ng-required="info.VEINS_OTHER == 0 || info.PERIPHERAL == 0 || info.HEART_SOUNDS == 0 ||
+                        info.IS_BLOOD == 0 || info.IS_RESTING_HEART_RATE == 0"></textarea>
+                        <div class="help-block" ng-show="MAForm.COMMENT_SEC1.$error.required">
+                            <label class="control-label">Required!</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -267,8 +273,13 @@
             </div>
             <div class="row">
                 <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
-                <div class="col-lg-10 col-md-10 col-sm-10">
-                    <textarea class="form-control " ng-model="info.COMMENT_SEC2"></textarea></div>
+                <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC2.$error.required}">
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC2" name="COMMENT_SEC2"
+                     ng-required="info.PERIPHERAL_SEC2 == 0 || info.COLOUR_SEC2 == 0"></textarea>
+                    <div class="help-block" ng-show="MAForm.COMMENT_SEC2.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -388,6 +399,16 @@
                         <input type="radio" ng-model="info.AUSCULTATION" ng-value="0"> Abnormal </label>
                 </div>
             </div>
+            <div class="row">
+                <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
+                <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC4.$error.required}">
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC4" ng-change="collectComment()" name="COMMENT_SEC4"
+                    ng-required="info.AUSCULTATION == 0 || info.SYMMETRICAL == 0 || info.SPIROMETRY == 0"></textarea>
+                    <div class="help-block" ng-show="MAForm.COMMENT_SEC4.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!--SECTION 5: Ears, Nose, Throat & Mouth-->
@@ -448,6 +469,17 @@
                         <input type="radio" ng-model="info.TEETH_GUMS" ng-value="0"> Abnormal </label>
                 </div>
             </div>
+            <div class="row">
+                <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
+                <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC5.$error.required}">
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC5" ng-change="collectComment()" name="COMMENT_SEC5"
+                    ng-required="info.TEETH_GUMS == 0 || info.THROAT == 0 || info.NOSE == 0 ||
+                    info.HEARING == 0 || info.EARS == 0"></textarea>
+                    <div class="help-block" ng-show="MAForm.COMMENT_SEC5.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!--SECTION 6: Skin-->
@@ -502,6 +534,11 @@
                     <label class="btn">
                         <input type="radio" ng-model="info.SCAR" ng-value="0"> No </label>
                 </div>
+            </div>
+            <div class="row">
+                <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC6" ng-change="collectComment()"></textarea></div>
             </div>
         </div>
     </div>
@@ -563,6 +600,17 @@
                         <input type="radio" ng-model="info.KIDNEYS" ng-value="0"> Abnormal </label>
                 </div>
             </div>
+            <div class="row">
+                <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
+                <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC7.$error.required}">
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC7" ng-change="collectComment()" name="COMMENT_SEC7"
+                    ng-required="info.KIDNEYS == 0 || info.SPLEEN == 0 || info.LIVER == 0 ||
+                    info.HERNIAL == 0 || info.ABDOMEN == 0"></textarea>
+                    <div class="help-block" ng-show="MAForm.COMMENT_SEC7.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!--SECTION 8: Nervous System-->
@@ -594,6 +642,16 @@
                         <input type="radio" ng-model="info.COORDINATION" ng-value="1"> Normal </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.COORDINATION" ng-value="0"> Abnormal </label>
+                </div>
+            </div>
+            <div class="row">
+                <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
+                <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC8.$error.required}">
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC8" ng-change="collectComment()" name="COMMENT_SEC8"
+                    ng-required="info.COORDINATION == 0 || info.BALANCE == 0"></textarea>
+                    <div class="help-block" ng-show="MAForm.COMMENT_SEC8.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -631,8 +689,13 @@
             </div>
             <div class="row">
                 <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
-                <div class="col-lg-10 col-md-10 col-sm-10">
-                    <textarea class="form-control " ng-model="info.COMMENT_SEC9"></textarea></div>
+                <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC9.$error.required}">
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC9" ng-change="totalComment()" name="COMMENT_SEC9"
+                    ng-required="info.LYMPH == 0 || info.THYROID == 0" style="height: 150px"></textarea>
+                    <div class="help-block" ng-show="MAForm.COMMENT_SEC9.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

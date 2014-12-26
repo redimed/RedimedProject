@@ -1,7 +1,7 @@
 
 angular.module('app.loggedIn.document.FA.controllers',[])
 
-    .controller("FAController",function($scope,$filter,$timeout,$state,DocumentService,$stateParams,localStorageService,$http,$cookieStore,toastr) {
+    .controller("FAController",function($scope,$filter,$timeout,$state,ConfigService,DocumentService,$stateParams,localStorageService,$http,$cookieStore,toastr) {
         var oriInfoH,
             oriInfoL,
             oriInfoD,
@@ -403,11 +403,9 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                 oriInfoD  = angular.copy($scope.infoD);
                 oriInfoC  = angular.copy($scope.infoC.VALUE);
             }
-
         });
 
         $scope.submitFA = function(FAForm){
-
             $scope.showClickedValidation = true;
             if(FAForm.$invalid){
                 toastr.error("Please Input All Required Information!", "Error");
@@ -440,7 +438,3 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         };
 
     });
-
-
-
-

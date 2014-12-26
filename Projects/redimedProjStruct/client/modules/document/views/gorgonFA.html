@@ -1,19 +1,10 @@
-<style>
-    #modalSign .modal-dialog {
-        width: 900px;
-        height: 800px;
-    }
-
-</style>
-<form name="gorgonFAForm" method="post" novalidate>
+<form name="gorgonFAForm" method="post" accessible-form novalidate>
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <button ng-disabled="!infoChanged()"
                         class="btn green pull-right" ng-click="submitGorgonFA(gorgonFAForm)">{{isNew?"Add New":"Update"}}
                 </button>
-
-
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/gorgonFA/{{info.id}}"
                    ng-disabled="isNew || infoChanged()"
                    class="btn btn-primary blue pull-right">Print PDF

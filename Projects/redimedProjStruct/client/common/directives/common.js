@@ -36,6 +36,30 @@ angular.module("app.directive.common", [
     }
 })
 
+
+.directive('accessibleForm', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, elem) {
+            // set up event handler on the form element
+            elem.on('submit', function () {
+                // find the first invalid element
+                var f1 = angular.element(elem[0].querySelectorAll('.ng-invalid')[0]);
+                var f2 = angular.element(elem[0].querySelectorAll('.ng-invalid')[1]);
+                (f1[0] != undefined && f2[0] == undefined) ?
+                    (f1.focus()) :
+                    (f2[0] != undefined && f1[0].childElementCount > 0) ?
+                        ( f2.focus()) :
+                        (f2[0] != undefined && f1[0].childElementCount <= 0) ?
+                            ((f1.offset().top < f2.offset().top) ?
+                                f1.focus() :
+                                f2.focus()) :
+                            0;//not find error
+            });
+        }
+    };
+})
+
 .directive("fabric", function(){
     return {
         restrict: "EA",
