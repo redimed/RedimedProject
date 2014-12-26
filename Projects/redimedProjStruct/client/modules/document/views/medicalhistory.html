@@ -1,9 +1,9 @@
-<form name="mhForm" method="post" novalidate>
+<form name="mhForm" method="post" ng-submit="submit(mhForm)" accessible-form novalidate>
 
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="button" ng-disabled="!infoChanged()" ng-click="submit(mhForm)"
+                <button type="submit" ng-disabled="!infoChanged()" accessible-form
                         class="btn green pull-right">{{isNew?"Add
                     new":"Update"}}
                 </button>

@@ -1,19 +1,19 @@
 ﻿<!--BEGIN FORM-->
 
-<form method="post" name="cat2Form" novalidate>
+<form method="post" name="cat2Form" ng-submit="submit(cat2Form)" accessible-form novalidate>
     <!--BUTTON SUBMIT-->
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="button"
-                        ng-disabled="cat2Form.$error.pattern || cat2Form.$error.maxlength || cat2Form.$error.required ||
-                    !infoChanged()"
-                        ng-click="submit(cat2Form)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+                <button type="submit"
+                        ng-disabled="!infoChanged()"
+                        class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
 
-                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/CAT2/{{info.cat_id}}/{{info.cal_id}}/{{info.patient_id}}" target="_self"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/CAT2/{{info.cat_id}}/{{info.cal_id}}/{{info.patient_id}}"
+                   target="_self"
 
-                   ng-disabled="cat2Form.$error.pattern || cat2Form.$error.maxlength || cat2Form.$error.required || infoChanged() || isNew"
+                   ng-disabled="infoChanged() || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
@@ -2385,7 +2385,8 @@
                                     <label class="control-label">Date:&nbsp;<span class="text-info">{{info.DATE|date:"dd/MM/yyyy"}}</span></label>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-sm-12" ng-show="info.doctor.Signature!==null&&info.doctor.Signature!==''">
+                            <div class="col-md-12 col-sm-12"
+                                 ng-show="info.doctor.Signature!==null&&info.doctor.Signature!==''">
                                 <img src="" ng-src="{{info.doctor.Signature}}"
                                      style="width:200px;height: 70px; margin-left: 10px;"/>
                             </div>
@@ -4194,7 +4195,8 @@
                                         <div class="col-md-7 col-sm-7">
 
                                         </div>
-                                        <div class="col-md-5 col-sm-5" ng-show="info.doctor.Signature!==null&&info.doctor.Signature!==''">
+                                        <div class="col-md-5 col-sm-5"
+                                             ng-show="info.doctor.Signature!==null&&info.doctor.Signature!==''">
                                             <img src="" alt="" ng-src="{{info.doctor.Signature}}"
                                                  style="width: 200px;; height: 70px;"/>
                                         </div>
