@@ -7,7 +7,8 @@
 angular.module('app.loggedIn.iso',
     ['app.loggedIn.iso.controller'
         ,'app.loggedIn.iso.service'
-        ,'app.loggedIn.iso.directive'])
+        ,'app.loggedIn.iso.directive'
+    ,'app.loggedIn.isoSubmitStatusPendingController.controller'])
     .config(function($stateProvider){
         $stateProvider
 
@@ -22,4 +23,9 @@ angular.module('app.loggedIn.iso',
 //                templateUrl: "modules/rediLegalOnlineBooking/views/booking.html",
 //                controller: 'rlob_bookingController'
 //            })
+            .state("loggedIn.isoSubmitStatusPending",{
+                url:'/isoSubmitStatusPending',
+                templateUrl:"modules/iso/views/isoSubmitStatusPending.html",
+                controller:"isoSubmitStatusPendingController"
+            })
     });

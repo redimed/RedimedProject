@@ -3,6 +3,7 @@ var moment=require('moment');
 var mkdirp = require('mkdirp');
 var fs = require('fs');//Read js file for import into
 var isoUtil=require('./isoUtilsController');
+var nodemailer = require("nodemailer");
 
 module.exports =
 {
@@ -264,7 +265,7 @@ module.exports =
             "   AND outin.`NODE_ID`=?             "+
             " ORDER BY ID DESC                      "+
             " LIMIT 1                               ";
-        isoUtil.exlog('uploader',req.body);
+        //isoUtil.exlog('uploader',req.body);
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,nodeId,function(err,rows)
@@ -390,6 +391,250 @@ module.exports =
             });
         });
 
+    },
+
+
+
+    //Giap SubmitDocument
+
+    selectIdFromCheckOutIn: function(req,res){
+        var info = req.query.NodeID;
+        isoUtil.exlog(info);
+        var sql = "SELECT outin.`ID` FROM `iso_check_out_in` outin    "+
+            "WHERE  outin.`SUBMIT_STATUS` IS NULL               "+
+            " AND outin.`NODE_ID`= ?                          "+
+            " AND outin.`ISENABLE`=1                            "+
+            "ORDER BY outin.`CHECK_IN_NO` DESC                  "+
+            "LIMIT 1;                                           ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,info,function(err,data)
+            {
+                if(err)
+                {
+
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:data})
+                }
+            });
+        });
+
+    },
+
+
+    submitDocument: function(req,res){
+        var info = req.body.data;
+        var date = moment().format("YYYY/MM/DD HH:mm:ss");
+        var sql=
+            " UPDATE  ISO_CHECK_OUT_IN "+
+            " SET SUBMIT_STATUS = ?, SUBMIT_DATE =  ?" +
+            "Where ID= ?";
+        var sqlGetEmail =
+            " SELECT u.`Contact_email` FROM users u "+
+            " INNER JOIN  `iso_approver` iso "+
+            " WHERE  iso.`APPROVER_ID` = u.`id`";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[info.status,date,info.ID],function(err)
+            {
+                if(err)
+                {
+                    isoUtil.exlog(err);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+
+                    req.getConnection(function(err,connection)
+                    {
+                        var query = connection.query(sqlGetEmail,function(err,data)
+                        {
+                            if(err)
+                            {
+                                isoUtil.exlog(err);
+                                res.json({status:'fail'});
+                            }
+                            else
+                            {
+                                var transport = nodemailer.createTransport({
+                                    service: 'Gmail',
+                                    auth: {
+                                        user:'tannv.solution@gmail.com',//test
+                                        pass:'redimed123'//test
+                                    }
+                                });
+                                data.forEach(function(item){
+                                    isoUtil.exlog(item.Contact_email);
+
+                                    var mailOptions = {
+                                        from: 'Tan Nguyen ? <tannv.solution@gmail.com>',
+                                        to: item.Contact_email, // receiver
+                                        subject:'Redimed New Password', // Subject line
+                                        html:
+                                        "	<p>Hi,</p>                                 "+
+                                        "    <p>                                                                                                 "+
+                                        "        Have new Document: http://localhost:3000/#/isoSubmitStatusPending                                                                            "+
+                                        "    </p>                                                                                                "+
+                                        "    <p>                                                                                                 "+
+                                        "        Should you have any questions please do not hesitate to contact Redilegal                       "+
+                                        "        on (08) 9230 0900 or redilegal@redimed.com.au                                                   "+
+                                        "    </p>                                                                                                "+
+                                        "    <p>                                                                                                 "+
+                                        "        Thank you                                                                                       "+
+                                        "    </p>   "
+
+                                    };
+
+                                    transport.sendMail(mailOptions, function(error){  //callback
+                                        if(error){
+                                            console.log(error);
+                                            res.json({status:"fail"});
+                                        }else{
+                                            res.json({status:"success"});
+                                        }
+                                        transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                                    });
+                                })
+                            }
+                        });
+                    });
+
+
+
+
+
+
+
+                }
+            });
+        });
+    },
+
+    getAllOutInStatusPending: function(req,res){
+        var sql =
+            "SELECT * FROM `iso_check_out_in` outin      "+
+            "WHERE outin.`SUBMIT_STATUS` = 'PENDING'     ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,data)
+            {
+                if(err)
+                {
+                    isoUtil.exlog(err);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:data});
+                }
+            });
+        });
+
+    },
+
+    downloadFileCheckOutIn:function(req,res){
+        var info = req.body.path;
+        var userInfo=JSON.parse(req.cookies.userInfo);
+
+    },
+
+    approvedAndReject :function(req,res){
+        var info = req.body.data;
+        var userInfo=JSON.parse(req.cookies.userInfo);
+        var date = moment().format("YYYY/MM/DD HH:mm:ss");
+        var ver;
+        var versionNew;
+        var sql=
+            " UPDATE  ISO_CHECK_OUT_IN "+
+            " SET SUBMIT_STATUS = ?, CENSORSHIP_BY =  ? , CENSORSHIP_DATE = ?, VERSION_NO = ? " +
+            "Where ID= ?";
+        var sqlcheck = "SELECT MAX(VERSION_NO) as VERSION_NO FROM `iso_check_out_in` WHERE `NODE_ID` = ?";
+        var sqlUpdateTreeDie =
+            " UPDATE iso_tree_dir "+
+            "SET `CURRENT_VERSION_ID` = ? "+
+            "WHERE `NODE_ID` = ?";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sqlcheck,info.Node_ID,function(err,data)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(data[0].VERSION_NO == null){
+                        versionNew = '001';
+                        isoUtil.exlog(versionNew);
+                    }else{
+                        ver = parseInt(data[0].VERSION_NO)+1;
+                        versionNew = isoUtil.pad(ver,3);
+                        isoUtil.exlog(versionNew)
+                    }
+                    req.getConnection(function(err,connection)
+                    {
+                        var query = connection.query(sql,[info.status,userInfo.id,date,versionNew,info.ID],function(err)
+                        {
+                            if(err)
+                            {
+                                res.json({status:'fail'});
+                            }
+                            else
+                            {
+                                req.getConnection(function(err,connection)
+                                {
+                                    var query = connection.query(sqlUpdateTreeDie,[info.ID,info.Node_ID],function(err)
+                                    {
+                                        if(err)
+                                        {
+                                            res.json({status:'fail'});
+                                        }
+                                        else
+                                        {
+                                            res.json({status:'success'})
+                                        }
+                                    });
+                                    //isoUtil.exlog('truy van:',query.sql);
+                                });
+                            }
+                        });
+                    });
+
+                }
+            });
+        });
+
+
+
+
+
+        //req.getConnection(function(err,connection)
+        //{
+        //    var query = connection.query(sql,[info.status,userInfo.id,date,info.ID],function(err)
+        //    {
+        //        if(err)
+        //        {
+        //            isoUtil.exlog(err);
+        //            res.json({status:'fail'});
+        //        }
+        //        else
+        //        {
+        //            res.json({status:'success'})
+        //        }
+        //    });
+        //});
+
+
     }
+
+
+
+
+
     
 }

@@ -63,8 +63,28 @@ angular.module('app.loggedIn.iso.service',[])
             canCheckInDocument:function(nodeId){
                 var result=api.one("iso/iso-check-out-in/can-check-in-document");
                 return result.get({nodeId:nodeId});
+            },
+
+            selectIdFromCheckOutIn: function(NodeID){
+                var result = api.one("iso/iso-check-out-in/selectIdFromCheckOutIn");
+                return result.get({NodeID:NodeID});
+            },
+            submitDocument : function(info){
+                var result = api.all("iso/iso-check-out-in/submitDocument");
+                return result.post({data:info});
+            },
+            getAllOutInStatusPending:function(){
+                var result = api.one("iso/iso-check-out-in/getAllOutInStatusPending");
+                return result.get();
+            },
+            approvedAndReject:function(info){
+                var result = api.all("iso/iso-check-out-in/approvedAndReject");
+                return result.post({data:info})
             }
+
         }
+
+
 
         return isoService;
     })

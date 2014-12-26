@@ -112,7 +112,6 @@ angular.module('app.loggedIn.iso.controller',[])
 
 					$scope.treeData=$scope.tempData[-1].nodes;
 
-
     			}
 	    	},function(err){
 
@@ -411,5 +410,26 @@ angular.module('app.loggedIn.iso.controller',[])
 
         	})
         }
+
+		$scope.SubmitDocument = function(){
+			isoService.checkOutIn.selectIdFromCheckOutIn($scope.selectedTreeNode.NODE_ID).then(function(data){
+				var info = {
+					ID :data.data[0].ID,
+					status:isoConst.submitStatus.pending
+				};
+				if(data.status == "success"){
+					isoService.checkOutIn.submitDocument(info).then(function(data){
+
+						if(data.status=='success'){
+							toastr.success('Submit Document Success');
+						}else{
+							toastr.error('Submit Document Error');
+						}
+					})
+				}else{
+					alert("Error")
+				}
+			})
+		}
     })
 

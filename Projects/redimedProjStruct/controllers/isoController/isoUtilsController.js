@@ -27,5 +27,11 @@ module.exports =
             lock:'LOCK',
             unlock:'UNLOCK'
         }
+    },
+
+    submitStatus:{
+        pending:'PENDING',
+        approved:'APPROVED',
+        reject:'REJECTED'
     }
 }

@@ -134,7 +134,7 @@ app.post('/api/meditek/v1/referral/add', ReferralController.postAdd);
 app.post('/api/meditek/v1/referral/edit', ReferralController.postEdit);
 app.post('/api/meditek/v1/referral/byId', ReferralController.postById);
 
-
+/*
 var mdtWaWorkCoverFirstController = require('./controllers/WaWorkCoverFirstController');
 
 app.post('/api/meditek/v1/wa/workcover/first/add', mdtWaWorkCoverFirstController.postAdd);
@@ -152,7 +152,7 @@ var mdtWaWorkCoverFinalController = require('./controllers/WaWorkCoverFinalContr
 app.post('/api/meditek/v1/wa/workcover/final/add', mdtWaWorkCoverFinalController.postAdd);
 app.post('/api/meditek/v1/wa/workcover/final/search', mdtWaWorkCoverFinalController.postSearch);
 app.post('/api/meditek/v1/wa/workcover/final/edit', mdtWaWorkCoverFinalController.postEdit);
-
+*/
 var SysServicesController = require('./controllers/SysServicesController');
 
 app.post('/api/meditek/v1/sysservices/search', SysServicesController.postSearch);

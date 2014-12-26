@@ -33,3 +33,7 @@ app.post('/api/iso/iso-check-out-in/check-out-document',isoCheckInOutController.
 app.get('/api/iso/iso-check-out-in/download-check-out-document',isoCheckInOutController.downloadCheckOutDocument);
 app.get('/api/iso/iso-check-out-in/can-check-in-document',isoCheckInOutController.canCheckInDocument);
 app.post('/api/iso/iso-check-out-in/check-in-document',multipartMiddleware,isoCheckInOutController.checkInDocument);
+app.post('/api/iso/iso-check-out-in/submitDocument',isoCheckInOutController.submitDocument);
+app.post('/api/iso/iso-check-out-in/approvedAndReject',isoCheckInOutController.approvedAndReject);
+app.get('/api/iso/iso-check-out-in/selectIdFromCheckOutIn',isoCheckInOutController.selectIdFromCheckOutIn);
+app.get('/api/iso/iso-check-out-in/getAllOutInStatusPending',isoCheckInOutController.getAllOutInStatusPending);

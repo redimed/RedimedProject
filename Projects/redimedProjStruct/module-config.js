@@ -19,7 +19,7 @@ eval(fs.readFileSync('./routes/redimedSite_route.js')+'');
 //
 eval(fs.readFileSync('./routes/user_route.js')+'');
 //
- eval(fs.readFileSync('./routes/document_route.js')+'');
+// eval(fs.readFileSync('./routes/document_route.js')+'');
 //
 eval(fs.readFileSync('./routes/redi_legal_online_booking.js')+'');
 //
@@ -30,10 +30,10 @@ eval(fs.readFileSync('./routes/v1_erm.js')+'');
 eval(fs.readFileSync('./routes/injury_management_route.js')+'');
 
 //meditek
-eval(fs.readFileSync('./routes/mdt_route.js')+'');
+//eval(fs.readFileSync('./routes/mdt_route.js')+'');
 
 //tannv.dts@gmail.com
 eval(fs.readFileSync('./routes/iso_route.js')+'');
 
 //medicare
-eval(fs.readFileSync('./routes/medicare_route.js')+'');
+//eval(fs.readFileSync('./routes/medicare_route.js')+'');
