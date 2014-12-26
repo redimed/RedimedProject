@@ -1,13 +1,13 @@
-<form name="form18" method="post" novalidate>
+<form name="form18" method="post" ng-submit="submit(form18)" accessible-form novalidate>
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="button"
-                        ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || !infoChanged()"
-                        ng-click="submit(form18)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+                <button type="submit"
+                        ng-disabled="!infoChanged()"
+                        class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/form18/{{info.GORGON_ID}}"
-                   ng-disabled="form18.$error.pattern || form18.$error.maxlength || form18.$error.required || infoChanged() || isNew"
+                   ng-disabled="infoChanged() || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset

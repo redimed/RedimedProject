@@ -1,14 +1,14 @@
-<form name="mrsForm" novalidate method="post">
+<form name="mrsForm" ng-submit="submit(mrsForm)" novalidate accessible-form method="post">
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="button"
+                <button type="submit"
                         ng-disabled="!infoChanged()"
-                        ng-click="submit(mrsForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+                        class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/mrs/{{info.mrs_id}}"
                    type="button"
-                   ng-disabled="mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required || infoChanged() || isNew"
+                   ng-disabled="infoChanged() || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset

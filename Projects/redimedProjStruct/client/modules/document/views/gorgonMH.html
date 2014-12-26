@@ -1,12 +1,12 @@
-<form name="gorgonMHForm" method="post" novalidate>
+<form name="gorgonMHForm" method="post" ng-submit="submit(gorgonMHForm)" accessible-form novalidate>
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="button" ng-disabled="!infoChanged()" ng-click="submit(gorgonMHForm)"
+                <button type="submit" ng-disabled="!infoChanged()"
                         class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/gorgonMH/{{info.Gorgon_Id}}"
-                   ng-disabled="gorgonMHForm.$error.pattern || gorgonMHForm.$error.maxlength || gorgonMHForm.$error.required || infoChanged() || isNew"
+                   ng-disabled="infoChanged() || isNew"
                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
