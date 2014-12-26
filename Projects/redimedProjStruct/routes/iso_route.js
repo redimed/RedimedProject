@@ -11,16 +11,11 @@ app.get('/api/iso/core/get-user-name-list',isoController.getUserNameList);
 
 //isoTreeDir
 app.post('/api/iso/iso-tree-dir/get-tree-dir',isoTreeDirController.getTreeDir);
-app.post('/api/iso/iso-tree-dir/create-folder',
-	isoTreeDirController.createFolder,
-	isoNodeAncestorController.setFolderAncestor,
-	isoTreeUsersController.saveFolderAuthor);
+app.post('/api/iso/iso-tree-dir/create-folder',isoTreeDirController.createFolder);
 
 app.post('/api/iso/iso-tree-dir/create-document-with-file',
 	multipartMiddleware,
 	isoTreeDirController.createDocumentWithFile,
-	isoNodeAncestorController.setDocumentAncestor,
-	isoTreeUsersController.saveDocumentAuthor,
 	isoCheckInOutController.buildFirstCheckIn);
 
 app.post('/api/iso/iso-tree-dir/check-dup-entry',isoTreeDirController.checkDupEntry);

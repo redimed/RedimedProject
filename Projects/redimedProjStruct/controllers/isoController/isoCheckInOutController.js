@@ -15,6 +15,7 @@ module.exports =
 		var userInfo=JSON.parse(req.cookies.userInfo);
 		var newRow={
 			NODE_ID:info.newDocument.NODE_ID,
+            USER_CHECK_OUT_IN:userInfo.id,
 			CHECK_IN_COMMENT:'CREATE DOCUMENT',
 			CHECK_IN_NO:'0001',
 			CHECK_IN_DATE:moment().format("YYYY-MM-DD HH:mm:ss"),

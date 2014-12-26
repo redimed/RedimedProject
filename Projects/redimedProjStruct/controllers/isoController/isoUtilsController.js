@@ -29,9 +29,18 @@ module.exports =
         }
     },
 
+
     submitStatus:{
         pending:'PENDING',
         approved:'APPROVED',
         reject:'REJECTED'
+		},
+
+    isoPermission:{
+        administrator:0,
+        create:1,
+        update:2,
+        read:3
+
     }
 }
