@@ -57,22 +57,36 @@ return {
 		 };
 		
 		var init = function(){
-		 	var extra_list = localStorageService.get('itemsTempList');
+		 	// var extra_list = localStorageService.get('itemsTempList');
+		 	// if( extra_list ) {
+		 	// 	$scope.extra_list = extra_list;
+		 	// 	localStorageService.remove('itemsTempList');
+		 	// } else {
+		 	// 	$scope.extra_list = [];
+		 	// }
 
-		 	if( extra_list ) {
-		 		$scope.extra_list = extra_list;
-		 		localStorageService.remove('itemsTempList');
-		 	} else {
-		 		$scope.extra_list = [];
-		 	}
+		 	$scope.extra_list = [];
 
-			DoctorService.getById($scope.appt.DOCTOR_ID).then(function(response) {
-				// console.log(response) // DOCTOR DATA
-				$scope.appt.dept_id = response.CLINICAL_DEPT_ID;
-				return 	DoctorService.getItemByDept($scope.appt.dept_id);
+			// DoctorService.getById($scope.appt.DOCTOR_ID).then(function(response) {
+			// 	// console.log(response) // DOCTOR DATA
+			// 	$scope.appt.dept_id = response.CLINICAL_DEPT_ID;
+			// 	return 	DoctorService.getItemByDept($scope.appt.dept_id);
+			// }).then(function (data) {
+
+			// GET APPOINTMENT DETAIL
+			ReceptionistService.apptDetail($scope.data.CAL_ID).then(function(response){
+				if(response.status === 'success') {
+			 		console.log(response.data)
+			 		$scope.appt = response.data;
+				}
+
+				// GET LIST ITEMS OF DEPARTMENT 
+				return 	DoctorService.getItemByDept($scope.appt.CLINICAL_DEPT_ID);
 			}).then(function (data) {
 				// console.log(data)
 		 		$scope.list_dept_item = data;
+
+		 		// GET ITEMS OF APPARTMENT 
 		 		return  DoctorService.getItemAppt($scope.appt.CAL_ID, $scope.data.Patient_id);
 		 	}).then(function (data) {
 		 		$scope.list_appt_item = data;
@@ -85,28 +99,28 @@ return {
 		 			});
 				});
 
+		 		// GET FEE OF LIST ITEMS
 		 		return ReceptionistService.itemFeeAppt($scope.appt.SERVICE_ID, item_id_list);
 		 	}).then( function( response ){
-
-		 		var list_fee = response.list;
-		 		angular.forEach($scope.item_list, function(cat, key) {
-		 			angular.forEach(cat.list, function(item, key) {
-		 				var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
-		 				if(t_item) {
-		 					item.PRICE = t_item.SCHEDULE_FEE;
-		 					item.disable_fee = true;
-		 				} else if(!item.PRICE) {
-		 					item.PRICE = 0;
-		 					item.disable_fee = false;
-		 				} 
-		 				
-		 			});
-				});
+		 		if(!!response) {
+			 		var list_fee = response.list;
+			 		angular.forEach($scope.item_list, function(cat, key) {
+			 			angular.forEach(cat.list, function(item, key) {
+			 				var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
+			 				if(t_item) {
+			 					item.PRICE = t_item.SCHEDULE_FEE;
+			 					item.disable_fee = true;
+			 				} else if(!item.PRICE) {
+			 					item.PRICE = 0;
+			 					item.disable_fee = false;
+			 				} 
+			 				
+			 			});
+					});
+				}
 
 				angular.forEach($scope.extra_list, function(item, key) {
-					
 					item.disable_fee = !!item.PRICE;
-
 				});
 
 		 		// console.log(response)
@@ -237,14 +251,15 @@ return {
 			} 	
 		}
 
-		ReceptionistService.apptDetail($scope.data.CAL_ID).then(function(response){
-		 	if(response.status === 'success') {
-		 		console.log(response.data)
-		 		$scope.appt = response.data;
-		 		init();
-				// $scope.list_appt_item = response.data.items;
-			}
-		})
+		// ReceptionistService.apptDetail($scope.data.CAL_ID).then(function(response){
+		//  	if(response.status === 'success') {
+		//  		console.log(response.data)
+		//  		$scope.appt = response.data;
+		//  		init();
+		// 		// $scope.list_appt_item = response.data.items;
+		// 	}
+		// })
+		init();
 	}
 }
 });
