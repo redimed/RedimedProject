@@ -412,7 +412,7 @@ angular.module("app.model", [])
 	Provider_type: null,
 	Specialty_id: null,
 	Default_bank_account_id: null,
-	Medical_Reg_no: null,
+	Medical_Registration_no: null,
 	OSHC_ID: null,
 	isAppointmentBook: null,
 	isMonday: null,

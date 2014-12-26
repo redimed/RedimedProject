@@ -1,14 +1,14 @@
-<form name="gorgonUQForm" ng-submit="submitGorgonUQ(gorgonUQForm)" method="post" novalidate>
+<form name="gorgonUQForm" ng-submit="submitGorgonUQ(gorgonUQForm)" method="post" accessible-form novalidate>
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <button type="submit"
-                        ng-disabled="submitGorgonUQ.$error.pattern || submitGorgonUQ.$error.maxlength || !infoChanged()"
+                        ng-disabled="!infoChanged()"
                         class="btn green pull-right">{{isNew?"Add New":"Update"}}
                 </button>
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/gorgonUQ/{{info.Quest_Id}}"
                    type="button"
-                   ng-disabled="submitGorgonUQ.$error.pattern || submitGorgonUQ.$error.maxlength || isNew == true || infoChanged()"
+                   ng-disabled="isNew == true || infoChanged()"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <a href="javascript:;" ng-disabled="!infoChanged()" ng-click="resetForm()"

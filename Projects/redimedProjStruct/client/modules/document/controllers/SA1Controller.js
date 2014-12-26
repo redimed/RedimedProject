@@ -183,4 +183,4 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                 }
             }
         }
-    });
+    })

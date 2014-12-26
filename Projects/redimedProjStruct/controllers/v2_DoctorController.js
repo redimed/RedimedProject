@@ -63,5 +63,42 @@ module.exports = {
 		}, function(error){
 			res.json(500, {"status": "error", "message": error});
 		})
-	}
+	},
+    
+    postSearch: function(req, res){
+		var limit = (req.body.limit) ? req.body.limit : 10;
+        var offset = (req.body.offset) ? req.body.offset : 0;
+		var fields = req.body.fields;
+		var search_data = req.body.search;
+		console.log('this is search data', search_data);
+		var agrs = [];
+		for (var key in search_data) {
+			if(search_data[key])
+			agrs.push(key + " = '"+ search_data[key] +"'");
+		};
+
+		var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
+
+		db.mdtDoctor.findAndCountAll({
+			where: whereOpt,
+			offset: offset,
+			limit: limit,
+			attributes: fields,
+            
+			order: 'NAME ASC',
+            include: [
+					{ 
+						model: db.mdtSpecialty , as: 'Specialties',
+//						attributes: ['POPULAR_HEADER_ID', 'POPULAR_CODE', 'POPULAR_NAME'],
+				
+					},
+				]
+
+		}).success(function(result){
+			res.json({"status": "success", "list": result.rows, "count": result.count});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	},
 }

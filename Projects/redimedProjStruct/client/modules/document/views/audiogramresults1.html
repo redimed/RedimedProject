@@ -1,16 +1,15 @@
-<form name="SA1" method="post" novalidate>
+<form name="SA1" method="post" accessible-form novalidate ng-submit="submit(SA1)">
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="button"
-                        ng-disabled="SA1.$error.pattern || SA1.$error.maxlength || !infoChanged()"
-                        ng-click="submit(SA1)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+                <button type="submit"
+                        ng-disabled="!infoChanged()" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
 
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/SA1/{{info.headers[0].SA_ID}}/{{info.CAL_ID}}/{{info.patient_id}}"
 
                    target="_self"
-                   ng-disabled="SA1.$error.pattern || SA1.$error.maxlength || infoChanged() || isNew"
+                   ng-disabled="infoChanged() || isNew"
                    ng-click="print()" class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
@@ -88,7 +87,8 @@
                             </div>
                             <div ng-class="{'has-error': SA1.RECIPIENT_NAME.$error.maxlength}">
                                 <div class="col-md-5 col-sm-7">
-                                    <input type="text" class="form-control" ng-model="info.RECIPIENT_NAME"
+                                    <input type="text" class="form-control" name="RECIPIENT_NAME"
+                                           ng-model="info.RECIPIENT_NAME"
                                            ng-maxlength="200"/>
                                 </div>
                                 <div class="help-block" ng-show="SA1.RECIPIENT_NAME.$error.maxlength">

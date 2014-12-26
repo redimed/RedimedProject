@@ -48,6 +48,18 @@ angular.module("app.loggedIn.doctor", [
             }
         }
     })
+    
+    //DOCTOR LIST
+    .state('loggedIn.doctor.list',{
+        url:"/doctor/list",
+        views:{
+            "main-content":{
+                templateUrl:"modules/doctor/views/doclist.html",
+                controller:"DoctorListController"
+            }
+        }
+    })
+    
     // TIMETABLE
     .state("loggedIn.doctor.timetable", {
         url: "/doctor/timetable",
