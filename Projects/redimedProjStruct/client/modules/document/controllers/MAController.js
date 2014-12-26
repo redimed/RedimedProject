@@ -83,10 +83,17 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         };
 
         var weight, height;
+        function changeNum(val)
+        {
+            val = '0' + val;
+            val = parseFloat(val);
+            return val;
+        }
         $scope.mathBMI = function(){
-            weight =  new Number( $scope.info.WEIGHT );
-            height = new Number( $scope.info.HEIGHT );
+            height = changeNum($scope.info.HEIGHT);
+            weight = changeNum($scope.info.WEIGHT);
             value = (weight * 10000) / (height * height);
+            console.log("height: " + height + "weight: " + weight + "value: " + value);
             value = value.toFixed(1);
             if(value > 0 && value < 300)
             {

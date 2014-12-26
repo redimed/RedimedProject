@@ -40,11 +40,11 @@
                 <div class="row">
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">Height</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.HEIGHT" ng-change="mathBMI()" ng-pattern="/^[0-9]+$/" name="HEIGHT">
+                        <input type="text" class="form-control" ng-model="info.HEIGHT" ng-change="mathBMI()" ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" name="HEIGHT">
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">Weight</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.WEIGHT" ng-change="mathBMI()" ng-pattern="/^[0-9]+$/" name="WEIGHT">
+                        <input type="text" class="form-control" ng-model="info.WEIGHT" ng-change="mathBMI()" ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" name="WEIGHT">
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">BMI</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
