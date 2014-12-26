@@ -6,7 +6,8 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 		scope: {
 			options: '=',
 			params: '=',
-			itemUpdate: "="
+			itemUpdate: "=",
+            onsuccess: '=onsuccess'
 		},
 		templateUrl: 'modules/mdtdoctor/directives/templates/detail.html',
 		link: function(scope, element, attrs){
@@ -31,6 +32,7 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 							scope.mdtDoctorMap.Title = parseInt(scope.mdtDoctorMap.Title);
 							scope.mdtDoctorMap.Created_by = $cookieStore.get("userInfo").id;
 							scope.mdtDoctorMap.Last_updated_by = $cookieStore.get("userInfo").id;
+                            scope.mdtDoctorMap.Medical_Registration_no = parseInt(scope.mdtDoctorMap.Medical_Registration_no);
 						})
 					}
 				scope.mdtDoctorMap = angular.copy(mdtDoctorModel);
@@ -54,15 +56,23 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 							init();
 							toastr.success('Edit Successfully !!!', 'Success');
 							scope.itemUpdate = true;
+                            if (scope.onsuccess) {
+                                console.log(scope.onsuccess)
+                                scope.onsuccess(response);
+                            }
 						})
 					}else{
 						postData.Creation_date = ConfigService.getCommonDatetime(new Date());
 
-						mdtDoctorService.add(postData).then(function(data){
-							if(data.status == 'error') toastr.error('Cannot Insert', 'Error')
+						mdtDoctorService.add(postData).then(function(response){
+							if(response.status == 'error') toastr.error('Cannot Insert', 'Error')
 							toastr.success('Insert Successfully !!!', 'Success');
 							init();
 							scope.itemUpdate = true;
+                            if (scope.onsuccess) {
+                                console.log(scope.onsuccess)
+                                scope.onsuccess(response);
+                            }
 						})
 						init();
 					}

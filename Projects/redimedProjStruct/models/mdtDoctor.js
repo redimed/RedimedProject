@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes){
 			referencesKey: "Specialties_id"
 		},
 		Default_bank_account_id: DataTypes.INTEGER(11),
-		Medical_Reg_no: DataTypes.INTEGER(11),
+		Medical_Registration_no: DataTypes.INTEGER(11),
 		OSHC_ID: DataTypes.INTEGER(11),
 		isAppointmentBook: DataTypes.INTEGER(11),
 		isMonday: DataTypes.INTEGER(11),

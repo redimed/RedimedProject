@@ -1,5 +1,6 @@
 angular.module("app.loggedIn.doctor.controller", [
     "app.loggedIn.doctor.home.controller",
+    "app.loggedIn.doctor.list.controller",
     "app.loggedIn.doctor.timetable.controller",
     "app.loggedIn.doctor.patients.controller",
     "app.loggedIn.doctor.items.controller",
