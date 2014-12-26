@@ -15,18 +15,14 @@ module.exports =
 	{
         var accessibleUserId=req.body.accessibleUserId?req.body.accessibleUserId:-10;
         var sql=
-            " SELECT    tree.*,                                                                                                "+
-            "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                 "+
-            "   MAX(`treeUser`.`IS_READ`) AS IS_READ,                                                                          "+
-            "   MAX(`treeUser`.`IS_CREATE`) AS IS_CREATE,                                                                      "+
-            "   MAX(treeUser.`IS_UPDATE`) AS IS_UPDATE,                                                                        "+
-            "   MAX(treeUser.`IS_DELETE`) AS IS_DELETE,                                                                        "+
-            "   MAX(treeUser.`IS_GRANT_PERMISSION`) AS IS_GRANT_PERMISSION                                                     "+   
-            " FROM iso_tree_dir tree                                                                                           "+
-            " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)   "+
-            " WHERE     tree.`ISENABLE`=1                                                                                      "+
-            " GROUP BY tree.`NODE_ID`                                                                                          "+
-            " ORDER BY FATHER_NODE_ID DESC                                                                                     ";
+            " SELECT    tree.*,                                                                                               "+
+            "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                "+
+            "   treeUser.`PERMISSION`                                                                                         "+
+            " FROM iso_tree_dir tree                                                                                          "+
+            " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)  "+
+            " WHERE     tree.`ISENABLE`=1                                                                                     "+
+            " GROUP BY tree.`NODE_ID`                                                                                         "+
+            " ORDER BY FATHER_NODE_ID DESC                                                                                    ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[accessibleUserId],function(err,rows)
@@ -56,11 +52,11 @@ module.exports =
     /**
      * tannv.dts@gmail.com
      * Tao mot thu muc moi tren o dia va luu vao database
+     * * modify 1: 25/12/2014 by tannv.dts@gmail.com
      */
     createFolder:function(req,res,next)
     {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create folder");
-        console.log(req.body.info);
+        isoUtil.exlog(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create folder");
         var info=req.body.info;
         var userInfo=JSON.parse(req.cookies.userInfo);
         console.log(userInfo);
@@ -72,35 +68,14 @@ module.exports =
             DESCRIPTION:info.description,
             CREATED_BY:userInfo.id
         }
-        var sql=" INSERT INTO `iso_tree_dir` set ? ";
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
         var targetFolder=prefix+info.relativePath;
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> info.relativePath "+info.relativePath);
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+targetFolder);
+        isoUtil.exlog(targetFolder);
         mkdirp(targetFolder, function(err){
             if(!err)
             {
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> create folder success!");
-                req.getConnection(function(err,connection)
-                {
-                    var query = connection.query(sql,newFolder,function(err,result)
-                    {
-                        
-                        if(err)
-                        {
-                            isoUtil.exlog(err);
-                            res.json({status:'fail'});
-                        }
-                        else
-                        {
-                            newFolder.NODE_ID=result.insertId;
-                            req.body.newFolder=newFolder;
-                            next();
-                            //res.json({status:'success',data:newFolder});
-                        }
-                    });
-                });
-                
+                isoUtil.exlog("create folder success!");
+                saveFolderInfoToDatabase();
             }
             else
             {
@@ -109,6 +84,197 @@ module.exports =
             }
                 
         });
+
+        //Luu thong tin folder vao database
+        var saveFolderInfoToDatabase=function()
+        {
+            isoUtil.exlog('saveFolderInfoToDatabase');
+            req.getConnection(function(err,connection)
+            {
+                var sql=" INSERT INTO `iso_tree_dir` set ? ";
+                var query = connection.query(sql,newFolder,function(err,result)
+                {
+                    
+                    if(err)
+                    {
+                        isoUtil.exlog(err);
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        newFolder.NODE_ID=result.insertId;
+                        req.body.newFolder=newFolder;
+                        //Sau khi tao thu muc tren o dia thanh cong va luu thong tin thu muc vao database
+                        //thanh cong thi chuyen sang xac dinh thong tin tat ca cac node cha cua node folder
+                        //moi nay
+                        saveFolderAncestor();
+                    }
+                });
+            });
+        }
+
+        //Luu lai tat ca cac node cha cua node folder vua tao:
+        var saveFolderAncestor=function()
+        {
+            isoUtil.exlog("saveFolderAncestor");
+            var newFolder=req.body.newFolder;
+            var sql=
+                " INSERT INTO iso_node_ancestor                             "+
+                " (NODE_ID,ANCESTOR_ID,CREATED_BY)                          "+
+                " SELECT ?,`ancestor`.`ANCESTOR_ID`,?                       "+
+                " FROM iso_node_ancestor ancestor                           "+
+                " WHERE ancestor.`NODE_ID`=? AND `ancestor`.`ISENABLE`=1    ";
+            req.getConnection(function(err,connection)
+            {
+                var query = connection.query(sql,[newFolder.NODE_ID,newFolder.CREATED_BY,newFolder.FATHER_NODE_ID],function(err,result)
+                {
+                    
+                    if(err)
+                    {
+                        isoUtil.exlog(err);
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        var row={
+                            NODE_ID:newFolder.NODE_ID,
+                            ANCESTOR_ID:newFolder.FATHER_NODE_ID,
+                            CREATED_BY:newFolder.CREATED_BY
+                        }
+                        var sql="insert into iso_node_ancestor set ?";
+
+                        req.getConnection(function(err,connection)
+                        {
+                            var query = connection.query(sql,row,function(err,result)
+                            {
+                                
+                                if(err)
+                                {
+                                    isoUtil.exlog(err);
+                                    res.json({status:'fail'});
+                                }
+                                else
+                                {
+                                    saveFolderPermission();                                    
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        }
+
+        var saveFolderPermission=function()
+        {
+            isoUtil.exlog('saveFolderPermission');
+            var newFolder=req.body.newFolder;
+
+            //truy van lay ra tat ca cac user co permission tren node cha
+            //sau do insert cho node moi nham ke thua permission
+            var sql=
+                " INSERT INTO `iso_tree_users`                                       "+
+                " (NODE_ID,`ACCESSIBLE_USER_ID`,PERMISSION,CREATED_BY)             "+
+                " SELECT ?,treeUser.`ACCESSIBLE_USER_ID`,treeUser.`PERMISSION`,?   "+
+                " FROM `iso_tree_users` treeUser                                   "+
+                " WHERE     treeUser.`NODE_ID`=? AND `treeUser`.`ISENABLE`=1;      ";
+
+            req.getConnection(function(err,connection)
+            {
+                isoUtil.exlog("Ke thua Permission (user nao co quyen tren node cha thi co quyen tren node con)");
+
+                var query = connection.query(sql,[newFolder.NODE_ID,newFolder.CREATED_BY,newFolder.FATHER_NODE_ID],function(err,result)
+                {
+
+                    if(err)
+                    {
+                        isoUtil.exlog('error',err);
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        var sql=
+                            " SELECT treeUser.PERMISSION,COUNT(treeUser.`NODE_ID`) AS HAVE_EXIST                     "+
+                            " FROM `iso_tree_users` treeUser                                     "+
+                            " WHERE treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?     ";
+
+                        req.getConnection(function(err,connection)
+                        {
+                            isoUtil.exlog("Kiem tra xem user hien tai co duoc add quyen tren node chua");
+                            var query = connection.query(sql,[newFolder.NODE_ID,newFolder.CREATED_BY],function(err,rows)
+                            {
+                                if(err)
+                                {
+                                    isoUtil.exlog('error',err);
+                                    res.json({status:'fail'});
+                                }
+                                else
+                                {
+                                    var sql="";
+                                    var params=[];
+
+                                    if(rows[0].HAVE_EXIST>0)
+                                    {
+                                        sql=
+                                            " UPDATE `iso_tree_users` treeUser SET treeUser.`PERMISSION`=?, treeUser.`LAST_UPDATED_BY`=?,   "+
+                                            "   treeUser.`LAST_UPDATED_DATE`=?                                                              "+
+                                            " WHERE     treeUser.`NODE_ID`=? AND `treeUser`.`ACCESSIBLE_USER_ID`=?                          "
+                                        if(rows[0].PERMISSION==isoUtil.isoPermission.administrator)
+                                        {
+                                            params.push(isoUtil.isoPermission.administrator);
+                                            params.push(userInfo.id);
+                                            params.push(moment().format("YYYY/MM/DD HH:mm:ss"));
+                                            params.push(newFolder.NODE_ID);
+                                            params.push(newFolder.CREATED_BY);
+                                            newFolder.PERMISSION=isoUtil.isoPermission.administrator;
+                                        }
+                                        else 
+                                        {
+                                            params.push(isoUtil.isoPermission.create);
+                                            params.push(userInfo.id);
+                                            params.push(moment().format("YYYY/MM/DD HH:mm:ss"));
+                                            params.push(newFolder.NODE_ID);
+                                            params.push(newFolder.CREATED_BY);
+                                            newFolder.PERMISSION=isoUtil.isoPermission.create;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        sql="insert into iso_tree_users set ? ";
+                                        var newRow={
+                                            NODE_ID:newFolder.NODE_ID,
+                                            ACCESSIBLE_USER_ID:newFolder.CREATED_BY,
+                                            PERMISSION:isoUtil.isoPermission.create,
+                                            CREATED_BY:userInfo.id
+                                        }
+                                        newFolder.PERMISSION=isoUtil.isoPermission.create;
+                                        params.push(newRow);
+                                    }
+                                    
+                                    req.getConnection(function(err,connection)
+                                    {
+                                        isoUtil.exlog("Insert hoac cap nhat lai quyen han cua user hien tai tren node");
+                                        var query = connection.query(sql,params,function(err,result)
+                                        {
+
+                                            if(err)
+                                            {
+                                                isoUtil.exlog('error',err);
+                                                res.json({status:'fail'});
+                                            }
+                                            else
+                                            {
+                                                newFolder.ACCESSIBLE_USER_ID=newFolder.CREATED_BY;
+                                                res.json({status:'success',data:newFolder});
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        }
         
     },
 
@@ -121,6 +287,7 @@ module.exports =
     {
 
         var info=req.body;
+        var userInfo=JSON.parse(req.cookies.userInfo);
         var newDocument={
             FATHER_NODE_ID:info.fatherNodeId,
             NODE_TYPE:info.nodeType,
@@ -151,8 +318,7 @@ module.exports =
                             newDocument.NODE_ID=result.insertId;
                             req.body.newDocument=newDocument;
                             //tiep theo: luu node ancestor
-                            //chuyen den isoNodeAncestorController.setDocumentAncestor
-                            next();
+                            saveDocumentAncestor();
                         }
                         else
                         {
@@ -170,6 +336,169 @@ module.exports =
             }
                 
         });
+
+        //Luu lai tat ca cac node cha cua node document vua tao:
+        var saveDocumentAncestor=function()
+        {
+            isoUtil.exlog("saveDocumentAncestor");
+            var newDocument=req.body.newDocument;
+            var sql=
+                " INSERT INTO iso_node_ancestor                             "+
+                " (NODE_ID,ANCESTOR_ID,CREATED_BY)                          "+
+                " SELECT ?,`ancestor`.`ANCESTOR_ID`,?                       "+
+                " FROM iso_node_ancestor ancestor                           "+
+                " WHERE ancestor.`NODE_ID`=? AND `ancestor`.`ISENABLE`=1    ";
+            req.getConnection(function(err,connection)
+            {
+                var query = connection.query(sql,[newDocument.NODE_ID,newDocument.CREATED_BY,newDocument.FATHER_NODE_ID],function(err,result)
+                {
+                    
+                    if(err)
+                    {
+                        isoUtil.exlog(err);
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        var row={
+                            NODE_ID:newDocument.NODE_ID,
+                            ANCESTOR_ID:newDocument.FATHER_NODE_ID,
+                            CREATED_BY:newDocument.CREATED_BY
+                        }
+                        var sql="insert into iso_node_ancestor set ?";
+
+                        req.getConnection(function(err,connection)
+                        {
+                            var query = connection.query(sql,row,function(err,result)
+                            {
+                                
+                                if(err)
+                                {
+                                    isoUtil.exlog(err);
+                                    res.json({status:'fail'});
+                                }
+                                else
+                                {
+                                    saveDocumentPermission();                                    
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        }
+
+        var saveDocumentPermission=function()
+        {
+            isoUtil.exlog('saveFolderPermission');
+            var newDocument=req.body.newDocument;
+
+            //truy van lay ra tat ca cac user co permission tren node cha
+            //sau do insert cho node moi nham ke thua permission
+            var sql=
+                " INSERT INTO `iso_tree_users`                                       "+
+                " (NODE_ID,`ACCESSIBLE_USER_ID`,PERMISSION,CREATED_BY)             "+
+                " SELECT ?,treeUser.`ACCESSIBLE_USER_ID`,treeUser.`PERMISSION`,?   "+
+                " FROM `iso_tree_users` treeUser                                   "+
+                " WHERE     treeUser.`NODE_ID`=? AND `treeUser`.`ISENABLE`=1;      ";
+
+            req.getConnection(function(err,connection)
+            {
+                isoUtil.exlog("Ke thua Permission (user nao co quyen tren node cha thi co quyen tren node con)");
+
+                var query = connection.query(sql,[newDocument.NODE_ID,newDocument.CREATED_BY,newDocument.FATHER_NODE_ID],function(err,result)
+                {
+
+                    if(err)
+                    {
+                        isoUtil.exlog('error',err);
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        var sql=
+                            " SELECT treeUser.PERMISSION,COUNT(treeUser.`NODE_ID`) AS HAVE_EXIST                     "+
+                            " FROM `iso_tree_users` treeUser                                     "+
+                            " WHERE treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?     ";
+
+                        req.getConnection(function(err,connection)
+                        {
+                            isoUtil.exlog("Kiem tra xem user hien tai co duoc add quyen tren node chua");
+                            var query = connection.query(sql,[newDocument.NODE_ID,newDocument.CREATED_BY],function(err,rows)
+                            {
+                                if(err)
+                                {
+                                    isoUtil.exlog('error',err);
+                                    res.json({status:'fail'});
+                                }
+                                else
+                                {
+                                    var sql="";
+                                    var params=[];
+
+                                    if(rows[0].HAVE_EXIST>0)
+                                    {
+                                        sql=
+                                            " UPDATE `iso_tree_users` treeUser SET treeUser.`PERMISSION`=?, treeUser.`LAST_UPDATED_BY`=?,   "+
+                                            "   treeUser.`LAST_UPDATED_DATE`=?                                                              "+
+                                            " WHERE     treeUser.`NODE_ID`=? AND `treeUser`.`ACCESSIBLE_USER_ID`=?                          "
+                                        if(rows[0].PERMISSION==isoUtil.isoPermission.administrator)
+                                        {
+                                            params.push(isoUtil.isoPermission.administrator);
+                                            params.push(userInfo.id);
+                                            params.push(moment().format("YYYY/MM/DD HH:mm:ss"));
+                                            params.push(newDocument.NODE_ID);
+                                            params.push(newDocument.CREATED_BY);
+                                            newDocument.PERMISSION=isoUtil.isoPermission.administrator;
+                                        }
+                                        else 
+                                        {
+                                            params.push(isoUtil.isoPermission.create);
+                                            params.push(userInfo.id);
+                                            params.push(moment().format("YYYY/MM/DD HH:mm:ss"));
+                                            params.push(newDocument.NODE_ID);
+                                            params.push(newDocument.CREATED_BY);
+                                            newDocument.PERMISSION=isoUtil.isoPermission.create;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        sql="insert into iso_tree_users set ? ";
+                                        var newRow={
+                                            NODE_ID:newDocument.NODE_ID,
+                                            ACCESSIBLE_USER_ID:newDocument.CREATED_BY,
+                                            PERMISSION:isoUtil.isoPermission.create,
+                                            CREATED_BY:userInfo.id
+                                        }
+                                        newDocument.PERMISSION=isoUtil.isoPermission.create;
+                                        params.push(newRow);
+                                    }
+                                    
+                                    req.getConnection(function(err,connection)
+                                    {
+                                        isoUtil.exlog("Insert hoac cap nhat lai quyen han cua user hien tai tren node");
+                                        var query = connection.query(sql,params,function(err,result)
+                                        {
+
+                                            if(err)
+                                            {
+                                                isoUtil.exlog('error',err);
+                                                res.json({status:'fail'});
+                                            }
+                                            else
+                                            {
+                                                newDocument.ACCESSIBLE_USER_ID=newDocument.CREATED_BY;
+                                                next();
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        }
     },
 
     /**

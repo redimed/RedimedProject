@@ -27,5 +27,12 @@ module.exports =
             lock:'LOCK',
             unlock:'UNLOCK'
         }
+    },
+
+    isoPermission:{
+        administrator:0,
+        create:1,
+        update:2,
+        read:3
     }
 }

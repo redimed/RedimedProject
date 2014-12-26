@@ -14,7 +14,12 @@
         </span>
         <div style="color:#800000;display:inline;font-size:11px">
            
-           {{node.ACCESSIBLE_USER_ID?'(':''}}{{node.IS_READ==1?'R':''}}{{node.IS_CREATE==1 && node.NODE_TYPE==nodeType.folder?'C':''}}{{node.IS_UPDATE==1?'U':''}}{{node.IS_DELETE==1?'D':''}}{{node.IS_GRANT_PERMISSION==1?'G':''}}{{node.ACCESSIBLE_USER_ID?')':''}}
+           {{node.ACCESSIBLE_USER_ID?'(':''}}
+           {{node.PERMISSION==0?'A':''}}
+           {{node.PERMISSION==1?'C':''}}
+           {{node.PERMISSION==2?'U':''}}
+           {{node.PERMISSION==3?'R':''}}
+           {{node.ACCESSIBLE_USER_ID?')':''}}
            
         </div>
         <a ng-show="node.ACCESSIBLE_USER_ID" ng-click="showTreeActionsMenuPopup(node);">actions </a>    
@@ -45,19 +50,18 @@
                 <div ng-show='selectedTreeNode.NODE_TYPE==nodeType.folder'>
                     <div class='iso-action-group'>
                         <button 
-                            ng-show='selectedTreeNode.IS_CREATE==1'
                             type="button" 
                             class="btn btn-default"
                             ng-click="showTreeActionContentPopup(treeActions.createFolder.name);">Create Folder
                         </button>
 
-                        <button ng-show='selectedTreeNode.IS_DELETE==1' 
+                        <button
                             type="button" 
                             class="btn btn-default"
                             ng-click="">Delete Folder
                         </button>
 
-                        <button ng-show='selectedTreeNode.IS_READ==1' 
+                        <button
                             type="button" 
                             class="btn btn-default"
                             ng-click="">Clone to PC
@@ -66,7 +70,7 @@
                     </div>
 
                     <div class='iso-action-group'>
-                        <button ng-show='selectedTreeNode.IS_READ==1' 
+                        <button
                             type="button" 
                             class="btn btn-default"
                             ng-click="showTreeActionContentPopup(treeActions.grantNodePermission.name);">Grant Permission
@@ -75,7 +79,6 @@
 
                     <div class='iso-action-group'>
                         <button 
-                            ng-show="selectedTreeNode.IS_CREATE==1"
                             type="button" 
                             class="btn btn-default"
                             ng-click="showTreeActionContentPopup(treeActions.createDocument.name);">Create Document
