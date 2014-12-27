@@ -54,7 +54,7 @@ angular.module("app.loggedIn.patient.claim.list.controller", [
 	}
 
 	$scope.setPage = function(){
-		$scope.params.pagination.offset = (scope.params.pagination.current_page-1)*scope.params.pagination.limit;
+		$scope.params.pagination.offset = ($scope.params.pagination.current_page-1)*$scope.params.pagination.limit;
 		loadList();
 	}
 

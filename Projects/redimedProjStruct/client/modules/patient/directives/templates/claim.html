@@ -129,19 +129,21 @@
 
     <!-- INSURER -->
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <span class="field">
+        <span class="field" ng-class="{'has-error': modelObjectMap.Insurer == '' || modelObjectMap.Insurer == undefined
+                    || modelObjectMap.Insurer == null}">
             <label for="insurer">Insurer</label>
             <input type="text" id="insurer"
                 name="insurer" ng-model="modelObjectMap.Insurer" 
-                placeholder="Insurer" float-label readonly="readonly"/>
-                 
-        </span>
-        <span ng-show="modelObjectMap.Insurer == '' || modelObjectMap.Insurer == undefined
+                placeholder="Insurer" float-label readonly="readonly" required/>
+                <span ng-show="modelObjectMap.Insurer == '' || modelObjectMap.Insurer == undefined
                     || modelObjectMap.Insurer == null">
             	<span class="mdt-popover above" >
-                    This worker currently has no insurer
+                    This worker currently has no insurer. Please add one
                 </span>
             </span>
+                 
+        </span>
+        
     </div>
     <!-- END INSURER -->
 

@@ -11,6 +11,8 @@ angular.module("app.loggedIn.patient.claim.directive", [])
         },
         templateUrl: "modules/patient/directives/templates/claim.html",
         link: function (scope, element, attrs) {
+            var patient_id = scope.params.Patient_id;
+            
             scope.$watch("patientId", function(newPatientId){
                 if(typeof newPatientId !== 'undefined'){
 
@@ -27,7 +29,6 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                 }// endif
             });
             var loadInit = function () {
-                console.log("This is the company service", CompanyService);
                 if (scope.params.permission.edit === true) {
                     PatientService.getClaim(scope.params.permission.Claim_id).then(function (response) {
                         if (response.status === 'success') {
@@ -47,14 +48,13 @@ angular.module("app.loggedIn.patient.claim.directive", [])
             }
             
             var getInsurerInfo = function(){
-            PatientService.mdtById(scope.params.Patient_id).then(function (response) {
+            PatientService.mdtById(patient_id).then(function (response) {
                     if (response.status === 'success') {
                         if (response.data.company_id !== null && response.data.company_id !== undefined && response.data.company_id !== '') {
                             CompanyService.mdtById(response.data.company_id).then(function (response2) {
                                 if (response2.data.Insurer !== null && response2.data.Insurer !== undefined && response2.data.Insurer !== '') {
                                     InsurerService.detail(response2.data.Insurer).then(function(insurerData){
                                         if(insurerData.row !== null && insurerData.row !== undefined && insurerData.row !== ''){
-                                            console.log('this is insurer', insurerData);
                                             scope.modelObjectMap.insurer_site = insurerData.row.id;
                                             scope.modelObjectMap.Insurer = insurerData.row.insurer_name;
 //                                            scope.modelObjectMap.insurerId = insurerData.row.id;
@@ -76,6 +76,7 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                     } // end if
                 })
             }
+            getInsurerInfo();
 
             //            var getInsurerList = function () {
             //                var insurer_list_api = {
@@ -98,7 +99,7 @@ angular.module("app.loggedIn.patient.claim.directive", [])
             // DECLARE
             scope.isSubmit = false;
             scope.modelObjectMap = angular.copy(ClaimModel);
-            scope.modelObjectMap.Patient_id = scope.params.Patient_id;
+            scope.modelObjectMap.Patient_id = patient_id;
             scope.modelObjectMap.insurer_site = scope.insurerId;
             scope.mode = {
                 type: 'add',
@@ -121,7 +122,7 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                 scope.modelObjectMap.Patient_id = patientid;
                 scope.modelObjectMap.insurer_site = scope.insurerId;
                 scope.modelObjectMap.Claim_date = new Date();
-                scope.params.Patient_id = patientid;
+//                scope.params.Patient_id = patientid;
                 getInsurerInfo();
             }
             //END POPUP
@@ -142,14 +143,15 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                         // END DATE
 
                         if (option.type == 'add') {
-                            ClaimService.add(postData).then(function (response) {
+                            PatientService.insertClaim(postData).then(function (response) {
                                 if (response.status === 'success') {
                                     toastr.success("Added a new Claim", "Success");
                                     scope.modelObjectMap = angular.copy(ClaimModel);
                                     scope.isSubmit = false;
                                     scope.claim = response.data;
-                                    scope.modelObjectMap = {};
-                                    scope.modelObjectMap.Patient_id = response.data.Patient_id;
+                                    scope.modelObjectMap = angular.copy(ClaimModel);
+                                    getInsurerInfo();
+                                    scope.modelObjectMap.Patient_id = patient_id;
                                     scope.modelObjectMap.Claim_date = new Date();
                                     scope.modelObjectMap.insurer_site = scope.insurerId;
                                 }
@@ -165,10 +167,12 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                                         type: 'add',
                                         text: 'Add Claim'
                                     };
-                                    scope.modelObjectMap = {};
-                                    scope.modelObjectMap.Patient_id = postData.Patient_id;
+                                    scope.modelObjectMap = angular.copy(ClaimModel);
+                                    getInsurerInfo();
+                                    scope.modelObjectMap.Patient_id = patient_id;
                                     scope.modelObjectMap.Claim_date = new Date();
                                     scope.modelObjectMap.insurer_site = scope.insurerId;
+                                    
                                 }
                             })
                         }

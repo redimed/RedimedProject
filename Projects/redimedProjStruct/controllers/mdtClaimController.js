@@ -5,7 +5,7 @@ module.exports = {
 	postAdd: function(req, res){
 		var postData = req.body.add_data;
 
-		db.mdtClaim.create(postData)
+		db.Claim.create(postData)
 		.success(function(created){
 			if(!created) res.json(500, {'status': 'error', 'message': 'Cannot Insert'});
 			res.json({'status': 'success', 'data': created});
@@ -18,7 +18,7 @@ module.exports = {
 		var postData = req.body.edit_data;
 		var edit_id = req.body.edit_id;
 
-		db.mdtClaim.find(edit_id)
+		db.Claim.find(edit_id)
 		.success(function(detail){
 			if(!detail) res.json(500, {'status': 'error', 'message': 'Id Missing !!!'});
 			detail.updateAttributes(postData).success(function(updated){
@@ -35,7 +35,7 @@ module.exports = {
 	postDelete: function(req, res){
 		var delete_id = req.body.delete_id;
 
-		db.mdtClaim.find(delete_id)
+		db.Claim.find(delete_id)
 		.success(function(detail){
 			if(!detail) res.json(500, {'status': 'error', 'message': 'Id Missing !!!'});
 			detail.destroy().success(function(deleted){
@@ -52,7 +52,7 @@ module.exports = {
 	postById: function(req, res){
 		var detail_id = req.body.detail_id;
 
-		db.mdtClaim.find(detail_id)
+		db.Claim.find(detail_id)
 		.success(function(detail){
 			if(!detail) res.json(500, {'status': 'error', 'message': 'Cannot Get Detail'});
 			res.json({'status': 'success', 'data': detail});
@@ -67,8 +67,8 @@ module.exports = {
 		var select = req.body.select;
 
 		var sql = mdt_functions.commonSearch(post_fields);
-
-		db.mdtClaim.findAndCountAll({
+        console.log('Perpare to call find and count all');
+		db.Claim.findAndCountAll({
 			where: [sql],
 			offset: pagination.offset,
 			limit: pagination.limit,
