@@ -58,7 +58,7 @@ angular.module('app.loggedIn.document.IDS.controllers', [])
                 $scope.patientInfo = response[0].patient;
                 angular.forEach(data.headers, function (dataH, hIndex) {
                     $scope.info.headers.push({
-                        "IDAS_ID":dataH.IDAS_DF_ID || dataH.IDAS_ID,
+                        "IDAS_ID": dataH.IDAS_DF_ID || dataH.IDAS_ID,
                         "PATIENT_ID": Patient_ID,
                         "CAL_ID": CalID,
                         "DOCTOR_ID": response[0].doctor.doctor_id,
@@ -86,12 +86,12 @@ angular.module('app.loggedIn.document.IDS.controllers', [])
                         "groups": []
                     });
                     //set some value out foreach
-                    var i=0;
+                    var i = 0;
                     angular.forEach(data.groups, function (dataG, gIndex) {
                         if ($scope.info.headers[hIndex].IDAS_ID == dataG.IDAS_ID || $scope.info.headers[hIndex].IDAS_ID == dataG.IDAS_DF_ID) {
                             $scope.info.headers[hIndex].groups.push({
                                 "IDAS_GROUP_ID": dataG.IDAS_GROUP_ID,
-                                "IDAS_ID": dataG.IDAS_ID,
+                                "IDAS_ID": dataG.IDAS_DF_ID || dataG.IDAS_ID,
                                 "PATIENT_ID": Patient_ID,
                                 "CAL_ID": CalID,
                                 "ORD": dataG.ORD,
@@ -107,7 +107,7 @@ angular.module('app.loggedIn.document.IDS.controllers', [])
                                     $scope.info.headers[hIndex].groups[i].lines.push({
                                         "IDAS_LINE_ID": dataL.IDAS_LINE_ID,
                                         "IDAS_GROUP_ID": dataL.IDAS_GROUP_ID,
-                                        "IDAS_ID": dataL.IDAS_ID,
+                                        "IDAS_ID": dataL.IDAS_DF_ID || dataL.IDAS_ID,
                                         "PATIENT_ID": Patient_ID,
                                         "CAL_ID": CalID,
                                         "ORD": dataL.ORD,

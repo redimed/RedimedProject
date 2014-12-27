@@ -136,13 +136,13 @@ module.exports = {
                             IDAS_GROUP_ID: infoG.IDAS_GROUP_ID,
                             IDAS_ID: infoG.IDAS_ID,
                             PATIENT_ID: infoH.PATIENT_ID,
-                            CAL_ID: infoH.CAL_ID,
-                            ORD: infoH.ORD,
+                            CAL_ID: infoG.CAL_ID,
+                            ORD: infoG.ORD,
                             GROUP_NAME: infoG.GROUP_NAME,
-                            USER_TYPE: infoH.USER_TYPE,
-                            Created_by: infoH.Created_by,
-                            Last_updated_by: infoH.Last_updated_by,
-                            ISENABLE: infoH.ISENABLE
+                            USER_TYPE: infoG.USER_TYPE,
+                            Created_by: infoG.Created_by,
+                            Last_updated_by: infoG.Last_updated_by,
+                            ISENABLE: infoG.ISENABLE
                         }).success(function () {
                             info.headers[hIndex].groups[gIndex].lines.forEach(function (infoL, lIndex) {
                                 LinesIDSCLN.create({
@@ -217,17 +217,17 @@ module.exports = {
                 .success(function () {
                     info.headers[hIndex].groups.forEach(function (infoG, gIndex) {
                         GroupsIDSCLN.update({
-                            IDAS_ID: infoH.IDAS_ID,
-                            ORD: infoH.ORD,
-                            GROUP_NAME: infoH.GROUP_NAME,
-                            USER_TYPE: infoH.USER_TYPE,
-                            Created_by: infoH.Created_by,
-                            Last_updated_by: infoH.Last_updated_by,
-                            ISENABLE: infoH.ISENABLE
+                            IDAS_ID: infoG.IDAS_ID,
+                            ORD: infoG.ORD,
+                            GROUP_NAME: infoG.GROUP_NAME,
+                            USER_TYPE: infoG.USER_TYPE,
+                            Created_by: infoG.Created_by,
+                            Last_updated_by: infoG.Last_updated_by,
+                            ISENABLE: infoG.ISENABLE
                         }, {
                             IDAS_GROUP_ID: infoG.IDAS_GROUP_ID,
-                            PATIENT_ID: infoH.PATIENT_ID,
-                            CAL_ID: infoH.CAL_ID
+                            PATIENT_ID: infoG.PATIENT_ID,
+                            CAL_ID: infoG.CAL_ID
                         }).success(function () {
                             info.headers[hIndex].groups[gIndex].lines.forEach(function (infoL, lIndex) {
                                 LinesIDSCLN.update({
