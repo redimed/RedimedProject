@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.claim.directive", [])
 
-.directive("patientClaim", function (PatientService, ClaimService, ClaimModel, ConfigService, toastr, Restangular, CompanyService, InsurerService) {
+.directive("patientClaim", function (PatientService, ClaimService, ClaimModel, ConfigService, toastr, Restangular, CompanyService, InsurerService, $cookieStore) {
     return {
         restrict: "EA",
         scope: {
@@ -143,6 +143,7 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                         // END DATE
 
                         if (option.type == 'add') {
+                            postData.Created_by = $cookieStore.get('userInfo').id;
                             PatientService.insertClaim(postData).then(function (response) {
                                 if (response.status === 'success') {
                                     toastr.success("Added a new Claim", "Success");
@@ -157,6 +158,7 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                                 }
                             });
                         } else {
+                            postData.Last_updated_by = $cookieStore.get('userInfo').id;
                             PatientService.editClaim(postData).then(function (response) {
                                 if (response.status === 'success') {
                                     toastr.success("Edited a new Claim", "Success");
