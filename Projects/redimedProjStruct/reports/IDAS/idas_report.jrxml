@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="idas_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="380e6717-6efb-44f3-9f91-4e5c6ef55dba">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="308"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -335,7 +335,7 @@ WHERE
 			</image>
 			<textField>
 				<reportElement x="0" y="140" width="552" height="55" uuid="b5d9e41a-ccf1-4bdc-9df5-c6ba35da6f53"/>
-				<textFieldExpression><![CDATA["I,"+$F{cln_idas_headers_NAME}+", understand that I am required to provide a sample of my urine "+
+				<textFieldExpression><![CDATA["I,"+$F{cln_patients_First_name}+" "+$F{cln_patients_Sur_name}+", understand that I am required to provide a sample of my urine "+
 "under supervision for drug testing and/or a breath sample for alcohol testing. I am aware these results will "+
 "be sent to the company requesting the drug and alcohol screen, and kept on record at RediMed. I declare "+
 "that I have taken the following medications (prescription and non-prescription) in the last 14 days:"]]></textFieldExpression>

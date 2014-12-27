@@ -61,12 +61,12 @@
             </div>
             <div class="row">
                 <div class="col-md-1 col-sm-1" style="width:auto;margin-top:5px;">
-                    <span class="control-label">I,</span>
+                    <label class="control-label">I,<span style="border-bottom:1.5px dashed">{{((patientInfo.First_name==null || patientInfo.First_name=='')?'':patientInfo.First_name) +
+                    ((patientInfo.First_name==null||patientInfo.First_name=='')?'':' ') +
+                    ((patientInfo.Middle_name==null||patientInfo.Middle_name=='')?'':patientInfo.Middle_name) +
+                    ((patientInfo.First_name==null||patientInfo.First_name=='')?'':' ') +
+                    ((patientInfo.Sur_name==null||patientInfo.Sur_name=='')?'':patientInfo.Sur_name)}}</span>, understand that I am required to provide a sample of my urine under supervision for drug testing and/or a breath sample for alcohol testing. I am aware these results will be sent to the company requesting the drug and alcohol screen, and kept on record at RediMed. I declare that I have taken the following medications (prescription and non-prescription) in the last 14 days: </label>
                 </div>
-                <div class="col-md-2 col-sm-2" style="width:auto;">
-                    <input type="text" class="form-control" ng-model="info.headers[0].NAME" style="width: 220px;">
-                </div>
-                <span class="control-label" style="margin-top:5px;">, understand that I am required to provide a sample of my urine under supervision for drug testing and/or a breath sample for alcohol testing. I am aware these results will be sent to the company requesting the drug and alcohol screen, and kept on record at RediMed. I declare that I have taken the following medications (prescription and non-prescription) in the last 14 days:</span>
             </div>
             <div class="row">
                 <div class="col-md-8 col-sm-8">
@@ -90,7 +90,7 @@
 
                         <div class="col-md-7 col-sm-7">
                             <input type="text" class="form-control" ng-model="info.headers[0].IDAS_DATE"
-                                   name="consentDate" datepicker-popup="dd/MM/yyyy" is-open="openConsentDate2"
+                                   name="consentDate" datepicker-popup="MM/yyyy" is-open="openConsentDate2"
                                    ng-click="openConsentDate2 = true" datepicker-options="dateOptions"
                                    close-text="Close"/>
                         </div>

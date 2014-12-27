@@ -134,11 +134,11 @@ module.exports = {
                     info.headers[hIndex].groups.forEach(function (infoG, gIndex) {
                         GroupsIDSCLN.create({
                             IDAS_GROUP_ID: infoG.IDAS_GROUP_ID,
-                            IDAS_ID: infoH.IDAS_ID,
+                            IDAS_ID: infoG.IDAS_ID,
                             PATIENT_ID: infoH.PATIENT_ID,
                             CAL_ID: infoH.CAL_ID,
                             ORD: infoH.ORD,
-                            GROUP_NAME: infoH.GROUP_NAME,
+                            GROUP_NAME: infoG.GROUP_NAME,
                             USER_TYPE: infoH.USER_TYPE,
                             Created_by: infoH.Created_by,
                             Last_updated_by: infoH.Last_updated_by,
