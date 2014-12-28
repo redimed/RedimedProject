@@ -173,8 +173,8 @@ module.exports =
             //sau do insert cho node moi nham ke thua permission
             var sql=
                 " INSERT INTO `iso_tree_users`                                       "+
-                " (NODE_ID,`ACCESSIBLE_USER_ID`,PERMISSION,CREATED_BY)             "+
-                " SELECT ?,treeUser.`ACCESSIBLE_USER_ID`,treeUser.`PERMISSION`,?   "+
+                " (NODE_ID,`ACCESSIBLE_USER_ID`,PERMISSION,ROOT_PERMISSION_NODE,CREATED_BY)             "+
+                " SELECT ?,treeUser.`ACCESSIBLE_USER_ID`,treeUser.`PERMISSION`,ROOT_PERMISSION_NODE,?   "+
                 " FROM `iso_tree_users` treeUser                                   "+
                 " WHERE     treeUser.`NODE_ID`=? AND `treeUser`.`ISENABLE`=1;      ";
 
@@ -244,6 +244,7 @@ module.exports =
                                             NODE_ID:newFolder.NODE_ID,
                                             ACCESSIBLE_USER_ID:newFolder.CREATED_BY,
                                             PERMISSION:isoUtil.isoPermission.create,
+                                            ROOT_PERMISSION_NODE:newFolder.NODE_ID,
                                             CREATED_BY:userInfo.id
                                         }
                                         newFolder.PERMISSION=isoUtil.isoPermission.create;
@@ -397,8 +398,8 @@ module.exports =
             //sau do insert cho node moi nham ke thua permission
             var sql=
                 " INSERT INTO `iso_tree_users`                                       "+
-                " (NODE_ID,`ACCESSIBLE_USER_ID`,PERMISSION,CREATED_BY)             "+
-                " SELECT ?,treeUser.`ACCESSIBLE_USER_ID`,treeUser.`PERMISSION`,?   "+
+                " (NODE_ID,`ACCESSIBLE_USER_ID`,PERMISSION,ROOT_PERMISSION_NODE,CREATED_BY)             "+
+                " SELECT ?,treeUser.`ACCESSIBLE_USER_ID`,treeUser.`PERMISSION`,ROOT_PERMISSION_NODE,?   "+
                 " FROM `iso_tree_users` treeUser                                   "+
                 " WHERE     treeUser.`NODE_ID`=? AND `treeUser`.`ISENABLE`=1;      ";
 
@@ -468,6 +469,7 @@ module.exports =
                                             NODE_ID:newDocument.NODE_ID,
                                             ACCESSIBLE_USER_ID:newDocument.CREATED_BY,
                                             PERMISSION:isoUtil.isoPermission.create,
+                                            ROOT_PERMISSION_NODE:newDocument.NODE_ID,
                                             CREATED_BY:userInfo.id
                                         }
                                         newDocument.PERMISSION=isoUtil.isoPermission.create;

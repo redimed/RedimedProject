@@ -46,10 +46,10 @@ angular.module('app.loggedIn.iso.service',[])
         };
 
         isoService.treeUser={
-            grantNodePermission:function(nodeId,user)
+            grantNodePermission:function(nodeId,accessibleUserId,permission)
             {
                 var result=api.all("iso/iso-tree-users/grant-node-permission");
-                return result.post({nodeId:nodeId,user:user});
+                return result.post({nodeId:nodeId,accessibleUserId:accessibleUserId,permission:permission});
             }
         }
 

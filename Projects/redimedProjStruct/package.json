@@ -52,6 +52,7 @@
     "static-favicon": "~1.0.0",
     "underscore": "^1.7.0",
     "util": "^0.10.3",
+    "watchjs": "0.0.0",
     "winston": "^0.8.3",
     "xml2js": "^0.4.4"
   }

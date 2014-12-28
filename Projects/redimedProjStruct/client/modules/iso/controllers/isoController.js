@@ -416,5 +416,30 @@ angular.module('app.loggedIn.iso.controller',[])
 				}
 			})
 		}
+
+
+		$scope.grantNodePermissionItem=function(nodeId,accessibleUserId,permission)
+        {
+            isoService.treeUser.grantNodePermission(nodeId,accessibleUserId,permission)
+            .then(function(data){
+            	exlog.alert(data);
+                if(data.status=='success')
+                {
+                	alert("dung roi");
+                    item.STATUS=data.status;
+                    //isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Grant Permission success!');
+                }
+                else
+                {
+                	alert("sai roi")
+                    item.STATUS=data.status;
+                    //isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Grant Permission error!');
+                }
+
+                //$("#iso-tree-action-content-popup").modal('hide');
+            },function(err){
+                item.STATUS='error';
+            })
+        }
     })
 
