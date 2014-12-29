@@ -5,7 +5,6 @@
                     ng-disabled="!infoChanged()"
                     class="btn green pull-right">{{isNew?"Add New":"Update"}}
             </button>
-
             <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/MA/{{info.MA_ID}}"
                type="button"
                ng-disabled="isNew || infoChanged()"
@@ -64,15 +63,15 @@
                 <div class="row" style="margin-top: 5px">
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">Waist</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.WAIST" ng-change="Ratio()" ng-pattern="/^[0-9]+$/" name="WAIST">
+                        <input type="text" class="form-control" ng-model="info.WAIST" ng-change="Ratio()" ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" name="WAIST">
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">Hip</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.HIP" ng-change="Ratio()" ng-pattern="/^[0-9]+$/" name="HIP">
+                        <input type="text" class="form-control" ng-model="info.HIP" ng-change="Ratio()" ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" name="HIP">
                     </div>
                     <label class="control-label col-lg-1 col-md-1 col-sm-1" style="margin-top: 7px">WHR</label>
                     <div class="col-md-2 col-lg-1 col-sm-2">
-                        <div class="form-control"  style="background-color: #f5f5f5">{{info.WHR | number : 2}}</div>
+                        <div class="form-control"  style="background-color: #f5f5f5">{{info.WHR}}</div>
                     </div>
                 </div>
                 <div ng-show="showClickedValidation">

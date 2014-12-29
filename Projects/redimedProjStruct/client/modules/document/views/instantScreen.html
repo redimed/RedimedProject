@@ -1,10 +1,10 @@
-<form name="IDSForm" method="post" novalidate>
+<form name="IDSForm" ng-submit="submitIDS(IDSForm)" method="post" accessible-form novalidate>
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <button class="btn green pull-right" ng-click="submitIDS(IDSForm)" ng-disabled="!infoChanged()">{{isNew?"Add
-                New":"Update"}}
+            <button type="submit"
+                    ng-disabled="!infoChanged()"
+                    class="btn green pull-right">{{isNew?"Add New":"Update"}}
             </button>
-
             <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/IDS/{{info.headers[0].IDAS_ID}}/{{info.headers[0].CAL_ID}}/{{info.headers[0].PATIENT_ID}}"
                type="button" ng-disabled="isNew || infoChanged()" class="btn btn-primary blue pull-right">Print PDF
             </a>

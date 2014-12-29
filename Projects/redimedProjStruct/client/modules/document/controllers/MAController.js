@@ -50,8 +50,9 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         };
 
         $scope.Ratio = function(){
-            $scope.info.WHR = $scope.info.WAIST / $scope.info.HIP;
-            if($scope.info.WHR > 0 && $scope.info.WHR < 100){
+            value = $scope.info.WAIST / $scope.info.HIP;
+            if(value > 0 && value < 100){
+                $scope.info.WHR = value.toFixed(2);
                 if(sex == "Female")
                 {
                     if($scope.info.WHR < 0.80)
@@ -165,6 +166,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     PROTEIN: null,
                     GLUCOSE: null,
                     BLOOD: null,
+                    BLOOD_SUGAR_LEVEL: null,
                     COMMENT_SEC3 : null,
                     SPIROMETRY: null,
                     SYMMETRICAL: null,
@@ -187,6 +189,11 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     COORDINATION: null,
                     LYMPH: null,
                     THYROID: null,
+                    COMMENT_SEC4 : null,
+                    COMMENT_SEC5 : null,
+                    COMMENT_SEC6 : null,
+                    COMMENT_SEC7 : null,
+                    COMMENT_SEC8 : null,
                     COMMENT_SEC9 : null,
                     AGE: getAge($scope.patientInfo.DOB),
                     HYPER: 0,

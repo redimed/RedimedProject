@@ -1,16 +1,16 @@
-<form name="COEForm" method="post" novalidate>
+<form name="COEForm" ng-submit="submitCOE(COEForm)" method="post" accessible-form novalidate>
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="button"
-                        ng-disabled="COEForm.$error.pattern || COEForm.$error.maxlength || !infoChanged()"
-                        ng-click="submitCOE(COEForm)" class="btn green pull-right">{{isNew?"Add new":"Update"}}
+                <button type="submit"
+                        ng-disabled="!infoChanged()"
+                        class="btn green pull-right">{{isNew?"Add New":"Update"}}
                 </button>
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/COE/{{info.coe_id}}"
                         ng-disabled="isNew == true || infoChanged()"
                         class="btn btn-primary blue pull-right">Print PDF
                 </a>
-                <button ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset</button>
+                <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
             </div>
         </div>
     </div>
