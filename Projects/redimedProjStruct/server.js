@@ -13,12 +13,11 @@ var config = require('config');
 var compress = require('compression');
 var db = require('./models');
 var restful = require('sequelize-restful');
-
-
 //Create application management
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var _ = require('lodash-node');
 
 server.listen(3000);
 
@@ -177,14 +176,4 @@ db.sequelize
         }
     }
 );
-
-
-
-
-
-
-
-
-
-
 

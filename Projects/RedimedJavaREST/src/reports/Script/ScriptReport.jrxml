@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScriptReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2b6103d-271a-46dc-b501-29c4a01f4289">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	s.`prescriber`,
+	s.`scriptNum`,
+	p.`Medicare_no`,
+	CONCAT(
+		IFNULL(p.`First_name`, ''), ' ',
+		IFNULL(p.`Middle_name`, ''), ' ',
+		IFNULL(p.`Sur_name`, '')
+	) AS Fullname,
+	IFNULL(s.`isRefNo`,0) AS 'isRefNo',
+	p.`Address1`,
+	p.`Ref`,
+	p.`Post_code`,
+	s.`EntitlementNo`,
+	IFNULL(s.`isSafety`,0) AS 'isSafety',
+	IFNULL(s.`isConcessional`,0) AS 'isConcessional',
+	IFNULL(s.`isPBS`,0) AS 'isPBS',
+	IFNULL(s.`isRPBS`,0) AS 'isRPBS',
+	IFNULL(s.`isBrand`,0) AS 'isBrand',
+	s.`pharmacist`,
+	SUBSTRING_INDEX(s.`doctorSign`, ',', -1) AS 'doc_sign',
+	s.`doctordate`,
+	SUBSTRING_INDEX(s.`patientSign`, ',', -1) AS 'patient_sign',
+	s.`patientDate`,
+	s.`agentAddress`
+FROM `cln_scripts` s
+INNER JOIN `cln_patients` p ON s.`Patient_id` = p.`Patient_id`
+WHERE s.`ID`=$P{id}]]>
+	</queryString>
+	<field name="prescriber" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="scriptNum" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Medicare_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fullname" class="java.lang.String"/>
+	<field name="isRefNo" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Address1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Ref" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Post_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EntitlementNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isSafety" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isConcessional" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isPBS" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isRPBS" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isBrand" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pharmacist" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="doc_sign" class="java.lang.String"/>
+	<field name="doctordate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="patient_sign" class="java.lang.String"/>
+	<field name="patientDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="agentAddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="239" splitType="Stretch">
+			<staticText>
+				<reportElement x="356" y="7" width="76" height="14" uuid="7740d488-3f1d-41f3-a007-a3e019355f0c"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Script Number:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="7" width="105" height="14" uuid="8c446a0d-697e-4436-bad2-cfeea2d8c080"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{scriptNum} != null ? $F{scriptNum} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="18" y="7" width="208" height="14" uuid="0f895ba5-e047-4c60-b53f-d80115a6ceb5"/>
+				<textFieldExpression><![CDATA[$F{prescriber} != null ? $F{prescriber} : ""]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="31" width="555" height="204" uuid="a97c8496-2774-4dfb-b424-7ff11c6d10c9"/>
+			</rectangle>
+			<textField>
+				<reportElement x="103" y="93" width="242" height="17" uuid="f6ffd9fe-72be-4d46-9e7e-27bbef2e18f8"/>
+				<textFieldExpression><![CDATA[$F{Medicare_no} != null ? $F{Medicare_no} : ""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="93" width="86" height="17" uuid="8c4ffcda-6fa1-4e21-b4b3-8492afc4efe4"/>
+				<text><![CDATA[Patient's Medicare:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="93" width="78" height="17" uuid="fbc27c25-c7c5-49dd-abba-1a5092227e18"/>
+				<text><![CDATA[Patient's Ref No.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="529" y="93" width="13" height="13" uuid="2baca279-1a5e-4200-8a2d-4c7c2921075a"/>
+				<imageExpression><![CDATA[$F{isRefNo}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="15" y="116" width="86" height="16" uuid="10826e25-922a-430b-9d0a-d6d498b77387"/>
+				<text><![CDATA[Patient's full name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="139" width="86" height="15" uuid="eb5f7153-19d5-48a0-81e1-e3f9b3d9e2c4"/>
+				<text><![CDATA[Patient's Address:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="158" width="47" height="15" uuid="adce06dc-d516-4317-a3a8-0d7452bd0846"/>
+				<text><![CDATA[Postcode:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="103" y="128" width="439" height="1" uuid="a6be371a-e546-4a95-b4ac-4cfa9179e180"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="103" y="150" width="439" height="1" uuid="8d92d64c-c699-4697-b0be-6243d967769f"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="15" y="170" width="303" height="1" uuid="eeeefb6d-0874-494f-8eee-1e172f2ce04a"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="375" y="170" width="167" height="1" uuid="7122c777-b444-4bab-b918-82f2d0e2f189"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="15" y="178" width="74" height="15" uuid="c640fb83-787e-40d3-95fa-43de66634bcb"/>
+				<text><![CDATA[Entitlement No.:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="92" y="191" width="450" height="1" uuid="31e82f42-a3b0-424a-a769-143535608141"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="103" y="116" width="439" height="16" uuid="bed3fd27-7fc8-451f-9f90-58372fbb0140"/>
+				<textFieldExpression><![CDATA[$F{Fullname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="138" width="439" height="15" uuid="3dbb1982-0fe0-4075-a181-0e777e9d2ebf"/>
+				<textFieldExpression><![CDATA[$F{Address1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="158" width="167" height="16" uuid="5df58262-74b9-4977-af94-5161ec212321"/>
+				<textFieldExpression><![CDATA[$F{Post_code} != null ? $F{Post_code} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="179" width="450" height="16" uuid="1ee459a5-80ff-43a8-bffd-e77b800833f0"/>
+				<textFieldExpression><![CDATA[$F{EntitlementNo} != null ? $F{EntitlementNo} : ""]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="17" y="38" width="170" height="42" uuid="ae52acea-8810-4957-b0c8-4b1faad60dd6"/>
+				<imageExpression><![CDATA["Redimed.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="15" y="203" width="103" height="26" uuid="c5381594-0e91-4356-b61c-9183afb07721"/>
+				<text><![CDATA[Safety Net entitlement
+cardholder]]></text>
+			</staticText>
+			<image>
+				<reportElement x="123" y="203" width="13" height="13" uuid="102c9752-bade-45c0-a2f4-ce12893d2816"/>
+				<imageExpression><![CDATA[$F{isSafety}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="177" y="203" width="213" height="26" uuid="6890d8cf-1b60-4657-87eb-e5df9021a3b4"/>
+				<text><![CDATA[Concessional or dependent. RPBS beneficiary
+Or Safety Net concession cardholder]]></text>
+			</staticText>
+			<image>
+				<reportElement x="393" y="204" width="13" height="13" uuid="23e8f5b4-5005-4d9c-9628-325b111681cc"/>
+				<imageExpression><![CDATA[$F{isConcessional}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="440" splitType="Stretch">
+			<rectangle>
+				<reportElement x="109" y="75" width="428" height="313" uuid="6bf833d9-e3b1-45f4-bd32-2035c97afd91"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="17" y="74" width="88" height="314" uuid="f4e5162a-d774-40bf-9fde-a1da8aa85660"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Pharmacist/Patient
+copy]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="83" width="404" height="295" uuid="cd224fab-cbca-4a5b-81b6-20114118a6dc"/>
+				<textFieldExpression><![CDATA[$F{pharmacist} != null ? $F{pharmacist} : ""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="398" width="88" height="17" uuid="0c5b4dcc-9382-4f81-b635-b4f6c2eb804c"/>
+				<text><![CDATA[Doctor's signature:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="105" y="398" width="126" height="34" uuid="4cffbf3e-3683-488e-8635-c9f8fddda1ab"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doc_sign}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="328" y="398" width="27" height="17" uuid="5ebce585-4a11-4945-be6b-1b45b382a5b0"/>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm a">
+				<reportElement x="355" y="398" width="178" height="17" uuid="ac16b934-a007-4dcd-b8d8-c22110406c99"/>
+				<textFieldExpression><![CDATA[$F{doctordate} != null ? $F{doctordate} : ""]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="8" width="555" height="1" uuid="47d476d2-7173-4609-81e1-e1c53af85422"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="15" y="19" width="103" height="16" uuid="42c4e1e7-d33b-4267-a507-526b78d04ea8"/>
+				<text><![CDATA[(Tick appropriate box)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="45" width="21" height="14" uuid="ef0bb4c2-5bbd-40b1-ac92-1fa57ddac5c2"/>
+				<text><![CDATA[PBS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="39" y="45" width="13" height="13" uuid="e2316997-6d12-487a-9b1c-09c19aa49768"/>
+				<imageExpression><![CDATA[$F{isPBS}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="100" y="45" width="31" height="14" uuid="e565f517-8fce-4866-8f59-acd89685d9c1"/>
+				<text><![CDATA[RPBS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="134" y="45" width="13" height="13" uuid="365d8eb2-740b-4e3b-ad60-05ae92891286"/>
+				<imageExpression><![CDATA[$F{isRPBS}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="206" y="46" width="148" height="14" uuid="df3e1025-019b-4878-b4ea-7cacecd1c349"/>
+				<text><![CDATA[Brand substitution not permitted]]></text>
+			</staticText>
+			<image>
+				<reportElement x="357" y="46" width="13" height="13" uuid="3482b255-762b-460b-96ee-722804a1a8ec"/>
+				<imageExpression><![CDATA[$F{isBrand}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="123" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="7" width="555" height="112" uuid="df89b662-0558-47eb-b125-e96c505d076f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="14" width="147" height="83" uuid="c84b4375-43ce-4fdd-99c3-9bdacd6d0210"/>
+				<text><![CDATA[I declare that i have received
+this/these medicine(s) and the
+information relating to any
+
+entitlement to a pharmaceutical
+benefit is correct.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="195" y="30" width="125" height="34" uuid="42b474cd-eaf6-4054-9d68-46a4f87ebf05"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{patient_sign}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="195" y="14" width="125" height="14" uuid="12da8206-df4b-4ae8-bd4a-670c2d3f6c35"/>
+				<text><![CDATA[Patient or agent signature:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="14" width="75" height="14" uuid="3f2a4483-a944-4c64-a911-7f47751bf6b1"/>
+				<text><![CDATA[Date of supply:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="390" y="30" width="147" height="16" uuid="8dab97cd-f250-4db4-87c8-76db1ba2ccdc"/>
+				<textFieldExpression><![CDATA[$F{patientDate} != null ? $F{patientDate} : ""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="195" y="77" width="125" height="14" uuid="a51e72e0-ee13-413e-b446-ca09e9e55cf6"/>
+				<text><![CDATA[Agent's address:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="195" y="93" width="342" height="17" uuid="50b6f35f-d3e5-4136-bf11-cebb57b58e22"/>
+				<textFieldExpression><![CDATA[$F{agentAddress} != null ? $F{agentAddress} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

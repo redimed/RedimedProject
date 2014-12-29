@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReferralReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d456b4a6-b03a-4398-bc57-3309355319e5">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="122"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	r.`APPOINTMENT_DATE`,
+	p.`Sur_name`,
+	p.`First_name`,
+	p.`DOB`,
+	p.`Address1`,
+	p.`Post_code`,
+	p.`Home_phone`,
+	p.`Phone_ext`,
+	p.`Mobile`,
+
+	IFNULL(r.`IS_CT_SCAN`,0) AS 'IS_CT_SCAN',
+	IFNULL(r.`IS_X_RAY`,0) AS 'IS_X_RAY',
+	IFNULL(r.`IS_ULTRASOUND`,0) AS 'IS_ULTRASOUND',
+	IFNULL(r.`IS_PATHOLOGY`,0) AS 'IS_PATHOLOGY',
+
+	r.`CLINICAL_DETAILS`,
+	IFNULL(r.`IS_ALLERGIES`,0) AS 'IS_ALLERGIES',
+
+	r.`REQUESTING_PRACTITIONER`,
+	IFNULL(r.`IS_REPORT_URGENT`,0) AS 'IS_REPORT_URGENT',
+
+	IFNULL(r.`IS_ELECTRONIC`,0) AS 'IS_ELECTRONIC',
+	IFNULL(r.`IS_FAX`,0) AS 'IS_FAX',
+	IFNULL(r.`IS_Email`,0) AS 'IS_Email',
+	IFNULL(r.`IS_PHONE`,0) AS 'IS_PHONE',
+	IFNULL(r.`IS_RETURN_WITH_PATIENT`,0) AS 'IS_RETURN_WITH_PATIENT'
+
+FROM `cln_redimed_referral` r
+INNER JOIN `cln_patients` p ON r.`Patient_id` = p.`Patient_id`
+WHERE r.`ID`=$P{id}
+]]>
+	</queryString>
+	<field name="APPOINTMENT_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sur_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="First_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOB" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Address1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Post_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Home_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Phone_ext" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Mobile" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_CT_SCAN" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_X_RAY" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_ULTRASOUND" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_PATHOLOGY" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLINICAL_DETAILS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_ALLERGIES" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="REQUESTING_PRACTITIONER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_REPORT_URGENT" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_ELECTRONIC" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_FAX" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_Email" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_PHONE" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_RETURN_WITH_PATIENT" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="99" splitType="Stretch">
+			<image>
+				<reportElement x="9" y="7" width="247" height="67" uuid="16577a56-11e1-4dcf-ad84-9195554ab211"/>
+				<imageExpression><![CDATA["Redimed.png"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="273" y="7" width="273" height="78" uuid="efc9d11b-7a63-4460-b1cd-07dcf5fca01a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="284" y="14" width="126" height="20" uuid="8ca2bfaa-fbf1-4a73-a0f6-41eac9133d7d"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Appointment Date:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="284" y="73" width="250" height="1" uuid="af6ed061-5cce-4f66-8199-b69ead1d7589"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd/MM/yyyy HH:mm a">
+				<reportElement x="282" y="60" width="252" height="20" uuid="ab670f64-8738-4d2b-bbd0-0fcf84e963c7"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APPOINTMENT_DATE} != null ? $F{APPOINTMENT_DATE} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="649" splitType="Stretch">
+			<rectangle>
+				<reportElement x="9" y="10" width="537" height="134" uuid="72019ad8-3ca7-445d-ae32-37f5923b1e44"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="22" y="18" width="100" height="20" uuid="39d6c20f-c6a7-42fb-8cc8-c95d655a21ff"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patient Details:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="44" width="50" height="15" uuid="98289db2-64e7-4cd1-95d5-d2e581b98485"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Surname:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="64" width="60" height="15" uuid="2c2090b5-f99c-4938-9a48-81b875fe8080"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[First Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="84" width="47" height="15" uuid="6d525e74-a00c-483e-b0e4-522a5998cdac"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Address:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="119" width="74" height="15" uuid="8e4a24c2-b1f3-4991-95da-7d2eac6acf56"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Telephone (H):]]></text>
+			</staticText>
+			<line>
+				<reportElement x="70" y="55" width="464" height="1" uuid="6d87fe35-1fdd-47f1-a0e0-45aa36a92e9d"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="79" y="75" width="222" height="1" uuid="98524e20-561c-4f8b-b016-3a0f4985b794"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="311" y="64" width="28" height="15" uuid="7d0f8aeb-9ef9-401b-b04e-a07c20b0fdfb"/>
+				<text><![CDATA[DOB:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="339" y="74" width="195" height="1" uuid="98e6d460-6698-4a45-9190-567f2d62b88f"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="67" y="95" width="467" height="1" uuid="21f7cb5f-2856-4c5a-a1bd-d855899ad7e6"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="22" y="113" width="279" height="1" uuid="848462e8-0b51-49af-8baf-880cdc17abb1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="311" y="102" width="48" height="15" uuid="9759f367-8e35-4bc6-984a-6aadf7c8117e"/>
+				<text><![CDATA[Postcode:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="357" y="112" width="177" height="1" uuid="e53882b4-e4fe-41db-a4c0-0e36b682220e"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="97" y="130" width="176" height="1" uuid="11c1d35b-60b3-485f-ad2b-93b1a5dfca68"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="278" y="119" width="14" height="15" uuid="79f7187c-1677-43cc-9cbf-5f41f7679ff1"/>
+				<text><![CDATA[(B)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="296" y="130" width="108" height="1" uuid="47550e9a-ad6f-4a86-8511-85b4a0b16245"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="406" y="119" width="15" height="15" uuid="93220a30-c551-4939-8fa9-a696da124848"/>
+				<text><![CDATA[(M)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="422" y="130" width="112" height="1" uuid="afe8a189-b0cc-4eb0-8b3e-33e92e4888ab"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="9" y="153" width="537" height="77" uuid="1c20cd2a-40c1-4132-aa87-e128eea2b35b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="22" y="161" width="100" height="20" uuid="0005ad71-d6f9-4695-b3ad-779ba3c57c5b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Examination:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="195" width="57" height="16" uuid="4c6d9205-98bf-4d78-b2b8-28472b1691f6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CT SCAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="194" width="38" height="16" uuid="d15f7c8b-7793-456b-8ed2-bdb137dcc3d4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[X-RAY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="282" y="195" width="88" height="16" uuid="dff8392b-43cb-4482-9b6c-16a704c42587"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ULTRASOUND]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="438" y="193" width="81" height="16" uuid="474445c3-52c4-430b-9859-0488011075a5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PATHOLOGY]]></text>
+			</staticText>
+			<image>
+				<reportElement x="83" y="196" width="13" height="13" uuid="878ed0da-0fc3-4a11-ad60-64220964c9a7"/>
+				<imageExpression><![CDATA[$F{IS_CT_SCAN}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="207" y="195" width="13" height="13" uuid="d06af3e5-277c-4698-bc91-daabf6508bc0"/>
+				<imageExpression><![CDATA[$F{IS_X_RAY}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="373" y="196" width="13" height="13" uuid="060f7337-953c-415c-881c-39f97800d8f3"/>
+				<imageExpression><![CDATA[$F{IS_ULTRASOUND}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="521" y="194" width="13" height="13" uuid="f3240128-3ca2-4373-be3a-85ffd60f1b43"/>
+				<imageExpression><![CDATA[$F{IS_PATHOLOGY}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="9" y="240" width="537" height="184" uuid="927ad992-b98f-4a3a-bcc9-9eddc37ae98b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="22" y="249" width="100" height="20" uuid="56d9822e-f46b-4db3-9268-652b9fb06c44"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clinical Details:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="22" y="401" width="13" height="13" uuid="e7a7ea82-07ad-4a1e-bbeb-d159603e9cf5"/>
+				<imageExpression><![CDATA[$F{IS_ALLERGIES}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="38" y="399" width="57" height="16" uuid="599f97dc-814e-4436-8cab-6240a51fb35b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Allergies]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="9" y="434" width="537" height="119" uuid="00ad1e74-076b-4fa5-a41e-4ec0d57803a2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="9" y="564" width="537" height="75" uuid="2bdac3bf-807b-4a67-84a5-ec6833507da1"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="22" y="444" width="147" height="20" uuid="c81eec85-a26d-431d-8859-786108e3fa1e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Requesting Practitioner:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="529" width="95" height="16" uuid="f0e65e76-2e4a-464f-9804-bc7fa7f33b0b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Report Urgent]]></text>
+			</staticText>
+			<image>
+				<reportElement x="22" y="531" width="13" height="13" uuid="09dce50f-5db1-4dc5-b9e8-c1f4c2ee33e5"/>
+				<imageExpression><![CDATA[$F{IS_REPORT_URGENT}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="22" y="573" width="61" height="20" uuid="9b7504fd-b466-40f8-afc0-cfca7072a530"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="606" width="71" height="16" uuid="439fc8b9-f05f-47b2-aa23-1244566b60b8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Electronic]]></text>
+			</staticText>
+			<image>
+				<reportElement x="22" y="607" width="13" height="13" uuid="1c63213a-2611-486f-9659-7b179ebcaefc"/>
+				<imageExpression><![CDATA[$F{IS_ELECTRONIC}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="151" y="605" width="33" height="16" uuid="3f9ab08a-0d2d-470d-8299-d3f849fb1c49"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fax]]></text>
+			</staticText>
+			<image>
+				<reportElement x="135" y="607" width="13" height="13" uuid="85363c70-33c4-4ae4-9f2a-646b4891feed"/>
+				<imageExpression><![CDATA[$F{IS_FAX}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="239" y="606" width="42" height="16" uuid="a98e8c8e-5b7d-42a2-b427-18756bee2e8b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mail]]></text>
+			</staticText>
+			<image>
+				<reportElement x="223" y="608" width="13" height="13" uuid="614ef051-4b76-4ed1-86eb-8303611201ea"/>
+				<imageExpression><![CDATA[$F{IS_Email}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="327" y="606" width="54" height="16" uuid="28d7b216-08a9-4acf-9f7a-fe2794ee4796"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone]]></text>
+			</staticText>
+			<image>
+				<reportElement x="311" y="608" width="13" height="13" uuid="b8fb6b6f-415d-4721-a5de-7a6bd377c3eb"/>
+				<imageExpression><![CDATA[$F{IS_PHONE}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="421" y="605" width="113" height="16" uuid="80139a34-e1e0-4685-91e6-69b62d986583"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Return with Patient]]></text>
+			</staticText>
+			<image>
+				<reportElement x="404" y="607" width="13" height="13" uuid="de28b055-226f-4918-afe4-6cb033c574ee"/>
+				<imageExpression><![CDATA[$F{IS_RETURN_WITH_PATIENT}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="72" y="41" width="462" height="15" uuid="f08da914-7900-4781-8ef1-2c4bcba1c1bd"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sur_name} != null ? $F{Sur_name} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="61" width="219" height="15" uuid="5a73b6b0-53bb-453f-8fb3-ade2fe5daaa2"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sur_name} != null ? $F{Sur_name} : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="339" y="60" width="195" height="15" uuid="b434659d-e338-4807-8c3a-0932a8655e51"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOB} != null ? $F{DOB} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="81" width="465" height="15" uuid="eab256a1-85a8-47eb-ac8b-a5cc2f109d63"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Address1} != null ? $F{Address1} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="357" y="99" width="177" height="15" uuid="ebde0bc4-b633-43ae-9f71-930a158a3b97"/>
+				<textFieldExpression><![CDATA[$F{Post_code}!= null ? $F{Post_code} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="116" width="176" height="15" uuid="4e41385d-b92c-471a-acba-867a3fc82cc5"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Home_phone} != null ? $F{Home_phone} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="117" width="99" height="17" uuid="e0e11821-d6c1-4fd9-aa47-6cd1015d971d"/>
+				<textFieldExpression><![CDATA[$F{Mobile} != null ? $F{Mobile} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="296" y="117" width="100" height="14" uuid="3c196944-3cc4-4914-99d7-6d83e5f18c34"/>
+				<textFieldExpression><![CDATA[$F{Phone_ext} != null ? $F{Phone_ext} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="272" width="512" height="117" uuid="567ad548-9787-4e4b-b22c-6d24f49ee086"/>
+				<textFieldExpression><![CDATA[$F{CLINICAL_DETAILS} != null ? $F{CLINICAL_DETAILS} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="467" width="512" height="56" uuid="653e72c6-7761-4aa9-b5a9-24bd19e12122"/>
+				<textFieldExpression><![CDATA[$F{REQUESTING_PRACTITIONER} != null ? $F{REQUESTING_PRACTITIONER} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

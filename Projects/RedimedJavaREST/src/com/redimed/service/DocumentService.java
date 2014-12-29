@@ -164,6 +164,21 @@ public class DocumentService {
                 return downloadReport("/reports/FinalWA/FinalWA.jasper", params, "FinalWA.pdf");
         	}
         	
+        	//Referral
+        	if(report.equalsIgnoreCase("referral"))
+        	{
+        		params.put("id",id);
+        		
+        		return downloadReport("/reports/Referral/ReferralReport.jasper", params, "ReferralReport.pdf");
+        	}
+        	
+        	//Script
+        	if(report.equalsIgnoreCase("script"))
+        	{
+        		params.put("id",id);
+        		
+        		return downloadReport("/reports/Script/ScriptReport.jasper", params, "ScriptReport.pdf");
+        	}
         	
         	
             

@@ -2,8 +2,6 @@ var _ = require('lodash-node');
 
 module.exports = function(io) {
     var userList = [];
-    var users = [];
-
     io.on('connection', function (socket) {
         socket.on('checkLogin',function(username){
 
@@ -31,11 +29,6 @@ module.exports = function(io) {
             var contact = _.find(userList, { username: username });
             if (!contact) { return; }
 
-            //console.log("Send From ------------->",currentUser.username);
-            //console.log("Send From ------------->",currentUser.socket);
-            //console.log("Send To ------------------> ",username);
-            //console.log("Send To ------------->",contact.socket);
-
             io.to(contact.socket)
                 .emit('messageReceived', currentUser.username, message);
         });
@@ -45,7 +38,6 @@ module.exports = function(io) {
             if (index !== -1) {
                 userList.splice(index, 1);
                 io.sockets.emit('online',userList);
-                //socket.broadcast.emit('online', userList);
             }
         });
 
@@ -54,58 +46,11 @@ module.exports = function(io) {
             if (index !== -1) {
                 userList.splice(index, 1);
                 io.sockets.emit('online',userList);
-                //socket.broadcast.emit('online', userList);
             }
         });
 
     });
 
-    //io.on('connection', function (socket) {
-    //    socket.on('login', function (name) {
-    //        // if this socket is already connected,
-    //        // send a failed login message
-    //        if (_.findIndex(users, { socket: socket.id }) !== -1) {
-    //            socket.emit('login_error', 'You are already connected.');
-    //        }
-    //
-    //        // if this name is already registered,
-    //        // send a failed login message
-    //        if (_.findIndex(users, { name: name }) !== -1) {
-    //            socket.emit('login_error', 'This name already exists.');
-    //            return;
-    //        }
-    //
-    //        users.push({
-    //            name: name,
-    //            socket: socket.id
-    //        });
-    //
-    //        socket.emit('login_successful', _.pluck(users, 'name'));
-    //        socket.broadcast.emit('online', name);
-    //
-    //        console.log(name + ' logged in');
-    //    });
-    //
-    //    socket.on('sendMessage', function (name, message) {
-    //        var currentUser = _.find(users, { socket: socket.id });
-    //        if (!currentUser) { return; }
-    //
-    //        var contact = _.find(users, { name: name });
-    //        if (!contact) { return; }
-    //
-    //        io.to(contact.socket)
-    //            .emit('messageReceived', currentUser.name, message);
-    //    });
-    //
-    //    socket.on('disconnect', function () {
-    //        var index = _.findIndex(users, { socket: socket.id });
-    //        if (index !== -1) {
-    //            socket.broadcast.emit('offline', users[index].name);
-    //            console.log(users[index].name + ' disconnected');
-    //
-    //            users.splice(index, 1);
-    //        }
-    //    });
-    //});
+
 
 };
