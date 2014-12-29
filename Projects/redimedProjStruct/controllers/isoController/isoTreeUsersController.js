@@ -401,8 +401,17 @@ module.exports =
                 });
                 isoUtil.exlog('Kiem tra xem user da tung duoc phan quyen tren node hay chua',query.sql);
             }
-            
         });
+    },
 
+    checkCanPermission(req,res)
+    {
+        var userGrant=req.body.userGrant?req.body.userGrant:'';
+        var userIsGranted=req.body.userIsGranted?req.body.userIsGranted:'';
+        var nodeId=req.body.nodeId?req.body.nodeId:'';
+        var permission=req.body.permission?req.body.permission:'';
+
+        //lay thu bat cua user tren node
+        
     }
 }
