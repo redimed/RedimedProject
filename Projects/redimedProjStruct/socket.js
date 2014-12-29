@@ -23,7 +23,7 @@ module.exports = function(io) {
         })
 
         socket.on('sendMessage', function (username, message) {
-            console.log("Send Message ------------------> ",message);
+
 
             var currentUser = _.find(userList, { socket: socket.id });
             if (!currentUser) { return; }
@@ -31,8 +31,13 @@ module.exports = function(io) {
             var contact = _.find(userList, { username: username });
             if (!contact) { return; }
 
+            //console.log("Send From ------------->",currentUser.username);
+            //console.log("Send From ------------->",currentUser.socket);
+            //console.log("Send To ------------------> ",username);
+            //console.log("Send To ------------->",contact.socket);
+
             io.to(contact.socket)
-                .emit('messageReceived', currentUser, message);
+                .emit('messageReceived', currentUser.username, message);
         });
 
         socket.on('logout', function (username) {
