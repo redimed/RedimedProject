@@ -2,9 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReferralReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d456b4a6-b03a-4398-bc57-3309355319e5">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="122"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -37,8 +40,7 @@
 
 FROM `cln_redimed_referral` r
 INNER JOIN `cln_patients` p ON r.`Patient_id` = p.`Patient_id`
-WHERE r.`ID`=$P{id}
-]]>
+WHERE r.`ID`=$P{id}]]>
 	</queryString>
 	<field name="APPOINTMENT_DATE" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -113,7 +115,7 @@ WHERE r.`ID`=$P{id}
 		<band height="99" splitType="Stretch">
 			<image>
 				<reportElement x="9" y="7" width="247" height="67" uuid="16577a56-11e1-4dcf-ad84-9195554ab211"/>
-				<imageExpression><![CDATA["Redimed.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"Redimed.png"]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement x="273" y="7" width="273" height="78" uuid="efc9d11b-7a63-4460-b1cd-07dcf5fca01a"/>
@@ -290,19 +292,19 @@ WHERE r.`ID`=$P{id}
 			</staticText>
 			<image>
 				<reportElement x="83" y="196" width="13" height="13" uuid="878ed0da-0fc3-4a11-ad60-64220964c9a7"/>
-				<imageExpression><![CDATA[$F{IS_CT_SCAN}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_CT_SCAN}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="207" y="195" width="13" height="13" uuid="d06af3e5-277c-4698-bc91-daabf6508bc0"/>
-				<imageExpression><![CDATA[$F{IS_X_RAY}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_X_RAY}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="373" y="196" width="13" height="13" uuid="060f7337-953c-415c-881c-39f97800d8f3"/>
-				<imageExpression><![CDATA[$F{IS_ULTRASOUND}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_ULTRASOUND}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="521" y="194" width="13" height="13" uuid="f3240128-3ca2-4373-be3a-85ffd60f1b43"/>
-				<imageExpression><![CDATA[$F{IS_PATHOLOGY}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_PATHOLOGY}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement x="9" y="240" width="537" height="184" uuid="927ad992-b98f-4a3a-bcc9-9eddc37ae98b"/>
@@ -316,7 +318,7 @@ WHERE r.`ID`=$P{id}
 			</staticText>
 			<image>
 				<reportElement x="22" y="401" width="13" height="13" uuid="e7a7ea82-07ad-4a1e-bbeb-d159603e9cf5"/>
-				<imageExpression><![CDATA[$F{IS_ALLERGIES}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_ALLERGIES}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="38" y="399" width="57" height="16" uuid="599f97dc-814e-4436-8cab-6240a51fb35b"/>
@@ -347,7 +349,7 @@ WHERE r.`ID`=$P{id}
 			</staticText>
 			<image>
 				<reportElement x="22" y="531" width="13" height="13" uuid="09dce50f-5db1-4dc5-b9e8-c1f4c2ee33e5"/>
-				<imageExpression><![CDATA[$F{IS_REPORT_URGENT}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_REPORT_URGENT}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="22" y="573" width="61" height="20" uuid="9b7504fd-b466-40f8-afc0-cfca7072a530"/>
@@ -365,7 +367,7 @@ WHERE r.`ID`=$P{id}
 			</staticText>
 			<image>
 				<reportElement x="22" y="607" width="13" height="13" uuid="1c63213a-2611-486f-9659-7b179ebcaefc"/>
-				<imageExpression><![CDATA[$F{IS_ELECTRONIC}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_ELECTRONIC}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="151" y="605" width="33" height="16" uuid="3f9ab08a-0d2d-470d-8299-d3f849fb1c49"/>
@@ -376,7 +378,7 @@ WHERE r.`ID`=$P{id}
 			</staticText>
 			<image>
 				<reportElement x="135" y="607" width="13" height="13" uuid="85363c70-33c4-4ae4-9f2a-646b4891feed"/>
-				<imageExpression><![CDATA[$F{IS_FAX}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_FAX}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="239" y="606" width="42" height="16" uuid="a98e8c8e-5b7d-42a2-b427-18756bee2e8b"/>
@@ -387,7 +389,7 @@ WHERE r.`ID`=$P{id}
 			</staticText>
 			<image>
 				<reportElement x="223" y="608" width="13" height="13" uuid="614ef051-4b76-4ed1-86eb-8303611201ea"/>
-				<imageExpression><![CDATA[$F{IS_Email}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_Email}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="327" y="606" width="54" height="16" uuid="28d7b216-08a9-4acf-9f7a-fe2794ee4796"/>
@@ -398,7 +400,7 @@ WHERE r.`ID`=$P{id}
 			</staticText>
 			<image>
 				<reportElement x="311" y="608" width="13" height="13" uuid="b8fb6b6f-415d-4721-a5de-7a6bd377c3eb"/>
-				<imageExpression><![CDATA[$F{IS_PHONE}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_PHONE}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="421" y="605" width="113" height="16" uuid="80139a34-e1e0-4685-91e6-69b62d986583"/>
@@ -409,7 +411,7 @@ WHERE r.`ID`=$P{id}
 			</staticText>
 			<image>
 				<reportElement x="404" y="607" width="13" height="13" uuid="de28b055-226f-4918-afe4-6cb033c574ee"/>
-				<imageExpression><![CDATA[$F{IS_RETURN_WITH_PATIENT}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{IS_RETURN_WITH_PATIENT}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="72" y="41" width="462" height="15" uuid="f08da914-7900-4781-8ef1-2c4bcba1c1bd"/>

@@ -168,6 +168,7 @@ public class DocumentService {
         	if(report.equalsIgnoreCase("referral"))
         	{
         		params.put("id",id);
+        		params.put("real_path","/reports/Referral/");
         		
         		return downloadReport("/reports/Referral/ReferralReport.jasper", params, "ReferralReport.pdf");
         	}
@@ -176,6 +177,7 @@ public class DocumentService {
         	if(report.equalsIgnoreCase("script"))
         	{
         		params.put("id",id);
+        		params.put("real_path","/reports/Script/");
         		
         		return downloadReport("/reports/Script/ScriptReport.jasper", params, "ScriptReport.pdf");
         	}
