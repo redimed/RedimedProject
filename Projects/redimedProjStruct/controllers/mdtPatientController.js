@@ -28,6 +28,13 @@ module.exports = {
 		delete req.body.Patient_id;
 		var postData = req.body;
 
+		//COMPANY CASE
+		var sql_company = "";
+		if(postData.company_id !== null){
+			sql_company = "INSERT IGNORE INTO patient_companies(patient_id, company_id) VALUES('"+patient_id+"', '"+postData.company_id+"')";
+		}
+		//END COMPANY CASE
+
 		if(patient_id == null)
 		{
 			console.log("============================",patient_id);
@@ -45,9 +52,16 @@ module.exports = {
 			}
 			patient.updateAttributes(postData)
 			.success(function(updated){
-				if(!updated){
-					res.json(500, {"status": "error", "message": "Database Error"});
-				}else{
+				if(sql_company !== ''){
+					db.sequelize.query(sql_company)
+					.success(function(created){
+						res.json({"status": "success", "data": updated});
+					})
+					.error(function(error){
+						res.json(500, {"status": "error", "message": error});			
+					})
+				}//end if sql company
+				else{
 					res.json({"status": "success", "data": updated});
 				}
 			})
