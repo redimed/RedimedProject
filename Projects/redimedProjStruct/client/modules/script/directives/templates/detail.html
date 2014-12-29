@@ -35,7 +35,7 @@
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="medicare">Medicare</label>
-                <input type="text" placeholder="Medicare" name="medicare" ng-model="modelObjectMap.Medicare" class="form-control" id="medicare" float-label>
+                <input type="text" placeholder="Medicare" name="medicare" ng-model="modelObjectMap.Medicare" class="form-control" id="medicare" float-label readonly="readonly">
             </span>	</div>
         <!--Medicare-->
         
@@ -109,10 +109,18 @@
 
 	<div class="break-row"></div>
 	<!--pharmacist-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="pharmacist" id="pharmacist" class="mdt-checkbox" ng-model="modelObjectMap.pharmacist" ng-true-value="1" ng-false-value="0">
-		<label for="pharmacist">Pharmacist</label>
-	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+    <span class="field" ng-class="{'has-error': mainForm.pharmacist.$invalid && isSubmit}">
+        <label for="pharmacist">Pharmacist</label>
+		<input type="text" name="pharmacist" id="pharmacist" ng-model="modelObjectMap.pharmacist" float-label placeholder="Pharmacist" class="form-control" required>
+   <span ng-show=" mainForm.pharmacist.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.pharmacist.$error.required">
+                       Pharmacist required!
+                    </span>
+            </span>
+    </span>
+	    
+			</div>
 	<!--pharmacist-->
 <div class="break-row"></div>
 

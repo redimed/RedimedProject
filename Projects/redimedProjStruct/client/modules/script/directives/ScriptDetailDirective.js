@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.script.detail.directive',[])
-    .directive('scriptDetail',function(ScriptReferralModel, ScriptService, DoctorService, ReceptionistService, ConfigService, toastr, $stateParams){
+    .directive('scriptDetail',function(ScriptReferralModel, ScriptService, DoctorService, ReceptionistService, ConfigService, toastr, $stateParams, PatientService){
         return{
             restrict: "EA",
             scope: {
@@ -41,6 +41,19 @@ angular.module('app.loggedIn.script.detail.directive',[])
                             }
                         }
                     })
+            
+            //Get Medicare ID
+            var patient_id = $stateParams.patient_id;
+                
+            PatientService.getById(patient_id).then(function(res){
+                if(!res){
+                    
+                }
+                else{
+                    scope.modelObjectMap.Medicare = res.Medicare_no;
+                }
+            })
+            
 
              var addProcess = function (postData) {
                 console.log(postData); // return;
