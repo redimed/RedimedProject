@@ -47,9 +47,9 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	// WATCH PATIENT ID
 	$scope.$watch("patient", function(newPatient){
 		if(typeof newPatient !== 'undefined' && newPatient !== null){
-			$scope.patient_id = newPatient.Patient_id;
-			angular.element(claimListSelectId).fadeIn();
-			//$scope.refreshAppointment();
+			//$scope.patient_id = newPatient.Patient_id;
+			//angular.element(claimListSelectId).fadeIn();
+			$scope.refreshAppointment();
 		}
 	})
 
