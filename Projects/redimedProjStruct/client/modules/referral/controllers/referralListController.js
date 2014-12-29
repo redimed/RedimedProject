@@ -1,33 +1,33 @@
-angular.module('app.loggedIn.script.list.controller',[
+angular.module('app.loggedIn.referral.list.controller',[
 
 ])
-    .controller('ScriptListController',function($scope, $stateParams){
-        $scope.script_panel = {};
-        $scope.script = {};
+    .controller('ReferralListController',function($scope, $stateParams){
+        $scope.referral_panel = {};
+        $scope.referral = {};
     
-        $scope.scripts = {
+        $scope.referrals = {
             select:0,
-            class:function(script){
+            class:function(referral){
                 return {
-                    selected: (script.ID == $scope.scripts.select)
+                    selected: (referral.ID == $scope.referral.select)
                 };
             },
-            scope: $scope.script_panel,
+            scope: $scope.referral_panel,
             options:{
-                api:'api/erm/v2/script/search',
+                api:'api/erm/v2/referral/search',
                 method:'post',
-                scope: $scope.script_panel,
+                scope: $scope.referral_panel,
                 columns: [
                     {field: 'ID', is_hide: true},
-                    {field: 'scriptNum', label: 'Script Number', width:"15%"},    
-                    {field: 'prescriber', label: 'Prescriber', width:"40%"},
-                    {field: 'EntitlementNo', label: 'Entitlement No'},       
+                    {field: 'CAL_ID', label: 'Calendar ID', width:"10%"},    
+                    {field: 'CLINICAL_DETAILS', label: 'Clinical details', width:"40%"},    
+                    {field: 'REQUESTING_PRACTITIONER', label: 'Requesting practitioner', width:"40%"},   
                 ],
                 use_filters: true,
                 filters: {
-                    scriptNum: {type: 'text'},
-                    prescriber: {type: 'text'},
-                    EntitlementNo: {type: 'text'},
+                    CAL_ID: {type: 'text'},
+                    CLINICAL_DETAILS: {type: 'text'},
+                    REQUESTING_PRACTITIONER: {type: 'text'},
                 },
                 search: {
                     Patient_id: $stateParams.patient_id,
@@ -39,8 +39,8 @@ angular.module('app.loggedIn.script.list.controller',[
                         class: 'fa fa-info', title: 'Edit',
                         callback: function(item){
                             console.log('this is selected item',item)
-                                $scope.script.id = item.ID;
-                                $scope.scriptEditForm.open();
+                                $scope.referral.id = item.ID;
+                                $scope.referralEditForm.open();
                         }
                     },
                     {
@@ -49,7 +49,7 @@ angular.module('app.loggedIn.script.list.controller',[
                             console.log('this is selected item',item)
 //                                $scope.script.id = item.ID;
 //                            $scope.go('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/'+item.ID);
-                            window.open('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/'+item.ID);
+                            window.open('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/referral/'+item.ID);
                         }
                     },
                 ],
@@ -57,7 +57,7 @@ angular.module('app.loggedIn.script.list.controller',[
             }
         };
     
-       $scope.scriptAddForm = {
+       $scope.referralAddForm = {
             is_show: false,
             open: function () {
                 this.is_show = true;
@@ -67,11 +67,11 @@ angular.module('app.loggedIn.script.list.controller',[
             },
             success: function (response) {
                 if (response.status == 'success')
-                    $scope.script_panel.reload();
+                    $scope.referral_panel.reload();
             }
         }
        
-       $scope.scriptEditForm = {
+       $scope.referralEditForm = {
             is_show: false,
             open: function () {
                 this.is_show = true;
@@ -81,7 +81,7 @@ angular.module('app.loggedIn.script.list.controller',[
             },
             success: function (response) {
                 if (response.status == 'success')
-                    $scope.script_panel.reload();
+                    $scope.referral_panel.reload();
             }
         }
     

@@ -1,163 +1,154 @@
-<form name="referralForm" novalidate>
-<!--ACTION-->
+<form name="mainForm" novalidate>
+
 <div class="row" style="margin-bottom: 15px;">
-	<div class="col-md-2 col-sm-3 col-xs-6">
-		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
-			<i class="fa fa-plus"></i>
-		</button>
-		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
-			<i class="fa fa-pencil"></i>
-		</button>
-	</div>
+	
 </div>
-<!--END ACTION -->
 
 <div class="row">
 
-	<!--Patient_id-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="patient_id">Patient id</label>
-			<input type="number" placeholder="Patient id" name="patient_id" ng-model="ReferralMap.Patient_id" class="form-control" id="patient_id" float-label>
-		</span>	</div>
-	<!--Patient_id-->
-
-	<!--CAL_ID-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="cal_id">Cal id</label>
-			<input type="number" placeholder="Cal id" name="cal_id" ng-model="ReferralMap.CAL_ID" class="form-control" id="cal_id" float-label>
-		</span>	</div>
-	<!--CAL_ID-->
-
 	<!--IS_CT_SCAN-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="is_ct_scan" id="is_ct_scan" class="mdt-checkbox" ng-model="ReferralMap.IS_CT_SCAN" ng-true-value="1" ng-false-value="0">
-		<label for="is_ct_scan">Is ct scan</label>
+		<input type="checkbox" name="is_ct_scan" id="is_ct_scan" class="mdt-checkbox" ng-model="modelObjectMap.IS_CT_SCAN" ng-true-value="1" ng-false-value="0">
+		<label for="is_ct_scan">CT SCAN</label>
 	</div>
 	<!--IS_CT_SCAN-->
+   
+   
+    <!--IS_X_RAY-->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="checkbox" name="is_x_ray" id="is_x_ray" class="mdt-checkbox" ng-model="modelObjectMap.IS_X_RAY" ng-true-value="1" ng-false-value="0">
+            <label for="is_x_ray">XRAY</label>
+        </div>
+        <!--IS_X_RAY-->
 
+        <!--IS_MRI-->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="checkbox" name="is_mri" id="is_mri" class="mdt-checkbox" ng-model="modelObjectMap.IS_MRI" ng-true-value="1" ng-false-value="0">
+            <label for="is_mri">MRI</label>
+        </div>
+        <!--IS_MRI-->
 
 	<div class="break-row"></div>
-	<!--IS_X_RAY-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="is_x_ray" id="is_x_ray" class="mdt-checkbox" ng-model="ReferralMap.IS_X_RAY" ng-true-value="1" ng-false-value="0">
-		<label for="is_x_ray">Is x ray</label>
-	</div>
-	<!--IS_X_RAY-->
-
-	<!--IS_MRI-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="is_mri" id="is_mri" class="mdt-checkbox" ng-model="ReferralMap.IS_MRI" ng-true-value="1" ng-false-value="0">
-		<label for="is_mri">Is mri</label>
-	</div>
-	<!--IS_MRI-->
+	
 
 	<!--IS_ULTRASOUND-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="is_ultrasound" id="is_ultrasound" class="mdt-checkbox" ng-model="ReferralMap.IS_ULTRASOUND" ng-true-value="1" ng-false-value="0">
-		<label for="is_ultrasound">Is ultrasound</label>
+		<input type="checkbox" name="is_ultrasound" id="is_ultrasound" class="mdt-checkbox" ng-model="modelObjectMap.IS_ULTRASOUND" ng-true-value="1" ng-false-value="0">
+		<label for="is_ultrasound">Ultrasound</label>
 	</div>
 	<!--IS_ULTRASOUND-->
-
+   
+    <!--IS_PATHOLOGY-->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="checkbox" name="is_pathology" id="is_pathology" class="mdt-checkbox" ng-model="modelObjectMap.IS_PATHOLOGY" ng-true-value="1" ng-false-value="0">
+            <label for="is_pathology">Pathology</label>
+        </div>
+        <!--IS_PATHOLOGY-->
 
 	<div class="break-row"></div>
-	<!--IS_PATHOLOGY-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="is_pathology" id="is_pathology" class="mdt-checkbox" ng-model="ReferralMap.IS_PATHOLOGY" ng-true-value="1" ng-false-value="0">
-		<label for="is_pathology">Is pathology</label>
-	</div>
-	<!--IS_PATHOLOGY-->
+	
 
 	<!--CLINICAL_DETAILS-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-md-8 col-sm-8 col-xs-12">
 		<span class="field">
 			<label for="clinical_details">Clinical details</label>
-			<input type="text" placeholder="Clinical details" name="clinical_details" ng-model="ReferralMap.CLINICAL_DETAILS" class="form-control" id="clinical_details" float-label>
+            <textarea style="resize:none;"  type="text" placeholder="Clinical details" name="clinical_details" ng-model="modelObjectMap.CLINICAL_DETAILS" class="form-control" id="clinical_details" float-label></textarea>
 		</span>	</div>
 	<!--CLINICAL_DETAILS-->
 
 	<!--IS_ALLERGIES-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="is_allergies" id="is_allergies" class="mdt-checkbox" ng-model="ReferralMap.IS_ALLERGIES" ng-true-value="1" ng-false-value="0">
-		<label for="is_allergies">Is allergies</label>
+	<div class="col-md-4 col-sm-4 col-xs-12">
+		<input type="checkbox" name="is_allergies" id="is_allergies" class="mdt-checkbox" ng-model="modelObjectMap.IS_ALLERGIES" ng-true-value="1" ng-false-value="0">
+		<label for="is_allergies">Allergies</label>
 	</div>
 	<!--IS_ALLERGIES-->
 
 
 	<div class="break-row"></div>
 	<!--REQUESTING_PRACTITIONER-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
+	<div class="col-md-8 col-sm-8 col-xs-12">
 		<span class="field">
 			<label for="requesting_practitioner">Requesting practitioner</label>
-			<input type="text" placeholder="Requesting practitioner" name="requesting_practitioner" ng-model="ReferralMap.REQUESTING_PRACTITIONER" class="form-control" id="requesting_practitioner" float-label>
+            <textarea style="resize:none;" placeholder="Requesting practitioner" name="requesting_practitioner" ng-model="modelObjectMap.REQUESTING_PRACTITIONER" class="form-control" id="requesting_practitioner" float-label></textarea>
 		</span>	</div>
 	<!--REQUESTING_PRACTITIONER-->
 
 	<!--IS_REPORT_URGENT-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="is_report_urgent" id="is_report_urgent" class="mdt-checkbox" ng-model="ReferralMap.IS_REPORT_URGENT" ng-true-value="1" ng-false-value="0">
-		<label for="is_report_urgent">Is report urgent</label>
+	<div class="col-md-4 col-sm-4 col-xs-12">
+		<input type="checkbox" name="is_report_urgent" id="is_report_urgent" class="mdt-checkbox" ng-model="modelObjectMap.IS_REPORT_URGENT" ng-true-value="1" ng-false-value="0">
+		<label for="is_report_urgent">Report urgent</label>
 	</div>
 	<!--IS_REPORT_URGENT-->
-
-	<!--ELECTRONIC-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="electronic">Electronic</label>
-			<input type="number" placeholder="Electronic" name="electronic" ng-model="ReferralMap.ELECTRONIC" class="form-control" id="electronic" float-label>
-		</span>	</div>
-	<!--ELECTRONIC-->
-
-
 	<div class="break-row"></div>
+    <div class="row">
+       <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+           <label class="control-label">
+              <b>REPORT</b>
+           </label>
+           </div>
+       </div>
+    </div>
+	<!--ELECTRONIC-->
+		<div class="col-md-4 col-sm-4 col-xs-12">
+		<input type="checkbox" name="IS_ELECTRONIC" id="IS_ELECTRONIC" class="mdt-checkbox" ng-model="modelObjectMap.IS_ELECTRONIC" ng-true-value="1" ng-false-value="0">
+		<label for="IS_ELECTRONIC">Electronic</label>
+	</div>
+	<!--ELECTRONIC-->
+   
+    <!--FAX-->
+		<div class="col-md-4 col-sm-4 col-xs-12">
+		<input type="checkbox" name="IS_FAX" id="IS_FAX" class="mdt-checkbox" ng-model="modelObjectMap.IS_FAX" ng-true-value="1" ng-false-value="0">
+		<label for="IS_FAX">Fax</label>
+	</div>
 	<!--FAX-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="fax">Fax</label>
-			<input type="number" placeholder="Fax" name="fax" ng-model="ReferralMap.FAX" class="form-control" id="fax" float-label>
-		</span>	</div>
-	<!--FAX-->
+   
+    <!--Email-->
+		<div class="col-md-4 col-sm-4 col-xs-12">
+		<input type="checkbox" name="IS_Email" id="IS_Email" class="mdt-checkbox" ng-model="modelObjectMap.IS_Email" ng-true-value="1" ng-false-value="0">
+		<label for="IS_Email">Email</label>
+	</div>
+	<!--Email-->
+	<div class="break-row"></div>
+	
 
-	<!--Email-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="email">Email</label>
-			<input type="text" placeholder="Email" name="email" ng-model="ReferralMap.Email" class="form-control" id="email" float-label>
-		</span>	</div>
-	<!--Email-->
+	
 
 	<!--PHONE-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="phone">Phone</label>
-			<input type="number" placeholder="Phone" name="phone" ng-model="ReferralMap.PHONE" class="form-control" id="phone" float-label>
-		</span>	</div>
+		<div class="col-md-4 col-sm-4 col-xs-12">
+		<input type="checkbox" name="IS_PHONE" id="IS_PHONE" class="mdt-checkbox" ng-model="modelObjectMap.IS_PHONE" ng-true-value="1" ng-false-value="0">
+		<label for="IS_PHONE">Phone</label>
+	</div>
 	<!--PHONE-->
 
-
-	<div class="break-row"></div>
 	<!--IS_RETURN_WITH_PATIENT-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="is_return_with_patient" id="is_return_with_patient" class="mdt-checkbox" ng-model="ReferralMap.IS_RETURN_WITH_PATIENT" ng-true-value="1" ng-false-value="0">
-		<label for="is_return_with_patient">Is return with patient</label>
+	<div class="col-md-4 col-sm-4 col-xs-12">
+		<input type="checkbox" name="IS_RETURN_WITH_PATIENT" id="IS_RETURN_WITH_PATIENT" class="mdt-checkbox" ng-model="modelObjectMap.IS_RETURN_WITH_PATIENT" ng-true-value="1" ng-false-value="0">
+		<label for="IS_RETURN_WITH_PATIENT">Return with patient</label>
 	</div>
 	<!--IS_RETURN_WITH_PATIENT-->
-
+    <div class="break-row"></div>
+    <div class="row" style="margin-bottom: 15px;">
+	
+    </div>
+    <div class="break-row"></div>
 	<!--APPOINTMENT_DATE-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="appointment_date">Appointment date</label>
-			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Appointment date" name="appointment_date" ng-model="ReferralMap.APPOINTMENT_DATE" class="form-control" id="appointment_date" float-label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Appointment date" name="appointment_date" ng-model="modelObjectMap.APPOINTMENT_DATE" class="form-control" id="appointment_date" float-label>
 		</span>	</div>
 	<!--APPOINTMENT_DATE-->
-
-	<!--Isenable-->
-	<div class="col-md-4 col-sm-6 col-xs-12">
-		<input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="ReferralMap.Isenable" ng-true-value="1" ng-false-value="0">
-		<label for="isenable">Isenable</label>
-	</div>
-	<!--Isenable-->
+	
+		<div class="clearfix"></div>
+        <!-- ACTION -->
+        <div class="col-sm-4 col-xs-6">
+            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+                <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
+                <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
+                {{mode.text}}
+            </button>
+        </div>
 
 </div>
 </form>

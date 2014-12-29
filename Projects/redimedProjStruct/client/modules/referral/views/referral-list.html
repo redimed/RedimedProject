@@ -1,0 +1,43 @@
+<h1>Referral List</h1>
+
+<div class="portlet box blue ng-scope">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Referrals
+        </div>
+        <div class="pull-right navbar-right">
+            <!-- Single button -->
+              <button style="margin-right: 0;" type="button" class="btn btn-default green" ng-click="referralAddForm.open()">
+                    Add referral
+              </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+       	<my-data-table options="referrals.options" rowclass="referrals.class" numrows="10"></my-data-table>
+    	<div class="clearfix"></div>
+    </div>
+</div>
+
+
+<!--REFERRAL ADD FORM-->
+<div class="mdt-search" style="display: block;" ng-if="referralAddForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="referralAddForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <referral-detail options="options" onsuccess="referralAddForm.success" />
+</div>
+<!--END REFERRAL ADD FORM-->
+
+
+<!--REFERRAL EDIT FORM-->
+<div class="mdt-search" style="display: block;" ng-if="referralEditForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="referralEditForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <referral-detail options="options" onsuccess="referralEditForm.success" data="{id:'{{referral.id}}'}"/>
+</div>
+<!--END REFERRAL EDIT FORM-->
