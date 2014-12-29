@@ -35,7 +35,7 @@
                         <label class="control-label">Job Number</label>
 
                         <div ng-class="{'has-error': gorgonMHForm.JobNo.$error.maxlength}">
-                            <input type="text" name="JobNo" id="JobNo" ng-model="info.JobNo" class="form-control"
+                            <input type="text" name="JobNo" ng-model="info.JobNo" class="form-control"
                                    ng-maxlength="50">
 
                             <div class="help-block" ng-show="gorgonMHForm.JobNo.$error.maxlength">
@@ -84,7 +84,7 @@
 
                         <div ng-class="{'has-error': gorgonMHForm.Occupation.$error.maxlength}">
                             <input type="text" name="Occupation" ng-model="info.Occupation" class="form-control"
-                                   ng-maxlength="200" id="Occupation">
+                                   ng-maxlength="200">
 
                             <div class="help-block" ng-show="gorgonMHForm.Occupation.$error.maxlength">
                                 <label class="control-label">Too long!</label>
@@ -98,7 +98,7 @@
                         <label class="control-label">Job Location:</label>
 
                         <div ng-class="{'has-error': gorgonMHForm.JobLocation.$error.maxlength}">
-                            <input type="text" ng-model="info.JobLocation" name="JobLocation" id="JobLocation"
+                            <input type="text" ng-model="info.JobLocation" name="JobLocation"
                                    class="form-control"
                                    ng-maxlength="200">
 
@@ -116,7 +116,6 @@
 
                         <div ng-class="{'has-error': gorgonMHForm.SpecificLocation.$error.maxlength}">
                             <input type="text" ng-model="info.SpecificLocation" name="SpecificLocation"
-                                   id="SpecificLocation"
                                    class="form-control" ng-maxlength="200">
 
                             <div class="help-block" ng-show="gorgonMHForm.SpecificLocation.$error.maxlength">
@@ -132,7 +131,7 @@
                             facility)</label>
 
                         <div ng-class="{'has-error': gorgonMHForm.PhoneNumber.$error.maxlength}">
-                            <input type="text" ng-model="info.PhoneNumber" name="PhoneNumber" id="PhoneNumber"
+                            <input type="text" ng-model="info.PhoneNumber" name="PhoneNumber"
                                    class="form-control"
                                    ng-maxlength="50">
 
@@ -213,17 +212,17 @@
                     <div class="col-md-3 col-sm-3">
                         <div class="form-group">
                             <label class="control-label">From year:</label>
-                            <input type="text" class="form-control col-md-12" name="Q1_YearFrom1" id="Q1_YearFrom1"
-                                   max-date="maxDate"
-                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.Q1_YearFrom1" is-open="openDOB"
+                            <input type="text" class="form-control col-md-12" name="Q1_YearFrom1"
+                                   max-date="info.Q1_YearTo1 || maxDate"
+                                   datepicker-popup="dd/MM/yyyy" ng-model="info.Q1_YearFrom1" is-open="openDOB"
                                    ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close"/>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-3">
                         <div class="form-group">
                             <label class="control-label">To year:</label>
-                            <input type="text" class="form-control col-md-12" name="Q1_YearTo1" id="Q1_YearTo1"
-                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.Q1_YearTo1"
+                            <input type="text" class="form-control col-md-12" name="Q1_YearTo1"
+                                   datepicker-popup="dd/MM/yyyy" ng-model="info.Q1_YearTo1"
                                    min-date="info.Q1_YearFrom1" max-date="maxDate" is-open="openDOB1"
                                    ng-click="openDOB1 = true" datepicker-options="dateOptions" close-text="Close"/>
                         </div>
@@ -234,7 +233,7 @@
                             <label class="control-label">Job:</label>
 
                             <div ng-class="{'has-error': gorgonMHForm.Q1_Job1.$error.maxlength}">
-                                <input type="text" name="Q1_Job1" id="Q1_Job1" ng-model="info.Q1_Job1"
+                                <input type="text" name="Q1_Job1" ng-model="info.Q1_Job1"
                                        class="form-control"
                                        ng-maxlength="200">
 
@@ -249,7 +248,7 @@
                             <label class="control-label">Employer:</label>
 
                             <div ng-class="{'has-error': gorgonMHForm.Q1_Employer1.$error.maxlength}">
-                                <input type="text" name="Q1_Employer1" id="Q1_Employer1" ng-model="info.Q1_Employer1"
+                                <input type="text" name="Q1_Employer1" ng-model="info.Q1_Employer1"
                                        class="form-control"
                                        ng-maxlength="200">
 
@@ -264,8 +263,10 @@
                     <div class="col-md-3 col-sm-3">
                         <div class="form-group">
                             <label class="control-label">From year:</label>
-                            <input type="text" class="form-control col-md-12" name="Q1_YearFrom2" id="Q1_YearFrom2"
-                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.Q1_YearFrom2" max-date="maxDate"
+                            <input type="text" class="form-control col-md-12" name="Q1_YearFrom2"
+                                   datepicker-popup="dd/MM/yyyy" data-ng-model="info.Q1_YearFrom2"
+                                   max-date="info.Q1_YearTo2 || maxDate"
+                                   min-date="info.Q1_YearTo1 || info.Q1_YearFrom1"
                                    is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions"
                                    close-text="Close"/>
                         </div>
@@ -273,9 +274,10 @@
                     <div class="col-md-3 col-sm-3">
                         <div class="form-group">
                             <label class="control-label">To year:</label>
-                            <input type="text" class="form-control col-md-12" name="Q1_YearTo2" id="Q1_YearTo2"
+                            <input type="text" class="form-control col-md-12" name="Q1_YearTo2"
                                    datepicker-popup="dd/MM/yyyy" data-ng-model="info.Q1_YearTo2"
-                                   min-date="info.Q1_YearFrom2" max-date="maxDate" is-open="openDOB3"
+                                   min-date="info.Q1_YearFrom2 || info.Q1_YearTo1 || info.Q1_YearFrom1"
+                                   max-date="maxDate" is-open="openDOB3"
                                    ng-click="openDOB3 = true" datepicker-options="dateOptions" close-text="Close"/>
                         </div>
                     </div>
@@ -285,7 +287,7 @@
                             <label class="control-label">Job:</label>
 
                             <div ng-class="{'has-error': gorgonMHForm.Q1_Job2.$error.maxlength}">
-                                <input type="text" name="Q1_Job2" id="Q1_Job2" ng-model="info.Q1_Job2"
+                                <input type="text" name="Q1_Job2" ng-model="info.Q1_Job2"
                                        class="form-control"
                                        ng-maxlength="200">
 
@@ -300,7 +302,7 @@
                             <label class="control-label">Employer:</label>
 
                             <div ng-class="{'has-error': gorgonMHForm.Q1_Employer2.$error.maxlength}">
-                                <input type="text" name="Q1_Employer2" id="Q1_Employer2" ng-model="info.Q1_Employer2"
+                                <input type="text" name="Q1_Employer2" ng-model="info.Q1_Employer2"
                                        class="form-control"
                                        ng-maxlength="200"/>
 
@@ -319,11 +321,11 @@
                     <div class="clearfix">
                         <div class="col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name="Q1_TypeOfWork" id="Q1_TypeOfWork"
+                                <input type="radio" name="Q1_TypeOfWork"
                                        ng-model="info.Q1_TypeOfWork" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q1_TypeOfWork' id="Q1_TypeOfWork"
+                                <input type="radio" name='Q1_TypeOfWork'
                                        ng-model="info.Q1_TypeOfWork" ng-value="1"/>Y
                             </label>
                         </div>
@@ -337,12 +339,12 @@
                         <div class="clearfix">
                             <div class="col-md-3 col-sm-3" style="width: auto;">
                                 <label class="btn bold">
-                                    <input type="radio" name="Q1_WorkPast" id="Q1_WorkPast" ng-model="info.Q1_WorkPast"
+                                    <input type="radio" name="Q1_WorkPast" ng-model="info.Q1_WorkPast"
                                            ng-value="0"
                                            ng-required="info.Q1_TypeOfWork==0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name="Q1_WorkPast" id="Q1_WorkPast" ng-model="info.Q1_WorkPast"
+                                    <input type="radio" name="Q1_WorkPast" ng-model="info.Q1_WorkPast"
                                            ng-value="1"
                                            ng-required="info.Q1_TypeOfWork==0"/>Y
                                 </label>
@@ -373,12 +375,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q1_WorkEnvironment' id="Q1_WorkEnvironment"
+                                <input type="radio" name='Q1_WorkEnvironment'
                                        ng-model="info.Q1_WorkEnvironment"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q1_WorkEnvironment' id="Q1_WorkEnvironment"
+                                <input type="radio" name='Q1_WorkEnvironment'
                                        ng-model="info.Q1_WorkEnvironment"
                                        ng-value="1"/>Y
                             </label>
@@ -395,12 +397,12 @@
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3" style="width:auto;">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_AnyProblems' id="Q1_AnyProblems"
+                                    <input type="radio" name='Q1_AnyProblems'
                                            ng-model="info.Q1_AnyProblems"
                                            ng-value="0" ng-required="info.Q1_WorkEnvironment==1"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_AnyProblems' id="Q1_AnyProblems"
+                                    <input type="radio" name='Q1_AnyProblems'
                                            ng-model="info.Q1_AnyProblems"
                                            ng-value="1" ng-required="info.Q1_WorkEnvironment==1"/>Y
                                 </label>
@@ -420,12 +422,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q1_CauseProblems' id="Q1_CauseProblems"
+                                <input type="radio" name='Q1_CauseProblems'
                                        ng-model="info.Q1_CauseProblems"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q1_CauseProblems' id="Q1_CauseProblems"
+                                <input type="radio" name='Q1_CauseProblems'
                                        ng-model="info.Q1_CauseProblems"
                                        ng-value="1"/>Y
                             </label>
@@ -450,12 +452,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_Underground' id="Q1_Underground"
+                                    <input type="radio" name='Q1_Underground'
                                            ng-model="info.Q1_Underground"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_Underground' id="Q1_Underground"
+                                    <input type="radio" name='Q1_Underground'
                                            ng-model="info.Q1_Underground"
                                            ng-value="1"/>Y
                                 </label>
@@ -469,12 +471,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_WetConditions' id="Q1_WetConditions"
+                                    <input type="radio" name='Q1_WetConditions'
                                            ng-model="info.Q1_WetConditions"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_WetConditions' id="Q1_WetConditions"
+                                    <input type="radio" name='Q1_WetConditions'
                                            ng-model="info.Q1_WetConditions"
                                            ng-value="1"/>Y
                                 </label>
@@ -492,11 +494,11 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_GrainDust' id="Q1_GrainDust"
+                                    <input type="radio" name='Q1_GrainDust'
                                            ng-model="info.Q1_GrainDust" ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_GrainDust' id="Q1_GrainDust"
+                                    <input type="radio" name='Q1_GrainDust'
                                            ng-model="info.Q1_GrainDust" ng-value="1"/>Y
                                 </label>
                             </div>
@@ -509,11 +511,11 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_Nickel' id="Q1_Nickel" ng-model="info.Q1_Nickel"
+                                    <input type="radio" name='Q1_Nickel' ng-model="info.Q1_Nickel"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_Nickel' id="Q1_Nickel" ng-model="info.Q1_Nickel"
+                                    <input type="radio" name='Q1_Nickel' ng-model="info.Q1_Nickel"
                                            ng-value="1"/>Y
                                 </label>
                             </div>
@@ -528,11 +530,11 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_RemoteEnv' id="Q1_RemoteEnv"
+                                    <input type="radio" name='Q1_RemoteEnv'
                                            ng-model="info.Q1_RemoteEnv" ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_RemoteEnv' id="Q1_RemoteEnv"
+                                    <input type="radio" name='Q1_RemoteEnv'
                                            ng-model="info.Q1_RemoteEnv" ng-value="1"/>Y
                                 </label>
                             </div>
@@ -546,12 +548,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_HumidConditions' id="Q1_HumidConditions"
+                                    <input type="radio" name='Q1_HumidConditions'
                                            ng-model="info.Q1_HumidConditions"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_HumidConditions' id="Q1_HumidConditions"
+                                    <input type="radio" name='Q1_HumidConditions'
                                            ng-model="info.Q1_HumidConditions"
                                            ng-value="1"/>Y
                                 </label>
@@ -567,11 +569,11 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_AtHeights' id="Q1_AtHeights"
+                                    <input type="radio" name='Q1_AtHeights'
                                            ng-model="info.Q1_AtHeights" ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q1_AtHeights' id="Q1_AtHeights"
+                                    <input type="radio" name='Q1_AtHeights'
                                            ng-model="info.Q1_AtHeights" ng-value="1"/>Y
                                 </label>
                             </div>
@@ -590,10 +592,10 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q1_FIFO' id="Q1_FIFO" ng-model="info.Q1_FIFO" ng-value="0"/>N
+                            <input type="radio" name='Q1_FIFO' ng-model="info.Q1_FIFO" ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q1_FIFO' id="Q1_FIFO" ng-model="info.Q1_FIFO" ng-value="1"/>Y
+                            <input type="radio" name='Q1_FIFO' ng-model="info.Q1_FIFO" ng-value="1"/>Y
                         </label>
                     </div>
                 </div>
@@ -606,12 +608,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3" style="width: auto;">
                             <label class="btn bold">
-                                <input type="radio" name='Q1_FIFODone' id="Q1_FIFODone" ng-model="info.Q1_FIFODone"
+                                <input type="radio" name='Q1_FIFODone' ng-model="info.Q1_FIFODone"
                                        ng-value="0"
                                        ng-required="info.Q1_FIFO==1"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q1_FIFODone' id="Q1_FIFODone" ng-model="info.Q1_FIFODone"
+                                <input type="radio" name='Q1_FIFODone' ng-model="info.Q1_FIFODone"
                                        ng-value="1"
                                        ng-required="info.Q1_FIFO==1"/>Y
                             </label>
@@ -631,7 +633,7 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3" style="width:auto;">
                             <label class="btn bold">
-                                <input type="radio" name='Q1_FIFOProblems' id="Q1_FIFOProblems"
+                                <input type="radio" name='Q1_FIFOProblems'
                                        ng-model="info.Q1_FIFOProblems" ng-value="0"
                                        ng-required="info.Q1_FIFODone==1"/>N
                             </label>
@@ -746,7 +748,7 @@
                 <div class="col-md-8 col-sm-8">
                     <div ng-class="{'has-error': gorgonMHForm.Q1_ExaminersComments.$error.required ||
          gorgonMHForm.Q1_ExaminersComments.$error.maxlength }">
-                        <textarea class="form-control" name="Q1_ExaminersComments" id="Q1_ExaminersComments"
+                        <textarea class="form-control" name="Q1_ExaminersComments"
                                   ng-model="info.Q1_ExaminersComments"
                                   ng-required="info.Q1_WorkPast || info.Q1_AnyProblems ||
                                        info.Q1_CauseProblems ||info.Q1_SafetyEquipment ==0||
@@ -785,11 +787,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Operation' id="Q2_Operation" ng-model="info.Q2_Operation"
+                            <input type="radio" name='Q2_Operation' ng-model="info.Q2_Operation"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Operation' id="Q2_Operation" ng-model="info.Q2_Operation"
+                            <input type="radio" name='Q2_Operation' ng-model="info.Q2_Operation"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -802,11 +804,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Accident' id="Q2_Accident" ng-model="info.Q2_Accident"
+                            <input type="radio" name='Q2_Accident' ng-model="info.Q2_Accident"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Accident' id="Q2_Accident" ng-model="info.Q2_Accident"
+                            <input type="radio" name='Q2_Accident' ng-model="info.Q2_Accident"
                                    ng-model="info.Q2_Accident" ng-value="1"/>Y
                         </label>
                     </div>
@@ -820,11 +822,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_SportsInjury' id="Q2_SportsInjury"
+                            <input type="radio" name='Q2_SportsInjury'
                                    ng-model="info.Q2_SportsInjury" ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_SportsInjury' id="Q2_SportsInjury"
+                            <input type="radio" name='Q2_SportsInjury'
                                    ng-model="info.Q2_SportsInjury" ng-value="1"/>Y
                         </label>
                     </div>
@@ -843,7 +845,7 @@
                 </div>
                 <div class="col-md-8 col-sm-8">
                     <div ng-class="{'has-error': gorgonMHForm.Q2_YesWhen.$error.required || gorgonMHForm.Q2_YesWhen.$error.maxlength}">
-                        <textarea name="Q2_YesWhen" id="Q2_YesWhen" ng-model="info.Q2_YesWhen" class="form-control"
+                        <textarea name="Q2_YesWhen" ng-model="info.Q2_YesWhen" class="form-control"
                                   ng-maxlength="200"
                                   ng-required="info.Q2_Operation || info.Q2_Accident || info.Q2_SportsInjury"
                                   style="height:50px;"></textarea>
@@ -867,12 +869,12 @@
                         <div class="clearfix">
                             <div class="btn-group">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q2_TimeOfWork' id="Q2_TimeOfWork"
+                                    <input type="radio" name='Q2_TimeOfWork'
                                            ng-model="info.Q2_TimeOfWork" ng-value="0"
                                            ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q2_TimeOfWork' id="Q2_TimeOfWork"
+                                    <input type="radio" name='Q2_TimeOfWork'
                                            ng-model="info.Q2_TimeOfWork" ng-value="1"
                                            ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>Y
                                 </label>
@@ -893,7 +895,7 @@
                 </div>
                 <div class="col-md-2 col-sm-2">
                     <div ng-class="{'has-error': gorgonMHForm.Q2_HowLongOff.$error.required || gorgonMHForm.Q2_HowLongOff.$error.maxlength}">
-                        <input type="text" name="Q2_HowLongOff" id="Q2_HowLongOff" ng-model="info.Q2_HowLongOff"
+                        <input type="text" name="Q2_HowLongOff" ng-model="info.Q2_HowLongOff"
                                class="form-control"
                                ng-required="info.Q2_TimeOfWork" ng-maxlength="200"/>
 
@@ -919,7 +921,7 @@
                 </div>
                 <div class="col-md-7 col-sm-7">
                     <div ng-class="{'has-error': gorgonMHForm.Q2_HowLongModified.$error.maxlength || gorgonMHForm.Q2_HowLongModified.$error.required}">
-                        <input type="text" name="Q2_HowLongModified" id="Q2_HowLongModified"
+                        <input type="text" name="Q2_HowLongModified"
                                ng-model="info.Q2_HowLongModified"
                                class="form-control" ng-maxlength="200"
                                ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1||info.Q2_TimeOfWork==1">
@@ -946,7 +948,7 @@
                 </div>
                 <div class="col-md-7 col-sm-7">
                     <div ng-class="{'has-error': gorgonMHForm.Q2_HowLongTreatment.$error.maxlength || gorgonMHForm.Q2_HowLongTreatment.$error.required}">
-                        <input type="text" name="Q2_HowLongTreatment" id="Q2_HowLongTreatment"
+                        <input type="text" name="Q2_HowLongTreatment"
                                ng-model="info.Q2_HowLongTreatment"
                                class="form-control" ng-maxlength="200"
                                ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1">
@@ -969,12 +971,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3" style="width:auto;">
                             <label class="btn bold">
-                                <input type="radio" name='Q2_NormalDuties' id="Q2_NormalDuties"
+                                <input type="radio" name='Q2_NormalDuties'
                                        ng-model="info.Q2_NormalDuties" ng-value="0"
                                        ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q2_NormalDuties' id="Q2_NormalDuties"
+                                <input type="radio" name='Q2_NormalDuties'
                                        ng-model="info.Q2_NormalDuties" ng-value="1"
                                        ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1"/>Y
                             </label>
@@ -994,12 +996,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3" style="width:auto;">
                             <label class="btn bold">
-                                <input type="radio" name='Q2_Compensation' id="Q2_Compensation"
+                                <input type="radio" name='Q2_Compensation'
                                        ng-model="info.Q2_Compensation" ng-value="0"
                                        ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q2_Compensation' id="Q2_Compensation"
+                                <input type="radio" name='Q2_Compensation'
                                        ng-model="info.Q2_Compensation" ng-value="1"
                                        ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>Y
                             </label>
@@ -1018,12 +1020,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3" style="width:auto;">
                             <label class="btn bold">
-                                <input type="radio" name='Q2_PsychologicalProblems' id="Q2_PsychologicalProblems"
+                                <input type="radio" name='Q2_PsychologicalProblems'
                                        ng-model="info.Q2_PsychologicalProblems" ng-value="0"
                                        ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q2_PsychologicalProblems' id="Q2_PsychologicalProblems"
+                                <input type="radio" name='Q2_PsychologicalProblems'
                                        ng-model="info.Q2_PsychologicalProblems" ng-value="1"
                                        ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1"/>Y
                             </label>
@@ -1047,7 +1049,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8">
                     <div ng-class="{'has-error': gorgonMHForm.Q2_ExaminersComments.$error.required || gorgonMHForm.Q2_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q2_ExaminersComments" id="Q2_ExaminersComments"
+                        <textarea class="form-control" name="Q2_ExaminersComments"
                                   ng-model="info.Q2_ExaminersComments"
                                   ng-required="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_PsychologicalProblems==1 || info.Q2_DentalHealth ==1 || info.Q2_Diabetic==1 || info.Q2_Seizure==1 || info.Q2_Epileptic ||info.Q2_Asthmatic==1 || info.Q2_AnyScars==1 ||  info.Q2_MedicAlert==1"
                                   ng-maxlength="500"></textarea>
@@ -1073,11 +1075,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_DentalHealth' id="Q2_DentalHealth"
+                            <input type="radio" name='Q2_DentalHealth'
                                    ng-model="info.Q2_DentalHealth" ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_DentalHealth' id="Q2_DentalHealth"
+                            <input type="radio" name='Q2_DentalHealth'
                                    ng-model="info.Q2_DentalHealth" ng-value="1"/>Y
                         </label>
                     </div>
@@ -1091,11 +1093,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Diabetic' id="Q2_Diabetic" ng-model="info.Q2_Diabetic"
+                            <input type="radio" name='Q2_Diabetic' ng-model="info.Q2_Diabetic"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Diabetic' id="Q2_Diabetic" ng-model="info.Q2_Diabetic"
+                            <input type="radio" name='Q2_Diabetic' ng-model="info.Q2_Diabetic"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -1108,11 +1110,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Seizure' id="Q2_Seizure" ng-model="info.Q2_Seizure"
+                            <input type="radio" name='Q2_Seizure' ng-model="info.Q2_Seizure"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Seizure' id="Q2_Seizure" ng-model="info.Q2_Seizure"
+                            <input type="radio" name='Q2_Seizure' ng-model="info.Q2_Seizure"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -1125,11 +1127,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Epileptic' id="Q2_Epileptic" ng-model="info.Q2_Epileptic"
+                            <input type="radio" name='Q2_Epileptic' ng-model="info.Q2_Epileptic"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Epileptic' id="Q2_Epileptic" ng-model="info.Q2_Epileptic"
+                            <input type="radio" name='Q2_Epileptic' ng-model="info.Q2_Epileptic"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -1142,11 +1144,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Asthmatic' id="Q2_Asthmatic" ng-model="info.Q2_Asthmatic"
+                            <input type="radio" name='Q2_Asthmatic' ng-model="info.Q2_Asthmatic"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_Asthmatic' id="Q2_Asthmatic" ng-model="info.Q2_Asthmatic"
+                            <input type="radio" name='Q2_Asthmatic' ng-model="info.Q2_Asthmatic"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -1159,11 +1161,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_AnyScars' id="Q2_AnyScars" ng-model="info.Q2_AnyScars"
+                            <input type="radio" name='Q2_AnyScars' ng-model="info.Q2_AnyScars"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_AnyScars' id="Q2_AnyScars" ng-model="info.Q2_AnyScars"
+                            <input type="radio" name='Q2_AnyScars' ng-model="info.Q2_AnyScars"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -1177,11 +1179,11 @@
                 <div class="clearfix">
                     <div class="btn-group  col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q2_MedicAlert' id="Q2_MedicAlert" ng-model="info.Q2_MedicAlert"
+                            <input type="radio" name='Q2_MedicAlert' ng-model="info.Q2_MedicAlert"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q2_MedicAlert' id="Q2_MedicAlert" ng-model="info.Q2_MedicAlert"
+                            <input type="radio" name='Q2_MedicAlert' ng-model="info.Q2_MedicAlert"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -1225,11 +1227,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_NeckInjury' id="Q3_NeckInjury"
+                                <input type="radio" name='Q3_NeckInjury'
                                        ng-model="info.Q3_NeckInjury" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_NeckInjury' id="Q3_NeckInjury"
+                                <input type="radio" name='Q3_NeckInjury'
                                        ng-model="info.Q3_NeckInjury" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1242,10 +1244,10 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Arm' id="Q3_Arm" ng-model="info.Q3_Arm" ng-value="0"/>N
+                                <input type="radio" name='Q3_Arm' ng-model="info.Q3_Arm" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Arm' id="Q3_Arm" ng-model="info.Q3_Arm" ng-value="1"/>Y
+                                <input type="radio" name='Q3_Arm' ng-model="info.Q3_Arm" ng-value="1"/>Y
                             </label>
                         </div>
                     </div>
@@ -1260,11 +1262,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_DiskInjury' id="Q3_DiskInjury"
+                                <input type="radio" name='Q3_DiskInjury'
                                        ng-model="info.Q3_DiskInjury" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_DiskInjury' id="Q3_DiskInjury"
+                                <input type="radio" name='Q3_DiskInjury'
                                        ng-model="info.Q3_DiskInjury" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1277,11 +1279,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_HandInjury' id="Q3_HandInjury"
+                                <input type="radio" name='Q3_HandInjury'
                                        ng-model="info.Q3_HandInjury" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_HandInjury' id="Q3_HandInjury"
+                                <input type="radio" name='Q3_HandInjury'
                                        ng-model="info.Q3_HandInjury" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1296,11 +1298,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Backache' id="Q3_Backache" ng-model="info.Q3_Backache"
+                                <input type="radio" name='Q3_Backache' ng-model="info.Q3_Backache"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Backache' id="Q3_Backache" ng-model="info.Q3_Backache"
+                                <input type="radio" name='Q3_Backache' ng-model="info.Q3_Backache"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1313,11 +1315,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_LegInjury' id="Q3_LegInjury" ng-model="info.Q3_LegInjury"
+                                <input type="radio" name='Q3_LegInjury' ng-model="info.Q3_LegInjury"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_LegInjury' id="Q3_LegInjury" ng-model="info.Q3_LegInjury"
+                                <input type="radio" name='Q3_LegInjury' ng-model="info.Q3_LegInjury"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1331,11 +1333,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Physio' id="Q3_Physio" ng-model="info.Q3_Physio"
+                                <input type="radio" name='Q3_Physio' ng-model="info.Q3_Physio"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Physio' id="Q3_Physio" ng-model="info.Q3_Physio"
+                                <input type="radio" name='Q3_Physio' ng-model="info.Q3_Physio"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1348,12 +1350,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_KneeCartilage' id="Q3_KneeCartilage"
+                                <input type="radio" name='Q3_KneeCartilage'
                                        ng-model="info.Q3_KneeCartilage"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_KneeCartilage' id="Q3_KneeCartilage"
+                                <input type="radio" name='Q3_KneeCartilage'
                                        ng-model="info.Q3_KneeCartilage"
                                        ng-value="1"/>Y
                             </label>
@@ -1369,11 +1371,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_BackInjury' id="Q3_BackInjury"
+                                <input type="radio" name='Q3_BackInjury'
                                        ng-model="info.Q3_BackInjury" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_BackInjury' id="Q3_BackInjury"
+                                <input type="radio" name='Q3_BackInjury'
                                        ng-model="info.Q3_BackInjury" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1386,12 +1388,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_KneeReconstruction' id="Q3_KneeReconstruction"
+                                <input type="radio" name='Q3_KneeReconstruction'
                                        ng-model="info.Q3_KneeReconstruction"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_KneeReconstruction' id="Q3_KneeReconstruction"
+                                <input type="radio" name='Q3_KneeReconstruction'
                                        ng-model="info.Q3_KneeReconstruction"
                                        ng-value="1"/>Y
                             </label>
@@ -1406,11 +1408,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Sciatica' id="Q3_Sciatica" ng-model="info.Q3_Sciatica"
+                                <input type="radio" name='Q3_Sciatica' ng-model="info.Q3_Sciatica"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Sciatica' id="Q3_Sciatica" ng-model="info.Q3_Sciatica"
+                                <input type="radio" name='Q3_Sciatica' ng-model="info.Q3_Sciatica"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1423,12 +1425,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_FootProblems' id="Q3_FootProblems"
+                                <input type="radio" name='Q3_FootProblems'
                                        ng-model="info.Q3_FootProblems"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_FootProblems' id="Q3_FootProblems"
+                                <input type="radio" name='Q3_FootProblems'
                                        ng-model="info.Q3_FootProblems"
                                        ng-value="1"/>Y
                             </label>
@@ -1444,11 +1446,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_BackSurgery' id="Q3_BackSurgery"
+                                <input type="radio" name='Q3_BackSurgery'
                                        ng-model="info.Q3_BackSurgery" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_BackSurgery' id="Q3_BackSurgery"
+                                <input type="radio" name='Q3_BackSurgery'
                                        ng-model="info.Q3_BackSurgery" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1462,11 +1464,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_OtherBone' id="Q3_OtherBone" ng-model="info.Q3_OtherBone"
+                                <input type="radio" name='Q3_OtherBone' ng-model="info.Q3_OtherBone"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_OtherBone' id="Q3_OtherBone" ng-model="info.Q3_OtherBone"
+                                <input type="radio" name='Q3_OtherBone' ng-model="info.Q3_OtherBone"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1481,12 +1483,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_SwollenJoints' id="Q3_SwollenJoints"
+                                <input type="radio" name='Q3_SwollenJoints'
                                        ng-model="info.Q3_SwollenJoints"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_SwollenJoints' id="Q3_SwollenJoints"
+                                <input type="radio" name='Q3_SwollenJoints'
                                        ng-model="info.Q3_SwollenJoints"
                                        ng-value="1"/>Y
                             </label>
@@ -1500,11 +1502,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Rheumatism' id="Q3_Rheumatism"
+                                <input type="radio" name='Q3_Rheumatism'
                                        ng-model="info.Q3_Rheumatism" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Rheumatism' id="Q3_Rheumatism"
+                                <input type="radio" name='Q3_Rheumatism'
                                        ng-model="info.Q3_Rheumatism" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1519,12 +1521,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_ArthriticKnee' id="Q3_ArthriticKnee"
+                                <input type="radio" name='Q3_ArthriticKnee'
                                        ng-model="info.Q3_ArthriticKnee"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_ArthriticKnee' id="Q3_ArthriticKnee"
+                                <input type="radio" name='Q3_ArthriticKnee'
                                        ng-model="info.Q3_ArthriticKnee"
                                        ng-value="1"/>Y
                             </label>
@@ -1543,10 +1545,10 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_RSI' id="Q3_RSI" ng-model="info.Q3_RSI" ng-value="0"/>N
+                                <input type="radio" name='Q3_RSI' ng-model="info.Q3_RSI" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_RSI' id="Q3_RSI" ng-model="info.Q3_RSI" ng-value="1"/>Y
+                                <input type="radio" name='Q3_RSI' ng-model="info.Q3_RSI" ng-value="1"/>Y
                             </label>
                         </div>
                     </div>
@@ -1560,11 +1562,11 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Hernia' id="Q3_Hernia" ng-model="info.Q3_Hernia"
+                                <input type="radio" name='Q3_Hernia' ng-model="info.Q3_Hernia"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q3_Hernia' id="Q3_Hernia" ng-model="info.Q3_Hernia"
+                                <input type="radio" name='Q3_Hernia' ng-model="info.Q3_Hernia"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1579,7 +1581,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q3_ExaminersComments.$error.required || gorgonMHForm.Q3_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q3_ExaminersComments" id="Q3_ExaminersComments"
+                        <textarea class="form-control" name="Q3_ExaminersComments"
                                   ng-model="info.Q3_ExaminersComments"
                                   ng-maxlength="500" ng-required="info.Q3_Physio||info.Q9_BreastFeeding ||
                                   info.Q9_Pregnant||info.Q6_Asthma || info.Q6_UsedPuffer||info.Q3_NeckInjury ||
@@ -1629,12 +1631,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q4_MentalHealth' id="Q4_MentalHealth"
+                                <input type="radio" name='Q4_MentalHealth'
                                        ng-model="info.Q4_MentalHealth"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q4_MentalHealth' id="Q4_MentalHealth"
+                                <input type="radio" name='Q4_MentalHealth'
                                        ng-model="info.Q4_MentalHealth"
                                        ng-value="1"/>Y
                             </label>
@@ -1650,12 +1652,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q4_Psychologist' id="Q4_Psychologist"
+                                <input type="radio" name='Q4_Psychologist'
                                        ng-model="info.Q4_Psychologist"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q4_Psychologist' id="Q4_Psychologist"
+                                <input type="radio" name='Q4_Psychologist'
                                        ng-model="info.Q4_Psychologist"
                                        ng-value="1"/>Y
                             </label>
@@ -1671,12 +1673,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q4_DrugsProblems' id="Q4_DrugsProblems"
+                                <input type="radio" name='Q4_DrugsProblems'
                                        ng-model="info.Q4_DrugsProblems"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q4_DrugsProblems' id="Q4_DrugsProblems"
+                                <input type="radio" name='Q4_DrugsProblems'
                                        ng-model="info.Q4_DrugsProblems"
                                        ng-value="1"/>Y
                             </label>
@@ -1692,11 +1694,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q4_Depression' id="Q4_Depression"
+                                <input type="radio" name='Q4_Depression'
                                        ng-model="info.Q4_Depression" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q4_Depression' id="Q4_Depression"
+                                <input type="radio" name='Q4_Depression'
                                        ng-model="info.Q4_Depression" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1708,11 +1710,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q4_Anxiety' id="Q4_Anxiety" ng-model="info.Q4_Anxiety"
+                                <input type="radio" name='Q4_Anxiety' ng-model="info.Q4_Anxiety"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q4_Anxiety' id="Q4_Anxiety" ng-model="info.Q4_Anxiety"
+                                <input type="radio" name='Q4_Anxiety' ng-model="info.Q4_Anxiety"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1727,12 +1729,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q4_PanicAttacks' id="Q4_PanicAttacks"
+                                <input type="radio" name='Q4_PanicAttacks'
                                        ng-model="info.Q4_PanicAttacks"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q4_PanicAttacks' id="Q4_PanicAttacks"
+                                <input type="radio" name='Q4_PanicAttacks'
                                        ng-model="info.Q4_PanicAttacks"
                                        ng-value="1"/>Y
                             </label>
@@ -1745,11 +1747,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q4_Insomnia' id="Q4_Insomnia" ng-model="info.Q4_Insomnia"
+                                <input type="radio" name='Q4_Insomnia' ng-model="info.Q4_Insomnia"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q4_Insomnia' id="Q4_Insomnia" ng-model="info.Q4_Insomnia"
+                                <input type="radio" name='Q4_Insomnia' ng-model="info.Q4_Insomnia"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1764,12 +1766,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q4_NervousProblem' id="Q4_NervousProblem"
+                                <input type="radio" name='Q4_NervousProblem'
                                        ng-model="info.Q4_NervousProblem"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q4_NervousProblem' id="Q4_NervousProblem"
+                                <input type="radio" name='Q4_NervousProblem'
                                        ng-model="info.Q4_NervousProblem"
                                        ng-value="1"/>Y
                             </label>
@@ -1788,7 +1790,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q4_ExaminersComments.$error.required || gorgonMHForm.Q4_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q4_ExaminersComments" id="Q4_ExaminersComments"
+                        <textarea class="form-control" name="Q4_ExaminersComments"
                                   ng-model="info.Q4_ExaminersComments"
                                   ng-maxlength="500" ng-required="info.Q4_MentalHealth ||info.Q4_Psychologist ||
                                   info.Q4_DrugsProblems || info.Q4_Depression || info.Q4_Anxiety || info.Q4_PanicAttacks
@@ -1830,11 +1832,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q5_Eczema' id="Q5_Eczema" ng-model="info.Q5_Eczema"
+                                <input type="radio" name='Q5_Eczema' ng-model="info.Q5_Eczema"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q5_Eczema' id="Q5_Eczema" ng-model="info.Q5_Eczema"
+                                <input type="radio" name='Q5_Eczema' ng-model="info.Q5_Eczema"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1846,11 +1848,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q5_Dermatitis' id="Q5_Dermatitis"
+                                <input type="radio" name='Q5_Dermatitis'
                                        ng-model="info.Q5_Dermatitis" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q5_Dermatitis' id="Q5_Dermatitis"
+                                <input type="radio" name='Q5_Dermatitis'
                                        ng-model="info.Q5_Dermatitis" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1864,11 +1866,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q5_Psoriasis' id="Q5_Psoriasis" ng-model="info.Q5_Psoriasis"
+                                <input type="radio" name='Q5_Psoriasis' ng-model="info.Q5_Psoriasis"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q5_Psoriasis' id="Q5_Psoriasis" ng-model="info.Q5_Psoriasis"
+                                <input type="radio" name='Q5_Psoriasis' ng-model="info.Q5_Psoriasis"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1881,11 +1883,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q5_SkinCancers' id="Q5_SkinCancers"
+                                <input type="radio" name='Q5_SkinCancers'
                                        ng-model="info.Q5_SkinCancers" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q5_SkinCancers' id="Q5_SkinCancers"
+                                <input type="radio" name='Q5_SkinCancers'
                                        ng-model="info.Q5_SkinCancers" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1900,11 +1902,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q5_SkinProblem' id="Q5_SkinProblem"
+                                <input type="radio" name='Q5_SkinProblem'
                                        ng-model="info.Q5_SkinProblem" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q5_SkinProblem' id="Q5_SkinProblem"
+                                <input type="radio" name='Q5_SkinProblem'
                                        ng-model="info.Q5_SkinProblem" ng-value="1"/>Y
                             </label>
                         </div>
@@ -1922,7 +1924,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q5_ExaminersComments.$error.required || gorgonMHForm.Q5_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q5_ExaminersComments" id="Q5_ExaminersComments"
+                        <textarea class="form-control" name="Q5_ExaminersComments"
                                   ng-model="info.Q5_ExaminersComments"
                                   ng-maxlength="500" ng-required="info.Q5_Eczema || info.Q5_Dermatitis ||
                                   info.Q5_Psoriasis || info.Q5_SkinCancers || info.Q5_SkinProblem"></textarea>
@@ -1962,11 +1964,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_Asthma' id="Q6_Asthma" ng-model="info.Q6_Asthma"
+                                <input type="radio" name='Q6_Asthma' ng-model="info.Q6_Asthma"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_Asthma' id="Q6_Asthma" ng-model="info.Q6_Asthma"
+                                <input type="radio" name='Q6_Asthma' ng-model="info.Q6_Asthma"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1978,11 +1980,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_Emphysema' id="Q6_Emphysema" ng-model="info.Q6_Emphysema"
+                                <input type="radio" name='Q6_Emphysema' ng-model="info.Q6_Emphysema"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_Emphysema' id="Q6_Emphysema" ng-model="info.Q6_Emphysema"
+                                <input type="radio" name='Q6_Emphysema' ng-model="info.Q6_Emphysema"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -1997,11 +1999,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_LungDisease' id="Q6_LungDisease"
+                                <input type="radio" name='Q6_LungDisease'
                                        ng-model="info.Q6_LungDisease" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_LungDisease' id="Q6_LungDisease"
+                                <input type="radio" name='Q6_LungDisease'
                                        ng-model="info.Q6_LungDisease" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2014,12 +2016,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_HeartDisease' id="Q6_HeartDisease"
+                                <input type="radio" name='Q6_HeartDisease'
                                        ng-model="info.Q6_HeartDisease"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_HeartDisease' id="Q6_HeartDisease"
+                                <input type="radio" name='Q6_HeartDisease'
                                        ng-model="info.Q6_HeartDisease"
                                        ng-value="1"/>Y
                             </label>
@@ -2035,11 +2037,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_Artery' id="Q6_Artery" ng-model="info.Q6_Artery"
+                                <input type="radio" name='Q6_Artery' ng-model="info.Q6_Artery"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_Artery' id="Q6_Artery" ng-model="info.Q6_Artery"
+                                <input type="radio" name='Q6_Artery' ng-model="info.Q6_Artery"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2051,11 +2053,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_Bronchitis' id="Q6_Bronchitis"
+                                <input type="radio" name='Q6_Bronchitis'
                                        ng-model="info.Q6_Bronchitis" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_Bronchitis' id="Q6_Bronchitis"
+                                <input type="radio" name='Q6_Bronchitis'
                                        ng-model="info.Q6_Bronchitis" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2070,12 +2072,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_HighBloodPressure' id="Q6_HighBloodPressure"
+                                <input type="radio" name='Q6_HighBloodPressure'
                                        ng-model="info.Q6_HighBloodPressure"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_HighBloodPressure' id="Q6_HighBloodPressure"
+                                <input type="radio" name='Q6_HighBloodPressure'
                                        ng-model="info.Q6_HighBloodPressure"
                                        ng-value="1"/>Y
                             </label>
@@ -2090,12 +2092,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_CollapsedLung' id="Q6_CollapsedLung"
+                                <input type="radio" name='Q6_CollapsedLung'
                                        ng-model="info.Q6_CollapsedLung"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_CollapsedLung' id="Q6_CollapsedLung"
+                                <input type="radio" name='Q6_CollapsedLung'
                                        ng-model="info.Q6_CollapsedLung"
                                        ng-value="1"/>Y
                             </label>
@@ -2111,10 +2113,10 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_DVT' id="Q6_DVT" ng-model="info.Q6_DVT" ng-value="0"/>N
+                                <input type="radio" name='Q6_DVT' ng-model="info.Q6_DVT" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_DVT' id="Q6_DVT" ng-model="info.Q6_DVT" ng-value="1"/>Y
+                                <input type="radio" name='Q6_DVT' ng-model="info.Q6_DVT" ng-value="1"/>Y
                             </label>
                         </div>
                     </div>
@@ -2126,11 +2128,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_HeartAttack' id="Q6_HeartAttack"
+                                <input type="radio" name='Q6_HeartAttack'
                                        ng-model="info.Q6_HeartAttack" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_HeartAttack' id="Q6_HeartAttack"
+                                <input type="radio" name='Q6_HeartAttack'
                                        ng-model="info.Q6_HeartAttack" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2145,11 +2147,11 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_UsedPuffer' id="Q6_UsedPuffer"
+                                <input type="radio" name='Q6_UsedPuffer'
                                        ng-model="info.Q6_UsedPuffer" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_UsedPuffer' id="Q6_UsedPuffer"
+                                <input type="radio" name='Q6_UsedPuffer'
                                        ng-model="info.Q6_UsedPuffer" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2164,12 +2166,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q6_CardiacPacemaker' id="Q6_CardiacPacemaker"
+                                <input type="radio" name='Q6_CardiacPacemaker'
                                        ng-model="info.Q6_CardiacPacemaker"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q6_CardiacPacemaker' id="Q6_CardiacPacemaker"
+                                <input type="radio" name='Q6_CardiacPacemaker'
                                        ng-model="info.Q6_CardiacPacemaker"
                                        ng-value="1"/>Y
                             </label>
@@ -2185,7 +2187,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q6_ExaminersComments.$error.required || gorgonMHForm.Q6_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q6_ExaminersComments" id="Q6_ExaminersComments"
+                        <textarea class="form-control" name="Q6_ExaminersComments"
                                   ng-model="info.Q6_ExaminersComments"
                                   ng-maxlength="500" ng-required="info.Q6_Asthma || info.Q6_UsedPuffer || info.Q6_Emphysema || info.Q6_LungDisease ||
                                   info.Q6_HeartDisease || info.Q6_Artery || info.Q6_Bronchitis ||
@@ -2227,11 +2229,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q7_HeadInjury' id="Q7_HeadInjury"
+                                <input type="radio" name='Q7_HeadInjury'
                                        ng-model="info.Q7_HeadInjury" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q7_HeadInjury' id="Q7_HeadInjury"
+                                <input type="radio" name='Q7_HeadInjury'
                                        ng-model="info.Q7_HeadInjury" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2244,12 +2246,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q7_SevereHeadaches' id="Q7_SevereHeadaches"
+                                <input type="radio" name='Q7_SevereHeadaches'
                                        ng-model="info.Q7_SevereHeadaches"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q7_SevereHeadaches' id="Q7_SevereHeadaches"
+                                <input type="radio" name='Q7_SevereHeadaches'
                                        ng-model="info.Q7_SevereHeadaches"
                                        ng-value="1"/>Y
                             </label>
@@ -2265,11 +2267,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q7_Epilepsy' id="Q7_Epilepsy" ng-model="info.Q7_Epilepsy"
+                                <input type="radio" name='Q7_Epilepsy' ng-model="info.Q7_Epilepsy"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q7_Epilepsy' id="Q7_Epilepsy" ng-model="info.Q7_Epilepsy"
+                                <input type="radio" name='Q7_Epilepsy' ng-model="info.Q7_Epilepsy"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2283,11 +2285,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q7_NeurologicalDisorder' id="Q7_NeurologicalDisorder"
+                                <input type="radio" name='Q7_NeurologicalDisorder'
                                        ng-model="info.Q7_NeurologicalDisorder" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q7_NeurologicalDisorder' id="Q7_NeurologicalDisorder"
+                                <input type="radio" name='Q7_NeurologicalDisorder'
                                        ng-model="info.Q7_NeurologicalDisorder" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2302,7 +2304,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q7_ExaminersComments.$error.required || gorgonMHForm.Q7_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q7_ExaminersComments" id="Q7_ExaminersComments"
+                        <textarea class="form-control" name="Q7_ExaminersComments"
                                   ng-model="info.Q7_ExaminersComments"
                                   ng-maxlength="500" ng-required="info.Q7_HeadInjury || info.Q7_SevereHeadaches ||
             info.Q7_Epilepsy || info.Q7_NeurologicalDisorder"></textarea>
@@ -2343,11 +2345,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q8_DOInsulin' id="Q8_DOInsulin" ng-model="info.Q8_DOInsulin"
+                                <input type="radio" name='Q8_DOInsulin' ng-model="info.Q8_DOInsulin"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q8_DOInsulin' id="Q8_DOInsulin" ng-model="info.Q8_DOInsulin"
+                                <input type="radio" name='Q8_DOInsulin' ng-model="info.Q8_DOInsulin"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2359,11 +2361,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q8_Arthritis' id="Q8_Arthritis" ng-model="info.Q8_Arthritis"
+                                <input type="radio" name='Q8_Arthritis' ng-model="info.Q8_Arthritis"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q8_Arthritis' id="Q8_Arthritis" ng-model="info.Q8_Arthritis"
+                                <input type="radio" name='Q8_Arthritis' ng-model="info.Q8_Arthritis"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2378,12 +2380,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q8_DOMedication' id="Q8_DOMedication"
+                                <input type="radio" name='Q8_DOMedication'
                                        ng-model="info.Q8_DOMedication"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q8_DOMedication' id="Q8_DOMedication"
+                                <input type="radio" name='Q8_DOMedication'
                                        ng-model="info.Q8_DOMedication"
                                        ng-value="1"/>Y
                             </label>
@@ -2397,12 +2399,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q8_BloodDisorder' id="Q8_BloodDisorder"
+                                <input type="radio" name='Q8_BloodDisorder'
                                        ng-model="info.Q8_BloodDisorder"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q8_BloodDisorder' id="Q8_BloodDisorder"
+                                <input type="radio" name='Q8_BloodDisorder'
                                        ng-model="info.Q8_BloodDisorder"
                                        ng-value="1"/>Y
                             </label>
@@ -2418,11 +2420,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q8_DietControl' id="Q8_DietControl"
+                                <input type="radio" name='Q8_DietControl'
                                        ng-model="info.Q8_DietControl" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q8_DietControl' id="Q8_DietControl"
+                                <input type="radio" name='Q8_DietControl'
                                        ng-model="info.Q8_DietControl" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2435,11 +2437,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q8_Cancer' id="Q8_Cancer" ng-model="info.Q8_Cancer"
+                                <input type="radio" name='Q8_Cancer' ng-model="info.Q8_Cancer"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q8_Cancer' id="Q8_Cancer" ng-model="info.Q8_Cancer"
+                                <input type="radio" name='Q8_Cancer' ng-model="info.Q8_Cancer"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2454,12 +2456,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q8_KidneyProblems' id="Q8_KidneyProblems"
+                                <input type="radio" name='Q8_KidneyProblems'
                                        ng-model="info.Q8_KidneyProblems"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q8_KidneyProblems' id="Q8_KidneyProblems"
+                                <input type="radio" name='Q8_KidneyProblems'
                                        ng-model="info.Q8_KidneyProblems"
                                        ng-value="1"/>Y
                             </label>
@@ -2473,12 +2475,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q8_BowelProblems' id="Q8_BowelProblems"
+                                <input type="radio" name='Q8_BowelProblems'
                                        ng-model="info.Q8_BowelProblems"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q8_BowelProblems' id="Q8_BowelProblems"
+                                <input type="radio" name='Q8_BowelProblems'
                                        ng-model="info.Q8_BowelProblems"
                                        ng-value="1"/>Y
                             </label>
@@ -2495,11 +2497,11 @@
                 <div class="clearfix">
                     <div class="btn-group col-md-6 col-sm-7">
                         <label class="btn bold">
-                            <input type="radio" name='Q8_LiverDisease' id="Q8_LiverDisease"
+                            <input type="radio" name='Q8_LiverDisease'
                                    ng-model="info.Q8_LiverDisease" ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q8_LiverDisease' id="Q8_LiverDisease"
+                            <input type="radio" name='Q8_LiverDisease'
                                    ng-model="info.Q8_LiverDisease" ng-value="1"/>Y
                         </label>
                     </div>
@@ -2511,11 +2513,11 @@
                 <div class="clearfix">
                     <div class="btn-group col-md-6 col-sm-7">
                         <label class="btn bold">
-                            <input type="radio" name='Q8_Hepatitis' id="Q8_Hepatitis" ng-model="info.Q8_Hepatitis"
+                            <input type="radio" name='Q8_Hepatitis' ng-model="info.Q8_Hepatitis"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q8_Hepatitis' id="Q8_Hepatitis" ng-model="info.Q8_Hepatitis"
+                            <input type="radio" name='Q8_Hepatitis' ng-model="info.Q8_Hepatitis"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -2530,11 +2532,11 @@
                 <div class="clearfix">
                     <div class="btn-group col-md-6 col-sm-7">
                         <label class="btn bold">
-                            <input type="radio" name='Q8_HearingLoss' id="Q8_HearingLoss" ng-model="info.Q8_HearingLoss"
+                            <input type="radio" name='Q8_HearingLoss' ng-model="info.Q8_HearingLoss"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q8_HearingLoss' id="Q8_HearingLoss" ng-model="info.Q8_HearingLoss"
+                            <input type="radio" name='Q8_HearingLoss' ng-model="info.Q8_HearingLoss"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -2547,11 +2549,11 @@
                 <div class="clearfix">
                     <div class="btn-group col-md-6 col-sm-7">
                         <label class="btn bold">
-                            <input type="radio" name='Q8_VisionProblem' id="Q8_VisionProblem"
+                            <input type="radio" name='Q8_VisionProblem'
                                    ng-model="info.Q8_VisionProblem" ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q8_VisionProblem' id="Q8_VisionProblem"
+                            <input type="radio" name='Q8_VisionProblem'
                                    ng-model="info.Q8_VisionProblem" ng-value="1"/>Y
                         </label>
                     </div>
@@ -2566,11 +2568,11 @@
                 <div class="clearfix">
                     <div class="btn-group col-md-6 col-sm-7">
                         <label class="btn bold">
-                            <input type="radio" name='Q8_Exhaustion' id="Q8_Exhaustion" ng-model="info.Q8_Exhaustion"
+                            <input type="radio" name='Q8_Exhaustion' ng-model="info.Q8_Exhaustion"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q8_Exhaustion' id="Q8_Exhaustion" ng-model="info.Q8_Exhaustion"
+                            <input type="radio" name='Q8_Exhaustion' ng-model="info.Q8_Exhaustion"
                                    ng-value="1"/>Y
                         </label>
                     </div>
@@ -2583,12 +2585,12 @@
                 <div class="clearfix">
                     <div class="btn-group col-md-6 col-sm-7">
                         <label class="btn bold">
-                            <input type="radio" name='Q8_ChronicIllness' id="Q8_ChronicIllness"
+                            <input type="radio" name='Q8_ChronicIllness'
                                    ng-model="info.Q8_ChronicIllness"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q8_ChronicIllness' id="Q8_ChronicIllness"
+                            <input type="radio" name='Q8_ChronicIllness'
                                    ng-model="info.Q8_ChronicIllness"
                                    ng-value="1"/>Y
                         </label>
@@ -2603,7 +2605,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q8_ExaminersComments.$error.required || gorgonMHForm.Q8_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q8_ExaminersComments" id="Q8_ExaminersComments"
+                        <textarea class="form-control" name="Q8_ExaminersComments"
                                   ng-model="info.Q8_ExaminersComments"
                                   ng-maxlength="500" ng-required="info.Q8_DOInsulin ||
             info.Q8_Arthritis || info.Q8_DOMedication || info.Q8_BloodDisorder ||
@@ -2648,11 +2650,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q9_Pregnant' id="Q9_Pregnant" ng-model="info.Q9_Pregnant"
+                                <input type="radio" name='Q9_Pregnant' ng-model="info.Q9_Pregnant"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q9_Pregnant' id="Q9_Pregnant" ng-model="info.Q9_Pregnant"
+                                <input type="radio" name='Q9_Pregnant' ng-model="info.Q9_Pregnant"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2665,12 +2667,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q9_BreastFeeding' id="Q9_BreastFeeding"
+                                <input type="radio" name='Q9_BreastFeeding'
                                        ng-model="info.Q9_BreastFeeding"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q9_BreastFeeding' id="Q9_BreastFeeding"
+                                <input type="radio" name='Q9_BreastFeeding'
                                        ng-model="info.Q9_BreastFeeding"
                                        ng-value="1"/>Y
                             </label>
@@ -2686,7 +2688,6 @@
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q9_ExaminersComments_details.$error.required || gorgonMHForm.Q9_ExaminersComments_details.$error.maxlength}">
                         <textarea class="form-control" name="Q9_ExaminersComments_details"
-                                  id="Q9_ExaminersComments_details"
                                   ng-model="info.Q9_ExaminersComments_details"
                                   ng-maxlength="500" ng-required="info.Q9_BreastFeeding||info.Q9_Pregnant"></textarea>
                     </div>
@@ -2734,12 +2735,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-4 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q10_Disabilities' id="Q10_Disabilities"
+                                <input type="radio" name='Q10_Disabilities'
                                        ng-model="info.Q10_Disabilities"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q10_Disabilities' id="Q10_Disabilities"
+                                <input type="radio" name='Q10_Disabilities'
                                        ng-model="info.Q10_Disabilities"
                                        ng-value="1"/>Y
                             </label>
@@ -2770,11 +2771,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Climb' id="Q11_Climb" ng-model="info.Q11_Climb"
+                                <input type="radio" name='Q11_Climb' ng-model="info.Q11_Climb"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Climb' id="Q11_Climb" ng-model="info.Q11_Climb"
+                                <input type="radio" name='Q11_Climb' ng-model="info.Q11_Climb"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2787,11 +2788,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Squat' id="Q11_Squat" ng-model="info.Q11_Squat"
+                                <input type="radio" name='Q11_Squat' ng-model="info.Q11_Squat"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Squat' id="Q11_Squat" ng-model="info.Q11_Squat"
+                                <input type="radio" name='Q11_Squat' ng-model="info.Q11_Squat"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2806,11 +2807,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Bend' id="Q11_Bend" ng-model="info.Q11_Bend"
+                                <input type="radio" name='Q11_Bend' ng-model="info.Q11_Bend"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Bend' id="Q11_Bend" ng-model="info.Q11_Bend"
+                                <input type="radio" name='Q11_Bend' ng-model="info.Q11_Bend"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2823,11 +2824,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Push' id="Q11_Push" ng-model="info.Q11_Push"
+                                <input type="radio" name='Q11_Push' ng-model="info.Q11_Push"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Push' id="Q11_Push" ng-model="info.Q11_Push"
+                                <input type="radio" name='Q11_Push' ng-model="info.Q11_Push"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -2842,12 +2843,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkOverhead' id="Q11_WorkOverhead"
+                                <input type="radio" name='Q11_WorkOverhead'
                                        ng-model="info.Q11_WorkOverhead"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkOverhead' id="Q11_WorkOverhead"
+                                <input type="radio" name='Q11_WorkOverhead'
                                        ng-model="info.Q11_WorkOverhead"
                                        ng-value="1"/>Y
                             </label>
@@ -2861,12 +2862,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkUnderground' id="Q11_WorkUnderground"
+                                <input type="radio" name='Q11_WorkUnderground'
                                        ng-model="info.Q11_WorkUnderground"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkUnderground' id="Q11_WorkUnderground"
+                                <input type="radio" name='Q11_WorkUnderground'
                                        ng-model="info.Q11_WorkUnderground"
                                        ng-value="1"/>Y
                             </label>
@@ -2882,12 +2883,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkHeights' id="Q11_WorkHeights"
+                                <input type="radio" name='Q11_WorkHeights'
                                        ng-model="info.Q11_WorkHeights"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkHeights' id="Q11_WorkHeights"
+                                <input type="radio" name='Q11_WorkHeights'
                                        ng-model="info.Q11_WorkHeights"
                                        ng-value="1"/>Y
                             </label>
@@ -2901,11 +2902,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkDusty' id="Q11_WorkDusty"
+                                <input type="radio" name='Q11_WorkDusty'
                                        ng-model="info.Q11_WorkDusty" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkDusty' id="Q11_WorkDusty"
+                                <input type="radio" name='Q11_WorkDusty'
                                        ng-model="info.Q11_WorkDusty" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2920,12 +2921,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkIsolation' id="Q11_WorkIsolation"
+                                <input type="radio" name='Q11_WorkIsolation'
                                        ng-model="info.Q11_WorkIsolation"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkIsolation' id="Q11_WorkIsolation"
+                                <input type="radio" name='Q11_WorkIsolation'
                                        ng-model="info.Q11_WorkIsolation"
                                        ng-value="1"/>Y
                             </label>
@@ -2939,12 +2940,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkConfined' id="Q11_WorkConfined"
+                                <input type="radio" name='Q11_WorkConfined'
                                        ng-model="info.Q11_WorkConfined"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkConfined' id="Q11_WorkConfined"
+                                <input type="radio" name='Q11_WorkConfined'
                                        ng-model="info.Q11_WorkConfined"
                                        ng-value="1"/>Y
                             </label>
@@ -2960,12 +2961,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Instruments' id="Q11_Instruments"
+                                <input type="radio" name='Q11_Instruments'
                                        ng-model="info.Q11_Instruments"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_Instruments' id="Q11_Instruments"
+                                <input type="radio" name='Q11_Instruments'
                                        ng-model="info.Q11_Instruments"
                                        ng-value="1"/>Y
                             </label>
@@ -2979,11 +2980,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkGround' id="Q11_WorkGround"
+                                <input type="radio" name='Q11_WorkGround'
                                        ng-model="info.Q11_WorkGround" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkGround' id="Q11_WorkGround"
+                                <input type="radio" name='Q11_WorkGround'
                                        ng-model="info.Q11_WorkGround" ng-value="1"/>Y
                             </label>
                         </div>
@@ -2998,12 +2999,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkAwkward' id="Q11_WorkAwkward"
+                                <input type="radio" name='Q11_WorkAwkward'
                                        ng-model="info.Q11_WorkAwkward"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkAwkward' id="Q11_WorkAwkward"
+                                <input type="radio" name='Q11_WorkAwkward'
                                        ng-model="info.Q11_WorkAwkward"
                                        ng-value="1"/>Y
                             </label>
@@ -3017,12 +3018,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-7">
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkVibration' id="Q11_WorkVibration"
+                                <input type="radio" name='Q11_WorkVibration'
                                        ng-model="info.Q11_WorkVibration"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q11_WorkVibration' id="Q11_WorkVibration"
+                                <input type="radio" name='Q11_WorkVibration'
                                        ng-model="info.Q11_WorkVibration"
                                        ng-value="1"/>Y
                             </label>
@@ -3054,12 +3055,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullBack' id="Q12_LossFullBack"
+                                    <input type="radio" name='Q12_LossFullBack'
                                            ng-model="info.Q12_LossFullBack"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullBack' id="Q12_LossFullBack"
+                                    <input type="radio" name='Q12_LossFullBack'
                                            ng-model="info.Q12_LossFullBack"
                                            ng-value="1"/>Y
                                 </label>
@@ -3074,12 +3075,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullArm' id="Q12_LossFullArm"
+                                    <input type="radio" name='Q12_LossFullArm'
                                            ng-model="info.Q12_LossFullArm"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullArm' id="Q12_LossFullArm"
+                                    <input type="radio" name='Q12_LossFullArm'
                                            ng-model="info.Q12_LossFullArm"
                                            ng-value="1"/>Y
                                 </label>
@@ -3096,12 +3097,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullLeg' id="Q12_LossFullLeg"
+                                    <input type="radio" name='Q12_LossFullLeg'
                                            ng-model="info.Q12_LossFullLeg"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullLeg' id="Q12_LossFullLeg"
+                                    <input type="radio" name='Q12_LossFullLeg'
                                            ng-model="info.Q12_LossFullLeg"
                                            ng-value="1"/>Y
                                 </label>
@@ -3115,12 +3116,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_Psychological' id="Q12_Psychological"
+                                    <input type="radio" name='Q12_Psychological'
                                            ng-model="info.Q12_Psychological"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_Psychological' id="Q12_Psychological"
+                                    <input type="radio" name='Q12_Psychological'
                                            ng-model="info.Q12_Psychological"
                                            ng-value="1"/>Y
                                 </label>
@@ -3136,11 +3137,11 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_DifficultyHearing' id="Q12_DifficultyHearing"
+                                    <input type="radio" name='Q12_DifficultyHearing'
                                            ng-model="info.Q12_DifficultyHearing" ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_DifficultyHearing' id="Q12_DifficultyHearing"
+                                    <input type="radio" name='Q12_DifficultyHearing'
                                            ng-model="info.Q12_DifficultyHearing" ng-value="1"/>Y
                                 </label>
                             </div>
@@ -3153,12 +3154,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_Breathing' id="Q12_Breathing"
+                                    <input type="radio" name='Q12_Breathing'
                                            ng-model="info.Q12_Breathing"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_Breathing' id="Q12_Breathing"
+                                    <input type="radio" name='Q12_Breathing'
                                            ng-model="info.Q12_Breathing"
                                            ng-value="1"/>Y
                                 </label>
@@ -3175,11 +3176,11 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossEye' id="Q12_LossEye" ng-model="info.Q12_LossEye"
+                                    <input type="radio" name='Q12_LossEye' ng-model="info.Q12_LossEye"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossEye' id="Q12_LossEye" ng-model="info.Q12_LossEye"
+                                    <input type="radio" name='Q12_LossEye' ng-model="info.Q12_LossEye"
                                            ng-value="1"/>Y
                                 </label>
                             </div>
@@ -3192,12 +3193,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_ChronicSkin' id="Q12_ChronicSkin"
+                                    <input type="radio" name='Q12_ChronicSkin'
                                            ng-model="info.Q12_ChronicSkin"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_ChronicSkin' id="Q12_ChronicSkin"
+                                    <input type="radio" name='Q12_ChronicSkin'
                                            ng-model="info.Q12_ChronicSkin"
                                            ng-value="1"/>Y
                                 </label>
@@ -3214,11 +3215,11 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_Glasses' id="Q12_Glasses" ng-model="info.Q12_Glasses"
+                                    <input type="radio" name='Q12_Glasses' ng-model="info.Q12_Glasses"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_Glasses' id="Q12_Glasses" ng-model="info.Q12_Glasses"
+                                    <input type="radio" name='Q12_Glasses' ng-model="info.Q12_Glasses"
                                            ng-value="1"/>Y
                                 </label>
                             </div>
@@ -3231,12 +3232,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_AlcoholMisuse' id="Q12_AlcoholMisuse"
+                                    <input type="radio" name='Q12_AlcoholMisuse'
                                            ng-model="info.Q12_AlcoholMisuse"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_AlcoholMisuse' id="Q12_AlcoholMisuse"
+                                    <input type="radio" name='Q12_AlcoholMisuse'
                                            ng-model="info.Q12_AlcoholMisuse"
                                            ng-value="1"/>Y
                                 </label>
@@ -3253,12 +3254,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_OtherLoss' id="Q12_OtherLoss"
+                                    <input type="radio" name='Q12_OtherLoss'
                                            ng-model="info.Q12_OtherLoss"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_OtherLoss' id="Q12_OtherLoss"
+                                    <input type="radio" name='Q12_OtherLoss'
                                            ng-model="info.Q12_OtherLoss"
                                            ng-value="1"/>Y
                                 </label>
@@ -3272,12 +3273,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossMobility' id="Q12_LossMobility"
+                                    <input type="radio" name='Q12_LossMobility'
                                            ng-model="info.Q12_LossMobility"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossMobility' id="Q12_LossMobility"
+                                    <input type="radio" name='Q12_LossMobility'
                                            ng-model="info.Q12_LossMobility"
                                            ng-value="1"/>Y
                                 </label>
@@ -3293,7 +3294,7 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullMovements' id="Q12_LossFullMovements"
+                                    <input type="radio" name='Q12_LossFullMovements'
                                            ng-model="info.Q12_LossFullMovements" ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
@@ -3311,12 +3312,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullNeck' id="Q12_LossFullNeck"
+                                    <input type="radio" name='Q12_LossFullNeck'
                                            ng-model="info.Q12_LossFullNeck"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_LossFullNeck' id="Q12_LossFullNeck"
+                                    <input type="radio" name='Q12_LossFullNeck'
                                            ng-model="info.Q12_LossFullNeck"
                                            ng-value="1"/>Y
                                 </label>
@@ -3333,12 +3334,12 @@
                         <div class="clearfix">
                             <div class="btn-group col-md-6 col-sm-7">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_OtherProblem' id="Q12_OtherProblem"
+                                    <input type="radio" name='Q12_OtherProblem'
                                            ng-model="info.Q12_OtherProblem"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q12_OtherProblem' id="Q12_OtherProblem"
+                                    <input type="radio" name='Q12_OtherProblem'
                                            ng-model="info.Q12_OtherProblem"
                                            ng-value="1"/>Y
                                 </label>
@@ -3362,7 +3363,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q12_ExaminersComments.$error.maxlength || gorgonMHForm.Q12_ExaminersComments.$error.required}">
-                        <textarea class="form-control" name="Q12_ExaminersComments" id="Q12_ExaminersComments"
+                        <textarea class="form-control" name="Q12_ExaminersComments"
                                   ng-model="info.Q12_ExaminersComments" ng-maxlength="500" ng-required="info.Q10_Disabilities || info.Q11_Climb==0 ||
                                      info.Q11_Squat==0 || info.Q11_Bend==0 || info.Q11_Push==0 || info.Q11_WorkOverhead==0 ||
                                      info.Q11_WorkUnderground==0 || info.Q11_WorkHeights==0 || info.Q11_WorkDusty==0 ||
@@ -3388,7 +3389,6 @@
             </div>
         </div>
     </div>
-    </div>
     <!--Work History Q13-->
     <div class="portlet light bordered">
         <div class="portlet-title">
@@ -3410,12 +3410,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-6">
                             <label class="btn bold">
-                                <input type="radio" name='Q13_AdvisedToChange' id="Q13_AdvisedToChange"
+                                <input type="radio" name='Q13_AdvisedToChange'
                                        ng-model="info.Q13_AdvisedToChange"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q13_AdvisedToChange' id="Q13_AdvisedToChange"
+                                <input type="radio" name='Q13_AdvisedToChange'
                                        ng-model="info.Q13_AdvisedToChange"
                                        ng-value="1"/>Y
                             </label>
@@ -3425,7 +3425,6 @@
                 <div class="col-md-5 col-sm-5">
                     <div ng-class="{'has-error': gorgonMHForm.Q13_AdvisedToChangeComment.$error.maxlength ||gorgonMHForm.Q13_AdvisedToChangeComment.$error.required}">
                         <input type="text" class="form-control" name="Q13_AdvisedToChangeComment"
-                               id="Q13_AdvisedToChangeComment"
                                ng-model="info.Q13_AdvisedToChangeComment" ng-maxlength="200"
                                ng-required="info.Q13_AdvisedToChange">
 
@@ -3446,12 +3445,12 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-6">
                             <label class="btn bold">
-                                <input type="radio" name='Q13_AdvisedToLimit' id="Q13_AdvisedToLimit"
+                                <input type="radio" name='Q13_AdvisedToLimit'
                                        ng-model="info.Q13_AdvisedToLimit"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q13_AdvisedToLimit' id="Q13_AdvisedToLimit"
+                                <input type="radio" name='Q13_AdvisedToLimit'
                                        ng-model="info.Q13_AdvisedToLimit"
                                        ng-value="1"/>Y
                             </label>
@@ -3460,7 +3459,7 @@
                 </div>
                 <div class="col-md-5 col-sm-5">
                     <div ng-class="{'has-error': gorgonMHForm.Q13_AdvisedToLimitComment.$error.maxlength || gorgonMHForm.Q13_AdvisedToLimitComment.$error.required}">
-                        <input type="text" name="Q13_AdvisedToLimitComment" id="Q13_AdvisedToLimitComment"
+                        <input type="text" name="Q13_AdvisedToLimitComment"
                                ng-model="info.Q13_AdvisedToLimitComment"
                                class="form-control" ng-maxlength="200" ng-required="info.Q13_AdvisedToLimit">
 
@@ -3481,11 +3480,11 @@
                     <div class="clearfix">
                         <div class="btn-group col-md-6 col-sm-6">
                             <label class="btn bold">
-                                <input type="radio" name='Q13_OffInjury' id="Q13_OffInjury"
+                                <input type="radio" name='Q13_OffInjury'
                                        ng-model="info.Q13_OffInjury" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q13_OffInjury' id="Q13_OffInjury"
+                                <input type="radio" name='Q13_OffInjury'
                                        ng-model="info.Q13_OffInjury" ng-value="1"/>Y
                             </label>
                         </div>
@@ -3493,7 +3492,7 @@
                 </div>
                 <div class="col-md-5 col-sm-5">
                     <div ng-class="{'has-error': gorgonMHForm.Q13_OffInjuryComment.$error.maxlength || gorgonMHForm.Q13_OffInjuryComment.$error.required}">
-                        <input type="text" name="Q13_OffInjuryComment" id="Q13_OffInjuryComment"
+                        <input type="text" name="Q13_OffInjuryComment"
                                ng-model="info.Q13_OffInjuryComment"
                                class="form-control" ng-maxlength="200" ng-required="info.Q13_OffInjury">
 
@@ -3521,7 +3520,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div ng-class="{'has-error': gorgonMHForm.Q13_WhatWas.$error.required || gorgonMHForm.Q13_WhatWas.$error.maxlength}">
-                            <input type="text" name="Q13_WhatWas" id="Q13_WhatWas" ng-model="info.Q13_WhatWas"
+                            <input type="text" name="Q13_WhatWas" ng-model="info.Q13_WhatWas"
                                    class="form-control"
                                    ng-maxlength="200"
                                    ng-required="info.Q13_AdvisedToChange || info.Q13_AdvisedToLimit || info.Q13_OffInjury"/>
@@ -3545,11 +3544,11 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q13_Medi_Vac' id="Q13_Medi_Vac" ng-model="info.Q13_Medi_Vac"
+                                <input type="radio" name='Q13_Medi_Vac' ng-model="info.Q13_Medi_Vac"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q13_Medi_Vac' id="Q13_Medi_Vac" ng-model="info.Q13_Medi_Vac"
+                                <input type="radio" name='Q13_Medi_Vac' ng-model="info.Q13_Medi_Vac"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -3564,7 +3563,7 @@
                     </div>
                     <div class="col-md-5 col-sm-5">
                         <div ng-class="{'has-error': gorgonMHForm.Q13_Details.$error.maxlength || gorgonMHForm.Q13_Details.$error.required}">
-                            <input type="text" name="Q13_Details" id="Q13_Details" ng-model="info.Q13_Details"
+                            <input type="text" name="Q13_Details" ng-model="info.Q13_Details"
                                    class="form-control"
                                    ng-maxlength="200" ng-required="info.Q13_Medi_Vac==1">
 
@@ -3588,7 +3587,7 @@
                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q13_ExaminersComments.$error.required ||
                 gorgonMHForm.Q13_ExaminersComments.$error.maxlength}">
-                        <textarea class="form-control" name="Q13_ExaminersComments" id="Q13_ExaminersComments"
+                        <textarea class="form-control" name="Q13_ExaminersComments"
                                   ng-model="info.Q13_ExaminersComments" ng-maxlength="500">
                         </textarea>
 
@@ -3627,11 +3626,11 @@
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q14_WorkRelatedDisease' id="Q14_WorkRelatedDisease"
+                                    <input type="radio" name='Q14_WorkRelatedDisease'
                                            ng-model="info.Q14_WorkRelatedDisease" ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q14_WorkRelatedDisease' id="Q14_WorkRelatedDisease"
+                                    <input type="radio" name='Q14_WorkRelatedDisease'
                                            ng-model="info.Q14_WorkRelatedDisease" ng-value="1"/>Y
                                 </label>
                             </div>
@@ -3653,7 +3652,7 @@
                     <div ng-class="{'has-error': gorgonMHForm.Q14_Year.$error.required || gorgonMHForm.$error.maxlength}">
 
                         <div class="col-md-5 col-sm-5">
-                            <input type="text" name="Q14_Year" id="Q14_Year" ng-model="info.Q14_Year"
+                            <input type="text" name="Q14_Year" ng-model="info.Q14_Year"
                                    class="form-control"
                                    ng-maxlength="200" ng-required="info.Q14_WorkRelatedDisease">
                         </div>
@@ -3676,7 +3675,7 @@
                     <div ng-class="{'has-error': gorgonMHForm.Q14_HowLongOff.$error.maxlength||gorgonMHForm.Q14_HowLongOff.$error.required}">
 
                         <div class="col-md-5 col-sm-5">
-                            <input type="text" name="Q14_HowLongOff" id="Q14_HowLongOff" ng-model="info.Q14_HowLongOff"
+                            <input type="text" name="Q14_HowLongOff" ng-model="info.Q14_HowLongOff"
                                    class="form-control"
                                    ng-maxlength="200" ng-required="info.Q14_WorkRelatedDisease">
                         </div>
@@ -3699,7 +3698,7 @@
                     <div ng-class="{'has-error': gorgonMHForm.Q14_HowLongModified.$error.maxlength || gorgonMHForm.Q14_HowLongModified.$error.required}">
 
                         <div class="col-md-5 col-sm-5">
-                            <input type="text" name="Q14_HowLongModified" id="Q14_HowLongModified"
+                            <input type="text" name="Q14_HowLongModified"
                                    ng-model="info.Q14_HowLongModified"
                                    class="form-control" ng-maxlength="200" ng-required="info.Q14_WorkRelatedDisease">
                         </div>
@@ -3722,7 +3721,7 @@
                     <div ng-class="{'has-error': gorgonMHForm.Q14_HowLongTreatment.$error.maxlength || gorgonMHForm.Q14_HowLongTreatment.$error.required}">
 
                         <div class="col-md-5 col-sm-5">
-                            <input type="text" name="Q14_HowLongTreatment" id="Q14_HowLongTreatment"
+                            <input type="text" name="Q14_HowLongTreatment"
                                    ng-model="info.Q14_HowLongTreatment"
                                    class="form-control" ng-maxlength="200" ng-required="info.Q14_WorkRelatedDisease">
                         </div>
@@ -3748,12 +3747,12 @@
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3" style="width:auto;">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q14_NormalDuties' id="Q14_NormalDuties"
+                                    <input type="radio" name='Q14_NormalDuties'
                                            ng-model="info.Q14_NormalDuties"
                                            ng-value="0" ng-required="info.Q14_WorkRelatedDisease"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q14_NormalDuties' id="Q14_NormalDuties"
+                                    <input type="radio" name='Q14_NormalDuties'
                                            ng-model="info.Q14_NormalDuties"
                                            ng-value="1" ng-required="info.Q14_WorkRelatedDisease"/>Y
                                 </label>
@@ -3775,12 +3774,12 @@
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3" style="width:auto;">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q14_Compensation' id="Q14_Compensation"
+                                    <input type="radio" name='Q14_Compensation'
                                            ng-model="info.Q14_Compensation"
                                            ng-value="0" ng-required="info.Q14_WorkRelatedDisease"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q14_Compensation' id="Q14_Compensation"
+                                    <input type="radio" name='Q14_Compensation'
                                            ng-model="info.Q14_Compensation"
                                            ng-value="1" ng-required="info.Q14_WorkRelatedDisease"/>Y
                                 </label>
@@ -3801,12 +3800,12 @@
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3" style='width:auto;'>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q14_Psychological' id="Q14_Psychological"
+                                    <input type="radio" name='Q14_Psychological'
                                            ng-model="info.Q14_Psychological"
                                            ng-value="0" ng-required="info.Q14_WorkRelatedDisease"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q14_Psychological' id="Q14_Psychological"
+                                    <input type="radio" name='Q14_Psychological'
                                            ng-model="info.Q14_Psychological"
                                            ng-value="1" ng-required="info.Q14_WorkRelatedDisease"/>Y
                                 </label>
@@ -3825,7 +3824,7 @@
                 <div class="row">
                     <div ng-class="{'has-error': gorgonMHForm.Q14_Details.$error.required}">
                         <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
-                            <textarea class="form-control" name="Q14_Details" id="Q14_Details"
+                            <textarea class="form-control" name="Q14_Details"
                                       ng-model="info.Q14_Details"
                                       ng-maxlength="200"
                                       ng-required="info.Q14_NormalDuties==0 || info.Q14_Psychological==1"
@@ -3848,12 +3847,12 @@
                             <div class="clearfix">
                                 <div class="btn-group  col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q14_WCClaim' id="Q14_WCClaim"
+                                        <input type="radio" name='Q14_WCClaim'
                                                ng-model="info.Q14_WCClaim"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q14_WCClaim' id="Q14_WCClaim"
+                                        <input type="radio" name='Q14_WCClaim'
                                                ng-model="info.Q14_WCClaim"
                                                ng-value="1"/>Y
                                     </label>
@@ -3870,7 +3869,7 @@
                 <div class="row">
                     <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                         <div ng-class="{'has-error': gorgonMHForm.Q14_ExaminersComments.$error.maxlength || gorgonMHForm.Q14_ExaminersComments.$error.required}">
-                            <textarea class="form-control" name="Q14_ExaminersComments" id="Q14_ExaminersComments"
+                            <textarea class="form-control" name="Q14_ExaminersComments"
                                       ng-model="info.Q14_ExaminersComments" ng-maxlength="500"
                                       ng-required="info.Q14_WCClaim"></textarea>
 
@@ -3905,12 +3904,12 @@
 
                     <div class="btn-group col-md-3 col-sm-3">
                         <label class="btn bold">
-                            <input type="radio" name='Q15_TakeMedications' id="Q15_TakeMedications"
+                            <input type="radio" name='Q15_TakeMedications'
                                    ng-model="info.Q15_TakeMedications"
                                    ng-value="0"/>N
                         </label>
                         <label class="btn bold">
-                            <input type="radio" name='Q15_TakeMedications' id="Q15_TakeMedications"
+                            <input type="radio" name='Q15_TakeMedications'
                                    ng-model="info.Q15_TakeMedications"
                                    ng-value="1"/>Y
                         </label>
@@ -3922,7 +3921,7 @@
 
                     <div ng-class="{'has-error': gorgonMHForm.Q15_ListMedication.$error.maxlength||gorgonMHForm.Q15_ListMedication.$error.required}">
                         <div class="col-md-8 col-sm-8">
-                            <input type="text" name="Q15_ListMedication" id="Q15_ListMedication"
+                            <input type="text" name="Q15_ListMedication"
                                    ng-model="info.Q15_ListMedication"
                                    class="form-control" ng-maxlength="200" ng-required="info.Q15_TakeMedications">
                         </div>
@@ -3960,12 +3959,12 @@
                             <div class="clearfix">
                                 <div class="btn-group col-md-6 col-sm-7">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q16_HayFever' id="Q16_HayFever"
+                                        <input type="radio" name='Q16_HayFever'
                                                ng-model="info.Q16_HayFever"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q16_HayFever' id="Q16_HayFever"
+                                        <input type="radio" name='Q16_HayFever'
                                                ng-model="info.Q16_HayFever"
                                                ng-value="1"/>Y
                                     </label>
@@ -3979,11 +3978,11 @@
                             <div class="clearfix">
                                 <div class="btn-group col-md-6 col-sm-7">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q16_Asthma' id="Q16_Asthma" ng-model="info.Q16_Asthma"
+                                        <input type="radio" name='Q16_Asthma' ng-model="info.Q16_Asthma"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q16_Asthma' id="Q16_Asthma" ng-model="info.Q16_Asthma"
+                                        <input type="radio" name='Q16_Asthma' ng-model="info.Q16_Asthma"
                                                ng-value="1"/>Y
                                     </label>
                                 </div>
@@ -4001,11 +4000,11 @@
                             <div class="clearfix">
                                 <div class="btn-group col-md-6 col-sm-7">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q16_Eczema' id="Q16_Eczema" ng-model="info.Q16_Eczema"
+                                        <input type="radio" name='Q16_Eczema' ng-model="info.Q16_Eczema"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q16_Eczema' id="Q16_Eczema" ng-model="info.Q16_Eczema"
+                                        <input type="radio" name='Q16_Eczema' ng-model="info.Q16_Eczema"
                                                ng-value="1"/>Y
                                     </label>
                                 </div>
@@ -4023,7 +4022,7 @@
 
                     <div class="col-md-5 col-sm-5">
                         <div ng-class="{'has-error': gorgonMHForm.Q16_Allergic.$error.maxlength || gorgonMHForm.Q16_Allergic.$error.required}">
-                            <input type="text" name="Q16_Allergic" id="Q16_Allergic" ng-model="info.Q16_Allergic"
+                            <input type="text" name="Q16_Allergic" ng-model="info.Q16_Allergic"
                                    class="form-control"
                                    ng-maxlength="200" ng-required="info.Q16_checkAllergic!=1"
                                    ng-disabled="info.Q16_checkAllergic==1">
@@ -4040,7 +4039,7 @@
                         <label class="control-label bold">Nil</label>
                     </div>
                     <div class="col-md-1 col-sm-1">
-                        <input type="checkbox" class="form-control" name="Q16_checkAllergic" id="Q16_checkAllergic"
+                        <input type="checkbox" class="form-control" name="Q16_checkAllergic"
                                ng-model="info.Q16_checkAllergic" ng-true-value="1"
                                ng-false-value="0" ng-checked="info.Q16_checkAllergic==1"/>
                     </div>
@@ -4055,11 +4054,11 @@
 
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q16_Adrenaline' id="Q16_Adrenaline"
+                                <input type="radio" name='Q16_Adrenaline'
                                        ng-model="info.Q16_Adrenaline" ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q16_Adrenaline' id="Q16_Adrenaline"
+                                <input type="radio" name='Q16_Adrenaline'
                                        ng-model="info.Q16_Adrenaline" ng-value="1"/>Y
                             </label>
                         </div>
@@ -4074,11 +4073,11 @@
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q16_Epipen' id="Q16_Epipen" ng-model="info.Q16_Epipen"
+                                    <input type="radio" name='Q16_Epipen' ng-model="info.Q16_Epipen"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q16_Epipen' id="Q16_Epipen" ng-model="info.Q16_Epipen"
+                                    <input type="radio" name='Q16_Epipen' ng-model="info.Q16_Epipen"
                                            ng-value="1"/>Y
                                 </label>
                             </div>
@@ -4110,11 +4109,11 @@
                             <div class="clearfix">
                                 <div class="btn-group col-md-6 col-sm-7">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q17_QFever' id="Q17_QFever" ng-model="info.Q17_QFever"
+                                        <input type="radio" name='Q17_QFever' ng-model="info.Q17_QFever"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q17_QFever' id="Q17_QFever" ng-model="info.Q17_QFever"
+                                        <input type="radio" name='Q17_QFever' ng-model="info.Q17_QFever"
                                                ng-value="1"/>Y
                                     </label>
                                 </div>
@@ -4128,12 +4127,12 @@
                             <div class="clearfix">
                                 <div class="btn-group col-md-6 col-sm-7">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q17_Tetanus' id="Q17_Tetanus"
+                                        <input type="radio" name='Q17_Tetanus'
                                                ng-model="info.Q17_Tetanus"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q17_Tetanus' id="Q17_Tetanus"
+                                        <input type="radio" name='Q17_Tetanus'
                                                ng-model="info.Q17_Tetanus"
                                                ng-value="1"/>Y
                                     </label>
@@ -4152,12 +4151,12 @@
                             <div class="clearfix">
                                 <div class="btn-group col-md-6 col-sm-7">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q17_HepatitisA' id="Q17_HepatitisA"
+                                        <input type="radio" name='Q17_HepatitisA'
                                                ng-model="info.Q17_HepatitisA"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q17_HepatitisA' id="Q17_HepatitisA"
+                                        <input type="radio" name='Q17_HepatitisA'
                                                ng-model="info.Q17_HepatitisA"
                                                ng-value="1"/>Y
                                     </label>
@@ -4172,12 +4171,12 @@
                             <div class="clearfix">
                                 <div class="btn-group col-md-6 col-sm-7">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q17_HepatitisB' id="Q17_HepatitisB"
+                                        <input type="radio" name='Q17_HepatitisB'
                                                ng-model="info.Q17_HepatitisB"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q17_HepatitisB' id="Q17_HepatitisB"
+                                        <input type="radio" name='Q17_HepatitisB'
                                                ng-model="info.Q17_HepatitisB"
                                                ng-value="1"/>Y
                                     </label>
@@ -4197,9 +4196,9 @@
                 <div class="row">
                     <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
                         <div ng-class="{'has-error': gorgonMHForm.Q17_ExaminersComments.$error.required || gorgonMHForm.Q17_ExaminersComments.$error.maxlength}">
-                            <textarea class="form-control" name="Q17_ExaminersComments" id="Q17_ExaminersComments"
+                            <textarea class="form-control" name="Q17_ExaminersComments"
                                       ng-model="info.Q17_ExaminersComments" ng-maxlength="500"
-                                      ng-required="info.Q16_Adrenaline==1|| info.Q16_Epipen==1" id="q17"></textarea>
+                                      ng-required="info.Q16_Adrenaline==1|| info.Q16_Epipen==1"></textarea>
 
                             <div class="help-block" ng-show="gorgonMHForm.Q17_ExaminersComments.$error.required">
                                 <label class="control-label">Required!</label>
@@ -4233,12 +4232,12 @@
 
                             <div class="btn-group  col-md-3 col-sm-3">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q18_IncreasedCough' id="Q18_IncreasedCough"
+                                    <input type="radio" name='Q18_IncreasedCough'
                                            ng-model="info.Q18_IncreasedCough"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q18_IncreasedCough' id="Q18_IncreasedCough"
+                                    <input type="radio" name='Q18_IncreasedCough'
                                            ng-model="info.Q18_IncreasedCough"
                                            ng-value="1"/>Y
                                 </label>
@@ -4255,12 +4254,12 @@
                             <div class="clearfix">
                                 <div class="btn-group  col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_ChestIllness' id="Q18_ChestIllness"
+                                        <input type="radio" name='Q18_ChestIllness'
                                                ng-model="info.Q18_ChestIllness"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_ChestIllness' id="Q18_ChestIllness"
+                                        <input type="radio" name='Q18_ChestIllness'
                                                ng-model="info.Q18_ChestIllness"
                                                ng-value="1"/>Y
                                     </label>
@@ -4278,12 +4277,12 @@
                             <div class="clearfix">
                                 <div class="btn-group  col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_SOBHurrying' id="Q18_SOBHurrying"
+                                        <input type="radio" name='Q18_SOBHurrying'
                                                ng-model="info.Q18_SOBHurrying"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_SOBHurrying' id="Q18_SOBHurrying"
+                                        <input type="radio" name='Q18_SOBHurrying'
                                                ng-model="info.Q18_SOBHurrying"
                                                ng-value="1"/>Y
                                     </label>
@@ -4301,12 +4300,12 @@
                             <div class="clearfix">
                                 <div class="btn-group  col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_SOBwalking' id="Q18_SOBwalking"
+                                        <input type="radio" name='Q18_SOBwalking'
                                                ng-model="info.Q18_SOBwalking"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_SOBwalking' id="Q18_SOBwalking"
+                                        <input type="radio" name='Q18_SOBwalking'
                                                ng-model="info.Q18_SOBwalking"
                                                ng-value="1"/>Y
                                     </label>
@@ -4324,12 +4323,12 @@
                             <div class="clearfix">
                                 <div class="btn-group  col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_SOBWakeUp' id="Q18_SOBWakeUp"
+                                        <input type="radio" name='Q18_SOBWakeUp'
                                                ng-model="info.Q18_SOBWakeUp"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_SOBWakeUp' id="Q18_SOBWakeUp"
+                                        <input type="radio" name='Q18_SOBWakeUp'
                                                ng-model="info.Q18_SOBWakeUp"
                                                ng-value="1"/>Y
                                     </label>
@@ -4347,12 +4346,12 @@
                             <div class="clearfix">
                                 <div class="btn-group  col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_CESWheezy' id="Q18_CESWheezy"
+                                        <input type="radio" name='Q18_CESWheezy'
                                                ng-model="info.Q18_CESWheezy"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_CESWheezy' id="Q18_CESWheezy"
+                                        <input type="radio" name='Q18_CESWheezy'
                                                ng-model="info.Q18_CESWheezy"
                                                ng-value="1"/>Y
                                     </label>
@@ -4370,12 +4369,12 @@
                             <div class="clearfix">
                                 <div class="btn-group  col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_CEFTight' id="Q18_CEFTight"
+                                        <input type="radio" name='Q18_CEFTight'
                                                ng-model="info.Q18_CEFTight"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_CEFTight' id="Q18_CEFTight"
+                                        <input type="radio" name='Q18_CEFTight'
                                                ng-model="info.Q18_CEFTight"
                                                ng-value="1"/>Y
                                     </label>
@@ -4393,12 +4392,12 @@
                             <div class="clearfix">
                                 <div class="btn-group  col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_GivenPuffer' id="Q18_GivenPuffer"
+                                        <input type="radio" name='Q18_GivenPuffer'
                                                ng-model="info.Q18_GivenPuffer"
                                                ng-value="0">N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q18_GivenPuffer' id="Q18_GivenPuffer"
+                                        <input type="radio" name='Q18_GivenPuffer'
                                                ng-model="info.Q18_GivenPuffer"
                                                ng-value="1"/>Y
                                     </label>
@@ -4420,7 +4419,7 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div ng-class="{'has-error': gorgonMHForm.Q18_LastTimePuffer.$error.required || gorgonMHForm.Q18_LastTimePuffer.$error.maxlength}">
-                                <input type="text" name="Q18_LastTimePuffer" id="Q18_LastTimePuffer"
+                                <input type="text" name="Q18_LastTimePuffer"
                                        ng-model="info.Q18_LastTimePuffer"
                                        class="form-control" ng-required="info.Q18_GivenPuffer" ng-maxlength="200">
 
@@ -4461,11 +4460,11 @@
                             <div class="clearfix">
                                 <div class="btn-group col-md-3 col-sm-3">
                                     <label class="btn bold">
-                                        <input type="radio" name='Q19_Smoke' id="Q19_Smoke" ng-model="info.Q19_Smoke"
+                                        <input type="radio" name='Q19_Smoke' ng-model="info.Q19_Smoke"
                                                ng-value="0"/>N
                                     </label>
                                     <label class="btn bold">
-                                        <input type="radio" name='Q19_Smoke' id="Q19_Smoke" ng-model="info.Q19_Smoke"
+                                        <input type="radio" name='Q19_Smoke' ng-model="info.Q19_Smoke"
                                                ng-value="1"/>Y
                                     </label>
                                 </div>
@@ -4484,7 +4483,7 @@
                         </div>
                         <div class="col-md-2 col-sm-4">
                             <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeDay.$error.pattern || gorgonMHForm.Q19_SmokeDay.$error.required}">
-                                <input type="text" name="Q19_SmokeDay" id="Q19_SmokeDay" ng-model="info.Q19_SmokeDay"
+                                <input type="text" name="Q19_SmokeDay" ng-model="info.Q19_SmokeDay"
                                        class="form-control"
                                        ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke"
                                        ng-required="info.Q19_Smoke">
@@ -4508,7 +4507,7 @@
                         </div>
                         <div class="col-md-2 col-sm-4">
                             <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeWeek.$error.pattern || gorgonMHForm.Q19_SmokeWeek.$error.required}">
-                                <input type="text" name="Q19_SmokeWeek" id="Q19_SmokeWeek" ng-model="info.Q19_SmokeWeek"
+                                <input type="text" name="Q19_SmokeWeek" ng-model="info.Q19_SmokeWeek"
                                        class="form-control" ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke"
                                        ng-required="info.Q19_Smoke">
 
@@ -4531,7 +4530,7 @@
                         </div>
                         <div class="col-md-2 col-sm-4">
                             <div ng-class="{'has-error': gorgonMHForm.Q19_SmokeYear.$error.pattern || gorgonMHForm.Q19_SmokeYear.$error.required}">
-                                <input type="text" name="Q19_SmokeYear" id="Q19_SmokeYear" ng-model="info.Q19_SmokeYear"
+                                <input type="text" name="Q19_SmokeYear" ng-model="info.Q19_SmokeYear"
                                        class="form-control" ng-pattern="/^[0-9]+$/" ng-disabled="!info.Q19_Smoke"
                                        ng-required="info.Q19_Smoke">
 
@@ -4572,7 +4571,7 @@
                     </div>
                     <div class="col-md-6 col-sm-4">
                         <div ng-class="{'has-error': gorgonMHForm.Q20_DrinkWeek.$error.maxlength}">
-                            <input type="text" name="Q20_DrinkWeek" id="Q20_DrinkWeek" ng-model="info.Q20_DrinkWeek"
+                            <input type="text" name="Q20_DrinkWeek" ng-model="info.Q20_DrinkWeek"
                                    class="form-control"
                                    ng-maxlength="200">
 
@@ -4594,7 +4593,7 @@
                 </div>
                 <div class="col-md-6 col-sm-4">
                     <div ng-class="{'has-error': gorgonMHForm.Q20_DrinkMax.$error.maxlength}">
-                        <input type="text" name="Q20_DrinkMax" id="Q20_DrinkMax" ng-model="info.Q20_DrinkMax"
+                        <input type="text" name="Q20_DrinkMax" ng-model="info.Q20_DrinkMax"
                                class="form-control"
                                ng-maxlength="200">
 
@@ -4631,16 +4630,16 @@
                     <div class="clearfix">
                         <div class="btn-group col-lg-12 col-md-5 col-sm-5" style="margin-left: 10px">
                             <label class="btn bold">
-                                <input type="radio" name='Q21_Exercise' id="Q21_Exercise" ng-model="info.Q21_Exercise"
+                                <input type="radio" name='Q21_Exercise' ng-model="info.Q21_Exercise"
                                        ng-value="0"/>Rarely/occasionally/never
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q21_Exercise' id="Q21_Exercise" ng-model="info.Q21_Exercise"
+                                <input type="radio" name='Q21_Exercise' ng-model="info.Q21_Exercise"
                                        ng-value="1"/>once
                                 or twice a week
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q21_Exercise' id="Q21_Exercise" ng-model="info.Q21_Exercise"
+                                <input type="radio" name='Q21_Exercise' ng-model="info.Q21_Exercise"
                                        ng-value="2"/>three
                                 or more times per week
 
@@ -4659,12 +4658,12 @@
                         <div class="clearfix">
                             <div class="btn-group  col-md-3 col-sm-3">
                                 <label class="btn bold">
-                                    <input type="radio" name='Q21_PlaySport' id="Q21_PlaySport"
+                                    <input type="radio" name='Q21_PlaySport'
                                            ng-model="info.Q21_PlaySport"
                                            ng-value="0"/>N
                                 </label>
                                 <label class="btn bold">
-                                    <input type="radio" name='Q21_PlaySport' id="Q21_PlaySport"
+                                    <input type="radio" name='Q21_PlaySport'
                                            ng-model="info.Q21_PlaySport"
                                            ng-value="1"/>Y
                                 </label>
@@ -4686,7 +4685,7 @@
                     </div>
                     <div class="col-md-5 col-sm-5">
                         <div ng-class="{'has-error': gorgonMHForm.Q21_SportDetails.$error.required || gorgonMHForm.Q21_SportDetails.$error.maxlength}">
-                            <input type="text" name="Q21_SportDetails" id="Q21_SportDetails"
+                            <input type="text" name="Q21_SportDetails"
                                    ng-model="info.Q21_SportDetails"
                                    class="form-control" ng-maxlength="200" ng-required="info.Q21_PlaySport">
 
@@ -4707,7 +4706,7 @@
                     <label style="margin-top: 10px">Football</label>
                 </div>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" name="Q21_IsFootball" id="Q21_IsFootball"
+                    <input class="form-control" type="checkbox" name="Q21_IsFootball"
                            ng-model="info.Q21_IsFootball"
                            ng-true-value="1" ng-false-value="0" ng-checked="info.Q21_IsFootball==1"/>
                 </div>
@@ -4716,7 +4715,7 @@
                     <label style="margin-top: 10px">Golf</label>
                 </div>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" name="Q21_IsGolf" id="Q21_IsFootball"
+                    <input class="form-control" type="checkbox" name="Q21_IsGolf"
                            ng-model="info.Q21_IsGolf"
                            ng-true-value="1" ng-false-value="0" ng-checked="info.Q21_IsGolf==1"/>
                 </div>
@@ -4726,7 +4725,7 @@
                     <label style="margin-top: 10px">Tennis</label>
                 </div>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" name="Q21_IsTennis" id="Q21_IsTennis"
+                    <input class="form-control" type="checkbox" name="Q21_IsTennis"
                            ng-model="info.Q21_IsTennis"
                            ng-true-value="1" ng-flase-value="0" ng-checked="info.Q21_IsTennis==1"/>
                 </div>
@@ -4735,7 +4734,7 @@
                     <label style="margin-top: 10px">Squash</label>
                 </div>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" name="Q21_IsSquash" id="Q21_IsTennis"
+                    <input class="form-control" type="checkbox" name="Q21_IsSquash"
                            ng-model="info.Q21_IsSquash"
                            ng-true-value="1" ng-false-value="0" ng-checked="info.Q21_IsSquash==1"/>
                 </div>
@@ -4745,7 +4744,7 @@
                     <label style="margin-top: 10px">Bowls</label>
                 </div>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" name="Q21_IsBowls" id="Q21_IsBowls"
+                    <input class="form-control" type="checkbox" name="Q21_IsBowls"
                            ng-model="info.Q21_IsBowls"
                            ng-true-value="1" ng-false-value="0" ng-checked="info.Q21_IsBowls==1"/>
                 </div>
@@ -4755,7 +4754,7 @@
                     <label style="margin-top: 10px">Gym</label>
                 </div>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" name="Q21_IsGym" id="Q21_IsGym"
+                    <input class="form-control" type="checkbox" name="Q21_IsGym"
                            ng-model="info.Q21_IsGym"
                            ng-true-value="1" ng-false-value="0" ng-checked="info.Q21_IsGym==1"/>
                 </div>
@@ -4765,15 +4764,15 @@
                     <label style="margin-top: 10px">Other</label>
                 </div>
                 <div class="col-md-1 col-sm-1">
-                    <input class="form-control" type="checkbox" name="Q21_IsOther" id="Q21_IsOther"
+                    <input class="form-control" type="checkbox" name="Q21_IsOther"
                            ng-model="info.Q21_IsOther"
                            ng-true-value="1" ng-false-value="0" ng-checked="info.Q21_IsOther==1"/>
                 </div>
                 <div class="col-md-3" style="margin-top: 5px;">
                     <div ng-class="{'has-error': gorgonMHForm.Q21Other1Comment.$error.required || gorgonMHForm.$error.maxlength}">
-                        <input type="text" name="Q21Other1Comment" id="Q21Other1Comment"
+                        <input type="text" name="Q21Other1Comment"
                                ng-model="info.Q21Other1Comment" class="form-control"
-                               ng-maxlength="500" ng-required="info.Q21_IsOther==1" id="q21">
+                               ng-maxlength="500" ng-required="info.Q21_IsOther==1">
 
                         <div class="help-block" ng-show="gorgonMHForm.Q21Other1Comment.$error.required">
                             <label class="control-label">Required!</label>
@@ -4807,12 +4806,12 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q22_SleepDisorder' id="Q22_SleepDisorder"
+                                <input type="radio" name='Q22_SleepDisorder'
                                        ng-model="info.Q22_SleepDisorder"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q22_SleepDisorder' id="Q22_SleepDisorder"
+                                <input type="radio" name='Q22_SleepDisorder'
                                        ng-model="info.Q22_SleepDisorder"
                                        ng-value="1"/>Y
                             </label>
@@ -4828,11 +4827,11 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q22_Choking' id="Q22_Choking" ng-model="info.Q22_Choking"
+                                <input type="radio" name='Q22_Choking' ng-model="info.Q22_Choking"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q22_Choking' id="Q22_Choking" ng-model="info.Q22_Choking"
+                                <input type="radio" name='Q22_Choking' ng-model="info.Q22_Choking"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -4847,11 +4846,11 @@
                     <div class="clearfix">
                         <div class="btn-group  col-md-3 col-sm-3">
                             <label class="btn bold">
-                                <input type="radio" name='Q22_UseCPAP' id="Q22_UseCPAP" ng-model="info.Q22_UseCPAP"
+                                <input type="radio" name='Q22_UseCPAP' ng-model="info.Q22_UseCPAP"
                                        ng-value="0"/>N
                             </label>
                             <label class="btn bold">
-                                <input type="radio" name='Q22_UseCPAP' id="Q22_UseCPAP" ng-model="info.Q22_UseCPAP"
+                                <input type="radio" name='Q22_UseCPAP' ng-model="info.Q22_UseCPAP"
                                        ng-value="1"/>Y
                             </label>
                         </div>
@@ -5070,8 +5069,8 @@
                     <div class="col-md-1 col-sm-2" style="margin-top: 5px;width: auto;">
                         <label class="control-label">Date:</label>
                     </div>
-                    <div class="col-md-2 col-sm-2">
-                        <input type="text" class="form-control col-md-12" name="GorgonDate" id="GorgonDate"
+                    <div class="col-md-2 col-sm-3 col-xs-4">
+                        <input type="text" class="form-control col-md-12" name="GorgonDate"
                                datepicker-popup="dd/MM/yyyy"
                                data-ng-model="info.GorgonDate" is-open="openDOB7" ng-click="openDOB7 = true"
                                datepicker-options="dateOptions" close-text="Close"/>
