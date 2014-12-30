@@ -38,6 +38,8 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
         }
 
         $scope.infoChanged = function () {
+            console.log(oriInfo);
+            console.log($scope.info);
             return !angular.equals(oriInfo, $scope.info);
         }
 
@@ -194,7 +196,7 @@ angular.module('app.loggedIn.document.MA.controllers',['fcsa-number'])
                     COMMENT_SEC6 : null,
                     COMMENT_SEC7 : null,
                     COMMENT_SEC8 : null,
-                    COMMENT_SEC9 : null,
+                    COMMENT_SEC9 : "",
                     AGE: getAge($scope.patientInfo.DOB),
                     HYPER: 0,
                     SMOKER: 0,
