@@ -176,10 +176,13 @@
     <div class="break-row"></div>
     
     <!-- COMPANY -->
-    <div class="col-md-2 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
         <span class="field">
             <button class="btn btn-small btn-block green" ng-click="clickCompany()">
                 {{selectedCompany.Company_name}}
+                &nbsp
+                (<span ng-if="selectedCompany.insurer === null">No Insurer</span>
+                <span ng-if="selectedCompany.insurer !== null">{{selectedCompany.insurer.insurer_name}}</span>)
             </button>
         </span>
     </div>
@@ -223,13 +226,13 @@
     <!-- END ACCOUNT TYPE -->
 
     <!-- ACCOUNT HOLDER -->
-    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+    <!--<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <span class="field">
             <label for="accholder">Account Holder</label>
             <input type="text" placeholder="Account Holder" name="accholder" ng-model="modelObjectMap.Account_holder"
                 class="form-control" id="accholder" float-label>
         </span>
-    </div>
+    </div>-->
     <!-- END ACCOUNT HOLDER -->
 </div> <!-- END INFORMATION -->
 

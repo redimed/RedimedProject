@@ -88,7 +88,19 @@ module.exports = {
 				res.json(500, {"status": "error", "message": "Database Error"});
 			}else{
 				patient.getCompany().then(function(company){
-					res.json({"status": "success", "company": company, "data": patient});
+					if(company.Insurer !== null){
+						var insurer_sql = "SELECT id, insurer_name FROM cln_insurers WHERE id="+company.Insurer;
+
+						db.sequelize.query(insurer_sql)
+						.success(function(list){
+							res.json({"status": "success", "company": company, "data": patient, "insurer": list[0]});
+						})
+						.error(function(error){
+							res.json({"status": "error", "message": error});
+						})
+					}else{
+						res.json({"status": "success", "company": company, "data": patient, "insurer": null});
+					}
 				}, function(error){
 					res.json(500, {"status": "error", "message": error});
 				})
