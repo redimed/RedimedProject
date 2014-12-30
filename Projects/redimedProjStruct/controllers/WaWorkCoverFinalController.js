@@ -88,4 +88,21 @@ module.exports = {
                 });
             })
     },
+    postDetail: function (req, res) {
+        var id = req.body.ID;
+        db.WaWorkCoverFinal.find(id)
+            .success(function (data) {
+                res.json({
+                    "status": "success",
+                    "data": data
+                });
+            })
+            .error(function (error) {
+                res.json(500, {
+                    "status": "error",
+                    "message": error
+                });
+            });
+
+    },
 }

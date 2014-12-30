@@ -87,4 +87,22 @@ module.exports = {
                 });
             })
     },
+    postDetail: function (req, res) {
+        var id = req.body.ID;
+        console.log('this is progress id',id);
+        db.WaWorkCoverProgress.find(id)
+            .success(function (data) {
+                res.json({
+                    "status": "success",
+                    "data": data
+                });
+            })
+            .error(function (error) {
+                res.json(500, {
+                    "status": "error",
+                    "message": error
+                });
+            });
+
+    },
 }

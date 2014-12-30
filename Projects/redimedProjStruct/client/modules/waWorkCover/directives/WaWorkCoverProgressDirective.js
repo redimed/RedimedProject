@@ -15,10 +15,10 @@ angular.module('app.loggedIn.waworkcover.progress.directive', [])
                     scope.oneAtATime = false;
                     scope.isSubmit = false;
                     scope.waprogress = {
-                        examDate: ConfigService.getCommonDateDefault(new Date())
+                        examDate: new Date()
                     };
                     //get patient info
-                    PatientService.mdtById(scope.params.patientInfo.Patient_id).then(function (res) {
+                    PatientService.mdtById(scope.params.patientInfo).then(function (res) {
                         if (res.status === 'success') {
                             if (res.data !== '' && res.data !== null && res.data !== undefined) {
                                 scope.patient = res.data;
@@ -36,7 +36,7 @@ angular.module('app.loggedIn.waworkcover.progress.directive', [])
                         }
                     });
                     //get appointment info
-                    ReceptionistService.apptDetail(scope.params.apptInfo.CAL_ID).then(function (res) {
+                    ReceptionistService.apptDetail(scope.params.apptInfo).then(function (res) {
                         if (res.data !== undefined && res.data !== null && res.data !== '') {
                             if (res.data.DOCTOR_ID !== undefined && res.data.DOCTOR_ID !== null && res.data.DOCTOR_ID !== '') {
                                 DoctorService.getById(res.data.DOCTOR_ID).then(function (res2) {
@@ -48,21 +48,12 @@ angular.module('app.loggedIn.waworkcover.progress.directive', [])
                         }
                     })
 
-                    //this will dceide the form to "add" or "edit" mode
-                    //create search filter
-                    var checkID = scope.params.apptInfo.CAL_ID;
-                    var searchValue = {
-                        filters: [{
-                            type: 'text',
-                            name: 'cal_id',
-                            value: checkID
-                        }]
-                    };
-                    WaWorkCoverService.progresssearch(searchValue).then(function (result) {
-                        if (result.status === 'success') {
-                            if (result.data !== null && result.data !== undefined && result.data !== '' && result.data.length > 0) {
-                                if (result.data[0] !== null && result.data[0] !== undefined && result.data[0] !== '') {
-                                    scope.waprogress = result.data[0];
+                    
+                    
+                    if(scope.params.edit === true && scope.params.workcover){
+                        WaWorkCoverService.progressdetail(scope.params.workcover).then(function(res){
+                            if(res.status === 'success' && !!res.data){
+                                scope.waprogress = res.data;
                                     for (var key in scope.waprogress) {
                                         if (scope.waprogress[key]) {
                                             if (key.indexOf('is') != -1 || key.indexOf('Is') != -1 || key.indexOf('IS') != -1)
@@ -70,45 +61,49 @@ angular.module('app.loggedIn.waworkcover.progress.directive', [])
                                             if (key.indexOf('date') != -1 || key.indexOf('Date') != -1 || key.indexOf('DATE') != -1 || key.indexOf('reviewOn') != -1 || key.indexOf('From') != -1 || key.indexOf('To') != -1)
                                                 scope.waprogress[key] = new Date(scope.waprogress[key]);
                                         }
-                                    } //end for
-                                    scope.params.edit = true;
-                                }
+                                    }
                             }
-                        }
-                    })
+                        })
+                    }
                 };
                 init();
+
+                scope.clearSignature = function () {
+                    scope.waprogress.signature = '';
+                }
 
                 scope.clickAction = function () {
                     scope.isSubmit = true;
                     if (!scope.waprogressform.$invalid) {
                         var postData = angular.copy(scope.waprogress);
-                        postData.cal_id = scope.params.apptInfo.CAL_ID;
+                        postData.cal_id = scope.params.apptInfo;
                         for (var key in postData) {
                             if (postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
                         } //end for
                         if (scope.params.edit === false) {
-                            postData.Created_by = $cookieStore.get('userInfo').id;
                             WaWorkCoverService.progressadd(postData).then(function (result) {
+                                console.log('this is insert result',result)
                                 if (result.status === 'success') {
                                     toastr.success('Add successfully!', 'Success!');
-                                    $state.go('loggedIn.patient.workcover', {
-                                        patient_id: scope.params.patientInfo.Patient_id,
-                                        cal_id: scope.params.apptInfo.CAL_ID
-                                    });
+                                    //GET BACK TO THE LIST
+//                                    $state.go('loggedIn.waworkcover.progress', {
+//                                        patient_id: scope.params.patientInfo,
+//                                        cal_id: scope.params.apptInfo,
+//                                        action: 'edit',
+//                                        wc_id: result.data.progress_id
+//                                    });
                                 } else {
                                     toastr.error('Unexpected Error!', 'Error!');
                                 }
                             })
                         } else {
-                            postData.Last_updated_by = $cookieStore.get('userInfo').id;
                             WaWorkCoverService.progressedit(postData.progress_id, postData).then(function (result) {
                                 if (result.status === 'success') {
                                     toastr.success('Edit successfully!', 'Success!');
-                                    $state.go('loggedIn.patient.workcover', {
-                                        patient_id: scope.params.patientInfo.Patient_id,
-                                        cal_id: scope.params.apptInfo.CAL_ID
-                                    });
+//                                    $state.go('loggedIn.patient.workcover', {
+//                                        patient_id: scope.params.patientInfo.Patient_id,
+//                                        cal_id: scope.params.apptInfo.CAL_ID
+//                                    });
                                 } else {
                                     toastr.error('Unexpected Error!', 'Error!');
                                 }

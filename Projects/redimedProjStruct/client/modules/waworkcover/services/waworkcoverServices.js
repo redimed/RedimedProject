@@ -14,6 +14,11 @@ angular.module('app.loggedIn.waworkcover.service', [])
             var funcApi = mdtApi.all('wa/workcover/first/search');
             return funcApi.post(option);
         };
+    
+        mdtService.firstdetail = function (wc_id) {
+            var funcApi = mdtApi.all('wa/workcover/first/detail');
+            return funcApi.post({'ID':wc_id});
+        };
 
         mdtService.firstedit = function (id, postData) {
             var funcApi = mdtApi.all('wa/workcover/first/edit');
@@ -44,6 +49,12 @@ angular.module('app.loggedIn.waworkcover.service', [])
                 edit_id: id
             });
         };
+    
+        mdtService.progressdetail = function (wc_id) {
+            var funcApi = mdtApi.all('wa/workcover/progress/detail');
+            return funcApi.post({'ID':wc_id});
+        };
+    
         mdtService.progressprint = function (id) {
             var funcApi = mdtApi.one('wa/workcover/progress/print/' + id);
             return funcApi.get();
@@ -65,6 +76,10 @@ angular.module('app.loggedIn.waworkcover.service', [])
                 edit_data: postData,
                 edit_id: id
             });
+        };
+         mdtService.finaldetail = function (wc_id) {
+            var funcApi = mdtApi.all('wa/workcover/final/detail');
+            return funcApi.post({'ID':wc_id});
         };
         mdtService.finalprint = function (id) {
             var funcApi = mdtApi.one('wa/workcover/final/print/' + id);

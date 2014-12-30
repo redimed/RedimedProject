@@ -11,14 +11,14 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
             },
             templateUrl: "modules/waWorkCover/directives/templates/final.html",
             link: function (scope, element, attrs) {
-                var init = function () {
+                				var init = function () {
                     scope.oneAtATime = false;
                     scope.isSubmit = false;
                     scope.wafinal = {
-                        examDate: ConfigService.getCommonDateDefault(new Date())
+                        examDate: new Date()
                     };
                     //get patient info
-                    PatientService.mdtById(scope.params.patientInfo.Patient_id).then(function (res) {
+                    PatientService.mdtById(scope.params.patientInfo).then(function (res) {
                         if (res.status === 'success') {
                             if (res.data !== '' && res.data !== null && res.data !== undefined) {
                                 scope.patient = res.data;
@@ -36,7 +36,7 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                         }
                     });
                     //get appointment info
-                    ReceptionistService.apptDetail(scope.params.apptInfo.CAL_ID).then(function (res) {
+                    ReceptionistService.apptDetail(scope.params.apptInfo).then(function (res) {
                         if (res.data !== undefined && res.data !== null && res.data !== '') {
                             if (res.data.DOCTOR_ID !== undefined && res.data.DOCTOR_ID !== null && res.data.DOCTOR_ID !== '') {
                                 DoctorService.getById(res.data.DOCTOR_ID).then(function (res2) {
@@ -50,19 +50,29 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
 
                     //this will dceide the form to "add" or "edit" mode
                     //create search filter
-                    var checkID = scope.params.apptInfo.CAL_ID;
-                    var searchValue = {
-                        filters: [{
-                            type: 'text',
-                            name: 'cal_id',
-                            value: checkID
-                        }]
-                    };
-                    WaWorkCoverService.finalsearch(searchValue).then(function (result) {
-                        if (result.status === 'success') {
-                            if (result.data !== null && result.data !== undefined && result.data !== '' && result.data.length > 0) {
-                                if (result.data[0] !== null && result.data[0] !== undefined && result.data[0] !== '') {
-                                    scope.wafinal = result.data[0];
+//                    WaWorkCoverService.finalsearch(searchValue).then(function (result) {
+//                        if (result.status === 'success') {
+//                            if (result.data !== null && result.data !== undefined && result.data !== '' && result.data.length > 0) {
+//                                if (result.data[0] !== null && result.data[0] !== undefined && result.data[0] !== '') {
+//                                    scope.wafinal = result.data[0];
+//                                    for (var key in scope.wafinal) {
+//                                        if (scope.wafinal[key]) {
+//                                            if (key.indexOf('is') != -1 || key.indexOf('Is') != -1 || key.indexOf('IS') != -1)
+//                                                scope.wafinal[key] = scope.wafinal[key].toString();
+//                                            if (key.indexOf('date') != -1 || key.indexOf('Date') != -1 || key.indexOf('DATE') != -1 || key.indexOf('reviewOn') != -1 || key.indexOf('From') != -1 || key.indexOf('To') != -1)
+//                                                scope.wafinal[key] = new Date(scope.wafinal[key]);
+//                                        }
+//                                    } //end for
+//                                    scope.params.edit = true;
+//                                }
+//                            }
+//                        }
+//                    })
+                    
+                    if(scope.params.edit === true && scope.params.workcover){
+                        WaWorkCoverService.finaldetail(scope.params.workcover).then(function(res){
+                            if(!!res.data){
+                                scope.wafinal = res.data;
                                     for (var key in scope.wafinal) {
                                         if (scope.wafinal[key]) {
                                             if (key.indexOf('is') != -1 || key.indexOf('Is') != -1 || key.indexOf('IS') != -1)
@@ -70,32 +80,38 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                                             if (key.indexOf('date') != -1 || key.indexOf('Date') != -1 || key.indexOf('DATE') != -1 || key.indexOf('reviewOn') != -1 || key.indexOf('From') != -1 || key.indexOf('To') != -1)
                                                 scope.wafinal[key] = new Date(scope.wafinal[key]);
                                         }
-                                    } //end for
-                                    scope.params.edit = true;
-                                }
+                                    }
                             }
-                        }
-                    })
+                        })
+                    }
                 };
                 init();
+
+                scope.clearSignature = function () {
+                    scope.wafinal.signature = '';
+                }
 
                 scope.clickAction = function () {
                     scope.isSubmit = true;
                     if (!scope.wafinalform.$invalid) {
                         var postData = angular.copy(scope.wafinal);
-                        postData.cal_id = scope.params.apptInfo.CAL_ID;
+                        postData.cal_id = scope.params.apptInfo;
                         for (var key in postData) {
                             if (postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
                         } //end for
                         if (scope.params.edit === false) {
                             WaWorkCoverService.finaladd(postData).then(function (result) {
+                                console.log('this is insert result',result)
                                 if (result.status === 'success') {
                                     toastr.success('Add successfully!', 'Success!');
-                                    $state.go('loggedIn.patient.workcover', {
-                                        patient_id: scope.params.patientInfo.Patient_id,
-                                        cal_id: scope.params.apptInfo.CAL_ID
-                                    });
-
+                                    
+                                    //GET BACK TO THE LIST
+//                                    $state.go('loggedIn.waworkcover.final', {
+//                                        patient_id: scope.params.patientInfo,
+//                                        cal_id: scope.params.apptInfo,
+//                                        action: 'edit',
+//                                        wc_id: result.data.id
+//                                    });
                                 } else {
                                     toastr.error('Unexpected Error!', 'Error!');
                                 }
@@ -104,10 +120,10 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                             WaWorkCoverService.finaledit(postData.id, postData).then(function (result) {
                                 if (result.status === 'success') {
                                     toastr.success('Edit successfully!', 'Success!');
-                                    $state.go('loggedIn.patient.workcover', {
-                                        patient_id: scope.params.patientInfo.Patient_id,
-                                        cal_id: scope.params.apptInfo.CAL_ID
-                                    });
+//                                    $state.go('loggedIn.patient.workcover', {
+//                                        patient_id: scope.params.patientInfo.Patient_id,
+//                                        cal_id: scope.params.apptInfo.CAL_ID
+//                                    });
                                 } else {
                                     toastr.error('Unexpected Error!', 'Error!');
                                 }

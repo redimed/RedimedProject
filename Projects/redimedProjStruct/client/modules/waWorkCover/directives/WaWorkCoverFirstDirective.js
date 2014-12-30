@@ -16,10 +16,10 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                     scope.oneAtATime = false;
                     scope.isSubmit = false;
                     scope.wafirst = {
-                        examDate: ConfigService.getCommonDateDefault(new Date())
+                        examDate: new Date()
                     };
                     //get patient info
-                    PatientService.mdtById(scope.params.patientInfo.Patient_id).then(function (res) {
+                    PatientService.mdtById(scope.params.patientInfo).then(function (res) {
                         if (res.status === 'success') {
                             if (res.data !== '' && res.data !== null && res.data !== undefined) {
                                 scope.patient = res.data;
@@ -37,7 +37,7 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                         }
                     });
                     //get appointment info
-                    ReceptionistService.apptDetail(scope.params.apptInfo.CAL_ID).then(function (res) {
+                    ReceptionistService.apptDetail(scope.params.apptInfo).then(function (res) {
                         if (res.data !== undefined && res.data !== null && res.data !== '') {
                             if (res.data.DOCTOR_ID !== undefined && res.data.DOCTOR_ID !== null && res.data.DOCTOR_ID !== '') {
                                 DoctorService.getById(res.data.DOCTOR_ID).then(function (res2) {
@@ -51,19 +51,29 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
 
                     //this will dceide the form to "add" or "edit" mode
                     //create search filter
-                    var checkID = scope.params.apptInfo.CAL_ID;
-                    var searchValue = {
-                        filters: [{
-                            type: 'text',
-                            name: 'cal_id',
-                            value: checkID
-                        }]
-                    };
-                    WaWorkCoverService.firstsearch(searchValue).then(function (result) {
-                        if (result.status === 'success') {
-                            if (result.data !== null && result.data !== undefined && result.data !== '' && result.data.length > 0) {
-                                if (result.data[0] !== null && result.data[0] !== undefined && result.data[0] !== '') {
-                                    scope.wafirst = result.data[0];
+//                    WaWorkCoverService.firstsearch(searchValue).then(function (result) {
+//                        if (result.status === 'success') {
+//                            if (result.data !== null && result.data !== undefined && result.data !== '' && result.data.length > 0) {
+//                                if (result.data[0] !== null && result.data[0] !== undefined && result.data[0] !== '') {
+//                                    scope.wafirst = result.data[0];
+//                                    for (var key in scope.wafirst) {
+//                                        if (scope.wafirst[key]) {
+//                                            if (key.indexOf('is') != -1 || key.indexOf('Is') != -1 || key.indexOf('IS') != -1)
+//                                                scope.wafirst[key] = scope.wafirst[key].toString();
+//                                            if (key.indexOf('date') != -1 || key.indexOf('Date') != -1 || key.indexOf('DATE') != -1 || key.indexOf('reviewOn') != -1 || key.indexOf('From') != -1 || key.indexOf('To') != -1)
+//                                                scope.wafirst[key] = new Date(scope.wafirst[key]);
+//                                        }
+//                                    } //end for
+//                                    scope.params.edit = true;
+//                                }
+//                            }
+//                        }
+//                    })
+                    
+                    if(scope.params.edit === true && scope.params.workcover){
+                        WaWorkCoverService.firstdetail(scope.params.workcover).then(function(res){
+                            if(!!res.data){
+                                scope.wafirst = res.data;
                                     for (var key in scope.wafirst) {
                                         if (scope.wafirst[key]) {
                                             if (key.indexOf('is') != -1 || key.indexOf('Is') != -1 || key.indexOf('IS') != -1)
@@ -71,12 +81,10 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                                             if (key.indexOf('date') != -1 || key.indexOf('Date') != -1 || key.indexOf('DATE') != -1 || key.indexOf('reviewOn') != -1 || key.indexOf('From') != -1 || key.indexOf('To') != -1)
                                                 scope.wafirst[key] = new Date(scope.wafirst[key]);
                                         }
-                                    } //end for
-                                    scope.params.edit = true;
-                                }
+                                    }
                             }
-                        }
-                    })
+                        })
+                    }
                 };
                 init();
 
@@ -88,19 +96,22 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                     scope.isSubmit = true;
                     if (!scope.wafirstform.$invalid) {
                         var postData = angular.copy(scope.wafirst);
-                        postData.cal_id = scope.params.apptInfo.CAL_ID;
+                        postData.cal_id = scope.params.apptInfo;
                         for (var key in postData) {
                             if (postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
                         } //end for
                         if (scope.params.edit === false) {
-                            console.log(scope.wafirst);
                             WaWorkCoverService.firstadd(postData).then(function (result) {
+                                console.log('this is insert result',result)
                                 if (result.status === 'success') {
                                     toastr.success('Add successfully!', 'Success!');
-                                    $state.go('loggedIn.patient.workcover', {
-                                        patient_id: scope.params.patientInfo.Patient_id,
-                                        cal_id: scope.params.apptInfo.CAL_ID
-                                    });
+                                    //GET BACK TO THE LIST
+//                                    $state.go('loggedIn.waworkcover.first', {
+//                                        patient_id: scope.params.patientInfo,
+//                                        cal_id: scope.params.apptInfo,
+//                                        action: 'edit',
+//                                        wc_id: result.data.Ass_id
+//                                    });
                                 } else {
                                     toastr.error('Unexpected Error!', 'Error!');
                                 }
@@ -109,10 +120,10 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                             WaWorkCoverService.firstedit(postData.Ass_id, postData).then(function (result) {
                                 if (result.status === 'success') {
                                     toastr.success('Edit successfully!', 'Success!');
-                                    $state.go('loggedIn.patient.workcover', {
-                                        patient_id: scope.params.patientInfo.Patient_id,
-                                        cal_id: scope.params.apptInfo.CAL_ID
-                                    });
+//                                    $state.go('loggedIn.patient.workcover', {
+//                                        patient_id: scope.params.patientInfo.Patient_id,
+//                                        cal_id: scope.params.apptInfo.CAL_ID
+//                                    });
                                 } else {
                                     toastr.error('Unexpected Error!', 'Error!');
                                 }
