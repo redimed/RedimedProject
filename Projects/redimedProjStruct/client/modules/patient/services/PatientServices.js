@@ -188,6 +188,8 @@ angular.module("app.loggedIn.patient.services", [])
     instanceService.workcoverSearchOpt = function(type, patient_id) {
         var cols = [];
 
+		// http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/firstWA/{{wafirst.Ass_id}}
+		
         var time_field =  {
             field: 'Creation_date', 
             label: 'Creation date', 
@@ -197,7 +199,9 @@ angular.module("app.loggedIn.patient.services", [])
             }
         };
         var edit_action = null;
-
+		var print_href = 'http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/';
+		var print_action = null;
+	
         switch(type) {
             case 'first':
                 cols = [
@@ -208,10 +212,15 @@ angular.module("app.loggedIn.patient.services", [])
                 edit_action = function(item) {
                     $state.go('loggedIn.waworkcover.first', {
                         action: 'edit',
-                        appt_id: item.cal_id,
-                        ass_id: item.Ass_id
+						patient_id: patient_id,
+                        cal_id: item.cal_id,
+                        wc_id: item.Ass_id
                     });
                 }
+				print_action = function(item) {
+					print_href += 'firstWA/' + item.Ass_id;
+					window.open(print_href);
+				}
                 break;
             case 'progress':
                 cols = [
@@ -219,13 +228,18 @@ angular.module("app.loggedIn.patient.services", [])
                     {field: 'cal_id'},
                     time_field
                 ];
-                 edit_action = function(item) {
+                edit_action = function(item) {
                     $state.go('loggedIn.waworkcover.progress', {
                         action: 'edit',
-                        appt_id: item.cal_id,
-                        ass_id: item.progress_id
+						patient_id: patient_id,
+                        cal_id: item.cal_id,
+                        wc_id: item.progress_id
                     });
                 }
+				print_action = function(item) {
+					print_href += 'progressWA/' + item.progress_id;
+					window.open(print_href);
+				}
                 break;
             case 'final':
                 cols = [
@@ -236,10 +250,15 @@ angular.module("app.loggedIn.patient.services", [])
                 edit_action = function(item) {
                     $state.go('loggedIn.waworkcover.final', {
                         action: 'edit',
-                        appt_id: item.cal_id,
-                        ass_id: item.id
+						patient_id: patient_id,
+                        cal_id: item.cal_id,
+                        wc_id: item.id
                     });
                 }
+				print_action = function(item) {
+					print_href += 'finalWA/' + item.id;
+					window.open(print_href);
+				}
                 break;
         }
 
@@ -258,9 +277,7 @@ angular.module("app.loggedIn.patient.services", [])
                     class:'fa fa-pencil', title: 'Edit', callback: edit_action
                 },
                 {
-                    class:'fa fa-print', title: 'Print', callback: function(item){
-
-                    }
+                    class:'fa fa-print', title: 'Print', callback: print_action
                 },
             ]
         };

@@ -96,6 +96,7 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                     if (!scope.wafinalform.$invalid) {
                         var postData = angular.copy(scope.wafinal);
                         postData.cal_id = scope.params.apptInfo;
+                        postData.patient_id = scope.params.patientInfo;
                         for (var key in postData) {
                             if (postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
                         } //end for
@@ -106,6 +107,10 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                                     toastr.success('Add successfully!', 'Success!');
                                     
                                     //GET BACK TO THE LIST
+                                    $state.go('loggedIn.patient.workcover',{
+                                        patient_id: scope.params.patientInfo,
+                                        cal_id: scope.params.apptInfo
+                                    })
 //                                    $state.go('loggedIn.waworkcover.final', {
 //                                        patient_id: scope.params.patientInfo,
 //                                        cal_id: scope.params.apptInfo,

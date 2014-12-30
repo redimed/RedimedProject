@@ -6,6 +6,8 @@ angular.module("app.loggedIn.patient.workcover.controller", [
 
 	var patient_id = $stateParams.patient_id ;
 	var cal_id = $stateParams.cal_id;
+	
+	
 
 	// PatientService.workcoverSearch(patient_id).then(function(response){
 	// 	console.log(response);
@@ -15,22 +17,25 @@ angular.module("app.loggedIn.patient.workcover.controller", [
 	$scope.navigator = {
 		add_first: function(){
 	 	  	$state.go('loggedIn.waworkcover.first', {
+				patient_id: patient_id,
                 action: 'add',
-                appt_id: cal_id,
-                ass_id: 0
+                cal_id: cal_id,
+                wc_id: 0
             });
 		},
 		add_progress: function(){
 			$state.go('loggedIn.waworkcover.progress', {
+				patient_id: patient_id,
                 action: 'add',
-                appt_id: cal_id,
-                ass_id: 0
+                cal_id: cal_id,
+                wc_id: 0
             });
 		},
 		add_final: function(){
 			$state.go('loggedIn.waworkcover.final', {
+				patient_id: patient_id,
                 action: 'add',
-                appt_id: cal_id,
+                cal_id: cal_id,
                 ass_id: 0
             });
 		},
