@@ -102,6 +102,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							scope.modelObjectMap.Title = parseInt(scope.modelObjectMap.Title);
 							//END INT
 							angular.extend(scope.selectedCompany, response.company);
+							scope.selectedCompany.insurer = response.insurer;
 						}// end if
 					})
 				}
