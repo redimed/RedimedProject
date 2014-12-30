@@ -283,8 +283,6 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         }
 
         $scope.infoChanged = function () {
-//            console.log(oriInfoD);
-//            console.log($scope.infoD);
             if(!angular.equals(oriInfoH, $scope.infoH) == false && !angular.equals(oriInfoL,$scope.infoL) == false && !angular.equals(oriInfoD, $scope.infoD) == false && !angular.equals(oriInfoC,$scope.infoC.VALUE) == false)
             {
                 return  false;
@@ -298,6 +296,10 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             {
                 $scope.isNew = true;
                 insert = true;
+                oriInfoH  = angular.copy($scope.infoH);
+                oriInfoL  = angular.copy($scope.infoL);
+                oriInfoD  = angular.copy($scope.infoD);
+                oriInfoC  = angular.copy($scope.infoC.VALUE);
             }else if(response['status'] === 'update')
             {
                 $scope.isNew = false;

@@ -48,28 +48,29 @@
             </div>
         </div>
         <div class="row">
-            <label class="control-label bold col-md-5 col-lg-4 col-sm-4">Photo - ID has been sighted
-                (compulsory)</label>
-
-            <div class="btn-group col-sm-6">
-                <label class="btn bold">
-                    <input type="radio" ng-model="info.PHOTO_ID" value="1"/> Confirmed
-                </label>
-                <label class="btn bold">
-                    <input type="radio" ng-model="info.PHOTO_ID" value="0"/> Not sighted
-                </label>
+            <div class="form-group">
+                <label class="control-label bold col-md-6 col-lg-4 col-sm-4">Photo - ID has been sighted (compulsory)</label>
+                <div class="btn-group col-sm-6">
+                    <label class="btn bold">
+                        <input type="radio" ng-model="info.PHOTO_ID" value="1"/> Confirmed
+                    </label>
+                    <label class="btn bold">
+                        <input type="radio" ng-model="info.PHOTO_ID" value="0"/> Not sighted
+                    </label>
+                </div>
             </div>
         </div>
         <div class="row">
-            <label class="control-label bold col-md-5 col-lg-4 col-sm-4">Hand Dominance</label>
-
-            <div class="btn-group col-sm-6">
-                <label class="btn">
-                    <input type="radio" ng-model="info.HAND_DOR" value="1"/> Right
-                </label>
-                <label class="btn">
-                    <input type="radio" ng-model="info.HAND_DOR" value="0"/> Left
-                </label>
+            <div class="form-group">
+                <label class="control-label bold col-md-6 col-lg-4 col-sm-4">Hand Dominance</label>
+                <div class="btn-group col-sm-6">
+                    <label class="btn">
+                        <input type="radio" ng-model="info.HAND_DOR" value="1"/> Right
+                    </label>
+                    <label class="btn">
+                        <input type="radio" ng-model="info.HAND_DOR" value="0"/> Left
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -254,7 +255,6 @@
                 <div class="col-md-5 col-sm-6">
                     <div class="form-group">
                         <label class="control-label col-md-4 col-sm-3">Cannabis</label>
-
                         <div class="btn-group col-sm-8 ">
                             <label class="btn">
                                 <input type="radio" ng-model="info.CANNABIS" value="1"/> -ve
@@ -268,7 +268,6 @@
                 <div class="col-md-5 col-sm-6">
                     <div class="form-group">
                         <label class="control-label col-md-4 col-sm-3">Benzo’s</label>
-
                         <div class="btn-group col-sm-8 ">
                             <label class="btn">
                                 <input type="radio" ng-model="info.BENZOS" value="1"/> -ve
@@ -665,40 +664,43 @@
             </div>
             </br>
             <div class="row">
-                <label class="control-label col-md-6 col-lg-5 col-sm-5">Is Spirometry satisfactory?</label>
-
-                <div class="btn-group col-sm-4 col-md-4 ">
-                    <label class="btn">
-                        <input type="radio" ng-model="info.SPIROMETRY_STATIS" ng-value="1"/> Yes
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.SPIROMETRY_STATIS" ng-value="0"/> No
-                    </label>
+                <div class="form-group">
+                    <label class="control-label col-md-6 col-lg-5 col-sm-5">Is Spirometry satisfactory?</label>
+                    <div class="btn-group col-sm-4 col-md-4 ">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.SPIROMETRY_STATIS" ng-value="1"/> Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.SPIROMETRY_STATIS" ng-value="0"/> No
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <label class="control-label col-md-6 col-lg-5 col-sm-5">Candidate ever used a puffer?</label>
-
-                <div class="btn-group col-sm-4 col-md-4 ">
-                    <label class="btn">
-                        <input type="radio" ng-model="info.CANDIDATE_EVER" ng-value="1"/> Yes
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.CANDIDATE_EVER" ng-value="0"/> No
-                    </label>
+                <div class="form-group">
+                    <label class="control-label col-md-6 col-lg-5 col-sm-5">Candidate ever used a puffer?</label>
+                    <div class="btn-group col-sm-4 col-md-4 ">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.CANDIDATE_EVER" ng-value="1"/> Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.CANDIDATE_EVER" ng-value="0"/> No
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <label class="control-label col-md-6 col-lg-5 col-sm-7">If Yes to either of above, was there any
-                    respiratory problem?</label>
-
-                <div class="btn-group col-sm-4 col-md-4 ">
-                    <label class="btn">
-                        <input type="radio" ng-model="info.YES_TO_EITHER" ng-value="1"/> Yes
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.YES_TO_EITHER" ng-value="0"/> No
-                    </label>
+                <div class="form-group">
+                    <label class="control-label col-md-6 col-lg-5 col-sm-8">If Yes to either of above, was there any
+                        respiratory problem?</label>
+                    <div class="btn-group col-sm-4 col-md-4 ">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.YES_TO_EITHER" ng-value="1"/> Yes
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.YES_TO_EITHER" ng-value="0"/> No
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -710,7 +712,7 @@
         </p>
         <div class="row"
              ng-class="{'has-error':gorgonMAForm.SPI_EXAMINERS_COMMENTS.$error.required}">
-            <div class="col-md-8" style="margin-left: 15px">
+            <div class="col-md-11 col-lg-8 col-sm-11" style="margin-left: 15px">
                 <textarea class="form-control"
                           ng-required="info.YES_TO_EITHER==1 || info.SPIROMETRY_STATIS ==0 || info.CANDIDATE_EVER || info.YES_TO_EITHER"
                           name="SPI_EXAMINERS_COMMENTS"
@@ -718,7 +720,7 @@
                           ng-change="totalComment()"
                           style="height: 150px"></textarea>
             </div>
-            <div class="col-md-6 help-block" style="margin-left: 20px;"
+            <div class="col-md-12 help-block" style="margin-left: 20px;"
                  ng-show="gorgonMAForm.SPI_EXAMINERS_COMMENTS.$error.required">
                 <label>Required!</label>
             </div>
@@ -921,42 +923,43 @@
             </label>
 
             <div class="row">
-                <div class="col-md-5">
-                    <label class="control-label bold col-md-2 col-sm-1" style="margin-top: 10px;">Left</label>
-
-                    <div class="btn-group col-sm-4 col-md-10">
-                        <label class="btn">
-                            <input type="radio" ng-model="info.VF_LEFT" ng-value="1"/> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.VF_LEFT" ng-value="0"/> <45°
-                        </label>
+                <div class="col-md-5 col-sm-5">
+                    <div class="form-group">
+                        <label class="control-label bold col-md-2 col-sm-2">Left</label>
+                        <div class="btn-group col-sm-10 col-md-10">
+                            <label class="btn">
+                                <input type="radio" ng-model="info.VF_LEFT" ng-value="1"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.VF_LEFT" ng-value="0"/> <45°
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-5">
-                    <label class="control-label bold col-md-2 col-sm-1" style="margin-top: 10px;">Right</label>
-
-                    <div class="btn-group col-sm-4 col-md-10">
-                        <label class="btn">
-                            <input type="radio" ng-model="info.VF_RIGHT" ng-value="1"/> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.VF_RIGHT" ng-value="0"/> <45°
-                        </label>
+                <div class="col-md-5 col-sm-5">
+                    <div class="form-group">
+                        <label class="control-label bold col-md-2 col-sm-2">Right</label>
+                        <div class="btn-group col-sm-10 col-md-10">
+                            <label class="btn">
+                                <input type="radio" ng-model="info.VF_RIGHT" ng-value="1"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.VF_RIGHT" ng-value="0"/> <45°
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-3 col-sm-4">
+                    <div class="col-md-5 col-lg-3 col-sm-5">
                         <label class="text-info">
                             Ishihara responses: Number wrong</label>
                     </div>
-                    <div class="col-md-3 col-sm-3" style="width: auto;">
+                    <div class="col-md-2 col-lg-1 col-sm-2">
                         <span ng-class="{'has-error':gorgonMAForm.ISHIHARA_RESPONSE.$error.pattern || gorgonMAForm.ISHIHARA_RESPONSE.$error.required}">
-                 <input type="text" name="ISHIHARA_RESPONSE" ng-pattern="/^[0-9]+$/" ng-model="info.ISHIHARA_RESPONSE"
+                        <input type="text" name="ISHIHARA_RESPONSE" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="info.ISHIHARA_RESPONSE"
                         ng-required="info.VF_LEFT==0 || info.VF_RIGHT==0">
-
                  </span>
                     </div>
                     <div class="col-md-3 col-sm-3" style="width: auto;">
@@ -967,7 +970,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-5 col-sm-5">
 
                     </div>
                     <div class="col-md-7 col-sm-7">
@@ -1081,23 +1084,23 @@
         </div>
         <div class="portlet-body form">
             <div class="row">
-                <label class="control-label bold col-md-2  col-sm-2" style="margin-top: 5px;">Chest:</label>
-
-                <div class="btn-group col-sm-6 ">
-                    <label class="btn">
-                        <input type="radio" ng-model="info.CHEST" ng-value="1"/> Normal
-                    </label>
-                    <label class="btn">
-                        <input type="radio" ng-model="info.CHEST" ng-value="0"/> Reduced (<5cm)
-                    </label>
+                <div class="form-group">
+                    <label class="control-label bold col-md-2  col-sm-2">Chest:</label>
+                    <div class="btn-group col-sm-6 ">
+                        <label class="btn">
+                            <input type="radio" ng-model="info.CHEST" ng-value="1"/> Normal
+                        </label>
+                        <label class="btn">
+                            <input type="radio" ng-model="info.CHEST" ng-value="0"/> Reduced (<5cm)
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <label class="control-label bold col-md-2  col-sm-2">Air Entry:</label>
-
                 <div class="col-md-12 col-sm-12">
-                    <label class="control-label bold col-md-2 col-sm-3" style="margin-top: 5px;">Upper Zones:</label>
-
+                    <div class="form-group">
+                    <label class="control-label bold col-md-3 col-sm-3">Upper Zones:</label>
                     <div class="btn-group col-sm-6 ">
                         <label class="btn">
                             <input type="radio" ng-model="info.UPPER_ZONES" ng-value="1"/> Normal
@@ -1106,17 +1109,19 @@
                             <input type="radio" ng-model="info.UPPER_ZONES" ng-value="0"/> Reduced (<5cm)
                         </label>
                     </div>
+                    </div>
                 </div>
                 <div class="col-md-12 col-sm-12">
-                    <label class="control-label bold col-md-2 col-sm-3" style="margin-top: 5px;">Lower Zones:</label>
-
-                    <div class="btn-group col-sm-6 ">
-                        <label class="btn">
-                            <input type="radio" ng-model="info.LOWER_ZONES" ng-value="1"/> Normal
-                        </label>
-                        <label class="btn">
-                            <input type="radio" ng-model="info.LOWER_ZONES" ng-value="0"/> Reduced (<5cm)
-                        </label>
+                    <div class="form-group">
+                        <label class="control-label bold col-md-3 col-sm-3">Lower Zones:</label>
+                        <div class="btn-group col-sm-6 ">
+                            <label class="btn">
+                                <input type="radio" ng-model="info.LOWER_ZONES" ng-value="1"/> Normal
+                            </label>
+                            <label class="btn">
+                                <input type="radio" ng-model="info.LOWER_ZONES" ng-value="0"/> Reduced (<5cm)
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1344,7 +1349,7 @@
 
         <div class="row">
             <div ng-class="{'has-error': gorgonMAForm.SKIN_EXAMINERS_COMMENTS.$error.required}">
-                <div class="col-md-8" style="margin-left: 15px;">
+                <div class="col-md-11 col-lg-8 col-sm-11" style="margin-left: 15px;">
                     <textarea class="form-control" name="SKIN_EXAMINERS_COMMENTS"
                               ng-model="info.SKIN_EXAMINERS_COMMENTS"
                               ng-required="
@@ -1532,11 +1537,10 @@
             <label class="text-info control-label" style="font-weight: bold">Lower limb reflexes:</label>
 
             <div class="row">
-                <div class="col-md-6 col-lg-5">
+                <div class="col-md-6 col-lg-5 col-sm-6">
                     <label class="control-label col-md-2 col-sm-2 bold"
-                           style="margin-top: 10px;font-weight: bold">Left:</label>
-
-                    <div class="btn-group col-sm-5 col-md-10">
+                           style="margin-top: 7px;font-weight: bold">Left:</label>
+                    <div class="btn-group col-sm-10 col-md-10">
                         <label class="btn">
                             <input type="radio" ng-model="info.LOWER_LEFT" value="1"/> Normal
                         </label>
@@ -1545,10 +1549,10 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-5">
-                    <label class="control-label col-md-2 col-sm-2 bold" style="margin-top: 10px;font-weight: bold">Right:</label>
+                <div class="col-md-6 col-lg-5 col-sm-6">
+                    <label class="control-label col-md-2 col-sm-2 bold" style="margin-top: 7px;font-weight: bold">Right:</label>
 
-                    <div class="btn-group col-sm-5 col-md-10 ">
+                    <div class="btn-group col-sm-10 col-md-10 ">
                         <label class="btn">
                             <input type="radio" ng-model="info.LOWER_RIGHT" value="1"/> Normal
                         </label>
@@ -1568,7 +1572,7 @@
             </p>
             <div class="row">
                 <div ng-class="{'has-error': gorgonMAForm.CNS_COMMENTS.$error.required}">
-                <div class="col-md-8">
+                <div class="col-md-11 col-lg-8 col-sm-11">
                     <textarea class="form-control" name="CNS_COMMENTS"
                               ng-model="info.CNS_COMMENTS"
                               ng-required="info.LOWER_RIGHT == 0 || info.LOWER_LEFT == 0 || info.GAIT == 0 || info.TREMOR == 0 ||
@@ -1842,7 +1846,7 @@
         </p>
         <div class="row">
             <div ng-class="{'has-error': gorgonMAForm.BACK_EXAMINERS_COMMENTS.$error.required}">
-                <div class="col-md-8">
+                <div class="col-md-11 col-lg-8 col-sm-11">
                     <textarea class="form-control" name="BACK_EXAMINERS_COMMENTS"
                               ng-model="info.BACK_EXAMINERS_COMMENTS"
                               ng-required="info.NECK_POSTURE == 0 || info.NECK_RHYTHM == 0 ||  info.BACK_POSTURE == 2 ||
@@ -2040,7 +2044,7 @@
 
         <div class="row">
             <div ng-class="{'has-error':gorgonMAForm.FUTHER_COMMENTS.$error.required}">
-                <div class="col-md-8" style="margin-left: 15px;">
+                <div class="col-md-11 col-lg-8 col-sm-11" style="margin-left: 15px;">
                     <textarea class="form-control" ng-model="info.FUTHER_COMMENTS" name="FUTHER_COMMENTS" ng-required="
                         info.SHOULDER == 3 || info.SHOULDER == 2 || info.ELBOWS == 3 || info.ELBOWS == 2 || info.WRISTS == 3 ||
                         info.WRISTS == 2 || info.KNEES == 3 || info.KNEES == 2 || info.ANKLES == 3 || info.ANKLES == 2||
@@ -2062,7 +2066,7 @@
 
         <div class="row">
             <div ng-class="{'has-error':gorgonMAForm.LIMB_EXAMINERS_COMMENTS.$error.required}">
-                <div class="col-md-8" style="margin-left: 15px;">
+                <div class="col-md-11 col-lg-8 col-sm-11" style="margin-left: 15px;">
                     <textarea class="form-control" ng-model="info.LIMB_EXAMINERS_COMMENTS"
                               name="LIMB_EXAMINERS_COMMENTS" ng-required="1"></textarea>
 
@@ -2076,13 +2080,13 @@
 
     <div class="portlet light bordered">
         <div class="row">
-            <div class="col-md-2 col-sm-2 col-lg-2"></div>
+            <div class="col-md-1 col-sm-1 col-lg-2"></div>
             <label class="control-label col-md-10 col-sm-10 col-lg-10 bold">Examiner's Name/Stamp</label>
             <div class="col-md-2 col-sm-2 col-lg-2"></div>
             <label class="control-label col-md-10 col-sm-10 col-lg-10">{{info.docName}}</label>
         </div>
         <div class="row">
-            <div class="col-md-2 col-sm-2 col-lg-2"></div>
+            <div class="col-md-1 col-sm-1 col-lg-2"></div>
             <div class="col-md-5 col-sm-5 col-lg-5" ng-show="info.docSign!=null && info.docSign!=''">
                 <img src="" ng-src="{{info.docSign}}" alt="" style="width: 200px;height: 150px;"/>
             </div>
