@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonMHReport" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27f3bba2-f4a5-4437-96b6-2724e2c86cb6">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="3544"/>
+	<property name="ireport.y" value="1248"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
@@ -2140,7 +2140,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement positionType="Float" x="228" y="-205" width="14" height="13" uuid="57a00f34-5167-4e96-9a2d-62efde6a5405"/>
 				<textElement>
-					<font size="9" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<font size="9" isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Q3]]></text>
 			</staticText>
@@ -2705,7 +2705,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement positionType="Float" x="228" y="2" width="14" height="13" uuid="1b5236ce-9688-4980-ada8-9fd5287067b3"/>
 				<textElement>
-					<font size="9" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+					<font size="9" isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Q4]]></text>
 			</staticText>
