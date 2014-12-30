@@ -25,10 +25,11 @@ angular.module('app.loggedIn.isoSubmitStatusPendingController.controller',[])
                     }
                 })
             }
-            $scope.reject = function(id){
+            $scope.rejects = function(id,node_id){
                 var info = {
                     ID:id,
-                    status:isoConst.submitStatus.reject
+                    status:isoConst.submitStatus.reject,
+                    Node_ID:node_id
                 }
 
                 isoService.checkOutIn.approvedAndReject(info).then(function(data){
@@ -40,6 +41,18 @@ angular.module('app.loggedIn.isoSubmitStatusPendingController.controller',[])
                     }
                 })
             }
+
+        $scope.downloadFile = function(id,fileName){
+          var info = {
+              Node_ID : id,
+              File_Name: fileName
+          }
+
+            isoService.checkOutIn.dowloadFile(info).then(function(){
+
+            })
+
+        }
 
 
 

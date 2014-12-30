@@ -2,7 +2,7 @@
  * Created by tannv.dts@gmail.com on 12/2/2014.
  */
 angular.module('app.loggedIn.iso.service',[])
-    .factory('isoService',function(Restangular,$http,$q){
+    .factory('isoService',function(Restangular,$http,$q,$window){
         var isoService = {};
         var api = Restangular.all('api');
 
@@ -80,6 +80,9 @@ angular.module('app.loggedIn.iso.service',[])
             approvedAndReject:function(info){
                 var result = api.all("iso/iso-check-out-in/approvedAndReject");
                 return result.post({data:info})
+            },
+            dowloadFile: function(data){
+                $window.location.href = '/api/iso/iso-check-out-in/downloadFileCheckOutIn?node_id='+data.Node_ID+'&file_name='+data.File_Name;
             }
 
         }

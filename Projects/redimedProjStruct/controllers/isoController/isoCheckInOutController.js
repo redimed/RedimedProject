@@ -526,7 +526,7 @@ module.exports =
             {
                 if(err)
                 {
-                    isoUtil.exlog(err);
+
                     res.json({status:'fail'});
                 }
                 else
@@ -539,8 +539,69 @@ module.exports =
     },
 
     downloadFileCheckOutIn:function(req,res){
-        var info = req.body.path;
-        var userInfo=JSON.parse(req.cookies.userInfo);
+        var info = req.query;
+        isoUtil.exlog(info.node_id);
+        var sql =
+            "SELECT tr.`NODE_NAME` FROM `iso_node_ancestor` an "+
+            "INNER JOIN `iso_tree_dir` tr "+
+            "WHERE an.`ANCESTOR_ID` = tr.`NODE_ID` AND an.`NODE_ID`= ?";
+        var sql1 =
+            "SELECT dir.`NODE_NAME` , oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`FILE_NAME` FROM `iso_check_out_in` oi "+
+            "INNER JOIN `iso_tree_dir` dir ON dir.`NODE_ID` = oi.`NODE_ID` "+
+            "WHERE oi.`NODE_ID` = ?"
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,info.node_id,function(err,data)
+            {
+                if(err)
+                {
+                    isoUtil.exlog(err);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    var Newpath = '';
+                    data.forEach(function(path){
+                        Newpath += '/'+path.NODE_NAME;
+                    })
+
+                    isoUtil.exlog(Newpath);
+
+                    req.getConnection(function(err,connection)
+                    {
+                        var query = connection.query(sql1,info.node_id,function(err,data)
+                        {
+                            if(err)
+                            {
+
+                                res.json({status:'fail'});
+                            }
+                            else
+                            {
+                               isoUtil.exlog(data);
+                                Newpath += '/'+data[0].NODE_NAME+'/CHECK_IN/'+data[0].CHECK_IN_FOLDER_STORAGE+'/'+data[0].FILE_NAME;
+                                isoUtil.exlog(Newpath);
+                                res.download("."+Newpath,function(err,data) {
+                                    if (err) {
+                                        res.json({status: "fail"});
+                                    }else{
+                                        isoUtil.exlog(data);
+                                    }
+                                })
+                            }
+                        });
+                    });
+
+
+
+
+
+
+                }
+            });
+        });
+
+
 
     },
 
@@ -575,7 +636,7 @@ module.exports =
                     }else{
                         ver = parseInt(data[0].VERSION_NO)+1;
                         versionNew = isoUtil.pad(ver,3);
-                        isoUtil.exlog(versionNew)
+
                     }
                     req.getConnection(function(err,connection)
                     {

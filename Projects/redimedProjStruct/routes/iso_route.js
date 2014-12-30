@@ -32,3 +32,4 @@ app.post('/api/iso/iso-check-out-in/submitDocument',isoCheckInOutController.subm
 app.post('/api/iso/iso-check-out-in/approvedAndReject',isoCheckInOutController.approvedAndReject);
 app.get('/api/iso/iso-check-out-in/selectIdFromCheckOutIn',isoCheckInOutController.selectIdFromCheckOutIn);
 app.get('/api/iso/iso-check-out-in/getAllOutInStatusPending',isoCheckInOutController.getAllOutInStatusPending);
+app.get('/api/iso/iso-check-out-in/downloadFileCheckOutIn',isoCheckInOutController.downloadFileCheckOutIn);
