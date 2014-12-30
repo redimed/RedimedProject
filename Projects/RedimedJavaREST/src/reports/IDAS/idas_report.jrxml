@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="idas_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="380e6717-6efb-44f3-9f91-4e5c6ef55dba">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -284,76 +284,76 @@ WHERE
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="686" splitType="Stretch">
+		<band height="696" splitType="Stretch">
 			<staticText>
-				<reportElement x="4" y="14" width="86" height="20" uuid="31af805c-52b5-4b69-9159-7705542603c6"/>
+				<reportElement x="4" y="5" width="86" height="20" uuid="31af805c-52b5-4b69-9159-7705542603c6"/>
 				<text><![CDATA[Candidate name: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="90" y="14" width="158" height="20" uuid="c0931c3b-01c2-4ba4-a58c-227b2bcabe24"/>
+				<reportElement x="90" y="5" width="222" height="20" uuid="c0931c3b-01c2-4ba4-a58c-227b2bcabe24"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_First_name}+" "+$F{cln_patients_Sur_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="318" y="14" width="31" height="20" uuid="a3a5f443-aeb7-4754-9813-9472a7d755de"/>
+				<reportElement x="318" y="5" width="31" height="20" uuid="a3a5f443-aeb7-4754-9813-9472a7d755de"/>
 				<text><![CDATA[DOB:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="349" y="14" width="122" height="20" uuid="cc992ad1-16c7-406c-a94b-ff514a6124be"/>
+				<reportElement x="349" y="5" width="178" height="20" uuid="cc992ad1-16c7-406c-a94b-ff514a6124be"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_DOB}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="54" width="48" height="20" uuid="5142630d-3054-49a0-be49-f4b910bcfb74"/>
+				<reportElement x="4" y="30" width="48" height="20" uuid="5142630d-3054-49a0-be49-f4b910bcfb74"/>
 				<text><![CDATA[Address:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="52" y="54" width="136" height="20" uuid="ebd18c15-5afe-4211-9ac5-861ebc6eab94"/>
+				<reportElement x="52" y="30" width="260" height="20" uuid="ebd18c15-5afe-4211-9ac5-861ebc6eab94"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_Address1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="87" width="86" height="20" uuid="17c8a649-8bcc-4532-88e9-e2c59ff1d67f"/>
+				<reportElement x="4" y="55" width="86" height="20" uuid="17c8a649-8bcc-4532-88e9-e2c59ff1d67f"/>
 				<text><![CDATA[Contact number:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="90" y="87" width="98" height="20" uuid="01f2ac36-06ab-4169-abae-f7926659a40e"/>
+				<reportElement x="90" y="55" width="202" height="20" uuid="01f2ac36-06ab-4169-abae-f7926659a40e"/>
 				<textFieldExpression><![CDATA[$F{cln_patients_Mobile}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="115" width="75" height="20" uuid="e9b1c977-1137-4e35-84ab-5d312959b6e7"/>
+				<reportElement mode="Transparent" x="4" y="80" width="75" height="20" uuid="e9b1c977-1137-4e35-84ab-5d312959b6e7"/>
 				<text><![CDATA[Tester’s name:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="79" y="115" width="109" height="20" uuid="62777ca8-727f-4ffb-8e16-fdcb39327ac0"/>
+				<reportElement mode="Transparent" x="79" y="80" width="213" height="20" uuid="62777ca8-727f-4ffb-8e16-fdcb39327ac0"/>
 				<textFieldExpression><![CDATA[$F{doctor_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="312" y="115" width="90" height="20" uuid="348bbfcf-6568-42ff-bc4e-a1b9cc8189f7"/>
+				<reportElement mode="Transparent" x="312" y="80" width="90" height="20" uuid="348bbfcf-6568-42ff-bc4e-a1b9cc8189f7"/>
 				<text><![CDATA[Tester’s signature: ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="414" y="115" width="113" height="50" uuid="1ef3732d-f028-4ba0-b931-5f039c8f4004"/>
+				<reportElement mode="Transparent" x="414" y="30" width="113" height="109" uuid="1ef3732d-f028-4ba0-b931-5f039c8f4004"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctor_sign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="0" y="180" width="552" height="60" uuid="b5d9e41a-ccf1-4bdc-9df5-c6ba35da6f53"/>
-				<textFieldExpression><![CDATA["I,"+$F{cln_idas_headers_NAME}+", understand that I am required to provide a sample of my urine "+
+				<reportElement x="0" y="140" width="552" height="55" uuid="b5d9e41a-ccf1-4bdc-9df5-c6ba35da6f53"/>
+				<textFieldExpression><![CDATA["I,"+$F{cln_patients_First_name}+" "+$F{cln_patients_Sur_name}+", understand that I am required to provide a sample of my urine "+
 "under supervision for drug testing and/or a breath sample for alcohol testing. I am aware these results will "+
 "be sent to the company requesting the drug and alcohol screen, and kept on record at RediMed. I declare "+
 "that I have taken the following medications (prescription and non-prescription) in the last 14 days:"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="7" y="297" width="97" height="20" uuid="cfb134c4-f45d-4bfd-ba91-390ae97448ea"/>
+				<reportElement x="7" y="280" width="97" height="20" uuid="cfb134c4-f45d-4bfd-ba91-390ae97448ea"/>
 				<text><![CDATA[Candidate signature:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="104" y="281" width="120" height="50" uuid="1e4faf05-6edb-467e-8333-73523861d2f3"/>
+				<reportElement x="104" y="236" width="120" height="95" uuid="1e4faf05-6edb-467e-8333-73523861d2f3"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{cln_idas_headers_SIGNATURE}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="368" y="297" width="43" height="20" uuid="13a1a388-2615-48a5-941c-87353ec29ef3"/>
+				<reportElement x="368" y="280" width="43" height="20" uuid="13a1a388-2615-48a5-941c-87353ec29ef3"/>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="411" y="297" width="100" height="20" uuid="6543ec24-f1f4-447a-a1a5-8dc2ce5b05b9"/>
+				<reportElement x="411" y="280" width="100" height="20" uuid="6543ec24-f1f4-447a-a1a5-8dc2ce5b05b9"/>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_IDAS_DATE}]]></textFieldExpression>
 			</textField>
 			<componentElement>
@@ -436,88 +436,123 @@ WHERE
 				</jr:list>
 			</componentElement>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="458" width="68" height="20" uuid="5162fd34-13a6-4495-af82-1c9df43d8125"/>
+				<reportElement positionType="Float" x="3" y="440" width="68" height="15" uuid="5162fd34-13a6-4495-af82-1c9df43d8125"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Temperature:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="236" y="458" width="56" height="20" uuid="6bf2be92-7dc4-45ee-90db-e708e1529b8b"/>
+				<reportElement positionType="Float" x="155" y="440" width="56" height="15" uuid="6bf2be92-7dc4-45ee-90db-e708e1529b8b"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Creatinine: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="71" y="458" width="165" height="20" uuid="00444197-6fb3-4ff3-81a3-8d77203e3a35"/>
-				<textElement>
+				<reportElement positionType="Float" x="71" y="440" width="75" height="15" uuid="00444197-6fb3-4ff3-81a3-8d77203e3a35"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Temperature}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="292" y="458" width="66" height="20" uuid="6681613c-1d48-440e-929f-4a3f606a8541"/>
-				<textElement>
+				<reportElement positionType="Float" x="210" y="440" width="75" height="15" uuid="6681613c-1d48-440e-929f-4a3f606a8541"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Creatinine}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="355" y="458" width="27" height="20" uuid="1b93b720-a58c-4815-a412-ebf56f0d5992"/>
+				<reportElement positionType="Float" x="300" y="440" width="27" height="15" uuid="1b93b720-a58c-4815-a412-ebf56f0d5992"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Time:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="382" y="458" width="44" height="20" uuid="c28c76c4-9d6a-4b3a-9c9d-b4f98f649503"/>
-				<textElement>
+				<reportElement positionType="Float" x="330" y="440" width="75" height="15" uuid="c28c76c4-9d6a-4b3a-9c9d-b4f98f649503"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Drug_Test_Time}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="426" y="458" width="59" height="20" uuid="8173754e-4461-4b45-a13e-5e873f472caf"/>
+				<reportElement positionType="Float" x="420" y="440" width="59" height="15" uuid="8173754e-4461-4b45-a13e-5e873f472caf"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Expiry Date:]]></text>
 			</staticText>
 			<textField pattern="yyyy/MM" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="485" y="458" width="67" height="20" uuid="26abe5fd-62e1-48aa-ad90-312ce7bc4d9e"/>
-				<textElement>
+				<reportElement positionType="Float" x="479" y="440" width="75" height="15" uuid="26abe5fd-62e1-48aa-ad90-312ce7bc4d9e"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Expiry_Date}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="4" y="489" width="34" height="20" uuid="29cad7f1-0bae-4aa7-a37f-19c445b28a5c"/>
+				<reportElement positionType="Float" x="4" y="465" width="34" height="15" uuid="29cad7f1-0bae-4aa7-a37f-19c445b28a5c"/>
 				<text><![CDATA[Notes:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="38" y="489" width="514" height="20" uuid="e15418df-1af9-42f0-b9c9-d9f0903b144b"/>
+				<reportElement positionType="Float" x="38" y="465" width="514" height="15" uuid="e15418df-1af9-42f0-b9c9-d9f0903b144b"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Notes}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="4" y="509" width="255" height="20" uuid="4585c372-c9da-4484-ba9c-1b9d5d48d2af"/>
+				<reportElement positionType="Float" x="4" y="490" width="255" height="20" uuid="4585c372-c9da-4484-ba9c-1b9d5d48d2af"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[The candidate’s alcohol test results were as follows:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="0" y="535" width="555" height="25" uuid="3c2b3057-cb8b-4195-bb46-f4b43926a19e"/>
+				<reportElement positionType="Float" x="0" y="516" width="555" height="25" uuid="3c2b3057-cb8b-4195-bb46-f4b43926a19e"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="6" y="540" width="24" height="17" uuid="6147a5ec-abf3-4e32-98ab-c50d0b1a6a87"/>
+				<reportElement positionType="Float" x="6" y="521" width="24" height="17" uuid="6147a5ec-abf3-4e32-98ab-c50d0b1a6a87"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Time: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="30" y="540" width="57" height="17" uuid="6a953417-cbda-4180-8058-df5383c09ffa"/>
+				<reportElement positionType="Float" x="30" y="521" width="57" height="17" uuid="6a953417-cbda-4180-8058-df5383c09ffa"/>
 				<box leftPadding="4" rightPadding="4"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
@@ -525,17 +560,17 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Alcohol_Test_Time}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="Float" x="87" y="535" width="1" height="24" uuid="4435c3ce-f4be-4770-bc7d-e6430c6554dc"/>
+				<reportElement positionType="Float" x="87" y="516" width="1" height="24" uuid="4435c3ce-f4be-4770-bc7d-e6430c6554dc"/>
 			</line>
 			<staticText>
-				<reportElement positionType="Float" x="90" y="540" width="35" height="17" uuid="72d2c44d-db18-45ad-b386-011036b04491"/>
+				<reportElement positionType="Float" x="90" y="521" width="35" height="17" uuid="72d2c44d-db18-45ad-b386-011036b04491"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Reading:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="125" y="540" width="86" height="17" uuid="c80f63d7-5340-4ce6-a827-1d6a4ecd565d"/>
+				<reportElement positionType="Float" x="125" y="521" width="86" height="17" uuid="c80f63d7-5340-4ce6-a827-1d6a4ecd565d"/>
 				<box leftPadding="4" rightPadding="4"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
@@ -543,42 +578,42 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Reading}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="Float" x="211" y="535" width="1" height="24" uuid="3a89c122-88e3-4408-87f1-8c8fe7d9949b"/>
+				<reportElement positionType="Float" x="211" y="516" width="1" height="24" uuid="3a89c122-88e3-4408-87f1-8c8fe7d9949b"/>
 			</line>
 			<staticText>
-				<reportElement positionType="Float" x="215" y="540" width="35" height="17" uuid="4910e132-020d-4db0-8f45-5fe70f2960bf"/>
+				<reportElement positionType="Float" x="215" y="521" width="35" height="17" uuid="4910e132-020d-4db0-8f45-5fe70f2960bf"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Positive]]></text>
 			</staticText>
 			<image hAlign="Center">
-				<reportElement positionType="Float" x="250" y="540" width="17" height="17" uuid="633181db-1cca-42d4-bd44-df402011dc3f"/>
+				<reportElement positionType="Float" x="250" y="521" width="17" height="17" uuid="633181db-1cca-42d4-bd44-df402011dc3f"/>
 				<imageExpression><![CDATA[$F{cln_idas_headers_Positive_Negative} != null && $F{cln_idas_headers_Positive_Negative}.intValue()==1?$P{real_path}+"/checked.jpg":$P{real_path}+"/nocheck.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="277" y="540" width="35" height="17" uuid="389a571a-8adc-4dde-a4ec-d863b9d91fbb"/>
+				<reportElement positionType="Float" x="277" y="521" width="35" height="17" uuid="389a571a-8adc-4dde-a4ec-d863b9d91fbb"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Negative]]></text>
 			</staticText>
 			<image hAlign="Center">
-				<reportElement positionType="Float" x="314" y="540" width="17" height="17" uuid="48179ed2-9caa-47c1-85e2-ae9882dbbd39"/>
+				<reportElement positionType="Float" x="314" y="521" width="17" height="17" uuid="48179ed2-9caa-47c1-85e2-ae9882dbbd39"/>
 				<imageExpression><![CDATA[$F{cln_idas_headers_Positive_Negative} != null && $F{cln_idas_headers_Positive_Negative}.intValue()==0? $P{real_path}+"/checked.jpg": $P{real_path}+"/nocheck.jpg"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement positionType="Float" x="342" y="535" width="1" height="24" uuid="bb4aa315-503c-4d86-8b93-cdb770b71bcf"/>
+				<reportElement positionType="Float" x="342" y="516" width="1" height="24" uuid="bb4aa315-503c-4d86-8b93-cdb770b71bcf"/>
 			</line>
 			<staticText>
-				<reportElement positionType="Float" x="345" y="540" width="80" height="17" uuid="ce1bda3c-5bbb-460f-abd5-ec839cb047b0"/>
+				<reportElement positionType="Float" x="345" y="521" width="80" height="17" uuid="ce1bda3c-5bbb-460f-abd5-ec839cb047b0"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[ 2nd reading (if req):]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="426" y="540" width="129" height="17" uuid="6c518a22-82b6-4f8e-87a7-cc64cc0155c2"/>
+				<reportElement positionType="Float" x="426" y="521" width="129" height="17" uuid="6c518a22-82b6-4f8e-87a7-cc64cc0155c2"/>
 				<box leftPadding="4" rightPadding="4"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
@@ -586,21 +621,22 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_Reading2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="3" y="149" width="35" height="20" uuid="b5ddd75d-9ca1-4467-86a5-ce1915406e8f"/>
+				<reportElement x="3" y="105" width="35" height="20" uuid="b5ddd75d-9ca1-4467-86a5-ce1915406e8f"/>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="38" y="149" width="100" height="20" uuid="24fa6b45-b6e5-4fe3-b832-158c7e4d691d"/>
+				<reportElement x="38" y="105" width="100" height="20" uuid="24fa6b45-b6e5-4fe3-b832-158c7e4d691d"/>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_TesterDate}]]></textFieldExpression>
 			</textField>
-			<rectangle>
-				<reportElement mode="Transparent" x="0" y="430" width="555" height="11" uuid="b410688c-9e3b-49c0-8141-69f66d86faaf"/>
-				<graphicElement>
-					<pen lineWidth="0.0"/>
-				</graphicElement>
-			</rectangle>
 			<textField pattern="">
-				<reportElement x="4" y="240" width="548" height="41" uuid="c577ae9e-5246-4244-88d7-8fda3958b804"/>
+				<reportElement x="1" y="195" width="554" height="41" uuid="c577ae9e-5246-4244-88d7-8fda3958b804"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_NAME_COMMENT}]]></textFieldExpression>
 			</textField>
 		</band>
