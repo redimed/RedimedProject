@@ -1,7 +1,12 @@
 module.exports = function (sequelize, DataTypes) {
     var WaWorkCoverFinal = sequelize.define('WaWorkCoverFinal', {
-        id: DataTypes.INTEGER(11),
+        id: {
+            type: DataTypes.INTEGER(11),
+            primaryKey: true,
+            autoIncrement: true
+        },
         cal_id: DataTypes.INTEGER(11),
+        patient_id: DataTypes.INTEGER(11),
         examDate: DataTypes.DATE,
         signature: DataTypes.TEXT,
         Created_by: DataTypes.INTEGER(11),

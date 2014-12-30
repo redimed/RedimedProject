@@ -38,7 +38,7 @@
              <!-- END SEARCH -->
         </thead>
         <tbody>
-            <tr ng-repeat="item in data.items" ng-click="row_click(item)" ng-class="row_class(item)">                
+            <tr ng-repeat="item in data.items" ng-click="row_click(item)" ng-class="row_class(item)">             
                 <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
                     <!-- TYPE INPUT -->
                     <span ng-switch on="col.type">
@@ -141,26 +141,38 @@
         <tbody>
             <tr ng-repeat="item in data.items | startFrom: (page_data.currentPage - 1) *page_data.itemPerPage | limitTo: page_data.itemPerPage" ng-class="row_class(item)" ng-click="row_click(item)">                
                 <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
-                   <!-- TYPE INPUT -->
+                    <!-- TYPE INPUT -->
                     <span ng-switch on="col.type">
                         <span ng-switch-when="checkbox">
-                            <input ng-model="item[col.field]" type="checkbox" ng-true-value="1" ng-false-value="0" class="form-control" ng-init="item[col.field] = item[col.field] + ''" />
+                            <input ng-disabled="col.disabled" ng-model="item[col.field]" type="checkbox" ng-true-value="1" ng-false-value="0" ng-init="item[col.field] = item[col.field] + ''" />
                         </span>
                         <span ng-switch-when="color">
-                            <input disabled ng-model="item[col.field]" type="color" />
+                            <input ng-disabled="col.disabled" ng-model="item[col.field]" type="color" />
                         </span>
+                        <span ng-switch-when="number">
+                            <input ng-disabled="col.disabled" ng-model="item[col.field]" type="number" />
+                        </span>
+                        <span ng-switch-when="custom">{{col.fn(item)}}</span>
                         <span ng-switch-default>{{item[col.field]}}</span>
                     </span>
                     <!-- END TYPE INPUT -->
                 </td>
                  <!-- MORE COLUMNS -->
-                <td ng-repeat="col2 in options.more_columns">
-                    TEST TEST TEST
+                <td ng-repeat="col in options.more_columns">
+                    <!-- TYPE INPUT -->
+                    <span ng-switch on="col.type">
+                        <span ng-switch-when="number">
+                            <input ng-model="item[col.field]" ng-init="item[col.field] = col.value" type="number" />
+                        </span>
+                        <span ng-switch-default>{{item[col.field]}}</span>
+                    </span>
+                    <!-- END TYPE INPUT -->
                 </td> 
                 <!-- END MORE COLUMNS -->
-                <!-- ACTION -->
+
+                 <!-- ACTION -->
                 <td ng-if="options.use_actions">
-                    <div class="btn-group" dropdown>
+                    <div  ng-if="options.action_show ?  options.action_show(item) : true" class="btn-group" dropdown>
                         <button style="margin-right: 0;" type="button" class="btn btn-sm blue-soft dropdown-toggle" ng-disabled="disabled">
                             More <span class="caret"></span>
                         </button>
@@ -171,7 +183,7 @@
                         </ul>
                     </div>
                 </td>
-                 <!-- END ACTION -->
+                <!-- END ACTION -->
             </tr>
             <tr ng-repeat="item in data.more_items" ng-class="row_class(item)" ng-click="row_click(item)">
                 <td ng-repeat="col in options.columns" ng-if="!col.is_hide">

@@ -410,6 +410,16 @@ angular.module('app.config', [])
         return date+"/"+month+"/"+year;
     }
 
+    configService.convertToDatetime = function(dateTime){
+        if(typeof dateTime === 'string')
+            dateTime = new Date(dateTime);
+
+        var prefix = configService.convertToDate(dateTime);
+        var postfix = configService.convertToTimeStringApp (dateTime)
+
+        return postfix + ' ' + prefix;
+    }
+
 	/*
 	*	END DATE TIME FUNCTION 
 	*/

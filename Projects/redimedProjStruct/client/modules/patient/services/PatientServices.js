@@ -1,22 +1,22 @@
 angular.module("app.loggedIn.patient.services", [])
 
-.factory("PatientService", function (Restangular) {
+.factory("PatientService", function (Restangular, ConfigService, $state) {
     var instanceService = {};
     var appApi = Restangular.all("api");
 
     var mdtApi = Restangular.all("api/meditek/v1/patient/");
 
-    var khankAPI = Restangular.all("api/erm/v2/patients");
+    var khankAPI = Restangular.all("api/erm/v2");
     /*
     *   KHANK 
     */
      instanceService.numCompanies = function(patient_id){
-        var funcApi = khankAPI.one('num_companies');
+        var funcApi = khankAPI.one('patients/num_companies');
         return funcApi.get({id: patient_id});
     }
 
      instanceService.numClaims = function(patient_id){
-        var funcApi = khankAPI.one('num_claims');
+        var funcApi = khankAPI.one('patients/num_claims');
         return funcApi.get({id: patient_id});
     }
 
@@ -175,5 +175,95 @@ angular.module("app.loggedIn.patient.services", [])
         return detailApi.post({'data':data});
     }    
 
+    /*
+    *   PATIENT WORKCOVER
+    */
+
+    instanceService.workcoverSearch = function(patient_id) {
+        var detailApi = khankAPI.all("assessments/group_search");
+        return detailApi.post({'patient_id':patient_id});
+    }
+
+
+    instanceService.workcoverSearchOpt = function(type, patient_id) {
+        var cols = [];
+
+        var time_field =  {
+            field: 'Creation_date', 
+            label: 'Creation date', 
+            type: 'custom',
+            fn: function(item){
+                return ConfigService.convertToDatetime(item.Creation_date); 
+            }
+        };
+        var edit_action = null;
+
+        switch(type) {
+            case 'first':
+                cols = [
+                    {field: 'Ass_id', is_hide: true},
+                    {field: 'cal_id'},
+                    time_field
+                ];
+                edit_action = function(item) {
+                    $state.go('loggedIn.waworkcover.first', {
+                        action: 'edit',
+                        appt_id: item.cal_id,
+                        ass_id: item.Ass_id
+                    });
+                }
+                break;
+            case 'progress':
+                cols = [
+                    {field: 'progress_id', is_hide: true},
+                    {field: 'cal_id'},
+                    time_field
+                ];
+                 edit_action = function(item) {
+                    $state.go('loggedIn.waworkcover.progress', {
+                        action: 'edit',
+                        appt_id: item.cal_id,
+                        ass_id: item.progress_id
+                    });
+                }
+                break;
+            case 'final':
+                cols = [
+                    {field: 'id', is_hide: true},
+                    {field: 'cal_id'},
+                    time_field
+                ];
+                edit_action = function(item) {
+                    $state.go('loggedIn.waworkcover.final', {
+                        action: 'edit',
+                        appt_id: item.cal_id,
+                        ass_id: item.id
+                    });
+                }
+                break;
+        }
+
+        return {
+            api: 'api/erm/v2/assessments/search',
+            method: 'post',
+            columns: cols,
+            static: true,
+            search: {
+                patient_id: patient_id,
+                type: type
+            },
+            use_actions: true,
+            actions: [
+                {
+                    class:'fa fa-pencil', title: 'Edit', callback: edit_action
+                },
+                {
+                    class:'fa fa-print', title: 'Print', callback: function(item){
+
+                    }
+                },
+            ]
+        };
+    }
     return instanceService;
 })

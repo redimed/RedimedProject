@@ -40,7 +40,10 @@ var v2_ItemFeeGroupController = require('./controllers/v2_ItemFeeGroupController
 var v2_ItemFeeTypesController = require('./controllers/v2_ItemFeeTypesController');
 var v2_ItemPrivateFundsController = require('./controllers/v2_ItemPrivateFundsController');
 var v2_ScriptController = require('./controllers/v2_ScriptController');
-var v2_ReferralController = require('./controllers/v2_ReferralController');
+
+var v2_WorkcoverController = require('./controllers/v2_WorkcoverController');
+
+
 
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
 k_route.setRoute(app, v2_InsurersController, '/api/erm/v2/insurers/');
@@ -54,4 +57,4 @@ k_route.setRoute(app, v2_ItemFeeGroupController, '/api/erm/v2/fees/group/');
 k_route.setRoute(app, v2_ItemFeeTypesController, '/api/erm/v2/fees/type/');
 k_route.setRoute(app, v2_ItemPrivateFundsController, '/api/erm/v2/fees/funds/');
 k_route.setRoute(app, v2_ScriptController, '/api/erm/v2/script/');
-k_route.setRoute(app, v2_ReferralController,'/api/erm/v2/referral/');
+k_route.setRoute(app, v2_WorkcoverController, '/api/erm/v2/assessments/');

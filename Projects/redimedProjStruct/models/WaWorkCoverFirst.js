@@ -6,6 +6,7 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true
         },
         cal_id: DataTypes.INTEGER(11),
+        patient_id: DataTypes.INTEGER(11),
         examDate: DataTypes.DATE,
         signature: DataTypes.TEXT,
         Created_by: DataTypes.INTEGER(11),
