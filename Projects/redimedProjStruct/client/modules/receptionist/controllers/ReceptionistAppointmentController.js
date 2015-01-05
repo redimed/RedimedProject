@@ -4,14 +4,14 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
 
-	$scope.params = {
+	$scope.claim_params = {
 		permission: {
 			create: true,
 			edit: false
 		}
 	}
 
-	$scope.params_claim = {
+	$scope.params = {
 		permission: {
 			create: true,
 			edit: false
@@ -47,8 +47,8 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	// WATCH PATIENT ID
 	$scope.$watch("patient", function(newPatient){
 		if(typeof newPatient !== 'undefined' && newPatient !== null){
-			//$scope.patient_id = newPatient.Patient_id;
-			//angular.element(claimListSelectId).fadeIn();
+			$scope.patient_id = newPatient.Patient_id;
+			angular.element(claimListAddId).fadeIn();
 			$scope.refreshAppointment();
 		}
 	})
