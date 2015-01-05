@@ -15,8 +15,23 @@ angular.module("app.loggedIn.patient.services", [])
         return funcApi.get({id: patient_id});
     }
 
-     instanceService.numClaims = function(patient_id){
+    instanceService.numClaims = function(patient_id){
         var funcApi = khankAPI.one('patients/num_claims');
+        return funcApi.get({id: patient_id});
+    }
+	
+	instanceService.mumReferrals = function(patient_id){
+        var funcApi = khankAPI.one('patients/num_referrals');
+        return funcApi.get({id: patient_id});
+    }
+	
+	instanceService.numOutReferrals = function(patient_id){
+        var funcApi = khankAPI.one('patients/num_outside_referrals');
+        return funcApi.get({id: patient_id});
+    }
+	
+	instanceService.numScripts = function(patient_id){
+        var funcApi = khankAPI.one('patients/num_scripts');
         return funcApi.get({id: patient_id});
     }
 
