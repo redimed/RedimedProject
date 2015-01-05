@@ -48,7 +48,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                     patient_id: patient_id,
                     cal_id: cal_id
                 };
-                var oriInfo;
+                var oriInfo, clearInfo;
                 var medications = [{
                     "col1": null,
                     "col2": null,
@@ -308,7 +308,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         s7_blood_presure: data.s7_blood_presure || null,
                         s7_comments: data.s7_comments || null,
                         s8_exercise: data.s8_exercise || null,
-                        s8_asthma: data.s8_asthma,
+                        s8_asthma: data.s8_asthma || null,
                         s8_emphysema: data.s8_emphysema || null,
                         s8_hay_fever: data.s8_hay_fever || null,
                         s8_tuberculosis: data.s8_tuberculosis || null,
@@ -369,8 +369,8 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         rmi_mental: data.rmi_mental || null,
                         rmi_mental_initials: data.rmi_mental_initials || null,
                         rmi_date: data.rmi_date || new Date(),
-                        dec_signed: data.dec_signed,
-                        dec_witness: data.dec_witness,
+                        dec_signed: data.dec_signed || null,
+                        dec_witness: data.dec_witness || null,
                         dec_date: data.dec_date || new Date(),
                         doctor_id: response[0].doctor.doctor_id || null,
                         created_by: data.created_by || null,
@@ -382,6 +382,213 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         medications: medications || []
                     };
                     oriInfo = angular.copy($scope.info);
+                    if ($scope.isNew) {
+                        clearInfo = angular.copy($scope.info);
+                    }
+                    else {
+                        clearInfo = {
+                            mh_id: $scope.info.mh_id || null,
+                            patient_id: patient_id,
+                            cal_id: cal_id,
+                            s2_occupation1: null,
+                            s2_startdate1: null,
+                            s2_enddate1: null,
+                            s2_employ1: null,
+
+                            s2_occupation2: null,
+                            s2_startdate2: null,
+                            s2_enddate2: null,
+                            s2_employ2: null,
+
+                            s2_occupation3: null,
+                            s2_startdate3: null,
+                            s2_enddate3: null,
+                            s2_employ3: null,
+
+                            s2_occupation4: null,
+                            s2_startdate4: null,
+                            s2_enddate4: null,
+                            s2_employ4: null,
+
+                            s2_occupation5: null,
+                            s2_startdate5: null,
+                            s2_enddate5: null,
+                            s2_employ5: null,
+
+                            s2_samework: null,
+                            s2_sameworkenvironment: null,
+                            s2_comments: null,
+
+                            s3_name1: null,
+                            s3_reason1: null,
+                            s3_regularly1: null,
+
+                            s3_name2: null,
+                            s3_reason2: null,
+                            s3_regularly2: null,
+
+                            s3_name3: null,
+                            s3_reason3: null,
+                            s3_regularly3: null,
+
+                            s3_name4: null,
+                            s3_reason4: null,
+                            s3_regularly4: null,
+
+                            s3_name5: null,
+                            s3_reason5: null,
+                            s3_regular5: null,
+
+                            s3_comments: null,
+                            s4_concerning: null,
+                            s4_weight_altered: null,
+                            s4_medicaltreatment: null,
+                            s4_hospital: null,
+                            s4_stranfustion: null,
+                            s4_diabetes: null,
+                            s4_pressure: null,
+                            s4_asthma: null,
+                            s4_emphysema: null,
+                            s4_veins: null,
+                            s4_epilepsy: null,
+                            s4_episodes: null,
+                            s4_cancer_or_tumour: null,
+                            s4_concussion_or_headinjury: null,
+                            s4_migraine: null,
+                            s4_eczema: null,
+                            s4_hepatitis: null,
+                            s4_desease: null,
+                            s4_hormonal: null,
+                            s4_allergies: null,
+                            s4_comments: null,
+                            s5_disease: null,
+                            s5_claim: null,
+                            s5_claim_comment: null,
+                            s5_lodged: null,
+                            s5_closed: null,
+                            s5_duties: null,
+                            s5_sickness: null,
+                            s5_equipment: null,
+                            s5_chermicals: null,
+                            s5_noise: null,
+                            s5_radiation: null,
+                            s5_dust: null,
+                            s5_asbestos: null,
+                            s5_solvents: null,
+                            s5_other: null,
+                            s5_comments: null,
+                            s6_neck: null,
+                            s6_shoulder: null,
+                            s6_elbow: null,
+                            s6_wrist_or_hand: null,
+                            s6_lower_black: null,
+                            s6_hip: null,
+                            s6_knee: null,
+                            s6_ankle_or_foot: null,
+                            s6_comments1: null,
+                            s6_cervical: null,
+                            s6_lower: null,
+                            s6_sciatica: null,
+                            s6_pins_needles: null,
+                            s6_muscle_aches_pains: null,
+                            s6_joint_aches_pains: null,
+                            s6_comments2: null,
+                            s6_rsi: null,
+                            s6_tennis: null,
+                            s6_carpal: null,
+                            s6_hernia: null,
+                            s6_osteoarthritis: null,
+                            s6_arthritis: null,
+                            s6_osteoporosis: null,
+                            s6_fibromyalgia: null,
+                            s6_fractured_bones: null,
+                            s6_affects: null,
+                            s6_joint_or_bones: null,
+                            s6_comments3: null,
+                            s7_directfamily: null,
+                            s7_undergone: null,
+                            s7_conditions: null,
+                            s7_disease: null,
+                            s7_murmurs: null,
+                            s7_palpitations: null,
+                            s7_angina: null,
+                            s7_blood_presure: null,
+                            s7_comments: null,
+                            s8_exercise: null,
+                            s8_asthma: null,
+                            s8_emphysema: null,
+                            s8_hay_fever: null,
+                            s8_tuberculosis: null,
+                            s8_obstructive: null,
+                            s8_disease: null,
+                            s8_rheumatic_fever: null,
+                            s8_bronchitis: null,
+                            s8_coughed_blood: null,
+                            s8_shortness: null,
+                            s8_comments: null,
+                            s9_hearing: null,
+                            s9_infections_or_discharge: null,
+                            s9_hearing_aid: null,
+                            s9_injury_or_condition: null,
+                            s9_near_or_distance: null,
+                            s9_color_blind: null,
+                            s9_eyes_or_ears: null,
+                            s9_comments: null,
+                            s10_indigestion: null,
+                            s10_vomited_blood: null,
+                            s10_bowel_habit: null,
+                            s10_time_you_urinate: null,
+                            s10_night_to_urinate: null,
+                            s10_start_stop_urine: null,
+                            s10_change_urine: null,
+                            s10_comments: null,
+                            s11_medicaltion_or_counselling: null,
+                            s11_psychologist_or_psychiatrist: null,
+                            s11_sleeping_tablets: null,
+                            s11_drug_or_alcohol: null,
+                            s11_depression: null,
+                            s11_panic: null,
+                            s11_anxiety: null,
+                            s11_insomnia: null,
+                            s11_any_condition: null,
+                            s11_comments: null,
+                            s12_narcolepsy: null,
+                            s12_exhaustion: null,
+                            s12_shift_work: null,
+                            s12_environment: null,
+                            s12_very_hot_environment: null,
+                            s12_illness: null,
+                            s12_sweat: null,
+                            s12_hormonal: null,
+                            s12_stones_or_renal: null,
+                            s12_comments: null,
+                            s13_ever_smoked: null,
+                            s13_many_cigarettes: null,
+                            s13_start_stop_smoked: null,
+                            s13_exercise: null,
+                            s13_aspect: null,
+                            s13_comments: null,
+                            s14_tetanus: null,
+                            s14_helpa_helpb: null,
+                            s14_comments: null,
+                            rmi_physical: null,
+                            rmi_physical_initials: null,
+                            rmi_mental: null,
+                            rmi_mental_initials: null,
+                            rmi_date: new Date(),
+                            dec_signed: null,
+                            dec_witness: null,
+                            dec_date: new Date(),
+                            doctor_id: null,
+                            created_by: null,
+                            last_updated_by: null,
+                            patient: $scope.info.patient || [],
+                            doctor: $scope.info.doctor || [],
+                            company: $scope.info.company || [],
+                            works: [],
+                            medications: []
+                        };
+                    }
                 });
                 //begin sec 2
                 //click add
@@ -429,9 +636,16 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                     $scope.mhForm.$setPristine();
                 };
                 $scope.maxDate = new Date();
-
+                //clearForm
+                $scope.clearForm = function () {
+                    $scope.info = angular.copy(clearInfo);
+                    $scope.mhForm.$setPristine();
+                };
                 $scope.infoChanged = function () {
                     return !angular.equals(oriInfo, $scope.info);
+                };
+                $scope.infoClear = function () {
+                    return !angular.equals(clearInfo, $scope.info);
                 };
                 $scope.submit = function (mhForm) {
                     //check validate

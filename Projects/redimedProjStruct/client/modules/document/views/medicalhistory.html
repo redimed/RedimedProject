@@ -3,15 +3,16 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="submit" ng-disabled="!infoChanged()" accessible-form
+                <button type="submit" ng-disabled="!infoChanged() || !infoClear()" accessible-form
                         class="btn green pull-right">{{isNew?"Add
                     new":"Update"}}
                 </button>
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/mh/{{info.mh_id}}"
-
                    class="btn btn-primary blue pull-right" ng-disabled="infoChanged() || isNew">Print PDF
                 </a>
                 <a ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
+                </a>
+                <a ng-disabled="!infoClear()" ng-click="clearForm()" class="btn btn-warning pull-right">Clear
                 </a>
             </div>
         </div>
