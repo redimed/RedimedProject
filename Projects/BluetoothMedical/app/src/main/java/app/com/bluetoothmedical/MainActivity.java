@@ -31,12 +31,15 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private TextView txtStatus;
-    private Button btnSwitch,btnList,btnScan,btnDiscover,btnDisconnect,btnSend;
+    private Button btnSwitch,btnList,btnScan,btnDiscover,btnDisconnect,btnSend,btnStopSend,btnScaleConfirmation,btnScaleSynchronizeTime,btnScaleReadTime,btnScaleData;
+    private Button btnSpPatientInfo,btnSpResult1,btnSpResult2;
     private ListView lvDevice;
     private BluetoothAdapter btAdapter;
     private BluetoothSocket btSocket,mBluetoothSocket;
@@ -53,6 +56,17 @@ public class MainActivity extends ActionBarActivity {
     public static final int SOCKET_CONNECTED = 2;
 
     private static final byte[] testByte = new byte[]{0x7D,(byte)0x81,(byte)0xA1,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80};
+    private static final byte[] testByte1 = new byte[]{0x7D,(byte)0x81,(byte)0xAF,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80};
+    private static final byte[] stopSend = new byte[]{0x7D,(byte)0x81,(byte)0xA2,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80,(byte)0x80};
+
+    private static final byte[] scaleConfirmationData = new byte[]{(byte)0x53,(byte)0x4e,(byte)0x08,(byte)0x00,(byte)0x05,(byte)0x01,(byte)0x53,(byte)0x49,(byte)0x4e,(byte)0x4f,(byte)0x47};
+    private static final byte[] scaleSynchronizeTime = new byte[]{(byte)0x93,(byte)0x8e,(byte)0x0,(byte)0x00,(byte)0x05,(byte)0x05,        (byte)0x0f,(byte)0x01,(byte)0x05,(byte)0xC,(byte)0x01,(byte)0x01,(byte)0x37};
+    private static final byte[] scaleSingleData = new byte[]{(byte)0x93,(byte)0x8e,(byte)0x04,(byte)0x00,(byte)0x05,(byte)0x03,(byte)0x0C};
+    private static final byte[] scaleReadTime = new byte[]{(byte)0x93,(byte)0x8e,(byte)0x04,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x0F};
+
+    private static final byte[] spPatientInfo = new byte[]{(byte)0x46};
+    private static final byte[] spResult1 = new byte[]{(byte)0x40};
+    private static final byte[] spResult2 = new byte[]{(byte)0x41};
 
     private ConnectionThread mBluetoothConnection;
 
@@ -66,6 +80,17 @@ public class MainActivity extends ActionBarActivity {
         btnList = (Button)findViewById(R.id.btnPairList);
         btnScan = (Button)findViewById(R.id.btnScan);
         btnSend = (Button) findViewById(R.id.btnSend);
+        btnStopSend = (Button) findViewById(R.id.btnStopSend);
+
+        btnScaleConfirmation = (Button) findViewById(R.id.btnScaleConfirmation);
+        btnScaleSynchronizeTime = (Button) findViewById(R.id.btnScaleSynchronizeTime);
+        btnScaleReadTime =  (Button) findViewById(R.id.btnScaleReadTime);
+        btnScaleData = (Button) findViewById(R.id.btnScaleData);
+
+        btnSpPatientInfo = (Button) findViewById(R.id.btnSpPatientInfo);
+        btnSpResult1 = (Button) findViewById(R.id.btnSpResult1);
+        btnSpResult2 = (Button) findViewById(R.id.btnSpResult2);
+
         btnDisconnect = (Button) findViewById(R.id.btnDisconnect);
         btnDiscover = (Button) findViewById(R.id.btnDiscover);
         lvDevice = (ListView)findViewById(R.id.lvDevice);
@@ -146,7 +171,95 @@ public class MainActivity extends ActionBarActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //sendData(testByte1);
                 sendData(testByte);
+            }
+        });
+
+        btnStopSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData(stopSend);
+
+            }
+        });
+
+        btnScaleConfirmation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData(scaleConfirmationData);
+            }
+        });
+
+        btnScaleSynchronizeTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                Date date = cal.getTime();
+                Log.d("","======== Current time: Y = " + date.getYear() + " M = " + date.getMonth()
+                        + " D = " + date.getDate()  + " H = " + date.getHours()  + " M = " + date.getMinutes()  + " S = " + date.getSeconds());
+
+
+                Log.d("", "======== Current time: Y = " + cal.get(Calendar.YEAR) + " M = " + cal.get(Calendar.MONTH)
+                        + " D = " + cal.get(Calendar.DAY_OF_MONTH) + " H = " + cal.get(Calendar.HOUR_OF_DAY) + " M = " + cal.get(Calendar.MINUTE) + " S = " + cal.get(Calendar.SECOND));
+
+                int yy = cal.get(Calendar.YEAR)%100;
+                int mm = cal.get(Calendar.MONTH) + 1;
+                int dd = cal.get(Calendar.DAY_OF_MONTH);
+               int hh = cal.get(Calendar.HOUR_OF_DAY);
+                int mi = cal.get(Calendar.MINUTE);
+                int ss = cal.get(Calendar.SECOND);
+                int sum = yy + mm + dd + hh + mi + ss + 10 + 5 + 5;
+
+
+                Log.d("","======== Current time: Y = " + yy + " " + Integer.toHexString(yy) + " M = " + mm  + " " + Integer.toHexString(mm)
+                        + " D = " + dd  + " " + Integer.toHexString(dd) + " H = " + hh  + " " + Integer.toHexString(hh)
+                        + " M = " + mi  + " " + Integer.toHexString(mi) + " S = " + ss  + " " + Integer.toHexString(ss));
+
+                byte[] scaleSynchronizeTime = new byte[]{(byte)0x93,(byte)0x8e,(byte)0x0A,(byte)0x00,(byte)0x05,(byte)0x05,        (byte)yy,(byte)mm,(byte)dd,(byte)hh,(byte)mi,(byte)ss,(byte)sum};
+
+                sendData(scaleSynchronizeTime);
+
+            }
+        });
+
+        btnScaleReadTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData(scaleReadTime);
+
+            }
+        });
+
+        btnScaleData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData(scaleSingleData);
+
+            }
+        });
+
+        btnSpPatientInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData(spPatientInfo);
+
+            }
+        });
+
+        btnSpResult1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData(spResult1);
+
+            }
+        });
+
+        btnSpResult2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData(spResult2);
+
             }
         });
 
@@ -171,13 +284,15 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-
     }
 
     public void sendData(byte[] data){
-
-        mBluetoothConnection.write(data);
-        Log.d("","==================== Send Message: "+toHex(data));
+        if(mBluetoothConnection.isAlive()) {
+            mBluetoothConnection.write(data);
+            Log.d("", "======== Send Message: " + toHex(data));
+        }else{
+            Log.d("", "======== Send Message: lost connection");
+        }
     }
 
     public void bluetoothSwitch(View v){
@@ -301,14 +416,16 @@ public class MainActivity extends ActionBarActivity {
                 case DATA_RECEIVED: {
                     byte[] readBuf = (byte[])msg.obj;
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    Log.d("","===================== Received Data: "+readMessage);
+                    //Log.d("","=== Received Data: "+toBinary(readBuf)+" : " + toHumanData(readBuf) + " : "+toHex(readBuf));
+                    Log.d("","=== Received Data: " + toHex(readBuf));
+                    //System.out.println(toBinary(readBuf)+" : "+toHex(readBuf));
                     break;
                 }
                 case SOCKET_CONNECTED:{
                     mBluetoothConnection = (ConnectionThread) msg.obj;
                     byte[] writeBuf = new byte[]{0x53,0x4e,0x08,0x00,0x02,0x01,0x53,0x49,0x4e,0x4f,0x44};
                     mBluetoothConnection.write(writeBuf);
-                    Log.d("","==================== Send Message: "+toHex(writeBuf));
+                    Log.d("","=== Send Message: "+toHex(writeBuf));
                     break;
                 }
             }
@@ -398,9 +515,66 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public static String toHex(byte[] bytes) {
-        BigInteger bi = new BigInteger(1, bytes);
-        return String.format("%0" + (bytes.length << 1) + "X", bi);
+        //BigInteger bi = new BigInteger(1, bytes);
+        //return String.format("%0" + (bytes.length << 1) + "X", bi);
+
+        String result = "";
+        for(int i=0;i<bytes.length && i < 50 ;i++){
+            result += String.format("%02X ", bytes[i]) + " ";
+        }
+        return result;
+
     }
 
 
+    public static String toBinary(byte[] bytes) {
+        String result = "";
+        for(int i=0;i<bytes.length && i < 50 ;i++){
+            result += Integer.toBinaryString((bytes[i]+256)%256) + "  ";
+        }
+        return result;
+    }
+
+    public static String toDecimal(byte[] bytes) {
+        String result = "";
+        for(int i=0;i<bytes.length && i < 50 ;i++){
+            int d = bytes[i] & 0xff;
+            result +=  d + "  ";
+        }
+        return result;
+    }
+
+    public static String toHumanData(byte[] bytes) {
+        /*
+        To set the seventh bit to 1:
+
+        b = (byte) (b | (1 << 6));
+        To set the sixth bit to zero:
+
+        b = (byte) (b & ~(1 << 5));
+        (The bit positions are effectively 0-based, so that's why the "seventh bit" maps to 1 << 6 instead of 1 << 7.)
+         */
+        String result = "";
+        for(int i=0;i<bytes.length && i < 50 ;i++){
+            byte b;
+            b = (byte) (bytes[i]  & ~(1 << 7));
+            int d = b & 0xff;
+            result +=  d + "  ";
+        }
+        return result;
+    }
+
+    public static byte hexStringToByte(String s) {
+        int len = s.length();
+        byte data = (byte)0x00;
+        if(len == 2){
+            data = (byte) ((Character.digit(s.charAt(0), 16) << 4)
+                    + Character.digit(s.charAt(1), 16));
+        }
+
+        if(len == 1){
+            data = (byte) ( Character.digit(s.charAt(0), 16) );
+        }
+        return data;
+    }
 }

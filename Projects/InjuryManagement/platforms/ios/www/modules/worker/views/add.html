@@ -1,0 +1,121 @@
+<ion-view title="Add Worker">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <form name="infor" novalidate>
+        <div class="bar bar-subheader">
+            <button class="button button-clear button-positive" ng-show="checkNonemerg" ng-click="backdescInjury()">
+                Back
+            </button>
+            <h1 class="title">Information</h1>
+            <button class="button button-clear button-positive" ng-click="nextFormMain(infor)">
+                Next
+            </button>
+        </div>
+        <ion-content class="padding has-header has-subheader">
+            <ion-list>
+                <label class="item item-input item-select" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
+                    <span class="input-label span-input-color">Title</span>
+                    <select ng-required="true" ng-model="worker.Title" name="Title"
+                            ng-options="row.name as row.name for row in titleIndex">
+                        <option value="">--Select Title--</option>
+                    </select>
+                    <i ng-class="{'icon ion-alert-circled error':isSubmit && infor.Title.$invalid}"></i>
+                </label>
+
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.First_name.$invalid}">
+                    <span class="input-label span-input-color">First Name</span>
+                    <input ng-required="true" type="text" ng-model="worker.First_name" name="First_name" />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.First_name.$invalid}"></i>
+                </label>
+
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Sur_name.$invalid}">
+                    <span class="input-label span-input-color">Sur Name</span>
+                    <input ng-required="true" type="text" ng-model="worker.Sur_name" name="Sur_name" />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Sur_name.$invalid}"></i>
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label span-input-color">Middle Name</span>
+                    <input type="text" ng-model="worker.Middle_name" name="Middle_name" />
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label span-input-color">Know as</span>
+                    <input type="text" ng-model="worker.Known_as" name="Known_as" />
+                </label>
+
+                <!--<label class="item item-input">-->
+                <!--<span class="input-label span-input-color">Maiden Name</span>-->
+                <!--<input type="text" ng-model="worker.Maiden_name" name="Maiden_name" />-->
+                <!--</label>-->
+
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Address1.$invalid}">
+                    <span class="input-label span-input-color">Address</span>
+                    <input ng-required="true" type="text" ng-model="worker.Address1" name="Address1">
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Address1.$invalid}"></i>
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label span-input-color">Address 2</span>
+                    <input type="text" ng-model="worker.Address2" name="Address2">
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label span-input-color">Suburb</span>
+                    <input type="text" ng-model="worker.Suburb" name="Suburb">
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label span-input-color">State</span>
+                    <input type="text" ng-model="worker.State" name="State">
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label span-input-color">Country</span>
+                    <input type="text" ng-model="worker.Country" name="Country">
+                </label>
+
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.DOB.$invalid}">
+                    <span class="input-label span-input-color">Birthday</span>
+                    <input ng-required="true" type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="worker.DOB" name="DOB" />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.DOB.$invalid}"></i>
+                </label>
+
+                <label class="item item-input item-select" ng-class="{'has-error':isSubmit && infor.Sex.$invalid}">
+                    <span class="input-label span-input-color">Sex</span>
+                    <select ng-required="true" ng-model="worker.Sex" name="Sex"
+                            ng-options="row.name as row.name for row in sexIndex">
+                        <option value="">--Select Title--</option>
+                    </select>
+                    <i ng-class="{'icon ion-alert-circled error':isSubmit && infor.Sex.$invalid}"></i>
+                </label>
+
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Email.$invalid || isFailEmail}">
+                    <span class="input-label span-input-color">Email</span>
+                    <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-blur="Checkfield(isMobile = false)">
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Email.$invalid || isFailEmail}"></i>
+                </label>
+
+                <label class="item item-input" ng-class="{'has-error':isSubmit && infor.Mobile.$invalid || isFailMobile}">
+                    <span class="input-label span-input-color">Mobile Phone</span>
+                    <input ng-required="true" type="tel" ng-model="worker.Mobile" name="Mobile" ng-blur="Checkfield(isMobile = true)">
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Mobile.$invalid || isFailMobile}"></i>
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label span-input-color">Home Phone</span>
+                    <input type="tel" ng-model="worker.Home_phone" name="Home_phone">
+                </label>
+
+                <label class="item item-input">
+                    <span class="input-label span-input-color">Work Phone</span>
+                    <input type="tel" ng-model="worker.Work_phone" name="Work_phone">
+                </label>
+            </ion-list>
+        </ion-content>
+    </form>
+</ion-view>
+
