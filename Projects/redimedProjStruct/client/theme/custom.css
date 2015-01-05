@@ -570,6 +570,9 @@ ul.mdt-list-booking-patient{
 .tabbable-custom {
 overflow: visible;
 }
+.tabbable-custom > .nav-tabs > li.active > a {
+font-weight: bold;
+}
 /* TIMETABLE TABLE */
 table.timetable-table{
     color: #333;
