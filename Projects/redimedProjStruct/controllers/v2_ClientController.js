@@ -101,5 +101,51 @@ module.exports = {
 			res.json(500, {status: 'error', error: error});
 		});
 
-	}
+	},
+
+	getNumReferrals : function(req, res) {
+    	var id = req.query.id;
+		if(!id) {
+			res.json(500, {status: 'error'});
+			return;
+		}
+		db.Referral.count({
+			where: {Patient_id: id}
+		}).success(function(data){
+			res.json({status: 'success', count: data});
+		}) . error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+    },
+	
+	getNumOutsideReferrals : function(req, res) {
+    	var id = req.query.id;
+		if(!id) {
+			res.json(500, {status: 'error'});
+			return;
+		}
+		db.OutsideReferral.count({
+			where: {patient_id: id}
+		}).success(function(data){
+			res.json({status: 'success', count: data});
+		}) . error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+    },
+
+	getNumScripts : function(req, res) {
+    	var id = req.query.id;
+		if(!id) {
+			res.json(500, {status: 'error'});
+			return;
+		}
+		db.Script.count({
+			where: {patient_id: id}
+		}).success(function(data){
+			res.json({status: 'success', count: data});
+		}) . error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+    },
+	
 }

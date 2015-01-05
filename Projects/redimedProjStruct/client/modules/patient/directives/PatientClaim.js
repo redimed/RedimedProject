@@ -78,18 +78,7 @@ angular.module("app.loggedIn.patient.claim.directive", [])
             }
             getInsurerInfo();
 
-            //            var getInsurerList = function () {
-            //                var insurer_list_api = {
-            //                    api: 'api/erm/v2/insurers/search',
-            //                    method: 'post'
-            //                };
-            //                Restangular.all(insurer_list_api.api).post().then(function (data) {
-            //                    scope.insurer_list = data.list;
-            //                    console.log(scope.insurer_list);
-            //                });
-            //            }
-            //
-            //            getInsurerList();
+
 
 
             if (scope.isClose) {

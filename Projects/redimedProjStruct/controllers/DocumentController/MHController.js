@@ -12,7 +12,6 @@ var Company = db.Company;
 //End table module
 
 
-
 module.exports = {
     loadMH: function (req, res) {
         var info = req.body.info || [];
@@ -287,9 +286,9 @@ module.exports = {
             s14_helpa_helpb: info.s14_helpa_helpb,
             s14_comments: info.s14_comments,
             rmi_physical: info.rmi_physical,
-            rmi_physical_initials: info.rmi_physical_initials,
+            rmi_physical_initials: info.rmi_physical == 1 ? info.rmi_physical_initials : null,
             rmi_mental: info.rmi_mental,
-            rmi_mental_initials: info.rmi_mental_initials,
+            rmi_mental_initials: info.rmi_mental == 1 ? info.rmi_mental_initials : null,
             rmi_date: info.rmi_date || new Date(),
             dec_signed: info.dec_signed,
             dec_witness: info.dec_witness,
@@ -310,12 +309,13 @@ module.exports = {
                 console.log('******************' + err + '******************');
                 res.json({
                     status: 'fail'
-                })
+                });
                 return false;
             });
     },
     editMH: function (req, res) {
         var info = req.body.info || [];
+        console.log(info);
         MedicalHistory.update({
             patient_id: info.patient_id,
             cal_id: info.cal_id,
@@ -506,9 +506,9 @@ module.exports = {
             s14_helpa_helpb: info.s14_helpa_helpb,
             s14_comments: info.s14_comments,
             rmi_physical: info.rmi_physical,
-            rmi_physical_initials: info.rmi_physical_initials,
+            rmi_physical_initials: info.rmi_physical == 1 ? info.rmi_physical_initials : null,
             rmi_mental: info.rmi_mental,
-            rmi_mental_initials: info.rmi_mental_initials,
+            rmi_mental_initials: info.rmi_mental == 1 ? info.rmi_mental_initials : null,
             rmi_date: info.rmi_date || new Date(),
             dec_signed: info.dec_signed,
             dec_witness: info.dec_witness,

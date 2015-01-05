@@ -12,9 +12,7 @@ angular.module('app.loggedIn.referral.detail.directive',[])
                 var loadData = function (id) {
                 ReferralService.referralDetail(id).then(function (data) {
                     angular.extend(scope.modelObjectMap, data.data);
-                    console.log('this is edit data 1', scope.modelObjectMap);
                     ConfigService.autoConvertData(scope.modelObjectMap);
-                    console.log('this is edit data 2', scope.modelObjectMap);
                 });
             };
 
@@ -43,17 +41,14 @@ angular.module('app.loggedIn.referral.detail.directive',[])
 //                    })
 
              var addProcess = function (postData) {
-                console.log(postData); // return;
                 postData.Patient_id = $stateParams.patient_id;
                 postData.CAL_ID = $stateParams.cal_id; 
                 ReferralService.referralInsert(postData).then(function (response) {
-                    console.log(response)
                     if (response.status === 'success') {
                         toastr.success("Added a referral", "Success");
                         scope.modelObjectMap = angular.copy(ReferralModel);
                         scope.isSubmit = false;
                         if (scope.onsuccess) {
-                            console.log(scope.onsuccess)
                             scope.onsuccess(response);
                         }
                     }
