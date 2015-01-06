@@ -1362,8 +1362,8 @@
                               info.FOLLICULITIS==2 || info.FOLLICULITIS==3 || info.FOLLICULITIS==4 ||
                               info.EC_OTHER==2 || info.EC_OTHER==3 || info.EC_OTHER==4 ||
                               info.HEART_RHYTHM==2 || info.HEART_RHYTHM==3 ||info.HEART_RHYTHM==4 ||
-                              info.HEART_SOUNDS==0 || info.CHEST==0 || info.UPPER_ZONES==0 ||
-                              info.LOWER_ZONES==0"></textarea>
+                              info.HEART_SOUNDS==0 || info.CHEST==0 || info.UPPER_ZONES==0 || info.LOWER_ZONES==0 ||
+                              info.VF_LEFT==0 || info.VF_RIGHT==0"></textarea>
 
                     <div class="help-block" ng-show="gorgonMAForm.SKIN_EXAMINERS_COMMENTS.$error.required">
                         <label class="control-label">Required!</label>
@@ -1633,7 +1633,7 @@
                         <input type="radio" ng-model="info.NECK_FLEXION" value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.NECK_FLEXION" value="2"/> >=75%
+                        <input type="radio" ng-model="info.NECK_FLEXION" value="2"/> >75%
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.NECK_FLEXION" value="3"/> 50-75%
@@ -1654,7 +1654,7 @@
                         <input type="radio" ng-model="info.NECK_EXTENSION" value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.NECK_EXTENSION" value="2"/> >=75%
+                        <input type="radio" ng-model="info.NECK_EXTENSION" value="2"/> >75%
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.NECK_EXTENSION" value="3"/> 50-75%
@@ -1675,7 +1675,7 @@
                         <input type="radio" ng-model="info.NECK_LATERAL" value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.NECK_LATERAL" value="2"/> >=75%
+                        <input type="radio" ng-model="info.NECK_LATERAL" value="2"/> >75%
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.NECK_LATERAL" value="3"/> 50-75%
@@ -1696,7 +1696,7 @@
                         <input type="radio" ng-model="info.NECK_ROTATION" value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.NECK_ROTATION" value="2"/> >=75%
+                        <input type="radio" ng-model="info.NECK_ROTATION" value="2"/> >75%
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.NECK_ROTATION" value="3"/> 50-75%
@@ -1761,7 +1761,7 @@
                         <input type="radio" ng-model="info.BACK_FLEXION" value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.BACK_FLEXION" value="2"/> >=75%
+                        <input type="radio" ng-model="info.BACK_FLEXION" value="2"/> >75%
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.BACK_FLEXION" value="3"/> 50-75%
@@ -1782,7 +1782,7 @@
                         <input type="radio" ng-model="info.BACK_EXTENSION" value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.BACK_EXTENSION" value="2"/> >=75%
+                        <input type="radio" ng-model="info.BACK_EXTENSION" value="2"/> >75%
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.BACK_EXTENSION" value="3"/> 50-75%
@@ -1803,7 +1803,7 @@
                         <input type="radio" ng-model="info.BACK_LATERAL" value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.BACK_LATERAL" value="2"/> >=75%
+                        <input type="radio" ng-model="info.BACK_LATERAL" value="2"/> >75%
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.BACK_LATERAL" value="3"/> 50-75%
@@ -1824,7 +1824,7 @@
                         <input type="radio" ng-model="info.BACK_ROTATION" value="1"/> Normal
                     </label>
                     <label class="btn">
-                        <input type="radio" ng-model="info.BACK_ROTATION" value="2"/> >=75%
+                        <input type="radio" ng-model="info.BACK_ROTATION" value="2"/> >75%
                     </label>
                     <label class="btn">
                         <input type="radio" ng-model="info.BACK_ROTATION" value="3"/> 50-75%

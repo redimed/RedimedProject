@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gorgonMAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d5e1d6a5-cccc-4b09-a010-c017da2c939f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1028"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="84940f7f-a360-45b6-8549-d07a2fbd07c5"/>
@@ -1127,12 +1127,12 @@ Barrow Island LNG Plant ]]></text>
 			<textField>
 				<reportElement x="80" y="104" width="164" height="15" uuid="ee00257c-a333-43b1-823f-393cafbdf011"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{cln_patients_First_name} != null ? $F{cln_patients_First_name} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cln_patients_Sur_name} != null ? $F{cln_patients_Sur_name} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="322" y="104" width="221" height="15" uuid="258b09a4-ab5b-48f9-b9ad-e302a7ff1624"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{cln_patients_Sur_name} != null ? $F{cln_patients_Sur_name} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cln_patients_First_name} != null ? $F{cln_patients_First_name} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="46" y="190" width="32" height="15" uuid="ddeb97da-2bd1-452a-9675-c25a33b0d130"/>
@@ -1667,104 +1667,104 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Uncorrected:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="182" y="29" width="11" height="15" uuid="a38cfe49-0d21-4b61-ab35-634c43825937"/>
+				<reportElement x="205" y="29" width="11" height="15" uuid="a38cfe49-0d21-4b61-ab35-634c43825937"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[L]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="258" y="29" width="11" height="15" uuid="bd15afb5-6ce0-4660-98bb-98d44e2e9f9f"/>
+				<reportElement x="277" y="29" width="11" height="15" uuid="bd15afb5-6ce0-4660-98bb-98d44e2e9f9f"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[R]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="169" y="51" width="15" height="15" uuid="507871fb-24d2-4e36-8319-e6fb940b848e"/>
+				<reportElement x="170" y="51" width="15" height="15" uuid="507871fb-24d2-4e36-8319-e6fb940b848e"/>
 				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
-				<text><![CDATA[6/]]></text>
+				<text><![CDATA[/6]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="244" y="51" width="13" height="15" uuid="48ba1cd4-37d8-4095-a996-fa12e165a5dd"/>
+				<reportElement x="246" y="51" width="13" height="15" uuid="48ba1cd4-37d8-4095-a996-fa12e165a5dd"/>
 				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
-				<text><![CDATA[6/]]></text>
+				<text><![CDATA[/6]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="475" y="51" width="15" height="15" uuid="e4831aac-bb4d-4426-8be5-b89443e625cc"/>
+				<reportElement x="469" y="51" width="15" height="15" uuid="e4831aac-bb4d-4426-8be5-b89443e625cc"/>
 				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
-				<text><![CDATA[6/]]></text>
+				<text><![CDATA[/6]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="404" y="51" width="15" height="15" uuid="9bc8c073-90cb-4391-af26-3c82e0cbaa7b"/>
+				<reportElement x="389" y="51" width="15" height="15" uuid="9bc8c073-90cb-4391-af26-3c82e0cbaa7b"/>
 				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
-				<text><![CDATA[6/]]></text>
+				<text><![CDATA[/6]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="489" y="29" width="11" height="15" uuid="91eb1ead-f067-4287-809c-6c5956c0e9b0"/>
+				<reportElement x="504" y="29" width="11" height="15" uuid="91eb1ead-f067-4287-809c-6c5956c0e9b0"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[R]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="29" width="54" height="15" uuid="9c5ce531-41f0-45d3-9af7-f931e0001eda"/>
+				<reportElement x="323" y="29" width="54" height="15" uuid="9c5ce531-41f0-45d3-9af7-f931e0001eda"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Corrected:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="416" y="29" width="11" height="15" uuid="3bf0529b-8ceb-4aa1-b799-d0160f4493b6"/>
+				<reportElement x="425" y="29" width="11" height="15" uuid="3bf0529b-8ceb-4aa1-b799-d0160f4493b6"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[L]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="169" y="72" width="15" height="15" uuid="f0846130-a8f4-49c7-9711-d01e723bab3f"/>
+				<reportElement x="191" y="66" width="15" height="15" uuid="f0846130-a8f4-49c7-9711-d01e723bab3f"/>
 				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="false"/>
@@ -1772,13 +1772,13 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[N]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="244" y="72" width="13" height="15" uuid="4c87c83a-4410-4421-8455-3f3e72a876cd"/>
+				<reportElement x="264" y="66" width="13" height="15" uuid="4c87c83a-4410-4421-8455-3f3e72a876cd"/>
 				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="false"/>
@@ -1786,13 +1786,13 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[N]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="404" y="72" width="15" height="15" uuid="6f6687bf-3933-4e0a-9d85-e14e26bce26b"/>
+				<reportElement x="409" y="66" width="15" height="15" uuid="6f6687bf-3933-4e0a-9d85-e14e26bce26b"/>
 				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="false"/>
@@ -1800,13 +1800,13 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[N]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="475" y="72" width="15" height="15" uuid="382347fd-bf60-4a02-9806-f6a35278d0b7"/>
+				<reportElement x="488" y="66" width="15" height="15" uuid="382347fd-bf60-4a02-9806-f6a35278d0b7"/>
 				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="false"/>
@@ -2493,7 +2493,7 @@ Barrow Island LNG Plant ]]></text>
 				<reportElement x="2" y="636" width="554" height="1" uuid="2bcfbc0a-dac0-452f-9e11-b21831b27786"/>
 			</line>
 			<textField>
-				<reportElement x="187" y="51" width="20" height="15" uuid="b3cbf13e-b770-43d4-b855-12c7468a31aa"/>
+				<reportElement x="188" y="51" width="40" height="15" uuid="b3cbf13e-b770-43d4-b855-12c7468a31aa"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -2505,7 +2505,7 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_VA_UNCORRECTED_LEFT} != null ? $F{gorgon_doc_ma_VA_UNCORRECTED_LEFT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="259" y="51" width="20" height="15" uuid="22abfbf4-1f2c-424b-8e4d-062ef425f7c9"/>
+				<reportElement x="261" y="51" width="40" height="15" uuid="22abfbf4-1f2c-424b-8e4d-062ef425f7c9"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -2517,7 +2517,7 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_VA_UNCORRECTED_RIGHT} != null ? $F{gorgon_doc_ma_VA_UNCORRECTED_RIGHT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="422" y="51" width="20" height="15" uuid="b79f0b9a-f308-4607-8f83-3639c130fdb5"/>
+				<reportElement x="407" y="51" width="40" height="15" uuid="b79f0b9a-f308-4607-8f83-3639c130fdb5"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -2529,7 +2529,7 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_VA_CORRECTED_LEFT} != null ? $F{gorgon_doc_ma_VA_CORRECTED_LEFT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="493" y="51" width="20" height="15" uuid="e1c0bca0-3376-48d9-966c-7b301a54cb99"/>
+				<reportElement x="487" y="51" width="40" height="15" uuid="e1c0bca0-3376-48d9-966c-7b301a54cb99"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -2541,7 +2541,7 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_VA_CORRECTED_RIGHT} != null ? $F{gorgon_doc_ma_VA_CORRECTED_RIGHT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="187" y="72" width="20" height="15" uuid="f66979d3-436e-47be-ad96-00dc0ee28f00"/>
+				<reportElement x="208" y="66" width="20" height="15" uuid="f66979d3-436e-47be-ad96-00dc0ee28f00"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -2553,7 +2553,7 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_NV_UNCORRECTED_LEFT} != null ? $F{gorgon_doc_ma_NV_UNCORRECTED_LEFT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="259" y="72" width="20" height="15" uuid="6298f4b4-e7ca-4eac-8c58-7257fa1d36c9"/>
+				<reportElement x="281" y="66" width="20" height="15" uuid="6298f4b4-e7ca-4eac-8c58-7257fa1d36c9"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -2565,7 +2565,7 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_NV_UNCORRECTED_RIGHT} != null ? $F{gorgon_doc_ma_NV_UNCORRECTED_RIGHT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="422" y="73" width="20" height="14" uuid="a684810a-8be4-4a1a-b05f-a8328de85104"/>
+				<reportElement x="427" y="66" width="20" height="14" uuid="a684810a-8be4-4a1a-b05f-a8328de85104"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -2577,7 +2577,7 @@ Barrow Island LNG Plant ]]></text>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_ma_NV_CORRECTED_LEFT} != null ? $F{gorgon_doc_ma_NV_CORRECTED_LEFT} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="493" y="72" width="20" height="15" uuid="e748ef38-61d4-4b92-9b5a-5899fdb28ec4"/>
+				<reportElement x="507" y="66" width="20" height="15" uuid="e748ef38-61d4-4b92-9b5a-5899fdb28ec4"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
