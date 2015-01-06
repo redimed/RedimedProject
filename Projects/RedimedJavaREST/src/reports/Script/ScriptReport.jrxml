@@ -2,11 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScriptReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2b6103d-271a-46dc-b501-29c4a01f4289">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="133"/>
+	<property name="ireport.y" value="743"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -132,7 +135,7 @@ WHERE s.`ID`= $P{id}]]>
 			</staticText>
 			<image>
 				<reportElement x="529" y="93" width="13" height="13" uuid="2baca279-1a5e-4200-8a2d-4c7c2921075a"/>
-				<imageExpression><![CDATA[$F{isRefNo}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{isRefNo}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="15" y="116" width="86" height="16" uuid="10826e25-922a-430b-9d0a-d6d498b77387"/>
@@ -207,7 +210,7 @@ cardholder]]></text>
 			</staticText>
 			<image>
 				<reportElement x="123" y="203" width="13" height="13" uuid="102c9752-bade-45c0-a2f4-ce12893d2816"/>
-				<imageExpression><![CDATA[$F{isSafety}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{isSafety}.intValue() == 1 ? $F{isRefNo}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="177" y="203" width="213" height="26" uuid="6890d8cf-1b60-4657-87eb-e5df9021a3b4"/>
@@ -216,7 +219,7 @@ Or Safety Net concession cardholder]]></text>
 			</staticText>
 			<image>
 				<reportElement x="393" y="204" width="13" height="13" uuid="23e8f5b4-5005-4d9c-9628-325b111681cc"/>
-				<imageExpression><![CDATA[$F{isConcessional}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{isConcessional}.intValue() == 1 ? $F{isRefNo}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
@@ -267,7 +270,7 @@ copy]]></text>
 			</staticText>
 			<image>
 				<reportElement x="39" y="45" width="13" height="13" uuid="e2316997-6d12-487a-9b1c-09c19aa49768"/>
-				<imageExpression><![CDATA[$F{isPBS}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{isPBS}.intValue() == 1 ? $F{isRefNo}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="100" y="45" width="31" height="14" uuid="e565f517-8fce-4866-8f59-acd89685d9c1"/>
@@ -275,7 +278,7 @@ copy]]></text>
 			</staticText>
 			<image>
 				<reportElement x="134" y="45" width="13" height="13" uuid="365d8eb2-740b-4e3b-ad60-05ae92891286"/>
-				<imageExpression><![CDATA[$F{isRPBS}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{isRPBS}.intValue() == 1 ? $F{isRefNo}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="206" y="46" width="148" height="14" uuid="df3e1025-019b-4878-b4ea-7cacecd1c349"/>
@@ -283,7 +286,7 @@ copy]]></text>
 			</staticText>
 			<image>
 				<reportElement x="357" y="46" width="13" height="13" uuid="3482b255-762b-460b-96ee-722804a1a8ec"/>
-				<imageExpression><![CDATA[$F{isBrand}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{isBrand}.intValue() == 1 ? $F{isRefNo}.intValue() == 1 ? $P{real_path}+"checked.png" : $P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 		</band>
 	</detail>
