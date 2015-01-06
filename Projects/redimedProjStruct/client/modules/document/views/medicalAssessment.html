@@ -10,7 +10,11 @@
                ng-disabled="isNew || infoChanged()"
                class="btn btn-primary blue pull-right">Print PDF
             </a>
-            <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
+            <!--<a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>-->
+            <a ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
+            </a>
+            <a ng-disabled="!infoClear()" ng-click="clearForm()" class="btn btn-warning pull-right">Clear
+            </a>
         </div>
     </div>
     <div class="row">

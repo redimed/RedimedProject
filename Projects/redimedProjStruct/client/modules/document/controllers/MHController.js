@@ -48,7 +48,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                     patient_id: patient_id,
                     cal_id: cal_id
                 };
-                var oriInfo, clearInfo;
+                var oriInfo, clearInfo, clearWorks, clearMedications;
                 var medications = [{
                     "col1": null,
                     "col2": null,
@@ -62,6 +62,8 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                     "col4": null,
                     "stt": true
                 }];
+                clearWorks = works;
+                clearMedications = medications;
                 var info = $scope.info;
                 DocumentService.loadMH(info).then(function (response) {
                     if (response['status'] === 'fail') {
@@ -585,8 +587,8 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                             patient: $scope.info.patient || [],
                             doctor: $scope.info.doctor || [],
                             company: $scope.info.company || [],
-                            works: [],
-                            medications: []
+                            works: clearWorks,
+                            medications: clearWorks
                         };
                     }
                 });
