@@ -58,15 +58,20 @@ module.exports = {
 			res.json(500, {"status": "error", "message": "Missing parameters "});
 		}
 
-		// var agrs = [];
-		// for (var key in search_data) {
-		// 	if(search_data[key])
-		// 	agrs.push(key + " = '"+ search_data[key] +"'");
-		// };
-		// var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
-
 		db[key].findAll({
 			where: {patient_id: patient_id},
+			include: [
+				{ 
+					model: db.Appointment , as: 'Appointment',
+					attributes: ['CAL_ID', 'FROM_TIME', 'TO_TIME'],
+					include: [
+						{ 
+							model: db.Doctor , as: 'Doctor',
+							attributes: ['doctor_id', 'NAME']
+						}
+					]
+				},
+			],
 			// offset: offset,
 			// limit: limit,
 			attributes: fields,

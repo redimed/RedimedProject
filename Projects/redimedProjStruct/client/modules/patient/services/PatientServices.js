@@ -213,6 +213,19 @@ angular.module("app.loggedIn.patient.services", [])
                 return ConfigService.convertToDatetime(item.Creation_date); 
             }
         };
+
+        var doctor_field = {
+            field: 'doctor',
+            not_submit: true,
+            label: 'Doctor',
+            type: 'custom',
+            fn: function(item) {
+                if(!item.appointment || !item.appointment.doctor) 
+                    return;
+                return item.appointment.doctor.NAME;
+            }
+        }
+
         var edit_action = null;
 		var print_href = 'http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/';
 		var print_action = null;
@@ -222,6 +235,7 @@ angular.module("app.loggedIn.patient.services", [])
                 cols = [
                     {field: 'Ass_id', is_hide: true},
                     {field: 'cal_id'},
+                     doctor_field,
                     time_field
                 ];
                 edit_action = function(item) {
@@ -241,6 +255,7 @@ angular.module("app.loggedIn.patient.services", [])
                 cols = [
                     {field: 'progress_id', is_hide: true},
                     {field: 'cal_id'},
+                    doctor_field,
                     time_field
                 ];
                 edit_action = function(item) {
@@ -260,6 +275,7 @@ angular.module("app.loggedIn.patient.services", [])
                 cols = [
                     {field: 'id', is_hide: true},
                     {field: 'cal_id'},
+                     doctor_field,
                     time_field
                 ];
                 edit_action = function(item) {
