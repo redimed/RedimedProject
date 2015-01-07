@@ -18,7 +18,7 @@ module.exports = {
         if (typeof username !== 'undefined' && username &&
             typeof password !== 'undefined' && password) {
             db.User.find({
-                where: {user_name: username}
+                where: {user_name: username, isEnable:1}
             }, {raw: true}).success(function (data)
             {
                 if(data)
