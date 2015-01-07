@@ -87,7 +87,15 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         tableName: 'th_progress_assessment',
         createdAt: 'Creation_date',
-        updatedAt: 'Last_update_date'
+        updatedAt: 'Last_update_date',
+        classMethods: {
+            associate: function(models) {
+                WaWorkCoverProgress.belongsTo(models.Appointment, { 
+                    as: 'Appointment',
+                    foreignKey: 'cal_id'
+                });
+            }
+        }
     });
 
     return WaWorkCoverProgress;

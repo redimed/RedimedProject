@@ -74,7 +74,15 @@ module.exports = {
 			offset: pagination.offset,
 			limit: pagination.limit,
 			attributes: select,
-			order: 'Creation_date DESC'
+			include: [
+				{ 
+					model: db.Doctor , as: 'ReferredDoctor', attributes: ['NAME']
+				},
+				{ 
+					model: db.mdtOutdoctor , as: 'OutDoctor', attributes: ['name']
+				},
+			],
+			// order: 'Creation_date DESC'
 		})
 		.success(function(result){
 			if(!result) res.json(500, {'status': 'error', 'message': 'Cannot Get Search'});

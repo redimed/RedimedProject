@@ -70,7 +70,15 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         tableName: 'th_first_assessment',
         createdAt: 'Creation_date',
-        updatedAt: 'Last_update_date'
+        updatedAt: 'Last_update_date',
+        classMethods: {
+            associate: function(models) {
+                WaWorkCoverFirst.belongsTo(models.Appointment, { 
+                    as: 'Appointment',
+                    foreignKey: 'cal_id'
+                });
+            }
+        }
     });
 
     return WaWorkCoverFirst;
