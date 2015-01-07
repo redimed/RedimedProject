@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonMHReport" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27f3bba2-f4a5-4437-96b6-2724e2c86cb6">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="3456"/>
+	<property name="ireport.y" value="1632"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
@@ -2180,7 +2180,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Back or neck surgery ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="10" y="-130" width="86" height="13" uuid="d731676b-a771-4399-a651-eb94a0db3175"/>
+				<reportElement positionType="Float" x="10" y="-131" width="86" height="13" uuid="d731676b-a771-4399-a651-eb94a0db3175"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -2257,7 +2257,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Foot problems ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="320" y="-130" width="108" height="13" uuid="8c9dc524-9bb2-412d-90a9-2c3328ee58bb"/>
+				<reportElement positionType="Float" x="320" y="-131" width="108" height="13" uuid="8c9dc524-9bb2-412d-90a9-2c3328ee58bb"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -2363,7 +2363,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q3_Sciatica} != null && $F{gorgon_doc_mh_Q3_Sciatica}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="180" y="-130" width="9" height="14" uuid="ebac3c4c-c597-41fa-8409-c76a10796fa7"/>
+				<reportElement positionType="Float" x="180" y="-131" width="9" height="14" uuid="ebac3c4c-c597-41fa-8409-c76a10796fa7"/>
 				<textElement>
 					<font size="9" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -2378,11 +2378,11 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q3_NeckInjury} != null && $F{gorgon_doc_mh_Q3_NeckInjury}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement positionType="Float" x="191" y="-130" width="13" height="13" uuid="c09f7f12-37a2-43ea-a4d6-b855f82911d3"/>
+				<reportElement positionType="Float" x="191" y="-131" width="13" height="13" uuid="c09f7f12-37a2-43ea-a4d6-b855f82911d3"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q3_Physio} != null && $F{gorgon_doc_mh_Q3_Physio}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement positionType="Float" x="228" y="-130" width="13" height="13" uuid="64aa5726-32e9-4142-afb5-d1d30a38b784"/>
+				<reportElement positionType="Float" x="228" y="-131" width="13" height="13" uuid="64aa5726-32e9-4142-afb5-d1d30a38b784"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q3_Physio} != null && $F{gorgon_doc_mh_Q3_Physio}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
@@ -2425,7 +2425,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[N]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="217" y="-129" width="9" height="14" uuid="6c83849a-2d2c-45ac-93ec-a778ec06c3d1"/>
+				<reportElement positionType="Float" x="217" y="-130" width="9" height="14" uuid="6c83849a-2d2c-45ac-93ec-a778ec06c3d1"/>
 				<textElement>
 					<font size="9" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -2539,7 +2539,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q3_KneeReconstruction} != null && $F{gorgon_doc_mh_Q3_KneeReconstruction}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement positionType="Float" x="496" y="-130" width="13" height="13" uuid="19d48af5-5a31-42c2-99c5-68199d0d6afc"/>
+				<reportElement positionType="Float" x="496" y="-131" width="13" height="13" uuid="19d48af5-5a31-42c2-99c5-68199d0d6afc"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q3_KneeCartilage} != null && $F{gorgon_doc_mh_Q3_KneeCartilage}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
@@ -2550,7 +2550,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Y]]></text>
 			</staticText>
 			<image>
-				<reportElement positionType="Float" x="533" y="-130" width="13" height="13" uuid="f3616fc3-92d0-43b9-a9cc-147403e6d59f"/>
+				<reportElement positionType="Float" x="533" y="-131" width="13" height="13" uuid="f3616fc3-92d0-43b9-a9cc-147403e6d59f"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q3_KneeCartilage} != null && $F{gorgon_doc_mh_Q3_KneeCartilage}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -2558,14 +2558,14 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q3_OtherBone} != null && $F{gorgon_doc_mh_Q3_OtherBone}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="522" y="-130" width="9" height="14" uuid="4098374b-4df8-460d-bcbc-6045f7af3dd7"/>
+				<reportElement positionType="Float" x="522" y="-131" width="9" height="14" uuid="4098374b-4df8-460d-bcbc-6045f7af3dd7"/>
 				<textElement>
 					<font size="9" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Y]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="485" y="-130" width="9" height="14" uuid="4f5fb88e-5797-481f-916f-4b75416d6a5e"/>
+				<reportElement positionType="Float" x="485" y="-131" width="9" height="14" uuid="4f5fb88e-5797-481f-916f-4b75416d6a5e"/>
 				<textElement>
 					<font size="9" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -3154,7 +3154,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Artery or vein problems ]]></text>
 			</staticText>
 			<image>
-				<reportElement positionType="Float" x="228" y="264" width="13" height="13" uuid="bae68655-5fed-4c60-81a7-2f4dccdfc1fa"/>
+				<reportElement positionType="Float" x="228" y="265" width="13" height="13" uuid="bae68655-5fed-4c60-81a7-2f4dccdfc1fa"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q6_UsedPuffer} != null && $F{gorgon_doc_mh_Q6_UsedPuffer}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -3162,7 +3162,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q6_Asthma} != null && $F{gorgon_doc_mh_Q6_Asthma}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="10" y="278" width="157" height="13" uuid="8d3c601c-3e56-403a-a0ac-6bbd46d8dbf1"/>
+				<reportElement positionType="Float" x="10" y="280" width="157" height="13" uuid="8d3c601c-3e56-403a-a0ac-6bbd46d8dbf1"/>
 				<textElement>
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -3184,18 +3184,18 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q6_Asthma} != null && $F{gorgon_doc_mh_Q6_Asthma}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="180" y="278" width="9" height="14" uuid="374fb047-3ccb-4372-8956-b53ab92d61fd"/>
+				<reportElement positionType="Float" x="180" y="280" width="9" height="14" uuid="374fb047-3ccb-4372-8956-b53ab92d61fd"/>
 				<textElement>
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[N]]></text>
 			</staticText>
 			<image>
-				<reportElement positionType="Float" x="191" y="278" width="13" height="13" uuid="3ad573cb-1f47-4002-8e0b-705614f03b46"/>
+				<reportElement positionType="Float" x="191" y="280" width="13" height="13" uuid="3ad573cb-1f47-4002-8e0b-705614f03b46"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q6_CardiacPacemaker} != null && $F{gorgon_doc_mh_Q6_CardiacPacemaker}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="10" y="264" width="132" height="13" uuid="a47686c0-1599-4053-8829-c542c1a0da73"/>
+				<reportElement positionType="Float" x="10" y="265" width="132" height="13" uuid="a47686c0-1599-4053-8829-c542c1a0da73"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -3210,7 +3210,7 @@ Barrow Island LNG Plant ]]></text>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q6_LungDisease} != null && $F{gorgon_doc_mh_Q6_LungDisease}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="217" y="265" width="9" height="14" uuid="8ab87a80-005e-48bd-bb87-603bebb0438a"/>
+				<reportElement positionType="Float" x="217" y="266" width="9" height="14" uuid="8ab87a80-005e-48bd-bb87-603bebb0438a"/>
 				<textElement>
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -3253,7 +3253,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[N]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="217" y="278" width="9" height="14" uuid="68b26e73-ed30-4f26-9ceb-8d913e1dbd6a"/>
+				<reportElement positionType="Float" x="217" y="280" width="9" height="14" uuid="68b26e73-ed30-4f26-9ceb-8d913e1dbd6a"/>
 				<textElement>
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -3267,7 +3267,7 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Y]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="180" y="265" width="9" height="14" uuid="580b4fea-cc6d-413e-9c8c-ec74e43e17c9"/>
+				<reportElement positionType="Float" x="180" y="266" width="9" height="14" uuid="580b4fea-cc6d-413e-9c8c-ec74e43e17c9"/>
 				<textElement>
 					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -3299,11 +3299,11 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Industrial lung disease]]></text>
 			</staticText>
 			<image>
-				<reportElement positionType="Float" x="191" y="264" width="13" height="13" uuid="cbe5b148-be0e-4eeb-9654-7306af101bc0"/>
+				<reportElement positionType="Float" x="191" y="265" width="13" height="13" uuid="cbe5b148-be0e-4eeb-9654-7306af101bc0"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q6_UsedPuffer} != null && $F{gorgon_doc_mh_Q6_UsedPuffer}.intValue() == 0 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement positionType="Float" x="228" y="278" width="13" height="13" uuid="1db14482-0eb1-4148-bfd5-3690a2882cb6"/>
+				<reportElement positionType="Float" x="228" y="280" width="13" height="13" uuid="1db14482-0eb1-4148-bfd5-3690a2882cb6"/>
 				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_mh_Q6_CardiacPacemaker} != null && $F{gorgon_doc_mh_Q6_CardiacPacemaker}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
