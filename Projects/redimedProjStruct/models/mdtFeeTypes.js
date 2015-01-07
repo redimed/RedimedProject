@@ -21,8 +21,8 @@ module.exports = function(sequelize, DataTypes){
         classMethods: {
             associate: function (models) {
             	
-                FeeType.belongsTo( models.SysServices, { 
-            		as: 'Service', 
+                FeeType.hasMany( models.SysServices, { 
+            		as: 'Services', 
             		foreignKey: 'SERVICE_ID'
                 });
 
