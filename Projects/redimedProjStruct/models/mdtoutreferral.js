@@ -19,7 +19,20 @@ module.exports = function(sequelize, DataTypes){
 	}, {
 		tableName: 'outside_referrals',
 		createdAt: 'Creation_date',
-		updatedAt: 'Last_update_date'
+		updatedAt: 'Last_update_date',
+		classMethods: {
+            associate: function(models) {
+                mdtoutreferral.belongsTo(models.Doctor, { 
+                	as: 'ReferredDoctor', 
+                	foreignKey: 'referred_to_doctor'
+                });
+
+                mdtoutreferral.belongsTo(models.mdtOutdoctor, { 
+                	as: 'OutDoctor', 
+                	foreignKey: 'doctor_id'
+                });
+            }
+        }
 	});
 
 	return mdtoutreferral;

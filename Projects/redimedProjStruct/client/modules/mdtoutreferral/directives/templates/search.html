@@ -14,6 +14,8 @@
 		<table class='mdt-table'>
 			<thead>
 				<tr>
+					<th>From Doctor</th>
+					<th>Reffer to Doctor</th>
 					<th>Issued Date</th>
 					<th>Expire Date</th>
 					<th>Duration</th>
@@ -21,8 +23,10 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat='l in list.data' ng-click='clickRow({row: l})' style='cursor: pointer;'>
-					<td>{{l.date_issued_map}}</th>
-					<td>{{l.expire_date_map}}</th>
+					<td>{{l.outDoctor.name}}</td>
+					<td>{{l.referredDoctor.NAME}}</td>
+					<td>{{l.date_issued_map}}</td>
+					<td>{{l.expire_date_map}}</td>
 					<td>{{l.duration}}</td>
 				</tr>
 			</tbody>

@@ -18,7 +18,7 @@ angular.module('app.loggedIn.mdtoutreferral.search.directive', []).directive('md
 					filters: [
 						{type: 'text', name: 'date_issued', value:''},
 						{type: 'text', name: 'date_started', value:''},
-						{type: 'text', name: 'duration', value:''}
+						{type: 'text', name: 'duration', value:''},
 					],
 					select: [
 						'id','date_issued', 'date_started', 'expire_date', 'duration'
