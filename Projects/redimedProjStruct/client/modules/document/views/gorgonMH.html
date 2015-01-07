@@ -860,6 +860,7 @@
                 </div>
             </div>
             <br/>
+
             <div class="row">
                 <div class="col-md-4 col-sm-4">
                     <label class="control-label" style="margin-top:5px;">Did you need time off work?
@@ -890,7 +891,7 @@
                     <div ng-show="info.Q2_TimeOfWork==1">
                         <label class="control-label">*How long were you off?</label>
                     </div>
-                    <div ng-show="!(info.Q2_TimeOfWork==1)">
+                    <div ng-show="info.Q2_TimeOfWork!=1">
                         <label class="control-label">How long were you off?</label>
                     </div>
                 </div>
@@ -913,7 +914,7 @@
 
             <div class="row">
                 <div class="col-md-4 col-sm-5" style="margin-top:7px;">
-                    <div ng-show="!(info.Q2_TimeOfWork==1)">
+                    <div ng-show="info.Q2_TimeOfWork!=1">
                         <label class="control-label">How long were you on modified or light duties?</label>
                     </div>
                     <div ng-show="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1">
@@ -940,7 +941,7 @@
 
             <div class="row">
                 <div class="col-md-4 col-sm-5" style="margin-top: 7px;">
-                    <div ng-show="!(info.Q2_TimeOfWork==1)">
+                    <div ng-show="info.Q2_TimeOfWork!=1">
                         <label class="control-label">How long did you need treatment?</label>
                     </div>
                     <div ng-show="info.Q2_Operation==1 || info.Q2_Accident ==1|| info.Q2_SportsInjury==1 || info.Q2_TimeOfWork==1">
