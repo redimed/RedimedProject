@@ -42,34 +42,36 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
     }
 
      doctorService.catItemDept = function(items) {
-				// MUST ORDER BY 'ITEM DEPT' POPULAR_HEADER_ID
-				var newlist = [];
-				for (var i = 0, len = items.length; i < len; ++i) {
-					var item = items[i];
-					// console.log(item)
+		// MUST ORDER BY 'ITEM DEPT' POPULAR_HEADER_ID
+		var newlist = [];
+		for (var i = 0, len = items.length; i < len; ++i) {
+			var item = items[i];
+		//	console.log(item)
 
-					if (newlist.length == 0 || newlist[newlist.length - 1].cat != item.POPULAR_HEADER_ID) {
-						var t2 = {
-							cat: item.POPULAR_HEADER_ID,
-							cattitle: item.POPULAR_NAME,
-							list: []
-						};
-						newlist.push(t2)
-					}
-					var t = {
-						ITEM_ID: item.ITEM_ID,
-						ITEM_CODE: item.ITEM_CODE,
-						ITEM_NAME: item.ITEM_NAME,
-						PRICE: item.PRICE ? item.PRICE : 0,
-						QUANTITY: item.QUANTITY ? item.QUANTITY : 1,
-						inserted: (item.inserted) ? true : false,
-						appt_item_id: item.appt_item_id,
-	                    checked: (item.checked) ? '1' : '0'//Math.round(Math.random()) + ''
-	                }
-	                newlist[newlist.length - 1].list.push(t);
-	            }
-	            return newlist;
-	        }
+			if (newlist.length == 0 || newlist[newlist.length - 1].cat != item.POPULAR_HEADER_ID) {
+				var t2 = {
+					cat: item.POPULAR_HEADER_ID,
+					cattitle: item.POPULAR_NAME,
+					list: []
+				};
+				newlist.push(t2)
+			}
+			var t = {
+				ITEM_ID: item.ITEM_ID,
+				ITEM_CODE: item.ITEM_CODE,
+				ITEM_NAME: item.ITEM_NAME,
+				PRICE: item.PRICE ? item.PRICE : 0,
+				QUANTITY: item.QUANTITY ? item.QUANTITY : 1,
+                TIME_SPENT: item.TIME_SPENT ? item.TIME_SPENT: 0,
+				inserted: (item.inserted) ? true : false,
+				appt_item_id: item.appt_item_id,
+                checked: (item.checked) ? '1' : '0'//Math.round(Math.random()) + ''
+            }
+            newlist[newlist.length - 1].list.push(t);
+        }
+        return newlist;
+    }
+
 	        doctorService.insertItemAppt = function (appt_id, patient_id, items) {
 	        	if(!appt_id) {console.log('MISSING INFO APPT_ID')}
 

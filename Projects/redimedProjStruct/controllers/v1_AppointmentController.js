@@ -85,6 +85,7 @@ var model_sql = {
                     .field('ITEM_NAME')
                     .field('appt_items.PRICE')
                     .field('ITEM_CODE')
+                    .field('TIME_SPENT')
                     .field('QUANTITY');
         return query_builder.toString();
     },
@@ -99,6 +100,7 @@ var model_sql = {
                 CLN_ITEM_ID: item.CLN_ITEM_ID,
                 QUANTITY: item.QUANTITY ? item.QUANTITY : 1,
                 PRICE: item.PRICE ? item.PRICE : 0,
+                TIME_SPENT: item.TIME_SPENT ? item.TIME_SPENT: 0,
                 Creation_date: 'NOW()'
             }
             rows.push(row);
@@ -116,7 +118,9 @@ var model_sql = {
     },
     sql_update_item_calendar: function (cal_id, patient_id, item) {
         var query_builder = squel.update().table('cln_appt_items');
-        query_builder.set('QUANTITY', item.QUANTITY)
+
+        query_builder.set('QUANTITY', item.QUANTITY);
+        query_builder.set('TIME_SPENT', item.TIME_SPENT);
 
         query_builder.where('cal_id = ?', cal_id);
         query_builder.where('Patient_id = ?', patient_id);

@@ -25,6 +25,7 @@ return {
 					t_item.appt_item_id = appt_item.appt_item_id;
 					t_item.QUANTITY = appt_item.QUANTITY ? appt_item.QUANTITY : 1;
 					t_item.PRICE = appt_item.PRICE ? appt_item.PRICE : 1;
+					t_item.TIME_SPENT = appt_item.TIME_SPENT;
 					continue;
 				} 
 				
@@ -34,12 +35,15 @@ return {
 					t_item.chosen = false;	
 					t_item.appt_item_id = appt_item.appt_item_id;
 					t_item.QUANTITY = appt_item.QUANTITY ? appt_item.QUANTITY : 1;
-				} else {
-					// INSERT APP appt_item INTO extra list 
-					appt_item.checked = '1';
-					appt_item.chosen = false;
-					$scope.extra_list.push(appt_item);
-				}
+					t_item.TIME_SPENT = appt_item.TIME_SPENT;
+					continue;
+				} 
+
+				// INSERT APP appt_item INTO extra list 
+				appt_item.checked = '1';
+				appt_item.chosen = false;
+				$scope.extra_list.push(appt_item);
+				
 			}
 			
 			// TRAVEL EXTRA ITEM 
@@ -107,14 +111,13 @@ return {
 			 		angular.forEach($scope.item_list, function(cat, key) {
 			 			angular.forEach(cat.list, function(item, key) {
 			 				var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
-			 				if(t_item) {
+			 				if(t_item && t_item.SCHEDULE_FEE > 0) {
 			 					item.PRICE = t_item.SCHEDULE_FEE;
 			 					item.disable_fee = true;
 			 				} else if(!item.PRICE) {
 			 					item.PRICE = 0;
 			 					item.disable_fee = false;
 			 				} 
-			 				
 			 			});
 					});
 				}
@@ -162,7 +165,8 @@ return {
 							update_list.push({
 								appt_item_id: item.appt_item_id,
 								QUANTITY: item.QUANTITY,
-								PRICE: item.PRICE
+								PRICE: item.PRICE,
+								TIME_SPENT: item.TIME_SPENT
 							});
 						} else {
 							// delete_list.push(item.appt_item_id);  
@@ -172,7 +176,8 @@ return {
 						insert_list.push({
 							CLN_ITEM_ID: item.ITEM_ID,
 							QUANTITY: item.QUANTITY,
-							PRICE: item.PRICE
+							PRICE: item.PRICE,
+							TIME_SPENT: item.TIME_SPENT
 						});
 					} 
 	                
@@ -182,25 +187,22 @@ return {
 			// TRAVEL EXTRA LIST 
 			for(var i =0, len = $scope.extra_list.length; i < len; ++i){
 				var item = $scope.extra_list[i];
-				var t  = {
-					CLN_ITEM_ID: item.ITEM_ID,
-					QUANTITY: item.QUANTITY,
-				};
 				
 				if( item.chosen && item.checked == '1') { // item just add 
 					insert_list.push({
 						CLN_ITEM_ID: item.ITEM_ID,
 						QUANTITY: item.QUANTITY,
-						PRICE: item.PRICE
+						PRICE: item.PRICE,
+						TIME_SPENT: item.TIME_SPENT
 					});
 				} else if (item.checked == '1'){
 					update_list.push({
 						appt_item_id: item.appt_item_id,
 						QUANTITY: item.QUANTITY,
-						PRICE: item.PRICE
+						PRICE: item.PRICE,
+						TIME_SPENT: item.TIME_SPENT
 					});
 				} else {
-					// delete_list.push(item.appt_item_id);  
 					delete_list.push(item.ITEM_ID);
 				}
 			}
