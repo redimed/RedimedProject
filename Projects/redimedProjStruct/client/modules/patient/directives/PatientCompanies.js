@@ -19,6 +19,16 @@ angular.module("app.loggedIn.patient.companies.directive", [])
 			}
 
 			$scope.row_click = function(item) {
+				if(item.id == active_item.id) {
+					return;
+				}
+
+				var yes = confirm('Set this company active for patient ??? ');
+
+				if(!yes) {
+					return;
+				}
+
 				PatientService.update({Patient_id: data.Patient_id, company_id: item.id}).then(function(response){
 		            if(response.status == 'success') {
 		            	item.active = 'active';
@@ -38,7 +48,7 @@ angular.module("app.loggedIn.patient.companies.directive", [])
                     {field: 'Industry'},
                     {field: 'Addr', label: 'Address'},
                     {field: 'Country', db_field: 'companies.Country'},
-                    {field: 'active', label: 'Active', not_submit: true},               
+                    {field: 'active', label: 'Active', is_hide: true, not_submit: true},               
                 ],
                 search: {
                     Patient_id: data.Patient_id,
