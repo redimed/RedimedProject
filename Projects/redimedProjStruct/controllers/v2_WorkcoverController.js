@@ -77,17 +77,4 @@ module.exports = {
 			res.json(500, {"status": "error", "message": error});
 		});
 	}, 
-
-	postProgressSearch: function(req, res) {
-
-	},
-
-	postFinalSearch: function(req, res) {
-
-	}
-
-
-
-
-
 }

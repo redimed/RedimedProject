@@ -47,21 +47,35 @@ module.exports = {
         var sql = PatientModel.sql_update(id, post_data);
         var k_sql = res.locals.k_sql;
 
-        k_sql.exec(sql, function (data) {
-        	if(!post_data.company_id) {
-        		res.json({status: 'success'});
-        		return;
-        	}
+
+        db.sequelize.query(sql)
+        .success(function(data){
         	var sql = PatientModel.sql_insert_patient_company(id, post_data.company_id);
-        	k_sql.exec(sql, function (data) {
+        	db.sequelize.query(sql)
+        	.success(function(data){
         		res.json({status: 'success'});
-        	}, function(err) {
-		   // DUPLICATE PRIMARY KEY of patient companies
-	            res.json({status: 'success'});
-	        });
-        }, function(err) {
-            res.json({status: 'error'});
-        });
+        	}).error(function(err){
+	            res.json({status: 'error', error: err});
+	        })
+        }).error(function(err){
+            res.json({status: 'error', error: err});
+        })
+
+       //  k_sql.exec(sql, function (data) {
+       //  	if(!post_data.company_id) {
+       //  		res.json({status: 'success'});
+       //  		return;
+       //  	}
+       //  	var sql = PatientModel.sql_insert_patient_company(id, post_data.company_id);
+       //  	k_sql.exec(sql, function (data) {
+       //  		res.json({status: 'success'});
+       //  	}, function(err) {
+		   		// // DUPLICATE PRIMARY KEY of patient companies
+	      //       res.json({status: 'success'});
+	      //   });
+       //  }, function(err) {
+       //      res.json({status: 'error'});
+       //  });
     },
 	
 	getNumCompanies: function(req, res) {

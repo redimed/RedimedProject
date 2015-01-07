@@ -162,14 +162,25 @@ module.exports = {
         var sql_data = sql_query.toString();	
 		var k_sql = req.k_sql;
 		var result = null;
-		k_sql.exec(sql_data).then(function(data){
-			result = data;
-			return k_sql.exec_row(sql_count);
-		}).then(function(row){
-			res.json({list: result, count: row.count});
-		}).catch(function(err){
-			console.log(err);
-		})
+
+	    db.sequelize.query(sql_data).then(function(data){
+	    	result = data;
+	    	return  db.sequelize.query(sql_count);
+	    }).then(function(row){
+			res.json({list: result, count: row[0].count});
+		}).error(function(err){
+            res.json({status: 'error', error: err});
+        })
+
+
+		// k_sql.exec(sql_data).then(function(data){
+		// 	result = data;
+		// 	return k_sql.exec_row(sql_count);
+		// }).then(function(row){
+		// 	res.json({list: result, count: row.count});
+		// }).catch(function(err){
+		// 	console.log(err);
+		// })
 	},
 
 	postInsurers : function(req, res) {

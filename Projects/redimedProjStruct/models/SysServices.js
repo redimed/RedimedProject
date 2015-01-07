@@ -24,8 +24,7 @@ module.exports = function(sequelize, DataTypes){
                 SysServices.hasMany(models.Department, {
                     as: 'Departments',
                     foreignKey: 'SERVICE_ID', 
-                    through: models.DeptServices,
-                    // through: 'cln_dept_services',
+                    through: models.DeptServices
                 });
 
                 SysServices.belongsTo( models.FeeType, { 
