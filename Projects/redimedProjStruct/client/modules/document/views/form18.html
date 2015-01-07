@@ -41,7 +41,7 @@
                     <br/>
 
                     <div class="row">
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-12 col-sm-12">
                             <label class="control-label">Address of worker:&nbsp;<span
                                     class="text-info">{{info.patient.Address1==null?'':info.patient.Address1}}, </span>
                             <span
@@ -252,32 +252,30 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3 col-sm-3" style="margin-top: 25px;">
+                        <div class="col-md-3 col-sm-3">
                             <a href="javascript:;" class="btn green" ng-click="showSignature1()"
                                ng-show="!isSignature1">Worker's
                                 signature</a>
+
+                            <div ng-show="info.WORKER_SIGNATURE!=null && info.WORKER_SIGNATURE!='' && !isSignature1">
+                                <img src="" ng-src="{{info.WORKER_SIGNATURE}}" alt=""
+                                     style="width: 200px;height: 70px;"/>
+                            </div>
                         </div>
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3 col-sm-3" style="margin-top: 10px;">
                             <label class="control-label">Date:&nbsp;<span>{{info.TIME_TEST|date:'dd/MM/yyyy'}}</span>
                             </label>
                         </div>
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3 col-sm-3" style="margin-top: 10px;">
                             <label class="control-label">Tester's signature:</label>
-                            <img ng-show="info.doctor.Signature!=null && info.doctor.Signature!=''" src="" alt="" style="width: 200px; height: 70px;" ng-src="{{info.doctor.Signature}}"/>
+                            <img ng-show="info.doctor.Signature!=null && info.doctor.Signature!=''" src="" alt=""
+                                 style="width: 200px; height: 70px;" ng-src="{{info.doctor.Signature}}"/>
                         </div>
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3 col-sm-3" style="margin-top: 10px;">
                             <label class="control-label">Date:&nbsp;<span>{{info.TIME_TEST|date:'dd/MM/yyyy'}}</span></label>
                         </div>
                     </div>
                     <br/>
-
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12"
-                             ng-show="info.WORKER_SIGNATURE!=null && info.WORKER_SIGNATURE!='' && !isSignature1">
-                            <img src="" ng-src="{{info.WORKER_SIGNATURE}}" alt=""
-                                 style="width: 200px;height: 70px;"/>
-                        </div>
-                    </div>
 
                     <div class="row" style="text-align: left;" ng-show="isSignature1">
                         <div class="col-md-12 col-sm-12">
