@@ -21,6 +21,7 @@ module.exports = {
 
 		db.sequelize.query(sql)
 		.success(function(created){
+
 			res.json({'status': 'success', 'data': created});
 		})
 		.error(function(error){

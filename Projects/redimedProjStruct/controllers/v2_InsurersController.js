@@ -19,7 +19,6 @@ module.exports = {
 
         var sql = ClnInsurersModel.sql_get_all(fields);
         var k_sql = res.locals.k_sql;
-
         k_sql.exec(sql, function (data) {
             res.json({status: 'success', list: data});
     }, function(err) {
@@ -36,8 +35,8 @@ module.exports = {
         var sql = ClnInsurersModel.sql_insert(data);
         var k_sql = res.locals.k_sql;
 
-        k_sql.exec(sql, function (res) {
-            res.json({status: 'success', data: res});
+        k_sql.exec(sql, function (data) {
+            res.json({status: 'success', data: data});
         }, function(err) {
             res.json({status: 'error'});
         });
