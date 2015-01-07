@@ -588,7 +588,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                             doctor: $scope.info.doctor || [],
                             company: $scope.info.company || [],
                             works: clearWorks,
-                            medications: clearWorks
+                            medications: clearMedications
                         };
                     }
                 });
