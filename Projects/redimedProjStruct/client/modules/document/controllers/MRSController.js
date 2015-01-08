@@ -99,7 +99,7 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         ac_any_medical_or_functional: data.ac_any_medical_or_functional,
                         ac_any_diagnosed_or_previous: data.ac_any_diagnosed_or_previous,
                         ac_examiner_comment: data.ac_examiner_comment,
-                        rr_screen: data.rr_screen,
+                        rr_green: data.rr_green,
                         rr_amber: data.rr_amber,
                         rr_amber_comment: data.rr_amber_comment,
                         rr_red: data.rr_red,
