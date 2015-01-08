@@ -210,7 +210,9 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                 r5_1: null,
                 r5_2: null,
                 DATE: new Date(),
-                DOCTOR_ID: null
+                DOCTOR_ID: null,
+                Created_by: null,
+                Last_updated_by: null
             };
             var oriInfo;
             var info = $scope.info;
@@ -228,6 +230,7 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                     $scope.info.apptInfo = response[0].appt;
                     $scope.info.doctor = response[0].doctor;
                     $scope.info.company = response[0].company;
+                    $scope.info.Created_by = userInfo.id;
                     oriInfo = angular.copy($scope.info);
                 }
                 else if (response[0].status === 'findFound') {
@@ -409,7 +412,9 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                         r5_1: data.r5_1,
                         r5_2: data.r5_2,
                         DATE: data.DATE,
-                        DOCTOR_ID: response[0].doctor.DOCTOR_ID
+                        DOCTOR_ID: response[0].doctor.DOCTOR_ID,
+                        Created_by: data.Created_by,
+                        Last_updated_by: userInfo.id
                     };
                     oriInfo = angular.copy($scope.info);
                 }

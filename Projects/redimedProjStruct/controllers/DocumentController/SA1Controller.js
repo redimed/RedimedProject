@@ -172,8 +172,8 @@ module.exports = {
                             ORD: infoS.ORD,
                             USER_TYPE: infoS.USER_TYPE,
                             ISENABLE: infoS.ISENABLE,
-                            Created_by: infoS.CREATED_BY,
-                            Last_updated_by: infoS.LAST_UPDATED_BY
+                            Created_by: infoS.Created_by,
+                            Last_updated_by: infoS.Last_updated_by
                         }, {raw: true})
                             .success(function () {
                                 info.headers[hIndex].sections[sIndex].lines.forEach(function (infoL, lIndex) {

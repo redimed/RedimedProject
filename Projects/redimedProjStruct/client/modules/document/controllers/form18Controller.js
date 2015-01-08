@@ -1,5 +1,5 @@
 /**
- * Created by HUYNHAN on 9/25/2014.
+ * Created by thanh on 9/25/2014.
  */
 angular.module('app.loggedIn.document.form18.controllers', [])
     .controller("form18Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
@@ -94,6 +94,7 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                         $scope.info.APPT = response[0].APPT;
                         $scope.info.rmSite = response[0].rmSite;
                         $scope.info.company = response[0].company;
+                        $scope.info.Created_by = userInfo.id;
                         oriInfo = angular.copy($scope.info);
                     }
                     else if ('findFound' === response[0].status) {
@@ -117,7 +118,9 @@ angular.module('app.loggedIn.document.form18.controllers', [])
                             PERSON_ARRANGING_NAME: data.PERSON_ARRANGING_NAME,
                             PERSON_ARRANGING_POSITION: data.PERSON_ARRANGING_POSITION,
                             DOCTOR_ID: response[0].doctor.DOCTOR_ID,
-                            WORKER_SIGNATURE: data.WORKER_SIGNATURE
+                            WORKER_SIGNATURE: data.WORKER_SIGNATURE,
+                            Created_by: data.Created_by,
+                            Last_updated_by: userInfo.id
                         };
                         oriInfo = angular.copy($scope.info);
                     }

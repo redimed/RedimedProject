@@ -385,9 +385,11 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                     };
                     oriInfo = angular.copy($scope.info);
                     if ($scope.isNew) {
+                        $scope.info.created_by = userInfo.id;
                         clearInfo = angular.copy($scope.info);
                     }
                     else {
+                        $scope.info.last_updated_by = userInfo.id;
                         clearInfo = {
                             mh_id: $scope.info.mh_id || null,
                             patient_id: patient_id,

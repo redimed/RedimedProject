@@ -145,7 +145,9 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     q1_5_3_c: null,
                     PATIENT_SIGNATURE: null,
                     PATIENT_DATE: new Date(),
-                    DOCTOR_ID: null
+                    DOCTOR_ID: null,
+                    Created_by: null,
+                    Last_updated_by: null
                 };
                 var oriInfo;
                 var info = $scope.info;
@@ -162,6 +164,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                             $scope.info.apptInfo = response[0].appt;
                             $scope.info.doctor = response[0].doctor;
                             $scope.info.company = response[0].company;
+                            $scope.info.Created_by = userInfo.id;
                             oriInfo = angular.copy($scope.info);
                         }
                         else if (response[0].status === 'findFound') {
@@ -275,7 +278,9 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                                 q1_5_3_c: data.q1_5_3_c,
                                 PATIENT_SIGNATURE: data.PATIENT_SIGNATURE,
                                 PATIENT_DATE: data.PATIENT_DATE,
-                                DOCTOR_ID: response[0].doctor.DOCTOR_ID
+                                DOCTOR_ID: response[0].doctor.DOCTOR_ID,
+                                Created_by: data.Created_by,
+                                Last_updated_by: userInfo.id
                             };
                             oriInfo = angular.copy($scope.info);
                         }

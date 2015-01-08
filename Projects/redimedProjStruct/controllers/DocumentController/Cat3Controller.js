@@ -200,7 +200,9 @@ module.exports = {
                 q1_5_3_c: info.q1_5_3_c,
                 PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,
                 PATIENT_DATE: info.PATIENT_DATE,
-                DOCTOR_ID: info.DOCTOR_ID
+                DOCTOR_ID: info.DOCTOR_ID,
+                Created_by: info.Created_by,
+                Last_updated_by: info.Last_updated_by
 
             }, {raw: true})
                 .success(function () {
@@ -320,7 +322,9 @@ module.exports = {
             q1_5_3_c: info.q1_5_3_c,
             PATIENT_SIGNATURE: info.PATIENT_SIGNATURE,
             PATIENT_DATE: info.PATIENT_DATE,
-            DOCTOR_ID: info.DOCTOR_ID
+            DOCTOR_ID: info.DOCTOR_ID,
+            Created_by: info.Created_by,
+            Last_updated_by: info.Last_updated_by
         }, {cat_id: info.cat_id}).success(function () {
             res.json({status: 'success'});
             return true;

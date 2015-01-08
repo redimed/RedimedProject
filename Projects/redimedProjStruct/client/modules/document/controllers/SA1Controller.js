@@ -75,8 +75,6 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                         "SA_NAME": dataH.SA_NAME,
                         "ISENABLE": dataH.ISENABLE,
                         "SA_CODE": dataH.SA_CODE,
-                        "Created_by": dataH.Created_by,
-                        "Last_updated_by": dataH.Last_updated_by,
                         "test_date": dataH.test_date || new Date(),
                         "tester": dataH.tester,
                         "report_type": dataH.report_type,
@@ -84,6 +82,8 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                         "DOCTOR_ID": dataH.DOCTOR_ID || response[0].doctor.doctor_id,
                         "Signature": dataH.Signature,
                         "LOCATION_ID": dataH.LOCATION_ID,
+                        "Created_by": $scope.isNew ? userInfo.id : dataH.Created_by,
+                        "Last_updated_by": $scope.isNew ? dataH.Last_updated_by : userInfo.id,
                         "sections": []
                     });
                     $scope.info.Signature = $scope.info.headers[hIndex].Signature;
@@ -102,8 +102,8 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                                 "ORD": dataS.ORD,
                                 "USER_TYPE": dataS.USER_TYPE,
                                 "ISENABLE": dataS.ISENABLE,
-                                "Created_by": dataS.Created_by,
-                                "Last_updated_by": dataS.Last_updated_by,
+                                "Created_by": $scope.isNew ? userInfo.id : dataS.Created_by,
+                                "Last_updated_by": $scope.isNew ? dataS.Last_updated_by : userInfo.id,
                                 "lines": []
                             });
                             angular.forEach(data.lines, function (dataL) {
@@ -118,8 +118,8 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                                         "VALUE_RIGHT": dataL.VALUE_RIGHT,
                                         "VALUE_LEFT": dataL.VALUE_LEFT,
                                         "ISENABLE": dataL.ISENABLE,
-                                        "Created_by": dataL.Created_by,
-                                        "Last_updated_by": dataL.Last_updated_by
+                                        "Created_by": $scope.isNew ? userInfo.id : dataL.Created_by,
+                                        "Last_updated_by": $scope.isNew ? dataL.Last_updated_by : userInfo.id
                                     });
                                 }
                             });

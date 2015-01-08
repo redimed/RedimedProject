@@ -265,7 +265,9 @@ module.exports = {
                     r5_1: info.r5_1,
                     r5_2: info.r5_2,
                     DATE: info.DATE,
-                    DOCTOR_ID: info.DOCTOR_ID
+                    DOCTOR_ID: info.DOCTOR_ID,
+                    Created_by: info.Created_by,
+                    Last_updated_by: info.Last_updated_by
                 }, {raw: true})
                     .success(function () {
                         res.json({status: 'success'});
@@ -450,7 +452,9 @@ module.exports = {
             r5_1: info.r5_1,
             r5_2: info.r5_2,
             DATE: info.DATE,
-            DOCTOR_ID: info.DOCTOR_ID
+            DOCTOR_ID: info.DOCTOR_ID,
+            Created_by: info.Created_by,
+            Last_updated_by: info.Last_updated_by
         }, {cat_id: info.cat_id})
             .success(function () {
                 res.json({status: 'success'});
