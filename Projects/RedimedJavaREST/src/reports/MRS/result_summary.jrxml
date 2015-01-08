@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="result_summary" pageWidth="595" pageHeight="900" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d23aca8a-126b-409e-a28e-0c3c45a44d8f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="416"/>
+	<property name="ireport.y" value="96"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="fb71c9c0-58bf-4055-b248-f597c5a711f9"/>
@@ -165,11 +165,11 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_any_diagnosed_or_previous}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="408" y="186" width="12" height="12" uuid="a5538322-4d8f-4d82-aa3d-ed9b66ef4091"/>
+				<reportElement x="408" y="187" width="12" height="12" uuid="a5538322-4d8f-4d82-aa3d-ed9b66ef4091"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_any_history}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="473" y="210" width="12" height="12" uuid="3329498d-539a-4fb0-8d4b-c56842b2631b"/>
+				<reportElement x="473" y="211" width="12" height="12" uuid="3329498d-539a-4fb0-8d4b-c56842b2631b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_cardiovascular}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -225,7 +225,7 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_any_diagnosed_or_previous}==0?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="443" y="258" width="12" height="12" uuid="7ba3044c-4012-4837-9ac5-a9ff70eb6f17"/>
+				<reportElement x="443" y="259" width="12" height="12" uuid="7ba3044c-4012-4837-9ac5-a9ff70eb6f17"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_any_medical_or_functional}==0?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -237,11 +237,11 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_cardiovascular}==0?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="443" y="185" width="12" height="12" uuid="08da8a7e-2fab-4631-9011-97b1a4b69f4a"/>
+				<reportElement x="443" y="187" width="12" height="12" uuid="08da8a7e-2fab-4631-9011-97b1a4b69f4a"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_any_history}==0?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="443" y="160" width="12" height="12" uuid="97726e67-f85d-4916-99b4-cbc62890fb78"/>
+				<reportElement x="443" y="161" width="12" height="12" uuid="97726e67-f85d-4916-99b4-cbc62890fb78"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_any_existing_or_active}==0?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -271,7 +271,7 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_as_medical_history}==0?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="514" y="212" width="12" height="12" uuid="001e1e0f-d3d4-46b5-9af3-9a595a0bcc0e"/>
+				<reportElement x="515" y="212" width="12" height="12" uuid="001e1e0f-d3d4-46b5-9af3-9a595a0bcc0e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_cardiovascular}==2?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy">
