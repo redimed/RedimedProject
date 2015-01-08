@@ -134,8 +134,11 @@ module.exports = {
                     Last_updated_by : info.Last_updated_by,
                     //Last_update_date : info.Last_update_date
                     CalId : info.CalId ,
-                    DocId : info.DocId
-
+                    DocId : info.DocId,
+                    Lsign : info.Lsign,
+                    LName : info.LName,
+                    LDate : info.LDate,
+                    LPosition : info.LPosition
                 },{raw:true})
                     .success(function(data){
                         res.json({status:'success'});
@@ -270,6 +273,10 @@ module.exports = {
                 LEPDC : info.LEPDC ,
                 LAPC : info.LAPC ,
                 LComment : info.LComment ,
+                Lsign : info.Lsign,
+                LName : info.LName,
+                LDate : info.LDate,
+                LPosition : info.LPosition,
                 Created_by : info.Created_by ,
                 //Creation_date : info.Creation_date ,
                 Last_updated_by : info.Last_updated_by// ,
