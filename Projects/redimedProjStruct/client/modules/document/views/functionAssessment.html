@@ -6,7 +6,7 @@
                 class="btn green pull-right">{{isNew?"Add New":"Update"}}
         </button>
         <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{infoH.FA_ID}}/{{infoH.CAL_ID}}/{{infoH.PATIENT_ID}}"
-           ng-disabled="isNew "
+           ng-disabled="isNew " target="_blank"
            class="btn btn-primary blue pull-right">Print PDF
         </a>
         <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
