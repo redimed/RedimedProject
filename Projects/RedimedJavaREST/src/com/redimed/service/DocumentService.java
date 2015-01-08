@@ -403,8 +403,12 @@ public class DocumentService {
 	            byte[] bytes = baos.toByteArray();
 	            
 	            return Response.ok(bytes, "application/pdf") 
-	                    .header("content-disposition", "attachment; filename = "+ fileName)
+	                    .header("content-disposition","inline")
 	                    .build();
+	            
+//	            return Response.ok(bytes, "application/pdf") 
+//	                    .header("content-disposition","attachment; filename = "+ fileName)
+//	                    .build();
 	            
 	            
 	        } catch (Exception e) {
