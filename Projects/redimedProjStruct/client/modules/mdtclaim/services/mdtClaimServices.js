@@ -8,6 +8,10 @@ angular.module('app.loggedIn.mdtclaim.services', [])
 		var funcApi = mdtApi.all('add');
 		return funcApi.post({add_data: postData});
 	}
+	mdtService.addPatient = function(postData){
+		var funcApi = mdtApi.all('addPatient');
+		return funcApi.post({add_data: postData});	
+	}
 	mdtService.edit = function(id, postData){
 		var funcApi = mdtApi.all('edit');
 		return funcApi.post({edit_data: postData, edit_id: id});

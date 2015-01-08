@@ -81,9 +81,9 @@ angular.module("app.loggedIn.patient.services", [])
         return claimApi.post({'Claim_id': claim_id});
     }
 
-    instanceService.insertClaim = function(data){
+    instanceService.insertClaim = function(data, Patient_id, CAL_ID){
         var claimApi = appApi.all("patient/insertClaim");
-        return claimApi.post(data);
+        return claimApi.post({add_data: data, Patient_id: Patient_id, CAL_ID: CAL_ID});
     }
 
     instanceService.editClaim = function(data){

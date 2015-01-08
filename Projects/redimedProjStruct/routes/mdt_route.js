@@ -51,6 +51,7 @@ app.get('/api/meditek/v1/mdtinsurer/list', mdtInsurerController.list);
 var mdtClaimController = require('./controllers/mdtClaimController');
 
 app.post('/api/meditek/v1/mdtclaim/search', mdtClaimController.postSearch);
+app.post('/api/meditek/v1/mdtclaim/addPatient', mdtClaimController.postAddPatient);
 app.post('/api/meditek/v1/mdtclaim/add', mdtClaimController.postAdd);
 app.post('/api/meditek/v1/mdtclaim/edit', mdtClaimController.postEdit);
 app.post('/api/meditek/v1/mdtclaim/byId', mdtClaimController.postById);

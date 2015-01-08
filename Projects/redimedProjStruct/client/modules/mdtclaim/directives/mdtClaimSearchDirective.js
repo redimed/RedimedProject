@@ -4,9 +4,16 @@ angular.module('app.loggedIn.mdtclaim.search.directive', []).directive('mdtclaim
 		scope: {
 			patientId: '=',
 			clickRow: '&',
+			isClose: '@'
 		},
 		templateUrl: 'modules/mdtclaim/directives/templates/search.html',
 		link: function(scope, element, attrs){
+			//POPUP
+			scope.closePopup = function(){
+				angular.element("#"+scope.isClose).fadeOut();
+			}
+			//END POPUP
+
 			var init = function(){
 				scope.list = {};
 				scope.params = {
@@ -17,12 +24,12 @@ angular.module('app.loggedIn.mdtclaim.search.directive', []).directive('mdtclaim
 						max_size: 3
 					},
 					filters: [
-						{type: 'text', name: 'Patient_id', value: scope.patientId},
+						/*{type: 'text', name: 'Patient_id', value: scope.patientId},*/
 						{type: 'text', name: 'Injury_name', value:''},
 						{type: 'text', name: 'Location', value:''}
 					],
 					select: [
-						'Patient_id', 'Injury_name', 'Location'
+						'Claim_id', 'Patient_id', 'Injury_name', 'Location'
 					]
 				}
 			}//end init
