@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.itemsheet.directive", [])
 
-.directive("itemsheet", function($filter, localStorageService, ReceptionistService, toastr, DoctorService){
+.directive("itemsheet", function($filter, localStorageService, ReceptionistService, toastr, DoctorService, PatientService){
 var arrGetBy = $filter('arrGetBy');
 
 return {
@@ -76,6 +76,8 @@ return {
 			// 	$scope.appt.dept_id = response.CLINICAL_DEPT_ID;
 			// 	return 	DoctorService.getItemByDept($scope.appt.dept_id);
 			// }).then(function (data) {
+
+			PatientService.initAppointment($scope.data.Patient_id, $scope.data.CAL_ID);
 
 			// GET APPOINTMENT DETAIL
 			ReceptionistService.apptDetail($scope.data.CAL_ID).then(function(response){
@@ -228,6 +230,7 @@ return {
 					if(is_delete && is_update){
 						$scope.reloadpage();
 						toastr.success('Save Successfully!!!', "Success");
+						PatientService.endAppointment(Patient_id, cal_id);
 					}
 				});
 			} 
@@ -238,6 +241,7 @@ return {
 					if(is_insert && is_update){
 						$scope.reloadpage();
 						toastr.success('Save Successfully!!!', "Success");
+						PatientService.endAppointment(Patient_id, cal_id);
 					}
 				});	
 			} 
@@ -248,6 +252,7 @@ return {
 					if(is_delete && is_insert){
 						$scope.reloadpage();
 						toastr.success('Save Successfully!!!', "Success");
+						PatientService.endAppointment(Patient_id, cal_id);
 					}
 				});	
 			} 	

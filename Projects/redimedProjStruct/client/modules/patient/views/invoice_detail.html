@@ -1,0 +1,75 @@
+<h3 class="page-title"> Invoice Detail </h3>
+
+<div class="portlet box red">
+	<div class="portlet-title">
+	    <div class="caption">
+	        <i class="fa fa-medkit"></i> Invoice Detail
+	    </div>
+	    <div class="pull-right navbar-right">
+            <button ng-click="invoiceSave()" class="btn blue"><i class="fa fa-save"></i> Save </button>
+        </div>
+	</div>
+	<div class="portlet-body">
+		<!-- DETAIL -->
+		<div class="row" style="margin-bottom: 15px;margin-top: 15px;">
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Patient: </strong>{{invoice.patient.Title}}. {{invoice.patient.First_name}} {{invoice.patient.Sur_name}}
+		    </div>
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Company: </strong> {{invoice.company.Company_name}}
+		    </div>
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Insurer: </strong> {{invoice.insurer.insurer_name}}
+		    </div>
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Service: </strong> {{invoice.service.SERVICE_NAME}}
+		    </div>
+		</div>
+
+		<div class="row" style="margin-bottom: 15px;">
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Doctor: </strong>{{invoice.doctor.NAME}}
+		    </div>
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Department: </strong>{{invoice.department.CLINICAL_DEPT_NAME}}
+		    </div>
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Site: </strong> {{invoice.site.Site_name}}
+		    </div>
+		</div>
+
+		<div class="row" style="margin-bottom: 15px;">
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Status: </strong>{{invoice.STATUS || 'enter'}}
+		    </div>
+		    <div class="col-md-3 col-sm-3 col-xs-6" ng-if="params.permission.create !== false">
+		        <strong>Amount: </strong> ${{invoice.AMOUNT}}
+		    </div>
+		</div>
+		<!-- DETAIL -->
+	</div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+       <b> Invoice Items </b>
+    </div>
+    <div class="panel-body">
+    	<table class="table table-bordered">
+    		<tr>
+    			<th> Item No</th>
+    			<th> Time Spent </th>
+    			<th> Quantity </th>
+    			<th> Price </th>
+    			<th> Amount </th>
+    		</tr>
+    		<tr ng-repeat="item in invoice.lines" ng-show="item.IS_ENABLE != 0">
+    			<td>{{item.invItem.ITEM_CODE}}</td>
+    			<td>{{item.TIME_SPENT}}</td>
+    			<td>{{item.QUANTITY}}</td>
+    			<td>${{item.PRICE}}</td>
+    			<td>${{item.AMOUNT}}</td>
+    		</tr>
+    	</table>
+    </div>
+</div>

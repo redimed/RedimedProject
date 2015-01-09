@@ -35,6 +35,26 @@ angular.module("app.loggedIn.patient.services", [])
         return funcApi.get({id: patient_id});
     }
 
+    instanceService.initAppointment = function(patient_id, cal_id){
+        var funcApi = khankAPI.all('appt/init');
+        return funcApi.post({patient_id: patient_id, cal_id: cal_id});
+    }
+
+    instanceService.endAppointment = function(patient_id, cal_id){
+        var funcApi = khankAPI.all('appt/end');
+        return funcApi.post({patient_id: patient_id, cal_id: cal_id});
+    }
+
+    instanceService.invoiceDetail = function(header_id) {
+        var funcApi = khankAPI.all('invoice/detail');
+        return funcApi.post({header_id: header_id});
+    }
+
+    instanceService.invoiceSave = function(header_id) {
+        var funcApi = khankAPI.all('invoice/save');
+        return funcApi.post({header_id: header_id});
+    }
+
      /*
     *  END KHANK 
     */

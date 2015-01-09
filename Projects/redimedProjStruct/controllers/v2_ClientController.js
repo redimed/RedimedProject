@@ -60,22 +60,6 @@ module.exports = {
         }).error(function(err){
             res.json({status: 'error', error: err});
         })
-
-       //  k_sql.exec(sql, function (data) {
-       //  	if(!post_data.company_id) {
-       //  		res.json({status: 'success'});
-       //  		return;
-       //  	}
-       //  	var sql = PatientModel.sql_insert_patient_company(id, post_data.company_id);
-       //  	k_sql.exec(sql, function (data) {
-       //  		res.json({status: 'success'});
-       //  	}, function(err) {
-		   		// // DUPLICATE PRIMARY KEY of patient companies
-	      //       res.json({status: 'success'});
-	      //   });
-       //  }, function(err) {
-       //      res.json({status: 'error'});
-       //  });
     },
 	
 	getNumCompanies: function(req, res) {
