@@ -27,8 +27,13 @@ module.exports = function(sequelize, DataTypes){
 		timestamps: false,
 		classMethods: {
 			associate: function(models){
-				mdtAppointment.belongsTo(models.Patient,{
-					as: 'Patient', foreignKey: 'Patient_id'
+				// mdtAppointment.belongsTo(models.Patient,{
+				// 	as: 'Patient', foreignKey: 'Patient_id'
+				// });
+				mdtAppointment.hasMany(models.Patient,{
+					as: 'Patients', 
+					foreignKey: 'CAL_ID',
+					through: 'cln_appt_patients'
 				});
 
 				mdtAppointment.hasMany(models.InvItem, {
