@@ -25,6 +25,7 @@ angular.module("app.loggedIn.patient.waiting_list.directive", [])
 				scope.selectedPatient.Sur_name = 'Patient';
 				scope.selectedPatient.error = true;
 			}
+			
 
 			initObject();
 
@@ -91,6 +92,8 @@ angular.module("app.loggedIn.patient.waiting_list.directive", [])
 					}// end if
 				}
 			}
+
+			
 			//END ACTION
 		}
 	} // end return

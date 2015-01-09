@@ -89,4 +89,13 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
+    .state("loggedIn.patient.itemsheet",{
+        url:"/appointment/:patient_id/:cal_id/itemsheet",
+        views: {
+            "main-content":{
+                templateUrl: "modules/patient/views/itemsheet.html",
+                controller: "PatientItemSheetController"
+            }
+        }
+    })
 })

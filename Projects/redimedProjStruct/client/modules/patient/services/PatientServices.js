@@ -38,7 +38,28 @@ angular.module("app.loggedIn.patient.services", [])
      /*
     *  END KHANK 
     */
+    
+    /*
+    * MINH
+    */
+    instanceService.getDeptItems = function(dept_id){
+        var funcApi = khankAPI.all('itemsheet/dept_items');
+        return funcApi.post({id: dept_id});
+    }
+    
+    instanceService.saveItemSheet = function(listitem){
+        var funcApi = khankAPI.all('itemsheet/insert_dept_items');
+        return funcApi.post({list: listitem });
+    }
+    
+    instanceService.getApptItems = function(appt_id){
+        var funcApi = khankAPI.all('itemsheet/appt_items');
+        return funcApi.post({appt_id: appt_id });
+    }
 
+    /*
+    * END MINH
+    */
     instanceService.mdtVerifiedMedicare = function(options){
         var govermentApi = Restangular.allUrl("Medicare", "http://localhost:9292/testapp.redimed.com.au:3003/RedimedJavaREST/api/medicare/verify/pvm");
         return govermentApi.post(options);

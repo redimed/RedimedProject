@@ -35,13 +35,16 @@ module.exports = function(sequelize, DataTypes){
 					as: 'Items', foreignKey: 'cal_id', through: models.ApptItems
 				}); 
 
-				mdtAppointment.belongsTo(models.Patient,{
-					as: 'Patient', foreignKey: 'Patient_id'
-				});
+				mdtAppointment.belongsTo(models.Department,{
+                 as: 'Department', foreignKey: 'CLINICAL_DEPT_ID'
+                });
 
 				mdtAppointment.belongsTo(models.Doctor,{
 					as: 'Doctor', foreignKey: 'DOCTOR_ID'
 				});
+                mdtAppointment.belongsTo( models.SysServices, { 
+                    as: 'Service', foreignKey: 'SERVICE_ID'
+                });
 			}
 		}// end association
 	});
