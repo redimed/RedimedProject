@@ -1,51 +1,53 @@
 <ion-side-menus>
   <ion-pane ion-side-menu-content>
-    <ion-nav-bar class="bar-stable nav-title-slide-ios7 ">
-      <ion-nav-buttons side="right">
-        <button class="button button-clear button-positive" ng-click="openPopover($event)">Setting</button>
-      </ion-nav-buttons>
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
     </ion-nav-bar>
     <ion-nav-view name="menuContent" animation="slide-left-right">
 
     </ion-nav-view>
   </ion-pane>
 
-  <ion-side-menu side="left" class="bg-menu-left" width="290">
+  <ion-side-menu side="left" class="bg-menu-left">
     <div id="content">
       <div id="profile-info">
-
         <a class="custom-icon-info" ui-sref="app.profile" menu-close>
           <i class="fa fa-info-circle fa-2x"></i>
         </a>
 
-        <img class="img-circle" width="100" height="100" src="http://www.mrwallpaper.com/wallpapers/nice-girl-1920x1080.jpg" title="Profile" >
+        <img class="img-circle" width="100" height="100" src="img/profile.png" style="border: 1px solid #fff">
 
         <a ng-click="logoutApp()" class="custom-icon-power">
           <i class="fa fa-power-off fa-2x"></i>
         </a>
 
-        <h3 id="profile-name">{{userName}}</h3>
+        <h3 id="profile-name" style="color: #fff7eb; font-weight: 200; text-shadow: 0 0 3px #fff7eb;">{{userName}}</h3>
         <button class="button button-positive" ng-click="readNFC()">Read NFC Tag</button>
       </div>
+
       <ion-list ng-repeat="menu in Injurymenu">
-        <ion-item ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}" class="item-menu" menu-close>
+        <ion-item class="item-menu" ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}" menu-close>
           {{submenu.name}}
-          <i class="fa fa-angle-right" style="float: right"></i>
+          <i class="fa fa-angle-right" style="float: right; position: absolute; right: 5%"></i>
         </ion-item>
       </ion-list>
     </div>
   </ion-side-menu>
 
-</ion-side-menus>
-
-
-<script id="my-popover.html" type="text/ng-template">
-  <ion-popover-view>
-    <ion-header-bar>
-      <h1 class="title">Injury Management App</h1>
-    </ion-header-bar>
-    <ion-content>
-      Version 1.8.
+  <ion-side-menu side="right">
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon" style="padding-right: 29px;"></i>
+      <input type="search" placeholder="Search">
+    </label>
+    <ion-content class="has-header" style="padding-top: 5px;">
+      <ul class="list">
+        <li class="item item-button-right" ng-repeat="contact in contacts" ng-hide="contact.username == userName">
+          <i class="icon ion-record" style="color: green"></i>
+          {{ contact.username }}
+          <button class="button button-icon icon ion-ios7-telephone"
+                  ui-sref="app.phoneCall({ isCalling: true, contactName: contact.username})" menu-close>
+          </button>
+        </li>
+      </ul>
     </ion-content>
-  </ion-popover-view>
-</script>
+  </ion-side-menu>
+</ion-side-menus>

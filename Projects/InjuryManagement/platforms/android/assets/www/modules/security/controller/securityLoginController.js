@@ -1,7 +1,7 @@
 angular.module('starter.security.login.controller',[])
-    .controller('securityLoginController',function($scope, $state,UserService, SecurityService,
+    .controller('securityLoginController',function($scope, $state, UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
-                                                   $cordovaMedia){
+                                                   $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading){
         $scope.notifications = [];
 
         $scope.$on('pushNotificationReceived', function (event, notification) {
@@ -54,15 +54,40 @@ angular.module('starter.security.login.controller',[])
             }
         }
 
+        signaling.on('isError', function () {
+            var alertPopup = $ionicPopup.alert({
+                title: "Can't Login",
+                template: 'Account is using!'
+            });
+        });
+
+        signaling.on('isSuccess', function () {
+            sigInApp();
+        });
+
         // SUBMIT LOGIN
-        $scope.login = function(){
+        $scope.loginApp = function() {
+            signaling.emit('checkLogin', $scope.modelUser.username);
+        }
+
+        function sigInApp() {
+            $ionicLoading.show({
+                template: "<div class='icon ion-ios7-reloading'></div>"+
+                "<br />"+
+                "<span>signing...</span>",
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 500
+            });
             SecurityService.login($scope.modelUser).then(function(response){
                 UserService.detail().then(function(response){
                     if(typeof response.userInfo !== 'undefined')
                         localStorageService.set("userInfo", response.userInfo);
+
+                    signaling.emit('login_successful', response.userInfo.id, response.userInfo.user_name);
+
                     if(typeof response.companyInfo !== 'undefined')
                         localStorageService.set("companyInfo", response.companyInfo);
-
                     if(response.userInfo['function_mobile'] != null){
                         UserService.getFunction(response.userInfo['function_mobile']).then(function(data){
                             var rs = data.definition.split('(');
@@ -84,16 +109,22 @@ angular.module('starter.security.login.controller',[])
                     }
                     else
                     {
-                        if(localStorageService.get("userInfo").user_type == "Driver")
+                        if(localStorageService.get("userInfo").UserType.user_type == "Driver")
                         {
+                            $ionicLoading.hide();
                             $state.go('app.driver.list');
                         } else {
+                            $ionicLoading.hide();
                             $state.go('app.injury.info');
                         }
                     }
                 });
             }, function(error){
-                alert('Error','error');
+                console.log(error);
+                $ionicPopup.alert({
+                    title: "Can't Login",
+                    template: 'Please Check Your Information!'
+                })
             });
         }
     });

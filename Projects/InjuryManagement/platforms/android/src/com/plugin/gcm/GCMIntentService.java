@@ -62,23 +62,25 @@ public class GCMIntentService extends GCMBaseIntentService {
 	protected void onMessage(Context context, Intent intent) {
 		Log.d(TAG, "onMessage - context: " + context);
 
+		MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.parse("http://testapp.redimed.com.au:3000/api/im/pushSound"));
 		// Extract the payload from the message
 		Bundle extras = intent.getExtras();
 		if (extras != null)
 		{
-			MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.parse("http://testapp.redimed.com.au:3000/api/im/pushSound"));
-
 			// if we are in the foreground, just surface the payload, else post it to the statusbar
             if (PushPlugin.isInForeground()) {
 				extras.putBoolean("foreground", true);
-				mediaPlayer.stop();
                 PushPlugin.sendExtras(extras);
+                mediaPlayer.stop();
 			}
 			else {
 				extras.putBoolean("foreground", false);
+
+                mediaPlayer.start();
+                mediaPlayer.setLooping(true);
+
                 // Send a notification if there is a message
                 if (extras.getString("message") != null && extras.getString("message").length() != 0) {
-	                mediaPlayer.start();
                     createNotification(context, extras);
                 }
             }
@@ -103,14 +105,16 @@ public class GCMIntentService extends GCMBaseIntentService {
 				defaults = Integer.parseInt(extras.getString("defaults"));
 			} catch (NumberFormatException e) {}
 		}
-		
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+
+		NotificationCompat.Builder mBuilder =
+			new NotificationCompat.Builder(context)
+				.setDefaults(defaults)
 				.setSmallIcon(context.getApplicationInfo().icon)
 				.setWhen(System.currentTimeMillis())
 				.setContentTitle(extras.getString("title"))
 				.setTicker(extras.getString("title"))
 				.setContentIntent(contentIntent)
-				.setAutoCancel(false);
+				.setAutoCancel(true);
 
 		String message = extras.getString("message");
 		if (message != null) {

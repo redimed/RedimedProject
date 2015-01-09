@@ -28,7 +28,7 @@ angular.module('starter.security',[
                 views:{
                     'main-content':{
                         templateUrl:'modules/security/views/forgot.html',
-                        controller:'securityForgotController'
+                        controller:'securityLoginController'
                     }
                 }
             })

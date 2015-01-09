@@ -29,5 +29,13 @@ angular.module('starter.driver',[
                     }
                 }
             })
+            .state('app.driver.mapsPickup',{
+                url:"/mapsPickup",
+                views:{
+                    'structure':{
+                        templateUrl:"modules/driver/views/mapsPickup.html"
+                    }
+                }
+            })
     })
 

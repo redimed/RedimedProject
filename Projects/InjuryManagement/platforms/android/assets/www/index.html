@@ -8,37 +8,30 @@
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="lib/ionic/css/ionic.css"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <!--<link rel="stylesheet" href="css/login.css"/>-->
-    <!--<link rel="stylesheet" href="css/profile.css"/>-->
     <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css"/>
     <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
-    <!--<link rel="stylesheet" href="theme/assets/admin/pages/css/login-soft.css"/>-->
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+    <!--socket.io-->
+    <script src="lib/socket.io.js"></script>
+    <script src="lib/collide/collide.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/angular-socket-io/socket.js"></script>
 
     <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/ng-cordova.js"></script>
+    <script src="lib/ng-cordova-master/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
 
-    <script src="lib/opentok.js"></script>
-    <!--<script src="http://static.opentok.com/webrtc/v2.2/js/opentok.min.js"></script>-->
+    <!--<script src="lib/fastclick-master/lib/fastclick.js"></script>-->
 
-    <!--RESTANGULAR-->
+    <!--ANGULAR-->
     <script src="lib/lodash/dist/lodash.compat.min.js"></script>
-
     <script src="lib/restangular/dist/restangular.min.js"></script>
     <script src="lib/angular-local-storage/dist/angular-local-storage.min.js"></script>
-
     <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="lib/jquery/jquery-1.10.2.min.js"></script>
 
     <!--//maps-->
-    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>-->
     <script src="lib/jquery/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script src="lib/hpneo-gmaps-f12b532/gmaps.js"></script>
@@ -55,7 +48,7 @@
     <script src="modules/onlineBooking/OnlineBooking.js"></script>
     <script src="modules/driver/Driver.js"></script>
     <script src="modules/NFC/NFC.js"></script>
-    <script src="modules/opentok/OpenTok.js"></script>
+    <script src="modules/phoneCall/phoneCall.js"></script>
 
     <!--service-->
     <script src="modules/security/services/securityServices.js"></script>
@@ -66,7 +59,7 @@
     <script src="modules/worker/services/WriteNFC.js"></script>
     <script src="modules/driver/services/DriverServices.js"></script>
     <script src="modules/NFC/services/readNFC.js"></script>
-    <script src="modules/opentok/services/OpenTokServices.js"></script>
+    <script src="modules/phoneCall/services/phoneCallService.js"></script>
 
     <!--controller-->
     <script src="modules/menu/controller/menuController.js"></script>
@@ -80,7 +73,7 @@
     <script src="modules/onlineBooking/controller/rlobDetailBookingController.js"></script>
     <script src="modules/driver/controller/DriverController.js"></script>
     <script src="modules/NFC/controller/readNFCController.js"></script>
-    <script src="modules/opentok/controller/OpenTokController.js"></script>
+    <script src="modules/phoneCall/controller/phoneCallController.js"></script>
 </head>
 <body ng-app="starter" class="platform-android platform-cordova platform-webview">
 <ion-nav-view name="root" style="background-color: rgba(0, 0, 0, 0.3);" >

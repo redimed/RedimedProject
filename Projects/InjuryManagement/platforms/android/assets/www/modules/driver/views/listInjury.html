@@ -3,12 +3,14 @@
 
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        <button class="button button-clear button-positive" ui-sref="app.driver.mapsPickup">
+            Maps
+        </button>
     </ion-nav-buttons>
 
     <ion-content style="z-index: 9999">
-        <ion-refresher
-                on-refresh="doRefreshList()">
-        </ion-refresher>
+        <!--<ion-refresher on-refresh="doRefreshList()">-->
+        <!--</ion-refresher>-->
         <div class="item-input-inset">
             <label class="item-input-wrapper" style="background-color: rgba(127, 140, 141, 0.8); color: whitesmoke !important;">
                 <i class="icon ion-ios7-search placeholder-icon"></i>
@@ -16,7 +18,7 @@
             </label>
         </div>
 
-        <div class="list">
+        <ion-list>
             <a ng-click="selectPatient(listPatient.injury_id, listPatient.STATUS)"
                class="item item-avatar custom-item-listpatient"
                ng-repeat="listPatient in lstPatient | filter: searchText"
@@ -44,6 +46,6 @@
                     </p>
                 </div>
             </a>
-        </div>
+        </ion-list>
     </ion-content>
 </ion-view>

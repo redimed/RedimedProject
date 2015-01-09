@@ -1,16 +1,25 @@
 angular.module("starter.menu.controller",[])
-    .controller("menuController",function($scope, localStorageService, $state, UserService, $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs, $ionicLoading, $timeout, $cordovaMedia, $ionicPlatform){
+    .controller("menuController",function($scope, localStorageService, $state, UserService,
+                                          $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
+                                          $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling){
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
         $scope.Injurymenu = [];
         $scope.user = userInfo.Booking_Person;
         $scope.userName = userInfo.user_name;
         $scope.selectedMenu = null;
+
         if(ionic.Platform.isAndroid() || ionic.Platform.isIOS())
         {
             var mediaSource = $cordovaMedia.newMedia("http://testapp.redimed.com.au:3000/api/im/pushSound");
             var media = mediaSource.media
         }
+
+        signaling.on('online', function (userlist) {
+            $scope.$apply(function(){
+                $scope.contacts = userlist;
+            })
+        })
 
         UserService.getUserInfo(userInfo.id).then(function(data){
             $scope.img = data.img;
@@ -50,6 +59,8 @@ angular.module("starter.menu.controller",[])
                 template: 'Are you sure you want to log out?'
             }).then(function(result){
                 if(result){
+                    signaling.emit('logout', userInfo.user_name);
+                    signaling.removeAllListeners();
                     $ionicLoading.show({
                         template: "<div class='icon ion-ios7-reloading'></div>"+
                         "<br />"+
@@ -76,38 +87,10 @@ angular.module("starter.menu.controller",[])
         }
 
         $scope.readNFC = function() {
-            $state.go('app.NFC',null,{
-                reload:true
+            $state.go('app.NFC', null, {
+                reload: true
             })
         }
-
-        // popover
-        $ionicPopover.fromTemplateUrl('my-popover.html', {
-            scope: $scope
-        }).then(function(popover) {
-            $scope.popover = popover;
-        });
-        $scope.openPopover = function($event) {
-            $scope.popover.show($event);
-        };
-        $scope.closePopover = function() {
-            $scope.popover.hide();
-        };
-        //Cleanup the popover when we're done with it!
-        $scope.$on('$destroy', function() {
-            $scope.popover.remove();
-        });
-        // Execute action on hide popover
-        $scope.$on('popover.hidden', function() {
-            // Execute action
-        });
-        // Execute action on remove popover
-        $scope.$on('popover.removed', function() {
-            // Execute action
-        });
-        //    end Popover
-
-
 
 
         $scope.$on('pushNotificationReceived', function (event, notification) {
@@ -121,12 +104,10 @@ angular.module("starter.menu.controller",[])
 
         //Android.
         function handleAndroid(notification) {
-            if (notification.event == "message" && userInfo.user_type == "Driver") {
-                $cordovaMedia.play(media);
+            if (notification.event == "message" && userInfo.UserType.user_type == "Driver") {
                 $cordovaDialogs.alert(notification.message, "Emergency").then(function (){
                     localStorageService.set("idpatient_notice", notification.payload.injury_id)
                     $state.go('app.driver.detailInjury', {}, {reload: true});
-                    $cordovaMedia.stop(media);
                 })
             }
             else if (notification.event == "error")
@@ -163,4 +144,5 @@ angular.module("starter.menu.controller",[])
                 else $cordovaDialogs.alert(notification.alert, "(RECEIVED WHEN APP IN BACKGROUND) Push Notification Received");
             }
         }
+
     })

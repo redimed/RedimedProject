@@ -1,5 +1,5 @@
 angular.module("starter.menu",["starter.menu.controller"])
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(function($stateProvider) {
         $stateProvider
             .state('app', {
                 url: "/app",

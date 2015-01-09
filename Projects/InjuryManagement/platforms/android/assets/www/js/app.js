@@ -1,10 +1,13 @@
 // Ionic Starter App
 
+'use strict';
+
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic',
+    'btford.socket-io',
     'restangular',
     'starter.menu',
     'starter.security',
@@ -20,7 +23,7 @@ angular.module('starter', ['ionic',
     'ngCordova',
     'starter.driver',
     'starter.NFC',
-    'starter.opentok',
+    'starter.phoneCall',
 ])
     //app ready get function register get device token
     .factory(("ionPlatform"), function( $q ){
@@ -35,9 +38,19 @@ angular.module('starter', ['ionic',
         }
     })
 
+    .factory('signaling', function (socketFactory) {
+        var socket = io.connect('http://192.168.133.42:3000/');
+
+        var socketFactory = socketFactory({
+            ioSocket: socket
+        });
+
+        return socketFactory;
+    })
+
     .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
 
-        RestangularProvider.setBaseUrl("http://192.168.135.99:3000");
+        RestangularProvider.setBaseUrl("http://192.168.133.42:3000");
 
         //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
@@ -53,7 +66,7 @@ angular.module('starter', ['ionic',
                             }, 100);
                         }else {
                             $timeout(function() {
-                                if(localStorageService.get("userInfo").user_type == "Driver")
+                                if(localStorageService.get("userInfo").UserType.user_type == "Driver")
                                 {
                                     $state.go('app.driver.list');
                                 } else {
@@ -65,7 +78,22 @@ angular.module('starter', ['ionic',
                 }
             })
     })
-    .run(function($state, $rootScope, localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform){
+
+    .run(function($state, $rootScope, localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $cordovaMedia){
+
+        //modal receive phone call
+        $ionicModal.fromTemplateUrl('modules/phoneCall/views/modal/receivePhone.html', function(modal) {
+            $rootScope.receivePhoneModal = modal;
+        },{
+            scope: $rootScope,
+            animation: 'slide-in-up'
+        });
+        $rootScope.contacts = {};
+
+        //sound phone call;
+        var src = "/android_asset/www/receive_phone.mp3";
+
+
         localStorageService.set('mode','read');
         $rootScope.$on("$stateChangeSuccess", function(e, toState) {
             if(!localStorageService.get("userInfo")){
@@ -98,13 +126,66 @@ angular.module('starter', ['ionic',
                     }
                 }
                 $cordovaPush.register(config).then(function (result) {
-                    console.log("Register success Push Notification " + result)
+                    console.log("Register Push Notification " + result)
                 }, function (err) {
-                    console.log("Register error Push Notification " + err)
+                    console.log("Register Push Notification " + err)
                 });
             });
         });
-    });
+
+        signaling.on('messageReceived', function (userInfo, message) {
+            switch (message.type) {
+                case 'call':
+
+                    var media = $cordovaMedia.newMedia(src);
+                    media.play();
+                    if ($state.current.name === 'app.phoneCall') { return; }
+
+                    $rootScope.nameCalling = userInfo;
+                    $rootScope.receivePhoneModal.show();
+
+                    $rootScope.answerphoneCall = function() {
+                        media.stop();
+                        $rootScope.receivePhoneModal.hide();
+                        $state.go('app.phoneCall', { isCalling: false, contactName: userInfo });
+                    }
+
+                    $rootScope.hideModalphoneCall = function(){
+                        media.stop();
+                        $rootScope.receivePhoneModal.hide();
+                        signaling.emit('sendMessage', userInfo, { type: 'ignore' });
+                    }
+
+                    break;
+                case 'ignore':
+                    $rootScope.receivePhoneModal.hide();
+                    media.stop();
+                    break;
+            }
+        });
+    })
+
+    .directive('videoView', function ($rootScope, $timeout) {
+        return {
+            restrict: 'E',
+            template: '<div class="video-container"></div>',
+            replace: true,
+            link: function (scope, element, attrs) {
+                function updatePosition() {
+                    cordova.plugins.phonertc.setVideoView({
+                        container: element[0],
+                        local: {
+                            position: [20, 20],
+                            size: [150, 150]
+                        }
+                    });
+                }
+
+                $timeout(updatePosition, 500);
+                $rootScope.$on('videoView.updatePosition', updatePosition);
+            }
+        }
+    })
 
 
 

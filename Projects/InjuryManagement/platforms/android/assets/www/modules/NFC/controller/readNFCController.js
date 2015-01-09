@@ -123,13 +123,10 @@ angular.module('starter.NFC.controller',[])
 
         })
         $scope.writeNewNFC = function(data){
-            var defer = $q.defer();
 
-            defer.promise.then(function () {
                 localStorageService.set('mode','write');
                 var mode = localStorageService.get('mode');
                 writeNFC.initialize(data,mode);
-            }).then(function(){
                 var NewInfo = {
                     Patient_id:data.data.Patient_id,
                     Title:data.data.Title,
@@ -175,9 +172,6 @@ angular.module('starter.NFC.controller',[])
                         alert("Update Fail");
                     }
                 })
-            });
-            defer.resolve();
-
         }
         $scope.Inapp = function(data){
 

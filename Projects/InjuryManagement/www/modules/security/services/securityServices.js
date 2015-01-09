@@ -32,5 +32,6 @@ angular.module('starter.security.services',[])
             var notificationServices = securityApi.all('im/deleteToken');
             return notificationServices.post({info:userinfo});
         }
+
         return securityService;
     })

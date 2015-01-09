@@ -1,0 +1,27 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="content-scroll" on-scroll="updateVideoPosition()" on-scroll-complete="updateVideoPosition()">
+        <div class="calling-container" ng-if="!callInProgress">
+            <p>Calling to <span class="balanced">{{ contactName }}</span>...</p>
+
+            <button class="button custom-bottom-cancel" ng-click="ignore()">
+                <img class="img-responsive margin-auto" src="img/call-down.png" />
+            </button>
+            <!--<button class="button custom-bottom-cancel" ng-click="mute()">-->
+                <!--<img class="img-responsive margin-auto" src="img/call-down.png" />-->
+            <!--</button>-->
+        </div>
+
+        <div class="calling-container" ng-if="callInProgress">
+            <p>
+                Call in progress...
+            </p>
+
+            <button class="button custom-bottom-cancel" ng-click="end()">
+                <img class="img-responsive margin-auto" src="img/call-down.png" />
+            </button>
+        </div>
+
+        <video-view></video-view>
+
+    </ion-content>
+</ion-view>

@@ -3,7 +3,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
     .controller('InjuryAddController', function($scope, $state, $filter, $stateParams,
                                                 InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                                 $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate, $cordovaGeolocation,
-                                                $ionicLoading, $compile, $timeout, $cordovaStatusbar, $cordovaDialogs, $cordovaPush){
+                                                $ionicLoading, $compile, $timeout, $rootScope){
         $scope.isSubmit = false;
         $scope.isShow = true;
         $scope.imgURI = [];
@@ -426,6 +426,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }
 
         $scope.pushNotificationbutton = function() {
+            //$rootScope.receivePhoneModal.show();
             InjuryServices.pushGCM().then(function(res){
                 if(res.status.toLocaleLowerCase() == "success"){
                     alert("push success");
@@ -557,8 +558,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         "<span>waiting...</span>",
                         animation: 'fade-in',
                         showBackdrop: true,
-                        maxWidth: 200,
-                        showDelay: 0
+                        maxWidth: 500
                     });
                     GMaps.geocode({
                         address:scope.address,

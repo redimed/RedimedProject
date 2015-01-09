@@ -1,0 +1,13 @@
+<ion-view name="Pickup Maps">
+
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        <button class="button button-clear button-positive" ui-sref="app.driver.mapsPickup">
+            Maps
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content >
+        <div id="map-canvas" data-tap-disabled="true" pickup-map  address="lstPatient" in="worker" add="selectPatient(injuryID)" class="col-md-12" lo="test"   style="height: 500px; width: 100%"></div>
+    </ion-content>
+</ion-view>

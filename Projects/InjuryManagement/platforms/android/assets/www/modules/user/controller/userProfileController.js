@@ -13,7 +13,7 @@ angular.module('starter.user.controller',[])
             companyInfo = localStorageService.get('companyInfo');
         }
 
-        if(userInfo.user_type == 'Company')
+        if(userInfo.UserType.user_type == 'Company')
         {
             $scope.detail = {
                 id: userInfo.id,
@@ -50,7 +50,7 @@ angular.module('starter.user.controller',[])
         })
 
 
-        if(userInfo.user_type == 'Company')
+        if(userInfo.UserType.user_type == 'Company')
         {
             $scope.isCompany = true;
             $scope.info = {
@@ -59,7 +59,7 @@ angular.module('starter.user.controller',[])
                 username:userInfo.user_name,
                 phone:userInfo.Contact_number,
                 email:userInfo.Contact_email,
-                userType: userInfo.user_type,
+                userType: userInfo.UserType.user_type,
                 companyName: companyInfo.Company_name,
                 companyIndustry: companyInfo.Industry,
                 companyAddr: companyInfo.Addr,
@@ -74,7 +74,7 @@ angular.module('starter.user.controller',[])
                 username:userInfo.user_name,
                 phone:userInfo.Contact_number,
                 email:userInfo.Contact_email,
-                userType: userInfo.user_type
+                userType: userInfo.UserType.user_type
             }
         }
 

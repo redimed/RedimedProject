@@ -6,6 +6,13 @@ module.exports = [
         "runs": true
     },
     {
+        "file": "plugins/com.dooble.phonertc/www/phonertc.js",
+        "id": "com.dooble.phonertc.PhoneRTC",
+        "clobbers": [
+            "cordova.plugins.phonertc"
+        ]
+    },
+    {
         "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
         "id": "com.phonegap.plugins.PushPlugin.PushNotification",
         "clobbers": [
@@ -18,17 +25,6 @@ module.exports = [
         "clobbers": [
             "datePicker"
         ]
-    },
-    {
-        "file": "plugins/nl.x-services.plugins.toast/www/Toast.js",
-        "id": "nl.x-services.plugins.toast.Toast",
-        "clobbers": [
-            "window.plugins.toast"
-        ]
-    },
-    {
-        "file": "plugins/nl.x-services.plugins.toast/test/tests.js",
-        "id": "nl.x-services.plugins.toast.tests"
     },
     {
         "file": "plugins/org.apache.cordova.camera/www/CameraConstants.js",
@@ -56,6 +52,13 @@ module.exports = [
         "id": "org.apache.cordova.camera.CameraPopoverHandle",
         "clobbers": [
             "CameraPopoverHandle"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
         ]
     },
     {
@@ -265,19 +268,19 @@ module.exports.metadata =
 // TOP OF METADATA
 {
     "com.chariotsolutions.nfc.plugin": "0.6.0",
+    "com.dooble.phonertc": "2.0.0",
     "com.phonegap.plugins.PushPlugin": "2.4.0",
     "com.plugin.datepicker": "0.5.0",
-    "nl.x-services.plugins.toast": "2.0.2",
     "org.apache.cordova.camera": "0.3.3",
-    "org.apache.cordova.console": "0.2.11",
+    "org.apache.cordova.console": "0.2.12",
+    "org.apache.cordova.device": "0.2.13",
     "org.apache.cordova.dialogs": "0.2.10",
     "org.apache.cordova.file": "1.3.1",
     "org.apache.cordova.file-transfer": "0.4.7",
     "org.apache.cordova.geolocation": "0.3.10",
     "org.apache.cordova.inappbrowser": "0.5.3",
     "org.apache.cordova.media": "0.2.15",
-    "org.apache.cordova.statusbar": "0.1.8",
-    "com.tokbox.cordova.opentok": "1.0.2"
+    "org.apache.cordova.statusbar": "0.1.8"
 }
 // BOTTOM OF METADATA
 });

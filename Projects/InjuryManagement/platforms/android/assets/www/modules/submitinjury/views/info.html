@@ -3,23 +3,16 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
 
-    <div class="bar-sub-color bar bar-subheader">
-
-        <button class="button button-clear button-positive" ng-click="resetFormInjury()">
-            Reset
-        </button>
-
-        <button class="button button-clear button-positive" ng-click="nextform(info)">
-            Next
-        </button>
-    </div>
+    <ion-nav-buttons side="right">
+        <button menu-toggle="right" class="button button-icon fa fa-book"></button>
+    </ion-nav-buttons>
 
     <form name="info" novalidate>
-        <ion-content class="padding has-header">
+        <ion-content class="padding">
             <ion-list>
-                <div style="z-index: 1; position:relative; width: 100%; top: 60px;">
+                <div style="z-index: 1; position:relative; width: 100%; top: 20px;">
 
-                    <label class="item item-input item-select" ng-class="{'has-error':isSubmit && info.Title.$invalid}">
+                    <label class="item item-input item-select label-custom-field" ng-class="{'has-error':isSubmit && info.Title.$invalid}">
                         <span class="input-label span-input-color">Title</span>
                         <select ng-required="true" ng-model="worker.Title" name="Title"
                                 ng-options="row.name as row.name for row in titleIndex" ng-disabled="worker.Patient_id != -1 && temp1.Title">
@@ -27,11 +20,15 @@
                         </select>
                     </label>
 
-                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.First_name.$invalid}">
+                    <hr class="custom-hr">
+
+                    <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && info.First_name.$invalid}">
                         <span class="input-label span-input-color">First Name</span>
                         <input ng-required="true" type="text" ng-model="worker.First_name" name="First_name" ng-disabled="worker.Patient_id != -1 && temp1.First_name" />
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.First_name.$invalid}"></i>
                     </label>
+
+                    <hr class="custom-hr">
 
                     <ion-scroll direction="y" class="list searchform" ng-hide="!worker.First_name || !isShow">
                         <a class="item itemsearch"
@@ -53,10 +50,12 @@
                         </a>
                     </ion-scroll>
 
-                    <label class="item item-input">
+                    <label class="item item-input label-custom-field">
                         <span class="input-label span-input-color">Middle Name</span>
                         <input type="text" ng-model="worker.Middle_name" name="Middle_name" ng-disabled="worker.Patient_id != -1 && temp1.Middle_name"/>
                     </label>
+
+                    <hr class="custom-hr">
 
                     <ion-scroll direction="y" class="list searchform" ng-hide="!worker.Middle_name || !isShow">
                         <a class="item itemsearch"
@@ -78,11 +77,13 @@
                         </a>
                     </ion-scroll>
 
-                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.Sur_name.$invalid}">
+                    <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && info.Sur_name.$invalid}">
                         <span class="input-label span-input-color">Sur Name</span>
-                        <input ng-required="true" type="text" ng-model="worker.Sur_name" name="Sur_name" ng-disabled="worker.Patient_id != -1 && temp1.Sur_name"/>
+                        <input ng-required="true" type="text" ng-model="worker.Sur_name" name="Sur_name" ng-disabled="worker.Patient_id != -1 && temp1.Sur_name" />
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Sur_name.$invalid}"></i>
                     </label>
+
+                    <hr class="custom-hr">
 
                     <ion-scroll direction="y" class="list searchform" ng-hide="!worker.Sur_name || !isShow">
                         <a class="item itemsearch"
@@ -104,13 +105,15 @@
                         </a>
                     </ion-scroll>
 
-                    <label class="item item-input" ng-class="{'has-error':(isSubmit && info.Mobile.$invalid) || isFailMobile}">
+                    <label class="item item-input label-custom-field" ng-class="{'has-error':(isSubmit && info.Mobile.$invalid) || isFailMobile}">
                         <span class="input-label span-input-color">Mobile Phone</span>
                         <input ng-required="true" type="tel" ng-model="worker.Mobile" name="Mobile" ng-change="Checkfield(isMobile = true)" ng-disabled="worker.Patient_id != -1 && temp1.Mobile"/>
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Mobile.$invalid || isFailMobile}"></i>
                     </label>
 
-                    <label class="item item-input" ng-class="{'has-error':(isSubmit && info.Email.$invalid) || isFailEmail}">
+                    <hr class="custom-hr">
+
+                    <label class="item item-input label-custom-field" ng-class="{'has-error':(isSubmit && info.Email.$invalid) || isFailEmail}">
                         <span class="input-label span-input-color">Email</span>
                         <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-change="Checkfield(isMobile = false)" ng-blur="isSuccess = false" ng-disabled="worker.Patient_id != -1 && temp1.Email"/>
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Email.$invalid || isFailEmail}"></i>
@@ -118,7 +121,9 @@
                         <i ng-class="{'icon ion-checkmark-round text-success':isSuccess}"></i>
                     </label>
 
-                    <label class="item item-input item-select" ng-class="{'has-error':isSubmit && info.Sex.$invalid}">
+                    <hr class="custom-hr">
+
+                    <label class="item item-input item-select label-custom-field" ng-class="{'has-error':isSubmit && info.Sex.$invalid}">
                         <span class="input-label span-input-color">Sex</span>
                         <select ng-required="true" ng-model="worker.Sex" name="Sex" ng-disabled="worker.Patient_id != -1 && temp1.Sex"
                                 ng-options="row.name as row.name for row in sexIndex">
@@ -126,17 +131,37 @@
                         </select>
                     </label>
 
-                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.DOB.$invalid}">
+                    <hr class="custom-hr">
+
+                    <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && info.DOB.$invalid}">
                         <span class="input-label span-input-color">Birthday</span>
                         <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()"  min="1865-01-01" max="1995-01-01" />
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.DOB.$invalid}"></i>
                     </label>
 
-                    <label class="item item-input" ng-class="{'has-error':isSubmit && info.Address1.$invalid}">
+                    <hr class="custom-hr">
+
+                    <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && info.Address1.$invalid}">
                         <span class="input-label span-input-color">Address</span>
                         <input ng-required="true" id="Address1" type="text"   ng-model="worker.Address1" name="Address1" ng-disabled="worker.Patient_id != -1 && temp1.Address1"/>
                         <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && info.Address1.$invalid}"></i>
                     </label>
+
+                    <hr class="custom-hr">
+
+                    <div class="row">
+                        <div class="col" style="text-align: right">
+                            <button class="button button-clear btn-process" ng-click="resetFormInjury()">
+                                <i class="icon ion-ios7-refresh-empty"></i>
+                            </button>
+                        </div>
+                        <div class="col" style="text-align: left">
+                            <button class="button button-clear btn-process" ng-click="nextform(info)">
+                                <i class="icon ion-ios7-arrow-thin-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
                     <button class="button button-positive" ng-click="pushNotificationbutton()">
                         Click me for Push!!!
                     </button>
