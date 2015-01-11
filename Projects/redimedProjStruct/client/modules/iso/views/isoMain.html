@@ -148,10 +148,10 @@
 
                     <div class='iso-action-group'>
                         <button
-                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].downloadNewestVersion"
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].downloadNewestVersion && selectedTreeNode.CURRENT_VERSION_ID!=null"
                             type="button" 
                             class="btn btn-default"
-                            ng-click="downloadNewestVersionDocument()">Download Newest Version
+                            ng-click="downloadNewestVersionDocument()">Download Current Version
                         </button>
                     </div>
                 </div>
