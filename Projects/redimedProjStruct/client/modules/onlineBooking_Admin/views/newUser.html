@@ -74,15 +74,8 @@
                             <label class="control-label col-md-3 col-sm-3">User Type <span class="required">
                                                 * </span></label>
                             <div class="col-md-8 col-sm-8">
-                                <select ng-model="info.userType" class="form-control" ng-change="userTypeChange(info.userType)"  required name="userType">
+                                <select ng-model="info.userType" class="form-control" ng-options="a.ID as a.user_type for a in typeList" ng-change="userTypeChange(info.userType)"  required name="userType">
                                     <option value="">---Select User Type---</option>
-                                    <option value="Company">Company</option>
-                                    <option value="ERP">ERP</option>
-                                    <option value="RediMed">RediMed</option>
-                                    <option value="Patient">Patient</option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Driver">Driver</option>
-                                    <option value="Nurse">Nurse</option>
                                 </select>
                                 <span ng-show="showClickedValidation && userForm.userType.$invalid" for="userType" class="help-block">User Type is required.</span>
                             </div>

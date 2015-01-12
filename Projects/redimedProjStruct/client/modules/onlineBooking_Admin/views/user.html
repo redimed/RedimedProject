@@ -44,8 +44,8 @@
                     <td data-title="'Booking Person'" filter="{ 'Booking_Person': 'text' }">
                         <label>{{b.Booking_Person}}</label>
                     </td>
-                    <td data-title="'User Type'"  filter="{ 'user_type': 'text' }">
-                        <label>{{b.user_type}}</label>
+                    <td data-title="'User Type'"  filter="{ 'userType': 'text' }">
+                        <label>{{b.userType}}</label>
                     </td>
                     <td data-title="'Company'" filter="{ 'Company_name': 'text' }">
                         <label>{{b.Company_name}}</label>
@@ -67,7 +67,7 @@
 
     </div>
 </div>
-<div class="portlet grey-cascade box">
+<div class="portlet grey-cascade box" ng-if="selectedId != null">
     <div class="portlet-title">
         <div class="caption">
             <i class="icon icon-list"></i>
@@ -79,7 +79,7 @@
         </div>
    </div>
     <div class="portlet-body form">
-        <form name="menuForm" ng-submit="submitUserMenu(menuForm)" method="post" novalidate>
+        <form ng-if="selectedRow != null" name="menuForm" ng-submit="submitUserMenu(menuForm)" method="post" novalidate>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-4"></div>

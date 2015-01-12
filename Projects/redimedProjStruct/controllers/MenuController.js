@@ -10,7 +10,17 @@ module.exports = {
 
         if(isWeb == true)
         {
-            db.sequelize.query("SELECT m.Menu_Id, m.Type as MenuIcon,m.Description,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile`, m.`isWeb` FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id WHERE m.isEnable = 1 AND (m.Menu_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1) OR m.Parent_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1)) AND m.`isWeb` = 1 ORDER BY m.Menu_Id;",null,{raw:true},[id,id])
+            db.sequelize.query("SELECT m.Menu_Id, m.Type AS MenuIcon,m.Description,IFNULL(m.Definition,' ') AS MenuDefinition,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile`, m.`isWeb`"
+                                +" FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id"
+                                +" WHERE m.`isEnable` = 1 AND m.isWeb = 1"
+                                +" AND (m.`menu_id` IN (SELECT rum.menu_id FROM redi_usertype_menus rum WHERE rum.`type_id` = (SELECT u.user_type FROM users u WHERE u.id = ?) AND rum.`isEnable` = 1)"
+                                +" OR m.`Parent_Id` IN (SELECT rum.menu_id FROM redi_usertype_menus rum WHERE rum.`type_id` = (SELECT u.user_type FROM users u WHERE u.id = ?) AND rum.`isEnable` = 1))"
+                                +" UNION"
+                                +" SELECT m.Menu_Id, m.Type AS MenuIcon,m.Description,IFNULL(m.Definition,' ') AS MenuDefinition,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile`, m.`isWeb`"
+                                +" FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id"
+                                +" WHERE m.isEnable = 1 AND m.`isWeb` = 1"
+                                +" AND (m.Menu_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1)"
+                                +" OR m.Parent_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1))",null,{raw:true},[id,id,id,id])
                 .success(function(data){
                     res.json(data);
                 })
@@ -21,7 +31,17 @@ module.exports = {
         }
         else
         {
-            db.sequelize.query("SELECT m.Menu_Id, m.Type as MenuIcon ,m.Description,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile`, m.`isWeb` FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id WHERE m.isEnable = 1 AND (m.Menu_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1) OR m.Parent_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1)) AND m.`isMobile` = 1 ORDER BY m.Menu_Id;",null,{raw:true},[id,id])
+            db.sequelize.query("SELECT m.Menu_Id, m.Type AS MenuIcon,m.Description,IFNULL(m.Definition,' ') AS MenuDefinition,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile`, m.`isWeb`"
+                                +" FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id"
+                                +" WHERE m.`isEnable` = 1 AND m.isMobile = 1"
+                                +" AND (m.`menu_id` IN (SELECT rum.menu_id FROM redi_usertype_menus rum WHERE rum.`type_id` = (SELECT u.user_type FROM users u WHERE u.id = ?) AND rum.`isEnable` = 1)"
+                                +" OR m.`Parent_Id` IN (SELECT rum.menu_id FROM redi_usertype_menus rum WHERE rum.`type_id` = (SELECT u.user_type FROM users u WHERE u.id = ?) AND rum.`isEnable` = 1))"
+                                +" UNION"
+                                +" SELECT m.Menu_Id, m.Type AS MenuIcon,m.Description,IFNULL(m.Definition,' ') AS MenuDefinition,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile`, m.`isWeb`"
+                                +" FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id"
+                                +" WHERE m.isEnable = 1 AND m.`isMobile` = 1"
+                                +" AND (m.Menu_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1)"
+                                +" OR m.Parent_Id IN (SELECT r.menu_id FROM redi_user_menus r WHERE r.user_id = ? AND r.isEnable = 1))",null,{raw:true},[id,id,id,id])
                 .success(function(data){
                     res.json(data);
                 })

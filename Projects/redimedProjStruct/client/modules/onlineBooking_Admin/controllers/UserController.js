@@ -198,7 +198,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         }
 })
 
-.controller('AddNewUserMenuController',function($scope,$state,$modal,$modalInstance,$filter,ngTableParams,OnlineBookingAdminService,userId,toastr){
+.controller('AddNewUserMenuController',function($scope,$state,$modal,$modalInstance,$filter,ngTableParams,OnlineBookingAdminService,UserService,userId,toastr){
 
         $scope.info = {
             user_id: userId,
@@ -216,6 +216,8 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
                 if(data[i].isEnable == 1)
                     $scope.menuList.push(data[i]);
             }
+
+
         })
 
         $scope.addNew = function(menuForm){
@@ -239,16 +241,30 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         }
 })
 
-.controller('AdminNewUserController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingAdminService,toastr){
+.controller('AdminNewUserController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingAdminService,UserService,toastr){
         $scope.isEdit = false;
         $scope.isCompany = false;
 
+        $scope.typeList = [];
+
         $scope.userTypeChange = function(b){
-            if(b == 'Company')
-                $scope.isCompany = true;
-            else
-                $scope.isCompany = false;
+            console.log("type change");
+            for(var i=0; i<$scope.typeList.length;i++){
+                if($scope.typeList[i].user_type == 'Company'){
+                    if($scope.typeList[i].ID == b)
+                        $scope.isCompany = true;
+                    else
+                        $scope.isCompany = false;
+                }
+            }
         }
+
+
+        UserService.getUserType().then(function(data){
+            $scope.typeList = data;
+        })
+
+
 
         $scope.info = {
             bookPerson:null,
@@ -322,18 +338,26 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         }
 })
 
-    .controller('AdminEditUserController',function($scope,$state,$stateParams,$modal,OnlineBookingService,OnlineBookingAdminService,toastr,$cookieStore){
-
+    .controller('AdminEditUserController',function($scope,$state,$stateParams,$modal,OnlineBookingService,OnlineBookingAdminService,toastr,UserService,$cookieStore){
+        $scope.typeList = [];
 
         $scope.isEdit = true;
 
         $scope.isCompany = false;
 
+        UserService.getUserType().then(function(data){
+            $scope.typeList = data;
+        })
+
         $scope.userTypeChange = function(b){
-            if(b == 'Company')
-                $scope.isCompany = true;
-            else
-                $scope.isCompany = false;
+            for(var i=0; i<$scope.typeList.length;i++){
+                if($scope.typeList[i].user_type == 'Company'){
+                    if($scope.typeList[i].ID == b)
+                        $scope.isCompany = true;
+                    else
+                        $scope.isCompany = false;
+                }
+            }
         }
 
         $scope.info = {
@@ -404,7 +428,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             $scope.info.isViewAllData = data.isAllCompanyData == 1 ? '1':'0';
             $scope.info.phone = data.Contact_number;
             $scope.info.username = data.user_name;
-            $scope.info.userType = data.user_type;
+            $scope.info.userType = data.UserType.id;
             $scope.info.companyId = data.company_id;
             $scope.info.poNum = data.PO_number;
             $scope.info.invoiceEmail = data.invoiceemail;
@@ -418,10 +442,18 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             $scope.info.isAdmin = data.isAdmin == 1 ? '1':'0';
             $scope.isReceiveEmail = data.isReceiveEmailAfterHour == 1 ? '1':'0';
 
-            if($scope.info.userType == 'Company')
-                $scope.isCompany = true;
-        })
+            for(var i=0; i<$scope.typeList.length;i++)
+            {
+                if($scope.typeList[i].user_type == 'Company')
+                {
+                    if($scope.typeList[i].ID == $scope.info.userType)
+                    {
+                        $scope.isCompany = true;
+                    }
+                }
+            }
 
+        })
 
 
         $scope.submitUser = function(userForm){

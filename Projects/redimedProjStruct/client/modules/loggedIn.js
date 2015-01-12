@@ -59,7 +59,9 @@ angular.module("app.loggedIn",[
 	'app.loggedIn.referral',
     'app.loggedIn.sysservices',
 	/*END AUTO CREATE*/
-    'app.loggedIn.timetable'
+    'app.loggedIn.timetable',
+
+    'app.loggedIn.im'
 ])
 
 .config(function($stateProvider) {

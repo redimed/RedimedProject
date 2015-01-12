@@ -289,7 +289,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 });
         };
 
-        if($scope.loginInfo.user_type=='Doctor')
+        if($scope.loginInfo.UserType.user_type=='Doctor')
         {
             $scope.getDoctorInfoByUserId()
             .then($scope.filterBooking);

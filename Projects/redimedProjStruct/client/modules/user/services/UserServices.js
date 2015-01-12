@@ -34,5 +34,37 @@ angular.module("app.loggedIn.user.services", [])
         return info.post({id:id});
     }
 
+    userService.getUserType = function(){
+        return userApi.one('users/type').get();
+    }
+
+    userService.updateUserType = function(info){
+        return userApi.all('users/type/edit').post({info:info});
+    }
+
+    userService.deleteUserType = function(id){
+        return userApi.all('users/type/delete').post({id:id});
+    }
+
+    userService.insertUserType = function(info){
+        return userApi.all('users/type/insert').post({info:info});
+    }
+
+    userService.getUserTypeMenu = function(id){
+        return userApi.all('users/type/menu').post({id:id});
+    }
+
+    userService.insertUserTypeMenu = function(info){
+        return userApi.all('users/type/menu/insert').post({info:info});
+    }
+
+    userService.updateUserTypeMenu = function(info,id,type_id){
+        return userApi.all('users/type/menu/edit').post({info:info,id:id,typeId:type_id});
+    }
+
+    userService.deleteUserTypeMenu = function(id){
+        return userApi.all('users/type/menu/delete').post({id:id});
+    }
+
     return userService;
 })

@@ -1,0 +1,31 @@
+
+<form name="userTypeForm"  method="post" novalidate ng-submit="submit()">
+    <div class="modal-header">
+        <h3 class="modal-title">Insert User Type</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group" ng-class="{'has-error':showClickedValidation && userTypeForm.type.$invalid}">
+                <div class="col-md-4">
+                    <label class="control-label pull-right">User Type <span class="required">
+                                                        * </span></label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" required ng-model="info.user_type" name="type" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-8">
+                <span ng-show="showClickedValidation && userTypeForm.type.$invalid" for="type" class="help-block">User Type is required.</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
+        <button type="submit" class="btn green" >Submit</button>
+    </div>
+</form>

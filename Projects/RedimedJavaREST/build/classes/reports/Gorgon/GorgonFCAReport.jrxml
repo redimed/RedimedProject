@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonFCAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1453719-11ad-40a0-b0d5-bfa64cf77775">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1104"/>
+	<property name="ireport.y" value="2545"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
@@ -1926,7 +1926,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="278" y="42" width="102" height="17" uuid="e3c16f5c-b8d3-4517-87b3-c45876080105"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -1979,7 +1979,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="42" width="80" height="17" uuid="575bf6e5-322d-4a5c-a4e5-24afce8509b0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true" isPdfEmbedded="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -2223,7 +2223,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="195" width="80" height="17" uuid="7bffc474-13ea-4265-90e2-fcc5af8a2496"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -2336,7 +2336,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="271" width="80" height="17" uuid="8452cb47-3dbb-4ed8-b6c7-c83b590b87ef"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -3644,7 +3644,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="58" width="103" height="18" uuid="8ab9e76b-2159-42a2-9cff-6b892e7a157c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -3740,7 +3740,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="139" width="103" height="16" uuid="e31171ff-0ff1-4565-90e0-5feb48571dc9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -3847,7 +3847,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="219" width="103" height="16" uuid="b32c6e41-5d41-4468-b280-9944dea70a47"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -3954,7 +3954,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="299" width="103" height="17" uuid="43fe49ce-73f0-47d9-9ff3-1a2594c89313"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -4012,7 +4012,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="381" width="103" height="16" uuid="1b6f6cb1-7def-443e-b327-e2363ab3b04a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -4088,7 +4088,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="461" width="103" height="16" uuid="cda412c5-a07c-4b72-a81a-a78888b98a91"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -4198,7 +4198,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="10" y="576" width="103" height="16" uuid="84ce7c61-00ed-4bf6-a5ed-9f04a6b80bbc"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isItalic="true"/>
+					<font isItalic="true" pdfFontName="Times-Italic" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[please circle]]></text>
 			</staticText>
@@ -6046,7 +6046,7 @@ Barrow Island LNG Plant ]]></text>
 			<staticText>
 				<reportElement x="15" y="177" width="217" height="17" uuid="18e3bab3-3e65-47b9-b50c-315f26e7e957"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Lifting Floor to Bench (900mm) to Shoulder]]></text>
+				<text><![CDATA[Lifting Bench (900mm) to Shoulder]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="269" y="58" width="22" height="17" uuid="f841b2b8-123c-4e75-b219-beed3db92dc9"/>
@@ -6227,11 +6227,11 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="390" y="322" width="13" height="13" uuid="4034a29d-0180-408a-ba47-9e59fc1a02ce"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_LEPDC} != null && $F{gorgon_doc_fca_LEPDC}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_Estimated} != null && $F{gorgon_doc_fca_Estimated}.intValue() == 4 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="59" y="322" width="13" height="13" uuid="1ee3a77c-8b7b-4447-b97f-a4870ce5e038"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_LEPDC} != null && $F{gorgon_doc_fca_LEPDC}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_Estimated} != null && $F{gorgon_doc_fca_Estimated}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="354" y="322" width="34" height="13" uuid="5fd78f6f-7baf-483b-b8c5-19b670581d16"/>
@@ -6240,15 +6240,15 @@ Barrow Island LNG Plant ]]></text>
 			</staticText>
 			<image>
 				<reportElement x="531" y="322" width="13" height="13" uuid="dff4f8fc-1849-4ec6-b72e-2c10bdd9f56c"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_LEPDC} != null && $F{gorgon_doc_fca_LEPDC}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_Estimated} != null && $F{gorgon_doc_fca_Estimated}.intValue() == 5 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="169" y="322" width="13" height="13" uuid="2c49e629-a5ba-426a-862a-d978c611f50e"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_LEPDC} != null && $F{gorgon_doc_fca_LEPDC}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_Estimated} != null && $F{gorgon_doc_fca_Estimated}.intValue() == 2 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="281" y="322" width="13" height="13" uuid="003acb80-ee9d-4f0a-b6fe-995f356e0e05"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_LEPDC} != null && $F{gorgon_doc_fca_LEPDC}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_Estimated} != null && $F{gorgon_doc_fca_Estimated}.intValue() == 3 ? "checked.png" : "uncheck.png")]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="471" y="322" width="58" height="13" uuid="61bda3ba-a924-4102-adf2-a93eba279800"/>
@@ -6526,56 +6526,36 @@ Barrow Island LNG Plant ]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_FCAToTal} != null ? $F{gorgon_doc_fca_FCAToTal} : ""]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="77" y="269" width="13" height="13" uuid="a7c4ac17-75ec-44f9-bb09-a09da96e6533"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() < 60 ? "checked.png" : "uncheck.png")]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="49" y="266" width="27" height="18" uuid="ae1684fd-5e33-4f47-85ef-83525444b451"/>
+				<reportElement x="55" y="266" width="27" height="18" uuid="ae1684fd-5e33-4f47-85ef-83525444b451"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isItalic="false"/>
 				</textElement>
 				<text><![CDATA[< 60]]></text>
 			</staticText>
-			<image>
-				<reportElement x="197" y="269" width="13" height="13" uuid="276c9d4a-1183-45d8-bc17-b026aab16714"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 60 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 69 ? "checked.png" : "uncheck.png")]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="153" y="267" width="43" height="18" uuid="9c356235-7b19-4146-ae09-63fa6ea81fa0"/>
+				<reportElement x="160" y="267" width="43" height="18" uuid="9c356235-7b19-4146-ae09-63fa6ea81fa0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isItalic="false"/>
 				</textElement>
 				<text><![CDATA[60 - 69]]></text>
 			</staticText>
-			<image>
-				<reportElement x="294" y="269" width="13" height="13" uuid="6e6409eb-3d7b-48c2-a77b-1b6f6c92e7f3"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 70 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 79 ? "checked.png" : "uncheck.png")]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="250" y="267" width="43" height="18" uuid="d061a5d5-6c27-4b72-a8d5-5293d72fe142"/>
+				<reportElement x="260" y="267" width="43" height="18" uuid="d061a5d5-6c27-4b72-a8d5-5293d72fe142"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isItalic="false"/>
 				</textElement>
 				<text><![CDATA[70 - 79]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="356" y="267" width="43" height="18" uuid="8a0b57f9-b0e1-4130-8e74-a4aa378d54cd"/>
+				<reportElement x="364" y="267" width="43" height="18" uuid="8a0b57f9-b0e1-4130-8e74-a4aa378d54cd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isItalic="false"/>
 				</textElement>
 				<text><![CDATA[80 - 89]]></text>
 			</staticText>
-			<image>
-				<reportElement x="400" y="269" width="13" height="13" uuid="0998e1a7-2400-44c2-aeb4-10f3b0ec3200"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 80 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 89 ? "checked.png" : "uncheck.png")]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="508" y="269" width="13" height="13" uuid="40fd2119-f547-4224-906e-2f9dd593a322"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 90 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 100 ? "checked.png" : "uncheck.png")]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="464" y="267" width="43" height="18" uuid="19da040b-02b0-4481-a6cb-3c627df6a521"/>
+				<reportElement x="470" y="267" width="43" height="18" uuid="19da040b-02b0-4481-a6cb-3c627df6a521"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isItalic="false"/>
 				</textElement>
@@ -6597,6 +6577,31 @@ Barrow Island LNG Plant ]]></text>
 				<reportElement x="72" y="593" width="125" height="106" uuid="f5486e8b-2249-4764-bf76-3c58e40294c1"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{gorgon_doc_fca_Signature}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
+			<ellipse>
+				<reportElement mode="Transparent" x="35" y="267" width="70" height="16" uuid="47c98a51-94c5-4885-b1d2-d9f32c8a17c9">
+					<printWhenExpression><![CDATA[$F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() < 60 ? true : false]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="144" y="267" width="70" height="16" uuid="3bb8e1ff-5482-422e-be91-ad65039e709f">
+					<printWhenExpression><![CDATA[$F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 60 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 69 ? true : false]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="244" y="267" width="70" height="16" uuid="dff62b09-4a08-405b-ba73-c07234406070">
+					<printWhenExpression><![CDATA[$F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 70 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 79 ? true : false]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="350" y="267" width="70" height="16" uuid="5abd5530-1d10-4709-bd54-598cf2dee220">
+					<printWhenExpression><![CDATA[$F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 80 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 89 ? true : false]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="457" y="267" width="70" height="16" uuid="7e6c4ad3-934e-4fb0-9ccf-a13a121ea2f5">
+					<printWhenExpression><![CDATA[$F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 90 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 100 ? true : false]]></printWhenExpression>
+				</reportElement>
+			</ellipse>
 		</band>
 		<band height="724">
 			<rectangle>

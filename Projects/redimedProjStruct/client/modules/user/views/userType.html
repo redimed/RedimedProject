@@ -1,0 +1,102 @@
+<style>
+    .selected {
+        background-color: rgba(69, 51, 36, 0.36);
+    }
+
+</style>
+
+<h3 class="page-title">User Type</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:;">System</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>User Type</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="portlet grey-cascade box">
+        <div class="portlet-title">
+            <div class="caption ">
+                <i class="icon-list"></i>
+                <span class="caption-subject uppercase">User Type List</span>
+            </div>
+            <div class="actions">
+                <a href="javascript:;" ng-click="addNewType()" class="btn green-jungle btn-sm">
+                    <i class="fa fa-plus"></i> Add New</a>
+            </div>
+        </div>
+        <div class="portlet-body" >
+            <div class="table-scrollable">
+            <table  ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered table-responsive">
+                <tr ng-click="showMenu(m)" ng-class="{selected : selectedId == m.ID}" align="center"  style="white-space: nowrap; cursor: pointer;" ng-repeat="m in $data | orderBy:'ID'" >
+                    <td  data-title="'ID'" sortable="'id'" >
+                        <label >{{m.ID}}</label>
+                    </td>
+                    <td  data-title="'User Type'" sortable="'user_type'"  filter="{ 'user_type': 'text' }">
+                        <a onaftersave="updateType(m)" href="#" editable-text="m.user_type">{{ m.user_type || 'Empty' }}</a>
+                    </td>
+                    <td align="center" data-title="'Actions'">
+                        <a  style="width: 75px" href="javascript:;" ng-click="deleteType(m)" class="btn btn-circle red-flamingo btn-sm">
+                            <i class="fa fa-times"></i> Delete </a>
+                    </td>
+
+                </tr>
+            </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6" ng-if="selectedId != null">
+        <div class="portlet grey-cascade box">
+            <div class="portlet-title">
+                <div class="caption ">
+                    <i class="icon-list"></i>
+                    <span class="caption-subject uppercase">{{selectedType}} Menu</span>
+                </div>
+                <div class="actions">
+                    <a href="javascript:;" ng-click="addNewMenu()" class="btn green-jungle btn-sm">
+                        <i class="fa fa-plus"></i>Add New</a>
+                </div>
+            </div>
+            <div class="portlet-body" >
+                <div class="table-scrollable">
+                    <table  ng-table="tableParams2"  show-filter="true" class="table table-hover table-bordered table-responsive">
+                        <tr align="center"  style="white-space: nowrap; cursor: pointer;" ng-repeat="m in $data | orderBy:'id'" >
+                            <td  data-title="'ID'" sortable="'id'">
+                                <label >{{m.id}}</label>
+                            </td>
+                            <td  data-title="'Menu'" sortable="'description'"  filter="{ 'description': 'text' }">
+                                <a href="#" editable-select="m.menu_id" onaftersave="updateMenu(m)" onshow="loadMenu()" e-ng-options="a.menu_id as a.description for a in menuList">
+                                    {{ m.description || 'Empty' }}
+                                </a>
+                            </td>
+                            <td data-title="'Enable'">
+                                <input ng-checked="m.isEnable == 1"  ng-model="m.isEnable" type="checkbox" ng-true-value="1" ng-false-value="0"/>
+                            </td>
+                            <td align="center" data-title="'Actions'">
+                                <a style="width: 75px" href="javascript:;" ng-click="updateMenu(m)" class="btn btn-circle blue-steel btn-sm">
+                                    <i class="fa fa-pencil"></i> Save </a>
+                                <a style="width: 75px" href="javascript:;" ng-click="deleteMenu(m.id)" class="btn btn-circle red-flamingo btn-sm">
+                                    <i class="fa fa-times"></i> Delete </a>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

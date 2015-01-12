@@ -33,7 +33,7 @@ angular.module("app.security.login.controller",[
 						 * khank
 						 * ADD COOKIE INFO 4 DOCTOR
 						 */
-						 if (response.userInfo.user_type == 'Doctor') {
+						 if (response.userInfo.UserType.user_type == 'Doctor') {
 							DoctorService.getByUserId(response.userInfo.id).then(function (data) {
 						        if(data){
                                     $cookieStore.put('doctorInfo', {
