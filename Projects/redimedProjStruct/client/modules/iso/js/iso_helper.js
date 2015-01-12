@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 12/2/2014.
  */
-
+var isoTest=false;
 var isoConst={
 	nodeType:{
 		folder:'FOLDER',
@@ -15,8 +15,91 @@ var isoConst={
 
 	dbError:{
 		ER_DUP_ENTRY:'ER_DUP_ENTRY'
-	}
+	},
+
+	submitStatus:{
+		pending:'PENDING',
+		approved:'APPROVED',
+		reject:'REJECTED',
+        cancel:'CANCEL'
+	},
+
+	isoPermission:{
+        administrator:0,
+        create:1,
+        update:2,
+        read:3,
+        notPermission:4
+    },
+
+    isoAdminFunction:{
+        restoreFolder:true,
+        restoreDocument:true
+    },
+
+    userFunction:{
+    	createFolder:'createFolder',
+    	deleteFolder:'deleteFolder',
+    	cloneToPC:'cloneToPC',
+    	grantFolderPermission:'cloneFolderPermission',
+    	createDocument:'createDocument',
+    	checkOut:'checkOut',
+    	checkIn:'checkIn',
+    	submitDocument:'submitDocument',
+        cancelSubmitDocument:'cancelSubmitDocument',
+    	deleteDocument:'deleteDocument',
+    	grantDocumentPermission:'grantDocumentPermission',
+    	downloadNewestVersion:'downloadNewestVersion'
+    },
+
+
+    permissionFunction:{
+    	'0':{
+    		createFolder:true,
+    		deleteFolder:true,
+    		cloneToPC:true,
+    		grantFolderPermission:true,
+    		createDocument:true,
+    		checkOut:true,
+    		checkIn:true,
+    		submitDocument:true,
+            cancelSubmitDocument:true,
+    		deleteDocument:true,
+    		grantDocumentPermission:true,
+    		downloadNewestVersion:true
+    	},
+    	'1':{
+    		createFolder:true,
+    		deleteFolder:true,
+    		cloneToPC:true,
+    		createDocument:true,
+    		checkOut:true,
+    		checkIn:true,
+    		submitDocument:true,
+            cancelSubmitDocument:true,
+    		deleteDocument:true,
+    		downloadNewestVersion:true
+    	},
+    	'2':{
+    		cloneToPC:true,
+    		checkOut:true,
+    		checkIn:true,
+    		submitDocument:true,
+            cancelSubmitDocument:true,
+    		downloadNewestVersion:true
+    	},
+    	'3':{
+    		cloneToPC:true,
+    		downloadNewestVersion:true
+    	}
+    },
+
+    checkInStatus:{
+        lock:'LOCK',
+        unlock:'UNLOCK'
+    }
 };
+
 
 
 

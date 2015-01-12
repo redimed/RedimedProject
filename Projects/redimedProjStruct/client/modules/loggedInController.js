@@ -162,7 +162,7 @@ angular.module("app.loggedIn.controller",[
                 var i = 0;
                 angular.forEach(response, function(menu){
                     if(menu.Parent_Id === -1)
-                        $scope.loggedInMenus.push({"parent": {"name": menu.Description, "icon": menu.MenuIcon, "definition":menu.Definition , "menu_id": menu.Menu_Id, "childs":[]}});
+                        $scope.loggedInMenus.push({"parent": {"name": menu.Description, "icon": menu.MenuIcon, "definition":menu.MenuDefinition , "menu_id": menu.Menu_Id, "childs":[]}});
                     else{
                         var j = 0;
                         angular.forEach($scope.loggedInMenus, function(lmenu){

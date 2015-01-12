@@ -10,20 +10,19 @@ var db = require('../models');
 
 module.exports = {
     list: function(req,res){
-        db.sequelize.query('SELECT u.*, c.Company_name, h.Employee_Code, h.FirstName AS EmployeeFName, h.LastName AS EmployeeLName, f.decription AS FunctionName ' +
-                            'FROM users u LEFT JOIN companies c ON u.company_id = c.id LEFT JOIN hr_employee h ON u.employee_id = h.Employee_ID LEFT JOIN redi_functions f ON u.function_id = f.function_id',null,{raw:true})
+        db.sequelize.query('SELECT u.*,us.user_type AS userType, c.Company_name, h.Employee_Code, h.FirstName AS EmployeeFName, h.LastName AS EmployeeLName, f.decription AS FunctionName ' +
+                            'FROM users u LEFT JOIN companies c ON u.company_id = c.id LEFT JOIN hr_employee h ON u.employee_id = h.Employee_ID LEFT JOIN redi_functions f ON u.function_id = f.function_id LEFT JOIN user_type us ON us.ID = u.user_type ',null,{raw:true})
             .success(function(data){
-
                 res.json(data);
             })
             .error(function(err){
-                res.json({status:'error'});
+                res.json({status:'error',error:err});
             })
     },
 
     userByCompany: function(req,res){
         var comId = req.body.comId;
-        db.sequelize.query("SELECT u.*,p.`Company_name` FROM users u INNER JOIN companies p ON u.`company_id` = p.`id` WHERE u.`user_type` LIKE 'Company' AND u.`company_id` = ?",null,{raw:true},[comId])
+        db.sequelize.query("SELECT u.*,p.`Company_name` FROM users u INNER JOIN companies p ON u.`company_id` = p.`id` LEFT JOIN user_type us ON us.ID = u.user_type WHERE us.`user_type` LIKE 'Company' AND u.`company_id` = ?",null,{raw:true},[comId])
             .success(function(data){
                 res.json(data);
             })
@@ -40,67 +39,82 @@ module.exports = {
             info = req.body.user;
 
             var hashPass = bcrypt.hashSync(info.password);
-
-            db.User.create({
-                Booking_Person: info.Booking_Person,
-                Contact_email: info.Contact_email,
-                user_name: info.user_name,
-                password: hashPass,
-                Contact_number: info.Contact_number,
-                isEnable: 1,
-                company_id: info.company_id,
-                user_type: "Company"
-            },{raw:true})
-                .success(function(data){
-                    res.json({status:'success'});
+            db.UserType.find({where:{user_type:'Company'}},{raw:true})
+                .success(function(type){
+                    db.User.create({
+                        Booking_Person: info.Booking_Person,
+                        Contact_email: info.Contact_email,
+                        user_name: info.user_name,
+                        password: hashPass,
+                        Contact_number: info.Contact_number,
+                        isEnable: 1,
+                        company_id: info.company_id,
+                        user_type: type.ID
+                    },{raw:true})
+                        .success(function(data){
+                            res.json({status:'success'});
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
                 })
                 .error(function(err){
                     res.json({status:'error'});
                     console.log(err);
                 })
+
         }
         else
         {
             info = req.body.info;
 
             var hash = bcrypt.hashSync(info.password);
-
-            db.User.create({
-                Booking_Person: info.bookPerson,
-                password: hash,
-                Contact_email: info.email,
-                user_name: info.username,
-                Contact_number: info.phone,
-                isEnable: info.isEnable,
-                isDownloadResult: info.isDownload,
-                isMakeBooking: info.isMakeBooking,
-                isPackage: info.isPackage,
-                isPosition: info.isPosition,
-                isSetting: info.isSetting,
-                isAll: info.isShowAll,
-                isBooking: info.isShowBooking,
-                isAllCompanyData: info.isViewAllData,
-                company_id: info.companyId,
-                user_type: info.userType,
-                PO_number: info.poNum,
-                invoiceemail: info.invoiceEmail,
-                result_email: info.resultEmail,
-                Report_To_email:info.reportEmail,
-                function_id: info.function_id,
-                function_mobile: info.function_mobile,
-                employee_id: info.empId,
-                isCalendar: info.isCalendar,
-                isProject: info.isProject,
-                isAdmin: info.isAdmin,
-                isReceiveEmailAfterHour:info.isReceiveEmail
-            })
-                .success(function(data){
-                    res.json({status:'success'});
+            db.UserType.find({where:{user_type:info.userType}},{raw:true})
+                .success(function(type){
+                    db.User.create({
+                        Booking_Person: info.bookPerson,
+                        password: hash,
+                        Contact_email: info.email,
+                        user_name: info.username,
+                        Contact_number: info.phone,
+                        isEnable: info.isEnable,
+                        isDownloadResult: info.isDownload,
+                        isMakeBooking: info.isMakeBooking,
+                        isPackage: info.isPackage,
+                        isPosition: info.isPosition,
+                        isSetting: info.isSetting,
+                        isAll: info.isShowAll,
+                        isBooking: info.isShowBooking,
+                        isAllCompanyData: info.isViewAllData,
+                        company_id: info.companyId,
+                        user_type: type.ID,
+                        PO_number: info.poNum,
+                        invoiceemail: info.invoiceEmail,
+                        result_email: info.resultEmail,
+                        Report_To_email:info.reportEmail,
+                        function_id: info.function_id,
+                        function_mobile: info.function_mobile,
+                        employee_id: info.empId,
+                        isCalendar: info.isCalendar,
+                        isProject: info.isProject,
+                        isAdmin: info.isAdmin,
+                        isReceiveEmailAfterHour:info.isReceiveEmail
+                    })
+                        .success(function(data){
+                            res.json({status:'success'});
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
                 })
                 .error(function(err){
                     res.json({status:'error'});
                     console.log(err);
                 })
+
+
         }
 
     },
@@ -109,39 +123,46 @@ module.exports = {
 
       console.log(info);
 
-        db.User.update({
-            Booking_Person: info.bookPerson,
-            Contact_email: info.email,
-            user_name: info.username,
-            Contact_number: info.phone,
-            isEnable: info.isEnable,
-            isDownloadResult: info.isDownload,
-            isMakeBooking: info.isMakeBooking,
-            isPackage: info.isPackage,
-            isPosition: info.isPosition,
-            isSetting: info.isSetting,
-            isAll: info.isShowAll,
-            isBooking: info.isShowBooking,
-            isAllCompanyData: info.isViewAllData,
-            company_id: info.companyId,
-            user_type: info.userType,
-            PO_number: info.poNum,
-            invoiceemail: info.invoiceEmail,
-            result_email: info.resultEmail,
-            Report_To_email:info.reportEmail,
-            function_id: info.function_id,
-            function_mobile: info.function_mobile,
-            employee_id: info.empId,
-            isCalendar: info.isCalendar,
-            isProject: info.isProject,
-            isAdmin: info.isAdmin,
-            isReceiveEmailAfterHour:info.isReceiveEmail
-        },{id: info.userId},{raw:true})
-            .success(function(data){
-                res.json({status:'success'});
+        db.UserType.find({where:{user_type:info.userType}},{raw:true})
+            .success(function(type) {
+                db.User.update({
+                    Booking_Person: info.bookPerson,
+                    Contact_email: info.email,
+                    user_name: info.username,
+                    Contact_number: info.phone,
+                    isEnable: info.isEnable,
+                    isDownloadResult: info.isDownload,
+                    isMakeBooking: info.isMakeBooking,
+                    isPackage: info.isPackage,
+                    isPosition: info.isPosition,
+                    isSetting: info.isSetting,
+                    isAll: info.isShowAll,
+                    isBooking: info.isShowBooking,
+                    isAllCompanyData: info.isViewAllData,
+                    company_id: info.companyId,
+                    user_type: type.ID,
+                    PO_number: info.poNum,
+                    invoiceemail: info.invoiceEmail,
+                    result_email: info.resultEmail,
+                    Report_To_email: info.reportEmail,
+                    function_id: info.function_id,
+                    function_mobile: info.function_mobile,
+                    employee_id: info.empId,
+                    isCalendar: info.isCalendar,
+                    isProject: info.isProject,
+                    isAdmin: info.isAdmin,
+                    isReceiveEmailAfterHour: info.isReceiveEmail
+                }, {id: info.userId}, {raw: true})
+                    .success(function (data) {
+                        res.json({status: 'success'});
+                    })
+                    .error(function (err) {
+                        res.json({status: 'error'});
+                        console.log(err);
+                    })
             })
-            .error(function(err){
-                res.json({status:'error'});
+            .error(function (err) {
+                res.json({status: 'error'});
                 console.log(err);
             })
     },
@@ -176,8 +197,8 @@ module.exports = {
     },
     getUserById: function(req,res){
         var id = req.body.id;
-
-        db.User.find({where:{id:id}},{raw:true})
+        db.User.belongsTo(db.UserType,{foreignKey:'user_type'});
+        db.User.find({where:{id:id},include:[db.UserType]},{raw:true})
             .success(function(data){
                 res.json(data);
             })
@@ -196,8 +217,8 @@ module.exports = {
     },
     userMenu: function(req,res){
         var id = req.body.id;
-        db.sequelize.query('SELECT r.*,m.description AS MenuTitle, u.user_name, u.user_type ' +
-                            'FROM redi_user_menus r LEFT JOIN redi_menus m ON r.menu_id = m.menu_id LEFT JOIN users u ON r.user_id = u.id WHERE r.user_id = ?',null,{raw:true},[id])
+        db.sequelize.query('SELECT r.*,m.description AS MenuTitle, u.user_name, us.user_type ' +
+                            'FROM redi_user_menus r LEFT JOIN redi_menus m ON r.menu_id = m.menu_id LEFT JOIN users u ON r.user_id = u.id LEFT JOIN user_type us ON us.ID =u.user_type WHERE r.user_id = ?  ',null,{raw:true},[id])
             .success(function(data){
                 res.json(data);
             })
@@ -364,6 +385,101 @@ module.exports = {
             })
             .error(function(err){
                 res.json({status:'error'});
+            })
+    },
+    getUserType: function(req,res){
+        db.UserType.findAll({raw:true})
+            .success(function(data){res.json(data)})
+            .error(function(err){res.json({status:'error'}); console.log(err)})
+
+
+    },
+    editUserType: function(req,res){
+        var info = req.body.info;
+
+        db.UserType.update({
+            user_type: info.user_type
+        },{ID: info.id})
+            .success(function(data){
+                res.json({status:'success'})
+            })
+            .error(function(err){
+                res.json({status:'error'})
+                console.log(err);
+            })
+    },
+    deleteUserType: function(req,res){
+        var id = req.body.id;
+
+        db.UserType.destroy({ID:id})
+            .success(function(data){
+                res.json({status:'success'})
+            })
+            .error(function(err){
+                res.json({status:'error'})
+                console.log(err);
+            })
+    },
+    insertUserType: function(req,res){
+        var info = req.body.info;
+
+        db.UserType.create(info)
+            .success(function(data){
+                res.json({status:'success'})
+            })
+            .error(function(err){
+                res.json({status:'error'})
+                console.log(err);
+            })
+    },
+    getUserTypeMenuById: function(req,res){
+        var id = req.body.id;
+
+        db.sequelize.query("SELECT r.*,m.description FROM redi_usertype_menus r INNER JOIN redi_menus m ON r.menu_id = m.menu_id WHERE r.type_id = ?",null,{raw:true},[id])
+            .success(function(data){
+                res.json(data)
+            })
+            .error(function(err){
+                res.json({status:'error'})
+                console.log(err);
+            })
+    },
+    editUserTypeMenu: function(req,res){
+        var info = req.body.info;
+        var id = req.body.id;
+        var type_id = req.body.typeId;
+
+        db.UserTypeMenu.update(info,{id:id})
+            .success(function(){
+                res.json({status:'success'})
+            })
+            .error(function(err){
+                res.json({status:'error'})
+                console.log(err);
+            })
+    },
+    deleteUserTypeMenu: function(req,res){
+        var id = req.body.id;
+
+        db.UserTypeMenu.destroy({id:id})
+            .success(function(data){
+                res.json({status:'success'})
+            })
+            .error(function(err){
+                res.json({status:'error'})
+                console.log(err);
+            })
+    },
+    insertUserTypeMenu:function(req,res){
+        var info = req.body.info;
+
+        db.UserTypeMenu.create(info)
+            .success(function(data){
+                res.json({status:'success'})
+            })
+            .error(function(err){
+                res.json({status:'error'})
+                console.log(err);
             })
     }
 

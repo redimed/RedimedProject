@@ -1,0 +1,42 @@
+<h3 class="page-title">Injury Map</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:;">Injury Management</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Injury Map</a>
+        </li>
+    </ul>
+</div>
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="icon-map"></i>
+            <span class="caption-subject uppercase">Maps</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <map  center="current-location" zoom="10">
+            <marker id="foo" position="{{im.position}}" ng-repeat="im in injuryMarker" on-click="showInfoWindow(event, 'info')"></marker>
+            <info-window id="info">
+                <div ng-non-bindable="">
+                    <div id="siteNotice"></div>
+                    <h1 id="firstHeading" class="firstHeading">Uluru</h1>
+                    <div id="bodyContent">
+                        <p>
+                            <b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large sandstone rock formation in the southern part of the Northern Territory, central Australia. It lies 335&nbsp;km (208&nbsp;mi) south west of the nearest large town, Alice Springs; 450&nbsp;km (280&nbsp;mi) by road. Kata Tjuta and Uluru are the two major features of the Uluru - Kata Tjuta National Park. Uluru is sacred to the Pitjantjatjara and Yankunytjatjara, the Aboriginal people of the area. It has many springs, waterholes, rock caves and ancient paintings. Uluru is listed as a World Heritage Site.</p> <p>Attribution: Uluru, <a href="//en.wikipedia.org/w/index.php?title=Uluru&amp;oldid=297882194"> http://en.wikipedia.org/w/index.php?title=Uluru</a> (last visited June 22, 2009).
+                        </p>
+                    </div>
+                </div>
+            </info-window>
+        </map>
+    </div>
+</div>
+

@@ -105,16 +105,23 @@ angular.module('app.loggedIn.function.controller',[])
         }
 
         $scope.submitFunction = function(){
-            FunctionService.insertFunction($scope.info).then(function(response){
-                if(response['status'] === 'success') {
-                    toastr.success("Insert New Function Successfully!","Success");
-                    $modalInstance.close();
-                }
-                else
-                {
-                    toastr.error("Insert New Function Failed!","Error");
-                }
-            })
+            $scope.showClickedValidation = true;
+            if($scope.functionForm.$invalid){
+                toastr.error("Please Input All Required Information!","Error")
+            }
+            else {
+                FunctionService.insertFunction($scope.info).then(function(response){
+                    if(response['status'] === 'success') {
+                        toastr.success("Insert New Function Successfully!","Success");
+                        $modalInstance.close();
+                    }
+                    else
+                    {
+                        toastr.error("Insert New Function Failed!","Error");
+                    }
+                })
+            }
+
         }
 })
 
@@ -136,15 +143,20 @@ angular.module('app.loggedIn.function.controller',[])
         }
 
         $scope.submitFunction = function(){
-            FunctionService.saveFunction($scope.info).then(function(response){
-                if(response['status'] === 'success') {
-                    toastr.success("Edit Function Successfully!","Success");
-                    $modalInstance.close();
-                }
-                else
-                {
-                    toastr.error("Edit Function Failed!","Error");
-                }
-            })
+            $scope.showClickedValidation = true;
+            if($scope.functionForm.$invalid){
+                toastr.error("Please Input All Required Information!","Error")
+            }
+            else {
+                FunctionService.saveFunction($scope.info).then(function (response) {
+                    if (response['status'] === 'success') {
+                        toastr.success("Edit Function Successfully!", "Success");
+                        $modalInstance.close();
+                    }
+                    else {
+                        toastr.error("Edit Function Failed!", "Error");
+                    }
+                })
+            }
         }
 })

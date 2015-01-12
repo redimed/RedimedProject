@@ -1,0 +1,106 @@
+<tabset>
+	<tab heading="Admin">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				Group Admin
+			</div>
+			<div class="panel-body">
+				<div class='row'>
+					<div class='col-md-12'>
+						<div class='btn btn-info iso-user-permission-item' ng-repeat="user in administratorUserList">
+							{{user.user_name}}
+						</div>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-md-12'>
+						<br/>
+						<a class='iso-add-user-permission-btn' ng-click="showSelectionAdminUserName=!showSelectionAdminUserName">
+							{{showSelectionAdminUserName?'Cancel':'Add New'}}
+						</a>
+						<iso-selection-user-name show='showSelectionAdminUserName' selected-user-name="newAdminUserName"></iso-selection-user-name>
+					</div>
+				</div>
+			</div>
+		</div>
+	</tab>
+	<tab heading="Create">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				Group Create
+			</div>
+			<div class="panel-body">
+				<div class='row'>
+					<div class='col-md-12'>
+						<div class='btn btn-info iso-user-permission-item' ng-repeat="user in createUserList">
+							{{user.user_name}}
+						</div>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-md-12'>
+						<br/>
+						<a class='iso-add-user-permission-btn' ng-click="showSelectionCreateUserName=!showSelectionCreateUserName">
+							{{showSelectionCreateUserName?'Cancel':'Add New'}}
+						</a>
+						<iso-selection-user-name show='showSelectionCreateUserName' selected-user-name="newCreateUserName"></iso-selection-user-name>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</tab>
+	<tab heading="Update">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				Group Update
+			</div>
+			<div class="panel-body">
+				<div class='row'>
+					<div class='col-md-12'>
+						<div class='btn btn-info iso-user-permission-item' ng-repeat="user in updateUserList">
+							{{user.user_name}}
+						</div>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-md-12'>
+						<br/>
+						<a class='iso-add-user-permission-btn' ng-click="showSelectionUpdateUserName=!showSelectionUpdateUserName">
+							{{showSelectionUpdateUserName?'Cancel':'Add New'}}
+						</a>
+						<iso-selection-user-name show='showSelectionUpdateUserName' selected-user-name="newUpdateUserName"></iso-selection-user-name>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</tab>	
+	<tab heading="Read">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				Group Read
+			</div>
+			<div class="panel-body">
+				<div class='row'>
+					<div class='col-md-12'>
+						<div class='btn btn-info iso-user-permission-item' ng-repeat="user in readUserList">
+							{{user.user_name}}
+						</div>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-md-12'>
+						<br/>
+						<a class='iso-add-user-permission-btn' ng-click="showSelectionReadUserName=!showSelectionReadUserName">
+							{{showSelectionReadUserName?'Cancel':'Add New'}}
+						</a>
+						<iso-selection-user-name show='showSelectionReadUserName' selected-user-name="newReadUserName"></iso-selection-user-name>
+					</div>
+				</div>
+			</div>
+		</div>
+	</tab>
+</tabset>
+
+

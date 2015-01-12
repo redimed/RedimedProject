@@ -4,7 +4,9 @@ module.exports = function(sequelize, DataTypes) {
       user_name: DataTypes.STRING(50),
       password : DataTypes.STRING(500),
       company_id: DataTypes.INTEGER(11),
-      user_type: DataTypes.STRING(20),
+      user_type: {
+        type:DataTypes.INTEGER(11)
+      },
       result_email: DataTypes.STRING(1000),
       invoiceemail : DataTypes.STRING(1000) ,
       PO_number : DataTypes.STRING(50) ,

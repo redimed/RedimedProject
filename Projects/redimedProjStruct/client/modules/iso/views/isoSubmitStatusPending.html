@@ -1,0 +1,94 @@
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="icon-list"></i>
+            <span class="caption-subject uppercase">Approval Document</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable" id="content">
+            <table   show-filter="false" class="table table-hover table-bordered table-responsive">
+                <tr>
+                    <th>CHECK IN NO</th>
+                    <th>DOCUMENT NAME</th>
+                    <th>FILE NAME</th>
+                    <th>SUBMIT DATE</th>
+                    <th></th>
+                </tr>
+
+                <tr style="white-space: nowrap; cursor: pointer;" ng-repeat="outin in checkInOutStatusPending">
+                    <td width="100px" data-title="'CHECK IN NO'"  >
+                        <label >{{outin.CHECK_IN_NO}}</label>
+                    </td>
+                    <td width="100px" data-title="'DOCUMENT NAME'" >
+                        <label >{{outin.NODE_NAME}}</label>
+                    </td>
+                    <td width="300px" align="center" data-title="'FILE NAME'" >
+                        <label >
+                            {{outin.FILE_NAME}}
+                        </label>
+                    </td>
+                    <td width="200px" align="center" data-title="'SUBMIT DATE'" >
+                        <label >
+                            {{outin.SUBMIT_DATE| date:'yyyy-MM-dd HH:mm:ss'}}
+                        </label>
+                    </td>
+
+                    <td align="center" data-title="'Actions'">
+                        <a  href="javascript:;" ng-click="downloadFile(outin.NODE_ID,outin.ID)" class="btn btn-circle blue-steel btn-sm">
+                            <i class="fa fa-download"></i> Download </a>
+                        <a  href="javascript:;" ng-click="approvedDocument(outin.NODE_ID,outin.ID)" class="btn btn-circle green-jungle btn-sm">
+                            Approve </a>
+                        <a  href="javascript:;" ng-click="rejectedDocument(outin.ID)" class="btn btn-circle red-flamingo btn-sm">
+                            Reject </a>
+                    </td>
+                </tr>
+            </table>
+            <pagination total-items="totalItems"
+                        ng-model="currentPage"
+                        max-size="maxSize"
+                        class="pagination-sm"
+                        boundary-links="true"
+                        rotate="false"
+                        num-pages="numPages"
+                        items-per-page="itemsPerPage"
+                        ng-change="handleListPaging()">
+            </pagination>
+        </div>
+        <br/>
+
+    </div>
+
+</div>
+<div id="iso-global-msg-popup" class="modal fade">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><div class="iso-global-msg-popup-header"></div></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+
+                        <!--<span  class="label" ng-class="{'label-success':status=='success','label-warning':status=='fail'}">-->
+                        <!--{{msg}}-->
+                        <!--</span>-->
+
+                        <div  class="alert alert-success iso-global-msg-popup-success" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                        <div class="alert alert-danger iso-global-msg-popup-error" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

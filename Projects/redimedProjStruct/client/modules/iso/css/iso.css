@@ -74,9 +74,22 @@ tannv.dts@gmail.com
 }
 
 
+
 /*select2 custom css
 tannv.dts@gmail.com
 */
 .select2-search-field input{
     width:223px!important;
+}
+
+.iso-user-permission-item{
+    margin-top:10px;
+}
+
+.iso-add-user-permission-btn{
+    margin-top:10px;
+}
+
+.iso_node_deleted span{
+    color:#B90000;
 }

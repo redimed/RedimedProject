@@ -114,28 +114,36 @@ module.exports = {
                               message.timeToLive = 3;
                               var registrationIds = [];
 
-                              db.UserToken.findAll({where: {user_type: 'Driver'}}, {raw: true})
-                                  .success(function (data) {
-                                      for (var i = 0; i < data.length; i++) {
-                                          if (data[i].android_token != null)
-                                              registrationIds.push(data[i].android_token);
-                                      }
+                              db.UserType.find({where:{user_type:'Driver'}},{raw:true})
+                                  .success(function(type){
+                                      db.UserToken.findAll({where: {user_type: type.ID}}, {raw: true})
+                                          .success(function (data) {
+                                              for (var i = 0; i < data.length; i++) {
+                                                  if (data[i].android_token != null)
+                                                      registrationIds.push(data[i].android_token);
+                                              }
 
-                                      sender.send(message, registrationIds, 4, function (err,result) {
-                                          if(err)
-                                          {
-                                              console.log("ERROR:",err);
-                                          }
-                                          else
-                                          {
-                                              console.log("SUCCESS:",result);
-                                          }
+                                              sender.send(message, registrationIds, 4, function (err,result) {
+                                                  if(err)
+                                                  {
+                                                      console.log("ERROR:",err);
+                                                  }
+                                                  else
+                                                  {
+                                                      console.log("SUCCESS:",result);
+                                                  }
 
-                                      });
+                                              });
+                                          })
+                                          .error(function (err) {
+                                              console.log(err);
+                                          })
                                   })
                                   .error(function (err) {
                                       console.log(err);
                                   })
+
+
                           }
                           //End Push GCM Android
 
@@ -267,7 +275,7 @@ module.exports = {
 
     },
     injuryList: function(req,res){
-        db.sequelize.query("SELECT i.*,p.* FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` WHERE i.`cal_id` IS NULL ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC LIMIT 10",null,{raw:true})
+        db.sequelize.query("SELECT i.*,p.* FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` WHERE i.`cal_id` IS NULL ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true})
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -333,30 +341,38 @@ module.exports = {
         message.timeToLive = 3;
         var registrationIds = [];
 
-        db.UserToken.findAll({where: {user_type: 'Driver'}}, {raw: true})
-            .success(function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].android_token != null)
-                        registrationIds.push(data[i].android_token);
-                }
+        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
+            .success(function(type){
+                db.UserToken.findAll({where: {user_type: type.ID}}, {raw: true})
+                    .success(function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].android_token != null)
+                                registrationIds.push(data[i].android_token);
+                        }
 
-                sender.send(message, registrationIds, 4, function (err,result) {
-                    if(err)
-                    {
-                        console.log("ERROR:",err);
-                        res.json({status:'error'});
-                    }
-                    else
-                    {
-                        console.log("SUCCESS:",result);
-                        res.json({status:'success'});
-                    }
+                        sender.send(message, registrationIds, 4, function (err,result) {
+                            if(err)
+                            {
+                                console.log("ERROR:",err);
+                                res.json({status:'error'});
+                            }
+                            else
+                            {
+                                console.log("SUCCESS:",result);
+                                res.json({status:'success'});
+                            }
 
-                });
+                        });
+                    })
+                    .error(function (err) {
+                        console.log(err);
+                    })
             })
             .error(function (err) {
                 console.log(err);
             })
+
+
     },
     makeCall: function(req,res){
         io.on('connection', function(socket) {

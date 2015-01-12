@@ -5,7 +5,7 @@ module.exports = function(sequelize,DataTypes){
     var UserToken = sequelize.define('UserToken',{
         id : {type:DataTypes.INTEGER(11), primaryKey:true},
         user_id : DataTypes.INTEGER(11) ,
-        user_type : DataTypes.STRING(20),
+        user_type : DataTypes.INTEGER(11),
         android_token: DataTypes.TEXT,
         ios_token : DataTypes.TEXT,
         roomSession: DataTypes.STRING(500)

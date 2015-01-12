@@ -314,8 +314,8 @@
 <div class="page-sidebar navbar-collapse collapse">
 <!-- BEGIN SIDEBAR MENU -->
 <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-    <li class="start">
-        <a  href="javascript:;" ng-click="userclick()">
+    <li class="start" >
+        <a href="javascript:;" ng-click="userclick()">
             <i class="icon-home"></i>
 
             <span class="title" >Home</span>
@@ -324,10 +324,9 @@
     </li>
 
     <li ng-repeat="menu in loggedInMenus">
-        <a ui-sref="{{menu.parent.definition}}" >
+        <a  ui-sref="{{menu.parent.definition}}">
             <i class="glyphicon glyphicon-star-empty"></i>
             <span class="title">{{menu.parent.name}}</span>
-
         </a>
         <ul ng-if="menu.parent.childs.length > 0" class="sub-menu">
             <li ng-repeat="submenu in menu.parent.childs">

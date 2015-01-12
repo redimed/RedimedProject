@@ -100,6 +100,8 @@ module.exports = {
         MedicalHistory.create({
             patient_id: info.patient_id,
             cal_id: info.cal_id,
+            s1_relationship: info.s1_relationship,
+            s1_job_location: info.s1_job_location,
             s2_occupation1: info.works[0] != undefined ? info.works[0].col1 : null,
             s2_startdate1: info.works[0] != undefined ? info.works[0].col2 : null,
             s2_enddate1: info.works[0] != undefined ? info.works[0].col3 : null,
@@ -276,6 +278,8 @@ module.exports = {
             s12_hormonal: info.s12_hormonal,
             s12_stones_or_renal: info.s12_stones_or_renal,
             s12_comments: info.s12_comments,
+            s13_each_date: info.s13_each_date,
+            s13_one_date: info.s13_one_date,
             s13_ever_smoked: info.s13_ever_smoked,
             s13_many_cigarettes: info.s13_many_cigarettes,
             s13_start_stop_smoked: info.s13_start_stop_smoked,
@@ -290,6 +294,7 @@ module.exports = {
             rmi_mental: info.rmi_mental,
             rmi_mental_initials: info.rmi_mental == 1 ? info.rmi_mental_initials : null,
             rmi_date: info.rmi_date || new Date(),
+            rmi_witness: info.rmi_witness,
             dec_signed: info.dec_signed,
             dec_witness: info.dec_witness,
             dec_date: info.dec_date || new Date(),
@@ -300,10 +305,33 @@ module.exports = {
             raw: true
         })
             .success(function () {
-                res.json({
-                    status: 'success'
-                });
-                return true;
+                Patient.update({
+                    Sur_name: info.patient.Sur_name,
+                    First_name: info.patient.First_name,
+                    DOB: info.patient.DOB,
+                    Sex: info.patient.Sex,
+                    Address1: info.patient.Address1,
+                    Post_code: info.patient.Post_code,
+                    Home_phone: info.patient.Home_phone,
+                    Email: info.patient.Email,
+                    NOK_Emerg_Contact: info.patient.NOK_Emerg_Contact,
+                    NOK_Phone: info.patient.NOK_Phone,
+                    Occupation: info.patient.Occupation,
+                    Addr: info.patient.Addr
+                }, {Patient_id: info.patient_id})
+                    .success(function () {
+                        res.json({
+                            status: 'success'
+                        });
+                        return true;
+                    })
+                    .error(function (err) {
+                        console.log('******************' + err + '******************');
+                        res.json({
+                            status: 'fail'
+                        });
+                        return false;
+                    });
             })
             .error(function (err) {
                 console.log('******************' + err + '******************');
@@ -315,11 +343,11 @@ module.exports = {
     },
     editMH: function (req, res) {
         var info = req.body.info || [];
-        console.log(info);
         MedicalHistory.update({
             patient_id: info.patient_id,
             cal_id: info.cal_id,
-
+            s1_relationship: info.s1_relationship,
+            s1_job_location: info.s1_job_location,
             s2_occupation1: info.works[0] != undefined ? info.works[0].col1 : null,
             s2_startdate1: info.works[0] != undefined ? info.works[0].col2 : null,
             s2_enddate1: info.works[0] != undefined ? info.works[0].col3 : null,
@@ -496,6 +524,8 @@ module.exports = {
             s12_hormonal: info.s12_hormonal,
             s12_stones_or_renal: info.s12_stones_or_renal,
             s12_comments: info.s12_comments,
+            s13_each_date: info.s13_each_date,
+            s13_one_date: info.s13_one_date,
             s13_ever_smoked: info.s13_ever_smoked,
             s13_many_cigarettes: info.s13_many_cigarettes,
             s13_start_stop_smoked: info.s13_start_stop_smoked,
@@ -510,6 +540,7 @@ module.exports = {
             rmi_mental: info.rmi_mental,
             rmi_mental_initials: info.rmi_mental == 1 ? info.rmi_mental_initials : null,
             rmi_date: info.rmi_date || new Date(),
+            rmi_witness: info.rmi_witness,
             dec_signed: info.dec_signed,
             dec_witness: info.dec_witness,
             dec_date: info.dec_date || new Date(),
@@ -520,10 +551,33 @@ module.exports = {
             mh_id: info.mh_id
         })
             .success(function () {
-                res.json({
-                    status: 'success'
-                });
-                return true;
+                Patient.update({
+                    Sur_name: info.patient.Sur_name,
+                    First_name: info.patient.First_name,
+                    DOB: info.patient.DOB,
+                    Sex: info.patient.Sex,
+                    Address1: info.patient.Address1,
+                    Post_code: info.patient.Post_code,
+                    Home_phone: info.patient.Home_phone,
+                    Email: info.patient.Email,
+                    NOK_Emerg_Contact: info.patient.NOK_Emerg_Contact,
+                    NOK_Phone: info.patient.NOK_Phone,
+                    Occupation: info.patient.Occupation,
+                    Addr: info.patient.Addr
+                }, {Patient_id: info.patient_id})
+                    .success(function () {
+                        res.json({
+                            status: 'success'
+                        });
+                        return true;
+                    })
+                    .error(function (err) {
+                        console.log('******************' + err + '******************');
+                        res.json({
+                            status: 'fail'
+                        });
+                        return false;
+                    });
             })
             .error(function (err) {
                 console.log('******************' + err + '******************');

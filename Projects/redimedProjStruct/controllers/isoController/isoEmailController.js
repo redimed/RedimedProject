@@ -5,7 +5,6 @@
  * Created by tannv.dts@gmail.com on 9/26/2014.
  */
 
-var db = require('../models');
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');

@@ -32,6 +32,7 @@ angular.module("app", [
     'ui-iconpicker',
     'ngPDFViewer',
     'ngSanitize',
+    'ngMap'
 ])
 
 .config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {
@@ -88,9 +89,19 @@ angular.module("app", [
 })
 
 //When update any route
-.run(function($cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions){
+.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions){
     $idle.watch();
     // Use when update any state
+
+        $rootScope.jsErrors = [];
+        $window.onerror = function (message, url, lineNo) {
+            $rootScope.jsErrors.push({
+                error:message,
+                url: url,
+                lineNumber: lineNo
+            });
+            return true;
+        }
 
     editableOptions.theme = 'bs3';
 

@@ -1,3 +1,6 @@
+
+
+
 angular.module("app.loggedIn.iso.directive", [])
 	.directive('isoDemoDirective', function() {
         return {
@@ -42,111 +45,11 @@ angular.module("app.loggedIn.iso.directive", [])
             }
         };
     })
-
-
+    
     /**
-     * Grant permission on node
+     * check in document, luu ban cap nhat moi nhat
      * tannv.dts@gmail.com
      */
-
-    .directive('isoGrantPermission', function() {
-        return {
-            restrict: 'E',
-            transclude:true,
-            required:['^ngModel'],
-            scope: {
-                selectedTreeNode:'=',
-                resetFlag:'='
-            },
-            templateUrl: 'modules/iso/directives/isoGrantPermission.html',
-            controller: function ($scope,isoService)
-            {
-                $scope.userNameList = [];
-                $scope.funcAsync=function(userNameKey,nodeId)
-                {
-
-                    $scope.userNameList=[];
-                    isoService.core.getUserNameList(userNameKey,nodeId)
-                    .then(function(data)
-                    {
-                        $scope.userNameList=data.data;
-                    },function(err){
-
-                    })
-                }
-                $scope.selectedUserNames = {};
-                $scope.selectedUserNames.list = [];
-
-                $scope.$watch('selectedUserNames.list',function(newValue,oldValue){
-                    angular.element('.ui-select-match-close.select2-search-choice-close').removeAttr('href');
-                });
-
-                $scope.$watch('resetFlag', function(newValue, oldValue) {
-                        $scope.selectedUserNames = {};
-                        $scope.selectedUserNames.list = [];
-                });
-
-                /*
-                $scope.grantNodePermission=function()
-                {
-                    for(var i=0;i<$scope.selectedUserNames.list.length;i++)
-                    {
-                        var user=$scope.selectedUserNames.list[i];
-                        isoService.treeUser.grantNodePermission($scope.selectedTreeNode.NODE_ID,user)
-                        .then(function(data){
-                            if(data.status=='success')
-                            {
-                                $scope.selectedUserNames.list[i].STATUS=data.status;
-                                //isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Grant Permission success!');
-                            }
-                            else
-                            {
-                                $scope.selectedUserNames.list[i].STATUS=data.status;
-                                //isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Grant Permission error!');
-                            }
-
-                            //$("#iso-tree-action-content-popup").modal('hide');
-                        },function(err){
-                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Grant Permission error!');
-                        })
-                    }
-                    
-                }
-                */
-               
-                $scope.grantNodePermission=function()
-                {
-                    for(var i=0;i<$scope.selectedUserNames.list.length;i++)
-                    {
-                        var user=$scope.selectedUserNames.list[i];
-                        $scope.grantNodePermissionItem(user);
-                    }
-                }
-
-                $scope.grantNodePermissionItem=function(item)
-                {
-                    isoService.treeUser.grantNodePermission($scope.selectedTreeNode.NODE_ID,item)
-                    .then(function(data){
-                        if(data.status=='success')
-                        {
-                            item.STATUS=data.status;
-                            //isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Grant Permission success!');
-                        }
-                        else
-                        {
-                            item.STATUS=data.status;
-                            //isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Grant Permission error!');
-                        }
-
-                        //$("#iso-tree-action-content-popup").modal('hide');
-                    },function(err){
-                        item.STATUS='error';
-                    })
-                }
-            }
-        };
-    })
-
     .directive('isoCheckInDocument', function() {
         return {
             restrict: 'E',
@@ -213,6 +116,12 @@ angular.module("app.loggedIn.iso.directive", [])
                         if(response.status=='success')
                         {
                             isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Check in success!');
+                            //khong cho checkin neu chua checkout
+                            $scope.selectedTreeNode.CHECK_IN_STATUS=response.data.CHECK_IN_STATUS;
+                            $scope.selectedTreeNode.CHECK_IN_NO=response.data.CHECK_IN_NO;
+                            $scope.selectedTreeNode.SUBMIT_STATUS=response.data.SUBMIT_STATUS;
+                            uploader.queue.splice(0);
+
                         }
                         else
                         {
@@ -248,3 +157,7 @@ angular.module("app.loggedIn.iso.directive", [])
             }
         };
     })
+
+
+    
+    
