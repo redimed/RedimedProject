@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mh_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ed7ad48-d2ae-4fdc-8d98-79bb0b845af6">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2688"/>
+	<property name="ireport.y" value="720"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -584,7 +584,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH4.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="506" y="26" width="13" height="13" uuid="ed01c357-a799-4e79-8efd-f4843ffb7f23"/>
+				<reportElement x="508" y="26" width="11" height="11" uuid="ed01c357-a799-4e79-8efd-f4843ffb7f23"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{cln_patients_Sex}=="Male"?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -668,59 +668,59 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s2_employ5}!=null && $F{medical_history_s2_employ5}!="")?$F{medical_history_s2_employ5}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="485" y="251" width="13" height="13" uuid="2431c7e6-9f1a-4a19-923b-bb51f5d08857"/>
+				<reportElement x="487" y="253" width="11" height="11" uuid="2431c7e6-9f1a-4a19-923b-bb51f5d08857"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s2_samework}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="252" width="13" height="13" uuid="bdc91be4-cd82-48e1-bf69-6f2e92c8627c"/>
+				<reportElement x="529" y="253" width="11" height="11" uuid="bdc91be4-cd82-48e1-bf69-6f2e92c8627c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s2_samework}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="273" width="13" height="13" uuid="2d2a63fe-a89b-40d6-9c44-1d353948b8ce"/>
+				<reportElement x="487" y="273" width="11" height="11" uuid="2d2a63fe-a89b-40d6-9c44-1d353948b8ce"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s2_sameworkenvironment}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="273" width="13" height="13" uuid="8a8871c3-f937-4b7e-b9f1-4e232dcd0e33"/>
+				<reportElement x="529" y="273" width="11" height="11" uuid="8a8871c3-f937-4b7e-b9f1-4e232dcd0e33"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s2_sameworkenvironment}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="453" y="468" width="13" height="13" uuid="cd0f14e5-efb4-46f9-9577-47baf6f3414e"/>
+				<reportElement x="455" y="469" width="11" height="11" uuid="cd0f14e5-efb4-46f9-9577-47baf6f3414e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly1}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="495" y="468" width="13" height="13" uuid="f332af7c-b277-4b3e-a524-d1448d590b6d"/>
+				<reportElement x="497" y="469" width="11" height="11" uuid="f332af7c-b277-4b3e-a524-d1448d590b6d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly1}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="453" y="481" width="13" height="13" uuid="e617596f-502e-4cde-9b3b-7ccd87312367"/>
+				<reportElement x="455" y="482" width="11" height="12" uuid="e617596f-502e-4cde-9b3b-7ccd87312367"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly2}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="495" y="481" width="13" height="13" uuid="fa0c11f9-8182-45ad-b53e-31220d0f4591"/>
+				<reportElement x="497" y="482" width="11" height="11" uuid="fa0c11f9-8182-45ad-b53e-31220d0f4591"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly2}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="453" y="494" width="13" height="13" uuid="229c987d-2bf4-4316-8473-71495bf456a3"/>
+				<reportElement x="455" y="495" width="11" height="11" uuid="229c987d-2bf4-4316-8473-71495bf456a3"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly3}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="495" y="494" width="13" height="13" uuid="6b6feae1-6909-4c53-b8d8-d2d24fa412de"/>
+				<reportElement x="497" y="495" width="11" height="11" uuid="6b6feae1-6909-4c53-b8d8-d2d24fa412de"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly3}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="495" y="519" width="13" height="13" uuid="903c044e-49e7-42ae-b38a-6c4cef989730"/>
+				<reportElement x="497" y="520" width="11" height="11" uuid="903c044e-49e7-42ae-b38a-6c4cef989730"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly5}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="495" y="506" width="13" height="13" uuid="8cce07ae-570c-4ead-9a56-8c745b5c24ca"/>
+				<reportElement x="497" y="507" width="11" height="11" uuid="8cce07ae-570c-4ead-9a56-8c745b5c24ca"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly4}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="453" y="506" width="13" height="13" uuid="b5de77bb-a282-467b-ae62-647c5cfb2c45"/>
+				<reportElement x="455" y="508" width="11" height="11" uuid="b5de77bb-a282-467b-ae62-647c5cfb2c45"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly4}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="453" y="519" width="13" height="13" uuid="be3919d5-991b-4e44-a300-0c067785f2ea"/>
+				<reportElement x="455" y="520" width="11" height="11" uuid="be3919d5-991b-4e44-a300-0c067785f2ea"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly5}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -728,11 +728,11 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s2_comments}!=null && $F{medical_history_s2_comments}!="")?$F{medical_history_s2_comments}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="453" y="532" width="13" height="13" uuid="2dfd9b73-b82b-46e1-9748-b4b6e9cf8ea2"/>
+				<reportElement x="455" y="534" width="11" height="11" uuid="2dfd9b73-b82b-46e1-9748-b4b6e9cf8ea2"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly6}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="495" y="532" width="13" height="13" uuid="b340f609-7813-4e56-83a3-0c79a379467f"/>
+				<reportElement x="497" y="534" width="11" height="11" uuid="b340f609-7813-4e56-83a3-0c79a379467f"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly6}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -788,7 +788,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s3_comments}!=null && $F{medical_history_s3_comments}!="")?$F{medical_history_s3_comments}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="531" y="26" width="13" height="13" uuid="771f3e1f-a73e-4edb-8c7f-7bd658b6b5a5"/>
+				<reportElement x="533" y="26" width="11" height="11" uuid="771f3e1f-a73e-4edb-8c7f-7bd658b6b5a5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{cln_patients_Sex}=="Female"?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -850,163 +850,163 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH7.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="30" width="13" height="13" uuid="512cdc79-6852-4cf6-a600-c025588301c1"/>
+				<reportElement x="488" y="31" width="11" height="11" uuid="512cdc79-6852-4cf6-a600-c025588301c1"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_concerning}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="30" width="13" height="13" uuid="97b62158-4515-4cd5-847b-2fc24f5b309d"/>
+				<reportElement x="533" y="31" width="11" height="11" uuid="97b62158-4515-4cd5-847b-2fc24f5b309d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_concerning}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="44" width="13" height="13" uuid="daef71a0-5704-4de3-a4a8-09475c82fe4c"/>
+				<reportElement x="487" y="45" width="11" height="11" uuid="daef71a0-5704-4de3-a4a8-09475c82fe4c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_weight_altered}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="44" width="13" height="13" uuid="b7296404-3de2-47ac-a255-88373a12611f"/>
+				<reportElement x="532" y="45" width="11" height="11" uuid="b7296404-3de2-47ac-a255-88373a12611f"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_weight_altered}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="58" width="13" height="13" uuid="8558a8b4-f271-45ac-b6eb-312936e2df4e"/>
+				<reportElement x="488" y="59" width="11" height="11" uuid="8558a8b4-f271-45ac-b6eb-312936e2df4e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_medicaltreatment}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="58" width="13" height="13" uuid="c1f41358-a5f4-4724-9266-a090f2bda589"/>
+				<reportElement x="533" y="59" width="11" height="11" uuid="c1f41358-a5f4-4724-9266-a090f2bda589"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_medicaltreatment}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="87" width="13" height="13" uuid="fd1f6065-2b15-4d3d-b522-17dfd3c42fbd"/>
+				<reportElement x="487" y="88" width="11" height="11" uuid="fd1f6065-2b15-4d3d-b522-17dfd3c42fbd"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_hospital}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="87" width="13" height="13" uuid="636c72a3-3cbc-4981-8933-69b59369db54"/>
+				<reportElement x="533" y="88" width="11" height="11" uuid="636c72a3-3cbc-4981-8933-69b59369db54"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_hospital}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="101" width="13" height="13" uuid="63fb9aee-77ba-4b88-9ee9-ea51104a6392"/>
+				<reportElement x="487" y="101" width="11" height="11" uuid="63fb9aee-77ba-4b88-9ee9-ea51104a6392"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_stranfustion}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="101" width="13" height="13" uuid="9ced4e8d-aafa-4e38-9d26-fd75ade2f6ca"/>
+				<reportElement x="533" y="101" width="11" height="11" uuid="9ced4e8d-aafa-4e38-9d26-fd75ade2f6ca"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_stranfustion}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="128" width="13" height="13" uuid="62be62c6-2181-4bf0-99e9-ae788546e7e4"/>
+				<reportElement x="488" y="130" width="11" height="11" uuid="62be62c6-2181-4bf0-99e9-ae788546e7e4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_concussion_or_headinjury}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="128" width="13" height="13" uuid="350f6f85-d8bd-4229-b5c6-849d507aa6d4"/>
+				<reportElement x="532" y="130" width="11" height="11" uuid="350f6f85-d8bd-4229-b5c6-849d507aa6d4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_concussion_or_headinjury}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="198" y="128" width="13" height="13" uuid="388748a9-e67d-4b89-a32c-dd8af5d55b4e"/>
+				<reportElement x="199" y="130" width="11" height="11" uuid="388748a9-e67d-4b89-a32c-dd8af5d55b4e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_diabetes}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="243" y="128" width="13" height="13" uuid="535fce50-b345-4a4d-812a-0ed6727b18a3"/>
+				<reportElement x="244" y="130" width="11" height="11" uuid="535fce50-b345-4a4d-812a-0ed6727b18a3"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_diabetes}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="198" y="142" width="13" height="13" uuid="fc36a39d-cc83-4e35-8179-5f5ce8aa2609"/>
+				<reportElement x="199" y="143" width="11" height="11" uuid="fc36a39d-cc83-4e35-8179-5f5ce8aa2609"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_pressure}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="243" y="142" width="13" height="13" uuid="3c9f9486-81ec-4f31-939a-0485d9f18729"/>
+				<reportElement x="244" y="143" width="11" height="11" uuid="3c9f9486-81ec-4f31-939a-0485d9f18729"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_pressure}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="142" width="13" height="13" uuid="838962a7-d47d-45f8-a63a-35df1fd04a51"/>
+				<reportElement x="488" y="143" width="11" height="11" uuid="838962a7-d47d-45f8-a63a-35df1fd04a51"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_migraine}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="142" width="13" height="13" uuid="f24a81a2-6c44-4e7d-ba34-fa2185aac8af"/>
+				<reportElement x="532" y="143" width="11" height="11" uuid="f24a81a2-6c44-4e7d-ba34-fa2185aac8af"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_migraine}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="198" y="156" width="13" height="13" uuid="40e11161-931f-45b5-ace7-313b9412bd52"/>
+				<reportElement x="199" y="157" width="11" height="11" uuid="40e11161-931f-45b5-ace7-313b9412bd52"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_asthma}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="243" y="156" width="13" height="13" uuid="2a914dca-8e20-43e8-8d7c-c17a2f0f0e62"/>
+				<reportElement x="244" y="157" width="11" height="11" uuid="2a914dca-8e20-43e8-8d7c-c17a2f0f0e62"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_asthma}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="156" width="13" height="13" uuid="4ee747b0-15c9-4e3b-ac6f-748a83ccc96e"/>
+				<reportElement x="488" y="157" width="11" height="11" uuid="4ee747b0-15c9-4e3b-ac6f-748a83ccc96e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_eczema}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="156" width="13" height="13" uuid="0af79c9b-a7d4-480f-9ab7-dda26cab25dd"/>
+				<reportElement x="533" y="157" width="11" height="11" uuid="0af79c9b-a7d4-480f-9ab7-dda26cab25dd"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_eczema}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="198" y="170" width="13" height="13" uuid="11aedebb-c2f6-47e4-a7c0-cf9478048a0f"/>
+				<reportElement x="199" y="170" width="11" height="11" uuid="11aedebb-c2f6-47e4-a7c0-cf9478048a0f"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_emphysema}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="243" y="170" width="13" height="13" uuid="a0a5571d-7ce2-4b4a-9b59-4c86a2007c07"/>
+				<reportElement x="244" y="170" width="11" height="11" uuid="a0a5571d-7ce2-4b4a-9b59-4c86a2007c07"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_emphysema}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="170" width="13" height="13" uuid="8489d633-5316-4770-8345-767194f2459c"/>
+				<reportElement x="488" y="170" width="11" height="11" uuid="8489d633-5316-4770-8345-767194f2459c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_hepatitis}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="170" width="13" height="13" uuid="827a1d3b-f050-48ee-830b-bed86c089c36"/>
+				<reportElement x="533" y="170" width="11" height="11" uuid="827a1d3b-f050-48ee-830b-bed86c089c36"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_hepatitis}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="198" y="184" width="13" height="13" uuid="c27059c5-0b6e-40b7-ab05-3ad30747a863"/>
+				<reportElement x="199" y="184" width="11" height="11" uuid="c27059c5-0b6e-40b7-ab05-3ad30747a863"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_veins}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="243" y="184" width="13" height="13" uuid="9db677df-3b90-4e8c-a95e-0fd8fed4d159"/>
+				<reportElement x="244" y="184" width="11" height="11" uuid="9db677df-3b90-4e8c-a95e-0fd8fed4d159"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_veins}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="184" width="13" height="13" uuid="6ec343dc-00e2-4440-93de-4f227541915b"/>
+				<reportElement x="488" y="184" width="11" height="11" uuid="6ec343dc-00e2-4440-93de-4f227541915b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_desease}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="184" width="13" height="13" uuid="72d7adb4-5125-4182-b32e-6992339c457b"/>
+				<reportElement x="533" y="184" width="11" height="11" uuid="72d7adb4-5125-4182-b32e-6992339c457b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_desease}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="198" y="198" width="13" height="13" uuid="2ec028bc-c041-4955-83c1-8e1a2dea346c"/>
+				<reportElement x="199" y="198" width="11" height="11" uuid="2ec028bc-c041-4955-83c1-8e1a2dea346c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_epilepsy}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="243" y="198" width="13" height="13" uuid="dde389fe-add5-4146-a570-8c4cf615dcc9"/>
+				<reportElement x="244" y="198" width="11" height="11" uuid="dde389fe-add5-4146-a570-8c4cf615dcc9"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_epilepsy}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="243" y="212" width="13" height="13" uuid="130e3289-52bb-4838-a857-4127db3a0ab4"/>
+				<reportElement x="244" y="211" width="11" height="11" uuid="130e3289-52bb-4838-a857-4127db3a0ab4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_episodes}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="198" y="212" width="13" height="13" uuid="4c9d6661-47dc-4fdd-b215-6b72c852ebd9"/>
+				<reportElement x="199" y="211" width="11" height="11" uuid="4c9d6661-47dc-4fdd-b215-6b72c852ebd9"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_episodes}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="210" width="13" height="13" uuid="023df4e5-1aba-4d7e-b1af-a259810276b8"/>
+				<reportElement x="488" y="211" width="11" height="11" uuid="023df4e5-1aba-4d7e-b1af-a259810276b8"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_hormonal}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="210" width="13" height="13" uuid="03bdda61-6d6b-46c3-ba10-f18d7b4943d5"/>
+				<reportElement x="533" y="211" width="11" height="11" uuid="03bdda61-6d6b-46c3-ba10-f18d7b4943d5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_hormonal}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="198" y="223" width="13" height="13" uuid="899e6970-daf8-4281-b51d-f9cc2156f142"/>
+				<reportElement x="199" y="224" width="11" height="11" uuid="899e6970-daf8-4281-b51d-f9cc2156f142"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_cancer_or_tumour}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="243" y="223" width="13" height="13" uuid="dc680d4f-2343-4bc1-800a-f60068ee0bd4"/>
+				<reportElement x="244" y="224" width="11" height="11" uuid="dc680d4f-2343-4bc1-800a-f60068ee0bd4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_cancer_or_tumour}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="223" width="13" height="13" uuid="7f4031a2-b429-4107-ab7b-ec179bf79505"/>
+				<reportElement x="488" y="224" width="11" height="11" uuid="7f4031a2-b429-4107-ab7b-ec179bf79505"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_allergies}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="223" width="13" height="13" uuid="4bb91e8c-6d44-48b5-b040-e249f48dd975"/>
+				<reportElement x="533" y="224" width="11" height="11" uuid="4bb91e8c-6d44-48b5-b040-e249f48dd975"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_allergies}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1014,99 +1014,99 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s4_comments}!=null && $F{medical_history_s4_comments}!="")?$F{medical_history_s4_comments}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="486" y="394" width="13" height="13" uuid="0d065986-e7e5-4109-b253-380c8fe6750c"/>
+				<reportElement x="488" y="395" width="11" height="11" uuid="0d065986-e7e5-4109-b253-380c8fe6750c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_disease}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="394" width="13" height="13" uuid="c6694e8e-21ff-485d-a17d-6006a6b41363"/>
+				<reportElement x="532" y="395" width="11" height="11" uuid="c6694e8e-21ff-485d-a17d-6006a6b41363"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_disease}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="427" width="13" height="13" uuid="f5cf0e39-f100-4e02-b068-f26f041abd60"/>
+				<reportElement x="488" y="428" width="11" height="11" uuid="f5cf0e39-f100-4e02-b068-f26f041abd60"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_claim}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="427" width="13" height="13" uuid="4c029791-12d1-4fe8-a38b-bc7cfa8417a8"/>
+				<reportElement x="533" y="428" width="11" height="11" uuid="4c029791-12d1-4fe8-a38b-bc7cfa8417a8"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_claim}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="494" width="13" height="13" uuid="f9672e04-7e4a-4f9b-a612-d656b5c84e8a"/>
+				<reportElement x="488" y="496" width="11" height="11" uuid="f9672e04-7e4a-4f9b-a612-d656b5c84e8a"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_duties}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="494" width="13" height="13" uuid="acfbf167-9fd6-4111-8c62-f7ba027e30fd"/>
+				<reportElement x="533" y="496" width="11" height="11" uuid="acfbf167-9fd6-4111-8c62-f7ba027e30fd"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_duties}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="509" width="13" height="13" uuid="32d120e6-889a-48bf-8750-5444fab14915"/>
+				<reportElement x="488" y="509" width="11" height="11" uuid="32d120e6-889a-48bf-8750-5444fab14915"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_sickness}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="509" width="13" height="13" uuid="9f1b8451-2f0e-432b-aca1-ca88e30bf89c"/>
+				<reportElement x="533" y="509" width="11" height="11" uuid="9f1b8451-2f0e-432b-aca1-ca88e30bf89c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_sickness}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="539" width="13" height="13" uuid="bcbcdabc-b696-41e3-ba99-8b77bd123d5a"/>
+				<reportElement x="487" y="539" width="11" height="11" uuid="bcbcdabc-b696-41e3-ba99-8b77bd123d5a"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_equipment}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="539" width="13" height="13" uuid="84f7db05-34fe-4899-b128-76c6f6810348"/>
+				<reportElement x="532" y="539" width="11" height="11" uuid="84f7db05-34fe-4899-b128-76c6f6810348"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_equipment}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="120" y="589" width="13" height="13" uuid="c02ded86-9740-442a-819a-a3b71ad108cc"/>
+				<reportElement x="121" y="589" width="11" height="11" uuid="c02ded86-9740-442a-819a-a3b71ad108cc"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_chermicals}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="120" y="602" width="13" height="13" uuid="13d5ea49-0fba-4592-a185-40467ea2b9d6"/>
+				<reportElement x="121" y="602" width="11" height="11" uuid="13d5ea49-0fba-4592-a185-40467ea2b9d6"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_noise}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="166" y="589" width="13" height="13" uuid="fe9b098f-f7e4-4e5d-af99-d97f34563698"/>
+				<reportElement x="167" y="589" width="11" height="11" uuid="fe9b098f-f7e4-4e5d-af99-d97f34563698"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_chermicals}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="166" y="602" width="13" height="13" uuid="2e242ddc-ba29-41f8-af8c-71a43bf85094"/>
+				<reportElement x="167" y="602" width="11" height="11" uuid="2e242ddc-ba29-41f8-af8c-71a43bf85094"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_noise}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="290" y="589" width="13" height="13" uuid="e3cd3bc4-7ac7-4d21-894e-d8352b963922"/>
+				<reportElement x="290" y="589" width="11" height="11" uuid="e3cd3bc4-7ac7-4d21-894e-d8352b963922"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_radiation}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="290" y="602" width="13" height="13" uuid="757e5c66-e9b3-4bad-aef1-ca778f3fc6de"/>
+				<reportElement x="290" y="602" width="11" height="11" uuid="757e5c66-e9b3-4bad-aef1-ca778f3fc6de"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_dust}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="334" y="589" width="13" height="13" uuid="c4a4dd60-3643-4670-b4b0-a78cdc931c93"/>
+				<reportElement x="335" y="589" width="11" height="11" uuid="c4a4dd60-3643-4670-b4b0-a78cdc931c93"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_radiation}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="334" y="602" width="13" height="13" uuid="2abc1f5d-2ad3-48f8-b941-200f51c7f5a5"/>
+				<reportElement x="335" y="602" width="11" height="11" uuid="2abc1f5d-2ad3-48f8-b941-200f51c7f5a5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_dust}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="589" width="13" height="13" uuid="0e72d2d8-085f-41eb-8f29-88c45242c165"/>
+				<reportElement x="487" y="589" width="11" height="11" uuid="0e72d2d8-085f-41eb-8f29-88c45242c165"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_asbestos}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="602" width="13" height="13" uuid="fb76b5c6-2652-4300-ba27-710be7798d58"/>
+				<reportElement x="487" y="602" width="11" height="11" uuid="fb76b5c6-2652-4300-ba27-710be7798d58"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_solvents}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="486" y="614" width="13" height="13" uuid="00c339b8-9042-4b85-9fd0-f77c8ecab30a"/>
+				<reportElement x="487" y="614" width="11" height="11" uuid="00c339b8-9042-4b85-9fd0-f77c8ecab30a"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_other}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="614" width="13" height="13" uuid="e0d93527-3c4c-4b57-95e0-057aab4c0070"/>
+				<reportElement x="532" y="614" width="11" height="11" uuid="e0d93527-3c4c-4b57-95e0-057aab4c0070"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_other}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="602" width="13" height="13" uuid="a0d5fefc-b5df-451c-925f-d8902e23bcef"/>
+				<reportElement x="532" y="602" width="11" height="11" uuid="a0d5fefc-b5df-451c-925f-d8902e23bcef"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_solvents}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="531" y="589" width="13" height="13" uuid="2b762cb7-0ad6-4f65-a09f-c2969125d057"/>
+				<reportElement x="532" y="589" width="11" height="11" uuid="2b762cb7-0ad6-4f65-a09f-c2969125d057"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_asbestos}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1140,67 +1140,67 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH10.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="211" y="56" width="13" height="13" uuid="d480e02c-1fd4-4d56-b2e9-0dbe03f9626c"/>
+				<reportElement x="212" y="56" width="11" height="11" uuid="d480e02c-1fd4-4d56-b2e9-0dbe03f9626c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_neck}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="211" y="68" width="13" height="13" uuid="a8aeb284-9a32-41ed-b132-39b62fec3c97"/>
+				<reportElement x="212" y="68" width="11" height="11" uuid="a8aeb284-9a32-41ed-b132-39b62fec3c97"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_shoulder}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="211" y="80" width="13" height="13" uuid="a746686f-5215-416f-a606-c54a9c51073e"/>
+				<reportElement x="212" y="82" width="11" height="11" uuid="a746686f-5215-416f-a606-c54a9c51073e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_elbow}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="211" y="92" width="13" height="13" uuid="74e85046-bedd-4207-9546-8ec65a155a02"/>
+				<reportElement x="212" y="93" width="11" height="11" uuid="74e85046-bedd-4207-9546-8ec65a155a02"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_wrist_or_hand}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="252" y="56" width="13" height="13" uuid="df5a6249-33df-4263-9b6c-63d9cda68ae7"/>
+				<reportElement x="254" y="56" width="11" height="11" uuid="df5a6249-33df-4263-9b6c-63d9cda68ae7"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_neck}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="252" y="68" width="13" height="13" uuid="960652be-c58f-4340-9698-eaf489588f6e"/>
+				<reportElement x="254" y="68" width="11" height="11" uuid="960652be-c58f-4340-9698-eaf489588f6e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_shoulder}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="252" y="80" width="13" height="13" uuid="935ba840-7d84-42c8-8af6-57d29d61f69d"/>
+				<reportElement x="254" y="82" width="11" height="11" uuid="935ba840-7d84-42c8-8af6-57d29d61f69d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_elbow}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="252" y="92" width="13" height="13" uuid="a9dc3809-0723-40dc-ba37-ae2df58d6438"/>
+				<reportElement x="255" y="94" width="11" height="11" uuid="a9dc3809-0723-40dc-ba37-ae2df58d6438"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_wrist_or_hand}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="56" width="13" height="13" uuid="79872590-3ae4-4faa-80b3-2062f8216219"/>
+				<reportElement x="486" y="56" width="11" height="11" uuid="79872590-3ae4-4faa-80b3-2062f8216219"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_lower_black}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="68" width="13" height="13" uuid="6093ddfc-0391-4935-982d-86e1c4d3ff37"/>
+				<reportElement x="486" y="68" width="11" height="11" uuid="6093ddfc-0391-4935-982d-86e1c4d3ff37"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_hip}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="80" width="13" height="13" uuid="82928685-69e4-48a7-b8a1-60d0993bb3c7"/>
+				<reportElement x="486" y="81" width="11" height="11" uuid="82928685-69e4-48a7-b8a1-60d0993bb3c7"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_knee}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="92" width="13" height="13" uuid="4f890cd9-a4ec-4c6e-8a53-e0780be1a50e"/>
+				<reportElement x="486" y="94" width="11" height="11" uuid="4f890cd9-a4ec-4c6e-8a53-e0780be1a50e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_ankle_or_foot}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="56" width="13" height="13" uuid="770c988a-450b-4808-848b-8354ea770e78"/>
+				<reportElement x="528" y="56" width="11" height="11" uuid="770c988a-450b-4808-848b-8354ea770e78"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_lower_black}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="68" width="13" height="13" uuid="115a82ab-021d-47d9-b756-7c54f05e529d"/>
+				<reportElement x="528" y="68" width="11" height="11" uuid="115a82ab-021d-47d9-b756-7c54f05e529d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_hip}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="80" width="13" height="13" uuid="706605e3-8647-4e4c-9b19-575d83e2b18c"/>
+				<reportElement x="528" y="81" width="11" height="11" uuid="706605e3-8647-4e4c-9b19-575d83e2b18c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_knee}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="92" width="13" height="13" uuid="57b2dfad-74f3-46fd-aa41-8b1f5899d91b"/>
+				<reportElement x="528" y="94" width="11" height="11" uuid="57b2dfad-74f3-46fd-aa41-8b1f5899d91b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_ankle_or_foot}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1208,51 +1208,51 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s6_comments1}!=null && $F{medical_history_s6_comments1}!="")?$F{medical_history_s6_comments1}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="211" y="266" width="13" height="13" uuid="c0321450-d5b9-4275-93d2-f9d866e43ddf"/>
+				<reportElement x="212" y="267" width="11" height="11" uuid="c0321450-d5b9-4275-93d2-f9d866e43ddf"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_cervical}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="211" y="278" width="13" height="13" uuid="5d5c1c60-aea1-4947-857b-6ff998d98dcf"/>
+				<reportElement x="211" y="280" width="11" height="11" uuid="5d5c1c60-aea1-4947-857b-6ff998d98dcf"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_lower_black}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="211" y="291" width="13" height="13" uuid="86523726-0f5f-46b1-9598-ffcd9127c3e4"/>
+				<reportElement x="211" y="293" width="11" height="11" uuid="86523726-0f5f-46b1-9598-ffcd9127c3e4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_sciatica}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="252" y="266" width="13" height="13" uuid="84c5514b-9b36-4449-ace1-2734e4cf495d"/>
+				<reportElement x="254" y="267" width="11" height="11" uuid="84c5514b-9b36-4449-ace1-2734e4cf495d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_cervical}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="252" y="278" width="13" height="13" uuid="d2cf802b-68c3-4771-95fd-cd651f9cfe4b"/>
+				<reportElement x="254" y="280" width="11" height="11" uuid="d2cf802b-68c3-4771-95fd-cd651f9cfe4b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_lower}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="252" y="291" width="13" height="13" uuid="a77a58db-883b-429a-b8a5-1ccd7f660b1b"/>
+				<reportElement x="254" y="293" width="11" height="11" uuid="a77a58db-883b-429a-b8a5-1ccd7f660b1b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_sciatica}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="266" width="13" height="13" uuid="a2017f07-f54d-4da3-812d-5e65d36014d2"/>
+				<reportElement x="487" y="267" width="11" height="11" uuid="a2017f07-f54d-4da3-812d-5e65d36014d2"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_pins_needles}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="278" width="13" height="13" uuid="9d397038-89e3-41ea-8817-14bc212e9616"/>
+				<reportElement x="487" y="280" width="11" height="11" uuid="9d397038-89e3-41ea-8817-14bc212e9616"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_muscle_aches_pains}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="291" width="13" height="13" uuid="3b3cb9bd-5b9b-4f8e-a711-6ba3ef698608"/>
+				<reportElement x="487" y="293" width="11" height="11" uuid="3b3cb9bd-5b9b-4f8e-a711-6ba3ef698608"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_joint_aches_pains}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="266" width="13" height="13" uuid="d75e4bdf-1e59-481f-a833-e6414384bfb2"/>
+				<reportElement x="529" y="267" width="11" height="11" uuid="d75e4bdf-1e59-481f-a833-e6414384bfb2"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_pins_needles}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="278" width="13" height="13" uuid="a9820a82-f941-4db4-8a5b-ef040f415568"/>
+				<reportElement x="529" y="280" width="11" height="11" uuid="a9820a82-f941-4db4-8a5b-ef040f415568"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_muscle_aches_pains}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="291" width="13" height="13" uuid="ca25a6c4-e0e4-4cc4-9b2b-16e23fe6b7bf"/>
+				<reportElement x="529" y="293" width="11" height="11" uuid="ca25a6c4-e0e4-4cc4-9b2b-16e23fe6b7bf"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_joint_aches_pains}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1260,83 +1260,83 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s6_comments2}!=null && $F{medical_history_s6_comments2}!="")?$F{medical_history_s6_comments2}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="207" y="460" width="13" height="13" uuid="0d764b43-1de4-4eb4-a30c-b28dd3a257f4"/>
+				<reportElement x="208" y="460" width="11" height="11" uuid="0d764b43-1de4-4eb4-a30c-b28dd3a257f4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_rsi}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="207" y="473" width="13" height="13" uuid="dc643308-4d74-46cf-8e79-ef54a489c1b8"/>
+				<reportElement x="208" y="473" width="11" height="11" uuid="dc643308-4d74-46cf-8e79-ef54a489c1b8"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_tennis}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="249" y="460" width="13" height="13" uuid="aa6f50ba-41fd-430f-b578-eb1569e291ce"/>
+				<reportElement x="250" y="460" width="11" height="11" uuid="aa6f50ba-41fd-430f-b578-eb1569e291ce"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_rsi}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="249" y="473" width="13" height="13" uuid="f15bd59a-8408-4c7d-b83e-e6546f3d4717"/>
+				<reportElement x="250" y="473" width="11" height="11" uuid="f15bd59a-8408-4c7d-b83e-e6546f3d4717"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_tennis}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="207" y="486" width="13" height="13" uuid="78084f3d-95b3-45c6-9d0d-6c6357fc82b5"/>
+				<reportElement x="208" y="486" width="11" height="11" uuid="78084f3d-95b3-45c6-9d0d-6c6357fc82b5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_carpal}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="249" y="486" width="13" height="13" uuid="850608f0-bd92-493c-8bd1-9fc6360773c9"/>
+				<reportElement x="250" y="486" width="11" height="11" uuid="850608f0-bd92-493c-8bd1-9fc6360773c9"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_carpal}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="207" y="499" width="13" height="13" uuid="df678729-c611-4199-a400-b8fefbe13104"/>
+				<reportElement x="208" y="499" width="11" height="11" uuid="df678729-c611-4199-a400-b8fefbe13104"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_hernia}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="249" y="499" width="13" height="13" uuid="8b52ddf1-d95c-4814-9ffb-02609a006dfd"/>
+				<reportElement x="250" y="499" width="11" height="11" uuid="8b52ddf1-d95c-4814-9ffb-02609a006dfd"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_hernia}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="207" y="512" width="13" height="13" uuid="a53c1f76-5352-4bed-8600-81760d2082ca"/>
+				<reportElement x="208" y="511" width="11" height="11" uuid="a53c1f76-5352-4bed-8600-81760d2082ca"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_osteoarthritis}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="249" y="512" width="13" height="13" uuid="b4ae7b0b-3995-4436-a14b-65852f93d7c5"/>
+				<reportElement x="250" y="511" width="11" height="11" uuid="b4ae7b0b-3995-4436-a14b-65852f93d7c5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_osteoarthritis}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="459" width="13" height="13" uuid="9240715a-35db-46c0-ac0f-8642d389af23"/>
+				<reportElement x="486" y="459" width="11" height="11" uuid="9240715a-35db-46c0-ac0f-8642d389af23"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_arthritis}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="472" width="13" height="13" uuid="a7d341da-1367-4a41-840e-4bf82a858625"/>
+				<reportElement x="486" y="472" width="11" height="11" uuid="a7d341da-1367-4a41-840e-4bf82a858625"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_osteoporosis}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="485" width="13" height="13" uuid="74af6ac5-25d6-44b6-a609-3f6b6bfa812b"/>
+				<reportElement x="486" y="485" width="11" height="11" uuid="74af6ac5-25d6-44b6-a609-3f6b6bfa812b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_fibromyalgia}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="498" width="13" height="13" uuid="09d0e7eb-0ba0-4151-9734-5ce6c8920caf"/>
+				<reportElement x="486" y="498" width="11" height="11" uuid="09d0e7eb-0ba0-4151-9734-5ce6c8920caf"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_fractured_bones}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="510" width="13" height="13" uuid="0fe3ff77-36f6-4be7-a99c-e408ea081933"/>
+				<reportElement x="486" y="510" width="11" height="11" uuid="0fe3ff77-36f6-4be7-a99c-e408ea081933"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_affects}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="459" width="13" height="13" uuid="6dea16a6-d48a-4e2f-9304-816b3d74dba0"/>
+				<reportElement x="528" y="459" width="11" height="11" uuid="6dea16a6-d48a-4e2f-9304-816b3d74dba0"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_arthritis}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="471" width="13" height="13" uuid="898ab9c5-74de-447c-ad97-f25dd29caf9d"/>
+				<reportElement x="528" y="472" width="11" height="11" uuid="898ab9c5-74de-447c-ad97-f25dd29caf9d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_osteoporosis}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="484" width="13" height="13" uuid="868b52f2-7cb8-4d68-b00a-a9482499285c"/>
+				<reportElement x="528" y="486" width="11" height="11" uuid="868b52f2-7cb8-4d68-b00a-a9482499285c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_fibromyalgia}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="498" width="13" height="13" uuid="c3955374-5e68-492d-92b7-a7d2a6445aff"/>
+				<reportElement x="528" y="498" width="11" height="11" uuid="c3955374-5e68-492d-92b7-a7d2a6445aff"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_fractured_bones}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="510" width="13" height="13" uuid="f2ae5fb7-c929-4761-87f2-2d1abe7663d9"/>
+				<reportElement x="528" y="510" width="11" height="11" uuid="f2ae5fb7-c929-4761-87f2-2d1abe7663d9"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_affects}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1358,59 +1358,59 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH13.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="32" width="13" height="13" uuid="0eb76912-5fc9-478b-aca8-57ceebfe8901"/>
+				<reportElement x="472" y="32" width="11" height="11" uuid="0eb76912-5fc9-478b-aca8-57ceebfe8901"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_directfamily}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="32" width="13" height="13" uuid="2db842df-07aa-45e3-b14f-8c015de3c37e"/>
+				<reportElement x="514" y="32" width="11" height="11" uuid="2db842df-07aa-45e3-b14f-8c015de3c37e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_directfamily}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="58" width="13" height="13" uuid="15ab6001-f127-47bb-92b2-39ed517f3840"/>
+				<reportElement x="472" y="58" width="11" height="11" uuid="15ab6001-f127-47bb-92b2-39ed517f3840"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_undergone}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="58" width="13" height="13" uuid="5a33662f-7fa5-4116-a84d-134eca5f46ea"/>
+				<reportElement x="514" y="58" width="11" height="11" uuid="5a33662f-7fa5-4116-a84d-134eca5f46ea"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_undergone}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="220" y="96" width="13" height="13" uuid="b4467d6d-f7b2-4469-8ba0-4129a660f560"/>
+				<reportElement x="220" y="98" width="11" height="11" uuid="b4467d6d-f7b2-4469-8ba0-4129a660f560"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_disease}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="261" y="96" width="13" height="13" uuid="bd646708-071c-4764-b82d-87727b26774f"/>
+				<reportElement x="262" y="97" width="11" height="11" uuid="bd646708-071c-4764-b82d-87727b26774f"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_disease}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="220" y="109" width="13" height="13" uuid="b2e99895-05ba-487f-b18b-06c625c49959"/>
+				<reportElement x="220" y="111" width="11" height="11" uuid="b2e99895-05ba-487f-b18b-06c625c49959"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_murmurs}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="261" y="109" width="13" height="13" uuid="4eb9185c-6891-4344-9184-04e04d0b0f27"/>
+				<reportElement x="262" y="110" width="11" height="11" uuid="4eb9185c-6891-4344-9184-04e04d0b0f27"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_murmurs}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="220" y="121" width="13" height="13" uuid="7e04fbd0-f936-4e0b-b26b-d33de585ebd7"/>
+				<reportElement x="220" y="123" width="11" height="11" uuid="7e04fbd0-f936-4e0b-b26b-d33de585ebd7"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_palpitations}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="261" y="121" width="13" height="13" uuid="49ae4f7b-0307-4260-bb7c-50bc920c7334"/>
+				<reportElement x="262" y="123" width="11" height="11" uuid="49ae4f7b-0307-4260-bb7c-50bc920c7334"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_palpitations}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="96" width="13" height="13" uuid="3d80cd7b-8288-4d30-bede-5b965922bf4b"/>
+				<reportElement x="472" y="97" width="11" height="11" uuid="3d80cd7b-8288-4d30-bede-5b965922bf4b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_angina}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="96" width="13" height="13" uuid="1e8e174d-0b96-47a2-b8f0-a8c6ee454230"/>
+				<reportElement x="514" y="97" width="11" height="11" uuid="1e8e174d-0b96-47a2-b8f0-a8c6ee454230"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_angina}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="109" width="13" height="13" uuid="ce1ba085-e83f-4af2-8a7c-6c3eb32beb2d"/>
+				<reportElement x="473" y="110" width="11" height="11" uuid="ce1ba085-e83f-4af2-8a7c-6c3eb32beb2d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_blood_presure}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="109" width="13" height="13" uuid="b811a8e1-fb91-4c96-a4cd-0cbd97d9d932"/>
+				<reportElement x="514" y="110" width="11" height="11" uuid="b811a8e1-fb91-4c96-a4cd-0cbd97d9d932"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s7_blood_presure}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1418,83 +1418,83 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s7_comments}!=null && $F{medical_history_s7_comments}!="")?$F{medical_history_s7_comments}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="221" y="287" width="13" height="13" uuid="f87596e2-8641-418c-9951-b19680469f6c"/>
+				<reportElement x="221" y="287" width="11" height="11" uuid="f87596e2-8641-418c-9951-b19680469f6c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_exercise}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="261" y="287" width="13" height="13" uuid="69565e80-93d0-4b63-93c8-a42943e80e38"/>
+				<reportElement x="263" y="287" width="11" height="11" uuid="69565e80-93d0-4b63-93c8-a42943e80e38"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_exercise}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="220" y="313" width="13" height="13" uuid="53430d27-6a77-4089-b415-816e96bb11b1"/>
+				<reportElement x="222" y="313" width="11" height="11" uuid="53430d27-6a77-4089-b415-816e96bb11b1"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_emphysema}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="261" y="313" width="13" height="13" uuid="2480b63f-8daa-4a8b-9ca8-81e5a7f0210d"/>
+				<reportElement x="263" y="313" width="11" height="11" uuid="2480b63f-8daa-4a8b-9ca8-81e5a7f0210d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_emphysema}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="261" y="326" width="13" height="13" uuid="43748e83-1c3a-4baa-8f7c-0d35885f4707"/>
+				<reportElement x="263" y="325" width="11" height="11" uuid="43748e83-1c3a-4baa-8f7c-0d35885f4707"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_hay_fever}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="220" y="326" width="13" height="13" uuid="ea7f60d5-4489-4f1b-8e0a-2e505743fc65"/>
+				<reportElement x="221" y="325" width="11" height="11" uuid="ea7f60d5-4489-4f1b-8e0a-2e505743fc65"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_hay_fever}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="287" width="13" height="13" uuid="914350a3-8d89-425e-ba4c-f3ecb026b337"/>
+				<reportElement x="473" y="287" width="11" height="11" uuid="914350a3-8d89-425e-ba4c-f3ecb026b337"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_tuberculosis}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="287" width="13" height="13" uuid="d0392984-06f3-4460-8654-4aeac9d1f69f"/>
+				<reportElement x="515" y="287" width="11" height="11" uuid="d0392984-06f3-4460-8654-4aeac9d1f69f"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_tuberculosis}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="300" width="13" height="13" uuid="272a558d-4e61-442a-9188-ea4f0379052a"/>
+				<reportElement x="473" y="300" width="11" height="11" uuid="272a558d-4e61-442a-9188-ea4f0379052a"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_obstructive}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="300" width="13" height="13" uuid="00294f44-5e0d-419c-9620-6ef562157d24"/>
+				<reportElement x="515" y="300" width="11" height="11" uuid="00294f44-5e0d-419c-9620-6ef562157d24"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_obstructive}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="312" width="13" height="13" uuid="721656b3-1a22-419f-badc-a2316f19886e"/>
+				<reportElement x="473" y="313" width="11" height="11" uuid="721656b3-1a22-419f-badc-a2316f19886e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_disease}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="312" width="13" height="13" uuid="7422a794-c7c6-45da-b09b-5598e51458fb"/>
+				<reportElement x="515" y="312" width="11" height="11" uuid="7422a794-c7c6-45da-b09b-5598e51458fb"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_disease}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="324" width="13" height="13" uuid="488cca59-6a53-4cf6-bd64-ec5e4729c7f9"/>
+				<reportElement x="473" y="325" width="11" height="11" uuid="488cca59-6a53-4cf6-bd64-ec5e4729c7f9"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_rheumatic_fever}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="324" width="13" height="13" uuid="bdece318-4632-4706-af2b-88e5d5d5c318"/>
+				<reportElement x="515" y="325" width="11" height="11" uuid="bdece318-4632-4706-af2b-88e5d5d5c318"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_rheumatic_fever}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="336" width="13" height="13" uuid="2662bc90-2f08-459d-af77-19644da98362"/>
+				<reportElement x="473" y="338" width="11" height="11" uuid="2662bc90-2f08-459d-af77-19644da98362"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_bronchitis}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="336" width="13" height="13" uuid="c94cec0f-48b5-479f-8426-7f66c62854fe"/>
+				<reportElement x="515" y="338" width="11" height="11" uuid="c94cec0f-48b5-479f-8426-7f66c62854fe"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_bronchitis}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="351" width="13" height="13" uuid="450d794c-836d-4823-915b-6885595fd7ba"/>
+				<reportElement x="473" y="351" width="11" height="11" uuid="450d794c-836d-4823-915b-6885595fd7ba"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_coughed_blood}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="351" width="13" height="13" uuid="a2a2b7f9-6d75-41ed-81d2-ce0d93f8c9d0"/>
+				<reportElement x="515" y="351" width="11" height="11" uuid="a2a2b7f9-6d75-41ed-81d2-ce0d93f8c9d0"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_coughed_blood}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="371" width="13" height="13" uuid="76f4e1ac-a353-4bff-b25a-b5d92c837764"/>
+				<reportElement x="473" y="371" width="11" height="11" uuid="76f4e1ac-a353-4bff-b25a-b5d92c837764"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_shortness}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="371" width="13" height="13" uuid="0fce4c1f-1d86-4d12-9014-b7dd302cddf5"/>
+				<reportElement x="515" y="371" width="11" height="11" uuid="0fce4c1f-1d86-4d12-9014-b7dd302cddf5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_shortness}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1502,59 +1502,59 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s8_comments}!=null && $F{medical_history_s8_comments}!="")?$F{medical_history_s8_comments}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="472" y="511" width="13" height="13" uuid="baf5621f-db5f-468f-b7e7-373743109e2e"/>
+				<reportElement x="473" y="511" width="11" height="11" uuid="baf5621f-db5f-468f-b7e7-373743109e2e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_hearing}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="511" width="13" height="13" uuid="e1dae28a-a25d-422a-9331-35a618733bbb"/>
+				<reportElement x="515" y="511" width="11" height="11" uuid="e1dae28a-a25d-422a-9331-35a618733bbb"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_hearing}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="524" width="13" height="13" uuid="eda2612d-a239-46df-8819-26df2a23c0ed"/>
+				<reportElement x="473" y="525" width="11" height="11" uuid="eda2612d-a239-46df-8819-26df2a23c0ed"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_infections_or_discharge}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="524" width="13" height="13" uuid="af92d194-6fcb-48a5-ada4-383d764040d4"/>
+				<reportElement x="515" y="525" width="11" height="11" uuid="af92d194-6fcb-48a5-ada4-383d764040d4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_infections_or_discharge}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="537" width="13" height="13" uuid="f1069731-9334-406a-bd1c-7db71d62d056"/>
+				<reportElement x="473" y="538" width="11" height="11" uuid="f1069731-9334-406a-bd1c-7db71d62d056"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_hearing_aid}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="537" width="13" height="13" uuid="a79fc600-ca47-4d8e-88cf-a6c80bf02420"/>
+				<reportElement x="515" y="538" width="11" height="11" uuid="a79fc600-ca47-4d8e-88cf-a6c80bf02420"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_hearing_aid}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="550" width="13" height="13" uuid="7dd8c4ad-a762-4d97-8aad-a7d8f6955934"/>
+				<reportElement x="473" y="551" width="11" height="11" uuid="7dd8c4ad-a762-4d97-8aad-a7d8f6955934"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_injury_or_condition}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="550" width="13" height="13" uuid="9f9774f2-8387-4279-bb41-43f1c445e953"/>
+				<reportElement x="515" y="551" width="11" height="11" uuid="9f9774f2-8387-4279-bb41-43f1c445e953"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_injury_or_condition}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="563" width="13" height="13" uuid="a8b97adb-cf5f-4372-a0dd-2772de9aa4ef"/>
+				<reportElement x="473" y="564" width="11" height="11" uuid="a8b97adb-cf5f-4372-a0dd-2772de9aa4ef"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_near_or_distance}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="563" width="13" height="13" uuid="52e3e4a5-d460-4bee-9cb7-0ad59912087c"/>
+				<reportElement x="515" y="564" width="11" height="11" uuid="52e3e4a5-d460-4bee-9cb7-0ad59912087c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_near_or_distance}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="576" width="13" height="13" uuid="4617c6a7-6832-41c2-9365-d14518340719"/>
+				<reportElement x="473" y="577" width="11" height="11" uuid="4617c6a7-6832-41c2-9365-d14518340719"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_color_blind}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="589" width="13" height="13" uuid="a3c57bac-99d9-4a7e-994c-b92a8f97eadf"/>
+				<reportElement x="473" y="590" width="11" height="11" uuid="a3c57bac-99d9-4a7e-994c-b92a8f97eadf"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_eyes_or_ears}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="576" width="13" height="13" uuid="7dfef226-2309-4c0f-9a5d-0887f358b504"/>
+				<reportElement x="515" y="577" width="11" height="11" uuid="7dfef226-2309-4c0f-9a5d-0887f358b504"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_color_blind}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="513" y="589" width="13" height="13" uuid="3b285054-1c38-477a-9181-da3e8a7c8730"/>
+				<reportElement x="515" y="590" width="11" height="11" uuid="3b285054-1c38-477a-9181-da3e8a7c8730"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s9_eyes_or_ears}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1576,203 +1576,203 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH16.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="31" width="13" height="13" uuid="e68d298e-a328-4364-a86b-2a0f42479f3d"/>
+				<reportElement x="487" y="32" width="11" height="11" uuid="e68d298e-a328-4364-a86b-2a0f42479f3d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_indigestion}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="44" width="13" height="13" uuid="eddc0e00-2c36-4385-abe1-5597774ce253"/>
+				<reportElement x="487" y="46" width="11" height="11" uuid="eddc0e00-2c36-4385-abe1-5597774ce253"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_vomited_blood}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="294" width="13" height="13" uuid="3ddd32ba-8853-463d-90ec-42e3bb86a6f6"/>
+				<reportElement x="486" y="295" width="11" height="11" uuid="3ddd32ba-8853-463d-90ec-42e3bb86a6f6"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_drug_or_alcohol}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="281" width="13" height="13" uuid="f0794f2e-62e7-4e70-a251-c67672b6f6f6"/>
+				<reportElement x="486" y="282" width="11" height="11" uuid="f0794f2e-62e7-4e70-a251-c67672b6f6f6"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_sleeping_tablets}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="268" width="13" height="13" uuid="f613f9f4-61e6-466b-9441-fff3c76a6aff"/>
+				<reportElement x="486" y="270" width="11" height="11" uuid="f613f9f4-61e6-466b-9441-fff3c76a6aff"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_psychologist_or_psychiatrist}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="242" width="13" height="13" uuid="690620f0-b329-4f7b-9f43-786ed2f44fce"/>
+				<reportElement x="486" y="243" width="11" height="11" uuid="690620f0-b329-4f7b-9f43-786ed2f44fce"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_medicaltion_or_counselling}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="58" width="13" height="13" uuid="4fa33d48-f455-415c-affe-7ab76d97642e"/>
+				<reportElement x="487" y="59" width="11" height="11" uuid="4fa33d48-f455-415c-affe-7ab76d97642e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_bowel_habit}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="71" width="13" height="13" uuid="0b251abf-19cb-4c7b-a14a-3573f39e9f3b"/>
+				<reportElement x="487" y="72" width="11" height="11" uuid="0b251abf-19cb-4c7b-a14a-3573f39e9f3b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_bowel_habit}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="84" width="13" height="13" uuid="0794ca48-69d8-4652-850f-9cffceb95002"/>
+				<reportElement x="487" y="85" width="11" height="11" uuid="0794ca48-69d8-4652-850f-9cffceb95002"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_time_you_urinate}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="97" width="13" height="13" uuid="a77910c8-2bcb-4f00-aaa7-193fcf3505fe"/>
+				<reportElement x="487" y="98" width="11" height="11" uuid="a77910c8-2bcb-4f00-aaa7-193fcf3505fe"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_start_stop_urine}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="111" width="13" height="13" uuid="9b0a95b7-7818-4eda-8315-a0176183de01"/>
+				<reportElement x="487" y="111" width="11" height="11" uuid="9b0a95b7-7818-4eda-8315-a0176183de01"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_change_urine}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="320" width="13" height="13" uuid="993bd4bd-1275-419e-9c5f-8a47b44ae0ac"/>
+				<reportElement x="486" y="322" width="11" height="11" uuid="993bd4bd-1275-419e-9c5f-8a47b44ae0ac"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_insomnia}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="332" width="13" height="13" uuid="8609fc47-ffcb-4d2c-ad3d-fd972c790757"/>
+				<reportElement x="486" y="335" width="11" height="11" uuid="8609fc47-ffcb-4d2c-ad3d-fd972c790757"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_any_condition}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="563" width="13" height="13" uuid="a0051654-bfee-4024-8681-0cd5ce28d4a2"/>
+				<reportElement x="486" y="566" width="11" height="11" uuid="a0051654-bfee-4024-8681-0cd5ce28d4a2"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_hormonal}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="577" width="13" height="13" uuid="43824fa7-c986-4420-8822-9152c2e635e8"/>
+				<reportElement x="486" y="580" width="11" height="11" uuid="43824fa7-c986-4420-8822-9152c2e635e8"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_stones_or_renal}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="550" width="13" height="13" uuid="e75f053f-c146-4672-998f-c92e9a987726"/>
+				<reportElement x="486" y="552" width="11" height="11" uuid="e75f053f-c146-4672-998f-c92e9a987726"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_sweat}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="538" width="13" height="13" uuid="0b5db0a4-bd2b-42c7-9ecf-eb3e8ff2aaff"/>
+				<reportElement x="486" y="539" width="11" height="11" uuid="0b5db0a4-bd2b-42c7-9ecf-eb3e8ff2aaff"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_illness}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="524" width="13" height="13" uuid="b39e3385-cf25-46ca-a9fe-48e9dd9fa32d"/>
+				<reportElement x="486" y="527" width="11" height="11" uuid="b39e3385-cf25-46ca-a9fe-48e9dd9fa32d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_very_hot_environment}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="511" width="13" height="13" uuid="844a0779-0e45-4ad1-bda4-41e64b58bb44"/>
+				<reportElement x="486" y="513" width="11" height="11" uuid="844a0779-0e45-4ad1-bda4-41e64b58bb44"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_environment}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="498" width="13" height="13" uuid="37ae0e3e-2882-4815-b224-21cb29801e9d"/>
+				<reportElement x="486" y="500" width="11" height="11" uuid="37ae0e3e-2882-4815-b224-21cb29801e9d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_shift_work}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="485" width="13" height="13" uuid="f16c8f60-2974-44f2-931c-7113d92dee0d"/>
+				<reportElement x="486" y="486" width="11" height="11" uuid="f16c8f60-2974-44f2-931c-7113d92dee0d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_exhaustion}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="485" y="472" width="13" height="13" uuid="866a0760-81f3-44d5-8f0e-9cb458b96fad"/>
+				<reportElement x="486" y="473" width="11" height="11" uuid="866a0760-81f3-44d5-8f0e-9cb458b96fad"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_narcolepsy}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="202" y="346" width="13" height="13" uuid="5d00c3dd-e721-4429-9d95-d16e548e6f72"/>
+				<reportElement x="204" y="347" width="11" height="11" uuid="5d00c3dd-e721-4429-9d95-d16e548e6f72"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_anxiety}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="202" y="332" width="13" height="13" uuid="4467d343-8e90-40b2-a692-be827a3a3a6c"/>
+				<reportElement x="204" y="334" width="11" height="11" uuid="4467d343-8e90-40b2-a692-be827a3a3a6c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_panic}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="202" y="320" width="13" height="13" uuid="d43ff303-5615-4244-bba2-6973903eb3d2"/>
+				<reportElement x="204" y="322" width="11" height="11" uuid="d43ff303-5615-4244-bba2-6973903eb3d2"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_depression}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="577" width="13" height="13" uuid="5354ebe9-d449-4e58-851c-2282ee37e1fc"/>
+				<reportElement x="531" y="580" width="11" height="11" uuid="5354ebe9-d449-4e58-851c-2282ee37e1fc"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_stones_or_renal}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="294" width="13" height="13" uuid="d85aa1de-8463-4c0d-8d56-a4e857b937a8"/>
+				<reportElement x="528" y="295" width="11" height="11" uuid="d85aa1de-8463-4c0d-8d56-a4e857b937a8"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_drug_or_alcohol}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="528" y="320" width="13" height="13" uuid="ecdf8fbc-6946-42bb-99fd-a247dd246add"/>
+				<reportElement x="528" y="322" width="11" height="11" uuid="ecdf8fbc-6946-42bb-99fd-a247dd246add"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_insomnia}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="528" y="332" width="13" height="13" uuid="72550a8e-1b00-4fe0-a2b7-34c614d9e8de"/>
+				<reportElement x="528" y="334" width="11" height="11" uuid="72550a8e-1b00-4fe0-a2b7-34c614d9e8de"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_any_condition}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="563" width="13" height="13" uuid="2b6c8f58-15c1-4cb6-8469-3d6a72af975e"/>
+				<reportElement x="531" y="566" width="11" height="11" uuid="2b6c8f58-15c1-4cb6-8469-3d6a72af975e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_hormonal}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="550" width="13" height="13" uuid="a241cc2a-094e-458e-b293-9e42b25b51e8"/>
+				<reportElement x="531" y="552" width="11" height="11" uuid="a241cc2a-094e-458e-b293-9e42b25b51e8"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_sweat}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="538" width="13" height="13" uuid="3f973e93-c09a-4217-8160-269e23d9e2fd"/>
+				<reportElement x="531" y="539" width="11" height="11" uuid="3f973e93-c09a-4217-8160-269e23d9e2fd"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_illness}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="525" width="13" height="13" uuid="29302e88-8aea-495d-aac4-74e35812280a"/>
+				<reportElement x="531" y="526" width="11" height="11" uuid="29302e88-8aea-495d-aac4-74e35812280a"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_very_hot_environment}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="512" width="13" height="13" uuid="9f15f693-c329-487b-a611-9a6afb3b76ed"/>
+				<reportElement x="531" y="513" width="11" height="11" uuid="9f15f693-c329-487b-a611-9a6afb3b76ed"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_environment}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="499" width="13" height="13" uuid="2d385d54-a63a-4975-97c5-a3fb7a466623"/>
+				<reportElement x="531" y="500" width="11" height="11" uuid="2d385d54-a63a-4975-97c5-a3fb7a466623"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_shift_work}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="485" width="13" height="13" uuid="51f862b5-4827-4552-87c3-d05fd4648d24"/>
+				<reportElement x="531" y="486" width="11" height="11" uuid="51f862b5-4827-4552-87c3-d05fd4648d24"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_exhaustion}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="530" y="472" width="13" height="13" uuid="2a4162c5-c6fe-4c88-9496-da618b07d500"/>
+				<reportElement x="531" y="473" width="11" height="11" uuid="2a4162c5-c6fe-4c88-9496-da618b07d500"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s12_narcolepsy}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="111" width="13" height="13" uuid="a5917f80-6891-4a82-bf50-baf1c239fff3"/>
+				<reportElement x="529" y="112" width="11" height="11" uuid="a5917f80-6891-4a82-bf50-baf1c239fff3"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_change_urine}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="242" width="13" height="13" uuid="08bbf2ce-78e4-4197-a95c-4e4e0c060a78"/>
+				<reportElement x="528" y="243" width="11" height="11" uuid="08bbf2ce-78e4-4197-a95c-4e4e0c060a78"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_medicaltion_or_counselling}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="268" width="13" height="13" uuid="64bee7ed-1a6d-4195-999b-7ce68b80d760"/>
+				<reportElement x="528" y="270" width="11" height="11" uuid="64bee7ed-1a6d-4195-999b-7ce68b80d760"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_psychologist_or_psychiatrist}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="527" y="281" width="13" height="13" uuid="03ec1030-6c0f-4f61-a25b-96d35cf95389"/>
+				<reportElement x="528" y="283" width="11" height="11" uuid="03ec1030-6c0f-4f61-a25b-96d35cf95389"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_sleeping_tablets}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="71" width="13" height="13" uuid="4eec6555-3f2d-444b-8a50-84cb7709ad30"/>
+				<reportElement x="529" y="72" width="11" height="11" uuid="4eec6555-3f2d-444b-8a50-84cb7709ad30"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_bowel_habit}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="84" width="13" height="13" uuid="e434e9f5-255a-43f5-990f-6d70446ee1c5"/>
+				<reportElement x="529" y="85" width="11" height="11" uuid="e434e9f5-255a-43f5-990f-6d70446ee1c5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_time_you_urinate}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="97" width="13" height="13" uuid="47cfe2d9-a8f9-4ba1-b811-308d09b6a329"/>
+				<reportElement x="529" y="98" width="11" height="11" uuid="47cfe2d9-a8f9-4ba1-b811-308d09b6a329"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_start_stop_urine}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="58" width="13" height="13" uuid="f5588078-a90a-4e79-bdb8-d7fdb983dc83"/>
+				<reportElement x="529" y="60" width="11" height="11" uuid="f5588078-a90a-4e79-bdb8-d7fdb983dc83"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_bowel_habit}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="44" width="13" height="13" uuid="71b546b3-82c2-4c95-968f-df4a0b3c5192"/>
+				<reportElement x="529" y="46" width="11" height="11" uuid="71b546b3-82c2-4c95-968f-df4a0b3c5192"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_vomited_blood}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="31" width="13" height="13" uuid="294f9572-142c-4533-9e81-cff8f91a1a9e"/>
+				<reportElement x="529" y="32" width="11" height="11" uuid="294f9572-142c-4533-9e81-cff8f91a1a9e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_indigestion}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="244" y="346" width="13" height="13" uuid="312367fa-c0c2-4d87-a6ad-9fd6cfeb7dc6"/>
+				<reportElement x="246" y="348" width="11" height="11" uuid="312367fa-c0c2-4d87-a6ad-9fd6cfeb7dc6"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_anxiety}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="244" y="332" width="13" height="13" uuid="2ea85bd8-20c7-4585-bb4d-0b773880c309"/>
+				<reportElement x="246" y="334" width="11" height="11" uuid="2ea85bd8-20c7-4585-bb4d-0b773880c309"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_panic}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="244" y="320" width="13" height="13" uuid="336c73f4-5ee5-4413-a699-f1e8f84532dc"/>
+				<reportElement x="246" y="322" width="11" height="11" uuid="336c73f4-5ee5-4413-a699-f1e8f84532dc"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_depression}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1802,51 +1802,51 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH19.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="472" y="58" width="13" height="13" uuid="4d8ebc31-cf07-4bc0-9ce0-4294522a9785"/>
+				<reportElement x="473" y="59" width="11" height="11" uuid="4d8ebc31-cf07-4bc0-9ce0-4294522a9785"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s13_ever_smoked}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="296" y="359" width="13" height="13" uuid="36fb6427-d5f8-4c1b-8874-24021e9c467f"/>
+				<reportElement x="297" y="360" width="11" height="11" uuid="36fb6427-d5f8-4c1b-8874-24021e9c467f"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s14_helpa_helpb}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="296" y="346" width="13" height="13" uuid="fb3c9416-297e-48a2-b248-f051641ac255"/>
+				<reportElement x="297" y="347" width="11" height="11" uuid="fb3c9416-297e-48a2-b248-f051641ac255"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s14_tetanus}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="471" y="198" width="13" height="13" uuid="8f0ce269-e572-44b2-a1a3-59b43b8053a4"/>
+				<reportElement x="473" y="200" width="11" height="11" uuid="8f0ce269-e572-44b2-a1a3-59b43b8053a4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s13_aspect}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="450" y="172" width="13" height="13" uuid="92f0d9c3-1554-4639-997f-ae1bd182b047"/>
+				<reportElement x="451" y="173" width="11" height="11" uuid="92f0d9c3-1554-4639-997f-ae1bd182b047"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s13_start_stop_smoked}==3?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="450" y="146" width="13" height="13" uuid="5f220a49-6f99-4e8b-b958-d72202dc5712"/>
+				<reportElement x="451" y="148" width="11" height="11" uuid="5f220a49-6f99-4e8b-b958-d72202dc5712"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s13_start_stop_smoked}==2?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="450" y="120" width="13" height="13" uuid="1009e626-f076-4e2c-9d13-c33cd2f8ef78"/>
+				<reportElement x="451" y="122" width="11" height="11" uuid="1009e626-f076-4e2c-9d13-c33cd2f8ef78"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s13_start_stop_smoked}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="450" y="97" width="13" height="13" uuid="357d2793-36e1-409d-b7a9-a5e0c7feb22a"/>
+				<reportElement x="451" y="97" width="11" height="11" uuid="357d2793-36e1-409d-b7a9-a5e0c7feb22a"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s13_start_stop_smoked}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="338" y="346" width="13" height="13" uuid="a21b9b10-7043-4ec0-a4e4-b9be91ba2cad"/>
+				<reportElement x="339" y="347" width="11" height="11" uuid="a21b9b10-7043-4ec0-a4e4-b9be91ba2cad"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s14_tetanus}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="338" y="359" width="13" height="13" uuid="7ff41eb6-6941-4d76-af8e-ddf12a8b26d6"/>
+				<reportElement x="339" y="360" width="11" height="11" uuid="7ff41eb6-6941-4d76-af8e-ddf12a8b26d6"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s14_helpa_helpb}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="516" y="58" width="13" height="13" uuid="e4a38ba7-a4a1-4dc9-a569-7a4be0c580e6"/>
+				<reportElement x="516" y="59" width="11" height="11" uuid="e4a38ba7-a4a1-4dc9-a569-7a4be0c580e6"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s13_ever_smoked}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="516" y="198" width="13" height="13" uuid="2ae2e1d8-530d-44d1-b0af-37b67800a94f"/>
+				<reportElement x="516" y="200" width="11" height="11" uuid="2ae2e1d8-530d-44d1-b0af-37b67800a94f"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s13_aspect}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -1880,11 +1880,11 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image\\MH21.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="39" y="146" width="13" height="13" uuid="74d0326f-e1d1-4416-8a24-09aa917c5627"/>
+				<reportElement x="39" y="146" width="11" height="11" uuid="74d0326f-e1d1-4416-8a24-09aa917c5627"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_rmi_physical}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="39" y="197" width="13" height="13" uuid="3a154b66-1124-4456-9990-dfd95a7b06bf"/>
+				<reportElement x="39" y="197" width="11" height="11" uuid="3a154b66-1124-4456-9990-dfd95a7b06bf"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_rmi_mental}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>

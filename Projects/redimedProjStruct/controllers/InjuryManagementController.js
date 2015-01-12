@@ -286,7 +286,7 @@ module.exports = {
     injuryById: function(req,res){
         var injury_id = req.body.injury_id;
 
-        db.sequelize.query("SELECT i.*,p.* FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
+        db.sequelize.query("SELECT i.*,p.*,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` INNER JOIN companies c ON c.id = p.company_id WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -303,7 +303,7 @@ module.exports = {
 
                 for(var i=0; i<data.length; i++)
                 {
-                    arr.push({image:base64Image(data[i].image),description:data[i].description});
+                    arr.push({image:data[i].image!=null || data[i].image!='' ? base64Image(data[i].image):'',description:data[i].description});
                 }
 
                 res.json({status:'success',data:arr});
@@ -412,8 +412,15 @@ module.exports = {
 };
 
 function base64Image(src) {
-    var data = fs.readFileSync(src).toString("base64");
-    return util.format("data:%s;base64,%s", mime.lookup(src), data);
+    var data;
+    try{
+        data = fs.readFileSync(src).toString("base64");
+        return util.format("data:%s;base64,%s", mime.lookup(src), data);
+    }
+    catch(err){
+        if (err.code !== 'ENOENT')
+            return null;
+    }
 }
 
 

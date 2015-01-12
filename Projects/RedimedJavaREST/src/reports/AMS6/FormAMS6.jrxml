@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormAMS6" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34724f58-210c-471f-b592-23f049b81d64">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="javax.imageio.ImageIO"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     ams6.*,
+     SUBSTRING_INDEX(ams6.`DT_SIGNATURE`,',',-1) AS DT_SIGNATURE_1
+FROM
+     `rl_form_ams6` ams6
+WHERE
+     ams6.`AMS6_ID` = $P{id}]]>
+	</queryString>
+	<field name="AMS6_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BOOKING_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_ADDRESS_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_ADDRESS_1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_POSTCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_DATE_OF_BIRTH" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_DATE_OF_INJURI" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_INSURER_CLAIM_NUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_DESCRIPTION_OF_INJURI" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_PHONE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_EMAIL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WRK_WORKCOVER_WA_CLAIM_NUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMPANIES_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_ORGANISATION_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_CONTACT_PERSON" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_ADDRESS_1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_ADDRESS_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_POSTCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_PHONE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_EMAIL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_NAME_OF_INSURER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_WORKCOVER_MUNBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PURPOSE_OF_THE_ASSESSMENT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATE_ASSESS" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INJURY_ASSESSMENT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOCTOR_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_SIGNATURE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_ADDRESS_1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_ADDRESS_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_POSTCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_PHONE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_EMAIL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISENABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CREATED_BY" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CREATION_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LAST_UPDATED_BY" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LAST_UPDATED_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT_SIGNATURE_1" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="ffe26f3a-b8aa-4fb4-bc3c-151f8505a099"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Form AMS 6]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="555" height="20" uuid="b29f722a-d16d-447e-94f6-f5d3ba1b2b1a"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Workers’ Compensation and Injury Management Act 1981]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="657" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="35" uuid="c1542d9b-b491-4acc-9921-9563e4f455f8"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CERTIFICATE OF DEGREE OF PERMANENT IMPAIRMENT
+[section 146H(1)]
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="41" width="56" height="20" uuid="5d566ae7-5c21-4802-a474-eba29c1cac35"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[For]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="41" width="100" height="20" uuid="13bee6b8-fb80-4390-b51c-53738e3e5930"/>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_NAME}!=null && $F{WRK_NAME}!="")?$F{WRK_NAME}:""]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="170" y="57" width="270" height="1" uuid="7f4d23c0-fec1-477c-ae26-1d5838201870"/>
+			</line>
+			<staticText>
+				<reportElement x="287" y="57" width="100" height="20" uuid="39b9c0c2-07ec-4cea-9aa7-2b0e51e6b9fe"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Name of the worker.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="73" width="100" height="20" uuid="cb07bb77-c162-4fe0-884f-09e17d7d4098"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Address]]></text>
+			</staticText>
+			<line>
+				<reportElement x="170" y="83" width="270" height="1" uuid="5870ac09-7ff2-49b0-9375-bc1981904126"/>
+			</line>
+			<line>
+				<reportElement x="170" y="102" width="270" height="1" uuid="688b1722-55b6-44c4-99bc-9dbe2bbeec79"/>
+			</line>
+			<textField>
+				<reportElement x="170" y="68" width="100" height="20" uuid="aa54469d-8b52-49a6-ba69-baa152206b83"/>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_ADDRESS_1}!=null && $F{WRK_ADDRESS_1}!="")?$F{WRK_ADDRESS_1}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="88" width="100" height="20" uuid="916abdd9-7219-4e6d-b823-f0c6a3a9db9b"/>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_ADDRESS_2}!=null && $F{WRK_ADDRESS_2}!="")?$F{WRK_ADDRESS_2}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="320" y="88" width="100" height="20" uuid="54274499-ff6d-4a58-b52b-1491008dbd5f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Postcode]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="367" y="88" width="73" height="20" uuid="27f00204-c9fc-4ae6-92f6-3f5ae88f562b"/>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_POSTCODE}!=null && $F{WRK_POSTCODE}!="")?$F{WRK_POSTCODE}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="108" width="100" height="20" uuid="263ca8de-3b46-4bc6-a8a5-d463d5c8fc30"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Date of birth ]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="130" y="123" width="150" height="20" uuid="fd177d16-3e5a-478a-80c9-1b9db6b56ecf"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_DATE_OF_BIRTH}!=null && $F{WRK_DATE_OF_BIRTH}!="")?$F{WRK_DATE_OF_BIRTH}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="145" width="100" height="20" uuid="59434bff-3533-449c-a195-37738efab8e6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Date of injury]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="130" y="160" width="150" height="20" uuid="dbdfc4fd-a3d9-4be3-97a4-a77567f15a91"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_DATE_OF_INJURI}!=null && $F{WRK_DATE_OF_INJURI}!="")?$F{WRK_DATE_OF_INJURI}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="292" y="145" width="113" height="20" uuid="5aa30329-4829-4665-b067-6b450b8c8d02"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Insurer claim number]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="292" y="160" width="148" height="20" uuid="8230c8d9-7c5d-46b6-95c8-2f83e38efdda"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_INSURER_CLAIM_NUMBER}!=null && $F{WRK_INSURER_CLAIM_NUMBER}!="")?$F{WRK_INSURER_CLAIM_NUMBER}:""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement positionType="Float" mode="Opaque" x="130" y="195" width="310" height="20" uuid="eec65494-2cd6-4be2-8c7b-1f2a823ab6ff"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_DESCRIPTION_OF_INJURI}!=null && $F{WRK_DESCRIPTION_OF_INJURI}!="")?$F{WRK_DESCRIPTION_OF_INJURI}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="180" width="113" height="20" uuid="81aa4e9e-99e1-4553-8e0c-01893e6b416e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Description of injury]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="130" y="230" width="148" height="20" uuid="ab66dd2a-4a16-43c4-8b82-1294791a707e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_PHONE}!=null && $F{WRK_PHONE}!="")?$F{WRK_PHONE}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="215" width="113" height="20" uuid="ac0793b0-8347-44b9-925c-66aff5a9bd36"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Contact telephone number ]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="292" y="230" width="148" height="20" uuid="1079d441-12f9-4be2-b0f0-8fb71fa59fb7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_EMAIL}!=null && $F{WRK_EMAIL}!="")?$F{WRK_EMAIL}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="292" y="215" width="113" height="20" uuid="26b7105e-375f-477f-a286-dec8e854b2fe"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Email address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="250" width="113" height="20" uuid="a2004678-fd4e-4b0d-adc3-eaf0395cd4bc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[WorkCover WA claim number ]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="130" y="265" width="148" height="20" uuid="7094c660-dd0e-419a-a705-ea322cdb4c39"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{WRK_WORKCOVER_WA_CLAIM_NUMBER}!=null && $F{WRK_WORKCOVER_WA_CLAIM_NUMBER}!="")?$F{WRK_WORKCOVER_WA_CLAIM_NUMBER}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="288" width="100" height="20" uuid="4b159f63-142b-48cd-8e90-b785e97bfac9"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Employer’s details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="307" width="113" height="20" uuid="14ffb09e-cc44-43c7-848f-b3ffe1ef76be"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Organisation name]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="130" y="322" width="310" height="20" uuid="469494b4-3c41-43a8-8772-04eee1119a8e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_ORGANISATION_NAME}!=null && $F{EMP_ORGANISATION_NAME}!="")?$F{EMP_ORGANISATION_NAME}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement positionType="Float" x="130" y="357" width="310" height="20" uuid="d149745e-71e3-4e8d-a458-1b0bbdd261f1"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_CONTACT_PERSON}!=null && $F{EMP_CONTACT_PERSON}!="")?$F{EMP_CONTACT_PERSON}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="342" width="113" height="20" uuid="c0c238c8-baee-495a-ad42-83ff3e1253e3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Contact person]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="130" y="393" width="310" height="42" uuid="a47790c1-e695-461d-9d36-faaacd1f1248"/>
+			</rectangle>
+			<textField pattern="">
+				<reportElement positionType="Float" x="132" y="395" width="148" height="20" uuid="16e5536d-ef52-4ad5-85a0-324c47686078"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_ADDRESS_1}!=null && $F{EMP_ADDRESS_1}!="")?$F{EMP_ADDRESS_1}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="378" width="113" height="20" uuid="80a78cf5-0028-4f01-8bcb-d97506174c39"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Address]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="132" y="415" width="148" height="20" uuid="c10fd4d4-f60f-4937-a172-640aac1c64a3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_ADDRESS_2}!=null && $F{EMP_ADDRESS_2}!="")?$F{EMP_ADDRESS_2}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="306" y="420" width="100" height="20" uuid="feba9e46-0b10-4f85-8b0a-c2955954b800"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Postcode]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="341" y="420" width="99" height="20" uuid="2562070b-3e85-4f90-93f6-f64e1e7b365f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_POSTCODE}!=null && $F{EMP_POSTCODE}!="")?$F{EMP_POSTCODE}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement positionType="Float" x="130" y="451" width="148" height="20" uuid="6f5b5ed9-4de4-44a2-b94d-859662116009"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_PHONE}!=null && $F{EMP_PHONE}!="")?$F{EMP_PHONE}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="292" y="436" width="113" height="20" uuid="0b64a4f8-164f-4f83-8547-85679b56790e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Email address]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="292" y="451" width="148" height="20" uuid="ea4cbd22-1a8b-4c05-b54b-434a5966df2d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_EMAIL}!=null && $F{EMP_EMAIL}!="")?$F{EMP_EMAIL}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="436" width="113" height="20" uuid="c28cc679-a010-49b5-ae69-5acdee01bdb9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telephone number]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="130" y="486" width="148" height="20" uuid="4c59b32a-9ef6-43f8-bee4-cc6ea18a6f4d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_NAME_OF_INSURER}!=null && $F{EMP_NAME_OF_INSURER}!="")?$F{EMP_NAME_OF_INSURER}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement positionType="Float" x="292" y="486" width="148" height="20" uuid="ff17465d-c88d-45e6-a87c-e330c003c0c4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{EMP_WORKCOVER_MUNBER}!=null && $F{EMP_WORKCOVER_MUNBER}!="")?$F{EMP_WORKCOVER_MUNBER}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="471" width="113" height="20" uuid="833d8484-cb6a-4722-844e-dff0dc8b2dc6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Name of Insurer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="292" y="471" width="113" height="20" uuid="27a3f6e6-a3b6-4114-bd1f-1fa221949894"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[WorkCover number (if known)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="508" width="181" height="20" uuid="40d956a0-4a3d-466b-8e5d-9bf773994738"/>
+				<textElement>
+					<font size="10" isBold="true" isUnderline="true"/>
+					<paragraph leftIndent="7"/>
+				</textElement>
+				<text><![CDATA[Purpose of the assessment ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="276" y="508" width="142" height="20" uuid="5832b52d-ee32-4cee-86a6-09e94e771582"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[(Select only one below)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="541" width="246" height="20" uuid="29b66730-8a78-4cf9-8c52-8ad0cd8c3446"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Assessment for the purpose of Part III Division 2A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="528" width="178" height="20" uuid="5af94dc7-7ba6-417a-a168-199372ac4af4"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Schedule 2: Lump Sum Payments]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="418" y="528" width="22" height="20" uuid="253cfc51-e61a-45f6-ad78-b5731886d171"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="570" width="246" height="23" uuid="dcb07ef9-8d19-44b3-8d27-e71dfd53b8de"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Assessment for the purpose of Part IV Division 2
+Subdivision 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="557" width="178" height="20" uuid="4a994726-e628-4ca4-89d1-b1045f0f1162"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Common Law ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="418" y="557" width="22" height="20" uuid="2a97804e-e391-406d-b09f-99e92c028c40"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="606" width="246" height="20" uuid="cceda391-44a4-42f3-846a-9072b3adb508"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Assessment for the purpose of Part IXA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="593" width="178" height="20" uuid="c628ee83-d8a5-464c-b0db-a643aa5c9a82"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Specialised Retraining Programs]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="418" y="593" width="22" height="20" uuid="0117e5d5-387c-4677-b6cb-dce7625c99b6"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="635" width="246" height="20" uuid="1e1ecb07-2d4c-4287-a844-522137547512"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Assessment for the purpose of clause 18A of Schedule 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="622" width="269" height="20" uuid="7e3dabda-51bd-4712-94f7-0005b50d6b4c"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment of Additional Medical Expenses: Exceptional Circumstances]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="418" y="622" width="22" height="20" uuid="d0d930eb-e5c2-4780-b640-4a6b4cfb4cd9"/>
+			</rectangle>
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="417" y="528" width="24" height="22" uuid="aa7d61a1-1499-4915-bf41-0c6f14ce4ebe"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="417" y="557" width="24" height="22" uuid="f4e2df94-2e35-44d5-aa54-14be25522c66"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="417" y="593" width="24" height="22" uuid="607285c8-62d8-4626-a9e7-c37f131500a4"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="417" y="622" width="24" height="22" uuid="21dbc9f2-038f-4277-8517-327f4ff7979c"/>
+				<imageExpression><![CDATA[$P{real_path}+"/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+			</image>
+		</band>
+		<band height="526">
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="130" y="0" width="310" height="54" uuid="ca7b8c83-9ddc-4e5b-bcf8-18736956c026"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[I certify that having assessed the above worker on
+            in accordance with the Workers’ Compensation Injury
+Management Act 1981, the degree of permanent impairment for
+the injury detailed above is:]]></text>
+			</staticText>
+			<textField pattern="dd-MMMMM">
+				<reportElement positionType="Float" x="363" y="0" width="77" height="19" uuid="8e89a388-1c4a-4f50-8b57-a06fb6018b1f"/>
+				<textFieldExpression><![CDATA[($F{DATE_ASSESS}!=null && $F{DATE_ASSESS}!="")?$F{DATE_ASSESS}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement positionType="Float" x="130" y="13" width="40" height="20" uuid="0fd6564c-1ad3-4ea6-acee-b3e3f53cb8f0"/>
+				<textFieldExpression><![CDATA[($F{DATE_ASSESS}!=null && $F{DATE_ASSESS}!="")?$F{DATE_ASSESS}:""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement positionType="Float" mode="Opaque" x="130" y="54" width="310" height="20" uuid="0038fc04-bd73-4e15-b7e5-a5c8b59a658d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{INJURY_ASSESSMENT}!=null && $F{INJURY_ASSESSMENT}!="")?$F{INJURY_ASSESSMENT}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="74" width="293" height="35" uuid="2a4dc519-37da-4035-941a-c0d951aae24f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(Please state the degree of permanent impairment as a percentage.  Also note for Schedule 2 Lump sum payments [Part III Division 2A] please specify the item number and the impairment description as per Part 2 of Schedule 2)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="137" y="122" width="33" height="20" uuid="8cf53712-eea3-4a91-b5c1-d86d1ca2953f"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Signed:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="320" y="122" width="31" height="20" uuid="55b492d5-6b8c-4a22-b507-016f716d6b4e"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="341" y="115" width="99" height="32" uuid="7805a680-e5a8-4128-8d3a-3b120afe610c"/>
+			</rectangle>
+			<textField pattern="dd-MMMMM">
+				<reportElement positionType="Float" x="341" y="119" width="99" height="20" uuid="67169b4f-0f69-48c0-90b1-92263fa83294"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DT_DATE}!=null && $F{DT_DATE}!="")?$F{DT_DATE}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement positionType="Float" x="341" y="133" width="99" height="20" uuid="d33d595f-5f55-4e5b-a663-d3088846a418"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DT_DATE}!=null && $F{DT_DATE}!="")?$F{DT_DATE}:""]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="160" y="146" width="160" height="1" uuid="9e7fb974-bae8-4ce5-923a-e36eb702557c"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="152" y="147" width="188" height="20" uuid="e5ff2480-97f6-46df-9261-9a35e7d4e432"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[signed by the Approved Medical Specialist]]></text>
+			</staticText>
+			<image>
+				<reportElement positionType="Float" x="192" y="119" width="148" height="50" uuid="14dd7961-4bd9-467b-b1fc-7c69144746bf"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{DT_SIGNATURE_1}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="174" width="113" height="20" uuid="64890a3f-5f68-4614-a126-de4304387992"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Approved Medical Specialist name]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="130" y="189" width="310" height="20" uuid="886e84c6-20fc-4484-a66f-99fc20ecf117"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DT_NAME}!=null && $F{DT_NAME}!="")?$F{DT_NAME}:""]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement positionType="Float" x="130" y="226" width="310" height="42" uuid="9a901bb4-475c-441c-ba3f-acb562e38d4e"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="304" y="253" width="100" height="20" uuid="10347123-d822-4913-bc4b-0f254b38a3f7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Postcode]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="132" y="248" width="148" height="20" uuid="e84b6680-7512-430d-82ed-112f1f9cdd06"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DT_ADDRESS_2}!=null && $F{DT_ADDRESS_2}!="")?$F{DT_ADDRESS_2}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement positionType="Float" x="339" y="253" width="99" height="20" uuid="4e38b797-fae0-45a9-a617-e70d96d562fe"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DT_POSTCODE}!=null && $F{DT_POSTCODE}!="")?$F{DT_POSTCODE}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement positionType="Float" x="132" y="228" width="148" height="20" uuid="79a3fb8b-1a1a-4f10-bcdf-481f5e06b187"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DT_ADDRESS_1}!=null && $F{DT_ADDRESS_1}!="")?$F{DT_ADDRESS_1}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="211" width="113" height="20" uuid="47ad98d1-1a55-46bf-b95d-eac64ec34693"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="130" y="268" width="113" height="20" uuid="84d92f4d-a621-441e-aba9-0d0ddae5d084"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telephone number. ]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement positionType="Float" x="130" y="283" width="148" height="20" uuid="5d26c121-6d73-4430-b005-a6e9eee6ea6c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DT_PHONE}!=null && $F{DT_PHONE}!="")?$F{DT_PHONE}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement positionType="Float" x="292" y="283" width="148" height="20" uuid="5fcfa487-cac1-4bca-b79b-48dbf87908b1"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{DT_EMAIL}!=null && $F{DT_EMAIL}!="")?$F{DT_EMAIL}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="292" y="268" width="113" height="20" uuid="9dd5d266-6590-460e-8c17-c532e57b72e8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Email address ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="142" y="312" width="289" height="31" uuid="83dc49f9-dfbd-41c7-b5f6-b98e61b4e667"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Note: Copies of this certificate is to be forwarded to both the worker and
+employer.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="528" y="25" width="9" height="20" uuid="901197bf-311f-44db-a606-c9de15ad8554"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="547" y="25" width="8" height="20" uuid="38202166-cf53-40c7-86b5-01f7fc4324e8"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="537" y="25" width="10" height="20" uuid="a4eb111c-fbeb-4941-b19c-de08080ce608"/>
+				<text><![CDATA[of]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

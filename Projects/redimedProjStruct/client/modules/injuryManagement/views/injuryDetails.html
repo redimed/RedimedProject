@@ -1,0 +1,182 @@
+
+
+<h3 class="page-title">Injury Details</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:;">Injury Management</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.im.map">Injury Map</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Injury Details</a>
+        </li>
+    </ul>
+</div>
+<div class="portlet blue-chambray box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="icon-home"></i>
+            <span class="caption-subject uppercase">Company Information</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Company Name</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.CompanyName}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Company Address</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.CompanyAddr}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Industry</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.Industry}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portlet blue-dark box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="icon-user"></i>
+            <span class="caption-subject uppercase">Patient Information</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Full Name</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.patientFullName}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Address</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.Address1}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Date Of Birth</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.DOB | date:'dd/MM/yyyy'}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Gender</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.Sex}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Email</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.Email}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Phone</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.Mobile}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="icon-plus"></i>
+            <span class="caption-subject uppercase">Injury Information</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Injury Date</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.injury_date | date:'dd/MM/yyyy - hh:mm:ss'}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Description</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.injury_description}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Pickup Address</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.pickup_address}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Status</label>
+                    <div class="col-md-8 col-sm-8" style="margin-top: 10px">
+                        <span ng-show="injuryInfo.STATUS == 'New'" class="label label-md label-success">New </span>
+                        <span ng-show="injuryInfo.STATUS == 'Waiting'" class="label label-md label-warning">Waiting </span>
+                        <span ng-show="injuryInfo.STATUS == 'Done'" class="label label-md label-primary">Done </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 portfolio-item" ng-repeat="img in injuryImages">
+                <a href="#">
+                    <img width="200px" height="200px" class="img-responsive" src="{{img.image}}" alt="">
+                </a>
+                <p>{{img.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>

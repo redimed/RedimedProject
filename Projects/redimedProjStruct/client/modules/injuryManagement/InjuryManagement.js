@@ -24,4 +24,14 @@ angular.module("app.loggedIn.im",[
             }
 
         })
+
+        .state("loggedIn.im.detail",{
+            url:"/im/details/:id",
+            views:{
+                "main-content":{
+                    templateUrl:"modules/injuryManagement/views/injuryDetails.html",
+                    controller:"InjuryDetailController"
+                }
+            }
+        })
 });

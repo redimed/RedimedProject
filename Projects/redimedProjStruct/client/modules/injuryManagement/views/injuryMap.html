@@ -24,19 +24,50 @@
     </div>
     <div class="portlet-body">
         <map  center="current-location" zoom="10">
-            <marker id="foo" position="{{im.position}}" ng-repeat="im in injuryMarker" on-click="showInfoWindow(event, 'info')"></marker>
-            <info-window id="info">
-                <div ng-non-bindable="">
-                    <div id="siteNotice"></div>
-                    <h1 id="firstHeading" class="firstHeading">Uluru</h1>
-                    <div id="bodyContent">
-                        <p>
-                            <b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large sandstone rock formation in the southern part of the Northern Territory, central Australia. It lies 335&nbsp;km (208&nbsp;mi) south west of the nearest large town, Alice Springs; 450&nbsp;km (280&nbsp;mi) by road. Kata Tjuta and Uluru are the two major features of the Uluru - Kata Tjuta National Park. Uluru is sacred to the Pitjantjatjara and Yankunytjatjara, the Aboriginal people of the area. It has many springs, waterholes, rock caves and ancient paintings. Uluru is listed as a World Heritage Site.</p> <p>Attribution: Uluru, <a href="//en.wikipedia.org/w/index.php?title=Uluru&amp;oldid=297882194"> http://en.wikipedia.org/w/index.php?title=Uluru</a> (last visited June 22, 2009).
-                        </p>
+            <marker id="{{im.id}}" data-position="{{im.position}}" icon="{{im.icon}}" ng-repeat="im in injuryMarker" data-on-click="showInfoWindow(event, 'info')">
+                <info-window max-width="500" id="info">
+                    <div>
+                        <div class="row">
+                            <label style="font-weight: bold; font-size: 18px; margin-left: 15px">{{im.fullName}}</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"> <label class="bold">Pickup At</label></div>
+                            <div class="col-md-9">
+                                <label>{{im.pickupAddr}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"> <label class="bold">Gender</label></div>
+                            <div class="col-md-9">
+                                <label>{{im.gender}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"> <label class="bold">Injury Desc</label></div>
+                            <div class="col-md-9">
+                                <label>{{im.injuryDesc}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"> <label class="bold">Status</label></div>
+                            <div class="col-md-9">
+                                <span ng-show="im.status == 'New'" class="label label-md label-success">New </span>
+                                <span ng-show="im.status == 'Waiting'" class="label label-md label-warning">Waiting </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a ng-show="im.status == 'New'" ng-click="showDetails(im.id)" style="margin-left: 10px;" href="javascript:;" class="btn btn-circle blue-steel btn-sm pull-right">
+                                    <i class="fa fa-pencil"></i> Allocate </a>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-            </info-window>
+                </info-window>
+            </marker>
         </map>
     </div>
 </div>
+
+
 

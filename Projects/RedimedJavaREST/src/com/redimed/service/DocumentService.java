@@ -182,6 +182,24 @@ public class DocumentService {
         		return downloadReport("/reports/Script/ScriptReport.jasper", params, "ScriptReport.pdf");
         	}
         	
+        	//AMS5
+        	if(report.equalsIgnoreCase("ams5"))
+        	{
+        		params.put("id",id);
+        		params.put("real_path","/reports/AMS5");
+        		
+        		return downloadReport("/reports/AMS5/FormAMS5.jasper", params, "FormAMS5.pdf");
+        	}
+        	
+        	//AMS6
+        	if(report.equalsIgnoreCase("ams6"))
+        	{
+        		params.put("id",id);
+        		params.put("real_path","/reports/AMS6");
+        		
+        		return downloadReport("/reports/AMS6/FormAMS6.jasper", params, "FormAMS6.pdf");
+        	}
+        	
         	
             
         } catch (Exception e) {
