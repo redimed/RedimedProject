@@ -3836,23 +3836,50 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
-                                    <div class="col-md-1 col-sm-2" style="margin-top: 7px;">
+                                    <div class="col-md-1 col-sm-2" style="margin-top: 27px;">
                                         <label class="control-label bold">
                                             Witness:
                                         </label>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
+                                    <div class="col-md-3 col-sm-4" style="margin-top: 20px;">
                                         <input type="text" class="form-control" ng-model="info.rmi_witness"/>
                                     </div>
-                                    <!--<div class="col-md-1 col-sm-1">-->
-                                        <!--<a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"-->
-                                           <!--class="btn green">Signature</a>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3 col-sm-4">-->
-                                        <!--<img ng-show="info.dec_signed!=null && info.dec_signed!='' && !isSignature"-->
-                                             <!--src="" ng-src="{{info.dec_signed}}" alt=""-->
-                                             <!--style="width: 200px;height: 70px;"/>-->
-                                    <!--</div>-->
+                                    <div class="col-md-1 col-sm-1" style="margin-top: 20px;">
+                                        <a href="javascript:;" ng-click="showSignature1()" ng-show="!isSignature1"
+                                           class="btn green">Signature</a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-4">
+                                        <img ng-show="info.rmi_signed_witness!=null && info.rmi_signed_witness!='' && !isSignature1"
+                                             src="" ng-src="{{info.rmi_signed_witness}}" alt=""
+                                             style="width: 200px;height: 70px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="isSignature1">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="col-md-12 col-sm-12">
+                                        <canvas width="500" height="400" id="canvas1" signature
+                                                ng-model="info.rmi_signed_witness" style="background-color: #8eece8">
+                                        </canvas>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="col-md-12 col-sm-12" style="margin-left:340px;">
+                                        <div class="break-row"></div>
+                                        <div class="btn-group">
+                                            <button type="button" ng-click="cancelClick1()"
+                                                    class="btn btn-danger btn-sm">
+                                                Cancel
+                                            </button>
+                                            <button type="button" ng-click="clearClick1()"
+                                                    class="btn btn-warning btn-sm">
+                                                Clear
+                                            </button>
+                                            <button type="button" ng-click="okClick1()" class="btn green btn-sm">
+                                                Ok
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <br/>
@@ -3967,13 +3994,49 @@ examination and urine drug screen to authorised personnel of my prospective empl
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
                                         <div class="col-md-12 col-sm-12">
-                                            <div class="col-md-1 col-sm-2" style="margin-top: 7px;">
+                                            <div class="col-md-1 col-sm-2" style="margin-top: 27px;">
                                                 <label class="control-label bold">
                                                     Witness:
                                                 </label>
                                             </div>
-                                            <div class="col-md-3 col-sm-4">
+                                            <div class="col-md-3 col-sm-4" style="margin-top: 20px;">
                                                 <input type="text" class="form-control" ng-model="info.dec_witness"/>
+                                            </div>
+                                            <div class="col-md-1 col-sm-1" style="margin-top: 20px;">
+                                                <a href="javascript:;" ng-click="showSignature2()" ng-show="!isSignature2"
+                                                   class="btn green">Signature</a>
+                                            </div>
+                                            <div class="col-md-3 col-sm-4">
+                                                <img ng-show="info.dec_signed_witness!=null && info.dec_signed_witness!='' && !isSignature2"
+                                                     src="" ng-src="{{info.dec_signed_witness}}" alt=""
+                                                     style="width: 200px;height: 70px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-show="isSignature2">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-12 col-sm-12">
+                                            <canvas width="500" height="400" id="canvas2" signature
+                                                    ng-model="info.dec_signed_witness" style="background-color: #8eece8">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-12 col-sm-12" style="margin-left:340px;">
+                                            <div class="break-row"></div>
+                                            <div class="btn-group">
+                                                <button type="button" ng-click="cancelClick2()"
+                                                        class="btn btn-danger btn-sm">
+                                                    Cancel
+                                                </button>
+                                                <button type="button" ng-click="clearClick2()"
+                                                        class="btn btn-warning btn-sm">
+                                                    Clear
+                                                </button>
+                                                <button type="button" ng-click="okClick2()" class="btn green btn-sm">
+                                                    Ok
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

@@ -16,7 +16,7 @@ angular.module('app.loggedIn.document.MH.controllers', [])
             $scope.isSignature = false;
             $scope.showSignature = function () {
                 $scope.isSignature = !$scope.isSignature;
-            }
+            };
 
             $scope.cancelClick = function () {
                 $scope.isSignature = !$scope.isSignature;
@@ -28,8 +28,48 @@ angular.module('app.loggedIn.document.MH.controllers', [])
             $scope.okClick = function () {
                 $scope.isSignature = !$scope.isSignature;
                 tempSignature = $scope.info.dec_signed;
-            }
+            };
             //End signature
+
+            //Begin signature1
+            var tempSignature1;
+            $scope.isSignature1 = false;
+            $scope.showSignature1 = function () {
+                $scope.isSignature1 = !$scope.isSignature1;
+            };
+
+            $scope.cancelClick1 = function () {
+                $scope.isSignature1 = !$scope.isSignature1;
+                $scope.info.rmi_signed_witness = tempSignature1;
+            };
+            $scope.clearClick1 = function () {
+                $scope.info.rmi_signed_witness = '';
+            };
+            $scope.okClick1 = function () {
+                $scope.isSignature1 = !$scope.isSignature1;
+                tempSignature1 = $scope.info.rmi_signed_witness;
+            };
+            //End signature1
+
+            //Begin signature2
+            var tempSignature2;
+            $scope.isSignature2 = false;
+            $scope.showSignature2 = function () {
+                $scope.isSignature2 = !$scope.isSignature2;
+            };
+
+            $scope.cancelClick2 = function () {
+                $scope.isSignature2 = !$scope.isSignature2;
+                $scope.info.dec_signed_witness = tempSignature2;
+            };
+            $scope.clearClick2 = function () {
+                $scope.info.dec_signed_witness = '';
+            };
+            $scope.okClick2 = function () {
+                $scope.isSignature2 = !$scope.isSignature2;
+                tempSignature2 = $scope.info.dec_signed_witness;
+            };
+            //End signature2
 
             $scope.info.Date = new Date();
             $scope.info.Statement_Date = new Date();
@@ -376,8 +416,10 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         rmi_mental_initials: data.rmi_mental_initials || null,
                         rmi_date: data.rmi_date || new Date(),
                         rmi_witness: data.rmi_witness || null,
+                        rmi_signed_witness: data.rmi_signed_witness || null,
                         dec_signed: data.dec_signed || null,
                         dec_witness: data.dec_witness || null,
+                        dec_signed_witness: data.dec_signed_witness || null,
                         dec_date: data.dec_date || new Date(),
                         doctor_id: response[0].doctor.doctor_id || null,
                         created_by: data.created_by || null,

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mh_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ed7ad48-d2ae-4fdc-8d98-79bb0b845af6">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="4799"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -337,12 +337,14 @@ medical_history.`s2_employ5` AS medical_history_s2_employ5,
         medical_history.`rmi_mental` AS medical_history_rmi_mental,
         medical_history.`rmi_mental_initials` AS medical_history_rmi_mental_initials,
         medical_history.`rmi_date` AS medical_history_rmi_date,
-medical_history.`rmi_witness` as medical_history_rmi_witness,
+        medical_history.`rmi_witness` as medical_history_rmi_witness,
+        SUBSTRING_INDEX(medical_history.`rmi_signed_witness`, ',', -1) as          medical_history_rmi_signed_witness,
         medical_history.`dec_witness` AS medical_history_dec_witness,
+        SUBSTRING_INDEX(medical_history.`dec_signed_witness`, ',', -1) as medical_history_dec_signed_witness,
         medical_history.`dec_date` AS medical_history_dec_date,
         medical_history.`doctor_id` AS medical_history_doctor_id,
-	SUBSTRING_INDEX(medical_history.`dec_signed`, ',', -1) AS medical_history_dec_signed,
-CONCAT(CONCAT(CONCAT(CONCAT(IFNULL(cln_patients.`First_name` ,''),' '), IFNULL(cln_patients.`Middle_name`,''), ' '),IFNULL(cln_patients.`Sur_name`,''))) AS full_name,
+        SUBSTRING_INDEX(medical_history.`dec_signed`, ',', -1) AS medical_history_dec_signed,
+CONCAT(CONCAT(CONCAT(CONCAT(IFNULL(cln_patients.`First_name` ,''),' '), IFNULL(cln_patients.`Middle_name`,''), ' '),IFNULL(cln_patients.`Sur_name`,''))) AS full_name_patient,
 cln_patients.`Sur_name` AS cln_patients_sur_name,
 cln_patients.`First_name` AS cln_patients_First_name,
 cln_patients.`DOB` AS cln_patients_DOB,
@@ -356,6 +358,7 @@ cln_patients.`NOK_Phone` AS cln_patients_NOK_Phone,
 cln_patients.`Occupation` AS cln_patients_Occupation,
 companies.`Addr` AS company_addr,
 doctors.`NAME` as doctors_NAME,
+CONCAT(CONCAT(CONCAT(CONCAT(IFNULL(doctors.`First_name` ,''),' '), IFNULL(doctors.`Middle_name`,''), ' '),IFNULL(doctors.`Sur_name`,''))) AS full_name_doctor,
 SUBSTRING_INDEX(doctors. `Signature`, ',', -1) as doctors_Signature,
 doctors.`DOB` as doctors_DOB
 FROM
@@ -363,6 +366,8 @@ FROM
 WHERE
 medical_history.`mh_id` = $P{id}]]>
 	</queryString>
+	<field name="medical_history_s1_relationship" class="java.lang.String"/>
+	<field name="medical_history_s1_job_location" class="java.lang.String"/>
 	<field name="medical_history_s2_occupation1" class="java.lang.String"/>
 	<field name="medical_history_s2_startdate1" class="java.sql.Timestamp"/>
 	<field name="medical_history_s2_enddate1" class="java.sql.Timestamp"/>
@@ -541,11 +546,14 @@ medical_history.`mh_id` = $P{id}]]>
 	<field name="medical_history_rmi_mental" class="java.lang.Integer"/>
 	<field name="medical_history_rmi_mental_initials" class="java.lang.String"/>
 	<field name="medical_history_rmi_date" class="java.sql.Timestamp"/>
+	<field name="medical_history_rmi_witness" class="java.lang.String"/>
+	<field name="medical_history_rmi_signed_witness" class="java.lang.String"/>
 	<field name="medical_history_dec_witness" class="java.lang.String"/>
+	<field name="medical_history_dec_signed_witness" class="java.lang.String"/>
 	<field name="medical_history_dec_date" class="java.sql.Timestamp"/>
 	<field name="medical_history_doctor_id" class="java.lang.Integer"/>
 	<field name="medical_history_dec_signed" class="java.lang.String"/>
-	<field name="full_name" class="java.lang.String"/>
+	<field name="full_name_patient" class="java.lang.String"/>
 	<field name="cln_patients_sur_name" class="java.lang.String"/>
 	<field name="cln_patients_First_name" class="java.lang.String"/>
 	<field name="cln_patients_DOB" class="java.sql.Date"/>
@@ -559,6 +567,7 @@ medical_history.`mh_id` = $P{id}]]>
 	<field name="cln_patients_Occupation" class="java.lang.String"/>
 	<field name="company_addr" class="java.lang.String"/>
 	<field name="doctors_NAME" class="java.lang.String"/>
+	<field name="full_name_doctor" class="java.lang.String"/>
 	<field name="doctors_Signature" class="java.lang.String"/>
 	<field name="doctors_DOB" class="java.sql.Timestamp"/>
 	<background>
@@ -587,7 +596,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH4.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="508" y="26" width="11" height="11" uuid="ed01c357-a799-4e79-8efd-f4843ffb7f23"/>
+				<reportElement x="508" y="25" width="11" height="11" uuid="ed01c357-a799-4e79-8efd-f4843ffb7f23"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{cln_patients_Sex}=="Male"?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -703,19 +712,19 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly2}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="455" y="495" width="11" height="11" uuid="229c987d-2bf4-4316-8473-71495bf456a3"/>
+				<reportElement x="455" y="496" width="11" height="11" uuid="229c987d-2bf4-4316-8473-71495bf456a3"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly3}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="497" y="495" width="11" height="11" uuid="6b6feae1-6909-4c53-b8d8-d2d24fa412de"/>
+				<reportElement x="497" y="496" width="11" height="11" uuid="6b6feae1-6909-4c53-b8d8-d2d24fa412de"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly3}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="497" y="520" width="11" height="11" uuid="903c044e-49e7-42ae-b38a-6c4cef989730"/>
+				<reportElement x="497" y="521" width="11" height="11" uuid="903c044e-49e7-42ae-b38a-6c4cef989730"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly5}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="497" y="507" width="11" height="11" uuid="8cce07ae-570c-4ead-9a56-8c745b5c24ca"/>
+				<reportElement x="497" y="508" width="11" height="11" uuid="8cce07ae-570c-4ead-9a56-8c745b5c24ca"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly4}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -723,7 +732,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly4}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="455" y="520" width="11" height="11" uuid="be3919d5-991b-4e44-a300-0c067785f2ea"/>
+				<reportElement x="455" y="521" width="11" height="11" uuid="be3919d5-991b-4e44-a300-0c067785f2ea"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s3_regularly5}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -791,7 +800,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[($F{medical_history_s3_comments}!=null && $F{medical_history_s3_comments}!="")?$F{medical_history_s3_comments}:""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="533" y="26" width="11" height="11" uuid="771f3e1f-a73e-4edb-8c7f-7bd658b6b5a5"/>
+				<reportElement x="533" y="25" width="11" height="11" uuid="771f3e1f-a73e-4edb-8c7f-7bd658b6b5a5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{cln_patients_Sex}=="Female"?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<textField>
@@ -853,11 +862,11 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"Image/MH7.PNG"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="488" y="31" width="11" height="11" uuid="512cdc79-6852-4cf6-a600-c025588301c1"/>
+				<reportElement x="487" y="31" width="11" height="11" uuid="512cdc79-6852-4cf6-a600-c025588301c1"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_concerning}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="533" y="31" width="11" height="11" uuid="97b62158-4515-4cd5-847b-2fc24f5b309d"/>
+				<reportElement x="532" y="31" width="11" height="11" uuid="97b62158-4515-4cd5-847b-2fc24f5b309d"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_concerning}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -869,7 +878,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_weight_altered}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="488" y="59" width="11" height="11" uuid="8558a8b4-f271-45ac-b6eb-312936e2df4e"/>
+				<reportElement x="487" y="59" width="11" height="11" uuid="8558a8b4-f271-45ac-b6eb-312936e2df4e"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_medicaltreatment}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -885,11 +894,11 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_hospital}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="487" y="101" width="11" height="11" uuid="63fb9aee-77ba-4b88-9ee9-ea51104a6392"/>
+				<reportElement x="487" y="102" width="11" height="11" uuid="63fb9aee-77ba-4b88-9ee9-ea51104a6392"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_stranfustion}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="533" y="101" width="11" height="11" uuid="9ced4e8d-aafa-4e38-9d26-fd75ade2f6ca"/>
+				<reportElement x="533" y="102" width="11" height="11" uuid="9ced4e8d-aafa-4e38-9d26-fd75ade2f6ca"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_stranfustion}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -973,11 +982,11 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_desease}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="199" y="198" width="11" height="11" uuid="2ec028bc-c041-4955-83c1-8e1a2dea346c"/>
+				<reportElement x="199" y="197" width="11" height="11" uuid="2ec028bc-c041-4955-83c1-8e1a2dea346c"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_epilepsy}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="244" y="198" width="11" height="11" uuid="dde389fe-add5-4146-a570-8c4cf615dcc9"/>
+				<reportElement x="244" y="197" width="11" height="11" uuid="dde389fe-add5-4146-a570-8c4cf615dcc9"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s4_epilepsy}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1025,11 +1034,11 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_disease}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="488" y="428" width="11" height="11" uuid="f5cf0e39-f100-4e02-b068-f26f041abd60"/>
+				<reportElement x="488" y="429" width="11" height="11" uuid="f5cf0e39-f100-4e02-b068-f26f041abd60"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_claim}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="533" y="428" width="11" height="11" uuid="4c029791-12d1-4fe8-a38b-bc7cfa8417a8"/>
+				<reportElement x="533" y="429" width="11" height="11" uuid="4c029791-12d1-4fe8-a38b-bc7cfa8417a8"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s5_claim}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1155,7 +1164,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_elbow}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="212" y="93" width="11" height="11" uuid="74e85046-bedd-4207-9546-8ec65a155a02"/>
+				<reportElement x="212" y="94" width="11" height="11" uuid="74e85046-bedd-4207-9546-8ec65a155a02"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_wrist_or_hand}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1171,7 +1180,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_elbow}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="255" y="94" width="11" height="11" uuid="a9dc3809-0723-40dc-ba37-ae2df58d6438"/>
+				<reportElement x="254" y="94" width="11" height="11" uuid="a9dc3809-0723-40dc-ba37-ae2df58d6438"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_wrist_or_hand}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1215,11 +1224,11 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_cervical}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="211" y="280" width="11" height="11" uuid="5d5c1c60-aea1-4947-857b-6ff998d98dcf"/>
+				<reportElement x="212" y="280" width="11" height="11" uuid="5d5c1c60-aea1-4947-857b-6ff998d98dcf"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_lower_black}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="211" y="293" width="11" height="11" uuid="86523726-0f5f-46b1-9598-ffcd9127c3e4"/>
+				<reportElement x="212" y="293" width="11" height="11" uuid="86523726-0f5f-46b1-9598-ffcd9127c3e4"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s6_sciatica}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1429,7 +1438,7 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_exercise}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="222" y="313" width="11" height="11" uuid="53430d27-6a77-4089-b415-816e96bb11b1"/>
+				<reportElement x="221" y="313" width="11" height="11" uuid="53430d27-6a77-4089-b415-816e96bb11b1"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_emphysema}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1477,11 +1486,11 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_rheumatic_fever}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="473" y="338" width="11" height="11" uuid="2662bc90-2f08-459d-af77-19644da98362"/>
+				<reportElement x="473" y="337" width="11" height="11" uuid="2662bc90-2f08-459d-af77-19644da98362"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_bronchitis}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="515" y="338" width="11" height="11" uuid="c94cec0f-48b5-479f-8426-7f66c62854fe"/>
+				<reportElement x="515" y="337" width="11" height="11" uuid="c94cec0f-48b5-479f-8426-7f66c62854fe"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_bronchitis}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1607,19 +1616,19 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_bowel_habit}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="487" y="72" width="11" height="11" uuid="0b251abf-19cb-4c7b-a14a-3573f39e9f3b"/>
+				<reportElement x="487" y="73" width="11" height="11" uuid="0b251abf-19cb-4c7b-a14a-3573f39e9f3b"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_bowel_habit}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="487" y="85" width="11" height="11" uuid="0794ca48-69d8-4652-850f-9cffceb95002"/>
+				<reportElement x="487" y="86" width="11" height="11" uuid="0794ca48-69d8-4652-850f-9cffceb95002"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_time_you_urinate}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="487" y="98" width="11" height="11" uuid="a77910c8-2bcb-4f00-aaa7-193fcf3505fe"/>
+				<reportElement x="487" y="99" width="11" height="11" uuid="a77910c8-2bcb-4f00-aaa7-193fcf3505fe"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_start_stop_urine}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="487" y="111" width="11" height="11" uuid="9b0a95b7-7818-4eda-8315-a0176183de01"/>
+				<reportElement x="487" y="112" width="11" height="11" uuid="9b0a95b7-7818-4eda-8315-a0176183de01"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_change_urine}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1743,15 +1752,15 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s11_sleeping_tablets}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="72" width="11" height="11" uuid="4eec6555-3f2d-444b-8a50-84cb7709ad30"/>
+				<reportElement x="529" y="73" width="11" height="11" uuid="4eec6555-3f2d-444b-8a50-84cb7709ad30"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_bowel_habit}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="85" width="11" height="11" uuid="e434e9f5-255a-43f5-990f-6d70446ee1c5"/>
+				<reportElement x="529" y="86" width="11" height="11" uuid="e434e9f5-255a-43f5-990f-6d70446ee1c5"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_time_you_urinate}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="529" y="98" width="11" height="11" uuid="47cfe2d9-a8f9-4ba1-b811-308d09b6a329"/>
+				<reportElement x="529" y="99" width="11" height="11" uuid="47cfe2d9-a8f9-4ba1-b811-308d09b6a329"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s10_start_stop_urine}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
@@ -1907,36 +1916,44 @@ medical_history.`mh_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[$F{medical_history_dec_date}!= null ? $F{medical_history_dec_date}  : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="53" y="675" width="493" height="20" uuid="68728543-29ac-47d7-a50b-87731b0f7518"/>
-				<textFieldExpression><![CDATA[($F{full_name}!=null && $F{full_name}!="")?$F{full_name}:""]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="10" y="435" width="100" height="20" uuid="e03009d3-ab0b-4f08-9825-852292617464"/>
-				<textFieldExpression><![CDATA[($F{full_name}!=null && $F{full_name}!="")?$F{full_name}:""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{full_name_patient}!=null && $F{full_name_patient}!="")?$F{full_name_patient}:""]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="443" y="435" width="100" height="20" uuid="a02c06be-d510-4d53-9ef5-7c29cb912fef"/>
+				<reportElement x="446" y="435" width="100" height="20" uuid="a02c06be-d510-4d53-9ef5-7c29cb912fef"/>
 				<textFieldExpression><![CDATA[($F{cln_patients_DOB}!=null && $F{cln_patients_DOB}!="")?$F{cln_patients_DOB}:""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="47" width="100" height="20" uuid="eadc0601-cc4a-492b-a47d-2fa40a5bcd78"/>
-				<textFieldExpression><![CDATA[($F{doctors_NAME}!=null && $F{doctors_NAME}!="")?$F{doctors_NAME}:""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{full_name_doctor}!=null && $F{full_name_doctor}!="")?$F{full_name_doctor}:""]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="446" y="47" width="100" height="20" uuid="c05ddb00-0985-4adb-b064-581baa7d1142"/>
 				<textFieldExpression><![CDATA[($F{doctors_DOB}!=null && $F{doctors_DOB}!="")?$F{doctors_DOB}:""]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="53" y="324" width="100" height="20" uuid="69921fed-2546-4a60-81e8-14072444684f"/>
-				<textFieldExpression><![CDATA[($F{doctors_NAME}!=null && $F{doctors_NAME}!="")?$F{doctors_NAME}:""]]></textFieldExpression>
-			</textField>
 			<image scaleImage="FillFrame">
-				<reportElement x="51" y="279" width="150" height="30" uuid="05804e5a-7d1a-4663-ba69-5527739f87c1"/>
+				<reportElement x="51" y="266" width="150" height="60" uuid="05804e5a-7d1a-4663-ba69-5527739f87c1"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctors_Signature}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
-				<reportElement x="53" y="632" width="150" height="30" uuid="ab1755bb-8443-4917-9cc5-c890a71b607d"/>
+				<reportElement stretchType="RelativeToTallestObject" x="53" y="620" width="150" height="60" uuid="ab1755bb-8443-4917-9cc5-c890a71b607d"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{medical_history_dec_signed}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="81" y="295" width="150" height="60" uuid="96175a61-8ffc-41d6-a60c-9687cfc5cb6e"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{medical_history_rmi_signed_witness}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="56" y="324" width="24" height="20" uuid="604e7265-7c37-486b-8acd-1a07858dcdea"/>
+				<textFieldExpression><![CDATA[($F{medical_history_rmi_witness}!=null &&$F{medical_history_rmi_witness}!="")?$F{medical_history_rmi_witness}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="55" y="675" width="25" height="20" uuid="7f1f67f9-237a-4cb6-912c-3063b2ce1c6d"/>
+				<textFieldExpression><![CDATA[($F{medical_history_dec_witness}!=null && $F{medical_history_dec_witness}!="")?$F{medical_history_dec_witness}:""]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement stretchType="RelativeToTallestObject" x="84" y="646" width="150" height="60" uuid="9a86dcfd-5abb-407e-8c2b-93e110144cd6"/>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{medical_history_dec_signed_witness}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 		</band>
 	</detail>
