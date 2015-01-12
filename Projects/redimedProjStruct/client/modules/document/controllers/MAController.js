@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
-    .controller("MAController", function ($scope, DocumentService, ConfigService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
+    .controller("MAController", function ($scope,$filter, DocumentService, ConfigService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
 
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -30,6 +30,7 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
         CalID = -1;
         Patient_ID = $scope.patientInfo.Patient_id;
         sex = $scope.patientInfo.Sex;
+        $scope.patientInfo.DOB = $filter('date')($scope.patientInfo.DOB, 'dd/MM/yyyy');
 
 
         $scope.resetForm = function () {
@@ -123,11 +124,12 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
         }
 
         var insert = true;
-        DocumentService.checkMA(Patient_ID, CalID).then(function (response) {
+        DocumentService.checkMA(Patient_ID, CalID,$scope.patientInfo.company_id).then(function (response) {
             if (response['status'] === 'insert') {
                 insert = true;
                 $scope.isNew = true;
                 date = new Date();
+                $scope.sites = response['site'];
                 $scope.info = {
                     PATIENT_ID: Patient_ID,
                     CAL_ID: CalID,
@@ -208,6 +210,7 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
                     DOCTOR_ID: response['docID'],
                     DOCTOR_NAME: response['docName'],
                     SIGN: response['docSign'],
+                    LOCATION: null,
                     Created_by: null,
                     Creation_date: date,
                     Last_updated_by: null,
@@ -215,6 +218,7 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
                     DF_CODE: null,
                     ISENABLE: null
                 };
+                $scope.companyName = response['nameCompany'];
                 oriInfo = angular.copy($scope.info);
             } else if (response['status'] === 'fail') {
                 toastr.error("Fail!", "Error");
@@ -225,6 +229,8 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
             } else if (response['status'] === 'update') {
                 insert = false;
                 $scope.isNew = false;
+                $scope.companyName = response['nameCompany'];
+                $scope.sites = response['site'];
                 $scope.info = angular.copy(response['data']);
                 $scope.info.DOCTOR_NAME = response['docName'];
                 $scope.info.SIGN = response['docSign'];

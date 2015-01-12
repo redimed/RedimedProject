@@ -86,6 +86,7 @@ module.exports = {
             ECG_RESULT: info.ECG_RESULT,
             GP: info.GP,
             COMMENT_SEC10 : info.COMMENT_SEC10,
+            LOCATION : info.LOCATION,
             DOCTOR_ID : info.DOCTOR_ID,
             Created_by: info.Created_by,
             Creation_date: info.Creation_date,
@@ -181,6 +182,7 @@ module.exports = {
             ECG_RESULT: info.ECG_RESULT,
             GP: info.GP,
             COMMENT_SEC10 : info.COMMENT_SEC10,
+            LOCATION : info.LOCATION,
             Created_by: info.Created_by,
             Last_updated_by: info.Last_updated_by,
             Last_update_date: info.Last_update_date,
@@ -200,27 +202,76 @@ module.exports = {
     checkMA: function(req,res){
         var Patient_Id = req.body.PatientID;
         var CalId = req.body.calID;
+        var idC = req.body.idC;
 
         db.docMA.find({where:{PATIENT_ID:Patient_Id,CAL_ID : CalId}})
             .success(function(data){
-                if(data == null)
-                {
-                    db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
-                        .success(function (appt) {
-                            if (appt === null || appt.length === 0) {
-                                console.log("Not found APPTCAL in table");
-                                res.json({status: 'fail'});
-                                return false;
-                            }
-                            db.Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
-                                .success(function (doctor) {
-                                    if (doctor === null || doctor.length === 0) {
-                                        console.log("Not found doctor in table");
+                db.RedimedSite.findAll({raw: true})
+                    .success(function (site) {
+                        if (site === null || site.length === 0) {
+                            console.log("Not found site in table");
+                            res.json({status: 'fail'});
+                            return false;
+                        }else
+                        {
+                            db.Company.find({where: {id: idC}}, {raw: true})
+                                .success(function (company) {
+                                    if (company === null || company.length === 0) {
+                                        console.log("Not found company in table");
                                         res.json({status: 'fail'});
                                         return false;
                                     }else
                                     {
-                                        res.json({status:'insert',docID : doctor.doctor_id,docName:doctor.NAME,docSign:doctor.Signature});
+                                        if(data == null)
+                                        {
+                                            db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
+                                                .success(function (appt) {
+                                                    if (appt === null || appt.length === 0) {
+                                                        console.log("Not found APPTCAL in table");
+                                                        res.json({status: 'fail'});
+                                                        return false;
+                                                    }
+                                                    db.Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
+                                                        .success(function (doctor) {
+                                                            if (doctor === null || doctor.length === 0) {
+                                                                console.log("Not found doctor in table");
+                                                                res.json({status: 'fail'});
+                                                                return false;
+                                                            }else
+                                                            {
+                                                                res.json({status:'insert',site: site,nameCompany: company.Company_name,docID : doctor.doctor_id,docName:doctor.NAME,docSign:doctor.Signature});
+                                                            }
+                                                        })
+                                                        .error(function (err) {
+                                                            console.log("ERROR:" + err);
+                                                            res.json({status: 'error'});
+                                                            return false;
+                                                        });
+                                                })
+                                                .error(function (err) {
+                                                    console.log("ERROR:" + err);
+                                                    res.json({status: 'error'});
+                                                    return false;
+                                                });
+                                        }else
+                                        {
+                                            db.Doctor.find({where: {doctor_id: data.DOCTOR_ID}}, {raw: true})
+                                                .success(function (doctor) {
+                                                    if (doctor === null || doctor.length === 0) {
+                                                        console.log("Not found doctor in table");
+                                                        res.json({status: 'fail'});
+                                                        return false;
+                                                    }else
+                                                    {
+                                                        res.json({status:'update',site: site,nameCompany: company.Company_name,data : data,docName:doctor.NAME,docSign:doctor.Signature});
+                                                    }
+                                                })
+                                                .error(function (err) {
+                                                    console.log("ERROR:" + err);
+                                                    res.json({status: 'error'});
+                                                    return false;
+                                                });
+                                        }
                                     }
                                 })
                                 .error(function (err) {
@@ -228,31 +279,13 @@ module.exports = {
                                     res.json({status: 'error'});
                                     return false;
                                 });
-                        })
-                        .error(function (err) {
-                            console.log("ERROR:" + err);
-                            res.json({status: 'error'});
-                            return false;
-                        });
-                }else
-                {
-                    db.Doctor.find({where: {doctor_id: data.DOCTOR_ID}}, {raw: true})
-                        .success(function (doctor) {
-                            if (doctor === null || doctor.length === 0) {
-                                console.log("Not found doctor in table");
-                                res.json({status: 'fail'});
-                                return false;
-                            }else
-                            {
-                                res.json({status:'update',data : data,docName:doctor.NAME,docSign:doctor.Signature});
-                            }
-                        })
-                        .error(function (err) {
-                            console.log("ERROR:" + err);
-                            res.json({status: 'error'});
-                            return false;
-                        });
-                }
+                        }
+                    })
+                    .error(function (err) {
+                        console.log("ERROR:" + err);
+                        res.json({status: 'error'});
+                        return false;
+                    })
             })
             .error(function(err){
                 res.json({status:'error'});

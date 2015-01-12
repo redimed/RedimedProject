@@ -78,6 +78,7 @@ module.exports = function(sequelize, DataTypes){
         "ECG_RESULT": DataTypes.INTEGER(11),
         "GP": DataTypes.INTEGER(11),
         "COMMENT_SEC10" : DataTypes.STRING(500),
+        "LOCATION" : DataTypes.STRING(100),
         "DOCTOR_ID" : DataTypes.INTEGER(11),
         "Created_by": DataTypes.INTEGER(11),
         "Creation_date": DataTypes.DATE,

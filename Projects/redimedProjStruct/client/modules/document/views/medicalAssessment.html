@@ -19,12 +19,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-sm-6" style="margin-bottom: 10px"  ng-class="{'has-error':mrsForm.sticker_here.$error.maxlength}">
-            <label class="control-label">Sticker Here:</label>
-            <textarea class="form-control" ng-model="info.STICKER" style="height: 100px" ng-maxlength="500" name="sticker_here"></textarea>
-            <label class="control-label help-block col-md-12 col-sm-12" ng-show="mrsForm.sticker_here.$error.maxlength">Sticker here 500</label>
+        <div class="col-md-5 col-sm-6">
+            <div class="note note-warning note-bordered">
+                <label class="bold">Sticker Here:</label></br>
+                <label>
+                    Name: {{patientInfo.First_name}} {{patientInfo.Middle_name}} {{patientInfo.Sur_name}}</br>
+                    Sex: {{patientInfo.Sex}}</br>
+                    DOB: {{patientInfo.DOB}}</br>
+                    Adress: {{patientInfo.Address1}}</br>
+                    Company: {{companyName}}
+                </label>
+            </div>
         </div>
-        <div  class="col-md-8 col-sm-6">
+        <div  class="col-md-7 col-sm-6">
             <p class="ng-binding" style="font-size: xx-large;text-align: center;font-weight: bolder;margin-top: 40px">Medical Assessment</p>
         </div>
     </div>
@@ -345,7 +352,7 @@
                 </div>
             </div>
             <div class="row">
-                <label class="col-lg-12 col-md-12 col-sm-12">Blood Sugar Level <input type="text" ng-model="info.BLOOD_SUGAR_LEVEL" ng-pattern="/^[0-9]+$/" name="BLOOD_SUGAR_LEVEL" style="width: 60px"> mmol/L</label>
+                <label class="col-lg-12 col-md-12 col-sm-12">Blood Sugar Level <input type="text" ng-model="info.BLOOD_SUGAR_LEVEL" ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" name="BLOOD_SUGAR_LEVEL" style="width: 60px"> mmol/L</label>
                 <div class="col-lg-12 col-md-12 col-sm-12" ng-show="showClickedValidation && MAForm.BLOOD_SUGAR_LEVEL.$error.pattern">
                     <label style="color: #8b0000">Blood Sugar Level must be number</label>
                 </div>
@@ -777,7 +784,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <label class="btn  bold">
-                                <input type="radio" disabled ng-model="info.RISK" ng-value="0"> LOW
+                                <input type="radio" ng-model="info.RISK" ng-value="0"> LOW
                             </label>
                         </div>
                         <label class="control-label col-lg-8 col-md-8 col-sm-8" style="margin-top: 10px">
@@ -787,7 +794,7 @@
                     <div class="row">
                         <div class=" col-lg-3 col-md-4 col-sm-4">
                             <label class="btn bold" >
-                                <input type="radio" disabled ng-model="info.RISK" ng-value="1"> MEDIUM
+                                <input type="radio" ng-model="info.RISK" ng-value="1"> MEDIUM
                             </label>
                         </div>
                         <label class="control-label col-lg-8 col-md-8 col-sm-8" style="margin-top: 10px">
@@ -798,7 +805,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-sm-4 ">
                             <label class="btn bold">
-                                <input type="radio" disabled  ng-model="info.RISK" ng-value="2"> HIGH
+                                <input type="radio"  ng-model="info.RISK" ng-value="2"> HIGH
                             </label>
                         </div>
                         <label class="control-label col-lg-8 col-md-8 col-sm-8" style="margin-top: 10px">
@@ -864,7 +871,11 @@
                 <label class="col-lg-2 col-md-2 col-sm-3 bold">Date</label>
                 <label class="col-lg-3 col-md-4 col-sm-3">{{info.Creation_date | date : 'dd / MM / yyyy'}}</label>
                 <label class="col-lg-2 col-md-2 col-sm-3 bold">Location</label>
-                <label class="col-lg-3 col-md-4 col-sm-3"></label>
+                <div class="col-lg-3 col-md-4 col-sm-3">
+                    <select ng-model="info.LOCATION" class="form-control" ng-options="site.id as site.Site_name for site in sites">
+                        <option value="">--Select Site--</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>

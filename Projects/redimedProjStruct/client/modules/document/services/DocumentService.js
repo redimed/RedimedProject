@@ -73,9 +73,9 @@ angular.module('app.loggedIn.document.services', [])
             return editMA.post({info:info});
         }
 
-        documentService.checkMA = function(PatientID, calID){
+        documentService.checkMA = function(PatientID, calID,idC){
             var checkMA = api.all("document/checkMA");
-            return checkMA.post({PatientID:PatientID, calID:calID});
+            return checkMA.post({PatientID:PatientID, calID:calID, idC:idC});
         }
         /* Medical Assessment
             End
