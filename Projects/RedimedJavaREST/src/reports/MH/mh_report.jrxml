@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mh_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ed7ad48-d2ae-4fdc-8d98-79bb0b845af6">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="720"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -157,6 +157,8 @@ ORDER BY `GROUP_ID`]]>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
+        medical_history.`s1_relationship` AS medical_history_s1_relationship,
+        medical_history.`s1_job_location` AS medical_history_s1_job_location,
         medical_history.`s2_occupation1` AS medical_history_s2_occupation1,
         medical_history.`s2_startdate1` AS medical_history_s2_startdate1,
         medical_history.`s2_enddate1` AS medical_history_s2_enddate1,
@@ -335,6 +337,7 @@ medical_history.`s2_employ5` AS medical_history_s2_employ5,
         medical_history.`rmi_mental` AS medical_history_rmi_mental,
         medical_history.`rmi_mental_initials` AS medical_history_rmi_mental_initials,
         medical_history.`rmi_date` AS medical_history_rmi_date,
+medical_history.`rmi_witness` as medical_history_rmi_witness,
         medical_history.`dec_witness` AS medical_history_dec_witness,
         medical_history.`dec_date` AS medical_history_dec_date,
         medical_history.`doctor_id` AS medical_history_doctor_id,
