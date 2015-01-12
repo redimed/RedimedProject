@@ -35,6 +35,30 @@ angular.module("app.loggedIn.patient.services", [])
         return funcApi.get({id: patient_id});
     }
 
+    instanceService.initAppointment = function(patient_id, cal_id){
+        var funcApi = khankAPI.all('appt/init');
+        return funcApi.post({patient_id: patient_id, cal_id: cal_id});
+    }
+
+    instanceService.endAppointment = function(patient_id, cal_id){
+        var funcApi = khankAPI.all('appt/end');
+        return funcApi.post({patient_id: patient_id, cal_id: cal_id});
+    }
+
+    instanceService.invoiceDetail = function(header_id) {
+        var funcApi = khankAPI.all('invoice/detail');
+        return funcApi.post({header_id: header_id});
+    }
+
+    instanceService.invoiceSave = function(header_id) {
+        var funcApi = khankAPI.all('invoice/save');
+        return funcApi.post({header_id: header_id});
+    }
+
+    instanceService.getAppointments = function(patient_id) {
+        var funcApi = khankAPI.all('patients/appointments');
+        return funcApi.post({patient_id: patient_id});
+    }
      /*
     *  END KHANK 
     */
@@ -102,9 +126,9 @@ angular.module("app.loggedIn.patient.services", [])
         return claimApi.post({'Claim_id': claim_id});
     }
 
-    instanceService.insertClaim = function(data){
+    instanceService.insertClaim = function(data, Patient_id, CAL_ID){
         var claimApi = appApi.all("patient/insertClaim");
-        return claimApi.post(data);
+        return claimApi.post({add_data: data, Patient_id: Patient_id, CAL_ID: CAL_ID});
     }
 
     instanceService.editClaim = function(data){

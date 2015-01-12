@@ -6,7 +6,7 @@
                         ng-disabled="!infoChanged()"
                         class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
-                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/mrs/{{info.mrs_id}}"
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/mrs/{{info.mrs_id}}" target="_blank"
                    type="button"
                    ng-disabled="infoChanged() || isNew"
                    class="btn btn-primary blue pull-right">Print PDF
@@ -513,8 +513,8 @@
                                             </label>
                                         </div>
                                         <div class="col-md-1 col-sm-1">
-                                            <input type="checkbox" class="form-control" ng-model="info.rr_screen"
-                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_screen==1"/>
+                                            <input type="checkbox" class="form-control" ng-model="info.rr_green"
+                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_green==1"/>
                                         </div>
                                         <div class="col-md-8 col-sm-8" style="margin-top:10px;">
                                             <label class="control-label">

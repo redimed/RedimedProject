@@ -133,7 +133,9 @@ angular.module("app.loggedIn.patient.claim.directive", [])
 
                         if (option.type == 'add') {
                             postData.Created_by = $cookieStore.get('userInfo').id;
-                            PatientService.insertClaim(postData).then(function (response) {
+                            var CAL_ID = 11;
+
+                            PatientService.insertClaim(postData, scope.modelObjectMap.Patient_id, CAL_ID).then(function (response) {
                                 if (response.status === 'success') {
                                     toastr.success("Added a new Claim", "Success");
                                     scope.modelObjectMap = angular.copy(ClaimModel);

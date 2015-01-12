@@ -2,8 +2,29 @@ var PatientModel = require('../v1_models/Cln_patients');
 var db = require('../models');
 
 module.exports = {
-	postCompanies: function(req, res){
 
+	postAppointments: function(req, res) {
+		var patient_id = req.body.patient_id;
+
+		db.Patient.find({
+			where: {Patient_id: patient_id},
+			include: [
+				{ model: db.Appointment , as: 'Appointments'}
+			],
+			attributes: ['Patient_id'],
+		}).success(function(data){
+			if(!data) {
+				res.json(500, {status: 'error', message: 'Cannot found Patient'});
+				return;
+			}
+			res.json({status: 'success', data: data});
+		}).error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+
+	},
+
+	postCompanies: function(req, res){
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
@@ -60,22 +81,6 @@ module.exports = {
         }).error(function(err){
             res.json({status: 'error', error: err});
         })
-
-       //  k_sql.exec(sql, function (data) {
-       //  	if(!post_data.company_id) {
-       //  		res.json({status: 'success'});
-       //  		return;
-       //  	}
-       //  	var sql = PatientModel.sql_insert_patient_company(id, post_data.company_id);
-       //  	k_sql.exec(sql, function (data) {
-       //  		res.json({status: 'success'});
-       //  	}, function(err) {
-		   		// // DUPLICATE PRIMARY KEY of patient companies
-	      //       res.json({status: 'success'});
-	      //   });
-       //  }, function(err) {
-       //      res.json({status: 'error'});
-       //  });
     },
 	
 	getNumCompanies: function(req, res) {
@@ -114,7 +119,6 @@ module.exports = {
 		}) . error(function(error){
 			res.json(500, {status: 'error', error: error});
 		});
-
 	},
 
 	getNumReferrals : function(req, res) {

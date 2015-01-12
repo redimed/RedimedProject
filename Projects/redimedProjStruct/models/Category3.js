@@ -110,10 +110,14 @@ module.exports = function (sequelize, DataTypes) {
         "q1_5_3_c": DataTypes.STRING(200),
         "PATIENT_SIGNATURE": DataTypes.TEXT,
         "PATIENT_DATE": DataTypes.DATE,
-        "DOCTOR_ID": DataTypes.INTEGER(11)
+        "DOCTOR_ID": DataTypes.INTEGER(11),
+        "Created_by": DataTypes.INTEGER(11),
+        "Last_updated_by": DataTypes.INTEGER(11),
+
     }, {
         tableName: 'gorgon_category_3',
-        timestamps: false
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_update_date'
     });
     return Category3;
 };

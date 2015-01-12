@@ -28,7 +28,8 @@ install_model.sql_get_appt_items = function (appt_id) {
                     .field('appt_items.PRICE')
                     .field('ITEM_CODE')
                     .field('TIME_SPENT')
-                    .field('QUANTITY');
+                    .field('QUANTITY')
+                    .field('is_enable')
         return query_builder.toString();
 }
 

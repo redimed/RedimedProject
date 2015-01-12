@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
-.controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService) {
+.controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, mdtClaimService, localStorageService) {
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
 
@@ -48,13 +48,26 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.$watch("patient", function(newPatient){
 		if(typeof newPatient !== 'undefined' && newPatient !== null){
 			$scope.patient_id = newPatient.Patient_id;
-			angular.element(claimListAddId).fadeIn();
+			angular.element(claimListSelectId).fadeIn();
 			$scope.refreshAppointment();
 		}
 	})
 
+	$scope.selectClaimModule = function(row){
+		var post_data = {
+			Claim_id: row.Claim_id,
+			Patient_id: $scope.patient_id,
+			CAL_ID: $scope.selectedCalId
+		}
+
+		mdtClaimService.addPatient(post_data).then(function(result){
+			toastr.success("Add Claim Successfully", "Success");
+			angular.element(claimListSelectId).fadeOut();
+		})
+	}
+
 	$scope.addClaim = function(){
-		angular.element(claimListAddId).fadeIn();
+		angular.element(claimListAddId).fadeIn();	
 	}
 
 	$scope.$watch('claim', function(newClaim, oldClaim){
@@ -95,7 +108,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.selectPatient = function(row){
 		var dataBooking = {
 			CAL_ID: $scope.rightSelectedBooking.data.cals[$scope.rightSelectedBooking.docId],
-			patients: $scope.rightSelectedBooking.data.patients[$scope.rightSelectedBooking.docId],
+			patients: $scope.rightSelectedBooking.data.patients[$scope.rightSelectedBooking.docId]
 		}
 
 		dataBooking.Patient_id = row.Patient_id;
@@ -117,7 +130,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	// END GET CLICK ADD OR SELECT PATIENT
 
 	// ADD WAITING LIST
-	$scope.addWaitingList = function(){
+	$scope.addWaitingList = function(){	
 		var waitingListId = "#waitingListAddModule";
 
 		angular.element(waitingListId).fadeIn();
@@ -326,7 +339,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			TO_TIME: data.to_time_map
 		}
 		/*$scope.modelObjectMap.FROM_TIME = data.from_time_map;
-		$scope.modelObjectMap.TO_TIME = data.to_time_map;		
+		$scope.modelObjectMap.TO_TIME = data.to_time_map;
 
 		$cookieStore.put("patientBookingInfo", {
 			cal_id: data.cals[index],

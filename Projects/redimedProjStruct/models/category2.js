@@ -166,11 +166,14 @@ module.exports = function (sequelize, DataTypes) {
         "r5_1": DataTypes.INTEGER(11),
         "r5_2": DataTypes.STRING(200),
         "DATE": DataTypes.DATE,
-        "DOCTOR_ID": DataTypes.INTEGER(11)
+        "DOCTOR_ID": DataTypes.INTEGER(11),
+        "Created_by": DataTypes.INTEGER(11),
+        "Last_updated_by": DataTypes.INTEGER(11)
 
     }, {
         tableName: 'gorgon_category_2',
-        timestamps: false
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_update_date'
     });
     return Category2;
 };

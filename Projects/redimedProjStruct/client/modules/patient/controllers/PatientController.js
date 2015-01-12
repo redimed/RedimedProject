@@ -13,7 +13,9 @@ angular.module("app.loggedIn.patient.controller", [
     "app.loggedIn.patient.appointment.controller",
     "app.loggedIn.patient.companies.controller",
     "app.loggedIn.patient.workcover.controller",
-    "app.loggedIn.patient.itemsheet.controller"
+    "app.loggedIn.patient.itemsheet.controller",
+    "app.loggedIn.patient.invoices.controller",
+    "app.loggedIn.patient.invoice_detail.controller",
 ])
 .controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW) {
     // FOR VIEW LIST

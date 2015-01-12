@@ -7,7 +7,7 @@
                     class="btn green pull-right">{{isNew?"Add New":"Update"}}
                 </button>
                 <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/gorgonFA/{{info.id}}"
-                   ng-disabled="isNew || infoChanged()"
+                   ng-disabled="isNew || infoChanged()" target="_blank"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
@@ -1629,15 +1629,15 @@
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label class="control-label bold">Signature</label>
-                    <label class="control-label col-md-12 col-sm-12" ng-show="info.SIGN != null && info.SIGN != '' ">
-                        <img src="" ng-src="{{info.SIGN}}" alt="" style="width: 200px;height: 150px;"/>
+                    <label class="control-label col-md-12 col-sm-12" ng-show="info.Lsign != null && info.Lsign != '' ">
+                        <img src="" ng-src="{{info.Lsign}}" alt="" style="width: 200px;height: 150px;"/>
                     </label>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label class="control-label bold">Date</label>
-                    <input type="text" readonly class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="info.DOA"/>
+                    <input type="text" readonly class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="info.LDate"/>
                 </div>
             </div>
         </div>
@@ -1645,7 +1645,7 @@
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label class="control-label bold">Name</label>
-                    <input type="text" ng-model="info.DOCTOR_NAME" class="form-control">
+                    <input type="text" ng-model="info.LName" class="form-control">
                 </div>
             </div>
 

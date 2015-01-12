@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
         "ac_any_medical_or_functional": DataTypes.INTEGER(11),
         "ac_any_diagnosed_or_previous": DataTypes.INTEGER(11),
         "ac_examiner_comment": DataTypes.STRING(500),
-        "rr_screen": DataTypes.INTEGER(11),
+        "rr_green": DataTypes.INTEGER(11),
         "rr_amber": DataTypes.INTEGER(11),
         "rr_amber_comment": DataTypes.STRING(500),
         "rr_red": DataTypes.INTEGER(11),

@@ -17,10 +17,13 @@ module.exports = function (sequelize, DataTypes) {
         "PERSON_ARRANGING_NAME": DataTypes.STRING(200),
         "PERSON_ARRANGING_POSITION": DataTypes.STRING(200),
         "DOCTOR_ID": DataTypes.INTEGER(11),
-        "WORKER_SIGNATURE": DataTypes.BLOB
+        "WORKER_SIGNATURE": DataTypes.BLOB,
+        "Created_by": DataTypes.INTEGER(11),
+        "Last_updated_by": DataTypes.INTEGER(11)
     }, {
         tableName: 'gorgon_audiometric_form18',
-        timestamps: false
+        createdAt: 'Creation_date',
+        updatedAt: 'Last_update_date'
     });
     return Form18;
 };

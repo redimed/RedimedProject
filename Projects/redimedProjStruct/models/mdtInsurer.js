@@ -35,7 +35,11 @@ createdAt: "creation_date",
 updatedAt: "last_update_date",
 classMethods: {
     associate: function(models) {
-        mdtInstance.hasMany(models.Company, {as: 'Companies', foreignKey: 'insurer_id', through: 'company_insurers'});
+        mdtInstance.hasMany(models.Company, {as: 
+            'Companies',
+             foreignKey: 'insurer_id', 
+             through: 'company_insurers'
+         });
     }
 }
 });

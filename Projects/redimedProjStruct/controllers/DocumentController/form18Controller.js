@@ -129,7 +129,9 @@ module.exports = {
                     PERSON_ARRANGING_NAME: info.PERSON_ARRANGING_NAME,
                     PERSON_ARRANGING_POSITION: info.PERSON_ARRANGING_POSITION,
                     DOCTOR_ID: info.DOCTOR_ID,
-                    WORKER_SIGNATURE: info.WORKER_SIGNATURE
+                    WORKER_SIGNATURE: info.WORKER_SIGNATURE,
+                    Created_by: info.Created_by,
+                    Last_updated_by: info.Last_updated_by
                 }, {raw: true})
                     .success(function () {
                         res.json({status: 'success'});
@@ -159,7 +161,9 @@ module.exports = {
             PERSON_ARRANGING_NAME: info.PERSON_ARRANGING_NAME,
             PERSON_ARRANGING_POSITION: info.PERSON_ARRANGING_POSITION,
             DOCTOR_ID: info.DOCTOR_ID,
-            WORKER_SIGNATURE: info.WORKER_SIGNATURE
+            WORKER_SIGNATURE: info.WORKER_SIGNATURE,
+            Created_by: info.Created_by,
+            Last_updated_by: info.Last_updated_by
         }, {GORGON_ID: 1})
             .success(function () {
                 res.json({status: 'success'});

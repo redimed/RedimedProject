@@ -6,7 +6,20 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         $scope.deptItems =  null; // DEPT ITEM LIST
         $scope.apptItems = []; //APPT ITEM LIST
         $scope.extraItems = [];
+        zzzz = $scope;
     
+        var isInDeptItems = function(item_id) {
+            for(var i= 0, len = $scope.deptItems.length; i < len; ++i){
+                var cat = $scope.deptItems[i];
+                 for(var j= 0, len2 = cat.items.length; j < len2; ++j){
+                    var t_item = cat.items[j];
+                     if(item_id == t_item.ITEM_ID) {
+                         return t_item;
+                    }
+                }
+            }
+            return false;
+        }
     
         ReceptionistService.apptDetail( $scope.appointment.CAL_ID)
         //  GET APPOINTMENT DETAIL
@@ -20,28 +33,43 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         .then(function(response){
             if(response.status === 'success') {
                 $scope.deptItems = response.data;
-                var item_id_list = [];
-		 		angular.forEach($scope.deptItems, function(cat, key) {
-			 			angular.forEach(cat.items, function(item, key) {
-                           item_id_list.push(item.ITEM_ID);
-			 			});
-					});
-                return ReceptionistService.itemFeeAppt($scope.appointment.SERVICE_ID, item_id_list);
-//                return PatientService.getApptItems($scope.appointment.CAL_ID);
+                
+                return PatientService.getApptItems($scope.appointment.CAL_ID);
 
             }
         })
         // GET ITEMS OF APPT AND GET ONLY EXTRA ITEM
-//        .then(function(response){
-//            if(response.status==='success'){
-//                $scope.apptItems = response.data;
+        .then(function(response){
+            if(response.status==='success'){
+                $scope.apptItems = response.data;
 //                
-//            }
-//        })
-        
 
-        
-        
+                
+                var item_id_list = [];
+		 		angular.forEach($scope.deptItems, function(cat, key) {
+                    angular.forEach(cat.items, function(item, key) {
+                       item_id_list.push(item.ITEM_ID);
+                    });
+                });
+                // ID LIST DEPT 
+                
+                angular.forEach($scope.apptItems, function(item){
+                    var t_item = isInDeptItems(item.ITEM_ID);
+			        if(!!t_item) {
+                        // price, quantity, time_spent 
+                        t_item.QUANTITY = item.QUANTITY;
+                        t_item.TIME_SPENT = item.TIME_SPENT;
+                        t_item.PRICE = item.PRICE;
+                        t_item.checked = item.is_enable === 1 ? '1' : '0';
+                    } else { // IN EXTRA ITEMS
+                        $scope.extraItems.push(item);
+                        item_id_list.push(item.ITEM_ID);
+                        item.checked = item.is_enable === 1 ? '1' : '0';
+                    }
+                });
+                return ReceptionistService.itemFeeAppt($scope.appointment.SERVICE_ID, item_id_list);
+            }
+        })
         // GET FEE OF ITEM 
         .then( function( response ){
 		 		if(!!response) {
@@ -49,8 +77,8 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
 			 		var list_fee = response.list;
 			 		angular.forEach($scope.deptItems, function(cat, key) {
 			 			angular.forEach(cat.items, function(item, key) {
-                            item.QUANTITY = 1;
-                            item.PRICE = 0;
+//                            item.QUANTITY = 1;
+//                            item.PRICE = 0;
 			 				var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
 			 				if(t_item && t_item.SCHEDULE_FEE > 0) {
 			 					item.PRICE = t_item.SCHEDULE_FEE;
@@ -59,6 +87,16 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
                             // SET FROM APPT ITEM
 			 			});
 					});
+                    angular.forEach($scope.extraItems, function(item, key) {
+                        var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
+			 				if(t_item && t_item.SCHEDULE_FEE > 0) {
+			 					item.PRICE = t_item.SCHEDULE_FEE;
+			 					item.disable_fee = true;
+			 				}
+                    });
+                    
+                    
+                    
 				}
          });
 
@@ -85,16 +123,11 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
                 
             },
             class:function(item){
-                // CHECK EXIST IN DEPT_ITEMS     
-                for(var i= 0, len = $scope.deptItems.length; i < len; ++i){
-                    var cat = $scope.deptItems[i];
-                     for(var j= 0, len2 = cat.items.length; j < len2; ++j){
-                        var t_item = cat.items[j];
-                         if(item.ITEM_ID == t_item.ITEM_ID) {
-                             item.type = 'dept_item';
-                             return 'danger';
-                        }
-                    }
+                // CHECK EXIST IN DEPT_ITEMS    
+                
+                if(!!isInDeptItems(item.ITEM_ID)) {
+                    item.type = 'dept_item';
+                    return 'danger';
                 }
                 
                 // CHECK EXIST IN EXTRA_ITEMS

@@ -3,6 +3,9 @@ var fs = require("fs");
 squel.useFlavour('mysql');
 var common_functions = require("../functions");
 
+var db = require('../models');
+var mdt_functions = require('../mdt-functions.js');
+
 var model_sql = {
     sql_patient_get_by_opt: function (limit, offset, search_data) {
         var query = squel.select()
@@ -166,33 +169,28 @@ module.exports = {
         });
     },
     insertClaim: function(req, res){
-        var created_by = req.body.Created_by;
+        var postData = req.body.add_data;
+        var CAL_ID = req.body.CAL_ID;
+        var Patient_id = req.body.Patient_id;
 
-        delete req.body.Created_by;
+        var sql_max_id = "SELECT MAX(Claim_id) AS claim_id FROM cln_claims LIMIT 1";
 
-        var sqlbuilder = squel.insert()
-                .into("cln_claims")
-                .set('Creation_date', 'NOW()', {dontQuote: true})
-                .set('Created_by', created_by);
-        ;
-
-        var data = req.body;
-
-        for (var key in data) {
-            if (data[key] || data[key] === 0 || data[key] === '0')
-                sqlbuilder.set(key, data[key]);
-        }
-
-        var sql = sqlbuilder.toString();
-        
-        req.getConnection(function (err, connection) {
-            var query = connection.query(sql, function (err, data) {
-                if (err) {
-                    res.json({status: err, sql: sql});
-                    return;
-                }
-                res.json({status: 'success', data: data});
-            });
+        db.Claim.create(postData)
+        .success(function(created){
+            db.sequelize.query(sql_max_id)
+            .success(function(detail){
+                var sql_insert_patient = "INSERT INTO cln_patient_claim(Claim_id, Patient_id, CAL_ID, Creation_date, Last_update_date) VALUES("+detail[0].claim_id+", "+Patient_id+", "+CAL_ID+", NOW(), NOW())";
+                db.sequelize.query(sql_insert_patient)
+                .success(function(created){
+                    res.json({message: created});
+                })
+                .error(function(error){
+                    res.json(500, {'status': 'error', 'message': error});       
+                })
+            })
+        })
+        .error(function(error){
+            res.json(500, {"status": "error", "message": error});
         });
     },
 

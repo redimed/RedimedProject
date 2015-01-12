@@ -1,9 +1,10 @@
 angular.module("app.loggedIn.patient.appointment.controller", [])
 
-.controller("PatientAppointmentController", function($scope, $stateParams, PatientService){
+.controller("PatientAppointmentController", function($scope, $state, $stateParams, PatientService, ConfigService){
 	//Detail appt modules
     var patient_id = $stateParams.patient_id;
 	$scope.current_patient = {};
+    $scope.cal_id = $stateParams.cal_id;
 
     $scope.patient_detail_modules = [
         {'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
@@ -26,9 +27,32 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Script', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
             'state': 'loggedIn.patient.script.list({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Referral', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
-            'state': 'loggedIn.patient.referral.list({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'}
+            'state': 'loggedIn.patient.referral.list({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
+        {'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
+            'state': 'loggedIn.patient.invoices({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
     ];
     //End detail appt modules
+
+    $scope.changeAppt = function(item) {
+        $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: item.CAL_ID});
+    }
+
+    $scope.classAppt = function(item) {
+        switch(item.APP_TYPE) {
+            
+            case 'ChangePersonInCharge':
+                return 'badge-danger';
+            case 'NotYet':
+            case 'Billing':
+                return 'badge-warning';
+        
+            case 'Done':
+                return 'badge-success';
+            default: 
+                return 'badge-default'; 
+        }
+        
+    }
 
     // Init Object
     var initObject = function () {
@@ -45,7 +69,17 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             }
 
             $scope.current_patient.Title = parseInt($scope.current_patient.Title);
-        })
+        });
+
+        PatientService.getAppointments(patient_id)
+        .then(function(response){
+            $scope.list_appt = response.data.appointments;
+            angular.forEach($scope.list_appt, function(item) {
+                item.DATE = ConfigService.getCommonDateDefault(item.FROM_TIME);
+                item.FROM_TIME = ConfigService.convertToTimeStringApp(item.FROM_TIME);
+                item.TO_TIME = ConfigService.convertToTimeStringApp(item.TO_TIME);
+            })
+        });
 
 		
 		/*

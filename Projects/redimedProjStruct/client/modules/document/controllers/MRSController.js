@@ -99,7 +99,7 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         ac_any_medical_or_functional: data.ac_any_medical_or_functional,
                         ac_any_diagnosed_or_previous: data.ac_any_diagnosed_or_previous,
                         ac_examiner_comment: data.ac_examiner_comment,
-                        rr_screen: data.rr_screen,
+                        rr_green: data.rr_green,
                         rr_amber: data.rr_amber,
                         rr_amber_comment: data.rr_amber_comment,
                         rr_red: data.rr_red,
@@ -107,19 +107,19 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         mrs_review: data.mrs_review,
                         mrs_doc_date: data.mrs_doc_date || new Date(),
                         doctor_id: $scope.doctor.doctor_id,
-                        created_by: data.created_by,
-                        last_updated_by: data.last_updated_by
+                        created_by: $scope.isNew ? userInfo.id : data.created_by,
+                        last_updated_by: $scope.isNew ? data.last_updated_by : userInfo.id
                     };
                     oriInfo = angular.copy($scope.info);
                 });
                 $scope.resetForm = function () {
                     $scope.info = angular.copy(oriInfo);
                     $scope.mrsForm.$setPristine();
-                }
+                };
 
                 $scope.infoChanged = function () {
                     return !angular.equals(oriInfo, $scope.info);
-                }
+                };
                 $scope.submit = function (mrsForm) {
                     if (mrsForm.$error.pattern || mrsForm.$error.maxlength || mrsForm.$error.required) {
                         toastr.error("Please Input All Required Information!", "Error");

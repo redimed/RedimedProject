@@ -311,6 +311,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                         } else if (response[0].status === 'findNull') {
                             $scope.isNew = true;
                             $scope.info.patient = response[0].patient;
+                            $scope.info.Created_by = userInfo.id;
                             oriInfo = angular.copy($scope.info);
                         } else if (response[0].status === 'findFound') {
                             $scope.isNew = false;
@@ -319,7 +320,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                             $scope.info = {
                                 patient: response[0].patient,
                                 Gorgon_Id: data.Gorgon_Id,
-                                Patient_Id: data.Patient_Id,
+                                Patient_Id: patient_id,
                                 JobNo: data.JobNo,
                                 Occupation: data.Occupation,
                                 JobLocation: data.JobLocation,
@@ -543,7 +544,7 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                                 Signature: data.Signature,
                                 GorgonDate: data.GorgonDate,
                                 Created_by: data.Created_by,
-                                Last_updated_by: data.Last_updated_by,
+                                Last_updated_by: userInfo.id,
                                 CalId: data.CalId,
                                 DocId: data.DocId,
                                 Q21_IsComment: data.Q21Other1Comment,
