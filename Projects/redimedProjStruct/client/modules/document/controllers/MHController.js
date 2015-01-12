@@ -441,6 +441,10 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                             mh_id: $scope.info.mh_id || null,
                             patient_id: patient_id,
                             cal_id: cal_id,
+
+                            s1_relationship: null,
+                            s1_job_location: null,
+
                             s2_occupation1: null,
                             s2_startdate1: null,
                             s2_enddate1: null,
@@ -627,8 +631,11 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                             rmi_mental: null,
                             rmi_mental_initials: null,
                             rmi_date: new Date(),
+                            rmi_witness: null,
+                            rmi_signed_witness: null,
                             dec_signed: null,
                             dec_witness: null,
+                            dec_signed_witness: null,
                             dec_date: new Date(),
                             doctor_id: null,
                             created_by: null,
