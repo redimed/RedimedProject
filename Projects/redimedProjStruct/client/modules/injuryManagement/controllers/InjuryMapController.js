@@ -46,42 +46,55 @@ angular.module("app.loggedIn.im.map.controller",[])
 
         socket.on('driverLocation',function(data){
 
-
-            var addNewMarker = true;
-            var positionArr = [];
-            var icon = 'modules/injuryManagement/icons/ambulance.png';
-
-            positionArr.push(data[0].latitude * 0.3);
-            positionArr.push(data[0].longitude * 0.3);
-
-            $scope.driverData = {
-                driverId: data[0].id,
-                position: positionArr,
-                username: data[0].userName,
-                type: data[0].userType,
-                icon: icon
-            };
-
-            if($scope.driverMarker.length > 0)
+            if(data[0].userType == 'Driver')
             {
-                for(var i=0; i<$scope.driverMarker.length;i++){
-                    if($scope.driverMarker[i].driverId == $scope.driverData.driverId)
+                var addNewMarker = true;
+                var positionArr = [];
+                var icon = 'modules/injuryManagement/icons/ambulance.png';
+
+                positionArr.push(data[0].latitude);
+                positionArr.push(data[0].longitude);
+
+                $scope.driverData = {
+                    driverId: data[0].id,
+                    position: positionArr,
+                    username: data[0].userName,
+                    type: data[0].userType,
+                    icon: icon
+                };
+
+                $scope.$apply(function(){
+                    if($scope.driverMarker.length > 0)
                     {
-                        addNewMarker = false;
-                        $scope.driverMarker[i].position = $scope.driverData.position;
+                        for(var i=0; i<$scope.driverMarker.length;i++){
+                            if($scope.driverMarker[i].driverId == $scope.driverData.driverId)
+                            {
+                                addNewMarker = false;
+                                $scope.driverMarker.splice(i,1);
+                                $scope.driverMarker.push($scope.driverData);
+                            }
+                        }
+                    }
+
+                    if(addNewMarker == true)
+                    {
+                        $scope.driverMarker.push($scope.driverData);
+                    }
+
+                });
+            }
+
+        })
+
+        socket.on('driverLogout',function(userId){
+            $scope.$apply(function(){
+                for(var i=0; i<$scope.driverMarker.length;i++){
+                    if($scope.driverMarker[i].driverId == userId)
+                    {
+                        $scope.driverMarker.splice(i,1);
                     }
                 }
-            }
-
-            if(addNewMarker == true)
-            {
-                $scope.driverMarker.push($scope.driverData);
-            }
-
-            $scope.$apply();
-
-            console.log($scope.driverMarker[0].position);
-
+            })
         })
 
         $scope.showDetails = function(id){
