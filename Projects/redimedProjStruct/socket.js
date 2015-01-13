@@ -37,11 +37,14 @@ module.exports = function(io) {
                 .emit('messageReceived', currentUser.username, message);
         });
 
-        socket.on('logout', function (username) {
+        socket.on('logout', function (username,id,userType) {
             var index = _.findIndex(userList, { username: username });
             if (index !== -1) {
                 userList.splice(index, 1);
                 io.sockets.emit('online',userList);
+
+                if(userType == 'Driver')
+                    io.sockets.emit('driverLogout',id);
             }
         });
 
