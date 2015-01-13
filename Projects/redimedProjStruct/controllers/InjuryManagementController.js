@@ -303,7 +303,7 @@ module.exports = {
 
                 for(var i=0; i<data.length; i++)
                 {
-                    arr.push({image:data[i].image!=null || data[i].image!='' ? base64Image(data[i].image):'',description:data[i].description});
+                    arr.push({imgId:data[i].injury_image_id,image:data[i].image!=null || data[i].image!='' ? base64Image(data[i].image):'',description:data[i].description});
                 }
 
                 res.json({status:'success',data:arr});

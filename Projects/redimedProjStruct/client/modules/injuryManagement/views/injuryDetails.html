@@ -1,4 +1,16 @@
-
+<style type="text/css">
+    a {
+        color: orange;
+    }
+    a:hover {
+        color: lightblue;
+        text-decoration: none;
+    }
+    .modal {
+        overflow: auto;
+        color: #333;
+    }
+</style>
 
 <h3 class="page-title">Injury Details</h3>
 <div class="page-bar">
@@ -169,14 +181,13 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-4 portfolio-item" ng-repeat="img in injuryImages">
-                <a href="#">
-                    <img width="200px" height="200px" class="img-responsive" src="{{img.image}}" alt="">
-                </a>
-                <p>{{img.description}}</p>
-            </div>
+        <br/>
+        <div >
+            <a ng-if="loadedImage" ng-click="viewImage(img)" ng-repeat="img in injuryImages">
+                <img width="200px" height="200px" src="{{img.image}}" alt="">
+            </a>
         </div>
+
     </div>
 </div>
+

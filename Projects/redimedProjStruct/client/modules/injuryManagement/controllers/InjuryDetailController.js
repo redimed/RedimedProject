@@ -5,6 +5,7 @@ angular.module("app.loggedIn.im.detail.controller",[])
     .controller("InjuryDetailController",function($scope,$filter,$state,$stateParams,InjuryManagementService,toastr){
         $scope.injuryInfo = {};
         $scope.injuryImages = {};
+        $scope.loadedImage = false;
 
         InjuryManagementService.getInjuryById($stateParams.id).then(function(rs){
             if(rs.status == 'success')
@@ -19,13 +20,16 @@ angular.module("app.loggedIn.im.detail.controller",[])
 
         InjuryManagementService.getImageByInjury($stateParams.id).then(function(rs){
             if(rs.status == 'success')
+            {
+                $scope.loadedImage = true;
                 $scope.injuryImages = rs.data;
+            }
 
-            console.log($scope.injuryImages);
         })
 
+        $scope.viewImage = function(img){
 
-
+        }
 
 
     })

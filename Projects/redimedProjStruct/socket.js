@@ -3,7 +3,6 @@ var _ = require('lodash-node');
 module.exports = function(io) {
     var userList = [];
     io.on('connection', function (socket) {
-
         socket.on('checkLogin',function(username){
 
             if (_.findIndex(userList, { username: username }) != -1) {
@@ -45,6 +44,10 @@ module.exports = function(io) {
                 io.sockets.emit('online',userList);
             }
         });
+
+        socket.on('location',function(data){
+            io.sockets.emit('driverLocation',data);
+        })
 
         //socket.on('disconnect', function () {
         //    var index = _.findIndex(userList, { socket: socket.id });

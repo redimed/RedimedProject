@@ -32,9 +32,18 @@ angular.module("app", [
     'ui-iconpicker',
     'ngPDFViewer',
     'ngSanitize',
-    'ngMap'
+    'ngMap',
+    'btford.socket-io'
 ])
+.factory('socket', function (socketFactory) {
+    var socket = io.connect('http://localhost:3000/');
 
+    var socketFactory = socketFactory({
+        ioSocket: socket
+    })
+
+    return socketFactory;
+})
 .config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {
     // CORS PROXY
     $httpProvider.defaults.useXDomain = true;
@@ -89,7 +98,7 @@ angular.module("app", [
 })
 
 //When update any route
-.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions){
+.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket){
     $idle.watch();
     // Use when update any state
 
@@ -114,3 +123,4 @@ angular.module("app", [
         }
     });
 })
+
