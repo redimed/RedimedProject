@@ -12,6 +12,7 @@ module.exports = {
 				{ model: db.Appointment , as: 'Appointments'}
 			],
 			attributes: ['Patient_id'],
+			order: [ [ { model: db.Appointment, as: 'Appointments' }, 'FROM_TIME', 'DESC' ] ]
 		}).success(function(data){
 			if(!data) {
 				res.json(500, {status: 'error', message: 'Cannot found Patient'});

@@ -190,6 +190,26 @@ angular.module("app.model", [])
 	ACC_TYPE: '',
 	bill_to: 1
 })
+.value('mdtAppointmentModel', {
+	CAL_ID: null,
+	DOCTOR_ID: null,
+	SITE_ID: null,
+	FROM_TIME: null,
+	TO_TIME: null,
+	NOTES: '',
+	PHONE: '',
+	APP_TYPE: '',
+	STATUS: '',
+	ARR_TIME: null,
+	ATTEND_TIME: null,
+	AVAILABLE: null,
+	Patient_id: '',
+	SERVICE_ID: null,
+	CLINICAL_DEPT_ID: null,
+	ACC_TYPE: '',
+	bill_to: null,
+	PATIENTS: '',
+})
 // END APPOINTMENT CALENDAR
 
 //WAITING LIST

@@ -18,8 +18,10 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
     ];
 
     $scope.patient_apt_modules = [
-        {'name': 'Appointment', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
-            'state': 'loggedIn.receptionist.appointment.detail({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
+        // {'name': 'Appointment', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
+        //     'state': 'loggedIn.receptionist.appointment.detail({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
+         {'name': 'ItemSheet', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
+            'state': 'loggedIn.patient.itemsheet({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
         {'name': 'Paperless', 'icon': 'fa fa-pencil-square-o', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.doctor.paperless({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Workcover', 'icon': 'fa fa-paper-plane-o', 'color': 'green-soft', 'desc': 'Has: 0',
@@ -39,7 +41,6 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 
     $scope.classAppt = function(item) {
         switch(item.APP_TYPE) {
-            
             case 'ChangePersonInCharge':
                 return 'badge-danger';
             case 'NotYet':
@@ -56,6 +57,13 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 
     // Init Object
     var initObject = function () {
+        $scope.appt_params = {
+            id: $scope.cal_id,
+            permission: {
+                edit: true
+            }
+        };
+
         PatientService.mdtById($stateParams.patient_id).then(function (response) {
             $scope.current_patient = response.data;
 

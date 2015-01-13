@@ -20,7 +20,7 @@
 	<div class="portlet-title">
 		<div class="caption">
 			<i class="fa fa-bars"></i>
-			Main Information
+			Patient Info
 		</div>
 	</div>
 	<div class="portlet-body" style="padding-top: 25px;">
@@ -85,7 +85,23 @@
 	    <div class="break-row"></div>
 	</div> <!-- END PANEL BODY -->
 </div>
-<!-- END PANEL INFO -->
+
+
+<!-- APPOINTMENT INFO -->
+<div class="portlet box blue-hoki">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-bars"></i>
+			Appointment Info
+		</div>
+	</div>
+	<div class="portlet-body" style="padding-top: 25px;">
+		<mdt-appointment-detail params="appt_params" options="options"></mdt-appointment-detail>
+	</div>
+</div>
+<!-- END APPOINTMENT INFO -->
+
+
 <div class="row">
 	<div class="col-lg-8" style="padding: 0">
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="module in patient_detail_modules">
