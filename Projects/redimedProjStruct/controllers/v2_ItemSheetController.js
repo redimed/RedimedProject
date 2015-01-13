@@ -41,8 +41,9 @@ module.exports = {
     
     postApptItems: function(req,res){
         var appt_id = req.body.appt_id;
+        var patient_id = req.body.patient_id;
         
-        var sql = ApptItemsModel.sql_get_appt_items(appt_id);
+        var sql = ApptItemsModel.sql_get_appt_items(appt_id, patient_id);
         
         
         db.sequelize.query(sql)

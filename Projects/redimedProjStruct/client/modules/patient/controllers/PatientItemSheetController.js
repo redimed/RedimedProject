@@ -2,6 +2,7 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
     .controller('PatientItemSheetController', function($filter,$scope, $stateParams,ReceptionistService, PatientService,toastr){
         var arrGetBy = $filter('arrGetBy');
         $scope.appointment = {CAL_ID: $stateParams.cal_id, Patient_id:  $stateParams.patient_id};
+
         $scope.items_search_panel = {};
         $scope.deptItems =  null; // DEPT ITEM LIST
         $scope.apptItems = []; //APPT ITEM LIST
@@ -24,12 +25,13 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         PatientService.initAppointment($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
         // END INIT INVOICE 
 
-
         ReceptionistService.apptDetail( $scope.appointment.CAL_ID)
         //  GET APPOINTMENT DETAIL
         .then(function(response){
             if(response.status === 'success') {
-                $scope.appointment = response.data;
+                delete response.data.Patient_id;
+                angular.extend($scope.appointment, response.data);
+
                 return PatientService.getDeptItems($scope.appointment.CLINICAL_DEPT_ID);
             }
         })
@@ -37,7 +39,7 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         .then(function(response){
             if(response.status === 'success') {
                 $scope.deptItems = response.data;
-                return PatientService.getApptItems($scope.appointment.CAL_ID);
+                return PatientService.getApptItems($scope.appointment.CAL_ID, $scope.appointment.Patient_id);
             }
         })
         // GET ITEMS OF APPT AND GET ONLY EXTRA ITEM
@@ -78,6 +80,7 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         })
         // GET FEE OF ITEM 
         .then( function( response ){
+	     if(!response.list) return; 
 	 		var list_fee = response.list;
 	 		angular.forEach($scope.deptItems, function(cat, key) {
 	 			angular.forEach(cat.items, function(item, key) {

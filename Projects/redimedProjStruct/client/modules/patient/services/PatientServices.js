@@ -76,9 +76,9 @@ angular.module("app.loggedIn.patient.services", [])
         return funcApi.post({list: listitem });
     }
     
-    instanceService.getApptItems = function(appt_id){
+    instanceService.getApptItems = function(appt_id, patient_id){
         var funcApi = khankAPI.all('itemsheet/appt_items');
-        return funcApi.post({appt_id: appt_id });
+        return funcApi.post({appt_id: appt_id, patient_id: patient_id });
     }
 
     /*
