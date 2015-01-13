@@ -122,7 +122,10 @@ module.exports = {
 		db.Appointment.find({
 			where: {CAL_ID: id},
 			include: [
-				{model: db.Doctor, as: 'Doctor'},
+				{
+					model: db.Doctor, as: 'Doctor',
+					attributes: ['NAME']
+				},
 				{model: db.Department, as: 'Department'},
 			]
 		}).success(function(appt){
