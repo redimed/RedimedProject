@@ -186,6 +186,7 @@ public class DocumentService {
         	if(report.equalsIgnoreCase("general"))
         	{
         		params.put("id",id);
+        		params.put("real_path","/reports/General/");
         		
         		return downloadReport("/reports/General/General.jasper", params, "General.pdf");
         	}
