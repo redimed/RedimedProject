@@ -81,4 +81,13 @@ angular.module('app.loggedIn.waworkcover', [
                         }
                     }
                 })
+                .state('loggedIn.waworkcover.general',{
+                    url:'/wa/workcover/:patient_id/:cal_id/general/:action/:wc_id',
+                    views:{
+                        'main-content':{
+                            templateUrl: 'modules/waWorkCover/views/general.html',
+                            controller: 'WaWorkCoverGeneralController'
+                        }
+                    }
+                })
     });

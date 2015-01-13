@@ -1304,15 +1304,15 @@
             </div>
             <div class="btn-group  col-md-12">
                 <label class="btn">
-                    <input type="radio" ng-model="info.aResult6" disabled value="1"> Sedentary </label>
+                    <input type="radio" ng-model="info.aResult6" disabled value="1"> Sedentary (0-5)</label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.aResult6" disabled value="2"> Light </label>
+                    <input type="radio" ng-model="info.aResult6" disabled value="2"> Light (6-9)</label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.aResult6" disabled value="3"> Medium </label>
+                    <input type="radio" ng-model="info.aResult6" disabled value="3"> Medium (10-22)</label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.aResult6" disabled value="4"> Heavy </label>
+                    <input type="radio" ng-model="info.aResult6" disabled value="4"> Heavy (23-45)</label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.aResult6" disabled value="5"> Very Heavy </label>
+                    <input type="radio" ng-model="info.aResult6" disabled value="5"> Very Heavy (+45)</label>
             </div>
             <div class="row">
                 <label class="control-label col-md-12 bold uppercase">6b. Dynamic Bench (900mm) To Shoulder</label>
@@ -1334,15 +1334,15 @@
             </div>
             <div class="btn-group  col-md-12">
                 <label class="btn">
-                    <input type="radio" ng-model="info.bResult6" disabled value="1"> Sedentary </label>
+                    <input type="radio" ng-model="info.bResult6" disabled value="1"> Sedentary (0-3)</label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.bResult6" disabled value="2"> Light </label>
+                    <input type="radio" ng-model="info.bResult6" disabled value="2"> Light (4-5)</label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.bResult6" disabled value="3"> Medium </label>
+                    <input type="radio" ng-model="info.bResult6" disabled value="3"> Medium (6-11)</label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.bResult6" disabled value="4"> Heavy </label>
+                    <input type="radio" ng-model="info.bResult6" disabled value="4"> Heavy (12-23)</label>
                 <label class="btn">
-                    <input type="radio" ng-model="info.bResult6" disabled value="5"> Very Heavy </label>
+                    <input type="radio" ng-model="info.bResult6" disabled value="5"> Very Heavy (+23)</label>
             </div>
             <div class="row">
                 <label class="control-label col-md-12 bold uppercase">6c. Manual Handling Technique</label>
@@ -1626,7 +1626,7 @@
     </div>
     <div class="portlet light">
         <div class="row">
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label class="control-label bold">Signature</label>
                     <label class="control-label col-md-12 col-sm-12" ng-show="info.Lsign != null && info.Lsign != '' ">
@@ -1634,7 +1634,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label class="control-label bold">Date</label>
                     <input type="text" readonly class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="info.LDate"/>
@@ -1642,18 +1642,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label class="control-label bold">Name</label>
                     <input type="text" ng-model="info.LName" class="form-control">
                 </div>
             </div>
 
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label bold">Position</label>
-                    <input type="text" ng-model="info.LPosition" class="form-control">
-                </div>
+            <div class="col-md-4 col-sm-6">
+                <label class="control-label bold">Position</label>
+                <select ng-model="info.LPosition" class="form-control" ng-options="site.id as site.Site_name for site in sites">
+                    <option value="">--Select Site--</option>
+                </select>
             </div>
         </div>
     </div>

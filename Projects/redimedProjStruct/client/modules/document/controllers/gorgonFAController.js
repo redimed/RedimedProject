@@ -350,6 +350,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             }else if (response['status'] === 'insert') {
                 insert = true;
                 $scope.isNew = true;
+                $scope.sites = response['site'];
                 $scope.info = {
                     id: null,
                     patientId: Patient_ID,
@@ -486,6 +487,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             }else if(response['status'] == 'update'){
                 insert = false;
                 $scope.isNew = false;
+                $scope.sites = response['site'];
                 $scope.info = {
                     id: response['data']['id'],
                     patientId: response['data']['patientId'],

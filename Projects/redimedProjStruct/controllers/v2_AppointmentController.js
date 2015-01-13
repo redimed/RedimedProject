@@ -121,6 +121,13 @@ module.exports = {
 
 		db.Appointment.find({
 			where: {CAL_ID: id},
+			include: [
+				{
+					model: db.Doctor, as: 'Doctor',
+					attributes: ['NAME']
+				},
+				{model: db.Department, as: 'Department'},
+			]
 		}).success(function(appt){
 			if(!appt) {
 				res.json(500, {"status": "error"});
@@ -161,5 +168,28 @@ module.exports = {
 			console.log(err);
 			res.json(500, {status: 'error', error: err})
 		})
+	},
+
+	postUpdate: function(req, res) {
+		var id = req.body.cal_id;
+		var postData = req.body.data;
+
+		 db.Appointment.update(postData, {
+            CAL_ID: id
+        })
+        .success(function (data) {
+            res.json({
+                "status": "success",
+                "data": data
+            });
+        })
+        .error(function (error) {
+            res.json(500, {
+                "status": "error",
+                "message": error
+            });
+        })
+
+
 	}
 }

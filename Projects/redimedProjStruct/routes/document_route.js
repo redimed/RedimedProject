@@ -174,3 +174,10 @@ app.post('/api/meditek/v1/wa/workcover/final/search', mdtWaWorkCoverFinalControl
 app.post('/api/meditek/v1/wa/workcover/final/edit', mdtWaWorkCoverFinalController.postEdit);
 app.post('/api/meditek/v1/wa/workcover/final/detail', mdtWaWorkCoverFinalController.postDetail)
 
+var mdtGeneralWorkCoverController = require('./controllers/GeneralWorkCoverController');
+
+app.post('/api/meditek/v1/wa/workcover/general/add', mdtGeneralWorkCoverController.postAdd);
+app.post('/api/meditek/v1/wa/workcover/general/search', mdtGeneralWorkCoverController.postSearch);
+app.post('/api/meditek/v1/wa/workcover/general/edit', mdtGeneralWorkCoverController.postEdit);
+app.post('/api/meditek/v1/wa/workcover/general/detail', mdtGeneralWorkCoverController.postDetail);
+

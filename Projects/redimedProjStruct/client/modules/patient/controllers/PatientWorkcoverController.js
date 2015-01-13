@@ -39,10 +39,19 @@ angular.module("app.loggedIn.patient.workcover.controller", [
                 ass_id: 0
             });
 		},
+        add_general: function(){
+			$state.go('loggedIn.waworkcover.general', {
+				patient_id: patient_id,
+                action: 'add',
+                cal_id: cal_id,
+                ass_id: 0
+            });
+		},
 	}
 
 	
 	$scope.first_opt = PatientService.workcoverSearchOpt('first', patient_id);
 	$scope.progress_opt = PatientService.workcoverSearchOpt('progress', patient_id);
 	$scope.final_opt = PatientService.workcoverSearchOpt('final', patient_id);
+    $scope.general_opt = PatientService.workcoverSearchOpt('general', patient_id);
 });

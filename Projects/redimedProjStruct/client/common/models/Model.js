@@ -190,6 +190,26 @@ angular.module("app.model", [])
 	ACC_TYPE: '',
 	bill_to: 1
 })
+.value('mdtAppointmentModel', {
+	CAL_ID: null,
+	DOCTOR_ID: null,
+	SITE_ID: null,
+	FROM_TIME: null,
+	TO_TIME: null,
+	NOTES: '',
+	PHONE: '',
+	APP_TYPE: '',
+	STATUS: '',
+	ARR_TIME: null,
+	ATTEND_TIME: null,
+	AVAILABLE: null,
+	Patient_id: '',
+	SERVICE_ID: null,
+	CLINICAL_DEPT_ID: null,
+	ACC_TYPE: '',
+	bill_to: null,
+	PATIENTS: '',
+})
 // END APPOINTMENT CALENDAR
 
 //WAITING LIST
@@ -650,3 +670,39 @@ angular.module("app.model", [])
 })
 
 //END SCRIPT REFERRAL MODEL
+
+//GENERAL ASSESSMENT
+.value('GeneralWorkCoverModel', {
+	cal_id: '',
+	patient_id: null,
+	injuryDate: null,
+	Symptoms: '',
+	vitalSigns: '',
+	medicalHistory: '',
+	medications: '',
+	allergies: '',
+	symptomology: '',
+	examiantion: '',
+	diffDiagnosis: '',
+	medication: '',
+	physio: '',
+	dutyrestriction: '',
+	recommendations: '',
+	followup: '',
+	referrals: '',
+	telehealth_id: null,
+	Name: '',
+	Address: '',
+	Email: '',
+	registionNo: '',
+	Phone: '',
+	examDate: null,
+	signature: '',
+	reportlocal: '',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	AssessmentName: '',
+})
+//END GENERAL ASSESSMENT

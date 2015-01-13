@@ -182,6 +182,14 @@ public class DocumentService {
         		return downloadReport("/reports/Script/ScriptReport.jasper", params, "ScriptReport.pdf");
         	}
         	
+        	//General
+        	if(report.equalsIgnoreCase("general"))
+        	{
+        		params.put("id",id);
+        		
+        		return downloadReport("/reports/General/General.jasper", params, "General.pdf");
+        	}
+        	
         	//AMS5
         	if(report.equalsIgnoreCase("ams5"))
         	{

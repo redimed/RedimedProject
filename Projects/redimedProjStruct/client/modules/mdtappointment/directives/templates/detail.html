@@ -1,0 +1,152 @@
+<form name="mdtappointmentForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i> Edit
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+	<!--DOCTOR_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="doctor_id">Doctor</label>
+			<input type="text" disabled placeholder="Doctor" name="Doctor" ng-model="mdtAppointmentMap.doctor.NAME" class="form-control" id="doctor_id" float-label>
+		</span>	</div>
+	<!--DOCTOR_ID-->
+
+	<!--SITE_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="site_id">Site id</label>
+			<select disabled class="form-control" name="SITE_ID"
+					ng-model="mdtAppointmentMap.SITE_ID"
+					ng-options="site.id as site.Site_name for site in options.redimedsites">
+				</select>
+		</span>		
+	</div>
+	<!--SITE_ID-->
+
+	<!--FROM_TIME-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="from_time">From time</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="From time" name="from_time" ng-model="mdtAppointmentMap.FROM_TIME" class="form-control" id="from_time" float-label>
+		</span>	</div>
+	<!--FROM_TIME-->
+
+	<!--TO_TIME-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="to_time">To time</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="To time" name="to_time" ng-model="mdtAppointmentMap.TO_TIME" class="form-control" id="to_time" float-label>
+		</span>	</div>
+	<!--TO_TIME-->
+
+	<div class="break-row"></div>
+
+
+	<!--SERVICE_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="SERVICE_ID">Service</label>
+			<select class="form-control" name="SERVICE_ID"
+					ng-model="mdtAppointmentMap.SERVICE_ID"
+					ng-options="type.SERVICE_ID as type.SERVICE_NAME for type in serviceList">
+				</select>
+		</span>	
+	</div>
+	<!--SERVICE_ID-->
+
+	<!--CLINICAL_DEPT_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="clinical_dept_id">Department</label>
+			<input type="text" disabled placeholder="Department" name="clinical_dept_id" ng-model="mdtAppointmentMap.department.CLINICAL_DEPT_NAME" class="form-control" id="clinical_dept_id" float-label>
+		</span>	</div>
+	<!--CLINICAL_DEPT_ID-->
+
+	<!--ARR_TIME-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="arr_time">Arr time</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Arr time" name="arr_time" ng-model="mdtAppointmentMap.ARR_TIME" class="form-control" id="arr_time" float-label>
+		</span>	</div>
+	<!--ARR_TIME-->
+
+	<!--ATTEND_TIME-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="attend_time">Attend time</label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Attend time" name="attend_time" ng-model="mdtAppointmentMap.ATTEND_TIME" class="form-control" id="attend_time" float-label>
+		</span>	</div>
+	<!--ATTEND_TIME-->
+
+
+
+
+	<div class="break-row"></div>
+	<!--APP_TYPE-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="app_type">App type</label>
+			<input type="text" placeholder="App type" name="app_type" ng-model="mdtAppointmentMap.APP_TYPE" class="form-control" id="app_type" float-label>
+		</span>	</div>
+	<!--APP_TYPE-->
+
+	<!--STATUS-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="status">Status</label>
+			<input type="text" placeholder="Status" name="status" ng-model="mdtAppointmentMap.STATUS" class="form-control" id="status" float-label>
+		</span>	</div>
+	<!--STATUS-->
+
+	
+	<!--ACC_TYPE-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="acc_type">Acc type</label>
+			<select class="form-control" name="ACC_TYPE"
+					ng-model="mdtAppointmentMap.ACC_TYPE"
+					ng-options="type.code as type.name for type in options.acc_types">
+				</select>
+		</span>	
+	</div>
+	<!--ACC_TYPE-->
+
+		<!--PHONE-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="phone">Phone</label>
+			<input type="text" placeholder="Phone" name="phone" ng-model="mdtAppointmentMap.PHONE" class="form-control" id="phone" float-label>
+		</span>	</div>
+	<!--PHONE-->
+	<div class="break-row"></div>
+
+
+	
+
+	
+
+	<!--NOTES-->
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="notes">Notes</label>
+			<input type="text" placeholder="Notes" name="notes" ng-model="mdtAppointmentMap.NOTES" class="form-control" id="notes" float-label>
+		</span>	</div>
+	<!--NOTES-->
+
+	<div class="break-row"></div>
+	
+
+
+
+</div>
+</form>

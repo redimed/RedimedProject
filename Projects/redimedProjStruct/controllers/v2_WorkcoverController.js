@@ -22,6 +22,10 @@ module.exports = {
 					model: db.WaWorkCoverFinal , as: 'WaWorkCoverFinal',
 					attributes: ['id'],
 				},
+                { 
+					model: db.GeneralWorkCover , as: 'GeneralWorkCover',
+					attributes: ['id'],
+				},
 			],
 			order: 'group_id DESC'
 		}).success(function(result){
@@ -51,6 +55,9 @@ module.exports = {
 				break;
 			case 'final':
 				key = 'WaWorkCoverFinal'; 
+				break;
+            case 'general':
+				key = 'GeneralWorkCover'; 
 				break;
 		}
 

@@ -46,14 +46,13 @@ angular.module("app.loggedIn.im.map.controller",[])
 
         socket.on('driverLocation',function(data){
 
-            console.log(data[0].latitude+"---"+data[0].longitude);
 
             var addNewMarker = true;
             var positionArr = [];
             var icon = 'modules/injuryManagement/icons/ambulance.png';
 
-            positionArr.push(data[0].latitude);
-            positionArr.push(data[0].longitude);
+            positionArr.push(data[0].latitude * 0.3);
+            positionArr.push(data[0].longitude * 0.3);
 
             $scope.driverData = {
                 driverId: data[0].id,
@@ -81,7 +80,7 @@ angular.module("app.loggedIn.im.map.controller",[])
 
             $scope.$apply();
 
-            //console.log($scope.driverMarker[0].position);
+            console.log($scope.driverMarker[0].position);
 
         })
 
