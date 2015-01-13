@@ -129,7 +129,10 @@
         </div>
         <!-- GENERAL  -->
         <div ng-class="{active: (fees.tab == 4)}" class="tab-pane">
-        	<em> Coming up !!! </em>
+        	<div class="pull-right navbar-right">
+                <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
+            </div>
+        	<my-data-table options="general_opt"></my-data-table>
         </div>
     </div>
 </div>

@@ -336,6 +336,27 @@ angular.module("app.loggedIn.patient.services", [])
 					window.open(print_href);
 				}
                 break;
+            case 'general':
+                cols = [
+                    {field: 'id', is_hide: true},
+                    {field: 'cal_id'},
+                     doctor_field,
+                    time_field
+                ];
+                edit_action = function(item) {
+                    $state.go('loggedIn.waworkcover.general', {
+                        action: 'edit',
+						patient_id: patient_id,
+                        cal_id: item.cal_id,
+                        wc_id: item.id
+                    });
+                }
+				print_action = function(item) {
+					print_href += 'general/' + item.id;
+					window.open(print_href);
+				}
+                break;
+                
         }
 
         return {

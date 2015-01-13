@@ -4,5 +4,6 @@
 angular.module('app.loggedIn.waworkcover.directive', [
     'app.loggedIn.waworkcover.first.directive',
     'app.loggedIn.waworkcover.progress.directive',
-    'app.loggedIn.waworkcover.final.directive'
+    'app.loggedIn.waworkcover.final.directive',
+    'app.loggedIn.waworkcover.general.directive'
 ]);

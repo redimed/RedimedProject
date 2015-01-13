@@ -670,3 +670,39 @@ angular.module("app.model", [])
 })
 
 //END SCRIPT REFERRAL MODEL
+
+//GENERAL ASSESSMENT
+.value('GeneralWorkCoverModel', {
+	cal_id: '',
+	patient_id: null,
+	injuryDate: null,
+	Symptoms: '',
+	vitalSigns: '',
+	medicalHistory: '',
+	medications: '',
+	allergies: '',
+	symptomology: '',
+	examiantion: '',
+	diffDiagnosis: '',
+	medication: '',
+	physio: '',
+	dutyrestriction: '',
+	recommendations: '',
+	followup: '',
+	referrals: '',
+	telehealth_id: null,
+	Name: '',
+	Address: '',
+	Email: '',
+	registionNo: '',
+	Phone: '',
+	examDate: null,
+	signature: '',
+	reportlocal: '',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	AssessmentName: '',
+})
+//END GENERAL ASSESSMENT

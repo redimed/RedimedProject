@@ -85,6 +85,23 @@ angular.module('app.loggedIn.waworkcover.service', [])
             var funcApi = mdtApi.one('wa/workcover/final/print/' + id);
             return funcApi.get();
         };
+    
+        mdtService.generaladd = function(postData){
+            var funcApi = mdtApi.all('wa/workcover/general/add');
+            return funcApi.post(postData);
+        }
+        
+        mdtService.generaledit = function (id, postData) {
+            var funcApi = mdtApi.all('wa/workcover/general/edit');
+            return funcApi.post({
+                edit_data: postData,
+                edit_id: id
+            });
+        };
+        mdtService.generaldetail= function (wc_id) {
+            var funcApi = mdtApi.all('wa/workcover/general/detail');
+            return funcApi.post({'ID':wc_id});
+        };
 
         return mdtService;
     });
