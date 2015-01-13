@@ -2,10 +2,13 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CertificateReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="f828c8c1-0693-4bf1-9703-ef8317bc2333">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="525"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -52,16 +55,11 @@
 	g.`followup`,
 	g.`referrals`,
 
-	CONCAT(
-		ifnull(d.`First_name`,''),' ',
-		ifnull(d.`Middle_name`,''),' ',
-		IFnull(d.`Sur_name`,'')
-	)
-	as doctor_fullname,
+	d.`NAME` as doctor_fullname,
 	d.`Address`,
 	d.`Phone` as doctor_phone,
-	d.`Medical_Registration_no`,
-	d.`Signature`,
+	d.`Medical_Reg_no`,
+	SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign,
 
 	g.`examDate`
 
@@ -111,7 +109,7 @@ where g.`id`= $P{id}]]>
 	<field name="Phone" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Medicare_no" class="java.lang.Integer">
+	<field name="Medicare_no" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="injuryDate" class="java.sql.Timestamp">
@@ -164,23 +162,15 @@ where g.`id`= $P{id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="doctor_phone" class="java.lang.String"/>
-	<field name="Medical_Registration_no" class="java.lang.Integer">
+	<field name="Medical_Reg_no" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Signature" class="java.lang.Object">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="docSign" class="java.lang.String"/>
 	<field name="examDate" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="Service" class="java.lang.String">
-		<variableExpression><![CDATA[($F{th_telehealth_form_isTraumaConsult} != null && $F{th_telehealth_form_isTraumaConsult}.intValue() == 1 ? "Trauma Consult, " : "") +
-($F{th_telehealth_form_isFirstMedicalCertificate} != null && $F{th_telehealth_form_isFirstMedicalCertificate}.intValue() == 1 ? "First Medical Certificate, " : "") +
-($F{th_telehealth_form_isFollowupInPerth} != null && $F{th_telehealth_form_isFollowupInPerth}.intValue() == 1 ? "Follow up in Perth, " : "") +
-($F{th_telehealth_form_isFitnessForWork} != null && $F{th_telehealth_form_isFitnessForWork}.intValue() == 1 ? "Fitness for work, " : "") +
-($F{th_telehealth_form_isInitialTelehealthConsult} != null && $F{th_telehealth_form_isInitialTelehealthConsult}.intValue() == 1 ? "Initial Telehealth Consult, " : "") +
-($F{th_telehealth_form_isProgressTelehealthConsult} != null && $F{th_telehealth_form_isProgressTelehealthConsult}.intValue() == 1 ? "Progress Telehealth Consult, " : "") +
-($F{th_telehealth_form_isTransportAirPort} != null && $F{th_telehealth_form_isTransportAirPort}.intValue() == 1 ? "Transport to/from Airport" : "")]]></variableExpression>
+		<variableExpression><![CDATA[]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -523,10 +513,6 @@ where g.`id`= $P{id}]]>
 				<textFieldExpression><![CDATA[$F{Work_phone}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="436" y="151" width="112" height="13" uuid="201e0dbb-83c6-471a-8a5c-cbf2f9a630fe"/>
-				<textFieldExpression><![CDATA[$F{th_telehealth_form_Mobile_phone} != null ? $F{th_telehealth_form_Mobile_phone} : ($F{th_telehealth_form_Tel} != null ? $F{th_telehealth_form_Tel} : "")]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement positionType="Float" x="436" y="164" width="112" height="14" uuid="e217a428-34bf-4be7-b591-f36959467990"/>
 				<textFieldExpression><![CDATA[$F{insurer_name}]]></textFieldExpression>
 			</textField>
@@ -560,7 +546,7 @@ where g.`id`= $P{id}]]>
 			</textField>
 			<image>
 				<reportElement positionType="Float" x="377" y="565" width="171" height="44" uuid="481bdd48-6fc7-48cf-a062-133b65f7ccd0"/>
-				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{Signature}.getBytes("UTF-8"))))]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{docSign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="152" y="376" width="396" height="13" uuid="10dcdd8a-a35b-4a66-858d-c5d09bf73c72"/>
@@ -592,7 +578,7 @@ where g.`id`= $P{id}]]>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="407" y="535" width="141" height="13" uuid="b4bcf132-c731-4465-b90f-4be20b44ae95"/>
-				<textFieldExpression><![CDATA[$F{Medical_Registration_no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Medical_Reg_no}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="152" y="515" width="396" height="13" uuid="e1f7dda4-9826-4b5b-ade3-0fc35fbcbab5"/>
@@ -619,54 +605,16 @@ where g.`id`= $P{id}]]>
 				<textFieldExpression><![CDATA[$F{medication}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="436" y="208" width="112" height="13" uuid="67102caa-e0cc-4cf3-9c95-27b90c0ea336"/>
-				<textFieldExpression><![CDATA[$F{th_telehealth_form_Position_no} != null ? $F{th_telehealth_form_Position_no} : ""]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement positionType="Float" x="150" y="235" width="177" height="13" uuid="a6fdede6-1075-484a-a196-851b0d29968c"/>
 				<textFieldExpression><![CDATA[$F{Medicare_no}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" x="148" y="207" width="179" height="14" uuid="37c514f3-9879-4f18-a713-d7a38c9497e0"/>
-				<textFieldExpression><![CDATA[$F{th_telehealth_form_Mem_no} != null ? $F{th_telehealth_form_Mem_no} : ""]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" x="436" y="236" width="112" height="13" uuid="35c7de99-ccf8-4b25-9881-406f7f71ad51"/>
-				<textFieldExpression><![CDATA[$F{th_telehealth_form_Veteran_affairs_no} != null ? $F{th_telehealth_form_Veteran_affairs_no} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="150" y="137" width="177" height="13" uuid="cb21e3fb-abba-466b-98be-a541a31dab22"/>
 				<textFieldExpression><![CDATA[$F{Mobile}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="150" y="150" width="177" height="14" uuid="fd30faa2-6470-4cbd-acab-024902ded62d"/>
-				<textFieldExpression><![CDATA[$F]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" x="150" y="221" width="177" height="13" uuid="17d5dadb-b92e-4986-a33d-38169a54b96a"/>
-				<textFieldExpression><![CDATA[$F{th_telehealth_form_Exp} != null ? $F{th_telehealth_form_Exp} : ""]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" x="436" y="222" width="112" height="13" uuid="332521c5-d745-42ff-ad56-c169765b1426"/>
-				<textFieldExpression><![CDATA[$F{th_telehealth_form_Health_fund_name} != null ? $F{th_telehealth_form_Health_fund_name} : ""]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" x="436" y="80" width="112" height="13" uuid="8f2b4875-f24e-403a-b34f-04f77322828e"/>
-				<textFieldExpression><![CDATA[$F{th_telehealth_form_isWorkRelated} != null && $F{th_telehealth_form_isWorkRelated}.intValue() == 0 ? "Work related" : ($F{th_telehealth_form_isWorkRelated} != null && $F{th_telehealth_form_isWorkRelated}.intValue() == 1 ? "Non work related" : ($F{th_telehealth_form_isWorkRelated} != null && $F{th_telehealth_form_isWorkRelated}.intValue() == 2 ? "Not sure" : ""))]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement positionType="Float" x="152" y="95" width="175" height="13" uuid="4528d59e-9c3b-4dc4-8cf9-79f3e1d6a742"/>
 				<textFieldExpression><![CDATA[$F{patient_fullName}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement positionType="Float" mode="Transparent" x="150" y="80" width="177" height="13" uuid="4fcfbbad-8350-4d2f-8dba-5a8ea1a56821"/>
-				<textFieldExpression><![CDATA[($F{th_telehealth_form_isTraumaConsult} != null && $F{th_telehealth_form_isTraumaConsult}.intValue() == 1 ? "Trauma Consult, " : "") +
-($F{th_telehealth_form_isFirstMedicalCertificate} != null && $F{th_telehealth_form_isFirstMedicalCertificate}.intValue() == 1 ? "First Medical Certificate, " : "") +
-($F{th_telehealth_form_isFollowupInPerth} != null && $F{th_telehealth_form_isFollowupInPerth}.intValue() == 1 ? "Follow up in Perth, " : "") +
-($F{th_telehealth_form_isFitnessForWork} != null && $F{th_telehealth_form_isFitnessForWork}.intValue() == 1 ? "Fitness for work, " : "") +
-($F{th_telehealth_form_isInitialTelehealthConsult} != null && $F{th_telehealth_form_isInitialTelehealthConsult}.intValue() == 1 ? "Initial Telehealth Consult, " : "") +
-($F{th_telehealth_form_isProgressTelehealthConsult} != null && $F{th_telehealth_form_isProgressTelehealthConsult}.intValue() == 1 ? "Progress Telehealth Consult, " : "") +
-($F{th_telehealth_form_isTransportAirPort} != null && $F{th_telehealth_form_isTransportAirPort}.intValue() == 1 ? "Transport to/from Airport" : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="152" y="299" width="396" height="13" uuid="c81f593e-c758-4879-b770-d6f482ca549e"/>
@@ -674,7 +622,7 @@ where g.`id`= $P{id}]]>
 			</textField>
 			<image>
 				<reportElement x="13" y="6" width="193" height="50" uuid="31d76e07-d605-4020-9615-5fa714b553a9"/>
-				<imageExpression><![CDATA["image001.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path} + "image001.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement positionType="Float" x="0" y="623" width="555" height="27" uuid="dfd1aec9-27d6-48c0-8add-2f7cc031d6c3"/>
