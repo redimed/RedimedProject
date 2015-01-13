@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonFCAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1453719-11ad-40a0-b0d5-bfa64cf77775">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2545"/>
+	<property name="ireport.y" value="4266"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
@@ -132,11 +132,13 @@
      gorgon_doc_fca.`LComment` AS gorgon_doc_fca_LComment,
      doctors.`NAME` AS gorgon_doc_fca_NAME,
      SUBSTRING_INDEX(doctors.`Signature`, ',', -1) AS gorgon_doc_fca_Signature,
+     redimedsites.`Site_name` AS gorgon_doc_fca_LPosition,
      cln_patients.`Sex` AS gorgon_doc_fca_sex
 FROM
      `gorgon_doc_fca` gorgon_doc_fca
      INNER JOIN `cln_patients` cln_patients ON cln_patients.`Patient_id` = gorgon_doc_fca.`patientId`
      INNER JOIN `doctors` doctors ON doctors.`doctor_id` = gorgon_doc_fca.`DocId`
+     INNER JOIN `redimedsites` redimedsites ON redimedsites.`id` = gorgon_doc_fca.`LPosition`
 WHERE
      gorgon_doc_fca.`id` = $P{id}]]>
 	</queryString>
@@ -261,6 +263,7 @@ WHERE
 	<field name="gorgon_doc_fca_LComment" class="java.lang.String"/>
 	<field name="gorgon_doc_fca_NAME" class="java.lang.String"/>
 	<field name="gorgon_doc_fca_Signature" class="java.lang.String"/>
+	<field name="gorgon_doc_fca_LPosition" class="java.lang.String"/>
 	<field name="gorgon_doc_fca_sex" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -6602,6 +6605,10 @@ Barrow Island LNG Plant ]]></text>
 					<printWhenExpression><![CDATA[$F{gorgon_doc_fca_FCAToTal} != null && $F{gorgon_doc_fca_FCAToTal}.floatValue() >= 90 && $F{gorgon_doc_fca_FCAToTal}.floatValue() <= 100 ? true : false]]></printWhenExpression>
 				</reportElement>
 			</ellipse>
+			<textField>
+				<reportElement x="336" y="698" width="200" height="15" uuid="b61d0ddc-7dd4-4ef1-bb69-cdea26d2ad3a"/>
+				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_LPosition}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="724">
 			<rectangle>
