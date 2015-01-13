@@ -99,6 +99,10 @@ angular.module('app.loggedIn.waworkcover.general.directive',[])
                                 if(result.status === 'success'){
                                     toastr.success('Add successfully!','Success!');
                                     //GET BACK TO THE LIST
+                                    $state.go('loggedIn.patient.workcover',{
+                                        patient_id: scope.params.patientInfo,
+                                        cal_id: scope.params.apptInfo
+                                    })
                                 }
                                 else{
                                     toastr.error('Unexpected error!','Error!');
