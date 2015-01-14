@@ -33,6 +33,7 @@ angular.module('app.loggedIn.mdtclaim.search.directive', []).directive('mdtclaim
 					]
 				}
 			}//end init
+			
 			var loadList = function(){
 				mdtClaimService.search(scope.params).then(function(response){
 					if(response.status==='error') toastr.error('Cannot get Seacrh', 'Error')

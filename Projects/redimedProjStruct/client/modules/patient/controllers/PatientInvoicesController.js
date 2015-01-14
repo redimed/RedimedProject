@@ -4,7 +4,6 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
 
 
 	$scope.invoiceClass = function(item) {
-		console.log(item)
 		if(item.STATUS == 'approach')
 			return 'warning';
 		if(item.STATUS == 'done')

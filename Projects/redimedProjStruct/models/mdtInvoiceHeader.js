@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes){
 			autoIncrement: true
 		},
 		cal_id: DataTypes.INTEGER(11),
+		claim_id: DataTypes.INTEGER(11),
 		Patient_id: DataTypes.INTEGER(11),
 		Company_id: DataTypes.INTEGER(11),
 		Insurer_id: DataTypes.INTEGER(11),
@@ -33,6 +34,48 @@ module.exports = function(sequelize, DataTypes){
 		tableName: 'cln_invoice_header',
 		createdAt: 'CREATION_DATE',
 		updatedAt: 'LAST_UPDATE_DATE',
+		hooks: {
+			beforeUpdate: function( header, fn ) {
+				if(header.claim_id) {
+					header.getClaim().success(function(claim){
+						if(!claim) {
+							fn();
+							return;
+						}
+
+						header.set('Insurer_id', claim.insurer_site);
+						fn();
+					}).error(function(err){
+						console.log(err)
+						fn();
+					})
+				} else {
+					fn();
+				}
+			},
+			afterUpdate: function( header, fn ) {
+				console.log('after update')
+				var updateData = {Claim_id : header.claim_id};
+				var PatientClaim = sequelize.daoFactoryManager.getDAO('mdtPatientClaim', { attribute: 'name' })
+				PatientClaim.findOrCreate(
+					{Patient_id: header.Patient_id, CAL_ID: header.cal_id}, 
+					updateData
+				).success(function(pclaim, created){
+					if(created) {
+						fn();
+						return;
+					}
+					return pclaim.updateAttributes(updateData)
+				})
+				.then(function(){
+					fn();
+				})
+				.error(function(err){
+					console.log(err)
+					fn(err);
+				})
+			}
+	    },
 		classMethods: {
             associate: function(models) {
 
@@ -46,6 +89,10 @@ module.exports = function(sequelize, DataTypes){
 
                 mdtInvoiceHeader.belongsTo(models.Company, { 
                 	as: 'Company', foreignKey: 'Company_id'
+                });
+
+                mdtInvoiceHeader.belongsTo(models.Claim, { 
+                	as: 'Claim', foreignKey: 'claim_id'
                 });
 
                 mdtInvoiceHeader.belongsTo(models.Insurer, { 

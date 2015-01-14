@@ -51,15 +51,21 @@ module.exports = {
 		var inc_model = inc_common_model.concat([
 			{ 
 				model: db.Department , as: 'Department',
+				attributes: ['CLINICAL_DEPT_NAME']
 			},
 			{
-				model: db.Patient, as: 'Patient'
+				model: db.Patient, as: 'Patient',
+				attributes: ['Title', 'Sur_name', 'First_name', 'Middle_name']
+			},
+			{
+				model: db.Claim, as: 'Claim', attributes: ['Injury_name']
 			},
 			{ 
 				model: db.mdtInvoiceLine , as: 'Lines',
 				include:   [
 					{ 
-						model: db.InvItem , as: 'InvItem'
+						model: db.InvItem , as: 'InvItem',
+						attributes: ['ITEM_CODE']
 					},
 				]
 			}
@@ -74,6 +80,27 @@ module.exports = {
 			console.log(error)
 			res.json(500, {"status": "error", "message": error});
 		});
+	},
+	postUpdate: function(req, res) {
+	 	var postData = req.body.data;	
+        var header_id =  req.body.header_id;
+
+        console.log(postData)
+
+        db.mdtInvoiceHeader.find({
+        	where: {header_id: header_id},
+        }).then(function(header){
+        	if(!header) {
+        		res.json(500, {"status": "error", "message": 'Missing Header' });
+        		return;
+        	}
+
+            return header.updateAttributes(postData);
+        }).then(function (data) {
+	        res.json({"status": "success", "data": data});
+	    }).error(function (error) {
+            res.json(500, {"status": "error", "message": error });
+        })	
 	},
 	postSave : function(req, res) {
 		var header_id = req.body.header_id;	
@@ -109,6 +136,5 @@ module.exports = {
 			console.log(error)
 			res.json(500, {"status": "error", "message": error});
 		});
-
 	}
 }

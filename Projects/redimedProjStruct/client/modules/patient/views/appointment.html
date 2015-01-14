@@ -23,28 +23,11 @@
 			Patient Info
 		</div>
 
-		<div class="pull-right navbar-right">
-            <div class="btn-group" dropdown="">
-
-              <button style="margin-right: 0;" type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-calendar"></i> <span class="caret"></span>
-              </button>
-
-              <ul class="dropdown-menu" role="menu">
-                	<li ng-repeat="appt in list_appt" 
-						ng-class="{'list-group-item-success': appt.CAL_ID == cal_id}" 
-						ng-click="changeAppt(appt)" >
-						<a>
-						<strong>{{appt.DATE}}</strong> {{appt.FROM_TIME}} - {{appt.TO_TIME}} <span class="badge" ng-class="classAppt(appt)"  style="position: relative; right: -5px"> {{appt.APP_TYPE}} </span>
-						</a>
-					</li>
-              </ul>
-            </div>
-        </div>
+		
 	</div>
 	<div class="portlet-body" style="padding-top: 25px;">
 		<!-- TITLE -->
-	    <div class="col-md-4 col-sm-6 col-xs-12">
+	    <div class="col-md-2 col-sm-6 col-xs-12">
 	        <span class="field">
 	            <label for="title">Title</label>
 	            <select ng-options="title.id as title.name for title in options.titles" disabled
@@ -54,7 +37,7 @@
 	    </div>
 	    <!-- END TITLE -->
 	    <!-- FIRST NAME -->
-	    <div class="col-md-4 col-sm-6 col-xs-12">
+	    <div class="col-md-2 col-sm-6 col-xs-12">
 	        <span class="field">
 	            <label for="fname">First name</label>
 	            <input required type="text" id="fname" float-label disabled
@@ -63,7 +46,7 @@
 	    </div>
 	    <!-- END FIRST NAME -->
 	    <!-- SUR NAME -->
-	    <div class="col-md-4 col-sm-6 col-xs-12">
+	    <div class="col-md-2 col-sm-6 col-xs-12">
 	        <span class="field">
 	            <label for="sname">Sur name</label>
 	            <input type="text" id="sname" disabled
@@ -72,10 +55,8 @@
 	    </div>
 	    <!-- END SURNAME NAME -->
 
-	    <div class="break-row"></div>
-
 	    <!-- MIDDLE NAME -->
-	    <div class="col-md-4 col-sm-6 col-xs-12">
+	    <div class="col-md-2 col-sm-6 col-xs-12">
 	        <span class="field">
 	            <label for="mname">Middle name</label>
 	            <input type="text" id="mname" disabled 
@@ -84,7 +65,7 @@
 	    </div>
 	    <!-- END MIDDLE NAME -->
 	    <!-- KNOWN AS -->
-	    <div class="col-md-4 col-sm-6 col-xs-12">
+	    <div class="col-md-2 col-sm-6 col-xs-12">
 	        <span class="field">
 	            <label for="knownas">Known as</label>
 	            <input type="text" id="knownas" disabled
@@ -93,7 +74,7 @@
 	    </div>
 	    <!-- END KNOWN AS -->
 	    <!-- BIRTHDAY -->
-	    <div class="col-md-4 col-sm-6 col-xs-12">
+	    <div class="col-md-2 col-sm-6 col-xs-12">
 	        <span class="field">
 	            <label for="dob">Date of Birth</label>
 	            <input disabled ui-date="{dateFormat: 'dd/mm/yy'}" id="dob" placeholder="Birthday" name="dob"
@@ -113,6 +94,24 @@
 			<i class="fa fa-bars"></i>
 			Appointment Info
 		</div>
+		<div class="pull-right navbar-right">
+            <div class="btn-group" dropdown="">
+
+              <button style="margin-right: 0;" type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-calendar"></i> <span class="caret"></span>
+              </button>
+
+              <ul class="dropdown-menu" role="menu">
+                	<li ng-repeat="appt in list_appt" 
+						ng-class="{'list-group-item-success': appt.CAL_ID == cal_id}" 
+						ng-click="changeAppt(appt)" >
+						<a>
+						<strong>{{appt.DATE}}</strong> {{appt.FROM_TIME}} - {{appt.TO_TIME}} <span class="badge" ng-class="classAppt(appt)"  style="position: relative; right: -5px"> {{appt.APP_TYPE}} </span>
+						</a>
+					</li>
+              </ul>
+            </div>
+        </div>
 	</div>
 	<div class="portlet-body" style="padding-top: 25px;">
 		<mdt-appointment-detail params="appt_params" options="options"></mdt-appointment-detail>
