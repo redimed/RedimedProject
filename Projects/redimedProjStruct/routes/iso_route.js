@@ -18,8 +18,13 @@ app.post('/api/iso/iso-tree-dir/get-tree-dir',isoTreeDirController.getTreeDir);
 app.post('/api/iso/iso-tree-dir/create-folder',isoController.getUserPermission,isoTreeDirController.createFolder);
 app.post('/api/iso/iso-tree-dir/delete-node',isoController.getUserPermission,isoTreeDirController.deleteNode);
 app.post('/api/iso/iso-tree-dir/restore-node',isoController.getUserPermission,isoTreeDirController.restoreNode);
-app.post('/api/iso/iso-tree-dir/handlingDownloadFolder',isoTreeDirController.handlingDownloadFolder);
-app.get('/api/iso/iso-tree-dir/dowloadFolder',isoTreeDirController.dowloadFolder);
+app.post('/api/iso/iso-tree-dir/handling-clone-folder',isoController.getUserPermission,isoTreeDirController.handlingCloneFolder);
+app.get('/api/iso/iso-tree-dir/clone-folder',isoController.getUserPermission,isoTreeDirController.cloneFolder);
+app.post('/api/iso/iso-tree-dir/getFullVersionDoccument',isoController.getUserPermission,isoTreeDirController.getFullVersionDoccument);
+app.post('/api/iso/iso-tree-dir/getFullCheckinDoccument',isoController.getUserPermission,isoTreeDirController.getFullCheckinDoccument);
+app.get('/api/iso/iso-tree-dir/handlingDownloadVersionDocument',isoController.getUserPermission,isoTreeDirController.handlingDownloadVersionDocument);
+
+
 
 app.post('/api/iso/iso-tree-dir/create-document-with-file',
 	multipartMiddleware,
@@ -41,8 +46,6 @@ app.post('/api/iso/iso-check-out-in/check-in-document',multipartMiddleware,isoCo
 app.post('/api/iso/iso-check-out-in/submitDocument',isoCheckInOutController.submitDocument);
 app.post('/api/iso/iso-check-out-in/approvedAndReject',isoCheckInOutController.approvedAndReject);
 app.get('/api/iso/iso-check-out-in/selectIdFromCheckOutIn',isoCheckInOutController.selectIdFromCheckOutIn);
-
-
 app.get('/api/iso/iso-check-out-in/downloadNewestVersionDocument',isoController.getUserPermission,isoCheckInOutController.downloadNewestVersionDocument);
 
 

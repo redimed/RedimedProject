@@ -68,6 +68,10 @@ module.exports =
         }
     },
 
+    nodeType:{
+        folder:'FOLDER',
+        document:'DOC'
+    },
 
     submitStatus:{
         pending:'PENDING',

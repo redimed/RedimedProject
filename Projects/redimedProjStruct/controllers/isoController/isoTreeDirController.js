@@ -8,6 +8,23 @@ var isoCheckInOutController=require('./isoCheckInOutController');
 var cookieParser = require('cookie-parser');
 var Archiver = require('Archiver');
 var rimraf = require('rimraf');
+
+
+function cleanTempFolder(path)
+{
+    rimraf(path, function (err) 
+    {
+        if (err)
+        {
+            isoUtil.exlog('clean temp folder error',err);
+        }
+        else
+        {
+            isoUtil.exlog('clean temp folder success');
+        }
+    });
+}
+
 module.exports =
 {
     /**
@@ -690,95 +707,178 @@ module.exports =
             isoUtil.exlog(query.sql);
         }); 
     },
-    
-    /**Giap
-     * Download Folder
-     * @param req
-     * @param res
+
+    /**
+     * xu ly download folder
+     * tannv.dts@gmail.com
      */
-    handlingDownloadFolder : function(req,res){
-        var data = req.body;
-        var userInfo=JSON.parse(req.cookies.userInfo);//get id user login
-        var idFolder = userInfo.user_name+' '+ moment().format("X SSS"); //create id folder name
-        
-        //Giap SQL
-        // var sql =
-        //     "SELECT dir.`NODE_NAME` , oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`FILE_NAME` FROM `iso_check_out_in` oi "+
-        //     "INNER JOIN `iso_tree_dir` dir ON dir.`NODE_ID` = oi.`NODE_ID` "+
-        //     "WHERE oi.`NODE_ID` = ? "+
-        //     "ORDER BY  oi.`VERSION_NO` DESC "+
-        //     "LIMIT 1 "   ;
+    handlingCloneFolder:function(req,res)
+    {
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        {
+            res.json({status:'fail'});
+            return;
+        }
 
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        var listNodeInfoTemp=isoUtil.checkData(req.body.listNode)?req.body.listNode:[];
+        var listNodeId=[];
+        for(var i=0;i<listNodeInfoTemp.length;i++)
+        {
+            listNodeId.push(listNodeInfoTemp[i].NODE_ID);
+        }
+        var listNodeInfo={};
+        for(var i=0;i<listNodeInfoTemp.length;i++)
+        {
+            listNodeInfo[listNodeInfoTemp[i].NODE_ID]=listNodeInfoTemp[i];
+        }
+        if(!isoUtil.checkListData([nodeId,userId]))
+        {
+            isoUtil.exlog("loi data roi");
+            res.json({status:'fail'});
+            return;
+        }
+        var folderTopName=listNodeInfoTemp[0].NODE_NAME;
+        var folderTopPathLength=listNodeInfoTemp[0].relativePath.length;
+        var downloadPackName = userInfo.user_name+' clone '+folderTopName+' '+ moment().format("DD-MM-YYYY SSS");
+        var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+        var zipPath= prefix+'temp\\'+downloadPackName;
         var sql=
-            " SELECT dir.`NODE_NAME` , oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`FILE_NAME` FROM `iso_check_out_in` oi   "+
-            " INNER JOIN `iso_tree_dir` dir ON dir.`CURRENT_VERSION_ID` = oi.`ID`                                "+
-            " WHERE dir.`NODE_ID`=?                                                                              "+
-            " LIMIT 1                                                                                            ";
-        var sum = data.data[0].relativePath.length;
-        var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));//get link
-        data.data.forEach(function(item){
-
-            var NewPathSubstring = item.relativePath.substring(sum);
-            var targetFolder=prefix+'temp\\'+idFolder+'\\'+data.data[0].NODE_NAME+NewPathSubstring;
-            mkdirp(targetFolder, function(err)
+            " SELECT treeDir.`NODE_ID`,treeDir.`NODE_TYPE`,treeDir.`NODE_NAME`,outin.ID,outin.`CHECK_IN_FOLDER_STORAGE`,outin.`FILE_NAME`  "+
+            " FROM `iso_tree_dir` treeDir                                                                                         "+
+            " LEFT JOIN `iso_check_out_in` outin ON treeDir.`CURRENT_VERSION_ID`=outin.`ID`                                       "+
+            " WHERE treeDir.`NODE_ID` IN (?)                                                                                      ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[listNodeId],function(err,rows)
             {
-                if(!err)
+                if(err)
                 {
-                    //isoUtil.exlog("create folder success!");
+                    res.json({status:'fail'});
                 }
                 else
                 {
-                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> create folder fail!");
-                    res.json({status:'fail',msg:err});
+                    if(rows.length>0)
+                    {
+                        //tao node
+                        function createNode(index)
+                        {
+                            var item=rows[index];
+                            var nodeInfo=listNodeInfo[item.NODE_ID];
+                            var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+                            var nodePath = folderTopName+'\\'+listNodeInfo[item.NODE_ID].relativePath.substring(folderTopPathLength);
+                            var folderWillCreate=prefix+'temp\\'+downloadPackName+'\\'+nodePath;
+                            
+                            mkdirp(folderWillCreate, function(err)
+                            {
+                                if(!err)
+                                {
+                                    if(item.NODE_TYPE==isoUtil.nodeType.document)
+                                    {
+                                        if (isoUtil.checkData(item.ID))
+                                        {
+                                            //Neu da release version
+                                            //isoUtil.exlog("create folder success!");
+                                            var filePathStore = prefix+nodeInfo.relativePath+'\\CHECK_IN\\'+item.CHECK_IN_FOLDER_STORAGE+'\\'+item.FILE_NAME;
+                                            var filePathTarget = prefix+'temp\\'+'\\'+downloadPackName+'\\'+nodePath+'\\'+item.FILE_NAME;
+                                            //linkZip = prefix+'temp\\'+idFolder;
+                                            fs.copy(filePathStore,filePathTarget,function(err)
+                                            {
+                                                if(err)
+                                                {
+                                                    cleanTempFolder(zipPath);
+                                                    res.json({status:'fail'});
+                                                }
+                                                else
+                                                {
+                                                    if(index<rows.length-1)
+                                                    {
+                                                        createNode(index+1);
+                                                    }
+                                                    else
+                                                    {
+                                                        res.json({status:'success',data:{downloadPackName:downloadPackName}});
+                                                    }
+                                                }
+                                            })
+                                        }
+                                        else
+                                        {
+                                            //Neu chua 
+                                            if(index<rows.length-1)
+                                            {
+                                                createNode(index+1);
+                                            }
+                                            else
+                                            {
+                                                res.json({status:'success',data:{downloadPackName:downloadPackName}});
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(index<rows.length-1)
+                                        {
+                                            createNode(index+1);
+                                        }
+                                        else
+                                        {
+                                            res.json({status:'success',data:{zipPath:zipPath}});
+                                        }
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    cleanTempFolder(zipPath);
+                                    res.json({status:'fail'});
+                                }
+                            });
+                            
+                        } 
+                        createNode(0);                       
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
                 }
             });
-            if(item.NODE_TYPE=='DOC'){
-                var newPath = '';
-                var copyPath = '';
-                var linkZip = '';
-                req.getConnection(function(err,connection)
-                {
-                    var query = connection.query(sql,item.NODE_ID,function(err,path)
-                    {
-                        if(err)
-                        {
-                            res.json({status:'fail'});
-                        }
-                        else
-                        {
-                            path.forEach(function(item1){
-                                newPath = prefix+item.relativePath+'\\CHECK_IN\\'+item1.CHECK_IN_FOLDER_STORAGE+'\\'+item1.FILE_NAME;
-                                var newPathNew = newPath.replace('\\\\',"\\");
-                                copyPath = prefix+'temp\\'+idFolder+'\\'+data.data[0].NODE_NAME+NewPathSubstring+'\\'+item1.FILE_NAME;
-                                linkZip = prefix+'temp\\'+idFolder;
-                               fs.copy(newPath,copyPath,function(err){
-                                    if(err){
-                                      //  isoUtil.exlog(err)
-                                    }else{
-                                        //isoUtil.exlog('Success')
-                                    }
-                               })
-                            })
-                            res.json({status:'success',data:linkZip});
-                        }
-                    });
-                });
-            }
-        })
-    },
-    //download document
-    dowloadFolder:function(req,res){
-        var data = req.query;
-        isoUtil.exlog(data);
-        var link = data.path+'.zip';
-        var doc = data.path;
+        });
 
-        var output = fs.createWriteStream(data.path+'.zip');
+    },
+
+    /**
+     * Download folder zip
+     * Vo Duc Giap
+     */
+    cloneFolder:function(req,res)
+    {
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        var downloadPackName=isoUtil.checkData(req.query.downloadPackName)?req.query.downloadPackName:'';
+        var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+        var zipPath= prefix+'temp\\'+downloadPackName;
+        var outputPath=zipPath+'.zip';
+
+        if(!isoUtil.checkListData([downloadPackName]))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
+        var output = fs.createWriteStream(outputPath);
         var archive = Archiver('zip');
 
-        output.on('close', function() {
+        output.on('close', function() 
+        {
             console.log('done')
-            res.download(link,function(err,data){
+            res.download(outputPath,function(err,data){
                 if (err)
                 {
                     //throw err;
@@ -787,7 +887,8 @@ module.exports =
                 }
                 else
                 {
-                    fs.unlink(link, function (err) {
+                    fs.unlink(outputPath, function (err) 
+                    {
                         if (err)
                         {
                             //throw err;
@@ -798,7 +899,7 @@ module.exports =
                         {
                             console.log('successfully deleted');
                             res.json({status:"success"});
-                            rimraf(doc, function (err) {
+                            rimraf(zipPath, function (err) {
                                 if (err)
                                 {
                                     console.log(err);
@@ -817,19 +918,173 @@ module.exports =
                 }
             });
         });
+
         archive.on('error', function(err) { throw err });
 
         archive.pipe(output);
 
         archive.bulk([
-            { expand: true, cwd: data.path, src: ['**/*'] }
+            { expand: true, cwd: zipPath, src: ['**/*'] }
         ]).finalize();
-
-
-
-
-
-    }
-
+    },
     
+    /**
+     * Get List Version of doucument
+     * Vo Duc Giap
+     */
+    getFullVersionDoccument:function(req,res){
+
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+
+        if(!isoUtil.checkListData([nodeId]))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        var sql = 
+            "SELECT oi.ID,oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`NODE_ID` FROM `iso_check_out_in` oi "+
+            "WHERE oi.`NODE_ID` = ? AND oi.`ISENABLE` = 1 AND oi.`VERSION_NO` IS NOT NULL";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,nodeId,function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    isoUtil.exlog(rows);;
+                    res.json({status:'success',data:rows});
+                }
+            });
+            isoUtil.exlog(query.sql);
+        }); 
+    },
+
+    /**
+     * Get list checkin of document
+     * Vo Duc Giap
+     */
+    getFullCheckinDoccument:function(req,res){
+
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        if(!isoUtil.checkListData([nodeId]))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        var sql = 
+            "SELECT oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`NODE_ID`, oi.`CHECK_IN_NO`,oi.`CHECK_IN_DATE` FROM `iso_check_out_in` oi "+
+            "WHERE oi.`NODE_ID` = ? AND check_in_no IS NOT NULL AND oi.`ISENABLE` = 1 ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,nodeId,function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    isoUtil.exlog(rows);;
+                    res.json({status:'success',data:rows});
+                }
+            });
+            isoUtil.exlog(query.sql);
+        }); 
+    },
+
+    /**
+     * Download checkin hoac version
+     * Vo Duc Giap
+     */
+    handlingDownloadVersionDocument: function(req,res){
+          if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        var nodeId=isoUtil.checkData(req.query.nodeId)?req.query.nodeId:'';
+        var FILE_NAME = isoUtil.checkData(req.query.FILE_NAME)?req.query.FILE_NAME:'';
+        var CHECK_IN_FOLDER_STORAGE = isoUtil.checkData(req.query.CHECK_IN_FOLDER_STORAGE)?req.query.CHECK_IN_FOLDER_STORAGE:'';
+        if(!isoUtil.checkListData([nodeId,FILE_NAME,CHECK_IN_FOLDER_STORAGE]))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        //get path
+          var sql =
+            " SELECT treeDir.`NODE_NAME`                                                      "+
+            " FROM `iso_node_ancestor` ancestor                                               "+
+            " INNER JOIN `iso_tree_dir` treeDir ON ancestor.`ANCESTOR_ID`=treeDir.`NODE_ID`   "+
+            " WHERE ancestor.`NODE_ID`=?   AND  ancestor.`ISENABLE`=1                         "+
+            " ORDER BY ancestor.`ANCESTOR_ID` ASC                                             ";
+            //get NodeName
+            var sql1 =
+            " SELECT treeDir.`NODE_NAME`                                                        "+
+            " FROM `iso_tree_dir` treeDir                                                       "+
+            " INNER JOIN `iso_check_out_in` outin ON treeDir.`CURRENT_VERSION_ID`=outin.`ID`    "+
+            " WHERE treeDir.`ISENABLE`=1 AND treeDir.`NODE_ID`=?                                ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,nodeId,function(err,data)
+            {
+                if(err)
+                {
+                    isoUtil.exlog(err);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    var Newpath = '';
+                    data.forEach(function(path){
+                        Newpath += '/'+path.NODE_NAME;
+                    });
+                    req.getConnection(function(err,connection)
+                    {
+                        var query = connection.query(sql1,nodeId,function(err,data)
+                        {
+                            if(err)
+                            {
+                                res.json({status:'fail'});
+                            }
+                            else
+                            {
+                                if(data.length>0)
+                                {
+                                    Newpath += '/'+data[0].NODE_NAME+'/CHECK_IN/'+CHECK_IN_FOLDER_STORAGE+'/'+FILE_NAME;
+                                   
+                                    res.download("."+Newpath,function(err,data) {
+                                        if (err) {
+                                            res.json({status: "fail"});
+                                        }else{
+                                            isoUtil.exlog(data);
+                                        }
+                                    })
+                                }
+                                else
+                                {
+                                    res.json({status:'fail'});
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    }    
 }

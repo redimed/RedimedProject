@@ -66,7 +66,9 @@ var isoConst={
             cancelSubmitDocument:true,
     		deleteDocument:true,
     		grantDocumentPermission:true,
-    		downloadNewestVersion:true
+    		downloadNewestVersion:true,
+            getFullVersionDoccument:true,
+            getFullCheckinDoccument:true
     	},
     	'1':{
     		createFolder:true,
@@ -78,7 +80,9 @@ var isoConst={
     		submitDocument:true,
             cancelSubmitDocument:true,
     		deleteDocument:true,
-    		downloadNewestVersion:true
+    		downloadNewestVersion:true,
+            getFullVersionDoccument:true,
+            getFullCheckinDoccument:true
     	},
     	'2':{
     		cloneToPC:true,
@@ -86,11 +90,15 @@ var isoConst={
     		checkIn:true,
     		submitDocument:true,
             cancelSubmitDocument:true,
-    		downloadNewestVersion:true
+    		downloadNewestVersion:true,
+            getFullVersionDoccument:true,
+            getFullCheckinDoccument:true
     	},
     	'3':{
     		cloneToPC:true,
-    		downloadNewestVersion:true
+    		downloadNewestVersion:true,
+            getFullVersionDoccument:true,
+            getFullCheckinDoccument:true
     	}
     },
 

@@ -50,6 +50,8 @@ angular.module('app.loggedIn.rlob.services',[])
         var rlobService = {};
         var api = Restangular.all('api');
 
+        rlobService.bookingInfoPaperless={id:null};
+
         //RL_TYPE
         //--------------------------------------------------------------------
         rlobService.getRlTypeList=function(sourceType)
@@ -128,6 +130,58 @@ angular.module('app.loggedIn.rlob.services',[])
         {
             var result=api.one('rlob/appointment-calendar/get-list-date-appointment-calendar');
             return result.get({RL_TYPE_ID:rlTypeId,Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,STARTDATE:startDate,ENDDATE:endDate,sourceType:bookingType});
+        }
+        //phanquocchien.c1109g@gmail.com
+        //addNewFromAms6
+        rlobService.addNewFromAms6=function(info)
+        {
+            var addAMS6=api.all('rlob/rl_form_ams6/addNewFormAms6');
+            return addAMS6.post({info:info});
+        } 
+        //phanquocchien.c1109g@gmail.com
+        //updateFromAms6
+        rlobService.updateFromAms6=function(info)
+        {
+            var addAMS6=api.all('rlob/rl_form_ams6/rl_form_ams6_update');
+            return addAMS6.post({info:info});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //get Booking Doctor Company
+        rlobService.getBookingDoctorCompany=function(BOOKING_ID)
+        {
+            var getBooking=api.one('rlob/rl_form_ams6/get_booking_doctor_company');
+            return getBooking.get({BOOKING_ID:BOOKING_ID});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //check Booking In FormAms6
+        rlobService.checkBookingInFormAms6=function(BOOKING_ID)
+        {
+            var getMAS6=api.one('rlob/rl_form_ams6/select_Item_rl_form_ams6_bookingid');
+            return getMAS6.get({BOOKING_ID:BOOKING_ID});
+        }
+        //phanquocchien.c1109g@gmail.com
+        //addNewFromAms5
+        rlobService.addNewFromAms5=function(info)
+        {
+            var addAMS5=api.all('rlob/rl_form_ams5/addNewFormAms5');
+            return addAMS5.post({info:info});
+        } 
+        //phanquocchien.c1109g@gmail.com
+        //updateFromAms5
+        rlobService.updateFromAms5=function(info)
+        {
+            var addAMS5=api.all('rlob/rl_form_ams5/rl_form_ams5_update');
+            return addAMS5.post({info:info});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //check Booking In FormAms5
+        rlobService.checkBookingInFormAms5=function(BOOKING_ID)
+        {
+            var getMAS6=api.one('rlob/rl_form_ams5/select_Item_rl_form_ams5_bookingid');
+            return getMAS6.get({BOOKING_ID:BOOKING_ID});
         }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {

@@ -158,7 +158,10 @@ angular.module('app.loggedIn.iso.main.controller',[])
             createFolder:{name:'createFolder',url:'iso_create_folder_template.html'},
             createDocument:{name:'createDocument',url:'iso_create_document_template.html'},
             grantNodePermission:{name:'grantNodePermission',url:'iso_grant_node_permission.html'},
-            checkInDocument:{name:'checkInDocument',url:'iso_check_in_document.html'}
+            checkInDocument:{name:'checkInDocument',url:'iso_check_in_document.html'},
+            getFullVersionDocument:{name:'getFullVersionDocument',url:'iso_get_full_version_document.html'},
+            getFullCheckinDocument:{name:'getFullCheckinDocument',url:'iso_get_full_checkin_document.html'}
+            
         };
         //action hien tai dang dc thao tac
         $scope.currentTreeAction={};
@@ -210,6 +213,15 @@ angular.module('app.loggedIn.iso.main.controller',[])
                     break;
                 case $scope.treeActions.checkInDocument.name:
                     $scope.currentTreeAction=$scope.treeActions.checkInDocument;
+                    break;
+                case $scope.treeActions.getFullVersionDocument.name:
+                    $scope.currentTreeAction=$scope.treeActions.getFullVersionDocument;
+                    $scope.getFullVersionDoccument();
+                    break;
+                case $scope.treeActions.getFullCheckinDocument.name:
+                    $scope.currentTreeAction=$scope.treeActions.getFullCheckinDocument;
+                    $scope.getFullCheckinDocument();
+
                     break;
 
             }
@@ -609,52 +621,74 @@ angular.module('app.loggedIn.iso.main.controller',[])
             })
             
         }
-	
-	//download document....
-	$scope.downloadFolderSelected = function(){
 
-		var listNode = [];
-		var dequy = function(node){
-			var item={
-				NODE_ID:node.NODE_ID,
-				relativePath:node.relativePath,
-				NODE_TYPE:node.NODE_TYPE,
-				NODE_NAME:node.NODE_NAME
+        /**
+         * Download folder 
+         * Voducgiap
+         * modify:tannv.dts@gmail.com
+         */
+    	$scope.downloadFolderSelected = function(){
 
-			};
-			listNode.push(item);
-			if(node.nodes)
-			{
-				angular.forEach(node.nodes,function(values){
-					dequy(values);
-				})
-			}
-		};
-		dequy($scope.selectedTreeNode);
-		console.log(listNode);
-		isoService.treeDir.handlingDownloadDocument(listNode).then(function(data){
-			console.log(data);
-			if(data.status=="success"){
-				isoService.treeDir.downloadFolder(data.data);
-			}
-		});
-	}
-    })
-.directive('ngConfirmClick', [
-    function() {
-        return {
-            priority: 1,
-            link: function(scope, element, attr) {
-                var msg = attr.ngConfirmClick || "Are you sure?";
-                var clickAction = attr.ngClick;
-                attr.ngClick = "";
-                element.bind('click', function(event) {
-                    if (window.confirm(msg)) {
-                        scope.$eval(clickAction)
-                    }
-                });
-            }
+    		var listNode = [];
+    		var dequy = function(node){
+    			var item={
+    				NODE_ID:node.NODE_ID,
+    				relativePath:node.relativePath,
+    				NODE_TYPE:node.NODE_TYPE,
+    				NODE_NAME:node.NODE_NAME
+
+    			};
+    			listNode.push(item);
+    			if(node.nodes)
+    			{
+    				angular.forEach(node.nodes,function(values){
+    					dequy(values);
+    				})
+    			}
+    		};
+    		dequy($scope.selectedTreeNode);
+    		console.log(listNode);
+            isoService.treeDir.handlingCloneFolder($scope.selectedTreeNode.NODE_ID,listNode)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    isoService.treeDir.cloneFolder($scope.selectedTreeNode.NODE_ID,data.data.downloadPackName);
+                }
+                else
+                {
+                    msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Download folder fail!');
+                }
+                // exlog.alert(data);
+            },function(err){
+                msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Download folder fail!');
+            })
+    	}
+
+        //get full version document
+        $scope.fullVersionDocumentData = {};
+        $scope.getFullVersionDoccument = function(){
+            isoService.treeDir.getFullVersionDoccument($scope.selectedTreeNode.NODE_ID).then(function(data){
+                if(data.status=='success'){
+                    console.log(data);
+                   $scope.fullVersionDocumentData = data.data;
+                }
+            })
         };
-    }
-]);
+        //download document 
+        $scope.downloadVersionNo = function(FILE_NAME,CHECK_IN_FOLDER_STORAGE,NODE_ID){
+               isoService.treeDir.handlingDownloadVersionDocument(FILE_NAME,CHECK_IN_FOLDER_STORAGE,NODE_ID);
+        },
+
+        //get full checkin document
+        $scope.fullCheckinDocumentData = {};
+        $scope.getFullCheckinDocument = function(){
+            isoService.treeDir.getFullCheckinDoccument($scope.selectedTreeNode.NODE_ID).then(function(data){
+                if(data.status=='success'){
+                    console.log(data);
+                   $scope.fullCheckinDocumentData = data.data;
+                }
+            })
+        }
+
+    })
 

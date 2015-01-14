@@ -77,17 +77,29 @@ angular.module('app.loggedIn.iso.service',[])
                 var result=api.all("iso/iso-tree-dir/restore-node");
                 return result.post({nodeId:nodeId});
             },
-	    
-	       handlingDownloadDocument:function(data)
-           {
-                var result=api.all("iso/iso-tree-dir/handlingDownloadFolder");
-                return result.post({data:data});
-            },
-            
-            downloadFolder : function(data){
-                $window.location.href = '/api/iso/iso-tree-dir/dowloadFolder?path='+data;
 
+            handlingCloneFolder:function(nodeId,listNode)
+            {
+                var result=api.all("iso/iso-tree-dir/handling-clone-folder");
+                return result.post({nodeId:nodeId,listNode:listNode});
+            },
+
+            cloneFolder:function(nodeId,downloadPackName)
+            {
+                $window.location.href = '/api/iso/iso-tree-dir/clone-folder?downloadPackName='+downloadPackName+'&nodeId='+nodeId;;
+            },
+            getFullVersionDoccument:function(nodeId){
+                var result = api.all("iso/iso-tree-dir/getFullVersionDoccument");
+                return result.post({nodeId:nodeId});
+            },
+            getFullCheckinDoccument:function(nodeId){
+                var result = api.all("iso/iso-tree-dir/getFullCheckinDoccument");
+                return result.post({nodeId:nodeId});
+            },
+            handlingDownloadVersionDocument:function(FILE_NAME,CHECK_IN_FOLDER_STORAGE,nodeId){
+                $window.location.href = '/api/iso/iso-tree-dir/handlingDownloadVersionDocument?nodeId='+nodeId+'&FILE_NAME='+FILE_NAME+'&CHECK_IN_FOLDER_STORAGE='+CHECK_IN_FOLDER_STORAGE;
             }
+
         };
 
         isoService.treeUser={
