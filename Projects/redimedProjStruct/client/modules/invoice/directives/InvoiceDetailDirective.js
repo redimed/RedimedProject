@@ -36,8 +36,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						if(response.status == 'success') {
 							toastr.success('Save Claim Successfully !!!', 'Success');
 							$scope.InvoiceMap.claim = item;
-
-
+							$scope.InvoiceMap.claim_id = item.Claim_id;
 							$scope.InvoiceMap.insurer = {insurer_name: item.Insurer }
 							$scope.patientClaim.close();
 						}
