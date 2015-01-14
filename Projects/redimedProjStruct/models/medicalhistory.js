@@ -130,7 +130,6 @@ module.exports = function (sequelize, DataTypes) {
         "s8_hay_fever": DataTypes.INTEGER(11),
         "s8_tuberculosis": DataTypes.INTEGER(11),
         "s8_obstructive": DataTypes.INTEGER(11),
-        "s8_disease": DataTypes.INTEGER(11),
         "s8_rheumatic_fever": DataTypes.INTEGER(11),
         "s8_bronchitis": DataTypes.INTEGER(11),
         "s8_coughed_blood": DataTypes.INTEGER(11),

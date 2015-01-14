@@ -2455,32 +2455,6 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-5" style="margin-top:10px;">
                                                         <label class="control-label">
-                                                            pulmonary disease
-                                                        </label>
-
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-7">
-                                                        <div class="btn-group">
-                                                            <label class="btn">
-                                                                <input type="radio" ng-model="info.s8_disease"
-                                                                       ng-value="1"/>&nbsp;Yes
-                                                            </label>
-                                                            <label class="btn">
-                                                                <input type="radio" ng-model="info.s8_disease"
-                                                                       ng-value="0"/>&nbsp;No
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12">
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-sm-5" style="margin-top:10px;">
-                                                        <label class="control-label">
                                                             Rheumatic fever
                                                         </label>
 
@@ -2499,6 +2473,10 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-5" style="margin-top:10px;">
@@ -2520,6 +2498,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-sm-12">
@@ -3719,13 +3700,13 @@
                                 <div class="col-md-12 col-sm-12">
                                     <div class="col-md-12 col-sm-12">
                                         <label class="control-label bold">
-                                            I,&nbsp;<span class="text-info">{{((info.doctor.First_name==null||info.doctor.First_name=='')?'':info.doctor.First_name) +
-                                        ((info.doctor.First_name==null||info.doctor.First_name=='')?'':' ') +
-                                        ((info.doctor.Middle_name==null||info.doctor.Middle_name=='')?'':info.doctor.Middle_name) +
-                                        ((info.doctor.First_name==null||info.doctor.First_name=='')?'':' ') +
-                                        ((info.doctor.Sur_name==null||info.doctor.Sur_name=='')?'':info.doctor.Sur_name)}}</span>
+                                            I,&nbsp;<span class="text-info">{{((info.patient.First_name==null||info.patient.First_name=='')?'':info.patient.First_name) +
+                                        ((info.patient.First_name==null||info.patient.First_name=='')?'':' ') +
+                                        ((info.patient.Middle_name==null||info.patient.Middle_name=='')?'':info.patient.Middle_name) +
+                                        ((info.patient.First_name==null||info.patient.First_name=='')?'':' ') +
+                                        ((info.patient.Sur_name==null||info.patient.Sur_name=='')?'':info.patient.Sur_name)}}</span>
                                             DOB&nbsp;
-                                            <span class="text-info">{{info.doctor.DOB | date: 'dd/MM/yyyy'}}</span>
+                                            <span class="text-info">{{info.patient.DOB | date: 'dd/MM/yyyy'}}</span>
                                         </label>
                                     </div>
                                     <div class="col-md-12 col-sm-12">
@@ -3820,15 +3801,39 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12">
-                                            <div class="col-md-1 col-sm-1" style="margin-top: 25px;">
-                                                <label class="control-label bold">
-                                                    Signed:
-                                                </label>
+                                            <div class="col-md-12 col-sm-12">
+                                                <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
+                                                   class="btn green">Signed</a>
+                                                <img ng-show="info.dec_signed!=null && info.dec_signed!='' && !isSignature"
+                                                     src="" ng-src="{{info.dec_signed}}" alt=""
+                                                     style="width: 200px;height: 70px;"/>
                                             </div>
-                                            <div class="col-md-4 col-sm-5">
-                                                <img ng-show="info.doctor.Signature!=null && info.doctor.Signature!=''"
-                                                     ng-src="{{info.doctor.Signature}}"
-                                                     style="height:70px;width:200px;"/>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="isSignature">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="col-md-12 col-sm-12">
+                                                <canvas width="500" height="400" id="canvas" signature
+                                                        ng-model="info.dec_signed" style="background-color: #8eece8">
+                                                </canvas>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="col-md-12 col-sm-12" style="margin-left:340px;">
+                                                <div class="break-row"></div>
+                                                <div class="btn-group">
+                                                    <button type="button" ng-click="cancelClick()"
+                                                            class="btn btn-danger btn-sm">
+                                                        Cancel
+                                                    </button>
+                                                    <button type="button" ng-click="clearClick()"
+                                                            class="btn btn-warning btn-sm">
+                                                        Clear
+                                                    </button>
+                                                    <button type="button" ng-click="okClick()" class="btn green btn-sm">
+                                                        Ok
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -3953,38 +3958,10 @@ examination and urine drug screen to authorised personnel of my prospective empl
                                     <div class="col-md-12 col-sm-12">
                                         <div class="col-md-12 col-sm-12">
                                             <div class="col-md-10 col-sm-10">
-                                                <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
-                                                   class="btn green">Signature</a>
+                                                <label class="control-label bold">Signature:</label>
                                                 <img ng-show="info.dec_signed!=null && info.dec_signed!='' && !isSignature"
                                                      src="" ng-src="{{info.dec_signed}}" alt=""
                                                      style="width: 200px;height: 70px;"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" ng-show="isSignature">
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="col-md-12 col-sm-12">
-                                            <canvas width="500" height="400" id="canvas" signature
-                                                    ng-model="info.dec_signed" style="background-color: #8eece8">
-                                            </canvas>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="col-md-12 col-sm-12" style="margin-left:340px;">
-                                            <div class="break-row"></div>
-                                            <div class="btn-group">
-                                                <button type="button" ng-click="cancelClick()"
-                                                        class="btn btn-danger btn-sm">
-                                                    Cancel
-                                                </button>
-                                                <button type="button" ng-click="clearClick()"
-                                                        class="btn btn-warning btn-sm">
-                                                    Clear
-                                                </button>
-                                                <button type="button" ng-click="okClick()" class="btn green btn-sm">
-                                                    Ok
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -4003,7 +3980,8 @@ examination and urine drug screen to authorised personnel of my prospective empl
                                                 <input type="text" class="form-control" ng-model="info.dec_witness"/>
                                             </div>
                                             <div class="col-md-1 col-sm-1" style="margin-top: 20px;">
-                                                <a href="javascript:;" ng-click="showSignature2()" ng-show="!isSignature2"
+                                                <a href="javascript:;" ng-click="showSignature2()"
+                                                   ng-show="!isSignature2"
                                                    class="btn green">Signature</a>
                                             </div>
                                             <div class="col-md-3 col-sm-4">
@@ -4018,7 +3996,8 @@ examination and urine drug screen to authorised personnel of my prospective empl
                                     <div class="col-md-12 col-sm-12">
                                         <div class="col-md-12 col-sm-12">
                                             <canvas width="500" height="400" id="canvas2" signature
-                                                    ng-model="info.dec_signed_witness" style="background-color: #8eece8">
+                                                    ng-model="info.dec_signed_witness"
+                                                    style="background-color: #8eece8">
                                             </canvas>
                                         </div>
                                     </div>
