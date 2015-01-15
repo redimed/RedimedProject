@@ -138,7 +138,8 @@ module.exports = {
                     Lsign : info.Lsign,
                     LName : info.LName,
                     LDate : info.LDate,
-                    LPosition : info.LPosition
+                    LPosition : info.LPosition,
+                    Chest : info.Chest
                 },{raw:true})
                     .success(function(data){
                         res.json({status:'success'});
@@ -277,6 +278,7 @@ module.exports = {
                 LName : info.LName,
                 LDate : info.LDate,
                 LPosition : info.LPosition,
+                Chest : info.Chest,
                 Created_by : info.Created_by ,
                 //Creation_date : info.Creation_date ,
                 Last_updated_by : info.Last_updated_by// ,
@@ -290,63 +292,29 @@ module.exports = {
                     console.log(err);
                 })
     },
-    checkGorgonFA: function(req,res){
+    checkGorgonFA: function(req,res) {
         var Patient_Id = req.body.PatientID;
         var CalId = req.body.calID;
 
-        db.RedimedSite.findAll({raw: true})
-            .success(function (site) {
-                if (site === null || site.length === 0) {
-                    console.log("Not found site in table");
-                    res.json({status: 'fail'});
-                    return false;
-                }else
-                {
-
-                    db.gorgonFA.find({where:{patientId:Patient_Id,CalId : CalId}})
-                        .success(function(data){
-                            db.gorgonMA.find({where:{PATIENT_ID:Patient_Id,CalId : CalId},attribute:['SYSTOLIC_BP','DIASTOLIC_BP','PULSE','WEIGHT']})
-                                .success(function(dataMA){
-                                    if(data == null)
-                                    {
-                                        if(dataMA == null)
-                                        {
-                                            res.json({status:'not'});
-                                        }else
-                                        {
-                                            db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
-                                                .success(function (appt) {
-                                                    if (appt === null || appt.length === 0) {
-                                                        console.log("Not found APPTCAL in table");
-                                                        res.json({status: 'fail'});
-                                                        return false;
-                                                    }
-                                                    db.Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
-                                                        .success(function (doctor) {
-                                                            if (doctor === null || doctor.length === 0) {
-                                                                console.log("Not found doctor in table");
-                                                                res.json({status: 'fail'});
-                                                                return false;
-                                                            }else
-                                                            {
-                                                                res.json({status:'insert',site: site,data:dataMA,docID : doctor.doctor_id,docName:doctor.NAME,docSign:doctor.Signature});
-                                                            }
-                                                        })
-                                                        .error(function (err) {
-                                                            console.log("ERROR:" + err);
-                                                            res.json({status: 'error'});
-                                                            return false;
-                                                        });
-                                                })
-                                                .error(function (err) {
-                                                    console.log("ERROR:" + err);
-                                                    res.json({status: 'error'});
-                                                    return false;
-                                                });
+        db.gorgonFA.find({where:{patientId:Patient_Id,CalId : CalId}})
+            .success(function(data){
+                db.gorgonMA.find({where:{PATIENT_ID:Patient_Id,CalId : CalId},attribute:['SYSTOLIC_BP','DIASTOLIC_BP','PULSE','WEIGHT']})
+                    .success(function(dataMA){
+                        if(data == null)
+                        {
+                            if(dataMA == null)
+                            {
+                                res.json({status:'not'});
+                            }else
+                            {
+                                db.APPTCAL.find({where: {cal_id: CalId}}, {raw: true})
+                                    .success(function (appt) {
+                                        if (appt === null || appt.length === 0) {
+                                            console.log("Not found APPTCAL in table");
+                                            res.json({status: 'fail'});
+                                            return false;
                                         }
-                                    }else
-                                    {
-                                        db.Doctor.find({where: {doctor_id: data.DocId}}, {raw: true})
+                                        db.Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
                                             .success(function (doctor) {
                                                 if (doctor === null || doctor.length === 0) {
                                                     console.log("Not found doctor in table");
@@ -354,11 +322,7 @@ module.exports = {
                                                     return false;
                                                 }else
                                                 {
-                                                    data.MS_Blood_Pressure_1=dataMA.SYSTOLIC_BP;
-                                                    data.MS_Blood_Pressure_2 =dataMA.DIASTOLIC_BP ;
-                                                    data.MS_Resting_Heart_Rate =dataMA.PULSE;
-                                                    data.MS_Mx_Weight_1 = dataMA.WEIGHT;
-                                                    res.json({status:'update',site: site,data : data,docName:doctor.NAME,docSign:doctor.Signature});
+                                                    res.json({status:'insert',data:dataMA,docID : doctor.doctor_id,docName:doctor.NAME,docSign:doctor.Signature});
                                                 }
                                             })
                                             .error(function (err) {
@@ -366,24 +330,46 @@ module.exports = {
                                                 res.json({status: 'error'});
                                                 return false;
                                             });
+                                    })
+                                    .error(function (err) {
+                                        console.log("ERROR:" + err);
+                                        res.json({status: 'error'});
+                                        return false;
+                                    });
+                            }
+                        }else
+                        {
+                            db.Doctor.find({where: {doctor_id: data.DocId}}, {raw: true})
+                                .success(function (doctor) {
+                                    if (doctor === null || doctor.length === 0) {
+                                        console.log("Not found doctor in table");
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    }else
+                                    {
+                                        data.MS_Blood_Pressure_1=dataMA.SYSTOLIC_BP;
+                                        data.MS_Blood_Pressure_2 =dataMA.DIASTOLIC_BP ;
+                                        data.MS_Resting_Heart_Rate =dataMA.PULSE;
+                                        data.MS_Mx_Weight_1 = dataMA.WEIGHT;
+                                        res.json({status:'update',data : data,docName:doctor.NAME,docSign:doctor.Signature});
                                     }
                                 })
-                                .error(function(err){
-                                    res.json({status:'error'});
-                                    console.log(err);
-                                })
-                        })
-                        .error(function(err){
-                            res.json({status:'error'});
-                            console.log(err);
-                        })
-                }
+                                .error(function (err) {
+                                    console.log("ERROR:" + err);
+                                    res.json({status: 'error'});
+                                    return false;
+                                });
+                        }
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
             })
-            .error(function (err) {
-                console.log("ERROR:" + err);
-                res.json({status: 'error'});
-                return false;
-            });
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
     }
 };
 

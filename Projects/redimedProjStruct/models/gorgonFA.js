@@ -123,6 +123,7 @@ module.exports = function(sequelize, DataTypes){
         "LDate" : DataTypes.DATE,
         "LName" : DataTypes.STRING(50),
         "LPosition" : DataTypes.STRING(50),
+        "Chest": DataTypes.INTEGER(11),
         "Created_by" : DataTypes.INTEGER(11),
         //"Creation_date" : DataTypes.DATE,
         "Last_updated_by" : DataTypes.INTEGER(11),

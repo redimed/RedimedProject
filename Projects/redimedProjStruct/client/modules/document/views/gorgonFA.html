@@ -711,13 +711,24 @@
                 </div>
             </div>
             <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-md-6 col-lg-4 col-sm-7" style="margin-top: 4px">Chester step test performed as per company request</label>
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <input type="checkbox" ng-model="info.Chest" ng-checked="info.Chest==1" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12 bold">
                     <label class="control-label bold">Comments:</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8 col-sm-10">
-                    <textarea class="form-control" ng-model="info.Comments2" ng-change="collectComment()"></textarea>
+                <div class="col-md-8 col-sm-10" ng-class="{'has-error': gorgonFAForm.Comments2.$error.required}">
+                    <textarea class="form-control" ng-model="info.Comments2" name="Comments2" ng-change="collectComment()" ng-required="info.Chest==1"></textarea>
+                    <div class="help-block" ng-show="gorgonFAForm.Comments2.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -1607,7 +1618,7 @@
                         workplace.</label>
                 </div>
                 <div class="row">
-                    <div class="col-md-10 col-sm-10">
+                    <div class="col-md-10 col-sm-10" >
                         <textarea class="form-control" style="height: 200px" name="LComment" ng-model="info.LComment" ng-change="totalComment()" required></textarea>
                         <div ng-show="gorgonFAForm.LComment.$error.required">
                             <div class="help-block" for="LComment">
@@ -1651,8 +1662,11 @@
 
             <div class="col-md-4 col-sm-6">
                 <label class="control-label bold">Position</label>
-                <select ng-model="info.LPosition" class="form-control" ng-options="site.id as site.Site_name for site in sites">
+                <select ng-model="info.LPosition" class="form-control">
                     <option value="">--Select Site--</option>
+                    <option value="0">Accredited Exercise Physiologist</option>
+                    <option value="1">Exercise Scientist </option>
+                    <option value="2">Physiotherapist</option>
                 </select>
             </div>
         </div>

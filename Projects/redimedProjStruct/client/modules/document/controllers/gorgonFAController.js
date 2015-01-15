@@ -350,7 +350,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             }else if (response['status'] === 'insert') {
                 insert = true;
                 $scope.isNew = true;
-                $scope.sites = response['site'];
                 $scope.info = {
                     id: null,
                     patientId: Patient_ID,
@@ -406,7 +405,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                     Step_Result2: null,
                     Step_Correct2: null,
                     Comments2: null,
-                    Total2: 0,
+                    Total2: null,
                     a_Right3: null,
                     a_Left3: null,
                     b_Right3: null,
@@ -467,7 +466,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                     Score6Comment: null,
                     Score7Comment: null,
                     Score8Comment: null,
-                    FCAToTal: null,
+                    FCAToTal: 0,
                     FCAResult: null,
                     LEPDC: null,
                     LAPC: null,
@@ -475,6 +474,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                     DocId : response['docID'],
                     LName : response['docName'],
                     LPosition : null,
+                    Chest : 0,
                     Lsign: response['docSign'],
                     LDate : date ,
                     Created_by: null,
@@ -487,7 +487,6 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             }else if(response['status'] == 'update'){
                 insert = false;
                 $scope.isNew = false;
-                $scope.sites = response['site'];
                 $scope.info = {
                     id: response['data']['id'],
                     patientId: response['data']['patientId'],
@@ -613,6 +612,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                     LName : response['data']['LName'],
                     LDate : response['data']['LDate'],
                     LPosition : response['data']['LPosition'],
+                    Chest : response['data']['Chest'],
                     //Creation_date : response['data'][''],
                     Last_updated_by: response['data']['Last_updated_by'],
                     //Last_update_date : response['data'][''],
