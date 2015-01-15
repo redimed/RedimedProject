@@ -48,15 +48,17 @@ module.exports = {
 			});
 		})
 		.then(function(header){
-			var insurer_id = null, company_id = null;
+			var insurer_id = null, company_id = null, claim_id = null;
 
 			company_id = patient.company_id;
 			if(patient_claim && patient_claim.claim) {
-				insurer_id = patient_claim.insurer_site;
+				insurer_id = patient_claim.claim.insurer_site;
+				claim_id = patient_claim.Claim_id;
 			}
 
 			var invoice_header = {
 				cal_id: cal_id,
+				claim_id: claim_id,
 				Patient_id: patient_id,
 				Company_id: company_id,
 				Insurer_id: insurer_id,
@@ -126,7 +128,6 @@ module.exports = {
 					model: db.Doctor, as: 'Doctor',
 					attributes: ['NAME']
 				},
-				{model: db.Department, as: 'Department'},
 			]
 		}).success(function(appt){
 			if(!appt) {

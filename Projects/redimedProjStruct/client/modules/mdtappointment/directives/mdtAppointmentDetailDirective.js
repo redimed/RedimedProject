@@ -29,7 +29,6 @@ angular.module('app.loggedIn.mdtappointment.detail.directive', [])
 						ConfigService.system_service_by_clinical(scope.mdtAppointmentMap.CLINICAL_DEPT_ID).then(function(response){
 							scope.serviceList = response;
 						})
-
 						console.log(scope.mdtAppointmentMap)
 					})
 				}
@@ -46,7 +45,7 @@ angular.module('app.loggedIn.mdtappointment.detail.directive', [])
 						if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
 					}//end for
 					if(scope.params.permission.edit === true){
-						var cols = ['department', 'doctor', 'Patient_id', 'CAL_ID', 'CLINICAL_DEPT_ID', 'SITE_ID', 'DOCTOR_ID','FROM_TIME', 'TO_TIME',  'PATIENTS'];
+						var cols = ['doctor', 'Patient_id', 'CAL_ID', 'CLINICAL_DEPT_ID', 'SITE_ID', 'DOCTOR_ID','FROM_TIME', 'TO_TIME',  'PATIENTS'];
 						for(var i=0; i < cols.length; ++i) {
 							var col = cols[i];
 							delete postData[col];

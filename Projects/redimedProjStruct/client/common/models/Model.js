@@ -225,6 +225,35 @@ angular.module("app.model", [])
 //END WAITING LIST
 
 /*AUTO CREATE*/
+.value('InvoiceHeaderModel', {
+	cal_id: null,
+	claim_id: null,
+	Patient_id: null,
+	Company_id: null,
+	Insurer_id: null,
+	DOCTOR_ID: null,
+	SITE_ID: null,
+	DEPT_ID: null,
+	SERVICE_ID: null,
+	INVOICE_NUMBER: null,
+	INVOICE_DATE: null,
+	CURRENCY_CODE: '',
+	RATE_TYPE: '',
+	RATE: null,
+	STATUS: '',
+	DESCRIPTION: '',
+	DUE_DATE: null,
+	AMOUNT: '',
+	TAX_AMOUNT: '',
+	TOTAL_AMOUNT: '',
+	BASE_AMOUNT: '',
+	BASE_TAX_AMOUNT: '',
+	BASE_TOTAL_AMOUNT: '',
+	LAST_UPDATE_DATE: null,
+	LAST_UPDATED_BY: null,
+	CREATION_DATE: null,
+	CREATED_BY: null,
+})
 .value('mdtInsurerModel', {
 	insurer_name: '',
 	address: '',

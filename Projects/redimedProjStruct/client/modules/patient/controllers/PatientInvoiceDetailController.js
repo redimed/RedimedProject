@@ -2,13 +2,21 @@ angular.module("app.loggedIn.patient.invoice_detail.controller", [])
 .controller("PatientInvoiceDetailController", function($scope, $state, $stateParams, toastr, PatientService, ConfigService){
 	var header_id = $stateParams.header_id;
 
+	$scope.invoiceOpt = {
+		permission: {
+			edit: true,
+		},
+		id: header_id
+	}
+
+	
+
 	$scope.invoiceSave  = function(){
 		PatientService.invoiceSave(header_id)
 		.then(function(response){
 			toastr.success('Save successfully !!!', 'Success');
 		})
 	}
-
 
 
  	PatientService.invoiceDetail(header_id)
@@ -24,6 +32,5 @@ angular.module("app.loggedIn.patient.invoice_detail.controller", [])
  			// line.AMOUNT = line.PRICE * line.QUANTITY;
  			$scope.invoice.AMOUNT +=  line.AMOUNT;
  		}
- 		console.log($scope.invoice)
  	});
 });

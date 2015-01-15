@@ -110,7 +110,7 @@ angular.module("app.directive.mydatatable.common", [])
 
                 options.not_paging = !options.not_paging ? false: true;
 
-                if(options.scope) {
+                if(options.scope !== undefined && options.scope !== null) {
                     angular.extend(options.scope, $scope);
                 }
    
