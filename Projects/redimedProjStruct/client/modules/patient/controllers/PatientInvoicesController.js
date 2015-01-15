@@ -1,15 +1,21 @@
 angular.module("app.loggedIn.patient.invoices.controller", [])
 .controller("PatientInvoicesController", function($scope, $state, $stateParams, PatientService, ConfigService){
 	var patient_id = $stateParams.patient_id;
-
+    var cal_id = $stateParams.cal_id;
 
 	$scope.invoiceClass = function(item) {
-		if(item.STATUS == 'approach')
-			return 'warning';
-		if(item.STATUS == 'done')
-			return 'success';
+        return {
+            approach: (item.STATUS == 'approach'),
+            done: (item.STATUS == 'done'),
+            danger: (item.STATUS == 'enter' || item.STATUS != null),
+            selected: (item.cal_id == cal_id)
+        }
+		// if(item.STATUS == 'approach')
+		// 	return 'warning';
+		// if(item.STATUS == 'done')
+		// 	return 'success';
 
-		return 'danger'; // enter
+		// return 'danger'; // enter
 	}
 	$scope.invoiceOption = {
         api: 'api/erm/v2/invoice/search',
