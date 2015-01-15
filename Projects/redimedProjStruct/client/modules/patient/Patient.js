@@ -44,21 +44,22 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-    .state("loggedIn.patient.invoices", {
-        url: "/:patient_id/invoices",
-        views: {
-            "main-content": {
-                templateUrl: "modules/patient/views/invoices.html",
-                controller: "PatientInvoicesController"
-            }
-        }
-    })
+  
     .state("loggedIn.patient.invoice_detail", {
         url: "/:header_id/invoices/detail",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/invoice_detail.html",
                 controller: "PatientInvoiceDetailController"
+            }
+        }
+    })
+      .state("loggedIn.patient.invoices", {
+        url: "/:patient_id/invoices/:cal_id",
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/invoices.html",
+                controller: "PatientInvoicesController"
             }
         }
     })
