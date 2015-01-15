@@ -144,7 +144,7 @@ angular.module("app.model", [])
 	Claim_date: new Date(), //yes
 	Insurer: '', //yes
 	Address: '', //yes
-	Claim_no: null, //yes
+	Claim_no: '', //yes
 	Case_manager: '', //yes
 	Isenable: '1', //yes
 	Created_by: null,

@@ -15,12 +15,13 @@ module.exports = {
 		})
 	},
 	postAdd: function(req, res){
+
 		var postData = req.body.add_data;
 		var CAL_ID = req.body.CAL_ID;
 		var Patient_id = req.body.Patient_id;
 
 		var sql_max_id = "SELECT MAX(Claim_id) AS claim_id FROM cln_claims LIMIT 1";
-
+        
 		db.Claim.create(postData)
 		.success(function(created){
 			db.sequelize.query(sql_max_id)
@@ -28,7 +29,7 @@ module.exports = {
 				var sql_insert_patient = "INSERT INTO cln_patient_claim(Claim_id, Patient_id, CAL_ID, Creation_date, Last_update_date) VALUES("+detail[0].claim_id+", "+Patient_id+", "+CAL_ID+", NOW(), NOW())";
 				db.sequelize.query(sql_insert_patient)
 				.success(function(created){
-					res.json({message: created});
+					res.json({message: created, 'status':'success', 'data':detail});
 				})
 				.error(function(error){
 					res.json(500, {'status': 'error', 'message': error});		

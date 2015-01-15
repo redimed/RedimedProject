@@ -182,7 +182,7 @@ module.exports = {
                 var sql_insert_patient = "INSERT INTO cln_patient_claim(Claim_id, Patient_id, CAL_ID, Creation_date, Last_update_date) VALUES("+detail[0].claim_id+", "+Patient_id+", "+CAL_ID+", NOW(), NOW())";
                 db.sequelize.query(sql_insert_patient)
                 .success(function(created){
-                    res.json({message: created});
+                    res.json({message: created, 'status':'success','data':detail});
                 })
                 .error(function(error){
                     res.json(500, {'status': 'error', 'message': error});       
