@@ -568,7 +568,7 @@ doc_ma.`MA_ID` = $P{id}]]>
 				<reportElement x="7" y="609" width="540" height="37" uuid="650d1d29-52d2-4d64-8594-e7079034706a"/>
 				<textFieldExpression><![CDATA[$F{doc_ma_COMMENT_SEC3} != null ? $F{doc_ma_COMMENT_SEC3} : ""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="111" y="68" width="50" height="15" uuid="50da66e1-bef2-4d31-8ac4-7658cd63b9e3"/>
 				<textFieldExpression><![CDATA[$F{doc_ma_BLOOD_SEC1}]]></textFieldExpression>
 			</textField>

@@ -215,8 +215,8 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
                 $scope.info = angular.copy(response['data']);
                 $scope.info.DOCTOR_NAME = response['docName'];
                 $scope.info.SIGN = response['docSign'];
-                oriInfo = angular.copy($scope.info);
                 $scope.totalComment();
+                oriInfo = angular.copy($scope.info);
             }
             if ($scope.isNew == true) {
                 clearInfo = angular.copy($scope.info);
