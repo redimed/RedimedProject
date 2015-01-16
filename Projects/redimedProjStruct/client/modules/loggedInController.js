@@ -1,7 +1,7 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-.controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout){
+.controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket){
 
     // DATE
     $scope.dateOptions = {
@@ -27,7 +27,7 @@ angular.module("app.loggedIn.controller",[
         weeks_of_month: ConfigService.number_of_week_option(),
 
         month_in_year: ConfigService.month_in_year(),
-        date_in_month: ConfigService.date_in_month(),
+        date_in_month: ConfigService.date_in_month()
         
     }
 
@@ -188,10 +188,15 @@ angular.module("app.loggedIn.controller",[
 
     //Logout
     $scope.logout = function(){
+        socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,$cookieStore.get("userInfo").UserType.user_type);
+
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
         $cookieStore.remove("doctorInfo");
         $state.go("security.login",null,{reload:true});
+
+        socket.removeAllListeners();
+
     }
 
     // Toggle Menu

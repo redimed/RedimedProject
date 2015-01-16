@@ -85,68 +85,18 @@ module.exports = {
 
           db.IMInjury.create({
               patient_id: imInfo.Patient_id,
-              driver_id: imInfo.driver_id,
               doctor_id: imInfo.doctor_id,
               cal_id: imInfo.cal_id,
               injury_date: imInfo.injury_date,
               injury_description: imInfo.injury_description,
-              STATUS: "New",
-              pickup_address: imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address == 'undefined' ? null : imInfo.infoMaps.format_address,
-              latitude:  imInfo.infoMaps.lat == null || typeof imInfo.infoMaps.lat == 'undefined' ? null : imInfo.infoMaps.lat,
-              longitude: imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng == 'undefined' ? null : imInfo.infoMaps.lng
+              STATUS: imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined' ?"New":null,
+              pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address == 'undefined' ? null : imInfo.infoMaps.format_address) : null,
+              latitude: imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined' ?  (imInfo.infoMaps.lat == null || typeof imInfo.infoMaps.lat == 'undefined' ? null : imInfo.infoMaps.lat) : null,
+              longitude: imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined' ? (imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng == 'undefined' ? null : imInfo.infoMaps.lng) : null
           },{raw:true})
               .success(function(data){
                   db.IMInjury.find({where:data.dataValues},{raw:true})
                       .success(function(rs){
-                          //Start Push GCM Android
-                          if(imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined') {
-                              var date = new Date();
-                              var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
-
-                              var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
-                              var message = new gcm.Message();
-                              message.addData('title','EMERGENCY');
-                              message.addData('message','You have an emergency case! - Time: '+dateString);
-                              message.addData('injury_id',rs.injury_id);
-                              message.addData('soundname','beep.wav');
-                              message.collapseKey = 'EMERGENCY';
-                              message.delayWhileIdle = true;
-                              message.timeToLive = 3;
-                              var registrationIds = [];
-
-                              db.UserType.find({where:{user_type:'Driver'}},{raw:true})
-                                  .success(function(type){
-                                      db.UserToken.findAll({where: {user_type: type.ID}}, {raw: true})
-                                          .success(function (data) {
-                                              for (var i = 0; i < data.length; i++) {
-                                                  if (data[i].android_token != null)
-                                                      registrationIds.push(data[i].android_token);
-                                              }
-
-                                              sender.send(message, registrationIds, 4, function (err,result) {
-                                                  if(err)
-                                                  {
-                                                      console.log("ERROR:",err);
-                                                  }
-                                                  else
-                                                  {
-                                                      console.log("SUCCESS:",result);
-                                                  }
-
-                                              });
-                                          })
-                                          .error(function (err) {
-                                              console.log(err);
-                                          })
-                                  })
-                                  .error(function (err) {
-                                      console.log(err);
-                                  })
-
-
-                          }
-                          //End Push GCM Android
-
                           if(imInfo.cal_id != null)
                           {
                               var pId = imInfo.Patient_id;
@@ -176,8 +126,6 @@ module.exports = {
                                                   "- If you are having a hearing assessment and need to have at least 16 hours of relatively quiet time before your appointment (no prolonged loud noises and avoid anything louder than a vacuum cleaner).<br>" +
                                                   "- For any queries, please call 92300990.<br>"
                                               };
-											  console.log(mailOptions);
-
                                               transport.sendMail(mailOptions, function(error, response){  //callback
                                                   if(error){
                                                       console.log(error);
@@ -275,7 +223,11 @@ module.exports = {
 
     },
     injuryList: function(req,res){
-        db.sequelize.query("SELECT i.*,p.* FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` WHERE i.`cal_id` IS NULL ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true})
+        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
+                            "FROM `im_injury` i " +
+                            "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+                            "LEFT JOIN users u ON u.id = i.driver_id " +
+                            "WHERE i.`cal_id` IS NULL ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true})
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -319,6 +271,90 @@ module.exports = {
         db.IMInjury.update(info,{injury_id:id})
             .success(function(){
                 res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    getListDriver: function(req,res){
+        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
+            .success(function(rs){
+                db.User.findAll({where:{user_type:rs.ID},attributes:['id','user_name','Booking_Person']},{raw:true})
+                    .success(function(data){
+                        res.json(data);
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    allocateDriver: function(req,res){
+        var driverId = req.body.driverId;
+        var patientId = req.body.patientId;
+        var injuryId = req.body.injuryId;
+        db.IMInjury.update({
+            driver_id: driverId,
+            STATUS:'Waiting'
+        },{injury_id: injuryId,patient_id:patientId})
+            .success(function(){
+                db.DriverInjury.create({
+                    driver_id: driverId,
+                    patient_id: patientId,
+                    STATUS : 'Picking',
+                    pickup_date: new Date()
+                })
+                    .success(function(){
+                        var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                        var message = new gcm.Message();
+                        message.addData('title','EMERGENCY');
+                        message.addData('message','You have new patient to pickup!');
+                        message.addData('injury_id',injuryId);
+                        message.addData('soundname','beep.wav');
+                        message.collapseKey = 'EMERGENCY';
+                        message.delayWhileIdle = true;
+                        message.timeToLive = 3;
+                        var registrationIds = [];
+
+                        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
+                            .success(function(type){
+                                db.UserToken.findAll({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
+                                    .success(function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                            if (data[i].android_token != null)
+                                                registrationIds.push(data[i].android_token);
+                                        }
+
+                                        sender.send(message, registrationIds, 4, function (err,result) {
+                                            if(err)
+                                            {
+                                                console.log("ERROR:",err);
+                                            }
+                                            else
+                                            {
+                                                console.log("SUCCESS:",result);
+                                            }
+
+                                        });
+                                    })
+                                    .error(function (err) {
+                                        console.log(err);
+                                    })
+                            })
+                            .error(function (err) {
+                                console.log(err);
+                            })
+                        res.json({status:'success'});
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
             })
             .error(function(err){
                 res.json({status:'error'});

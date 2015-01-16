@@ -18,5 +18,14 @@ angular.module("app.loggedIn.im.services",[])
             return api.all('im/images').post({injury_id:id});
         }
 
+        imService.listDriver = function(){
+            return api.one('im/getListDriver').get();
+        }
+
+        imService.allocateDriver = function(dId,pId,iId){
+            return api.all('im/allocateDriver').post({driverId:dId,patientId:pId,injuryId:iId});
+
+        }
+
         return imService;
     })

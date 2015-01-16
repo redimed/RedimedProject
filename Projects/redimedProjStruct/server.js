@@ -21,7 +21,7 @@ var _ = require('lodash-node');
 
 server.listen(3000);
 
-require('./socket')(io);
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -40,6 +40,8 @@ app.use(cookieParser());
 app.use(session({ secret: config.get('session.secret') }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('./socket')(io,cookieParser);
 
 var clientDir = path.join(__dirname, 'client');
 

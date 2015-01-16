@@ -54,6 +54,7 @@
     "sequelize-restful": "^0.3.0",
     "sequelize-transactions": "^1.0.1",
     "socket.io": "^1.2.1",
+    "socket.io-cookie": "0.0.1",
     "squel": "^3.9.1",
     "static-favicon": "~1.0.0",
     "underscore": "^1.7.0",

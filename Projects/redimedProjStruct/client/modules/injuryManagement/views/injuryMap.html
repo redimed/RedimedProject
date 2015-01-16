@@ -26,9 +26,15 @@
         <map  center="current-location" zoom="10">
             <marker id="{{im.id}}" data-position="{{im.position}}" icon="{{im.icon}}" ng-repeat="im in injuryMarker" data-on-click="showInfoWindow(event, 'info')">
                 <info-window max-width="500" id="info">
-                    <div>
+                    <div ng-non-bindable="">
                         <div class="row">
-                            <label style="font-weight: bold; font-size: 18px; margin-left: 15px">{{im.fullName}}</label>
+                            <div class="col-md-1">
+                                <img ng-show="im.gender == 'Male'" src="modules/injuryManagement/icons/male.png" />
+                                <img ng-show="im.gender == 'Female'" src="modules/injuryManagement/icons/female.png" />
+                            </div>
+                            <div class="col-md-8">
+                                <label style="margin-top: 20px;font-weight: bold; font-size: 18px; margin-left: 15px">{{im.fullName}}</label>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3"> <label class="bold">Pickup At</label></div>
@@ -56,16 +62,53 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <a ng-show="im.status == 'New'" ng-click="showDetails(im.id)" style="margin-left: 10px;" href="javascript:;" class="btn btn-circle blue-steel btn-sm pull-right">
-                                    <i class="fa fa-pencil"></i> Allocate </a>
+                            <div class="col-md-3"> <label class="bold">Driver</label></div>
+                            <div class="col-md-9">
+                                <label ng-show="im.status == 'Waiting'">{{im.driverUser}}</label>
+                                <select ng-model="info.driverId" ng-show="im.status == 'New'" ng-options="a.id as a.user_name for a in driverListTemp">
+                                    <option value="">--Select Driver--</option>
+                                </select>
+                                <a ng-class="{disabled:info.driverId == null}" ng-show="im.status == 'New'"  ng-click="allocateDriver(im)" style="margin-left: 10px;" href="javascript:;" class="btn btn-success btn-sm">
+                                     Submit </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9">
+                                <!--<a ng-show="im.status == 'New'" ng-click="showDetails(im.id)" style="margin-left: 10px;" href="javascript:;" class="btn blue-steel btn-sm">-->
+                                    <!--<i class="fa fa-pencil"></i> Details </a>-->
                             </div>
                         </div>
 
                     </div>
                 </info-window>
             </marker>
-            <marker  data-position="{{d.position}}" icon="{{d.icon}}" ng-repeat="d in driverMarker" >
+            <marker  data-position="{{d.position}}" icon="{{d.icon}}" ng-repeat="d in driverMarker" data-on-click="showInfoWindow(event, 'infoDriver')">
+                <info-window max-width="500" id="infoDriver">
+                    <div ng-non-bindable="">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="modules/injuryManagement/icons/hospital.png" />
+                            </div>
+                            <div class="col-md-8">
+                                <label style="margin-left:20px; margin-top: 20px;font-weight: bold; font-size: 18px;">{{d.username}}</label>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-md-5"> <label class="bold">Picking: </label></div>
+                            <div class="col-md-7" >
+                                <label>{{d.patientList.length}} Patient(s)</label>
+                            </div>
+                        </div>
+                        <div class="row" ng-repeat="p in d.patientList">
+                            <div class="col-md-2">{{$index + 1}}.</div>
+                            <div class="col-md-10" >
+                                <label>{{p.FullName}}</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </info-window>
             </marker>
         </map>
 

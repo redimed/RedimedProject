@@ -35,7 +35,8 @@ module.exports = function(sequelize, DataTypes) {
       function_mobile: DataTypes.INTEGER(11),
       function_taskFlow : DataTypes.STRING(100) ,
       employee_id : DataTypes.INTEGER(11),
-      img: DataTypes.TEXT
+      img: DataTypes.TEXT,
+      socket: DataTypes.STRING(500)
 }, {
         tableName: 'users', // đặt tên bảng
         createdAt: 'Creation_date',

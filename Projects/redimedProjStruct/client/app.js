@@ -33,7 +33,8 @@ angular.module("app", [
     'ngPDFViewer',
     'ngSanitize',
     'ngMap',
-    'btford.socket-io'
+    'btford.socket-io',
+    'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
     var socket = io.connect('http://localhost:3000/');
@@ -114,8 +115,11 @@ angular.module("app", [
 
     editableOptions.theme = 'bs3';
 
+
     $rootScope.$on("$stateChangeSuccess", function(e, toState, fromState, fromParams){
         if(!$cookieStore.get("userInfo")){
+            socket.removeAllListeners();
+            socket.emit('lostCookie');
             if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register"){
                 e.preventDefault();
                 $state.go("security.login");
