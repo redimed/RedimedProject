@@ -360,7 +360,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
         //SUBMIT END INSERT INJURY LAST
         $scope.submitInjuryAll = function () {
-            $scope.worker.infoMaps = $scope.infoMaps;
+
+            $scope.worker.infoMaps =   $scope.infoMaps;
+
             $ionicLoading.show({
                 template: "<div class='icon ion-ios7-reloading'></div>"+
                 "<br />"+
@@ -458,7 +460,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.isActiveTab = function(tabUrl) {
             return tabUrl == $scope.currentTab;
         };
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/InjuryManagement-v1.0
         $scope.ad = {};
         $scope.result1 = '';
         $scope.options1 = null;
