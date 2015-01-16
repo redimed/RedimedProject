@@ -38,8 +38,8 @@ angular.module('starter', ['ionic',
         }
     })
 
-    .factory('signaling', function (socketFactory) {
-        var socket = io.connect('http://192.168.133.42:3000/');
+    .factory('signaling', function (socketFactory, localStorageService) {
+        var socket = io.connect('http://192.168.133.121:3000/');
 
         var socketFactory = socketFactory({
             ioSocket: socket
@@ -48,9 +48,9 @@ angular.module('starter', ['ionic',
         return socketFactory;
     })
 
-    .config(function($stateProvider, $urlRouterProvider,RestangularProvider) {
+    .config(function($stateProvider, $urlRouterProvider, RestangularProvider) {
 
-        RestangularProvider.setBaseUrl("http://192.168.133.42:3000");
+        RestangularProvider.setBaseUrl("http://192.168.133.121:3000");
 
         //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
 
@@ -79,7 +79,7 @@ angular.module('starter', ['ionic',
             })
     })
 
-    .run(function($state, $rootScope, localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $cordovaMedia){
+    .run(function($state, $rootScope, localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal){
 
         //modal receive phone call
         $ionicModal.fromTemplateUrl('modules/phoneCall/views/modal/receivePhone.html', function(modal) {
@@ -92,7 +92,25 @@ angular.module('starter', ['ionic',
 
         //sound phone call;
         var src = "/android_asset/www/receive_phone.mp3";
+        var media = null;
 
+        if(localStorageService.get("userInfo")) {
+            signaling.emit('checkApp', localStorageService.get("userInfo").id);
+        }
+
+        document.addEventListener("pause", onPause, false);
+
+        function onPause() {
+            console.log('onPause------');
+        }
+
+        function onDeviceReady() {
+            document.addEventListener("offline", onOffline, false);
+        }
+
+        function onOffline() {
+            console.log('onOffline--------');
+        }
 
         localStorageService.set('mode','read');
         $rootScope.$on("$stateChangeSuccess", function(e, toState) {
@@ -111,6 +129,7 @@ angular.module('starter', ['ionic',
                 $ionicSideMenuDelegate.canDragContent(true);
             }
             ionPlatform.ready.then(function (device) {
+
                 var config = null;
 
                 if (ionic.Platform.isAndroid()) {
@@ -137,7 +156,7 @@ angular.module('starter', ['ionic',
             switch (message.type) {
                 case 'call':
 
-                    var media = $cordovaMedia.newMedia(src);
+                    media = new Media(src);
                     media.play();
                     if ($state.current.name === 'app.phoneCall') { return; }
 

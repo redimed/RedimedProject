@@ -2,6 +2,9 @@ angular.module('starter.security.login.controller',[])
     .controller('securityLoginController',function($scope, $state, UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
                                                    $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading){
+
+
+
         $scope.notifications = [];
 
         $scope.$on('pushNotificationReceived', function (event, notification) {
@@ -77,10 +80,11 @@ angular.module('starter.security.login.controller',[])
                 "<span>signing...</span>",
                 animation: 'fade-in',
                 showBackdrop: true,
-                maxWidth: 500
+                maxWidth: 500,
+                showDelay: 0
             });
-            SecurityService.login($scope.modelUser).then(function(response){
-                UserService.detail().then(function(response){
+            SecurityService.login($scope.modelUser).then(function(response) {
+                UserService.detail().then(function(response) {
                     if(typeof response.userInfo !== 'undefined')
                         localStorageService.set("userInfo", response.userInfo);
 
@@ -109,12 +113,11 @@ angular.module('starter.security.login.controller',[])
                     }
                     else
                     {
+                        $ionicLoading.hide();
                         if(localStorageService.get("userInfo").UserType.user_type == "Driver")
                         {
-                            $ionicLoading.hide();
                             $state.go('app.driver.list');
                         } else {
-                            $ionicLoading.hide();
                             $state.go('app.injury.info');
                         }
                     }
@@ -127,4 +130,6 @@ angular.module('starter.security.login.controller',[])
                 })
             });
         }
+
+
     });

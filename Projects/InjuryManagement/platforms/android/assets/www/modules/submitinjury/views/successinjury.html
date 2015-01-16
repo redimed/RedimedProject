@@ -4,9 +4,7 @@
     </ion-nav-buttons>
 
     <div class="bar bar-subheader bar-sub-color">
-        <button class="button button-clear button-positive" ui-sref="app.injury.desinjury">
-            Back
-        </button>
+        <button class="button button-icon icon ion-ios7-arrow-back" ui-sref="app.injury.desinjury">&nbsp;Back</button>
     </div>
     <ion-content style="background-color: #F7F7F7 !important;">
 
@@ -117,21 +115,21 @@
 
 
         <div class="portlet light">
-            <div class="portlet-title">
-                <div class="tools" style="float:left;" >
-                    <i class="fa fa-map-marker fa-2x text-danger" ng-click="isCollapsed = !isCollapsed">Show maps</i>
-                </div>
-            </div>
+            <!--<div class="portlet-title">-->
+                <!--<div class="tools" style="float:left;" >-->
+                    <!--<i class="fa fa-map-marker fa-2x text-danger" ng-click="isCollapsed = !isCollapsed">Show maps</i>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div class="row portlet-body " collapse="isCollapsed" style="height: 0px;overflow: auto;margin: 0px;padding: 0px;">
-                <div class="list list-inset" >
-
-                    <label class="item item-input col-xs-8" style="float:left">
+            <div class="row portlet-body" collapse="isCollapsed" style="height: 0px; overflow: auto; margin: 0px; padding: 0px;">
+                <div class="item item-input-inset">
+                    <label class="item-input-wrapper">
                         <i class="icon ion-search placeholder-icon"></i>
-                        <input type="text" class="" placeholder="Search" ng-model="infoMaps.format_address" ng-autocomplete="infoMaps.format_address" details="details1" options="options1">
+                        <input type="text" placeholder="Search" ng-model="infoMaps.format_address" ng-autocomplete="infoMaps.format_address" details="details1" options="options1" style="color: #000;">
                     </label>
-                    <button class="button button-positive"  ng-click="test=!test"><i class="fa fa-search"></i></button>
+                    <button class="button button-small button-icon icon ion-ios7-navigate-outline"  ng-click="test=!test"></button>
                 </div>
+
                 <div id="map-canvas" mdt-map address="infoMaps.format_address" ad="ad" class="col-md-12" lo="test"  style="height: 200px; width: 100%"></div>
             </div>
             <div class="clearfix"></div>
@@ -139,7 +137,7 @@
 
         <div class="row">
             <div class="col col-50 col-offset-25 padding-bottom">
-                <button class="button button-block bg-btn-custom border-radius-button" ng-click="submitInjuryAll()">
+                <button class="button button-block bg-btn-custom" ng-click="submitInjuryAll()">
                     Submit
                 </button>
             </div>
@@ -148,4 +146,3 @@
 
     </ion-content>
 </ion-view>
-

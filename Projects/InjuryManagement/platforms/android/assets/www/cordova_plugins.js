@@ -255,13 +255,6 @@ module.exports = [
         "clobbers": [
             "window.Media"
         ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.statusbar/www/statusbar.js",
-        "id": "org.apache.cordova.statusbar.statusbar",
-        "clobbers": [
-            "window.StatusBar"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -277,10 +270,9 @@ module.exports.metadata =
     "org.apache.cordova.dialogs": "0.2.10",
     "org.apache.cordova.file": "1.3.1",
     "org.apache.cordova.file-transfer": "0.4.7",
-    "org.apache.cordova.geolocation": "0.3.10",
+    "org.apache.cordova.geolocation": "0.3.11",
     "org.apache.cordova.inappbrowser": "0.5.3",
-    "org.apache.cordova.media": "0.2.15",
-    "org.apache.cordova.statusbar": "0.1.8"
+    "org.apache.cordova.media": "0.2.15"
 }
 // BOTTOM OF METADATA
 });

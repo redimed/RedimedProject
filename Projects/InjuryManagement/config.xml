@@ -17,5 +17,13 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
-  <icon src="www/img/icons/icon.png" />
+  <!--<icon src="www/img/icons/icon.png" />-->
+  <icon src="www/img/icons/android/mipmap-hdpi/ic_launcher.png" width="72" height="72" />
+  <icon src="www/img/icons/android/mipmap-mdpi/ic_launcher.png" width="48" height="48" />
+  <icon src="www/img/icons/android/mipmap-xdpi/ic_launcher.png" width="96" height="96" />
+  <icon src="www/img/icons/android/mipmap-xxdpi/ic_launcher.png" width="144" height="144" />
+  <icon src="www/img/icons/android/mipmap-xxxdpi/ic_launcher.png" width="192" height="192" />
+  <feature name="Media">
+    <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+  </feature>
 </widget>

@@ -3,10 +3,7 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
         <div class="bar bar-subheader">
-            <button class="button button-clear button-positive" ui-sref="app.worker.main">
-                Back
-            </button>
-            <h1 class="title">Second</h1>
+            <button class="button button-icon icon ion-ios7-arrow-back" ui-sref="app.worker.main">&nbsp;Back</button>
         </div>
     <form name="second" novalidate>
         <ion-content class="padding has-subheader has-header">
@@ -33,27 +30,35 @@
                 <!--<input type="text" ng-model="worker.Pr_lang" name="Pr_lang">-->
                 <!--</label>-->
 
-                <label class="item item-input">
+                <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Occupation</span>
                     <input type="text" ng-model="worker.Occupation" name="Occupation">
                 </label>
 
-                <label class="item item-input">
+                <hr class="custom-hr">
+
+                <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Partner's Name</span>
                     <input type="text" ng-model="worker.Partner_name" name="Partner_name">
                 </label>
 
-                <label class="item item-input">
+                <hr class="custom-hr">
+
+                <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Partner's DOB</span>
                     <input type="text" onfocus="this.type='date';
                     this.setAttribute('onfocus','');this.blur();
                     this.focus();" ng-model="worker.Partner_DOB" name="Partner_DOB" />
                 </label>
 
-                <label class="item item-input">
+                <hr class="custom-hr">
+
+                <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Partner's Occupation</span>
                     <input type="text" ng-model="worker.Partner_Occupation" name="Partner_Occupation">
                 </label>
+
+                <hr class="custom-hr">
 
                 <!--<label class="item item-input" ng-class="{'has-error':isSubmit3 && second.NOK_emerg_contact.$invalid}">-->
                 <!--<span class="input-label span-input-color">NOK/Emerg.Contact</span>-->
@@ -67,28 +72,37 @@
                 <!--<i ng-class="{'icon ion-alert-circled error':isSubmit3 && second.NOK_Phone.$invalid}"></i>-->
                 <!--</label>-->
 
-                <label class="item item-input">
+                <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Alias First Name</span>
                     <input type="text" ng-model="worker.Alias_First_name" name="Alias_First_name">
                 </label>
 
-                <label class="item item-input">
+                <hr class="custom-hr">
+
+                <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Alias Sur Name</span>
                     <input type="text" ng-model="worker.Alias_Sur_name" name="Alias_Sur_name">
                 </label>
 
-                <label class="item item-input">
+                <hr class="custom-hr">
+
+                <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">UR No</span>
                     <input type="tel" ng-model="worker.UR_no" name="UR_no">
                 </label>
 
-                <label class="item item-input">
+                <hr class="custom-hr">
+
+                <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Custom</span>
                     <input type="text" ng-model="worker.Custom" name="Custom">
                 </label>
-                <div class="padding-right padding-left">
-                    <button type="submit" class="button button-block button-positive" ng-click="submit(workerForm, second)">
-                        Add Worker
+
+                <hr class="custom-hr">
+
+                <div class="padding-right padding-left" style="padding-top: 40px">
+                    <button type="submit" class="button button-block btn-success-custom" ng-click="submit(workerForm, second)">
+                        Submit
                     </button>
                 </div>
             </ion-list>

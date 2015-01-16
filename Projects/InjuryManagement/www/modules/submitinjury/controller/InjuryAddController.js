@@ -3,7 +3,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
     .controller('InjuryAddController', function($scope, $state, $filter, $stateParams,
                                                 InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                                 $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate, $cordovaGeolocation,
-                                                $ionicLoading, $compile, $timeout, $rootScope){
+                                                $ionicLoading, $compile, $timeout){
         $scope.isSubmit = false;
         $scope.isShow = true;
         $scope.imgURI = [];

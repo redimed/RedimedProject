@@ -10,8 +10,8 @@
     float: right;
 }
 .has-error {
-    border-left: 3px solid #cc2511;
-    border-right: 3px solid #cc2511;
+    border-left: 3px solid #cc2511 !important;
+    border-right: 3px solid #cc2511 !important;
 }
 form i.icon.error {
     color: #ef4e3a;
@@ -120,6 +120,11 @@ form i.icon.error {
 .bg-menu-left{
     background: url("../img/Medicine - 1.jpg");
     background-size: cover;
+}
+.bg-menu-right{
+    background: url("../img/Medicine - 1.jpg");
+    background-size: cover;
+    background-position: right;
 }
 .item-menu {
     background-color: rgba(0, 0, 0, 0) !important;
@@ -279,7 +284,8 @@ form i.icon.error {
     border-radius: 10px !important;
 }
 .bg-btn-custom {
-    background-color:#898C90;
+    background-color: #FF5E3A;
+    border-color: #FF5E3A ;
     color: #F5F5F5;
 }
 .name-info-injury {
@@ -328,6 +334,17 @@ form i.icon.error {
     color: white;
     font-size: 60px;
     font-weight: lighter;
+}
+.img-image-name-phone{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    color: #080808;
+    font-size: 30px;
+    font-weight: lighter;
+    background-color: #1bbc9b;
 }
 .custom-item-listpatient {
     padding: 0;
@@ -770,4 +787,13 @@ form i.icon.error {
     border-radius: 50% !important;
     color: #000 !important;
     border: 1px solid rgba(0, 0, 0, .3) !important;
+}
+
+.item-menu-custom {
+    font-weight: bolder;
+}
+
+.btn-success-custom {
+    background-color: #4CD964;
+    border-color: #4CD964;
 }

@@ -15,8 +15,8 @@ angular.module('starter.phoneCall.controller',[])
 
 
         var src = "/android_asset/www/phone_calling.mp3";
-        var media = $cordovaMedia.newMedia(src);
-
+        var media = null;
+        media = new Media(src);
 
         function call(isInitiator, contactName) {
             console.log(new Date().toString() + ': calling to ' + contactName + ', isInitiator: ' + isInitiator);
@@ -53,7 +53,6 @@ angular.module('starter.phoneCall.controller',[])
                 if ($scope.contacts[contactName]) {
                     delete $scope.contacts[contactName];
                 }
-
                 if (Object.keys($scope.contacts).length === 0) {
                     signaling.emit('sendMessage', contactName, { type: 'ignore' });
                     if(localStorageService.get("userInfo").UserType.user_type == "Driver")
@@ -88,11 +87,10 @@ angular.module('starter.phoneCall.controller',[])
             }, 1500);
         }
 
-        $scope.mute = function() {
-            alert('$scope.mute');
-            session.streams.audio = false;
-            $scope.contacts.renegotiate();
-        }
+        //$scope.mute = function() {
+        //    session.streams.audio = false;
+        //    $scope.contacts.renegotiate();
+        //}
 
 
         $scope.ignore = function () {
@@ -149,6 +147,7 @@ angular.module('starter.phoneCall.controller',[])
         function onMessageReceive (name, message) {
             switch (message.type) {
                 case 'answer':
+                    media.stop();
                     $scope.$apply(function () {
                         $scope.callInProgress = true;
                         $timeout($scope.updateVideoPosition, 1000);
@@ -167,6 +166,7 @@ angular.module('starter.phoneCall.controller',[])
                     break;
 
                 case 'ignore':
+                    media.stop();
                     var len = Object.keys($scope.contacts).length;
                     if (len > 0) {
                         if ($scope.contacts[name]) {

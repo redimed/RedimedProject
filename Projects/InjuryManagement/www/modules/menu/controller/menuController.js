@@ -1,13 +1,15 @@
 angular.module("starter.menu.controller",[])
     .controller("menuController",function($scope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
-                                          $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling){
+                                          $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling, $cordovaGeolocation){
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
         $scope.Injurymenu = [];
         $scope.user = userInfo.Booking_Person;
         $scope.userName = userInfo.user_name;
         $scope.selectedMenu = null;
+
+        var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
 
         if(ionic.Platform.isAndroid() || ionic.Platform.isIOS())
         {
@@ -18,8 +20,33 @@ angular.module("starter.menu.controller",[])
         signaling.on('online', function (userlist) {
             $scope.$apply(function(){
                 $scope.contacts = userlist;
+
+                for(var i = 0 ; i < $scope.contacts.length; i++) {
+                    $scope.contacts[i].background = colors[Math.floor(Math.random() * colors.length)];
+                    $scope.contacts[i].letter = String($scope.contacts[i].username).substr(0,1).toUpperCase();
+                }
             })
         })
+
+        signaling.on('isLoggedIn', function () {
+                clearInterval(locationInterval);
+                $scope.userInfoLS.push({
+                    platform: ionic.Platform.platform(),
+                    info: userInfo,
+                    token: notificationLS.regid
+                })
+                signaling.removeAllListeners();
+                SecurityService.logOutapp($scope.userInfoLS).then(function (result) {
+                    if (result.status.toLowerCase() == "success") {
+                        localStorageService.remove('userInfo');
+                        localStorageService.remove('companyInfo');
+                        localStorageService.remove("notificationLS");
+                        localStorageService.remove("idpatient_notice");
+                        $state.go("security.login");
+                    }
+                })
+            }
+        );
 
         UserService.getUserInfo(userInfo.id).then(function(data){
             $scope.img = data.img;
@@ -50,6 +77,7 @@ angular.module("starter.menu.controller",[])
         loadMenu();
 
         $scope.logoutApp = function() {
+            clearInterval(locationInterval);
             $scope.userInfoLS.push({
                 platform: ionic.Platform.platform(),
                 info: userInfo,
@@ -59,12 +87,12 @@ angular.module("starter.menu.controller",[])
                 template: 'Are you sure you want to log out?'
             }).then(function(result){
                 if(result){
-                    signaling.emit('logout', userInfo.user_name);
+                    signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type);
                     signaling.removeAllListeners();
                     $ionicLoading.show({
                         template: "<div class='icon ion-ios7-reloading'></div>"+
                         "<br />"+
-                        "<span>Waiting...</span>",
+                        "<span>Logout...</span>",
                         animation: 'fade-in',
                         showBackdrop: true,
                         maxWidth: 200,
@@ -143,6 +171,36 @@ angular.module("starter.menu.controller",[])
                 }
                 else $cordovaDialogs.alert(notification.alert, "(RECEIVED WHEN APP IN BACKGROUND) Push Notification Received");
             }
+        }
+
+        var locationInterval = setInterval(function () {getLocation()}, 10000);
+
+        var lat = 0;
+        var long = 0;
+
+        function getLocation() {
+            var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy:true};
+            $cordovaGeolocation.getCurrentPosition(posOptions)
+                .then(function (position) {
+                    var driverLocation = [];
+
+                    //lat  += position.coords.latitude / position.coords.latitude
+                    //long += position.coords.longitude / position.coords.longitude
+
+                    lat  = position.coords.latitude
+                    long = position.coords.longitude
+
+                    driverLocation.push({
+                        id: localStorageService.get("userInfo").id,
+                        latitude: lat,
+                        longitude: long,
+                        userName: localStorageService.get("userInfo").user_name,
+                        userType: localStorageService.get("userInfo").UserType.user_type
+                    });
+                    signaling.emit('location', driverLocation);
+                }, function(err) {
+                    console("Error " + err);
+                });
         }
 
     })

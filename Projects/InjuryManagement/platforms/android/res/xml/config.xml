@@ -33,11 +33,11 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
-    <feature name="Media">
-        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
-    </feature>
     <feature name="StatusBar">
         <param name="android-package" onload="true" value="org.apache.cordova.statusbar.StatusBar" />
+    </feature>
+    <feature name="Media">
+        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
     </feature>
     <name>InjuryManagement</name>
     <description>
@@ -53,5 +53,9 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="Orientation" value="portrait" />
-    <icon src="www/img/icons/icon.png" />
+    <icon height="72" src="www/img/icons/android/mipmap-hdpi/ic_launcher.png" width="72" />
+    <icon height="48" src="www/img/icons/android/mipmap-mdpi/ic_launcher.png" width="48" />
+    <icon height="96" src="www/img/icons/android/mipmap-xdpi/ic_launcher.png" width="96" />
+    <icon height="144" src="www/img/icons/android/mipmap-xxdpi/ic_launcher.png" width="144" />
+    <icon height="192" src="www/img/icons/android/mipmap-xxxdpi/ic_launcher.png" width="192" />
 </widget>
