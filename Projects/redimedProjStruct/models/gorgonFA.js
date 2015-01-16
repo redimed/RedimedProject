@@ -122,7 +122,7 @@ module.exports = function(sequelize, DataTypes){
         "Lsign" : DataTypes.TEXT,
         "LDate" : DataTypes.DATE,
         "LName" : DataTypes.STRING(50),
-        "LPosition" : DataTypes.STRING(50),
+        "LPosition" : DataTypes.STRING(100),
         "Chest": DataTypes.INTEGER(11),
         "Created_by" : DataTypes.INTEGER(11),
         //"Creation_date" : DataTypes.DATE,

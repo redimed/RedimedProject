@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
 	<property name="ireport.zoom" value="1.0245201830476074"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -220,7 +220,7 @@ doc_ma.`MA_ID` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"\\images\\header.PNG"]]></imageExpression>
 			</image>
 			<rectangle>
-				<reportElement mode="Opaque" x="1" y="11" width="260" height="92" uuid="971ffacf-83fc-4f55-b41b-471f2d3df435"/>
+				<reportElement mode="Opaque" x="0" y="11" width="265" height="92" uuid="971ffacf-83fc-4f55-b41b-471f2d3df435"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="8" y="81" width="50" height="15" uuid="05e93de0-5e56-4f1f-b7a2-665c332a56bd"/>
@@ -840,7 +840,7 @@ doc_ma.`MA_ID` = $P{id}]]>
 			</image>
 			<textField isBlankWhenNull="false">
 				<reportElement x="6" y="572" width="540" height="90" uuid="83facef6-df21-4c49-a06f-2f30514020d8"/>
-				<textFieldExpression><![CDATA[($F{doc_ma_COMMENT_SEC4} != null ? $F{doc_ma_COMMENT_SEC4} + "\n" : "") + ($F{doc_ma_COMMENT_SEC5} != null ? $F{doc_ma_COMMENT_SEC5} + "\n" : "") + ($F{doc_ma_COMMENT_SEC6} != null ? $F{doc_ma_COMMENT_SEC6} + "\n" : "") + ($F{doc_ma_COMMENT_SEC7} != null ? $F{doc_ma_COMMENT_SEC7} + "\n" : "") + ($F{doc_ma_COMMENT_SEC8} != null ? $F{doc_ma_COMMENT_SEC8} + "\n" : "") + ($F{doc_ma_COMMENT_SEC9} != null ? $F{doc_ma_COMMENT_SEC9} : "") ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{doc_ma_COMMENT_SEC4} != null ? $F{doc_ma_COMMENT_SEC4} + "\n" : "") + ($F{doc_ma_COMMENT_SEC5} != null ? $F{doc_ma_COMMENT_SEC5} + "\n" : "") + ($F{doc_ma_COMMENT_SEC6} != null ? $F{doc_ma_COMMENT_SEC6} + "\n" : "") + ($F{doc_ma_COMMENT_SEC7} != null ? $F{doc_ma_COMMENT_SEC7} + "\n" : "") + ($F{doc_ma_COMMENT_SEC8} != null ? $F{doc_ma_COMMENT_SEC8} + "\n" : "") + ($F{doc_ma_COMMENT_SEC9} != null ? $F{doc_ma_COMMENT_SEC9} : "")]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="669">

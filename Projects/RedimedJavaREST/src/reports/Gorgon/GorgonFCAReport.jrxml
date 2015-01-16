@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonFCAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1453719-11ad-40a0-b0d5-bfa64cf77775">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="908"/>
+	<property name="ireport.y" value="1009"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
@@ -130,15 +130,15 @@
      gorgon_doc_fca.`LEPDC` AS gorgon_doc_fca_LEPDC,
      gorgon_doc_fca.`LAPC` AS gorgon_doc_fca_LAPC,
      gorgon_doc_fca.`LComment` AS gorgon_doc_fca_LComment,
+     gorgon_doc_fca.`LPosition` AS gorgon_doc_fca_LPosition,
+     gorgon_doc_fca.`Chest` AS gorgon_doc_fca_Chest,
      doctors.`NAME` AS gorgon_doc_fca_NAME,
      SUBSTRING_INDEX(doctors.`Signature`, ',', -1) AS gorgon_doc_fca_Signature,
-     redimedsites.`Site_name` AS gorgon_doc_fca_LPosition,
      cln_patients.`Sex` AS gorgon_doc_fca_sex
 FROM
      `gorgon_doc_fca` gorgon_doc_fca
      INNER JOIN `cln_patients` cln_patients ON cln_patients.`Patient_id` = gorgon_doc_fca.`patientId`
      INNER JOIN `doctors` doctors ON doctors.`doctor_id` = gorgon_doc_fca.`DocId`
-     INNER JOIN `redimedsites` redimedsites ON redimedsites.`id` = gorgon_doc_fca.`LPosition`
 WHERE
      gorgon_doc_fca.`id` = $P{id}]]>
 	</queryString>
@@ -261,9 +261,10 @@ WHERE
 	<field name="gorgon_doc_fca_LEPDC" class="java.lang.Integer"/>
 	<field name="gorgon_doc_fca_LAPC" class="java.lang.Integer"/>
 	<field name="gorgon_doc_fca_LComment" class="java.lang.String"/>
+	<field name="gorgon_doc_fca_LPosition" class="java.lang.String"/>
+	<field name="gorgon_doc_fca_Chest" class="java.lang.Integer"/>
 	<field name="gorgon_doc_fca_NAME" class="java.lang.String"/>
 	<field name="gorgon_doc_fca_Signature" class="java.lang.String"/>
-	<field name="gorgon_doc_fca_LPosition" class="java.lang.String"/>
 	<field name="gorgon_doc_fca_sex" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -1444,87 +1445,87 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Yes]]></text>
 			</staticText>
 			<line>
-				<reportElement x="424" y="660" width="1" height="30" uuid="b35b926c-249b-4d25-8618-a365099edd06"/>
+				<reportElement x="424" y="682" width="1" height="30" uuid="b35b926c-249b-4d25-8618-a365099edd06"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="10" y="558" width="52" height="14" uuid="b23efdc9-363f-47cf-9aaf-c6b2890089ca"/>
+				<reportElement x="10" y="580" width="52" height="14" uuid="b23efdc9-363f-47cf-9aaf-c6b2890089ca"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Comments]]></text>
 			</staticText>
 			<line>
-				<reportElement x="62" y="621" width="481" height="1" uuid="8d57251c-f4e7-40be-b294-94e4cd7fcdb4"/>
+				<reportElement x="62" y="643" width="481" height="1" uuid="8d57251c-f4e7-40be-b294-94e4cd7fcdb4"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="425" y="661" width="60" height="30" uuid="2b4331d5-866d-46ac-a3ea-3f4805dae80b"/>
+				<reportElement x="425" y="683" width="60" height="30" uuid="2b4331d5-866d-46ac-a3ea-3f4805dae80b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<line>
-				<reportElement x="62" y="647" width="481" height="1" uuid="90743a57-f6b8-4f98-91d3-699f8a80a08d"/>
+				<reportElement x="62" y="669" width="481" height="1" uuid="90743a57-f6b8-4f98-91d3-699f8a80a08d"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="425" y="660" width="120" height="1" uuid="d225c962-7e32-4b6e-b90b-f66b3f52d738"/>
+				<reportElement x="425" y="682" width="120" height="1" uuid="d225c962-7e32-4b6e-b90b-f66b3f52d738"/>
 			</line>
 			<line>
-				<reportElement x="544" y="660" width="1" height="30" uuid="579ceebb-b846-464d-b888-13f2b3590f2a"/>
+				<reportElement x="544" y="682" width="1" height="30" uuid="579ceebb-b846-464d-b888-13f2b3590f2a"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="608" width="481" height="1" uuid="57024975-2211-4292-bef5-1210a4809ec3"/>
+				<reportElement x="62" y="630" width="481" height="1" uuid="57024975-2211-4292-bef5-1210a4809ec3"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="569" width="481" height="1" uuid="313b1073-3f68-4846-9c06-b8543d25a19f"/>
+				<reportElement x="62" y="591" width="481" height="1" uuid="313b1073-3f68-4846-9c06-b8543d25a19f"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="595" width="481" height="1" uuid="d16aac8c-2a4d-4940-889e-5b60fbb6d21e"/>
+				<reportElement x="62" y="617" width="481" height="1" uuid="d16aac8c-2a4d-4940-889e-5b60fbb6d21e"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="582" width="481" height="1" uuid="beaa79c0-ec2c-4567-8dcc-06f81943eb40"/>
+				<reportElement x="62" y="604" width="481" height="1" uuid="beaa79c0-ec2c-4567-8dcc-06f81943eb40"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="634" width="481" height="1" uuid="02bab866-2d03-4b0c-b0fe-ca06c52def9a"/>
+				<reportElement x="62" y="656" width="481" height="1" uuid="02bab866-2d03-4b0c-b0fe-ca06c52def9a"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="425" y="690" width="120" height="1" uuid="21c6dea9-cbdd-4388-8e96-483f103da3c1"/>
+				<reportElement x="425" y="712" width="120" height="1" uuid="21c6dea9-cbdd-4388-8e96-483f103da3c1"/>
 			</line>
 			<line>
-				<reportElement x="484" y="661" width="1" height="30" uuid="45c707d3-d14b-48e9-afb6-a2bb462ecf54"/>
+				<reportElement x="484" y="683" width="1" height="30" uuid="45c707d3-d14b-48e9-afb6-a2bb462ecf54"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="518" y="661" width="15" height="29" uuid="8a557e87-1c38-47af-8eb8-2a76075c4e57"/>
+				<reportElement x="518" y="683" width="15" height="29" uuid="8a557e87-1c38-47af-8eb8-2a76075c4e57"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[/5]]></text>
 			</staticText>
@@ -1748,11 +1749,11 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Excellent]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="67" y="557" width="477" height="92" uuid="dfd0f5ba-b486-42bf-830e-a912dc5fe94f"/>
+				<reportElement x="67" y="579" width="477" height="92" uuid="dfd0f5ba-b486-42bf-830e-a912dc5fe94f"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_2Comments} != null ? $F{gorgon_doc_fca_2Comments} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="487" y="661" width="33" height="29" uuid="a219abbf-32d7-46e9-b973-84c201abc293"/>
+				<reportElement x="487" y="683" width="33" height="29" uuid="a219abbf-32d7-46e9-b973-84c201abc293"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_2Total} != null ? $F{gorgon_doc_fca_2Total} : ""]]></textFieldExpression>
 			</textField>
@@ -1931,6 +1932,14 @@ Barrow Island LNG Plant ]]></text>
 					<printWhenExpression><![CDATA[$F{gorgon_doc_fca_1Rom_Ankles} != null && $F{gorgon_doc_fca_1Rom_Ankles}.intValue() == 1 ? true : false]]></printWhenExpression>
 				</reportElement>
 			</ellipse>
+			<staticText>
+				<reportElement x="10" y="555" width="253" height="14" uuid="050718ec-3913-4f6f-b4fc-292cde8c8053"/>
+				<text><![CDATA[Chester step test performed as per company request]]></text>
+			</staticText>
+			<image>
+				<reportElement mode="Transparent" x="260" y="555" width="14" height="14" uuid="df8c7626-875a-42a0-81f2-7e85e932407d"/>
+				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_Chest} != null && $F{gorgon_doc_fca_Chest}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
+			</image>
 		</band>
 		<band height="724">
 			<image hAlign="Center" vAlign="Middle">

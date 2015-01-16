@@ -473,7 +473,7 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
                     LComment: null,
                     DocId : response['docID'],
                     LName : response['docName'],
-                    LPosition : null,
+                    LPosition : '',
                     Chest : 0,
                     Lsign: response['docSign'],
                     LDate : date ,
