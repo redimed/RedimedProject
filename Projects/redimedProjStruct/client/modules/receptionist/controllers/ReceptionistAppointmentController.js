@@ -3,12 +3,13 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 .controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, mdtClaimService, localStorageService) {
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
+    $scope.addClaimShow = false;
 
 	$scope.claim_params = {
 		permission: {
 			create: true,
 			edit: false
-		}
+		},
 	}
 
 	$scope.params = {
@@ -67,7 +68,9 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	}
 
 	$scope.addClaim = function(){
-		angular.element(claimListAddId).fadeIn();	
+        angular.element(claimListAddId).fadeIn();
+        $scope.claim_params.Patient_id = $scope.patient_id
+        $scope.addClaimShow = true;
 	}
 
 	$scope.$watch('claim', function(newClaim, oldClaim){
