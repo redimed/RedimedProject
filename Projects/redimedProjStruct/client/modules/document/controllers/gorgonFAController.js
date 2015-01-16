@@ -341,7 +341,10 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
         };
 
         //============================================INSERT && UPDATE===============================
-        var insert = true;
+        var insert = true,
+            FName = '',
+            SName = '',
+            MName = '';
 
         DocumentService.checkGorgonFA(Patient_ID, CalID).then(function (response) {
             if(response['status'] == 'not'){
@@ -350,10 +353,13 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
             }else if (response['status'] === 'insert') {
                 insert = true;
                 $scope.isNew = true;
+                FName = $scope.patientInfo.First_name != null ? $scope.patientInfo.First_name : '';
+                SName = $scope.patientInfo.Sur_name != null ? $scope.patientInfo.Sur_name : '';
+                MName = $scope.patientInfo.Middle_name != null ? $scope.patientInfo.Middle_name : '';
                 $scope.info = {
                     id: null,
                     patientId: Patient_ID,
-                    fName: $scope.patientInfo.First_name + " " + $scope.patientInfo.Sur_name + " " + $scope.patientInfo.Middle_name,
+                    fName: FName + " " + MName + " " + SName,
                     age: null,
                     JAF: null,
                     DOB: $scope.patientInfo.DOB,
