@@ -88,7 +88,8 @@ module.exports = function(sequelize, DataTypes){
                 Patient.hasMany(models.Appointment,{
                     as: 'Appointments', 
                     foreignKey: 'Patient_id',
-                    through: 'cln_appt_patients'
+                    // through: 'cln_appt_patients'
+                    through: models.ApptPatient
                 });
 
             }

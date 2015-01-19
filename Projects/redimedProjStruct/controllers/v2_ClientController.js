@@ -1,6 +1,8 @@
 var PatientModel = require('../v1_models/Cln_patients');
 var db = require('../models');
 
+var mdtFunction = require('../mdt-functions');
+
 module.exports = {
 
 	postAppointments: function(req, res) {
@@ -22,8 +24,41 @@ module.exports = {
 		}).error(function(error){
 			res.json(500, {status: 'error', error: error});
 		});
-
 	},
+
+	postRecallAppointments: function(req, res) {
+    	var patient_id = req.body.patient_id;
+
+    	var str_now = mdtFunction.toDateDatabase(new Date());
+    	console.log(str_now)
+
+    	db.ApptPatient.findAll({
+			where: {Patient_id: patient_id},
+			include: [
+				{ 
+					model: db.Appointment , as: 'Appointment',
+					attributes: ['FROM_TIME'],
+					include: [
+						{ model: db.Department , as: 'Department', attributes: ['CLINICAL_DEPT_NAME'] },
+						{ model: db.SysServices , as: 'Service', attributes: ['SERVICE_NAME'] },
+						{ model: db.Doctor , as: 'Doctor', attributes: ['NAME'] },
+					],
+					where: {FROM_TIME: {gt: str_now}}
+				}
+			],
+			// attributes: ['Patient_id'],
+			order: [ [ { model: db.Appointment, as: 'Appointment' }, 'FROM_TIME', 'DESC' ] ]
+		}).success(function(data){
+			if(!data) {
+				res.json(500, {status: 'error', message: 'Cannot found Patient'});
+				return;
+			}
+			res.json({status: 'success', data: data});
+		}).error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+
+    },
 
 	postClaims: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
@@ -46,7 +81,6 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		});
-
 	},
 
 	postCompanies: function(req, res){
@@ -107,6 +141,10 @@ module.exports = {
             res.json({status: 'error', error: err});
         })
     },
+
+    /*
+    *	NUM 
+    */
 	
 	getNumCompanies: function(req, res) {
 		var id = req.query.id;

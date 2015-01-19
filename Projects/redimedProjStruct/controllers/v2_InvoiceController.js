@@ -31,14 +31,34 @@ module.exports = {
 		var fields = req.body.fields;
 
 		var search_data = req.body.search;
-		var whereOpt = {Patient_id: search_data.patient_id};
+		var whereOpt = {};
+
+
+		
+		if(search_data && search_data.patient_id) {
+			whereOpt.Patient_id = search_data.patient_id;
+			var inc_model = inc_common_model;
+		} else {
+			var inc_model = inc_common_model.concat([
+				{
+					model: db.Patient , as: 'Patient',
+					attributes: ['Title', 'First_name', 'Sur_name']
+				}
+			]);
+
+			if(search_data.STATUS) { // equal
+				whereOpt.STATUS = search_data.STATUS;
+			}
+
+		}
 
 		db.mdtInvoiceHeader.findAndCountAll({
 			where: whereOpt,
 			offset: offset,
 			limit: limit,
 			attributes: fields,
-			include: inc_common_model,
+			include: inc_model,
+			order: 'HEADER_ID DESC'
 		}).success(function(result){
 			res.json({"status": "success", "list": result.rows, "count": result.count});
 		})
@@ -85,8 +105,6 @@ module.exports = {
 	 	var postData = req.body.data;	
         var header_id =  req.body.header_id;
 
-        console.log(postData)
-
         db.mdtInvoiceHeader.find({
         	where: {header_id: header_id},
         }).then(function(header){
@@ -102,6 +120,37 @@ module.exports = {
             res.json(500, {"status": "error", "message": error });
         })	
 	},
+
+	postAdd: function(req, res){
+		var postData = req.body.data;	
+		var lines = postData.lines;
+
+		var amount = 0;
+		for(var i = 0, len = lines.length; i < len; ++i) {
+ 			var line = lines[i];
+ 			line.AMOUNT = line.QUANTITY * line.PRICE;
+ 			amount += line.AMOUNT ;
+ 		} 
+ 		postData.AMOUNT = amount;
+
+ 		console.log(lines);
+
+		db.mdtInvoiceHeader.create(postData)
+		.success(function (header) {
+			var header_id = header.header_id;
+			for(var i = 0, len = lines.length; i < len; ++i) {
+	 			lines[i].HEADER_ID = header_id;
+	 		} 
+			return db.mdtInvoiceLine.bulkCreate(lines)
+		})
+		.success(function(create){
+			res.json({status: 'success'});
+		})
+		.error(function (error) {
+            res.json(500, {'status': 'error','message': error });
+        })
+	},
+
 	postSave : function(req, res) {
 		var header_id = req.body.header_id;	
 
@@ -127,7 +176,7 @@ module.exports = {
 	 			amount +=  line.AMOUNT;
 	 		}
 
-	 		return db.mdtInvoiceHeader.update({AMOUNT: amount}, {
+	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: 'approach'}, {
 	            header_id: header_id
 	        });
 		}).then(function(updated){

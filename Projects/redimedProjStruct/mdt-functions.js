@@ -117,7 +117,12 @@ module.exports = {
 			var month = date.getMonth()+1;
 			var year = date.getFullYear();
 		}
-
+		if(dates < 10) {
+			dates = '0' + dates;
+		}
+		if(month < 10) {
+			month = '0' + month;
+		}
 		return year+"-"+month+"-"+dates;
 	},
 	nowDateDatabase: function(){

@@ -14,7 +14,7 @@ module.exports = {
 		// query.left_join('cln_insurers', null, 'companies.Insurer = cln_insurers.id');
 		// var sql =  query.toString();
 
-				var k_sql = req.k_sql;
+		var k_sql = req.k_sql;
 
 		var company_data = {};
 
