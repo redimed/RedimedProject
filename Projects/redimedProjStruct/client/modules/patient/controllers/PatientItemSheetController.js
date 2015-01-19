@@ -124,7 +124,6 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
                         item.disable_fee = false;
                     }
                 });
-                
             },
             class:function(item){
                 // CHECK EXIST IN DEPT_ITEMS    
@@ -140,8 +139,7 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
                 if(t_item) {
                     item.type = 'extra_item';
                     return 'info';
-                }
-                
+                }       
             },
             options:{
                 api:'api/erm/v2/items/search',

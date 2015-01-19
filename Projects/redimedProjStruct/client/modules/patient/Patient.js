@@ -54,12 +54,21 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-      .state("loggedIn.patient.invoices", {
+    .state("loggedIn.patient.invoices", {
         url: "/:patient_id/invoices/:cal_id",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/invoices.html",
                 controller: "PatientInvoicesController"
+            }
+        }
+    })
+    .state("loggedIn.patient.recall", {
+        url: "/:patient_id/recall/:cal_id",
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/recall.html",
+                controller: "PatientRecallController"
             }
         }
     })

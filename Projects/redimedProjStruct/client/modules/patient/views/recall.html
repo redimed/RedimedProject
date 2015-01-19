@@ -1,0 +1,25 @@
+<h3 class="page-title"> Recall </h3>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+       <b> Appointment List </b>
+    </div>
+    <div class="panel-body">
+    	<table class="mdt-table table table-bordered">
+    		<tr>
+    			<th>#</th>
+    			<th>Appointment Time</th>
+    			<th>Doctor</th>
+    			<th>Department</th>
+    			<th>Service</th>
+    		</tr>
+    		<tr ng-repeat="item in appt_list">
+    			<td>{{$index + 1}}</td>
+    			<td>{{item.appointment.FROM_TIME}}</td>
+    			<td>{{item.appointment.doctor.NAME}}</td>
+    			<td>{{item.appointment.department.CLINICAL_DEPT_NAME}}</td>
+    			<td>{{item.appointment.service.SERVICE_NAME}}</td>
+    		</tr>
+    	</table>
+    </div>
+</div>

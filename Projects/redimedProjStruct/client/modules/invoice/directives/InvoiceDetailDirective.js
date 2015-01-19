@@ -12,12 +12,9 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			$scope.goToAppt = function(patient_id, cal_id) {
 				 $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: cal_id});
 			}
-
-
-            // search: {
-            // 	Patient_id: $scope.InvoiceMap.Patient_id
-            // }
-
+			/*
+			*	SEARCH CLAIM
+			*/
             $scope.patientClaimPanel = {};
 
 			$scope.patientClaim = {
@@ -54,8 +51,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 	                ],
 	                not_load: true,
 	                search: {}
-	            },
-	            
+	            },   
 			}
 		},
 		link: function(scope, element, attrs){
@@ -70,11 +66,8 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						ConfigService.autoConvertData(scope.InvoiceMap);
 
 
-
 						// INIT FIELD 
 						scope.InvoiceMap.patient.full_name = scope.InvoiceMap.patient.Title + '. ' + scope.InvoiceMap.patient.First_name + ' ' + scope.InvoiceMap.patient.Sur_name;
-						
-
 						scope.InvoiceMap.lines = scope.InvoiceMap.lines.filter(function(item){
 				 			return item.IS_ENABLE == 1;
 				 		})

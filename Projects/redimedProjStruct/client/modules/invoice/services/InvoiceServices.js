@@ -19,6 +19,11 @@ angular.module('app.loggedIn.invoice.services', [])
 		return funcApi.post({ header_id: id, data: postData});
 	}
 
+	mdtService.add = function(postData){
+		var funcApi = mdtApi.all('invoice/add');
+		return funcApi.post({data: postData});
+	}
+
 
 
 	 // instanceService.invoiceDetail = function(header_id) {
@@ -32,10 +37,7 @@ angular.module('app.loggedIn.invoice.services', [])
     // }
 
 
-	mdtService.add = function(postData){
-		var funcApi = mdtApi.all('add');
-		return funcApi.post({add_data: postData});
-	}
+	
 	
 	
 	mdtService.search = function(option){

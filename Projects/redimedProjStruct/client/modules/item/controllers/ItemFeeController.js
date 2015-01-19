@@ -119,16 +119,6 @@ angular.module("app.loggedIn.item.fee.controller",[
                                 $('#fee_type_upload').click();
                             }, 100);
 
-                            /*
-						angular.element('#fee_type_upload').bind('click', function(){
-							this.click();
-						});
-						*/
-						/*
-						if(!$scope.$$phase) {
-							//$digest or $apply
-							$('#fee_type_upload').click();
-						}*/
                     }
                 }, 
                 {

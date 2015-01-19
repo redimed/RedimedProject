@@ -90,7 +90,10 @@
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="status">Status</label>
-			<input type="text" placeholder="Status" name="status" ng-model="InvoiceMap.STATUS" class="form-control" id="status" float-label>
+			<select class="form-control" name="STATUS"
+				ng-model="InvoiceMap.STATUS"
+				ng-options="item.code as item.label for item in options.invoice_status">
+			</select>
 		</span>	
 	</div>
 	<!--STATUS-->
@@ -118,15 +121,6 @@
 	</div>
 	<!--claim_id-->
 	<div class="break-row"></div>
-
-	<!--AMOUNT-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="amount">Amount</label>
-			<input type="text" disabled placeholder="Amount" name="amount" ng-model="InvoiceMap.AMOUNT" class="form-control" id="amount" float-label>
-		</span>	
-	</div>
-	<!--AMOUNT-->
 </div>
 
 

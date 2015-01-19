@@ -1,23 +1,34 @@
-angular.module("app.loggedIn.patient.invoices.controller", [])
-.controller("PatientInvoicesController", function($scope, $state, $stateParams, PatientService, ConfigService){
-	var patient_id = $stateParams.patient_id;
-    var cal_id = $stateParams.cal_id;
+angular.module("app.loggedIn.invoice.list.controller",[
+])
+.controller("InvoiceListController", function($scope, $state, toastr, ItemService, ConfigService){
+	console.log($scope.options)
+
+    /*
+    *   SET UP TABLE - INVOICE 
+    */
+	var invoice_status = [{label: '-- All --'}].concat($scope.options.invoice_status);
 
 	$scope.invoiceClass = function(item) {
         return {
             warning: (item.STATUS == 'approach'),
             success: (item.STATUS == 'done'),
-            danger: (item.STATUS == 'enter' || item.STATUS == null),
-            selected: (item.cal_id == cal_id)
+            danger: (item.STATUS == 'enter' || item.STATUS == null)
         }
 	}
+
+    $scope.invoicePanel = {};
+
 	$scope.invoiceOption = {
         api: 'api/erm/v2/invoice/search',
         method: 'post',
+        scope: $scope.invoicePanel,
         columns: [
             {field: 'header_id', is_hide: true},
             {field: 'cal_id', is_hide: true},
-            {field: 'STATUS', is_hide: true},
+         
+            {field: 'Patient_id', label: 'Patient', type: 'custom', fn: function(item){
+            	if(item.patient) return item.patient.Title + '. ' + item.patient.First_name;
+            }},
             {field: 'Company_id', label: 'Company', type: 'custom', fn: function(item){
             	if(item.company) return item.company.Company_name;
             }},
@@ -36,18 +47,45 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             {field: 'CREATION_DATE', label: 'Created Date', type: 'custom', fn: function(item){
             	return ConfigService.getCommonDateDefault(item.CREATION_DATE);
             }},
+            {field: 'STATUS', label: 'Status'},
         ],
-        search: {patient_id: patient_id},
+        use_filters: true,
+        filters: {
+    		STATUS: { type: 'dropdown', values: invoice_status}
+    	},
         use_actions: true, 
         actions: [              
             {
                 class: 'fa fa-money', title: 'Detail',
                 callback: function(item){
-                	console.log(item)
                		$state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id}); 
                 }
             },
         ],
 	};
+
+    /*
+    *   SET UP ADD FORM
+    */
+    $scope.invoiceParams = {
+        permission: {
+            add: true,
+        }
+    }
+
+
+    $scope.addFormInvoice = {
+        is_show: false,
+        open: function () {
+            this.is_show = true;
+        },
+        close: function () {
+            this.is_show = false;
+        },
+        success: function(){
+            $scope.addFormInvoice.close();
+            $scope.invoicePanel.reload();
+        }
+    }
 
 });

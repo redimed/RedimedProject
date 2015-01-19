@@ -10,7 +10,7 @@ angular.module("app.loggedIn.patient.services", [])
     /*
     *   KHANK 
     */
-     instanceService.numCompanies = function(patient_id){
+    instanceService.numCompanies = function(patient_id){
         var funcApi = khankAPI.one('patients/num_companies');
         return funcApi.get({id: patient_id});
     }
@@ -59,6 +59,11 @@ angular.module("app.loggedIn.patient.services", [])
         var funcApi = khankAPI.all('patients/appointments');
         return funcApi.post({patient_id: patient_id});
     }
+
+    instanceService.getRecallAppointments = function(patient_id) {
+        var funcApi = khankAPI.all('patients/recall_appointments');
+        return funcApi.post({patient_id: patient_id});
+    }    
      /*
     *  END KHANK 
     */
