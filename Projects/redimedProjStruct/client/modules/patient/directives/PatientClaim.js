@@ -113,6 +113,7 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                 scope.modelObjectMap.Claim_date = new Date();
 //                scope.params.Patient_id = patientid;
                 getInsurerInfo();
+                scope.params.addClaimShow = false;
             }
             //END POPUP
 

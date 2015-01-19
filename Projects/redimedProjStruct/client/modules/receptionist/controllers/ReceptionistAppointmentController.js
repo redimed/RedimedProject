@@ -70,7 +70,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	$scope.addClaim = function(){
         angular.element(claimListAddId).fadeIn();
         $scope.claim_params.Patient_id = $scope.patient_id
-        $scope.addClaimShow = true;
+        $scope.claim_params.addClaimShow = true;
 	}
 
 	$scope.$watch('claim', function(newClaim, oldClaim){

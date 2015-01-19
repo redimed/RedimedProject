@@ -87,23 +87,30 @@ module.exports = {
 			if(!patient){
 				res.json(500, {"status": "error", "message": "Database Error"});
 			}else{
-				patient.getCompany().then(function(company){
-					if(company.Insurer !== null){
-						var insurer_sql = "SELECT id, insurer_name FROM cln_insurers WHERE id="+company.Insurer;
+                if(!!patient.company_id){
+                        patient.getCompany().then(function(company){
+                        console.log("this is company", company);
+                        if(!!company.Insurer){
+                            var insurer_sql = "SELECT id, insurer_name FROM cln_insurers WHERE id="+company.Insurer;
 
-						db.sequelize.query(insurer_sql)
-						.success(function(list){
-							res.json({"status": "success", "company": company, "data": patient, "insurer": list[0]});
-						})
-						.error(function(error){
-							res.json({"status": "error", "message": error});
-						})
-					}else{
-						res.json({"status": "success", "company": company, "data": patient, "insurer": null});
-					}
-				}, function(error){
-					res.json(500, {"status": "error", "message": error});
-				})
+                            db.sequelize.query(insurer_sql)
+                            .success(function(list){
+                                res.json({"status": "success", "company": company, "data": patient, "insurer": list[0]});
+                            })
+                            .error(function(error){
+                                res.json({"status": "error", "message": error});
+                            })
+                        }else{
+                            res.json({"status": "success", "company": company, "data": patient, "insurer": null});
+                        }
+                    }, function(error){
+                        res.json(500, {"status": "error", "message": error});
+                    })
+                }
+                else{
+                    res.json({"status": "success", "company": null, "data": patient, "insurer": null})
+                }
+				
 			}
 		})
 		.error(function(error){
