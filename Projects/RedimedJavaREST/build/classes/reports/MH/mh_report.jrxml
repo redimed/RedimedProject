@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mh_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ed7ad48-d2ae-4fdc-8d98-79bb0b845af6">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="4799"/>
+	<property name="ireport.y" value="2405"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -281,7 +281,6 @@ medical_history.`s2_employ5` AS medical_history_s2_employ5,
         medical_history.`s8_hay_fever` AS medical_history_s8_hay_fever,
         medical_history.`s8_tuberculosis` AS medical_history_s8_tuberculosis,
         medical_history.`s8_obstructive` AS medical_history_s8_obstructive,
-        medical_history.`s8_disease` AS medical_history_s8_disease,
         medical_history.`s8_rheumatic_fever` AS medical_history_s8_rheumatic_fever,
         medical_history.`s8_bronchitis` AS medical_history_s8_bronchitis,
         medical_history.`s8_coughed_blood` AS medical_history_s8_coughed_blood,
@@ -490,7 +489,6 @@ medical_history.`mh_id` = $P{id}]]>
 	<field name="medical_history_s8_hay_fever" class="java.lang.Integer"/>
 	<field name="medical_history_s8_tuberculosis" class="java.lang.Integer"/>
 	<field name="medical_history_s8_obstructive" class="java.lang.Integer"/>
-	<field name="medical_history_s8_disease" class="java.lang.Integer"/>
 	<field name="medical_history_s8_rheumatic_fever" class="java.lang.Integer"/>
 	<field name="medical_history_s8_bronchitis" class="java.lang.Integer"/>
 	<field name="medical_history_s8_coughed_blood" class="java.lang.Integer"/>
@@ -1470,14 +1468,6 @@ medical_history.`mh_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_obstructive}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="473" y="313" width="11" height="11" uuid="721656b3-1a22-419f-badc-a2316f19886e"/>
-				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_disease}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="515" y="312" width="11" height="11" uuid="7422a794-c7c6-45da-b09b-5598e51458fb"/>
-				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_disease}==0?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
-			</image>
-			<image>
 				<reportElement x="473" y="325" width="11" height="11" uuid="488cca59-6a53-4cf6-bd64-ec5e4729c7f9"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_history_s8_rheumatic_fever}==1?"Image/checked.png":"Image/uncheck.png")]]></imageExpression>
 			</image>
@@ -1573,6 +1563,10 @@ medical_history.`mh_id` = $P{id}]]>
 				<reportElement x="10" y="620" width="531" height="73" uuid="b10a2c39-10ff-46a2-991c-d858a6e34f38"/>
 				<textFieldExpression><![CDATA[($F{medical_history_s9_comments}!=null && $F{medical_history_s9_comments}!="")?$F{medical_history_s9_comments}:""]]></textFieldExpression>
 			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="450" y="313" width="100" height="11" uuid="0c44e648-eb6e-4fb6-b7fa-b578939cf129"/>
+				<imageExpression><![CDATA[$P{real_path}+"Image/blank.png"]]></imageExpression>
+			</image>
 		</band>
 		<band height="725">
 			<image scaleImage="RetainShape">
@@ -1925,15 +1919,15 @@ medical_history.`mh_id` = $P{id}]]>
 			</textField>
 			<textField>
 				<reportElement x="10" y="47" width="100" height="20" uuid="eadc0601-cc4a-492b-a47d-2fa40a5bcd78"/>
-				<textFieldExpression><![CDATA[($F{full_name_doctor}!=null && $F{full_name_doctor}!="")?$F{full_name_doctor}:""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{full_name_patient}!=null && $F{full_name_patient}!="")?$F{full_name_patient}:""]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="446" y="47" width="100" height="20" uuid="c05ddb00-0985-4adb-b064-581baa7d1142"/>
-				<textFieldExpression><![CDATA[($F{doctors_DOB}!=null && $F{doctors_DOB}!="")?$F{doctors_DOB}:""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{cln_patients_DOB}!=null && $F{cln_patients_DOB}!="")?$F{cln_patients_DOB}:""]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame">
 				<reportElement x="51" y="266" width="150" height="60" uuid="05804e5a-7d1a-4663-ba69-5527739f87c1"/>
-				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctors_Signature}.getBytes("UTF-8"))))]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{medical_history_dec_signed_witness}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement stretchType="RelativeToTallestObject" x="53" y="620" width="150" height="60" uuid="ab1755bb-8443-4917-9cc5-c890a71b607d"/>

@@ -2061,3 +2061,213 @@ Error at Fri Jan 16 2015 08:16:21 GMT+0700 (SE Asia Standard Time) : {"code":"PR
 Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
 Error at Fri Jan 16 2015 08:16:21 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
 
+Exec SQL: SELECT * FROM doctors WHERE (user_id = 10)
+Error at Sat Jan 17 2015 21:07:02 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Sat Jan 17 2015 21:07:08 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Sat Jan 17 2015 21:07:08 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Sat Jan 17 2015 21:07:08 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Sat Jan 17 2015 21:08:29 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Sat Jan 17 2015 21:08:29 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Sat Jan 17 2015 21:08:29 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 09:31:45 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 09:31:45 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 09:31:45 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 09:37:59 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 09:37:59 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 09:37:59 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 09:45:38 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 09:45:38 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 09:45:38 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_insurers WHERE (cln_insurers.`id` = '1')
+Error at Mon Jan 19 2015 09:47:37 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_insurers WHERE (cln_insurers.`id` = '1')
+Error at Mon Jan 19 2015 09:48:12 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_insurers WHERE (cln_insurers.`id` = '1')
+Error at Mon Jan 19 2015 09:48:22 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_insurers WHERE (cln_insurers.`id` = '1')
+Error at Mon Jan 19 2015 09:48:26 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_insurers WHERE (cln_insurers.`id` = '1')
+Error at Mon Jan 19 2015 09:48:51 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_insurers WHERE (cln_insurers.`id` = '1')
+Error at Mon Jan 19 2015 09:48:57 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 10:29:33 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 10:29:33 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 10:29:33 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 10:50:54 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 10:50:54 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 10:50:54 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 10:55:19 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 10:55:19 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 10:55:20 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 10:58:13 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_insurers WHERE (cln_insurers.`id` = '1')
+Error at Mon Jan 19 2015 10:58:21 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_insurers WHERE (cln_insurers.`id` = '1')
+Error at Mon Jan 19 2015 10:58:40 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:00:14 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 11:01:33 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 11:01:33 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 11:01:33 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:02:14 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_patients WHERE (Patient_id = '598')
+Error at Mon Jan 19 2015 11:03:21 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:04:14 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:06:15 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:08:15 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:10:15 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM doctors WHERE (user_id = 10)
+Error at Mon Jan 19 2015 11:10:29 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 11:10:40 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 11:10:41 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 11:10:41 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:12:16 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_patients WHERE (Patient_id = '598')
+Error at Mon Jan 19 2015 11:12:31 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:14:16 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:16:16 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:18:17 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:20:17 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:22:18 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:24:18 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:26:18 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:28:19 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:30:19 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:32:19 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:34:20 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:36:20 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT companies.id, Company_name, Industry, Addr, companies.Country, IF(cln_patients.company_id = patient_companies.company_id , 'active', 'inactive' ) AS "active" FROM cln_patients INNER JOIN patient_companies ON (cln_patients.Patient_id = patient_companies.patient_id) INNER JOIN companies ON (patient_companies.company_id = companies.id) WHERE (cln_patients.patient_id = 598) ORDER BY active ASC LIMIT 5
+Error at Mon Jan 19 2015 11:38:20 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 11:42:43 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 11:42:43 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 11:42:43 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT * FROM cln_patients WHERE (Patient_id = '598')
+Error at Mon Jan 19 2015 11:44:40 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Jan 19 2015 12:05:07 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Jan 19 2015 12:05:07 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Jan 19 2015 12:05:07 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
