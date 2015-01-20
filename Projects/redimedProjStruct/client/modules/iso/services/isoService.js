@@ -213,6 +213,12 @@ angular.module('app.loggedIn.iso.service',[])
         }
 
         isoService.isoUserGroup={
+            checkCanAccessUserGroupPage:function()
+            {
+                var result = api.one("iso/iso-user-group/access-user-group-page");
+                return result.get();
+            },
+
             getUserGroupList:function()
             {
                 var result = api.one("iso/iso-user-group/get-user-group-list");

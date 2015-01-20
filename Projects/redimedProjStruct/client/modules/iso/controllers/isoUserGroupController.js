@@ -1,5 +1,19 @@
 angular.module('app.loggedIn.iso.userGroup.controller',[])
-    .controller("isoUserGroupController", function($scope,isoService) {   
+    .controller("isoUserGroupController", function($scope,isoService,$state) {  
+
+        /**
+         * Kiem tra xem user dang nhap co phai la admin iso system hay khong
+         * tannv.dts@gmail.com
+         */
+        isoService.isoUserGroup.checkCanAccessUserGroupPage()
+        .then(function(data){
+            if(data.status!='success')
+            {
+                $state.go("loggedIn.iso.main");
+            }
+        },function(err){
+            $state.go("loggedIn.iso.main");
+        }); 
         /**
          * Lay danh sach tat ca cac user Group
          * tannv.dts@gmail.com

@@ -3,8 +3,26 @@ var isoUtil=require('./isoUtilsController');
 
 module.exports =
 {
+
+    accessUserGroupPage:function(req,res){
+        if(isoUtil.isAdminIsoSystem(req))
+        {
+            res.json({status:'success'});
+        }
+        else
+        {
+            res.json({status:'fail'});
+        }
+    },
+
 	getUserGroupList:function(req,res)
 	{
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
 		var sql="SELECT * FROM `iso_user_group`";
 		req.getConnection(function(err,connection)
         {
@@ -34,6 +52,12 @@ module.exports =
 
     updateGroupInfo:function(req,res)
     {        
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
         var groupInfo=isoUtil.checkData(req.body.groupInfo)?req.body.groupInfo:{};
         var groupId=isoUtil.checkData(groupInfo.GROUP_ID)?groupInfo.GROUP_ID:''
         var groupName=isoUtil.checkData(groupInfo.GROUP_NAME)?groupInfo.GROUP_NAME:'';
@@ -72,6 +96,12 @@ module.exports =
 
     addGroup:function(req,res)
     {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        
         var groupInfo=isoUtil.checkData(req.body.groupInfo)?req.body.groupInfo:{};
         var groupName=isoUtil.checkData(groupInfo.GROUP_NAME)?groupInfo.GROUP_NAME:'';
         var groupEnable=isoUtil.checkData(groupInfo.ISENABLE)?groupInfo.ISENABLE:0;
@@ -110,6 +140,12 @@ module.exports =
 
     getUsersInGroup:function(req,res)
     {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
         var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
         var sql=
             " SELECT detail.*, u.`user_name`                                                      "+
@@ -151,6 +187,12 @@ module.exports =
 
     updateGroupItemInfo:function(req,res)
     {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
         var groupItemInfo=isoUtil.checkData(req.body.groupItemInfo)?req.body.groupItemInfo:{};
         var groupId=isoUtil.checkData(groupItemInfo.GROUP_ID)?groupItemInfo.GROUP_ID:'';
         var itemId=isoUtil.checkData(groupItemInfo.USER_ID)?groupItemInfo.USER_ID:'';
@@ -203,6 +245,12 @@ module.exports =
 
     addGroupItem:function(req,res)
     {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
         var groupItemInfo=isoUtil.checkData(req.body.groupItemInfo)?req.body.groupItemInfo:{};
         var groupId=isoUtil.checkData(groupItemInfo.GROUP_ID)?groupItemInfo.GROUP_ID:'';
         var itemId=isoUtil.checkData(groupItemInfo.USER_ID)?groupItemInfo.USER_ID:'';

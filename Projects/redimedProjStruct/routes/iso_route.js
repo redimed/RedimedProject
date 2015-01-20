@@ -51,8 +51,6 @@ app.post('/api/iso/iso-check-out-in/submitDocument',isoCheckInOutController.subm
 app.post('/api/iso/iso-check-out-in/approvedAndReject',isoCheckInOutController.approvedAndReject);
 app.get('/api/iso/iso-check-out-in/selectIdFromCheckOutIn',isoCheckInOutController.selectIdFromCheckOutIn);
 app.get('/api/iso/iso-check-out-in/downloadNewestVersionDocument',isoController.getUserPermission,isoCheckInOutController.downloadNewestVersionDocument);
-
-
 //tannv.dts@gmail.com
 app.post('/api/iso/iso-check-out-in/submit-document',isoController.getUserPermission,isoCheckInOutController.checkCanSubmitDocument,isoCheckInOutController.submitDocument);
 app.post('/api/iso/iso-check-out-in/cancel-submit-document',isoController.getUserPermission,isoCheckInOutController.checkCanCancelSubmitDocument,isoCheckInOutController.cancelSubmitDocument);
@@ -70,12 +68,13 @@ app.post('/api/iso/iso-admin/insertNewUserToAdmin',isoController.checkAdminIsoSy
 app.post('/api/iso/iso-admin/updateEnableAdmin',isoController.checkAdminIsoSystemMaster,isoAdminController.updateEnableAdmin);
 
 //isoUserGroupController
-app.get('/api/iso/iso-user-group/get-user-group-list',isoUserGroupController.getUserGroupList);
-app.post('/api/iso/iso-user-group/update-group-info',isoUserGroupController.updateGroupInfo);
-app.post('/api/iso/iso-user-group/add-group',isoUserGroupController.addGroup);
-app.post('/api/iso/iso-user-group/get-user-in-group',isoUserGroupController.getUsersInGroup);
-app.post('/api/iso/iso-user-group/update-group-item-info',isoUserGroupController.updateGroupItemInfo);
-app.post('/api/iso/iso-user-group/add-group-item',isoUserGroupController.addGroupItem);
+app.get('/api/iso/iso-user-group/access-user-group-page',isoController.checkAdminIsoSystem,isoUserGroupController.accessUserGroupPage);
+app.get('/api/iso/iso-user-group/get-user-group-list',isoController.checkAdminIsoSystem,isoUserGroupController.getUserGroupList);
+app.post('/api/iso/iso-user-group/update-group-info',isoController.checkAdminIsoSystem,isoUserGroupController.updateGroupInfo);
+app.post('/api/iso/iso-user-group/add-group',isoController.checkAdminIsoSystem,isoUserGroupController.addGroup);
+app.post('/api/iso/iso-user-group/get-user-in-group',isoController.checkAdminIsoSystem,isoUserGroupController.getUsersInGroup);
+app.post('/api/iso/iso-user-group/update-group-item-info',isoController.checkAdminIsoSystem,isoUserGroupController.updateGroupItemInfo);
+app.post('/api/iso/iso-user-group/add-group-item',isoController.checkAdminIsoSystem,isoUserGroupController.addGroupItem);
 
 //iso Approver 
 app.get('/api/iso/iso-approver/getApproverList',isoApproverController.getApproverList);

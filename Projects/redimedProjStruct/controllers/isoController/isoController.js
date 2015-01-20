@@ -160,14 +160,22 @@ module.exports =
                 {
                     if(rows.length>0)
                     {                      
-                        if(isoUtil.haveData(req.body))
+                        // if(isoUtil.haveData(req.body))
+                        // {
+                        //     req.body.userLoginPermission=rows[0].PERMISSION;
+                        // }
+                        // if(isoUtil.haveData(req.query))
+                        // {
+                        //     req.query.userLoginPermission=rows[0].PERMISSION;
+                        // }  
+                        if(req.method=='POST')
                         {
                             req.body.userLoginPermission=rows[0].PERMISSION;
                         }
-                        if(isoUtil.haveData(req.query))
+                        if(req.method=='GET')
                         {
                             req.query.userLoginPermission=rows[0].PERMISSION;
-                        }  
+                        }
                         next();
                     }
                     else
@@ -205,12 +213,11 @@ module.exports =
             {
                 if(rows.length>0)
                 {            
-
-                    if(isoUtil.haveData(req.body))
+                    if(req.method=='POST')
                     {
                         req.body.isAdminIsoSystem=1;
                     }
-                    if(isoUtil.haveData(req.query))
+                    if(req.method=='GET')
                     {
                         req.query.isAdminIsoSystem=1;
                     }    
