@@ -77,13 +77,14 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                 })
             }
             getInsurerInfo();
-
+            
 
 
 
             if (scope.isClose) {
                 var idClose = "#" + scope.isClose;
             }
+            angular.element(idClose).fadeIn();
 
             // DECLARE
             scope.isSubmit = false;
@@ -112,8 +113,13 @@ angular.module("app.loggedIn.patient.claim.directive", [])
                 scope.modelObjectMap.insurer_site = scope.insurerId;
                 scope.modelObjectMap.Claim_date = new Date();
 //                scope.params.Patient_id = patientid;
-                getInsurerInfo();
-                scope.params.addClaimShow = false;
+                if(scope.params.addClaimShow === undefined){
+                    getInsurerInfo();
+
+                }
+                else{
+                    scope.params.addClaimShow = false;
+                }
             }
             //END POPUP
 

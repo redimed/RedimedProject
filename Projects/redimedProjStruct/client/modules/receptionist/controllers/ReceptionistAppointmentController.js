@@ -50,6 +50,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 		if(typeof newPatient !== 'undefined' && newPatient !== null){
 			$scope.patient_id = newPatient.Patient_id;
 			angular.element(claimListSelectId).fadeIn();
+            $scope.claim_params.Patient_id = $scope.patient_id;
 			$scope.refreshAppointment();
 		}
 	})
@@ -68,9 +69,10 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 	}
 
 	$scope.addClaim = function(){
-        angular.element(claimListAddId).fadeIn();
-        $scope.claim_params.Patient_id = $scope.patient_id
         $scope.claim_params.addClaimShow = true;
+        if($scope.claim_params.addClaimShow === true){
+        angular.element(claimListAddId).fadeIn();
+        }
 	}
 
 	$scope.$watch('claim', function(newClaim, oldClaim){

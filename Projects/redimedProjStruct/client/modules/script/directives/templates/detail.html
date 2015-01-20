@@ -130,10 +130,7 @@
 	<div class="break-row"></div>
 	<div class="col-md-6 cols-sm-6 col-xs-12">
 	    <div class="row">
-            <div class="col-md-12 cols-sm-12">
-                <img src="{{modelObjectMap.doctorSign}}" style="width:100%; height:200px"/>
-            </div>
-	        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
 	            <!-- Doctor Date -->
 	            <span class="field">
 			<label for="doctordate">Doctor Date</label>
@@ -141,21 +138,20 @@
 		</span>
         <!-- End Doctor Date -->
 	        </div>
+            <div class="col-md-12 cols-sm-12">
+                <img src="{{modelObjectMap.doctorSign}}" style="width:100%; height:200px"/>
+            </div>
+	       
 	    </div>
 	</div>
 	
 	<div class="col-md-6 cols-sm-6 col-xs-12">
 	    <div class="row">
-        <div class="col-md-12 col-sm-12">
-                 <canvas id="canvas" style="background-color: grey; width:100%; height:200px" signature ng-model="modelObjectMap.patientSign">
-                        </canvas>
-            </div>
-            <div class="break-row"></div>
-	        <div class="col-md-10 col-sm-10 col-xs-10">
+       <div class="col-md-10 col-sm-10 col-xs-10">
 	            <!-- Patient Date -->
 	           <span class="field">
 			<label for="patientdate">Patient Date</label>
-			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Patientdate" name="patientdate" ng-model="modelObjectMap.patientDate" class="form-control" id="patientdate" float-label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Patient date" name="patientdate" ng-model="modelObjectMap.patientDate" class="form-control" id="patientdate" float-label>
 		</span>	
         <!-- End patient Date -->
 	        </div>
@@ -164,6 +160,12 @@
 	                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 	            </button>
 	        </div>
+        <div class="col-md-12 col-sm-12">
+                 <canvas id="canvas" style="background-color: grey; width:100%; height:200px" signature ng-model="modelObjectMap.patientSign">
+                        </canvas>
+            </div>
+            <div class="break-row"></div>
+	        
 	    </div>
 	</div>
 	
